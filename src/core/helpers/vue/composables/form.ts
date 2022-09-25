@@ -1,18 +1,20 @@
 import { computed, ref, onMounted } from "vue";
 import type { NamedRules, Rule, Rules } from "../../rules";
 
-
-
 // todo: this need to be more typed
 export interface useFormProps {
   rules?: NamedRules;
   ref: any;
   initialValue?: any;
+  autoCollectData?: boolean;
 }
 
 export default function useForm(props: useFormProps) {
   const errors = ref<{ [key: string]: string }>({});
   const formValues = ref<{ [key: string]: string }>({});
+
+  const autoCollectData =
+    typeof props.autoCollectData === "undefined" ? true : props.autoCollectData;
 
   function reset(): void {
     errors.value = {};
@@ -50,7 +52,7 @@ export default function useForm(props: useFormProps) {
     if (props.initialValue) {
       formValues.value = props.initialValue;
     }
-    if (props.ref?.value) {
+    if (autoCollectData && props.ref?.value) {
       props.ref.value.oninput = (event: Event) => {
         _collectFormData();
       };
@@ -86,8 +88,9 @@ export default function useForm(props: useFormProps) {
   function onSumbit(callback: (data: any) => void) {
     return (event: Event) => {
       event.preventDefault();
-
-      _collectFormData(event?.target as HTMLFormElement);
+      if (autoCollectData) {
+        _collectFormData(event?.target as HTMLFormElement);
+      }
       validate();
 
       callback(formValues.value);
