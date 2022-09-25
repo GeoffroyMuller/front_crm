@@ -1,0 +1,40 @@
+{
+    "GET": {
+        "/customers/1/wishlist": [
+            "Voiture",
+            "Maison"
+        ],
+        "/customers": [
+            {
+                "id": 1,
+                "email": "etienne.robert1698@gmail.com",
+                "firstname": "Etienne",
+                "lastname": "ROBERT"
+            },
+            {
+                "id": 2,
+                "email": "client2@gmail.com",
+                "firstname": "Etienne",
+                "lastname": "MARTIN"
+            },
+            {
+                "id": 3,
+                "email": "geoff@gmail.com",
+                "firstname": "Geoffroy",
+                "lastname": "MULLER"
+            }, 
+            {
+                "id": 4,
+                "email": "elise@gmail.com",
+                "firstname": "Elise",
+                "lastname": "DUPONT"
+            }
+        ],
+        "/customers/1": {
+            "id": 1,
+            "email": "etienne.robert1698@gmail.com",
+            "firstname": "Etienne",
+            "lastname": "Robert"
+        }
+    }
+}

@@ -1,0 +1,114 @@
+@use "sass:list";
+@import "./functions";
+
+@mixin modifiers($map, $attribute, $prefix: '', $separator: '-', $base: 'base') {
+
+    @each $key,
+    $value in $map {
+        &#{if($key != $base, #{$prefix}#{$key},
+        '')
+    }
+
+        {
+        @if type-of($value)=='map' {
+            @include modifiers($value, $attribute, $separator);
+        }
+
+        @else {
+            #{$attribute}: $value;
+        }
+    }
+}
+}
+
+@mixin flex($direction, $justify-content, $align-items, $spacing-value: none) {
+    $directions: row, col, column;
+
+    @if not list.index($directions, $direction) {
+        @warn "Unknown property #{$direction}";
+    }
+
+    display: flex;
+
+    @if $direction==col or $direction==column {
+        flex-direction: column;
+    }
+
+    @if $spacing-value !=none {
+        &>* {
+            @if $direction==col or $direction==column {
+                @if unitless($spacing-value) {
+                    margin-bottom: spacing($spacing-value);
+                }
+
+                @else {
+                    margin-bottom: $spacing-value;
+                }
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+
+            @else {
+                @if unitless($spacing-value) {
+                    margin-right: spacing($spacing-value);
+                }
+
+                @else {
+                    margin-right: $spacing-value;
+                }
+
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+
+    justify-content: $justify-content;
+    align-items: $align-items;
+}
+
+
+@mixin grid($columns: 0, $rows: 0, $gap: 0) {
+    display: grid;
+    @if $columns != 0 {
+        grid-template-columns: repeat($columns, minmax(0, 1fr));
+    }
+    @if $rows != 0 {
+        grid-template-rows: repeat($rows, minmax(0, 1fr));
+    }
+    @if $gap != 0 {
+        gap: spacing($gap);
+    }
+    
+    
+}
+
+
+
+@mixin typo($_type: none) {
+    @if $_type==text or $_type==none {
+        font-weight: 400;
+        font-size: 18px;
+        color: black;
+    }
+
+    @if $_type==text2 {
+        font-size: 15px;
+        font-weight: 400;
+        color: #626262;
+    }
+
+    @if $_type==subtitle {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    @if $_type==title {
+        font-size: 21px;
+        font-weight: 500;
+    }
+}

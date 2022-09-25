@@ -1,0 +1,25 @@
+@import './_variables.scss';
+
+html, body {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "Gill Sans", sans-serif;
+    letter-spacing: 0.05em;
+    line-height: 1;
+}
+
+body {
+    background-color: #f8fafc;
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+.title {
+    @include typo($_type: title);
+}
+.subtitle {
+    @include typo($_type: subtitle);
+}
