@@ -1,6 +1,9 @@
 <template>
   <div id="customers-page">
     <div class="customers-list">
+      <pre>
+        {{ customers }}
+      </pre>
       <Card
         v-for="customer of customers"
         :key="customer.id"
