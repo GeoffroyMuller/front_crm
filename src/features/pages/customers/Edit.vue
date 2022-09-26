@@ -2,7 +2,7 @@
   <pre>
     {{ customer }}
   </pre>
-  <Card id="edit-customer-page" title="Edit Customer Form">
+  <Card id="edit-customer-page" title="Edit Customer Form" v-if="isPageLoaded">
     <Form
       :defaultValue="customer"
       @submit="handleSubmit"
@@ -20,12 +20,17 @@ import { useCustomerStore } from "@/features/stores/customers";
 import Card from "@/core/components/Card.vue";
 import TextField from "@/core/components/form/TextField.vue";
 import Form from "@/core/components/form/Form.vue";
+import { isNil } from "lodash";
 
 const customerStore = useCustomerStore();
 
 const route = useRoute();
 
 const isAddAction = computed(() => !route.params.id);
+
+const isPageLoaded = computed(
+  () => isAddAction.value || !isNil(customer.value)
+);
 
 const customer = computed(() => {
   if (isAddAction.value) {
