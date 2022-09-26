@@ -8,10 +8,12 @@ import {
 } from "vue";
 
 import { isNil } from "lodash";
+import type { Rules } from "../../rules";
 
 interface ValidatableProps<T> {
   value?: T;
   error?: boolean | string;
+  rules?: Rules;
 }
 
 export default function useValidatable<T>(props: ValidatableProps<T>) {
@@ -22,11 +24,22 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
   const internalError = ref<string | boolean | undefined>(props.error);
 
   function validate() {
-    console.error("--- VALIDATE ---");
-    // FAKE
-    const valid = internalValue.value?.length ? true : "Un probleme";
-    internalError.value =
-      valid && typeof valid === "boolean" ? undefined : valid;
+    let valid: string | boolean | null | undefined = true;
+    if (props.rules?.length) {
+      for (const rule of props.rules) {
+        const ruleValid = rule(internalValue.value);
+        if (ruleValid === false || typeof ruleValid === "string") {
+          valid = ruleValid;
+        }
+      }
+    }
+
+    if (typeof valid === "string" || valid === false) {
+      internalError.value = (valid || true) as string | boolean;
+    } else {
+      internalError.value = undefined;
+    }
+
     return valid;
   }
 
@@ -70,6 +83,7 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
   watch(
     () => internalValue.value,
     () => {
+      validate();
       instance?.emit("update:modelValue", internalValue.value);
     }
   );

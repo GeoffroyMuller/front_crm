@@ -26,6 +26,7 @@
 import useValidatable from "../../helpers/vue/composables/validatable";
 import { defineEmits, defineProps, withDefaults, watch } from "vue";
 import type { FormInputProps } from "../types";
+import type { Rules } from "@/core/helpers/rules";
 
 interface InputProps extends FormInputProps<string | number> {
   fullWidth?: boolean;
@@ -40,6 +41,7 @@ interface InputProps extends FormInputProps<string | number> {
   name?: string;
   error?: string;
   disabled?: boolean;
+  rules?: Rules;
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
@@ -57,6 +59,7 @@ const emit = defineEmits([
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
   error: props.error,
+  rules: props.rules,
 });
 </script>
 

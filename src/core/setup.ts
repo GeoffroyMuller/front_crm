@@ -5,6 +5,7 @@ import pinia from "./plugins/pinia";
 import Unicon from "./plugins/unicon";
 import setupRouter from "./plugins/router";
 import lodashPlugin from "./plugins/lodash";
+import validationPlugin from "./plugins/validation";
 
 import { createApp } from "vue";
 import { createWebHistory, type RouteRecordRaw } from "vue-router";
@@ -25,7 +26,12 @@ export default function setup(options: SetupOptions) {
     routes,
   });
 
-  app.use(pinia).use(router).use(Unicon).use(lodashPlugin);
+  app
+    .use(pinia)
+    .use(router)
+    .use(Unicon)
+    .use(lodashPlugin)
+    .use(validationPlugin);
 
   return {
     router,

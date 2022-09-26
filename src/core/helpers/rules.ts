@@ -1,15 +1,11 @@
-export type Rule = (val: string) => string | boolean | null | undefined;
+export type Rule = (val: any) => string | boolean | null | undefined;
 export type Rules = Array<Rule>;
 export type NamedRules = { [key: string]: [Rule] | Rule };
 
 export function required(): Rule {
-  return (val: string) => (val ? false : "La valeur est requise");
+  return (val: any) => (val ? true : "La valeur est requise");
 }
 
-export function valEqual(toBeEqual: string): Rule {
-  return (val: string) => {
-    return val === toBeEqual
-      ? false
-      : `La valeur doit etre egale à "${toBeEqual}"`;
-  };
-}
+export default {
+  required,
+};

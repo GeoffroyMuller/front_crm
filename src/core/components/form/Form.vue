@@ -79,7 +79,9 @@ function getFormData() {
 function handleSumbit(event: Event) {
   event.preventDefault();
   validate();
-  emit("submit", getFormData());
+  if (!hasError.value) {
+    emit("submit", getFormData());
+  }
 }
 
 provide("form", {

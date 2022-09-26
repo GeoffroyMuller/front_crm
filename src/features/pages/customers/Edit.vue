@@ -2,9 +2,13 @@
   <Card id="edit-customer-page" title="Edit Customer Form" v-if="isPageLoaded">
     <Form :defaultValue="customer" @submit="handleSubmit">
       <template v-slot:default="{ hasError }">
-        <TextField name="firstname" label="Prenom" />
-        <TextField name="lastname" label="Nom" />
-        <TextField name="email" label="Email" />
+        <TextField
+          name="firstname"
+          label="Prenom"
+          :rules="[$rules.required()]"
+        />
+        <TextField name="lastname" label="Nom" :rules="[$rules.required()]" />
+        <TextField name="email" label="Email" :rules="[$rules.required()]" />
 
         <Button v-if="isAddAction" type="submit" :disabled="hasError">
           Ajouter
