@@ -45,10 +45,6 @@ function add(model: string, body: any) {
 
 function deleteData(model: string, id: ID) {
   delete DB[model][id];
-  console.error({
-    "DB[model]": DB[model],
-    id,
-  });
 }
 
 export default {

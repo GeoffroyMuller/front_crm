@@ -20,9 +20,7 @@ export interface makeAPIStoreProps {
 export function makeAPIStore<T>(props: makeAPIStoreProps) {
   function _getPath(id?: ID, resource?: string) {
     let resPath = "";
-    if (typeof resource === "string") {
-      resPath = props.path ? `${props.path}` : `/${props.id}`;
-    }
+    resPath = props.path ? `${props.path}` : `/${props.id}`;
     if (id) {
       resPath += `/${id}`;
     }
