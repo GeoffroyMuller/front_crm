@@ -4,7 +4,7 @@
     class="text-field"
     :class="{
       'w-full': fullWidth,
-      error: error,
+      error: internalError,
     }"
   >
     <label v-if="label">
@@ -16,8 +16,8 @@
       ref="internalRef"
       v-model="internalValue"
     />
-    <div v-if="error" class="input-error">
-      {{ error }}
+    <div v-if="internalError" class="input-error">
+      {{ internalError }}
     </div>
   </div>
 </template>
@@ -26,9 +26,22 @@
 import useValidatable from "../../helpers/vue/composables/validatable";
 import { defineEmits, defineProps, withDefaults, watch } from "vue";
 import type { FormInputProps } from "../types";
+import type { Rules } from "@/core/helpers/rules";
 
 interface InputProps extends FormInputProps<string | number> {
   fullWidth?: boolean;
+
+  /*
+  TODO : this is a duplicate of props in FormInputProps<string | number>
+        need to found why extends do not work proprely
+  */
+  label?: string;
+  modelValue?: string | number;
+  readonly?: boolean;
+  name?: string;
+  error?: string;
+  disabled?: boolean;
+  rules?: Rules;
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
@@ -43,15 +56,11 @@ const emit = defineEmits([
   "change",
 ]);
 
-const { internalValue, validate } = useValidatable({});
-
-watch(
-  () => props.modelValue,
-  (val) => {
-    if (val != internalValue.value) internalValue.value = val as string;
-  },
-  { immediate: true }
-);
+const { internalValue, internalError, validate } = useValidatable({
+  value: props.modelValue,
+  error: props.error,
+  rules: props.rules,
+});
 </script>
 
 <style lang="scss" scoped>

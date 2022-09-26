@@ -1,9 +1,6 @@
 <template>
   <div id="customers-page">
     <div class="customers-list">
-      <pre>
-        {{ customers }}
-      </pre>
       <Card
         v-for="customer of customers"
         :key="customer.id"
@@ -43,6 +40,7 @@ const itemsInTable = [
 
 function deleteById(id) {
   customersStore.delete(id);
+  customersStore.fetchAll();
 }
 
 const customers = computed(() => customersStore.getList);

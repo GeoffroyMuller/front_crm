@@ -1,42 +1,76 @@
 <template>
   <form @submit="handleSumbit">
-    <slot />
+    <slot :hasError="hasError" />
   </form>
 </template>
 
 <script lang="ts" setup>
-import { ref, provide, type ComponentInternalInstance, defineEmits } from "vue";
+import { ref, provide, defineEmits, computed } from "vue";
+import { isEmpty, omitBy, isNil } from "lodash";
 
-const emit = defineEmits(["submit"]);
-
-const inputs = ref<{ [key: string | number]: ComponentInternalInstance }>({});
-
-function register(input: ComponentInternalInstance) {
-  inputs.value[input.uid] = input;
+interface FormProps {
+  defaultValue?: any;
 }
 
-function unregister(input: ComponentInternalInstance) {
-  delete inputs.value[input.uid];
+interface _CustomInput {
+  name: string;
+  getValue: () => any;
+  validate: () => boolean | string;
+  getError: () => boolean | string | undefined;
+}
+
+const props = withDefaults(defineProps<FormProps>(), {
+  defaultValue: {},
+});
+
+const emit = defineEmits(["submit", "inputChange"]);
+
+const inputs = ref<{ [key: string]: _CustomInput }>({});
+const errors = ref<{ [key: string]: string | boolean | undefined }>({});
+
+function register(props: _CustomInput) {
+  inputs.value[props.name] = props;
+}
+
+function unregister(name: string) {
+  delete inputs.value[name];
+}
+
+function inputChange(name: string) {
+  emit("inputChange", {
+    name: name,
+    value: inputs.value[name].getValue(),
+  });
+}
+
+function inputErrorChange(name: string) {
+  errors.value[name] = inputs.value[name].getError();
 }
 
 function validate() {
+  errors.value = {};
+
   return Object.keys(inputs.value).reduce((prev, currentKey) => {
+    const input: _CustomInput = inputs.value[currentKey];
     // @ts-ignore
-    if (typeof inputs.value[currentKey]?.validate === "function") {
+    const valid = input.validate();
+
+    if (!valid || typeof valid === "string") {
       // @ts-ignore
-      return prev && inputs.value[currentKey].validate();
+      errors.value[input.name] = valid;
     }
-    return prev;
+    return prev && valid;
   }, true);
 }
+
+const hasError = computed(() => !isEmpty(omitBy(errors.value, isNil)));
 
 function getFormData() {
   // @ts-ignore
   const inputsArray = Object.values(inputs.value);
-  return inputsArray.reduce((prev: any, input: ComponentInternalInstance) => {
-    if (input.props.name) {
-      // @ts-ignore
-      return { ...prev, [input.props.name]: input.setupState.internalValue };
+  return inputsArray.reduce((prev: any, input: _CustomInput) => {
+    if (input.name) {
+      return { ...prev, [input.name]: input.getValue() };
     }
     return prev;
   }, {});
@@ -45,11 +79,16 @@ function getFormData() {
 function handleSumbit(event: Event) {
   event.preventDefault();
   validate();
-  emit("submit", getFormData());
+  if (!hasError.value) {
+    emit("submit", getFormData());
+  }
 }
 
 provide("form", {
   register,
   unregister,
+  inputChange,
+  inputErrorChange,
+  defaultValue: props.defaultValue,
 });
 </script>

@@ -1,3 +1,5 @@
+import type { Rules } from "@/core/helpers/rules";
+
 export interface FormInputProps<T> {
   label?: string;
   modelValue?: T;
@@ -5,7 +7,7 @@ export interface FormInputProps<T> {
   name?: string;
   error?: string;
   disabled?: boolean;
-  value?: T;
+  rules?: Rules;
 }
 
 export type Color =

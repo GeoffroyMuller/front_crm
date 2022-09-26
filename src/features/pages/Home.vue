@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <Form @submit="handleSubmit">
     {{ $_.isNil({ a: 1 }) }}
     {{ $_.isNil(undefined) }}
@@ -36,3 +37,7 @@ function handleSubmit(formValues: any) {
   console.error({ formValues });
 }
 </script>
+=======
+  <div>HOME</div>
+</template>
+>>>>>>> 84c100edf5ecd63a5e5d9e4f99a99ede63622259
