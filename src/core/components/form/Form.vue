@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<FormProps>(), {
 const emit = defineEmits(["submit", "inputChange"]);
 
 const inputs = ref<{ [key: string]: _CustomInput }>({});
-const errors = ref({});
+const errors = ref<{ [key: string]: string | boolean | undefined }>({});
 
 function register(props: _CustomInput) {
   inputs.value[props.name] = props;
