@@ -40,7 +40,7 @@ function getById(model: string, id: ID) {
 function add(model: string, body: any) {
   const data = { ...body };
   data.id = _generateID();
-  DB[model][data.id] = body;
+  DB[model][data.id] = data;
 }
 
 function deleteData(model: string, id: ID) {

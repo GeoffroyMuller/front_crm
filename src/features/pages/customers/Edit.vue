@@ -1,14 +1,16 @@
 <template>
-  <pre>
-    {{ customer }}
-  </pre>
   <Card id="edit-customer-page" title="Edit Customer Form" v-if="isPageLoaded">
     <Form
       :defaultValue="customer"
       @submit="handleSubmit"
       @input-change="handleInputChange"
     >
-      <TextField name="firstname" />
+      <TextField name="firstname" label="Prenom" />
+      <TextField name="lastname" label="Nom" />
+      <TextField name="email" label="Email" />
+
+      <Button v-if="isAddAction" type="submit"> Ajouter </Button>
+      <Button v-else type="submit"> Modifier </Button>
     </Form>
   </Card>
 </template>
@@ -21,6 +23,7 @@ import Card from "@/core/components/Card.vue";
 import TextField from "@/core/components/form/TextField.vue";
 import Form from "@/core/components/form/Form.vue";
 import { isNil } from "lodash";
+import Button from "../../../core/components/Button.vue";
 
 const customerStore = useCustomerStore();
 
@@ -44,7 +47,11 @@ onMounted(async () => {
 });
 
 function handleSubmit(data: any) {
-  console.error({ data });
+  if (isAddAction.value) {
+    customerStore.create(data);
+  } else {
+    //customerStore.update(id, data);
+  }
 }
 
 function handleInputChange(handleInputChangeData: any) {

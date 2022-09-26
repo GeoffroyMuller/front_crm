@@ -7,7 +7,7 @@
         alt="logo"
         :style="{ height: '50px', width: '50px' }"
       /> -->
-        <span> LOCMANAGER </span>
+        <span> CRM </span>
       </div>
       <div class="nav-items">
         <div
