@@ -10,7 +10,12 @@
     <label v-if="label">
       {{ label }}
     </label>
-    <input v-bind="$props" ref="internalRef" v-model="internalValue" />
+    <input
+      @blur="validate"
+      v-bind="$props"
+      ref="internalRef"
+      v-model="internalValue"
+    />
     <div v-if="error" class="input-error">
       {{ error }}
     </div>
@@ -18,15 +23,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineEmits, defineProps, withDefaults, watch } from "vue";
+import useValidatable from "../../helpers/vue/composables/validatable";
+import { defineEmits, defineProps, withDefaults, watch } from "vue";
+import type { FormInputProps } from "../types";
 
-interface InputProps {
-  label?: string;
-  modelValue?: string | number;
+interface InputProps extends FormInputProps<string | number> {
   fullWidth?: boolean;
-  readonly?: boolean;
-  name?: string;
-  error?: string;
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
@@ -41,7 +43,7 @@ const emit = defineEmits([
   "change",
 ]);
 
-const internalValue = ref("");
+const { internalValue, validate } = useValidatable({});
 
 watch(
   () => props.modelValue,
@@ -49,14 +51,6 @@ watch(
     if (val != internalValue.value) internalValue.value = val as string;
   },
   { immediate: true }
-);
-
-watch(
-  () => internalValue.value,
-  (val) => {
-    emit("update:modelValue", val);
-    emit("update:error", false);
-  }
 );
 </script>
 

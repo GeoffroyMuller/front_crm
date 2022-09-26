@@ -6,6 +6,7 @@
         ? `button-text button-text-${color}`
         : `button-${color}`
     "
+    :type="type"
     :disabled="disabled || loading"
   >
     <slot />
@@ -28,11 +29,13 @@ interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   variant?: "base" | "text";
+  type?: "button" | "submit";
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   color: "primary",
   variant: "base",
+  type: "button",
 });
 </script>
 
