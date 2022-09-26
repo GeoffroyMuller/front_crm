@@ -7,7 +7,15 @@
 <script lang="ts" setup>
 import { ref, provide, type ComponentInternalInstance, defineEmits } from "vue";
 
-const emit = defineEmits(["submit"]);
+interface FormProps {
+  defaultValue?: any;
+}
+
+const props = withDefaults(defineProps<FormProps>(), {
+  defaultValue: {},
+});
+
+const emit = defineEmits(["submit", "inputChange"]);
 
 const inputs = ref<{ [key: string | number]: ComponentInternalInstance }>({});
 
@@ -17,6 +25,13 @@ function register(input: ComponentInternalInstance) {
 
 function unregister(input: ComponentInternalInstance) {
   delete inputs.value[input.uid];
+}
+
+function inputChange(input: ComponentInternalInstance, value: any) {
+  emit("inputChange", {
+    name: input.props.name,
+    value,
+  });
 }
 
 function validate() {
@@ -51,5 +66,7 @@ function handleSumbit(event: Event) {
 provide("form", {
   register,
   unregister,
+  inputChange,
+  defaultValue: props.defaultValue,
 });
 </script>

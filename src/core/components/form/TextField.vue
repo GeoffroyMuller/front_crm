@@ -29,6 +29,17 @@ import type { FormInputProps } from "../types";
 
 interface InputProps extends FormInputProps<string | number> {
   fullWidth?: boolean;
+
+  /*
+  TODO : this is a duplicate of props in FormInputProps<string | number>
+        need to found why extends do not work proprely
+  */
+  label?: string;
+  modelValue?: string | number;
+  readonly?: boolean;
+  name?: string;
+  error?: string;
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
@@ -44,14 +55,6 @@ const emit = defineEmits([
 ]);
 
 const { internalValue, validate } = useValidatable({});
-
-watch(
-  () => props.modelValue,
-  (val) => {
-    if (val != internalValue.value) internalValue.value = val as string;
-  },
-  { immediate: true }
-);
 </script>
 
 <style lang="scss" scoped>

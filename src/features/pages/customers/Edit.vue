@@ -1,6 +1,15 @@
 <template>
+  <pre>
+    {{ customer }}
+  </pre>
   <Card id="edit-customer-page" title="Edit Customer Form">
-    
+    <Form
+      :defaultValue="customer"
+      @submit="handleSubmit"
+      @input-change="handleInputChange"
+    >
+      <TextField name="firstname" />
+    </Form>
   </Card>
 </template>
 
@@ -9,6 +18,8 @@ import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useCustomerStore } from "@/features/stores/customers";
 import Card from "@/core/components/Card.vue";
+import TextField from "@/core/components/form/TextField.vue";
+import Form from "@/core/components/form/Form.vue";
 
 const customerStore = useCustomerStore();
 
@@ -29,6 +40,10 @@ onMounted(async () => {
 
 function handleSubmit(data: any) {
   console.error({ data });
+}
+
+function handleInputChange(handleInputChangeData: any) {
+  console.error({ handleInputChangeData });
 }
 </script>
 

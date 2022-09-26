@@ -74,7 +74,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
         const response: T = IS_MOCK
           ? mock.add(_getPath(), body)
           : await axios.post(_getPath(), body);
-        return response; 
+        return response;
       },
       async delete(id: ID) {
         // @ts-ignore

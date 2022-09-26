@@ -24,22 +24,46 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
     return true;
   }
 
-  if (!isNil(form) && !isNil(instance)) {
+  if (
+    !isNil(form) &&
+    !isNil(instance) &&
+    (instance?.props.name as unknown as string)?.length
+  ) {
     onMounted(() => {
       form?.register(instance);
+      const defaultValue =
+        form?.defaultValue?.[instance?.props.name as unknown as string];
+      if (!isNil(defaultValue)) {
+        internalValue.value = defaultValue;
+      }
     });
 
     onUnmounted(() => {
       form?.unregister(instance);
     });
+
+    watch(
+      () => internalValue.value,
+      () => {
+        form?.inputChange(instance, internalValue.value);
+      }
+    );
   }
 
   watch(
     () => internalValue.value,
     () => {
       instance?.emit("update:modelValue", internalValue.value);
-      instance?.emit("change", internalValue.value);
     }
+  );
+
+  watch(
+    () => instance?.props.modelValue,
+    (val) => {
+      // @ts-ignore
+      if (val != internalValue.value) internalValue.value = val as string;
+    },
+    { immediate: true }
   );
 
   return {
