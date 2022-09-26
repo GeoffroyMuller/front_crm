@@ -5,12 +5,16 @@
       @submit="handleSubmit"
       @input-change="handleInputChange"
     >
-      <TextField name="firstname" label="Prenom" />
-      <TextField name="lastname" label="Nom" />
-      <TextField name="email" label="Email" />
+      <template v-slot:default="{ hasError }">
+        <TextField name="firstname" label="Prenom" />
+        <TextField name="lastname" label="Nom" />
+        <TextField name="email" label="Email" />
 
-      <Button v-if="isAddAction" type="submit"> Ajouter </Button>
-      <Button v-else type="submit"> Modifier </Button>
+        <Button v-if="isAddAction" type="submit" :disabled="hasError">
+          Ajouter
+        </Button>
+        <Button v-else type="submit" :disabled="hasError"> Modifier </Button>
+      </template>
     </Form>
   </Card>
 </template>

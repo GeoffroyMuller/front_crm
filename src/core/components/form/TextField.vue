@@ -4,7 +4,7 @@
     class="text-field"
     :class="{
       'w-full': fullWidth,
-      error: error,
+      error: internalError,
     }"
   >
     <label v-if="label">
@@ -16,8 +16,8 @@
       ref="internalRef"
       v-model="internalValue"
     />
-    <div v-if="error" class="input-error">
-      {{ error }}
+    <div v-if="internalError" class="input-error">
+      {{ internalError }}
     </div>
   </div>
 </template>
@@ -54,7 +54,10 @@ const emit = defineEmits([
   "change",
 ]);
 
-const { internalValue, validate } = useValidatable({});
+const { internalValue, internalError, validate } = useValidatable({
+  value: props.modelValue,
+  error: props.error,
+});
 </script>
 
 <style lang="scss" scoped>

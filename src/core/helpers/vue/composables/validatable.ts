@@ -11,6 +11,7 @@ import { isNil } from "lodash";
 
 interface ValidatableProps<T> {
   value?: T;
+  error?: boolean | string;
 }
 
 export default function useValidatable<T>(props: ValidatableProps<T>) {
@@ -18,10 +19,15 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
   const form = inject<any>("form");
 
   const internalValue = ref<T | undefined>(props.value);
+  const internalError = ref<string | boolean | undefined>(props.error);
 
   function validate() {
     console.error("--- VALIDATE ---");
-    return true;
+
+    const valid = internalValue.value?.length ? true : "Un probleme";
+    internalError.value =
+      valid && typeof valid === "boolean" ? undefined : valid;
+    return valid;
   }
 
   if (
@@ -30,7 +36,12 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
     (instance?.props.name as unknown as string)?.length
   ) {
     onMounted(() => {
-      form?.register(instance);
+      form?.register({
+        name: instance?.props.name,
+        getValue: () => internalValue.value,
+        getError: () => internalError.value,
+        validate,
+      });
       const defaultValue =
         form?.defaultValue?.[instance?.props.name as unknown as string];
       if (!isNil(defaultValue)) {
@@ -39,13 +50,19 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
     });
 
     onUnmounted(() => {
-      form?.unregister(instance);
+      form?.unregister(instance?.props.name);
     });
 
     watch(
       () => internalValue.value,
       () => {
-        form?.inputChange(instance, internalValue.value);
+        form?.inputChange(instance?.props.name);
+      }
+    );
+    watch(
+      () => internalError.value,
+      () => {
+        form?.inputErrorChange(instance?.props.name);
       }
     );
   }
@@ -69,5 +86,6 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
   return {
     validate,
     internalValue,
+    internalError,
   };
 }
