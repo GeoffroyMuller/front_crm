@@ -12,6 +12,8 @@ import { createWebHistory, type RouteRecordRaw } from "vue-router";
 
 import App from "./components/App.vue";
 
+import "./plugins//typescript";
+
 interface SetupOptions {
   routes: Readonly<RouteRecordRaw[]>;
 }
