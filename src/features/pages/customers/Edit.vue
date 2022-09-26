@@ -1,10 +1,6 @@
 <template>
   <Card id="edit-customer-page" title="Edit Customer Form" v-if="isPageLoaded">
-    <Form
-      :defaultValue="customer"
-      @submit="handleSubmit"
-      @input-change="handleInputChange"
-    >
+    <Form :defaultValue="customer" @submit="handleSubmit">
       <template v-slot:default="{ hasError }">
         <TextField name="firstname" label="Prenom" />
         <TextField name="lastname" label="Nom" />
@@ -56,10 +52,6 @@ function handleSubmit(data: any) {
   } else {
     //customerStore.update(id, data);
   }
-}
-
-function handleInputChange(handleInputChangeData: any) {
-  console.error({ handleInputChangeData });
 }
 </script>
 

@@ -23,7 +23,7 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
 
   function validate() {
     console.error("--- VALIDATE ---");
-
+    // FAKE
     const valid = internalValue.value?.length ? true : "Un probleme";
     internalError.value =
       valid && typeof valid === "boolean" ? undefined : valid;
