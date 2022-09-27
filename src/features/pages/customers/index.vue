@@ -11,7 +11,7 @@
       >
         {{ customer }}
 
-        <Button @click.stop="deleteById(customer.id)" color="danger"
+        <Button @click.stop="deleteById(customer)" color="danger"
           >SUPPRIMER</Button
         >
       </Card>
@@ -29,6 +29,7 @@ import Card from "@/core/components/Card.vue";
 import Button from "@/core/components/Button.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import type { ID } from "@/features/types/utils";
+import type Customer from "@/features/types/customer";
 
 const customersStore = useCustomerStore();
 const ui = useUI();
@@ -36,14 +37,16 @@ const ui = useUI();
 onMounted(() => {
   customersStore.fetchAll();
 });
-const itemsInTable = [
-  { firstName: "Geoffroy", lastName: "Muller", age: 22 },
-  { firstName: "Etienne", lastName: "Robert", age: 24 },
-];
 
-async function deleteById(id: ID) {
+async function deleteById(customer: Customer) {
   if (await ui.confirm("Voulez vous vraiment supprimer cet utilisateur ?")) {
-    customersStore.delete(id);
+    customersStore.delete(customer.id);
+    ui.toast({
+      type: "success",
+      message: `Utilisateur ${customer.firstname}${
+        customer.lastname ? " " + customer.lastname : ""
+      } supprimé`,
+    });
     customersStore.fetchAll();
   }
 }

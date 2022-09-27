@@ -4,8 +4,6 @@ export default function useUI() {
   const toast = inject<any>("notifications");
   const confirm = inject<any>("confirmation");
 
-  console.error(confirm);
-
   return {
     toast,
     confirm,

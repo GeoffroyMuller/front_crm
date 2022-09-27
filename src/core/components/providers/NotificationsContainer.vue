@@ -1,8 +1,11 @@
 <template>
   <div class="notifications-container">
-    <pre v-for="notification of notifications" :key="notification.id">
-        {{ notification }}
-    </pre>
+    <Toast
+      v-for="notification of notifications"
+      :key="notification.id"
+      v-bind="notification"
+      @close="deleteNotification(notification.id as string)"
+    />
   </div>
   <slot />
 </template>
@@ -11,13 +14,33 @@
 import { ref, provide } from "vue";
 import type { Notification } from "../types";
 import { uniqueId } from "lodash";
+import Toast from "../Toast.vue";
 
 const notifications = ref<Notification[]>([]);
 
-function createNotification(notification: Notification) {
-  notification.duration = notification.duration || 5000;
-  notification.id = notification.id || uniqueId();
+function createNotification(n: Notification | string) {
+  const defaultNotification: Notification = {
+    type: "primary",
+    title: "",
+    autoClose: true,
+    duration: 2000,
+    id: uniqueId(),
+    message: "",
+  };
+
+  const notification: Notification =
+    typeof n === "string"
+      ? ({ ...defaultNotification, message: n } as Notification)
+      : { ...defaultNotification, ...n };
+
   notifications.value.push(notification);
+
+  if (notification.autoClose) {
+    setTimeout(
+      () => deleteNotification(notification.id as string),
+      notification.duration
+    );
+  }
 }
 
 function deleteNotification(id: string | number) {
@@ -31,11 +54,17 @@ provide("notifications", createNotification);
 
 <style lang="scss">
 .notifications-container {
+  position: fixed;
+  z-index: 50;
   position: absolute;
   bottom: 0;
   margin: auto;
   left: 0;
   right: 0;
-  margin: spacing(1);
+  min-width: 400px;
+  width: max-content;
+  > * {
+    margin: spacing(2);
+  }
 }
 </style>

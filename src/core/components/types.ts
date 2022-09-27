@@ -12,7 +12,7 @@ export interface FormInputProps<T> {
 
 export interface Notification {
   id?: string;
-  type: "success" | "error" | "warning" | "info";
+  type: Color;
   message: string;
   title: string;
   duration?: number;
@@ -20,7 +20,7 @@ export interface Notification {
 }
 
 export interface Confirmation {
-  type?: "success" | "error" | "warning" | "info";
+  type?: Notification["type"];
   message: string;
   title: string;
 }
@@ -29,7 +29,7 @@ export type Color =
   | "primary"
   | "danger"
   | "warning"
-  | "error"
+  | "success"
   | "white"
   | "black";
 

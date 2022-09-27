@@ -6,6 +6,7 @@ import {
   uniUser,
   uniWeight,
   uniBell,
+  uniMultiply,
 } from "vue-unicons/dist/icons";
 
 Unicon.add([
@@ -15,6 +16,7 @@ Unicon.add([
   uniUser,
   uniWeight,
   uniBell,
+  uniMultiply,
 ]);
 
 export default Unicon;

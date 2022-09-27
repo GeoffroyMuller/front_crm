@@ -1,5 +1,5 @@
 <template>
-  <Modal v-model:open="confirmOpen">
+  <Modal :open="confirmOpen" @update:open="cancelConfirm">
     <div v-if="confirmationData?.title">
       {{ confirmationData?.title }}
     </div>

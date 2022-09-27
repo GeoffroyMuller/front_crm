@@ -28,6 +28,7 @@ const emit = defineEmits(["update:open"]);
 </script>
 
 <style lang="scss" scoped>
+$zIndexModal: 55;
 .container {
   position: absolute;
   background-color: black;
@@ -36,6 +37,7 @@ const emit = defineEmits(["update:open"]);
   height: 100vh;
   top: 0;
   left: 0;
+  z-index: $zIndexModal;
 }
 .modal {
   position: absolute;
@@ -45,7 +47,7 @@ const emit = defineEmits(["update:open"]);
   background-color: white;
   border-radius: map-deep-get($rounded, "md");
   opacity: 1;
-  z-index: 5;
+  z-index: $zIndexModal;
   padding: spacing(1.5) spacing(3);
   & .no-padding {
     padding: 0;
