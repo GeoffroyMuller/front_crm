@@ -115,6 +115,7 @@ provide("layout-page", {
 
 <style lang="scss" scoped>
 $navWidth: 240px;
+$menuHeight: spacing(10);
 
 .loading {
   position: absolute;
@@ -132,10 +133,12 @@ $navWidth: 240px;
 }
 .page-container {
   position: absolute;
-  top: spacing(10);
+  top: 0;
   left: $navWidth;
   width: calc(100% - $navWidth);
   padding: spacing(1) spacing(2);
+  padding-top: $menuHeight;
+  height: 100%;
 }
 .actions {
   display: flex;
@@ -151,7 +154,7 @@ $navWidth: 240px;
   flex-grow: 1;
   padding-left: spacing(4);
   padding-right: spacing(4);
-  height: spacing(10);
+  height: $menuHeight;
   margin-left: $navWidth;
 
   .buttons {
