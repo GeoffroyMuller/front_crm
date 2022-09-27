@@ -57,6 +57,7 @@ async function confirm(c: Confirmation | string) {
           resolve(confirmationResponse.value);
           unwatchResponse();
           confirmationResponse.value = null;
+          confirmation.value = null;
         }
       }
     );
@@ -64,12 +65,10 @@ async function confirm(c: Confirmation | string) {
 }
 function confirmConfirm() {
   confirmationResponse.value = true;
-  confirmation.value = null;
 }
 
 function cancelConfirm() {
   confirmationResponse.value = false;
-  confirmation.value = null;
 }
 
 provide("confirmation", confirm);

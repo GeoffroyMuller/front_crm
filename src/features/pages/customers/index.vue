@@ -43,9 +43,9 @@ async function deleteById(customer: Customer) {
     customersStore.delete(customer.id);
     ui.toast({
       type: "success",
-      message: `Utilisateur ${customer.firstname}${
+      message: `Utilisateur <b>"${customer.firstname}${
         customer.lastname ? " " + customer.lastname : ""
-      } supprimé`,
+      }"</b> supprimé`,
     });
     customersStore.fetchAll();
   }
