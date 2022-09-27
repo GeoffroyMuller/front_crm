@@ -58,8 +58,6 @@ provide("notifications", createNotification);
   z-index: 50;
   position: absolute;
   bottom: 0;
-  margin: auto;
-  left: 0;
   right: 0;
   min-width: 400px;
   width: max-content;

@@ -1,13 +1,13 @@
 <template>
   <Card :title="title || ''" class="toast" :class="`toast-${type}`">
     <div class="toast-content">
-      <span v-html="message" />
       <Icon
         @click="$emit('close')"
         name="multiply"
         :color="type"
         class="icon"
       />
+      <span v-html="message" />
     </div>
   </Card>
 </template>
@@ -33,6 +33,7 @@ const props = withDefaults(defineProps<ToastProps>(), {});
   }
   .icon {
     cursor: pointer;
+    margin-right: spacing(2);
   }
 }
 
