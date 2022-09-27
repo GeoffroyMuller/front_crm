@@ -14,16 +14,11 @@
           v-if="isAddAction"
           type="submit"
           :loading="loading"
-          :disabled="loading || hasError"
+          :disabled="hasError"
         >
           Ajouter
         </Button>
-        <Button
-          v-else
-          type="submit"
-          :loading="loading"
-          :disabled="loading || hasError"
-        >
+        <Button v-else type="submit" :loading="loading" :disabled="hasError">
           Modifier
         </Button>
       </template>
