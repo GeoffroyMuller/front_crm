@@ -54,7 +54,7 @@ function handleSubmit(data: any) {
   if (isAddAction.value) {
     customerStore.create(data);
   } else {
-    //customerStore.update(id, data);
+    customerStore.update(route.params.id, data);
   }
 }
 </script>

@@ -1,5 +1,6 @@
 import type { ID } from "@/features/types/utils";
 import mock from "@/mock.json";
+import { merge } from "lodash";
 
 interface IDB {
   [key: string]: any;
@@ -37,10 +38,16 @@ function getById(model: string, id: ID) {
   return DB[model][id];
 }
 
+function update(model: string, id: ID, body: any) {
+  DB[model][id] = merge(DB[model][id], body);
+  return DB[model][id];
+}
+
 function add(model: string, body: any) {
   const data = { ...body };
   data.id = _generateID();
   DB[model][data.id] = data;
+  return data;
 }
 
 function deleteData(model: string, id: ID) {
@@ -52,6 +59,7 @@ export default {
   getById,
   add,
   deleteData,
+  update,
   mock,
   DB,
 };
