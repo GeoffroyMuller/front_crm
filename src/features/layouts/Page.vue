@@ -61,7 +61,10 @@
       </div>
     </div>
     <div class="page-container">
-      <slot />
+      <Spinner v-show="loading" class="loading" />
+      <div v-show="!loading">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
@@ -73,8 +76,10 @@ import Button from "@/core/components/Button.vue";
 import { useUserStore } from "@/features/stores/user";
 import { useRouter } from "vue-router";
 import Modal from "@/core/components/Modal.vue";
+import Spinner from "../../core/components/Spinner.vue";
 
 const title = ref("");
+const loading = ref<boolean>(false);
 
 const modalDisconnectOpen = ref(false);
 
@@ -102,11 +107,24 @@ provide("layout-page", {
     title.value = t;
   },
   getTitle: () => title.value,
+  setLoading: (l: boolean) => {
+    loading.value = l;
+  },
 });
 </script>
 
 <style lang="scss" scoped>
 $navWidth: 240px;
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: 50%;
+  bottom: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 
 #container {
   display: flex;

@@ -1,7 +1,7 @@
 import { inject, onMounted, onUnmounted, watch, type ComputedRef } from "vue";
 
 export default function usePage(title: string | ComputedRef) {
-  const { setTitle, getTitle } = inject<any>("layout-page");
+  const { setTitle, getTitle, setLoading } = inject<any>("layout-page");
 
   if (typeof title === "string") {
     onMounted(() => {
@@ -22,17 +22,15 @@ export default function usePage(title: string | ComputedRef) {
       }
     );
     onUnmounted(() => {
-      console.error({
-        "title.value": title.value,
-        "getTitle()": getTitle(),
-      });
       unwatchTitle();
       setTitle("");
+      setLoading(false);
     });
   }
 
   return {
     setTitle,
     getTitle,
+    setLoading,
   };
 }

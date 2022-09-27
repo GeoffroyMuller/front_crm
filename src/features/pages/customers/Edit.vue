@@ -10,17 +10,29 @@
         <TextField name="lastname" label="Nom" :rules="[$rules.required()]" />
         <TextField name="email" label="Email" :rules="[$rules.required()]" />
 
-        <Button v-if="isAddAction" type="submit" :disabled="hasError">
+        <Button
+          v-if="isAddAction"
+          type="submit"
+          :loading="loading"
+          :disabled="loading || hasError"
+        >
           Ajouter
         </Button>
-        <Button v-else type="submit" :disabled="hasError"> Modifier </Button>
+        <Button
+          v-else
+          type="submit"
+          :loading="loading"
+          :disabled="loading || hasError"
+        >
+          Modifier
+        </Button>
       </template>
     </Form>
   </Card>
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, onMounted } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useCustomerStore } from "@/features/stores/customers";
 import Card from "@/core/components/Card.vue";
@@ -29,9 +41,12 @@ import Form from "@/core/components/form/Form.vue";
 import { isNil } from "lodash";
 import Button from "../../../core/components/Button.vue";
 import usePage from "@/features/composables/page";
+import { useRouter } from "vue-router";
+import useUI from "@/core/helpers/vue/composables/ui";
 
 const customerStore = useCustomerStore();
 
+const router = useRouter();
 const route = useRoute();
 
 const isAddAction = computed(() => !route.params.id);
@@ -40,6 +55,8 @@ const isPageLoaded = computed(
   () => isAddAction.value || !isNil(customer.value)
 );
 
+const loading = ref(false);
+
 const customer = computed(() => {
   if (isAddAction.value) {
     return null;
@@ -47,7 +64,7 @@ const customer = computed(() => {
   return customerStore.getById(route.params.id as string);
 });
 
-usePage(
+const { setLoading: setPageLoading } = usePage(
   computed(() => {
     if (!isAddAction.value) {
       return !isNil(customer.value?.id)
@@ -61,16 +78,35 @@ usePage(
   })
 );
 
+const { toast, confirm } = useUI();
+
 onMounted(async () => {
+  if (!isAddAction.value && isNil(customer.value?.id)) {
+    setPageLoading(true);
+  }
   await customerStore.fetchById(route.params.id);
+  setPageLoading(false);
 });
 
-function handleSubmit(data: any) {
+async function handleSubmit(data: any) {
+  loading.value = true;
   if (isAddAction.value) {
-    customerStore.create(data);
+    await customerStore.create(data);
+    toast({
+      type: "success",
+      message: `Utilisateur créé avec succes`,
+    });
   } else {
-    customerStore.update(route.params.id, data);
+    await customerStore.update(route.params.id, data);
+    toast({
+      type: "success",
+      message: `Utilisateur <b>${customer.value.firstname}${
+        customer.value.lastname ? " " + customer.value.lastname : ""
+      }</b> modifié avec succes`,
+    });
   }
+  loading.value = false;
+  router.push("/customers");
 }
 </script>
 

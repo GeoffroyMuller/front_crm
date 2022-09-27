@@ -30,17 +30,22 @@ import Button from "@/core/components/Button.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import type { ID } from "@/features/types/utils";
 import type Customer from "@/features/types/customer";
+import usePage from "@/features/composables/page";
 
 const customersStore = useCustomerStore();
 const ui = useUI();
 
-onMounted(() => {
-  customersStore.fetchAll();
+const { setLoading } = usePage("Customers");
+
+onMounted(async () => {
+  !customers?.value?.length && setLoading(true);
+  await customersStore.fetchAll();
+  setLoading(false);
 });
 
 async function deleteById(customer: Customer) {
   if (await ui.confirm("Voulez vous vraiment supprimer cet utilisateur ?")) {
-    customersStore.delete(customer.id);
+    await customersStore.delete(customer.id);
     ui.toast({
       type: "success",
       message: `Utilisateur <b>"${customer.firstname}${
