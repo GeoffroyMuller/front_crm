@@ -22,14 +22,22 @@
       </div>
 
       <div class="footer">
-        <Button variant="text" color="primary" @click="modalDisconnectOpen = true">
+        <Button
+          variant="text"
+          color="primary"
+          @click="modalDisconnectOpen = true"
+        >
           Disconnect
         </Button>
         <Modal v-model:open="modalDisconnectOpen">
           <div>Are you sure your want to disconnect ?</div>
 
           <div class="actions">
-            <Button variant="text" color="primary" @click="modalDisconnectOpen = false">
+            <Button
+              variant="text"
+              color="primary"
+              @click="modalDisconnectOpen = false"
+            >
               Cancel
             </Button>
             <Button variant="text" color="primary" @click="disconnect">
@@ -40,12 +48,17 @@
       </div>
     </div>
     <div class="menu">
-      <Button variant="text" class="auth">
-        {{ auth.firstname }} {{ auth.lastname }}
-      </Button>
-      <Button variant="text">
-        <Icon name="bell" />
-      </Button>
+      <div class="title">
+        {{ title }}
+      </div>
+      <div class="buttons">
+        <Button variant="text" class="auth">
+          {{ auth.firstname }} {{ auth.lastname }}
+        </Button>
+        <Button variant="text">
+          <Icon name="bell" />
+        </Button>
+      </div>
     </div>
     <div class="page-container">
       <slot />
@@ -54,12 +67,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from "vue";
+import { ref, computed, provide } from "vue";
 import Icon from "@/core/components/Icon.vue";
 import Button from "@/core/components/Button.vue";
 import { useUserStore } from "@/features/stores/user";
 import { useRouter } from "vue-router";
 import Modal from "@/core/components/Modal.vue";
+
+const title = ref("");
 
 const modalDisconnectOpen = ref(false);
 
@@ -81,6 +96,13 @@ function disconnect() {
   userStore.disconnect();
   router.replace("/login");
 }
+
+provide("layout-page", {
+  setTitle: (t: string) => {
+    title.value = t;
+  },
+  getTitle: () => title.value,
+});
 </script>
 
 <style lang="scss" scoped>
@@ -106,17 +128,23 @@ $navWidth: 240px;
 }
 .menu {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   flex-grow: 1;
   padding-left: spacing(4);
   padding-right: spacing(4);
   height: spacing(10);
+  margin-left: $navWidth;
 
-  .auth {
-    font-weight: 600;
-    color: color("primary", 500);
-    margin-right: spacing(0.25);
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    .auth {
+      font-weight: 600;
+      color: color("primary", 500);
+      margin-right: spacing(0.25);
+    }
   }
 }
 .nav {

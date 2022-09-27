@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted } from "vue";
+import { computed, inject, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useCustomerStore } from "@/features/stores/customers";
 import Card from "@/core/components/Card.vue";
@@ -28,6 +28,7 @@ import TextField from "@/core/components/form/TextField.vue";
 import Form from "@/core/components/form/Form.vue";
 import { isNil } from "lodash";
 import Button from "../../../core/components/Button.vue";
+import usePage from "@/features/composables/page";
 
 const customerStore = useCustomerStore();
 
@@ -46,8 +47,22 @@ const customer = computed(() => {
   return customerStore.getById(route.params.id as string);
 });
 
+usePage(
+  computed(() => {
+    if (!isAddAction.value) {
+      return !isNil(customer.value?.id)
+        ? `${customer.value.firstname}${
+            customer.value.lastname ? " " + customer.value.lastname : ""
+          }`
+        : "";
+    } else {
+      return "New user";
+    }
+  })
+);
+
 onMounted(async () => {
-  customerStore.fetchById(route.params.id);
+  await customerStore.fetchById(route.params.id);
 });
 
 function handleSubmit(data: any) {

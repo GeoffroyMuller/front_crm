@@ -1,8 +1,9 @@
 import { defineStore } from "pinia";
 import mock from "../../mock";
 import axios from "../../../plugins/axios";
-import { IS_MOCK } from "@/const";
+import { IS_MOCK, MOCK_DURATION } from "@/const";
 import type { ID } from "@/features/types/utils";
+import { sleep } from "../../utils";
 
 export interface makeAPIStoreProps {
   id: string;
@@ -46,6 +47,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
     },
     actions: {
       async fetchById(id: ID): Promise<T> {
+        IS_MOCK && (await sleep(MOCK_DURATION));
         // @ts-ignore
         const response: T = IS_MOCK
           ? mock.getById(_getPath(), id)
@@ -54,6 +56,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
         return response;
       },
       async fetchResourceById(id: ID, resource: string): Promise<any> {
+        IS_MOCK && (await sleep(MOCK_DURATION));
         // @ts-ignore
         const response: any = IS_MOCK
           ? mock.getAll(_getPath(id, resource))
@@ -62,6 +65,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
         return response;
       },
       async fetchAll(): Promise<T> {
+        IS_MOCK && (await sleep(MOCK_DURATION));
         // @ts-ignore
         const response: T = IS_MOCK
           ? mock.getAll(_getPath())
@@ -70,6 +74,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
         return response;
       },
       async create(body: T) {
+        IS_MOCK && (await sleep(MOCK_DURATION));
         // @ts-ignore
         const response: T = IS_MOCK
           ? mock.add(_getPath(), body)
@@ -77,6 +82,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
         return response;
       },
       async update(id: ID, body: T) {
+        IS_MOCK && (await sleep(MOCK_DURATION));
         // @ts-ignore
         const response: T = IS_MOCK
           ? mock.update(_getPath(), id, body)
@@ -84,6 +90,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
         return response;
       },
       async delete(id: ID) {
+        IS_MOCK && (await sleep(MOCK_DURATION));
         // @ts-ignore
         const response: T = IS_MOCK
           ? mock.deleteData(_getPath(), id)
