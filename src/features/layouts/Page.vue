@@ -47,7 +47,7 @@
         </Modal>
       </div>
     </div>
-    <div class="menu">
+    <div class="page-menu">
       <div class="title">
         {{ title }}
       </div>
@@ -55,9 +55,12 @@
         <Button variant="text" class="auth">
           {{ auth.firstname }} {{ auth.lastname }}
         </Button>
-        <Button variant="text">
-          <Icon name="bell" />
-        </Button>
+        <Menu>
+          <template #activator>
+            <Icon name="bell" />
+          </template>
+          <template #default> dqsjbsqdnsqdbhs </template>
+        </Menu>
       </div>
     </div>
     <div class="page-container">
@@ -76,7 +79,8 @@ import Button from "@/core/components/Button.vue";
 import { useUserStore } from "@/features/stores/user";
 import { useRouter } from "vue-router";
 import Modal from "@/core/components/Modal.vue";
-import Spinner from "../../core/components/Spinner.vue";
+import Spinner from "@/core/components/Spinner.vue";
+import Menu from "@/core/components/Menu.vue";
 
 const title = ref("");
 const loading = ref<boolean>(false);
@@ -147,7 +151,7 @@ $menuHeight: spacing(10);
   align-items: center;
   margin-top: spacing(2);
 }
-.menu {
+.page-menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
