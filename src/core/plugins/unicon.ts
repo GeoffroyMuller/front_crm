@@ -7,6 +7,8 @@ import {
   uniWeight,
   uniBell,
   uniMultiply,
+  uniCheckCircle,
+  uniExclamationCircle,
 } from "vue-unicons/dist/icons";
 
 Unicon.add([
@@ -17,6 +19,8 @@ Unicon.add([
   uniWeight,
   uniBell,
   uniMultiply,
+  uniCheckCircle,
+  uniExclamationCircle,
 ]);
 
 export default Unicon;

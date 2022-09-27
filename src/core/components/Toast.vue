@@ -1,17 +1,22 @@
 <template>
   <Card :title="title || ''" class="toast" :class="`toast-${type}`">
     <div class="toast-content">
+      <div class="message-container">
+        <Icon :name="icon" :color="type" />
+        <span v-html="message" />
+      </div>
+
       <Icon
         @click="$emit('close')"
         name="multiply"
         :color="type"
         class="icon"
       />
-      <span v-html="message" />
     </div>
   </Card>
 </template>
 <script setup lang="ts">
+import { computed } from "vue";
 import Card from "./Card.vue";
 import Icon from "./Icon.vue";
 import type { Notification } from "./types";
@@ -20,6 +25,17 @@ interface ToastProps {
   message: Notification["message"];
   title: Notification["title"];
 }
+
+const icon = computed(() => {
+  switch (props.type) {
+    case "success":
+      return "check-circle";
+    case "danger":
+      return "exclamation-circle";
+    default:
+      return "exclamation-circle";
+  }
+});
 
 const props = withDefaults(defineProps<ToastProps>(), {});
 </script>
@@ -31,16 +47,21 @@ const props = withDefaults(defineProps<ToastProps>(), {});
     justify-content: space-between;
     align-items: center;
   }
+  .message-container {
+    display: flex;
+    gap: spacing(1);
+    align-items: center;
+  }
   .icon {
     cursor: pointer;
-    margin-right: spacing(2);
+    margin-left: spacing(2);
   }
 }
 
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .toast-#{$key} {
-      background-color: map-deep-get($value, 50);
+      background-color: white;
       color: map-deep-get($value, 500);
       border: 0.1px solid map-deep-get($value, 400);
     }

@@ -28,7 +28,6 @@ import { computed, onMounted } from "vue";
 import Card from "@/core/components/Card.vue";
 import Button from "@/core/components/Button.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
-import type { ID } from "@/features/types/utils";
 import type Customer from "@/features/types/customer";
 import usePage from "@/features/composables/page";
 
