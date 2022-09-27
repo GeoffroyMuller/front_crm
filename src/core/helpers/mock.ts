@@ -1,6 +1,6 @@
 import type { ID } from "@/features/types/utils";
 import mock from "@/mock.json";
-import { merge } from "lodash";
+import { merge, uniqueId } from "lodash";
 
 interface IDB {
   [key: string]: any;
@@ -27,7 +27,7 @@ function initDB(): IDB {
 const DB = initDB();
 
 function _generateID() {
-  return Date.now();
+  return Date.now() + uniqueId();
 }
 
 function getAll(model: string) {

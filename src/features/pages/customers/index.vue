@@ -27,8 +27,11 @@ import { useCustomerStore } from "@/features/stores/customers.js";
 import { computed, onMounted } from "vue";
 import Card from "@/core/components/Card.vue";
 import Button from "@/core/components/Button.vue";
+import useUI from "@/core/helpers/vue/composables/ui";
+import type { ID } from "@/features/types/utils";
 
 const customersStore = useCustomerStore();
+const ui = useUI();
 
 onMounted(() => {
   customersStore.fetchAll();
@@ -38,9 +41,11 @@ const itemsInTable = [
   { firstName: "Etienne", lastName: "Robert", age: 24 },
 ];
 
-function deleteById(id) {
-  customersStore.delete(id);
-  customersStore.fetchAll();
+async function deleteById(id: ID) {
+  if (await ui.confirm("Voulez vous vraiment supprimer cet utilisateur ?")) {
+    customersStore.delete(id);
+    customersStore.fetchAll();
+  }
 }
 
 const customers = computed(() => customersStore.getList);
