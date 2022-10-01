@@ -1,25 +1,25 @@
 <template>
   <!-- <div class="table">
-    <div v-for="column in columnsInternal" :key="column.key">
-      {{ column.title }}
+    <div v-for="column in internalColumns" :key="column.key">
+      {{ column.text }}
     </div>
     <div v-for="(item, index) in items" :key="index">
       <slot :name="['item', item].join('-')"></slot>
       {{ item }}
     </div>
-    <slot name="title"></slot>
+    <slot name="text"></slot>
     <button @click="getColumnsByItems">TEST</button>
   </div> -->
   <table>
     <thead>
       <tr>
-        <th v-for="column in columnsInternal" :key="column.key">
-          {{ column.title }}
+        <th v-for="column in internalColumns" :key="column.key">
+          {{ column.text }}
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item, index) in items" :key="index">
+      <tr v-for="(item, index) in itemsDisplayed" :key="index">
         <td
           v-for="(itemKey, index) in Object.keys(item)"
           :key="itemKey + index"
@@ -34,37 +34,47 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults, defineProps, ref } from "vue";
+import { withDefaults, defineProps, computed } from "vue";
 
-type T = any;
+type Item = any;
 
 interface Column {
-  title: string;
-  key: string;
+  text: string;
+  key: keyof Item;
 }
 
-interface TableProps<T> {
+interface TableProps<Item> {
   columns: Array<Column> | null;
-  items: Array<T>;
-  itemsPerPage: number;
+  items: Array<Item>;
 }
 
-const props = withDefaults(defineProps<TableProps<T>>(), {
+const props = withDefaults(defineProps<TableProps<Item>>(), {
   columns: null,
   items: Array,
-  itemsPerPage: 5,
 });
+
 const getColumnsByItems = () => {
   const columnsKey: string[] = [];
   props.items.forEach((item) => {
     columnsKey.push(...Object.keys(item));
   });
   const columnsRes = Array.from(new Set(columnsKey)).map((colKey) => {
-    return { key: colKey, title: colKey } as Column;
+    return { key: colKey, text: colKey } as Column;
   });
   return columnsRes;
 };
-const columnsInternal = props.columns || getColumnsByItems();
+
+const internalColumns = props.columns || getColumnsByItems();
+
+const itemsDisplayed = computed(() => {
+  return props.items.map((item) => {
+    const itemRes = {} as Item;
+    for (const column of internalColumns) {
+      itemRes[column.key] = item[column.key] || "";
+    }
+    return itemRes;
+  });
+});
 </script>
 
 <style lang="scss" scoped>
