@@ -15,16 +15,17 @@
   <Table
     :columns="[
       {
-        text: '',
+        title: 'sss',
+        key: 'status',
+        data: (item) => item.name,
+      },
+      {
+        title: 'Name',
         key: 'name',
       },
       {
-        text: 'Ages',
-        key: 'age',
-      },
-      {
-        text: '',
-        key: 'status',
+        title: 'Action',
+        key: 'action',
       },
     ]"
     :items="[
@@ -32,7 +33,11 @@
       { name: 'etienne', age: 24 },
       { name: 'pierre', age: 32, status: 'nouille' },
     ]"
-  ></Table>
+  >
+    <template #action="{ item, column }">
+      <pre>{{ { item, column } }}</pre>
+    </template>
+  </Table>
 </template>
 
 <script setup lang="ts">
