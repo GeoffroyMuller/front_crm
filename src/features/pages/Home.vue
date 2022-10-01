@@ -13,6 +13,20 @@
     <Button type="submit"> Enregistrer </Button>
   </Form>
   <Table
+    :columns="[
+      {
+        text: '',
+        key: 'name',
+      },
+      {
+        text: 'Ages',
+        key: 'age',
+      },
+      {
+        text: '',
+        key: 'status',
+      },
+    ]"
     :items="[
       { name: 'geoff', age: 23 },
       { name: 'etienne', age: 24 },
