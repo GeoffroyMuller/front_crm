@@ -24,6 +24,7 @@
           key: 'action',
         },
       ]"
+      styleItem="padding: 8px 16px"
       :items="customers"
       @row-click="(customer) => $router.push(`/customers/${customer.id}`)"
     >
