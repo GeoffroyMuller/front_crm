@@ -50,8 +50,10 @@ const { internalValue, internalError, validate } = useValidatable({
   $dotSize: spacing(2);
   $dotMargin: spacing(0.2);
   $height: spacing(2.5);
+  width: fit-content;
   @include grid(1, 0, 1);
   overflow: hidden;
+
   cursor: pointer;
   label {
     cursor: pointer;

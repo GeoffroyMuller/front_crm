@@ -155,7 +155,7 @@ async function handleSubmit(data: any) {
     width: 100%;
     @include flex(col, center, flex-start, 1.5);
 
-    *:not(button) {
+    *:not(button):not(.switch-container) {
       width: 100%;
     }
   }
