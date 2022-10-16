@@ -61,8 +61,7 @@ provide("notifications", createNotification);
   position: absolute;
   bottom: 0;
   right: 0;
-  min-width: 400px;
-  width: max-content;
+  width: 400px;
   > * {
     margin: spacing(2);
   }
