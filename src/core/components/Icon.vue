@@ -1,63 +1,28 @@
 <template>
   <span
-    class="icon"
-    :class="`icon-${dark ? 'dark-' : light ? 'light-' : ''}${color}`"
+    :class="{
+      'material-symbols-outlined': outlined,
+      'material-symbols-sharp': !outlined,
+    }"
   >
-    <unicon v-bind="$props" />
+    {{ name }}
   </span>
 </template>
 
 <script lang="ts" setup>
 import { withDefaults, defineProps } from "vue";
-import type { Color } from "./types";
+import type { Color, IconName } from "./types";
 
 interface IconProps {
-  name: string;
-  fill?: string;
+  name: IconName;
   color?: Color;
-  dark?: boolean;
-  light?: boolean;
+  outlined?: boolean;
 }
 
 const props = withDefaults(defineProps<IconProps>(), {
   color: "black",
+  outlined: true,
 });
 </script>
 
-<style lang="scss">
-@each $key, $value in $colors {
-  @if type-of($value) == "map" {
-    .icon-#{$key} {
-      svg {
-        fill: map-deep-get($value, 500);
-      }
-    }
-  } @else {
-    .icon-#{$key} {
-      svg {
-        fill: $value;
-      }
-    }
-  }
-}
-
-@each $key, $value in $colors {
-  @if type-of($value) == "map" {
-    .icon-light-#{$key} {
-      svg {
-        fill: map-deep-get($value, 200);
-      }
-    }
-  }
-}
-
-@each $key, $value in $colors {
-  @if type-of($value) == "map" {
-    .icon-dark-#{$key} {
-      svg {
-        fill: map-deep-get($value, 700);
-      }
-    }
-  }
-}
-</style>
+<style lang="scss"></style>

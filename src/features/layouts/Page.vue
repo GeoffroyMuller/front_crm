@@ -57,7 +57,7 @@
         </Button>
         <Menu>
           <template #activator>
-            <Icon name="bell" />
+            <Icon name="notifications" />
           </template>
           <template #default> dqsjbsqdnsqdbhs </template>
         </Menu>
@@ -97,7 +97,7 @@ const router = useRouter();
 
 const menu = ref([
   { path: "/", title: "Home", icon: "home" },
-  { path: "/customers", title: "Clients", icon: "user" },
+  { path: "/customers", title: "Clients", icon: "person" },
   { path: "/", title: "Equipments", icon: "weight" },
 ]);
 
@@ -160,6 +160,7 @@ $menuHeight: spacing(10);
   padding-right: spacing(4);
   height: $menuHeight;
   margin-left: $navWidth;
+  z-index: 2;
 
   .buttons {
     display: flex;

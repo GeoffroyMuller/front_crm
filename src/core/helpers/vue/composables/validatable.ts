@@ -92,7 +92,7 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
     () => instance?.props.modelValue,
     (val) => {
       // @ts-ignore
-      if (val != internalValue.value) internalValue.value = val as string;
+      if (val != internalValue.value) internalValue.value = val;
     },
     { immediate: true }
   );

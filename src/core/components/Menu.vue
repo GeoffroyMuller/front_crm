@@ -4,10 +4,14 @@
     class="menu"
     @click.stop
   >
-    <div class="activator" @click="open = true">
+    <div class="activator" @click="open = !open">
       <slot name="activator" />
     </div>
-    <Card class="content">
+    <Card
+      class="content"
+      :style="{ display: open ? 'block' : 'none' }"
+      @click="open = false"
+    >
       <slot />
     </Card>
   </div>
@@ -22,7 +26,7 @@ interface MenuProps {
 }
 
 const props = withDefaults(defineProps<MenuProps>(), {
-  needClickToSwitchOpen: false,
+  needClickToSwitchOpen: true,
 });
 
 const open = ref(false);
@@ -40,6 +44,7 @@ useEventListener(document.body, "click", () => {
     position: absolute;
     bottom: 0;
     transform: translateY(100%);
+    z-index: 5;
   }
   .activator {
     cursor: pointer;

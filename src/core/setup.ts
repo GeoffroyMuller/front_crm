@@ -2,7 +2,6 @@ import "./assets/style/main.scss";
 
 import "./plugins/daysjs";
 import pinia from "./plugins/pinia";
-import Unicon from "./plugins/unicon";
 import setupRouter from "./plugins/router";
 import lodashPlugin from "./plugins/lodash";
 import validationPlugin from "./plugins/validation";
@@ -28,12 +27,7 @@ export default function setup(options: SetupOptions) {
     routes,
   });
 
-  app
-    .use(pinia)
-    .use(router)
-    .use(Unicon)
-    .use(lodashPlugin)
-    .use(validationPlugin);
+  app.use(pinia).use(router).use(lodashPlugin).use(validationPlugin);
 
   return {
     router,

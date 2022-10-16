@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<CardProps>(), {
 <style lang="scss">
 .card {
   background-color: white;
-  box-shadow: 10px 10px 5px 0px #f1f5f9;
+  box-shadow: 0px 0px 5px 0px #f1f5f9;
   padding-left: spacing(2);
   padding-right: spacing(2);
   padding-top: spacing(1.5);

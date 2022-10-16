@@ -24,12 +24,13 @@
           {{ monthNames[currentMonth] }} {{ currentYear }}
         </div>
         <div class="buttons">
-          <button @click="decrementMonth">{{ "<" }}</button>
-          <button @click="incrementMonth">{{ ">" }}</button>
+          <button type="button" @click="decrementMonth">{{ "<" }}</button>
+          <button type="button" @click="incrementMonth">{{ ">" }}</button>
         </div>
       </div>
       <div class="years" v-if="displayYears">
         <button
+          type="button"
           v-for="(y, index) of years"
           :key="index"
           class="p-1 rounded-md"
@@ -44,19 +45,28 @@
         </button>
       </div>
       <div class="dates" v-else>
-        <div v-for="(day, index) of weekDaysLabels" :key="index" class="weekday">
+        <div
+          v-for="(day, index) of weekDaysLabels"
+          :key="index"
+          class="weekday"
+        >
           {{ day }}
         </div>
         <button
           v-for="date in daysInCurrentMonth"
           :key="date"
           class="monthday"
+          type="button"
           :class="{
             'date-selected':
               modelValueAsDaysjs?.date() == date &&
               modelValueAsDaysjs?.month() == currentMonth &&
               modelValueAsDaysjs?.year() == currentYear,
-            'cannot-be-selected': !dateCanBeSelected(date, currentMonth, currentYear),
+            'cannot-be-selected': !dateCanBeSelected(
+              date,
+              currentMonth,
+              currentYear
+            ),
           }"
           @click.stop="onSelectDate(date)"
         >
@@ -81,6 +91,8 @@ import {
 } from "vue";
 import useEventListener from "@/core/helpers/vue/composables/eventListener";
 import useCalendar from "@/core/helpers/vue/composables/calendar";
+import useValidatable from "@/core/helpers/vue/composables/validatable";
+import type { Rules } from "@/core/helpers/rules";
 
 interface DatePickerProps {
   modelValue?: string | Dayjs;
@@ -90,13 +102,19 @@ interface DatePickerProps {
   label?: string;
   name?: string;
   error?: string;
+  rules?: Rules;
 }
 
 const props = withDefaults(defineProps<DatePickerProps>(), {});
 
 const emit = defineEmits(["update:modelValue", "update:error"]);
 
-const internalValue = ref<Dayjs | string>("");
+const { internalValue, internalError, validate } = useValidatable({
+  value: props.modelValue,
+  error: props.error,
+  rules: props.rules,
+});
+
 
 const {
   daysInCurrentMonth,
@@ -143,6 +161,7 @@ function onSelectDate(date: number) {
     })
   );
   open.value = false;
+  validate();
 }
 
 const open = ref(false);

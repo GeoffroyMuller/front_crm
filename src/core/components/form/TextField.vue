@@ -4,7 +4,7 @@
     class="text-field"
     :class="{
       'w-full': fullWidth,
-      error: internalError,
+      error: internalError || error,
     }"
   >
     <label v-if="label">
@@ -16,8 +16,8 @@
       ref="internalRef"
       v-model="internalValue"
     />
-    <div v-if="internalError" class="input-error">
-      {{ internalError }}
+    <div v-if="internalError || error" class="input-error">
+      {{ internalError || error }}
     </div>
   </div>
 </template>
@@ -36,10 +36,10 @@ interface InputProps extends FormInputProps<string | number> {
         need to found why extends do not work proprely
   */
   label?: string;
-  modelValue?: string | number;
+  modelValue?: any;
   readonly?: boolean;
   name?: string;
-  error?: string;
+  error?: string | boolean;
   disabled?: boolean;
   rules?: Rules;
 }

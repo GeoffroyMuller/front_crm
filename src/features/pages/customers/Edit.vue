@@ -10,6 +10,22 @@
         <TextField name="lastname" label="Nom" :rules="[$rules.required()]" />
         <TextField name="email" label="Email" :rules="[$rules.required()]" />
 
+        <Select
+          name="gender"
+          label="Genre"
+          :options="[
+            { label: 'Monsieur', value: 'M' },
+            { label: 'Madame', value: 'Mme' },
+          ]"
+          :rules="[$rules.required()]"
+        />
+
+        <DatePicker
+          name="birthdate"
+          label="Date de naissance"
+          :rules="[$rules.required()]"
+        />
+
         <Button
           v-if="isAddAction"
           type="submit"
@@ -38,6 +54,8 @@ import Button from "../../../core/components/Button.vue";
 import usePage from "@/features/composables/page";
 import { useRouter } from "vue-router";
 import useUI from "@/core/helpers/vue/composables/ui";
+import Select from "@/core/components/form/Select.vue";
+import DatePicker from "../../../core/components/form/DatePicker.vue";
 
 const customerStore = useCustomerStore();
 
