@@ -129,23 +129,31 @@ onMounted(async () => {
 
 async function handleSubmit(data: any) {
   loading.value = true;
-  if (isAddAction.value) {
-    await customerStore.create(data);
+  try {
+    if (isAddAction.value) {
+      await customerStore.create(data);
+      toast({
+        type: "success",
+        message: `Utilisateur créé avec succes`,
+      });
+    } else {
+      await customerStore.update(route.params.id, data);
+      toast({
+        type: "success",
+        message: `Utilisateur <b>${customer.value.firstname}${
+          customer.value.lastname ? " " + customer.value.lastname : ""
+        }</b> modifié avec succes`,
+      });
+      router.push("/customers");
+    }
+  } catch (err) {
+    console.error(err);
     toast({
-      type: "success",
-      message: `Utilisateur créé avec succes`,
-    });
-  } else {
-    await customerStore.update(route.params.id, data);
-    toast({
-      type: "success",
-      message: `Utilisateur <b>${customer.value.firstname}${
-        customer.value.lastname ? " " + customer.value.lastname : ""
-      }</b> modifié avec succes`,
+      type: "danger",
+      message: `Erreur lors de la modification`,
     });
   }
   loading.value = false;
-  router.push("/customers");
 }
 </script>
 

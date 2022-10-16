@@ -65,17 +65,25 @@ onMounted(async () => {
 });
 
 async function deleteById(customer: Customer) {
-  if (await ui.confirm("Voulez vous vraiment supprimer cet utilisateur ?")) {
-    await customersStore.delete(customer.id);
-    nextTick(() => {
-      ui.toast({
-        type: "success",
-        message: `Utilisateur <b>"${customer.firstname}${
-          customer.lastname ? " " + customer.lastname : ""
-        }"</b> supprimé`,
+  try {
+    if (await ui.confirm("Voulez vous vraiment supprimer cet utilisateur ?")) {
+      await customersStore.delete(customer.id);
+      nextTick(() => {
+        ui.toast({
+          type: "success",
+          message: `Utilisateur <b>"${customer.firstname}${
+            customer.lastname ? " " + customer.lastname : ""
+          }"</b> supprimé`,
+        });
       });
+      customersStore.fetchAll();
+    }
+  } catch (err) {
+    console.error(err);
+    ui.toast({
+      type: "danger",
+      message: `Erreur lors de la modification`,
     });
-    customersStore.fetchAll();
   }
 }
 

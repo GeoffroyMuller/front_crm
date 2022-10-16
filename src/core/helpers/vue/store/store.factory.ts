@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import mock from "../../mock";
 import axios from "../../../plugins/axios";
-import { IS_MOCK, MOCK_DURATION } from "@/const";
+import config from "@/const";
 import type { ID } from "@/features/types/utils";
 import { sleep } from "../../utils";
 
@@ -47,52 +47,79 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
     },
     actions: {
       async fetchById(id: ID): Promise<T> {
-        IS_MOCK && (await sleep(MOCK_DURATION));
+        if (config.IS_MOCK) {
+          await sleep(config.MOCK_DURATION);
+          if (config.MOCK_ERROR.fetch) {
+            throw config.MOCK_ERROR.fetch;
+          }
+        }
         // @ts-ignore
-        const response: T = IS_MOCK
+        const response: T = config.IS_MOCK
           ? mock.getById(_getPath(), id)
           : await axios.get(_getPath(id));
         this.byId[id] = response;
         return response;
       },
       async fetchResourceById(id: ID, resource: string): Promise<any> {
-        IS_MOCK && (await sleep(MOCK_DURATION));
+        if (config.IS_MOCK) {
+          await sleep(config.MOCK_DURATION);
+        }
         // @ts-ignore
-        const response: any = IS_MOCK
+        const response: any = config.IS_MOCK
           ? mock.getAll(_getPath(id, resource))
           : await axios.get(_getPath(id, resource));
         //this.byId[id] = response;
         return response;
       },
       async fetchAll(): Promise<T> {
-        IS_MOCK && (await sleep(MOCK_DURATION));
+        if (config.IS_MOCK) {
+          await sleep(config.MOCK_DURATION);
+          if (config.MOCK_ERROR.fetchAll) {
+            throw config.MOCK_ERROR.fetchAll;
+          }
+        }
         // @ts-ignore
-        const response: T = IS_MOCK
+        const response: T = config.IS_MOCK
           ? mock.getAll(_getPath())
           : await axios.get(_getPath());
         this.list = response;
         return response;
       },
       async create(body: T) {
-        IS_MOCK && (await sleep(MOCK_DURATION));
+        if (config.IS_MOCK) {
+          await sleep(config.MOCK_DURATION);
+          if (config.MOCK_ERROR.add) {
+            throw config.MOCK_ERROR.add;
+          }
+        }
         // @ts-ignore
-        const response: T = IS_MOCK
+        const response: T = config.IS_MOCK
           ? mock.add(_getPath(), body)
           : await axios.post(_getPath(), body);
         return response;
       },
       async update(id: ID, body: T) {
-        IS_MOCK && (await sleep(MOCK_DURATION));
+        if (config.IS_MOCK) {
+          await sleep(config.MOCK_DURATION);
+          if (config.MOCK_ERROR.update) {
+            throw config.MOCK_ERROR.update;
+          }
+        }
         // @ts-ignore
-        const response: T = IS_MOCK
+        const response: T = config.IS_MOCK
           ? mock.update(_getPath(), id, body)
           : await axios.put(_getPath(id), body);
         return response;
       },
       async delete(id: ID) {
-        IS_MOCK && (await sleep(MOCK_DURATION));
+        if (config.IS_MOCK) {
+          await sleep(config.MOCK_DURATION);
+          if (config.MOCK_ERROR.delete) {
+            throw config.MOCK_ERROR.delete;
+          }
+        }
         // @ts-ignore
-        const response: T = IS_MOCK
+        const response: T = config.IS_MOCK
           ? mock.deleteData(_getPath(), id)
           : await axios.delete(_getPath(id));
         this.byId[id] = undefined;
