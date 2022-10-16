@@ -46,9 +46,10 @@ const { internalValue, internalError, validate } = useValidatable({
 
 <style lang="scss">
 .switch-container {
-  $width: spacing(4);
-  $dotSize: spacing(1.5);
+  $width: spacing(5);
+  $dotSize: spacing(2);
   $dotMargin: spacing(0.2);
+  $height: spacing(2.5);
   @include grid(1, 0, 1);
   cursor: pointer;
   label {
@@ -58,10 +59,12 @@ const { internalValue, internalError, validate } = useValidatable({
     border-radius: 10px;
     border: solid 1px black;
     width: $width;
-    height: spacing(2);
+    height: $height;
     position: relative;
     &.selected {
       border: solid 1px color("primary", 500);
+      background-color: color("primary", 50);
+      transition: 0.5s ease;
       .switch-inner {
         margin-left: calc($width - $dotSize - 2 * $dotMargin);
         background-color: color("primary", 500);
@@ -69,6 +72,7 @@ const { internalValue, internalError, validate } = useValidatable({
     }
     &.error {
       border: solid 1px color("danger", 500);
+      background-color: color("danger", 50);
       .switch-inner {
         background-color: color("danger", 500);
       }
