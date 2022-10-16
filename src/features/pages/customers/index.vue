@@ -15,6 +15,11 @@
           key: 'email',
         },
         {
+          title: 'Birthdate',
+          key: 'birthdate',
+          data: (item: Customer) => formatDate(item.birthdate)
+        },
+        {
           title: '',
           key: 'action',
         },
@@ -41,11 +46,16 @@ import useUI from "@/core/helpers/vue/composables/ui";
 import type Customer from "@/features/types/customer";
 import usePage from "@/features/composables/page";
 import Table from "@/core/components/Table.vue";
+import dayjs from "dayjs";
 
 const customersStore = useCustomerStore();
 const ui = useUI();
 
 const { setLoading } = usePage("Customers");
+
+function formatDate(date: string) {
+  return dayjs(date).format("DD/MM/YYYY");
+}
 
 onMounted(async () => {
   !customers?.value?.length && setLoading(true);
