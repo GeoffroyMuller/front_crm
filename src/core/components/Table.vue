@@ -88,8 +88,15 @@ table {
   tbody td {
     font-weight: 500;
   }
-  tbody tr:last-child td {
-    border-bottom: 0;
+  tbody tr {
+    transition: 0.3s;
+    &:hover {
+      background-color: color("primary", 50);
+      cursor: pointer;
+    }
+    &:last-child td {
+      border-bottom: 0;
+    }
   }
 }
 </style>
