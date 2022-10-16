@@ -1,21 +1,31 @@
 <template>
   <div id="customers-page">
-    <div class="customers-list">
-      <Card
-        v-for="customer of customers"
-        :key="customer.id"
-        class="customer-card"
-        @click="$router.push(`/customers/${customer.id}`)"
-        :title="`${customer.firstname} ${customer.lastname}`"
-        :subtitle="customer.email"
-      >
-        {{ customer }}
-
-        <Button @click.stop="deleteById(customer)" color="danger" icon="delete"
-          >SUPPRIMER</Button
-        >
-      </Card>
-    </div>
+    <Table
+      :columns="[
+        {
+          title: 'Lastname',
+          key: 'lastname',
+        },
+        {
+          title: 'Firstname',
+          key: 'firstname',
+        },
+        {
+          title: 'Email',
+          key: 'email',
+        },
+        {
+          title: '',
+          key: 'action',
+        },
+      ]"
+      :items="customers"
+      @row-click="(customer) => $router.push(`/customers/${customer.id}`)"
+    >
+      <template #action="{ item }">
+        <Button @click.stop="deleteById(item)" color="danger" icon="delete" />
+      </template>
+    </Table>
     <Button @click="$router.push(`/customers/new`)" class="add-btn" icon="add">
       Ajouter un utilisateur
     </Button>

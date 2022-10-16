@@ -8,7 +8,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item, index) in items" :key="index">
+      <tr
+        v-for="(item, index) in items"
+        :key="index"
+        @click="$emit('row-click', item)"
+      >
         <td v-for="column in columns" :key="column.key" class="p-1 align-top">
           <div v-if="!$slots[`${column.key as string}`]">
             {{

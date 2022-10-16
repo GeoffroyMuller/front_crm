@@ -7,7 +7,7 @@
   >
     <div class="content">
       <Icon :name="icon" v-if="icon" />
-      <span> <slot /></span>
+      <span v-if="$slots.default"> <slot /></span>
     </div>
 
     <Spinner size="sm" v-if="loading" :color="variant === 'text' ? color : 'white'" />

@@ -35,7 +35,7 @@
     ]"
   >
     <template #action="{ item, column }">
-      <pre>{{ { item, column } }}</pre>
+      {{ column.title }} {{ item.status }}
     </template>
   </Table>
 </template>
