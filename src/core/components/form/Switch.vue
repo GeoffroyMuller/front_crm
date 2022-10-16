@@ -50,6 +50,10 @@ const { internalValue, internalError, validate } = useValidatable({
   $dotSize: spacing(1.5);
   $dotMargin: spacing(0.2);
   @include grid(1, 0, 1);
+  cursor: pointer;
+  label {
+    cursor: pointer;
+  }
   .switch {
     border-radius: 10px;
     border: solid 1px black;
