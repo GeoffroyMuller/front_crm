@@ -40,8 +40,8 @@
           label="Valide"
           name="valid"
           :options="[
-            { label: 'oui', value: true },
-            { label: 'non', value: false },
+            { label: 'Oui', value: true },
+            { label: 'Non', value: false },
           ]"
           :rules="[$rules.required()]"
         />

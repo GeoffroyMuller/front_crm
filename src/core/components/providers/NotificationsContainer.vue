@@ -25,7 +25,7 @@ function createNotification(n: Notification | string) {
     type: "primary",
     title: "",
     autoClose: true,
-    duration: 10000,
+    duration: 5000,
     id: uniqueId(),
     message: "",
   };

@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { useCustomerStore } from "@/features/stores/customers.js";
-import { computed, onMounted } from "vue";
+import { computed, nextTick, onMounted } from "vue";
 import Card from "@/core/components/Card.vue";
 import Button from "@/core/components/Button.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
@@ -46,11 +46,13 @@ onMounted(async () => {
 async function deleteById(customer: Customer) {
   if (await ui.confirm("Voulez vous vraiment supprimer cet utilisateur ?")) {
     await customersStore.delete(customer.id);
-    ui.toast({
-      type: "success",
-      message: `Utilisateur <b>"${customer.firstname}${
-        customer.lastname ? " " + customer.lastname : ""
-      }"</b> supprimé`,
+    nextTick(() => {
+      ui.toast({
+        type: "success",
+        message: `Utilisateur <b>"${customer.firstname}${
+          customer.lastname ? " " + customer.lastname : ""
+        }"</b> supprimé`,
+      });
     });
     customersStore.fetchAll();
   }
