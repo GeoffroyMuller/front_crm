@@ -37,14 +37,7 @@
 
 <script setup lang="ts">
 import { withDefaults, defineProps } from "vue";
-
-type Item = any;
-
-interface Column {
-  title: string;
-  key: keyof Item | string;
-  data?: (item: Item) => keyof Item;
-}
+import type { Column, Item } from "./types";
 
 interface TableProps<Item> {
   columns: Array<Column> | null;
