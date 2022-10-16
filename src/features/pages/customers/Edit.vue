@@ -4,7 +4,9 @@
       <template v-slot:default="{ hasError }">
         <TextField name="firstname" label="Prenom" :rules="[$rules.required()]" />
         <TextField name="lastname" label="Nom" :rules="[$rules.required()]" />
-        <TextField name="email" label="Email" :rules="[$rules.required()]" />
+        <TextField name="email" type="email" label="Email" :rules="[$rules.required()]" />
+
+        <TextField name="description" label="Description" multiline />
 
         <Select
           name="gender"

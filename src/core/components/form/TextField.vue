@@ -10,8 +10,21 @@
       {{ label }}
     </label>
     <div class="relative">
-      <input @blur="validate" v-bind="$props" ref="internalRef" v-model="internalValue" />
-      <div v-if="icon" class="icon-hook">
+      <textarea
+        v-if="multiline"
+        @blur="validate"
+        v-bind="$props"
+        ref="internalRef"
+        v-model="internalValue"
+      />
+      <input
+        @blur="validate"
+        v-bind="$props"
+        ref="internalRef"
+        v-model="internalValue"
+        v-if="!multiline"
+      />
+      <div v-if="icon && !multiline" class="icon-hook">
         <Icon :name="icon" />
       </div>
     </div>
@@ -32,6 +45,7 @@ import Icon from "../Icon.vue";
 import Alert from "../Alert.vue";
 interface InputProps extends FormInputProps<string | number> {
   icon?: IconName;
+  multiline?: boolean;
   /*
   TODO : this is a duplicate of props in FormInputProps<string | number>
         need to found why extends do not work proprely
@@ -79,14 +93,14 @@ const { internalValue, internalError, validate } = useValidatable({
     place-items: center;
     margin-right: spacing(1);
   }
-  input {
+  input,
+  textarea {
     background-color: white;
     border-radius: map-get($rounded, "sm");
     display: block;
     padding: 4px 8px;
     border: 1px solid #d1d5db;
     width: 100%;
-    height: 35px;
     color: black;
     transition: border-color 0.5s, box-shadow 0.5s;
 
@@ -96,9 +110,19 @@ const { internalValue, internalError, validate } = useValidatable({
       box-shadow: 0 0 5pt 0.5pt color("primary", 200);
     }
   }
+  textarea {
+    padding: spacing(2) spacing(1.5);
+    min-height: spacing(12);
+    height: auto;
+    resize: vertical;
+  }
+  input {
+    height: 35px;
+  }
 
   &.error {
-    input {
+    input,
+    textarea {
       outline: none;
       border-color: color("danger", 500);
       box-shadow: 0 0 5pt 0.5pt color("danger", 200);
