@@ -47,8 +47,8 @@ const { internalValue, internalError, validate } = useValidatable({
 <style lang="scss">
 .switch-container {
   $width: spacing(4);
-  $size: spacing(1.5);
-  $margin: spacing(0.2);
+  $dotSize: spacing(1.5);
+  $dotMargin: spacing(0.2);
   @include grid(1, 0, 1);
   .switch {
     border-radius: 10px;
@@ -59,7 +59,7 @@ const { internalValue, internalError, validate } = useValidatable({
     &.selected {
       border: solid 1px color("primary", 500);
       .switch-inner {
-        margin-left: calc($width - $size - 2 * $margin);
+        margin-left: calc($width - $dotSize - 2 * $dotMargin);
         background-color: color("primary", 500);
       }
     }
@@ -74,11 +74,11 @@ const { internalValue, internalError, validate } = useValidatable({
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      margin-left: $margin;
+      margin-left: $dotMargin;
       border-radius: 50%;
       background-color: rgb(168, 168, 168);
-      width: $size;
-      height: $size;
+      width: $dotSize;
+      height: $dotSize;
     }
   }
 }
