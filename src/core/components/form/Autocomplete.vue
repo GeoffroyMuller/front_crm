@@ -174,5 +174,6 @@ watch(
 .autocomplete {
   display: grid;
   gap: spacing(1);
+  width: 100%;
 }
 </style>
