@@ -7,6 +7,7 @@
           :model-value="displayed"
           icon="calendar_month"
           :error="internalError || error ? true : false"
+          readonly
         />
       </template>
       <template #default>
