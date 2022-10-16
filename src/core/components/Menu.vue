@@ -1,13 +1,13 @@
 <template>
-  <div
-    :class="!needClickToSwitchOpen ? 'hover-menu' : ''"
-    class="menu"
-    @click.stop
-  >
-    <div class="activator" @click="open = true">
-      <slot name="activator" />
+  <div :class="!needClickToSwitchOpen ? 'hover-menu' : ''" class="menu" @click.stop>
+    <div class="activator" @click="open = !open">
+      <slot name="activator" :open="open" />
     </div>
-    <Card class="content">
+    <Card
+      class="content"
+      :style="{ display: open ? 'block' : 'none' }"
+      @click="handleClickContent()"
+    >
       <slot />
     </Card>
   </div>
@@ -22,14 +22,24 @@ interface MenuProps {
 }
 
 const props = withDefaults(defineProps<MenuProps>(), {
-  needClickToSwitchOpen: false,
+  needClickToSwitchOpen: true,
 });
 
 const open = ref(false);
 
+const emit = defineEmits(["close"]);
+
 useEventListener(document.body, "click", () => {
-  open.value = false;
+  if (open.value) {
+    open.value = false;
+    emit("close");
+  }
 });
+
+function handleClickContent() {
+  open.value = false;
+  emit("close");
+}
 </script>
 
 <style scoped lang="scss">
@@ -40,6 +50,7 @@ useEventListener(document.body, "click", () => {
     position: absolute;
     bottom: 0;
     transform: translateY(100%);
+    z-index: 5;
   }
   .activator {
     cursor: pointer;

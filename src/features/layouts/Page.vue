@@ -22,22 +22,14 @@
       </div>
 
       <div class="footer">
-        <Button
-          variant="text"
-          color="primary"
-          @click="modalDisconnectOpen = true"
-        >
+        <Button variant="text" color="primary" @click="modalDisconnectOpen = true">
           Disconnect
         </Button>
         <Modal v-model:open="modalDisconnectOpen">
           <div>Are you sure your want to disconnect ?</div>
 
           <div class="actions">
-            <Button
-              variant="text"
-              color="primary"
-              @click="modalDisconnectOpen = false"
-            >
+            <Button variant="text" color="primary" @click="modalDisconnectOpen = false">
               Cancel
             </Button>
             <Button variant="text" color="primary" @click="disconnect">
@@ -57,7 +49,7 @@
         </Button>
         <Menu>
           <template #activator>
-            <Icon name="bell" />
+            <Icon name="notifications" />
           </template>
           <template #default> dqsjbsqdnsqdbhs </template>
         </Menu>
@@ -97,8 +89,9 @@ const router = useRouter();
 
 const menu = ref([
   { path: "/", title: "Home", icon: "home" },
-  { path: "/customers", title: "Clients", icon: "user" },
+  { path: "/customers", title: "Clients", icon: "person" },
   { path: "/", title: "Equipments", icon: "weight" },
+  { path: "/reservations", title: "Reservations", icon: "calendar_month" },
 ]);
 
 function disconnect() {
@@ -160,6 +153,7 @@ $menuHeight: spacing(10);
   padding-right: spacing(4);
   height: $menuHeight;
   margin-left: $navWidth;
+  z-index: 2;
 
   .buttons {
     display: flex;

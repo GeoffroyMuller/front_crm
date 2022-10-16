@@ -17,7 +17,7 @@ body {
     min-height: 100vh;
 }
 
-pre {
+pre.code {
     font-size: 0.75rem;
     background-color: #0f172a;
     background-color: rgba(15, 23, 42, 1);
@@ -35,4 +35,22 @@ pre {
 }
 .subtitle {
     @include typo($_type: subtitle);
+}
+
+* {
+    scrollbar-color: color("primary", 500) color("primary", 100);
+    scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: color("primary", 100);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: color("primary", 600);
+    border-radius: 10px;
+}
+*::-webkit-scrollbar {
+    width: spacing(1);
+    border-radius: inherit;
 }

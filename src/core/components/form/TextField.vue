@@ -3,50 +3,63 @@
     @click="($refs.internalRef as HTMLInputElement).focus()"
     class="text-field"
     :class="{
-      'w-full': fullWidth,
-      error: internalError,
+      error: internalError || error,
     }"
   >
     <label v-if="label">
       {{ label }}
     </label>
-    <input
-      @blur="validate"
-      v-bind="$props"
-      ref="internalRef"
-      v-model="internalValue"
-    />
-    <div v-if="internalError" class="input-error">
-      {{ internalError }}
+    <div class="relative">
+      <textarea
+        v-if="multiline"
+        @blur="validate"
+        v-bind="$props"
+        ref="internalRef"
+        v-model="internalValue"
+      />
+      <input
+        @blur="validate"
+        v-bind="$props"
+        ref="internalRef"
+        v-model="internalValue"
+        v-if="!multiline"
+      />
+      <div v-if="icon && !multiline" class="icon-hook">
+        <Icon :name="icon" />
+      </div>
     </div>
+    <Alert
+      v-if="(internalError || error) && typeof (internalError || error) === 'string'"
+    >
+      {{ internalError || error }}
+    </Alert>
   </div>
 </template>
 
 <script lang="ts" setup>
 import useValidatable from "../../helpers/vue/composables/validatable";
 import { defineEmits, defineProps, withDefaults, watch } from "vue";
-import type { FormInputProps } from "../types";
+import type { FormInputProps, IconName } from "../types";
 import type { Rules } from "@/core/helpers/rules";
-
+import Icon from "../Icon.vue";
+import Alert from "../Alert.vue";
 interface InputProps extends FormInputProps<string | number> {
-  fullWidth?: boolean;
-
+  icon?: IconName;
+  multiline?: boolean;
   /*
   TODO : this is a duplicate of props in FormInputProps<string | number>
         need to found why extends do not work proprely
   */
   label?: string;
-  modelValue?: string | number;
+  modelValue?: any;
   readonly?: boolean;
   name?: string;
-  error?: string;
+  error?: string | boolean;
   disabled?: boolean;
   rules?: Rules;
 }
 
-const props = withDefaults(defineProps<InputProps>(), {
-  fullWidth: true,
-});
+const props = withDefaults(defineProps<InputProps>(), {});
 const emit = defineEmits([
   "update:modelValue",
   "update:error",
@@ -67,16 +80,28 @@ const { internalValue, internalError, validate } = useValidatable({
 .text-field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  input {
+  gap: spacing(1);
+  .relative {
+    position: relative;
+  }
+  .icon-hook {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    margin-right: spacing(1);
+  }
+  input,
+  textarea {
     background-color: white;
     border-radius: map-get($rounded, "sm");
     display: block;
     padding: 4px 8px;
     border: 1px solid #d1d5db;
     width: 100%;
-    height: 35px;
-
+    color: black;
     transition: border-color 0.5s, box-shadow 0.5s;
 
     &:focus {
@@ -85,16 +110,23 @@ const { internalValue, internalError, validate } = useValidatable({
       box-shadow: 0 0 5pt 0.5pt color("primary", 200);
     }
   }
+  textarea {
+    padding: spacing(2) spacing(1.5);
+    min-height: spacing(12);
+    height: auto;
+    resize: vertical;
+  }
+  input {
+    height: 35px;
+  }
 
   &.error {
-    input {
+    input,
+    textarea {
       outline: none;
       border-color: color("danger", 500);
       box-shadow: 0 0 5pt 0.5pt color("danger", 200);
     }
   }
-}
-.input-error {
-  color: color("danger", 500);
 }
 </style>

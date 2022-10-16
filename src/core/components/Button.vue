@@ -1,35 +1,32 @@
 <template>
   <button
     class="button"
-    :class="
-      variant === 'text'
-        ? `button-text button-text-${color}`
-        : `button-${color}`
-    "
+    :class="variant === 'text' ? `button-text button-text-${color}` : `button-${color}`"
     :type="type"
     :disabled="disabled || loading"
   >
-    <slot />
+    <div class="content">
+      <Icon :name="icon" v-if="icon" />
+      <span> <slot /></span>
+    </div>
 
-    <Spinner
-      size="sm"
-      v-show="loading"
-      :color="variant === 'text' ? color : 'white'"
-    />
+    <Spinner size="sm" v-if="loading" :color="variant === 'text' ? color : 'white'" />
   </button>
 </template>
 
 <script setup lang="ts">
 import { withDefaults, defineProps } from "vue";
 import Spinner from "./Spinner.vue";
-import type { Color } from "./types";
-
+import type { Color, IconName } from "./types";
+import Icon from "./Icon.vue";
 interface ButtonProps {
   color?: Color;
   disabled?: boolean;
   loading?: boolean;
   variant?: "base" | "text";
   type?: "button" | "submit";
+
+  icon?: IconName;
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -48,9 +45,16 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   color: white;
   text-transform: uppercase;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
+
+  .content {
+    display: flex;
+    align-items: center;
+    gap: spacing(1);
+  }
+
+  gap: spacing(1);
 
   &:not(:disabled) {
     cursor: pointer;
@@ -78,13 +82,12 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 
 .button-text {
   background-color: transparent;
+  color: black;
 }
 
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .button-text-#{$key} {
-      color: transparent;
-
       color: map-deep-get($value, 500);
 
       &:hover:not(:disabled) {

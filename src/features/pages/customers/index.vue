@@ -11,12 +11,12 @@
       >
         {{ customer }}
 
-        <Button @click.stop="deleteById(customer)" color="danger"
+        <Button @click.stop="deleteById(customer)" color="danger" icon="delete"
           >SUPPRIMER</Button
         >
       </Card>
     </div>
-    <Button @click="$router.push(`/customers/new`)" class="add-btn">
+    <Button @click="$router.push(`/customers/new`)" class="add-btn" icon="add">
       Ajouter un utilisateur
     </Button>
   </div>
@@ -24,12 +24,13 @@
 
 <script setup lang="ts">
 import { useCustomerStore } from "@/features/stores/customers.js";
-import { computed, onMounted } from "vue";
+import { computed, nextTick, onMounted } from "vue";
 import Card from "@/core/components/Card.vue";
 import Button from "@/core/components/Button.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import type Customer from "@/features/types/customer";
 import usePage from "@/features/composables/page";
+import Table from "@/core/components/Table.vue";
 
 const customersStore = useCustomerStore();
 const ui = useUI();
@@ -45,11 +46,13 @@ onMounted(async () => {
 async function deleteById(customer: Customer) {
   if (await ui.confirm("Voulez vous vraiment supprimer cet utilisateur ?")) {
     await customersStore.delete(customer.id);
-    ui.toast({
-      type: "success",
-      message: `Utilisateur <b>"${customer.firstname}${
-        customer.lastname ? " " + customer.lastname : ""
-      }"</b> supprimé`,
+    nextTick(() => {
+      ui.toast({
+        type: "success",
+        message: `Utilisateur <b>"${customer.firstname}${
+          customer.lastname ? " " + customer.lastname : ""
+        }"</b> supprimé`,
+      });
     });
     customersStore.fetchAll();
   }

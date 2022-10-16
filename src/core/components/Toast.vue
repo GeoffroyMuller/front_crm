@@ -6,12 +6,7 @@
         <span v-html="message" />
       </div>
 
-      <Icon
-        @click="$emit('close')"
-        name="multiply"
-        :color="type"
-        class="icon"
-      />
+      <Icon @click="$emit('close')" name="close" :color="type" class="icon" />
     </div>
   </Card>
 </template>
@@ -29,18 +24,18 @@ interface ToastProps {
 const icon = computed(() => {
   switch (props.type) {
     case "success":
-      return "check-circle";
+      return "check";
     case "danger":
-      return "exclamation-circle";
+      return "exclamation";
     default:
-      return "exclamation-circle";
+      return "exclamation";
   }
 });
 
 const props = withDefaults(defineProps<ToastProps>(), {});
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .toast {
   .toast-content {
     display: flex;

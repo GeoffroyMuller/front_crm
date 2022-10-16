@@ -1,0 +1,175 @@
+<template>
+  <div class="calendar">
+    <div class="calendar-header">
+      <div>{{ monthNames[current.month] }} {{ current.year }}</div>
+      <div class="buttons">
+        <Button
+          icon="chevron_left"
+          variant="text"
+          color="black"
+          @click.stop="decrementMonth()"
+        />
+        <Button
+          icon="chevron_right"
+          variant="text"
+          color="black"
+          @click.stop="incrementMonth()"
+        />
+      </div>
+    </div>
+    <div class="calendar-content" ref="calendarContent">
+      <div v-for="day of weekDaysLabels" :key="day" class="weekday">
+        {{ day }}
+      </div>
+      <div
+        class="day"
+        v-for="day in datesToDisplay"
+        :key="day.id"
+        :class="{
+          'not-this-month': day.month != current.month && day.year == current.year,
+        }"
+      >
+        {{ day.day }}
+      </div>
+    </div>
+  </div>
+</template>
+<script setup lang="ts">
+import dayjs from "dayjs";
+import { computed, onMounted, ref } from "vue";
+import Button from "./Button.vue";
+
+const calendarContent = ref();
+
+function handleScroll() {
+  const scrollPosition = calendarContent.value.scrollTop;
+  const pageBottom = calendarContent.value.offsetHeight;
+  const percentScrolled = (scrollPosition / pageBottom) * 100;
+  if (percentScrolled > 90) {
+    incrementMonth();
+    scrollToCenter();
+  }
+  if (percentScrolled < 10) {
+    decrementMonth();
+    scrollToCenter();
+  }
+}
+
+onMounted(() => {
+  calendarContent.value.style.height = `calc(100vh - ${calendarContent.value.offsetTop}px)`;
+  scrollToCenter();
+  calendarContent.value.addEventListener("scroll", handleScroll);
+});
+
+const monthNames = dayjs()
+  .localeData()
+  .months()
+  .map((m: string) => m[0].toUpperCase() + m.substring(1));
+
+const weekdaysName = dayjs().localeData().weekdays();
+
+const datesToDisplay = computed(() => {
+  const res: Array<{
+    day: number;
+    year: number;
+    month: number;
+    id?: string;
+  }> = [];
+
+  return res.map((date) => ({
+    ...date,
+    id: date.day + "-" + date.month + "-" + date.year,
+  }));
+});
+
+const current = ref({
+  month: dayjs().month(),
+  year: dayjs().year(),
+});
+const weekDaysLabels = computed(() => {
+  const firstDay =
+    typeof props.firstDayDisplayIndex !== "undefined"
+      ? props.firstDayDisplayIndex
+      : dayjs().year(current.value.year).month(current.value.month).date(0).day() + 1;
+  const list = [
+    ...weekdaysName.filter((d: string, index: number) => index >= firstDay),
+    ...weekdaysName.filter((d: string, index: number) => index < firstDay),
+  ];
+
+  return list.map((d: string) => d[0].toUpperCase());
+});
+
+function scrollToCenter() {
+  const pageBottom = calendarContent.value.offsetHeight;
+  calendarContent.value.scrollTo(0, pageBottom / 2);
+}
+
+function incrementMonth() {
+  if (current.value.month < 11) {
+    current.value.month = current.value.month + 1;
+  } else {
+    current.value.month = 0;
+    current.value.year = current.value.year + 1;
+  }
+}
+
+function decrementMonth() {
+  if (current.value.month === 0) {
+    current.value.month = 11;
+    current.value.year = current.value.year - 1;
+  } else {
+    current.value.month = current.value.month - 1;
+  }
+}
+
+interface CalendarProps {
+  // 0 for sunday, 6 for saturday
+  firstDayDisplayIndex?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+}
+
+const props = withDefaults(defineProps<CalendarProps>(), {
+  firstDayDisplayIndex: 1,
+});
+</script>
+
+<style lang="scss">
+.calendar {
+  border-radius: map-deep-get($rounded, "sm");
+  .calendar-header {
+    border-bottom: solid 1px black;
+    @include flex(row, flex-start, center, 1);
+    padding: spacing(2);
+    .buttons {
+      display: flex;
+      button {
+        padding: 0;
+      }
+    }
+  }
+  .calendar-content {
+    @include grid(7, 0, 0);
+    border: solid 1px black;
+    border-left: none;
+    border-top: none;
+    overflow-y: auto;
+    height: 1px;
+    .day {
+      border: solid 1px black;
+      border-bottom: none;
+      border-right: none;
+      height: 180px;
+      padding: spacing(1);
+      &.not-this-month {
+        color: rgb(175, 173, 173);
+      }
+    }
+    .weekday {
+      border: solid 1px black;
+      border-bottom: none;
+      border-right: none;
+      border-top: none;
+      padding: spacing(1);
+    }
+  }
+}
+</style>

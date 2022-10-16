@@ -1,7 +1,7 @@
 import { onMounted, onUnmounted } from "vue";
 
 export default function useEventListener(
-  target: HTMLElement,
+  target: HTMLElement | Window,
   event: string,
   callback: (e?: Event) => void
 ) {
