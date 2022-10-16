@@ -30,6 +30,7 @@ import Button from "@/core/components/Button.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import type Customer from "@/features/types/customer";
 import usePage from "@/features/composables/page";
+import Table from "@/core/components/Table.vue";
 
 const customersStore = useCustomerStore();
 const ui = useUI();
