@@ -5,7 +5,7 @@
     @click.stop
   >
     <div class="activator" @click="open = !open">
-      <slot name="activator" />
+      <slot name="activator" :open="open" />
     </div>
     <Card
       class="content"

@@ -1,6 +1,6 @@
 <template>
   <Menu>
-    <template #activator>
+    <template #activator="{ open }">
       <TextField
         :full-width="fullWidth"
         :model-value="displayed"
@@ -8,6 +8,7 @@
         :disabled="disabled"
         :error="internalError"
         :label="label"
+        :icon="!open ? 'expand_more' : 'expand_less'"
       />
     </template>
     <template #default>

@@ -1,111 +1,88 @@
 <template>
-  <div ref="inputContainer" class="input-container">
-    <TextField
-      readonly
-      :modelValue="dateDisplayed"
-      ref="inputRef"
-      :label="label"
-      @click.stop="open = !open"
-      :error="error"
-      @update:error="$emit('update:error', $event)"
-    />
-
-    <input :style="{ display: 'none' }" :name="name" :value="internalValue" />
-
-    <div
-      v-if="open"
-      ref="datePickerContainer"
-      class="date-picker-container"
-      :class="{ 'display-top': displayTop }"
-      @click.stop="$refs?.inputRef?.$refs?.internalRef?.focus()"
-    >
-      <div class="actions">
-        <div class="titles" @click="displayYears = !displayYears">
-          {{ monthNames[currentMonth] }} {{ currentYear }}
+  <Menu>
+    <template #activator>
+      <TextField
+        :label="label"
+        :full-width="fullWidth"
+        :model-value="displayed"
+        :error="internalError"
+        icon="calendar_month"
+      />
+    </template>
+    <template #default>
+      <div class="datepicker">
+        <div class="datepicker-header">
+          <div>{{ monthNames[current.month] }} {{ current.year }}</div>
+          <div class="datepicker-header-actions">
+            <Button
+              icon="chevron_left"
+              variant="text"
+              color="black"
+              @click.stop="decrementMonth()"
+            />
+            <Button
+              icon="chevron_right"
+              variant="text"
+              color="black"
+              @click.stop="incrementMonth()"
+            />
+          </div>
         </div>
-        <div class="buttons">
-          <button type="button" @click="decrementMonth">{{ "<" }}</button>
-          <button type="button" @click="incrementMonth">{{ ">" }}</button>
+        <div class="datepicker-content">
+          <div v-for="day of weekDaysLabels" :key="day" class="weekday">
+            {{ day }}
+          </div>
+          <div
+            v-for="date in daysToDisplay"
+            :key="date.id"
+            @click="onSelectDate(date.day, date.month, date.year)"
+            class="day"
+            :class="{
+              'last-month': date.month !== current.month,
+              selected: isSelected(date),
+            }"
+          >
+            {{ date.day }}
+          </div>
         </div>
       </div>
-      <div class="years" v-if="displayYears">
-        <button
-          type="button"
-          v-for="(y, index) of years"
-          :key="index"
-          class="p-1 rounded-md"
-          :class="{
-            'bg-indigo-500 text-white hover:bg-indigo-600':
-              modelValueAsDaysjs?.year() == y,
-            'hover:bg-slate-100': modelValueAsDaysjs?.year() != y,
-          }"
-          @click="onSelectYear(y)"
-        >
-          {{ y }}
-        </button>
-      </div>
-      <div class="dates" v-else>
-        <div
-          v-for="(day, index) of weekDaysLabels"
-          :key="index"
-          class="weekday"
-        >
-          {{ day }}
-        </div>
-        <button
-          v-for="date in daysInCurrentMonth"
-          :key="date"
-          class="monthday"
-          type="button"
-          :class="{
-            'date-selected':
-              modelValueAsDaysjs?.date() == date &&
-              modelValueAsDaysjs?.month() == currentMonth &&
-              modelValueAsDaysjs?.year() == currentYear,
-            'cannot-be-selected': !dateCanBeSelected(
-              date,
-              currentMonth,
-              currentYear
-            ),
-          }"
-          @click.stop="onSelectDate(date)"
-        >
-          {{ date }}
-        </button>
-      </div>
-    </div>
-  </div>
+    </template>
+  </Menu>
 </template>
-
-<script lang="ts" setup>
-import TextField from "./TextField.vue";
-import dayjs, { Dayjs } from "dayjs";
-import {
-  computed,
-  ref,
-  defineProps,
-  defineEmits,
-  withDefaults,
-  watch,
-  nextTick,
-} from "vue";
-import useEventListener from "@/core/helpers/vue/composables/eventListener";
-import useCalendar from "@/core/helpers/vue/composables/calendar";
-import useValidatable from "@/core/helpers/vue/composables/validatable";
+<script setup lang="ts">
 import type { Rules } from "@/core/helpers/rules";
+import useValidatable from "@/core/helpers/vue/composables/validatable";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
+import { computed, ref } from "vue";
+import Menu from "../Menu.vue";
+import TextField from "./TextField.vue";
+import Button from "../Button.vue";
+
+const monthNames = dayjs()
+  .localeData()
+  .months()
+  .map((m: string) => m[0].toUpperCase() + m.substring(1));
+
+const weekdaysName = dayjs().localeData().weekdays();
 
 interface DatePickerProps {
-  modelValue?: string | Dayjs;
-  isBordered?: boolean;
-  min?: string | Dayjs;
-  max?: string | Dayjs;
+  fullWidth?: boolean;
+  // 0 for sunday, 6 for saturday
+  firstDayDisplayIndex?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+  modelValue?: string;
+  min?: Dayjs;
+  max?: Dayjs;
   label?: string;
   name?: string;
   error?: string;
   rules?: Rules;
 }
 
-const props = withDefaults(defineProps<DatePickerProps>(), {});
+const props = withDefaults(defineProps<DatePickerProps>(), {
+  firstDayDisplayIndex: 1,
+});
 
 const emit = defineEmits(["update:modelValue", "update:error"]);
 
@@ -115,192 +92,143 @@ const { internalValue, internalError, validate } = useValidatable({
   rules: props.rules,
 });
 
-
-const {
-  daysInCurrentMonth,
-  incrementMonth,
-  decrementMonth,
-  weekDaysLabels,
-  dateCanBeSelected,
-  minMaxAsDaysJs,
-  currentMonth,
-  currentYear,
-  monthNames,
-} = useCalendar({
-  min: props.min,
-  max: props.max,
+const current = ref({
+  month: dayjs().month(),
+  year: dayjs().year(),
 });
 
-/* 
-  todo: changer de methode car celle ci impose un click.stop sur le textfield
-  et du coup pas de fermeture d'un datepicker si on click sur un autre datepicker...
-*/
-useEventListener(document.body, "click", () => {
-  open.value = false;
-});
+function incrementMonth() {
+  if (current.value.month < 11) {
+    current.value.month = current.value.month + 1;
+  } else {
+    current.value.month = 0;
+    current.value.year = current.value.year + 1;
+  }
+}
 
-const inputRef = ref();
+function decrementMonth() {
+  if (current.value.month === 0) {
+    current.value.month = 11;
+    current.value.year = current.value.year - 1;
+  } else {
+    current.value.month = current.value.month - 1;
+  }
+}
 
-function onSelectDate(date: number) {
-  const newDateToEmit = dayjs()
-    .year(currentYear.value)
-    .month(currentMonth.value)
-    .date(date)
-    .hour(0)
-    .minute(0)
-    .second(0)
-    .millisecond(0)
-    .toDate()
-    .toDateString();
-  internalValue.value = newDateToEmit;
-  emit("update:modelValue", newDateToEmit);
-  inputRef.value?.$refs?.internalRef?.dispatchEvent(
-    new Event("input", {
-      bubbles: true,
-      cancelable: true,
-    })
-  );
-  open.value = false;
+function onSelectDate(day: number, month: number, year: number) {
+  internalValue.value = dayjs().year(year).month(month).date(day).format("YYYY-MM-DD");
   validate();
 }
 
-const open = ref(false);
-watch(
-  () => open.value,
-  (val: boolean) => {
-    if (val) {
-      nextTick(() => {
-        const pageHeight = document.body.clientHeight;
-        const inputContainerBottomYPosition =
-          inputContainer.value?.offsetHeight +
-          inputContainer.value?.getBoundingClientRect().top +
-          datePickerContainer.value.offsetHeight;
-
-        displayTop.value = pageHeight - inputContainerBottomYPosition <= 0;
+const daysToDisplay = computed(() => {
+  const daysInCurrentMonth = dayjs().month(current.value.month).daysInMonth();
+  const res = [];
+  if (props.firstDayDisplayIndex !== undefined) {
+    const firstDayCurrentMonth = dayjs()
+      .year(current.value.year)
+      .month(current.value.month)
+      .date(0)
+      .day();
+    const beforeMonth = current.value.month === 0 ? 11 : current.value.month - 1;
+    const beforeMonthYear =
+      current.value.month === 0 ? current.value.year - 1 : current.value.year;
+    const daysInBeforeMonth = dayjs()
+      .month(current.value.month)
+      .subtract(1, "month")
+      .daysInMonth();
+    for (
+      let day = daysInBeforeMonth;
+      day > daysInBeforeMonth - firstDayCurrentMonth;
+      day--
+    ) {
+      res.unshift({
+        day,
+        month: beforeMonth,
+        year: beforeMonthYear,
       });
     }
   }
-);
-
-const dateDisplayed = computed(() => {
-  if (internalValue.value) {
-    return modelValueAsDaysjs.value.format("DD/MM/YYYY");
+  for (let day = 1; day <= daysInCurrentMonth; day++) {
+    res.push({
+      day,
+      month: current.value.month,
+      year: current.value.year,
+    });
   }
-  return "";
+  return res.map((date) => ({
+    ...date,
+    id: date.day + "-" + date.month + "-" + date.year,
+  }));
 });
 
-const modelValueAsDaysjs = computed(() =>
-  typeof internalValue.value === "string"
-    ? dayjs(internalValue.value)
-    : internalValue.value
-);
+const weekDaysLabels = computed(() => {
+  const firstDay =
+    typeof props.firstDayDisplayIndex !== "undefined"
+      ? props.firstDayDisplayIndex
+      : dayjs().year(current.value.year).month(current.value.month).date(0).day() + 1;
+  const list = [
+    ...weekdaysName.filter((d: string, index: number) => index >= firstDay),
+    ...weekdaysName.filter((d: string, index: number) => index < firstDay),
+  ];
 
-watch(
-  () => props.modelValue,
-  (val) => {
-    if (val) {
-      internalValue.value = val;
-    }
-  },
-  { immediate: true }
-);
+  return list.map((d: string) => d[0].toUpperCase());
+});
 
-function onSelectYear(year: number) {
-  currentYear.value = year;
-  displayYears.value = false;
+function isSelected(date: any) {
+  const value = dayjs(internalValue.value);
+  return (
+    value?.date() == date.day &&
+    value?.month() == date.month &&
+    value?.year() == date.year
+  );
 }
 
-const years = computed<Array<number>>(() => {
-  const res = [];
-  for (
-    let index = minMaxAsDaysJs.value?.min?.year() || 1900;
-    index <= (minMaxAsDaysJs.value?.max?.year() || 2100);
-    index++
-  ) {
-    res.push(index);
+const displayed = computed(() => {
+  if (!internalValue?.value?.length) {
+    return "";
   }
-  return res;
+  return dayjs(internalValue.value).format("DD/MM/YYYY");
 });
-
-const displayYears = ref(false);
-
-const inputContainer = ref();
-const datePickerContainer = ref();
-
-const displayTop = ref(false);
 </script>
 
-<style lang="scss" scoped>
-.input-container {
-  position: relative;
-  .date-picker-container {
-    position: absolute;
-    max-height: 35opx;
-    overflow-y: auto;
-    padding: spacing(3);
-    background-color: white;
-    border-radius: map-get($rounded, "md");
-    box-shadow: 10px 10px 5px 0px #f1f5f9;
-    z-index: 10;
-    .years {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: spacing(1);
-      button {
-        &:hover {
-          background-color: #f1f5f9;
-        }
-      }
-    }
-    .dates {
-      @include grid(7, 0, 1);
-      .weekday {
-        text-align: center;
-        color: gray;
-      }
-      .monthday {
-        width: 38px;
-        height: 38px;
-        border-radius: map-get($rounded, "sm");
-        &:focus {
-          outline: none;
-        }
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-        &:hover {
-          background-color: #f1f5f9;
-        }
-        &.cannot-be-selected {
-          color: gray;
-          cursor: not-allowed;
-          pointer-events: none;
-        }
-        &.date-selected {
-          background-color: color("primary", 500);
-          color: white;
-          &:hover {
-            background-color: color("primary", 700);
-          }
-        }
-      }
-    }
-    .actions {
+<style lang="scss">
+.datepicker {
+  @include grid(1, 0, 2);
+  .datepicker-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .datepicker-header-actions {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: spacing(2);
-      .titles {
+      justify-content: center;
+      button {
+        padding: 0;
       }
-      .buttons {
-        button {
-          &:focus {
-            outline: none;
-          }
-          border: none;
-          background-color: transparent;
-          cursor: pointer;
-        }
+    }
+  }
+  .datepicker-content {
+    @include grid(7, 0, 0.5);
+    .weekday {
+      display: grid;
+      place-items: center;
+      text-align: center;
+    }
+    .day {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: black;
+      width: spacing(4);
+      height: spacing(4);
+      border-radius: map-deep-get($rounded, "sm");
+      cursor: pointer;
+      &.last-month {
+        color: rgb(215, 215, 215);
+      }
+      &.selected,
+      &:hover {
+        background-color: color("primary", 500);
+        color: white;
       }
     }
   }

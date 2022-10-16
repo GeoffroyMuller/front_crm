@@ -31,10 +31,17 @@
           type="submit"
           :loading="loading"
           :disabled="hasError"
+          icon="save"
         >
           Ajouter
         </Button>
-        <Button v-else type="submit" :loading="loading" :disabled="hasError">
+        <Button
+          v-else
+          type="submit"
+          :loading="loading"
+          :disabled="hasError"
+          icon="save"
+        >
           Modifier
         </Button>
       </template>
@@ -56,6 +63,7 @@ import { useRouter } from "vue-router";
 import useUI from "@/core/helpers/vue/composables/ui";
 import Select from "@/core/components/form/Select.vue";
 import DatePicker from "../../../core/components/form/DatePicker.vue";
+import Icon from "../../../core/components/Icon.vue";
 
 const customerStore = useCustomerStore();
 

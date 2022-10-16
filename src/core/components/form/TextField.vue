@@ -10,12 +10,17 @@
     <label v-if="label">
       {{ label }}
     </label>
-    <input
-      @blur="validate"
-      v-bind="$props"
-      ref="internalRef"
-      v-model="internalValue"
-    />
+    <div class="relative">
+      <input
+        @blur="validate"
+        v-bind="$props"
+        ref="internalRef"
+        v-model="internalValue"
+      />
+      <div v-if="icon" class="icon-hook">
+        <Icon :name="icon" />
+      </div>
+    </div>
     <div v-if="internalError || error" class="input-error">
       {{ internalError || error }}
     </div>
@@ -25,12 +30,13 @@
 <script lang="ts" setup>
 import useValidatable from "../../helpers/vue/composables/validatable";
 import { defineEmits, defineProps, withDefaults, watch } from "vue";
-import type { FormInputProps } from "../types";
+import type { FormInputProps, IconName } from "../types";
 import type { Rules } from "@/core/helpers/rules";
+import Icon from "../Icon.vue";
 
 interface InputProps extends FormInputProps<string | number> {
   fullWidth?: boolean;
-
+  icon?: IconName;
   /*
   TODO : this is a duplicate of props in FormInputProps<string | number>
         need to found why extends do not work proprely
@@ -68,6 +74,18 @@ const { internalValue, internalError, validate } = useValidatable({
   display: flex;
   flex-direction: column;
   gap: 6px;
+  .relative {
+    position: relative;
+  }
+  .icon-hook {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    margin-right: spacing(1);
+  }
   input {
     background-color: white;
     border-radius: map-get($rounded, "sm");
