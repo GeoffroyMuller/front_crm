@@ -69,7 +69,7 @@ provide("notifications", createNotification);
 
 .toast-enter-active,
 .toast-leave-active {
-  transition: transform 0.5s ease, opacity 0.5s;
+  transition: transform 0.5s ease, opacity 0.2s;
 }
 
 .toast-enter-from {

@@ -9,25 +9,41 @@
                 "id": 1,
                 "email": "etienne.robert1698@gmail.com",
                 "firstname": "Etienne",
-                "lastname": "ROBERT"
+                "lastname": "ROBERT",
+                "gender": "M", 
+                "birthdate": "2022-10-05", 
+                "city": "Metz", 
+                "valid": false 
             },
             {
                 "id": 2,
                 "email": "client2@gmail.com",
                 "firstname": "Etienne",
-                "lastname": "MARTIN"
+                "lastname": "MARTIN",
+                "gender": "M", 
+                "birthdate": "2022-10-05", 
+                "city": "Metz", 
+                "valid": false 
             },
-            {
+            { 
                 "id": 3,
-                "email": "geoff@gmail.com",
+                "email": "geoff@gmail.com", 
                 "firstname": "Geoffroy",
-                "lastname": "MULLER"
-            }, 
+                "lastname": "MULLER", 
+                "gender": "M", 
+                "birthdate": "2022-10-05", 
+                "city": "Metz", 
+                "valid": false 
+            },
             {
                 "id": 4,
                 "email": "elise@gmail.com",
                 "firstname": "Elise",
-                "lastname": "DUPONT"
+                "lastname": "DUPONT",
+                "gender": "M", 
+                "birthdate": "2022-10-05", 
+                "city": "Metz", 
+                "valid": false 
             }
         ],
         "/customers/1": {

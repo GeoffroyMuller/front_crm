@@ -36,6 +36,16 @@
           ]"
         />
 
+        <RadioGroup
+          label="Valide"
+          name="valid"
+          :options="[
+            { label: 'oui', value: true },
+            { label: 'non', value: false },
+          ]"
+          :rules="[$rules.required()]"
+        />
+
         <Button
           v-if="isAddAction"
           type="submit"
@@ -68,6 +78,7 @@ import useUI from "@/core/helpers/vue/composables/ui";
 import Select from "@/core/components/form/Select.vue";
 import DatePicker from "@/core/components/form/DatePicker.vue";
 import Autocomplete from "@/core/components/form/Autocomplete.vue";
+import RadioGroup from "../../../core/components/form/RadioGroup.vue";
 
 const customerStore = useCustomerStore();
 
