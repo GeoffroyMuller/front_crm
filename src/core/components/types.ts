@@ -25,6 +25,14 @@ export interface Confirmation {
   title: string;
 }
 
+export interface Column {
+  title: string;
+  key: keyof Item | string;
+  data?: (item: Item) => keyof Item;
+}
+
+export type Item = any;
+
 export type Color =
   | "primary"
   | "danger"
