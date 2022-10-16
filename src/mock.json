@@ -13,7 +13,8 @@
                 "gender": "M", 
                 "birthdate": "2022-10-05", 
                 "city": "Metz", 
-                "valid": false 
+                "valid": false,
+                "description": "Cette utilisateur est un habitué, \nIl vient très souvent ici.\n\nMerci de le prioriser.\n\nSigner:\nLa direction."
             },
             {
                 "id": 2,
