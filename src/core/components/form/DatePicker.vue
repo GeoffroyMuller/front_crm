@@ -40,6 +40,7 @@
             :class="{
               'last-month': date.month !== current.month,
               selected: isSelected(date),
+              disabled: !dateCanBeSelected(date.day, date.month, date.year),
             }"
           >
             {{ date.day }}
@@ -189,6 +190,29 @@ const displayed = computed(() => {
   }
   return dayjs(internalValue.value).format("DD/MM/YYYY");
 });
+
+function dateCanBeSelected(date: number, month: number, year: number): boolean {
+  if (props.min) {
+    if (
+      year < props.min.year() ||
+      (year == props.min.year() && month < props.min.month()) ||
+      (year == props.min.year() && month == props.min.month() && date < props.min.date())
+    ) {
+      return false;
+    }
+  }
+  if (props.max) {
+    if (
+      year > props.max.year() ||
+      (year == props.max.year() && month > props.max.month()) ||
+      (year == props.max.year() && month == props.max.month() && date > props.max.date())
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+}
 </script>
 
 <style lang="scss">
@@ -226,9 +250,13 @@ const displayed = computed(() => {
         color: rgb(215, 215, 215);
       }
       &.selected,
-      &:hover {
+      &:hover:not(.disabled) {
         background-color: color("primary", 500);
         color: white;
+      }
+      &.disabled {
+        color: rgb(238, 237, 237);
+        cursor: not-allowed;
       }
     }
   }
