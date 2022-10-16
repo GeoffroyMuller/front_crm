@@ -1,11 +1,13 @@
 <template>
   <div class="notifications-container">
-    <Toast
-      v-for="notification of notifications"
-      :key="notification.id"
-      v-bind="notification"
-      @close="deleteNotification(notification.id as string)"
-    />
+    <TransitionGroup name="toast">
+      <Toast
+        v-for="notification of notifications"
+        :key="notification.id"
+        v-bind="notification"
+        @close="deleteNotification(notification.id as string)"
+      />
+    </TransitionGroup>
   </div>
   <slot />
 </template>
@@ -23,7 +25,7 @@ function createNotification(n: Notification | string) {
     type: "primary",
     title: "",
     autoClose: true,
-    duration: 2000,
+    duration: 10000,
     id: uniqueId(),
     message: "",
   };
@@ -54,7 +56,7 @@ provide("notifications", createNotification);
 
 <style lang="scss">
 .notifications-container {
-  position: fixed;
+  overflow: hidden;
   z-index: 50;
   position: absolute;
   bottom: 0;
@@ -64,5 +66,19 @@ provide("notifications", createNotification);
   > * {
     margin: spacing(2);
   }
+}
+
+.toast-enter-active,
+.toast-leave-active {
+  transition: transform 0.5s ease, opacity 0.5s;
+}
+
+.toast-enter-from {
+  transform: translateY(100%);
+  opacity: 0;
+}
+.toast-leave-to {
+  opacity: 0;
+  transform: translateY(-100%);
 }
 </style>

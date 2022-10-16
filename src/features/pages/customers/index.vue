@@ -11,7 +11,9 @@
       >
         {{ customer }}
 
-        <Button @click.stop="deleteById(customer)" color="danger">SUPPRIMER</Button>
+        <Button @click.stop="deleteById(customer)" color="danger" icon="delete"
+          >SUPPRIMER</Button
+        >
       </Card>
     </div>
     <Button @click="$router.push(`/customers/new`)" class="add-btn" icon="add">

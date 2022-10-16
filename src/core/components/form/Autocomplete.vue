@@ -1,6 +1,6 @@
 <template>
   <div class="autocomplete">
-    <Menu @close="validate">
+    <Menu @close="handleClose">
       <template #activator="{ open }">
         <TextField
           v-model="search"
@@ -86,6 +86,11 @@ const { internalValue, internalError, validate } = useValidatable({
   error: props.error,
   rules: props.rules,
 });
+
+function handleClose() {
+  validate();
+  search.value = displayed.value;
+}
 
 function isSelected(opt: any) {
   if (props.multiple) {

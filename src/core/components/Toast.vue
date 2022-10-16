@@ -35,7 +35,7 @@ const icon = computed(() => {
 const props = withDefaults(defineProps<ToastProps>(), {});
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .toast {
   .toast-content {
     display: flex;
