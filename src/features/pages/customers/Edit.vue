@@ -48,6 +48,8 @@
           :rules="[$rules.required()]"
         />
 
+        <Switch label="Authorisé" name="authorized" />
+
         <Button
           v-if="isAddAction"
           type="submit"
@@ -80,7 +82,8 @@ import useUI from "@/core/helpers/vue/composables/ui";
 import Select from "@/core/components/form/Select.vue";
 import DatePicker from "@/core/components/form/DatePicker.vue";
 import Autocomplete from "@/core/components/form/Autocomplete.vue";
-import RadioGroup from "../../../core/components/form/RadioGroup.vue";
+import RadioGroup from "@/core/components/form/RadioGroup.vue";
+import Switch from "@/core/components/form/Switch.vue";
 
 const customerStore = useCustomerStore();
 

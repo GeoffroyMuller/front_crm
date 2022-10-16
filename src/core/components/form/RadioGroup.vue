@@ -113,7 +113,7 @@ function handleClickOption(opt: any) {
 </script>
 <style lang="scss">
 .radio-group {
-  @include grid(1, 0, 2);
+  @include grid(1, 0, 1);
   .radio-buttons {
     display: flex;
     gap: spacing(2);
