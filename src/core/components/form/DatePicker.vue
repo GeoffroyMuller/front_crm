@@ -222,6 +222,7 @@ function dateCanBeSelected(date: number, month: number, year: number): boolean {
 <style lang="scss">
 .datepicker-container {
   display: grid;
+  width: 100%;
   gap: spacing(1);
 }
 .datepicker {

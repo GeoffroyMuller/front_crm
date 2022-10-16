@@ -139,6 +139,7 @@ const displayed = computed<string>(() => {
 .select {
   display: grid;
   gap: spacing(1);
+  width: 100%;
 }
 .select-option {
   cursor: pointer;

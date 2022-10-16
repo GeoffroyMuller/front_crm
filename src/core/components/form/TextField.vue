@@ -81,6 +81,7 @@ const { internalValue, internalError, validate } = useValidatable({
   display: flex;
   flex-direction: column;
   gap: spacing(1);
+  width: 100%;
   .relative {
     position: relative;
   }
