@@ -1,22 +1,16 @@
 <template>
   <button
     class="button"
-    :class="
-      variant === 'text'
-        ? `button-text button-text-${color}`
-        : `button-${color}`
-    "
+    :class="variant === 'text' ? `button-text button-text-${color}` : `button-${color}`"
     :type="type"
     :disabled="disabled || loading"
   >
-    <span> <slot /></span>
+    <div class="content">
+      <Icon :name="icon" v-if="icon" />
+      <span> <slot /></span>
+    </div>
 
-    <Icon :name="icon" v-if="!loading && icon" />
-    <Spinner
-      size="sm"
-      v-if="loading"
-      :color="variant === 'text' ? color : 'white'"
-    />
+    <Spinner size="sm" v-if="loading" :color="variant === 'text' ? color : 'white'" />
   </button>
 </template>
 
@@ -53,6 +47,13 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .content {
+    display: flex;
+    align-items: center;
+    gap: spacing(1);
+  }
+
   gap: spacing(1);
 
   &:not(:disabled) {

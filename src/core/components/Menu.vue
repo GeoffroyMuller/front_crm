@@ -1,16 +1,12 @@
 <template>
-  <div
-    :class="!needClickToSwitchOpen ? 'hover-menu' : ''"
-    class="menu"
-    @click.stop
-  >
+  <div :class="!needClickToSwitchOpen ? 'hover-menu' : ''" class="menu" @click.stop>
     <div class="activator" @click="open = !open">
       <slot name="activator" :open="open" />
     </div>
     <Card
       class="content"
       :style="{ display: open ? 'block' : 'none' }"
-      @click="open = false"
+      @click="handleClickContent()"
     >
       <slot />
     </Card>
@@ -31,9 +27,19 @@ const props = withDefaults(defineProps<MenuProps>(), {
 
 const open = ref(false);
 
+const emit = defineEmits(["close"]);
+
 useEventListener(document.body, "click", () => {
-  open.value = false;
+  if (open.value) {
+    open.value = false;
+    emit("close");
+  }
 });
+
+function handleClickContent() {
+  open.value = false;
+  emit("close");
+}
 </script>
 
 <style scoped lang="scss">

@@ -7,6 +7,7 @@ import Home from "@/features/pages/Home.vue";
 import Login from "@/features/pages/Login.vue";
 import Customers from "@/features/pages/customers/index.vue";
 import CustomerEdit from "@/features/pages/customers/Edit.vue";
+import Reservations from "@/features/pages/reservations/index.vue";
 
 export default [
   {
@@ -40,6 +41,15 @@ export default [
     path: "/customers/:id",
     name: "customer-edit",
     component: CustomerEdit,
+    meta: {
+      middleware: [auth],
+      layout: Page,
+    },
+  },
+  {
+    path: "/reservations",
+    name: "reservations",
+    component: Reservations,
     meta: {
       middleware: [auth],
       layout: Page,

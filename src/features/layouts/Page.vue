@@ -22,22 +22,14 @@
       </div>
 
       <div class="footer">
-        <Button
-          variant="text"
-          color="primary"
-          @click="modalDisconnectOpen = true"
-        >
+        <Button variant="text" color="primary" @click="modalDisconnectOpen = true">
           Disconnect
         </Button>
         <Modal v-model:open="modalDisconnectOpen">
           <div>Are you sure your want to disconnect ?</div>
 
           <div class="actions">
-            <Button
-              variant="text"
-              color="primary"
-              @click="modalDisconnectOpen = false"
-            >
+            <Button variant="text" color="primary" @click="modalDisconnectOpen = false">
               Cancel
             </Button>
             <Button variant="text" color="primary" @click="disconnect">
@@ -99,6 +91,7 @@ const menu = ref([
   { path: "/", title: "Home", icon: "home" },
   { path: "/customers", title: "Clients", icon: "person" },
   { path: "/", title: "Equipments", icon: "weight" },
+  { path: "/reservations", title: "Reservations", icon: "calendar_month" },
 ]);
 
 function disconnect() {

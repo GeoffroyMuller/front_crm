@@ -1,54 +1,58 @@
 <template>
-  <Menu>
-    <template #activator>
-      <TextField
-        :label="label"
-        :full-width="fullWidth"
-        :model-value="displayed"
-        :error="internalError"
-        icon="calendar_month"
-      />
-    </template>
-    <template #default>
-      <div class="datepicker">
-        <div class="datepicker-header">
-          <div>{{ monthNames[current.month] }} {{ current.year }}</div>
-          <div class="datepicker-header-actions">
-            <Button
-              icon="chevron_left"
-              variant="text"
-              color="black"
-              @click.stop="decrementMonth()"
-            />
-            <Button
-              icon="chevron_right"
-              variant="text"
-              color="black"
-              @click.stop="incrementMonth()"
-            />
+  <div class="datepicker-container">
+    <Menu @close="validate()">
+      <template #activator>
+        <TextField
+          :label="label"
+          :model-value="displayed"
+          icon="calendar_month"
+          :error="internalError || error ? true : false"
+        />
+      </template>
+      <template #default>
+        <div class="datepicker">
+          <div class="datepicker-header">
+            <div>{{ monthNames[current.month] }} {{ current.year }}</div>
+            <div class="datepicker-header-actions">
+              <Button
+                icon="chevron_left"
+                variant="text"
+                color="black"
+                @click.stop="decrementMonth()"
+              />
+              <Button
+                icon="chevron_right"
+                variant="text"
+                color="black"
+                @click.stop="incrementMonth()"
+              />
+            </div>
+          </div>
+          <div class="datepicker-content">
+            <div v-for="day of weekDaysLabels" :key="day" class="weekday">
+              {{ day }}
+            </div>
+            <div
+              v-for="date in daysToDisplay"
+              :key="date.id"
+              @click="onSelectDate(date.day, date.month, date.year)"
+              class="day"
+              :class="{
+                'last-month': date.month !== current.month,
+                selected: isSelected(date),
+                disabled: !dateCanBeSelected(date.day, date.month, date.year),
+              }"
+            >
+              {{ date.day }}
+            </div>
           </div>
         </div>
-        <div class="datepicker-content">
-          <div v-for="day of weekDaysLabels" :key="day" class="weekday">
-            {{ day }}
-          </div>
-          <div
-            v-for="date in daysToDisplay"
-            :key="date.id"
-            @click="onSelectDate(date.day, date.month, date.year)"
-            class="day"
-            :class="{
-              'last-month': date.month !== current.month,
-              selected: isSelected(date),
-              disabled: !dateCanBeSelected(date.day, date.month, date.year),
-            }"
-          >
-            {{ date.day }}
-          </div>
-        </div>
-      </div>
-    </template>
-  </Menu>
+      </template>
+    </Menu>
+    <Alert v-if="internalError || error">
+      {{ internalError || error }}
+    </Alert>
+  </div>
 </template>
 <script setup lang="ts">
 import type { Rules } from "@/core/helpers/rules";
@@ -59,6 +63,7 @@ import { computed, ref } from "vue";
 import Menu from "../Menu.vue";
 import TextField from "./TextField.vue";
 import Button from "../Button.vue";
+import Alert from "../Alert.vue";
 
 const monthNames = dayjs()
   .localeData()
@@ -68,7 +73,6 @@ const monthNames = dayjs()
 const weekdaysName = dayjs().localeData().weekdays();
 
 interface DatePickerProps {
-  fullWidth?: boolean;
   // 0 for sunday, 6 for saturday
   firstDayDisplayIndex?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -216,6 +220,10 @@ function dateCanBeSelected(date: number, month: number, year: number): boolean {
 </script>
 
 <style lang="scss">
+.datepicker-container {
+  display: grid;
+  gap: spacing(1);
+}
 .datepicker {
   @include grid(1, 0, 2);
   .datepicker-header {

@@ -3,7 +3,6 @@
     @click="($refs.internalRef as HTMLInputElement).focus()"
     class="text-field"
     :class="{
-      'w-full': fullWidth,
       error: internalError || error,
     }"
   >
@@ -11,19 +10,16 @@
       {{ label }}
     </label>
     <div class="relative">
-      <input
-        @blur="validate"
-        v-bind="$props"
-        ref="internalRef"
-        v-model="internalValue"
-      />
+      <input @blur="validate" v-bind="$props" ref="internalRef" v-model="internalValue" />
       <div v-if="icon" class="icon-hook">
         <Icon :name="icon" />
       </div>
     </div>
-    <div v-if="internalError || error" class="input-error">
+    <Alert
+      v-if="(internalError || error) && typeof (internalError || error) === 'string'"
+    >
       {{ internalError || error }}
-    </div>
+    </Alert>
   </div>
 </template>
 
@@ -33,9 +29,8 @@ import { defineEmits, defineProps, withDefaults, watch } from "vue";
 import type { FormInputProps, IconName } from "../types";
 import type { Rules } from "@/core/helpers/rules";
 import Icon from "../Icon.vue";
-
+import Alert from "../Alert.vue";
 interface InputProps extends FormInputProps<string | number> {
-  fullWidth?: boolean;
   icon?: IconName;
   /*
   TODO : this is a duplicate of props in FormInputProps<string | number>
@@ -50,9 +45,7 @@ interface InputProps extends FormInputProps<string | number> {
   rules?: Rules;
 }
 
-const props = withDefaults(defineProps<InputProps>(), {
-  fullWidth: true,
-});
+const props = withDefaults(defineProps<InputProps>(), {});
 const emit = defineEmits([
   "update:modelValue",
   "update:error",
@@ -73,7 +66,7 @@ const { internalValue, internalError, validate } = useValidatable({
 .text-field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: spacing(1);
   .relative {
     position: relative;
   }
@@ -94,7 +87,7 @@ const { internalValue, internalError, validate } = useValidatable({
     border: 1px solid #d1d5db;
     width: 100%;
     height: 35px;
-
+    color: black;
     transition: border-color 0.5s, box-shadow 0.5s;
 
     &:focus {
@@ -111,8 +104,5 @@ const { internalValue, internalError, validate } = useValidatable({
       box-shadow: 0 0 5pt 0.5pt color("danger", 200);
     }
   }
-}
-.input-error {
-  color: color("danger", 500);
 }
 </style>

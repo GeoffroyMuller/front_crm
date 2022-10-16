@@ -1,14 +1,13 @@
 <template>
-  <div class="select">
+  <div class="autocomplete">
     <Menu @close="validate">
       <template #activator="{ open }">
         <TextField
-          :model-value="displayed"
-          readonly
+          v-model="search"
           :disabled="disabled"
           :label="label"
           :error="internalError || error ? true : false"
-          :icon="!open ? 'expand_more' : 'expand_less'"
+          icon="search"
         />
       </template>
       <template #default>
@@ -17,7 +16,7 @@
           :get-option-value="getOptionValue"
           :get-option-label="getOptionLabel"
           :is-selected="isSelected"
-          :options="options"
+          :options="optionsFiltered"
         />
       </template>
     </Menu>
@@ -26,7 +25,9 @@
     </Alert>
   </div>
 </template>
+
 <script setup lang="ts">
+import { ref, watch } from "vue";
 import type { Rules } from "@/core/helpers/rules";
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import { computed } from "vue";
@@ -37,13 +38,15 @@ import { isEqual } from "lodash";
 import Alert from "../Alert.vue";
 import OptionsList from "../OptionsList.vue";
 
-interface SelectProps extends FormInputProps<any> {
+interface AutocompleteProps extends FormInputProps<any> {
   multiple?: boolean;
 
   getOptionValue?: (opt: any) => any;
   getOptionLabel?: (opt: any) => string;
 
   options: Array<any>;
+
+  autoFilter?: boolean;
 
   /*
   TODO : this is a duplicate of props in FormInputProps<string | number>
@@ -58,8 +61,11 @@ interface SelectProps extends FormInputProps<any> {
   rules?: Rules;
 }
 
-const props = withDefaults(defineProps<SelectProps>(), {
+const emit = defineEmits(["update:modelValue", "search"]);
+
+const props = withDefaults(defineProps<AutocompleteProps>(), {
   multiple: false,
+  autoFilter: false,
   getOptionLabel: (opt: any) => {
     if (typeof opt === "string" || typeof opt === "number") {
       return opt;
@@ -73,14 +79,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
     return opt?.value;
   },
 });
-const emit = defineEmits([
-  "update:modelValue",
-  "update:error",
-  "blur",
-  "focus",
-  "input",
-  "change",
-]);
+const search = ref("");
 
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
@@ -133,22 +132,42 @@ const displayed = computed<string>(() => {
   }
   return props.getOptionLabel(selected.value);
 });
+
+const optionsFiltered = computed(() => {
+  if (props.autoFilter) {
+    return props.options.filter((opt: any) =>
+      props
+        .getOptionLabel(opt)
+        .toLowerCase()
+        .includes((search.value || "").toLowerCase())
+    );
+  }
+  return props.options;
+});
+
+watch(
+  () => search.value,
+  (searchValue) => {
+    if (searchValue !== displayed.value) {
+      emit("search", searchValue);
+    }
+  }
+);
+
+watch(
+  () => internalValue.value,
+  (val) => {
+    search.value = displayed.value;
+  },
+  {
+    immediate: true,
+  }
+);
 </script>
 
 <style lang="scss">
-.select {
+.autocomplete {
   display: grid;
   gap: spacing(1);
-}
-.select-option {
-  cursor: pointer;
-  padding-top: spacing(0.75);
-  padding-bottom: spacing(0.75);
-  &.selected {
-    color: color("primary", 500);
-  }
-  &:hover {
-    color: color("primary", 500);
-  }
 }
 </style>
