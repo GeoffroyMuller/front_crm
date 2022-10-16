@@ -13,7 +13,7 @@
         :key="index"
         @click="$emit('row-click', item)"
       >
-        <td v-for="column in columns" :key="column.key" class="p-1 align-top">
+        <td v-for="column in columns" :key="column.key" :style="styleItem">
           <div v-if="!$slots[`${column.key as string}`]">
             {{
               (column?.data ? column?.data(item) : undefined) ||
@@ -42,6 +42,7 @@ import type { Column, Item } from "./types";
 interface TableProps<Item> {
   columns: Array<Column> | null;
   items: Array<Item>;
+  styleItem?: string;
 }
 
 const props = withDefaults(defineProps<TableProps<Item>>(), {
