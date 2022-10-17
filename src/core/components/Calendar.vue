@@ -26,10 +26,10 @@
         v-for="day in datesToDisplay"
         :key="day.id"
         :class="{
-          'not-this-month': day.month != current.month && day.year == current.year,
+          'not-this-month': day.month != current.month || day.year != current.year,
         }"
       >
-        {{ day.day }}
+        {{ day.day }}/{{ day.month }}/{{ day.year }}
       </div>
     </div>
   </div>
