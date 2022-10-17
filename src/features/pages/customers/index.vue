@@ -32,6 +32,7 @@
         <Button @click.stop="deleteById(item)" color="danger" icon="delete" />
       </template>
     </Table>
+    <DataTable> </DataTable>
     <Button @click="$router.push(`/customers/new`)" class="add-btn" icon="add">
       Ajouter un utilisateur
     </Button>
@@ -48,6 +49,7 @@ import type Customer from "@/features/types/customer";
 import usePage from "@/features/composables/page";
 import Table from "@/core/components/Table.vue";
 import dayjs from "dayjs";
+import DataTable from "../../../core/components/DataTable.vue";
 
 const customersStore = useCustomerStore();
 const ui = useUI();
