@@ -21,6 +21,7 @@
         @blur="validate"
         v-bind="$props"
         ref="internalRef"
+        :type="type"
         v-model="internalValue"
         v-if="!multiline"
       />
@@ -29,7 +30,9 @@
       </div>
     </div>
     <Alert
-      v-if="(internalError || error) && typeof (internalError || error) === 'string'"
+      v-if="
+        (internalError || error) && typeof (internalError || error) === 'string'
+      "
     >
       {{ internalError || error }}
     </Alert>
@@ -52,6 +55,7 @@ interface InputProps extends FormInputProps<string | number> {
   */
   label?: string;
   modelValue?: any;
+  type?: string;
   readonly?: boolean;
   name?: string;
   error?: string | boolean;
@@ -59,7 +63,9 @@ interface InputProps extends FormInputProps<string | number> {
   rules?: Rules;
 }
 
-const props = withDefaults(defineProps<InputProps>(), {});
+const props = withDefaults(defineProps<InputProps>(), {
+  type: "text",
+});
 const emit = defineEmits([
   "update:modelValue",
   "update:error",
