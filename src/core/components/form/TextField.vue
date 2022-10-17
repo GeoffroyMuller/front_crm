@@ -21,7 +21,6 @@
         @blur="validate"
         v-bind="$props"
         ref="internalRef"
-        :type="type"
         v-model="internalValue"
         v-if="!multiline"
       />
@@ -61,6 +60,8 @@ interface InputProps extends FormInputProps<string | number> {
   error?: string | boolean;
   disabled?: boolean;
   rules?: Rules;
+  min?: number | undefined | null;
+  max?: number | undefined | null;
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
