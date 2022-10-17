@@ -30,14 +30,20 @@
       </tr>
     </tbody>
     <tfoot>
-      <slot name="footer"></slot>
+      <tr>
+        <td :colspan="internalColumns?.length">
+          <slot class="table-footer" name="footer"></slot>
+        </td>
+      </tr>
     </tfoot>
   </table>
 </template>
 
 <script setup lang="ts">
-import { withDefaults, defineProps } from "vue";
+import { withDefaults, defineProps, onMounted, ref, watch } from "vue";
+import { isNavigationFailure } from "vue-router";
 import type { Column, Item } from "./types";
+import { isNil } from "lodash";
 
 interface TableProps<Item> {
   columns: Array<Column> | null;
@@ -50,6 +56,9 @@ const props = withDefaults(defineProps<TableProps<Item>>(), {
   items: Array,
 });
 
+const internalColumns = ref<Array<Column> | null>(null);
+const itemsIsInit = ref<boolean>(false);
+
 const getColumnsByItems = () => {
   const columnsKey: string[] = [];
   props.items.forEach((item) => {
@@ -61,7 +70,16 @@ const getColumnsByItems = () => {
   return columnsRes;
 };
 
-const internalColumns = props.columns || getColumnsByItems();
+watch(
+  () => props.items,
+  (val) => {
+    if (isNil(val)) return;
+    if (!itemsIsInit.value) {
+      internalColumns.value = props.columns || getColumnsByItems();
+    }
+  },
+  { immediate: false }
+);
 </script>
 
 <style lang="scss" scoped>
@@ -92,5 +110,8 @@ table {
       border-bottom: 0;
     }
   }
+}
+.table-footer {
+  width: 100%;
 }
 </style>
