@@ -1,13 +1,18 @@
 <template>
-  <Table>
+  <Table v-bind="$props">
     <template #footer>
-      <Pagination />
+      <div class="data-table-pagination">
+        <Pagination
+          :current-page="currentPage"
+          @update:current-page="(val) => $emit('update:currentPage', val)"
+        />
+      </div>
     </template>
   </Table>
 </template>
 
 <script setup lang="ts">
-import { withDefaults, defineProps } from "vue";
+import { withDefaults, defineProps, ref, watch } from "vue";
 import Table from "./Table.vue";
 import type { Column, Item } from "./types";
 import Pagination from "./Pagination.vue";
@@ -16,14 +21,20 @@ interface DataTableProps<Item> {
   columns: Array<Column> | null;
   items: Array<Item>;
   itemsPerPage?: number;
+  currentPage?: number;
 }
 
 const props = withDefaults(defineProps<DataTableProps<Item>>(), {
   columns: null,
   items: Array,
   itemsPerPage: 5,
-  currentPage: 1,
 });
+const emit = defineEmits(["update:currentPage"]);
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.data-table-pagination {
+  margin: auto;
+  width: 100%;
+}
+</style>
