@@ -29,7 +29,7 @@
           'not-this-month': day.month != current.month && day.year == current.year,
         }"
       >
-        {{ day.id }}
+        {{ day.day }}
       </div>
     </div>
   </div>
