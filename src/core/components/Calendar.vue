@@ -41,6 +41,8 @@ import Button from "./Button.vue";
 
 const calendarContent = ref();
 
+// code for infinite scroll
+/* 
 function handleScroll() {
   const scrollPosition = calendarContent.value.scrollTop;
   const pageBottom = calendarContent.value.offsetHeight;
@@ -53,13 +55,13 @@ function handleScroll() {
     decrementMonth();
     scrollToCenter();
   }
-}
 
 onMounted(() => {
-  calendarContent.value.style.height = `calc(100vh - ${calendarContent.value.offsetTop}px)`;
-  scrollToCenter();
-  calendarContent.value.addEventListener("scroll", handleScroll);
+  //calendarContent.value.style.height = `calc(100vh - ${calendarContent.value.offsetTop}px)`;
+  //scrollToCenter();
+  //calendarContent.value.addEventListener("scroll", handleScroll);
 });
+*/
 
 const monthNames = dayjs()
   .localeData()
@@ -69,12 +71,62 @@ const monthNames = dayjs()
 const weekdaysName = dayjs().localeData().weekdays();
 
 const datesToDisplay = computed(() => {
+  const daysInCurrentMonth = dayjs().month(current.value.month).daysInMonth();
   const res: Array<{
     day: number;
     year: number;
     month: number;
     id?: string;
   }> = [];
+  const firstDayCurrentMonth = dayjs()
+    .year(current.value.year)
+    .month(current.value.month)
+    .date(0)
+    .day();
+  const beforeMonth = current.value.month === 0 ? 11 : current.value.month - 1;
+  const beforeMonthYear =
+    current.value.month === 0 ? current.value.year - 1 : current.value.year;
+  const daysInBeforeMonth = dayjs()
+    .month(current.value.month)
+    .subtract(1, "month")
+    .daysInMonth();
+  for (
+    let day = daysInBeforeMonth;
+    day > daysInBeforeMonth - firstDayCurrentMonth;
+    day--
+  ) {
+    res.unshift({
+      day,
+      month: beforeMonth,
+      year: beforeMonthYear,
+    });
+  }
+
+  for (let day = 1; day <= daysInCurrentMonth; day++) {
+    res.push({
+      day,
+      month: current.value.month,
+      year: current.value.year,
+    });
+  }
+
+  const limitDay = props.firstDayDisplayIndex > 0 ? props.firstDayDisplayIndex - 1 : 7;
+  let date = dayjs()
+    .year(res[res.length - 1].year)
+    .month(res[res.length - 1].month)
+    .date(res[res.length - 1].day);
+  console.error({
+    "date.day": date.day(),
+    "props.firstDayDisplayIndex": props.firstDayDisplayIndex,
+  });
+  while (date.day() != limitDay) {
+    res.push({
+      day: date.date(),
+      month: date.month(),
+      year: date.year(),
+    });
+    date = date.add(1, "day");
+  }
 
   return res.map((date) => ({
     ...date,
@@ -152,7 +204,6 @@ const props = withDefaults(defineProps<CalendarProps>(), {
     border-left: none;
     border-top: none;
     overflow-y: auto;
-    height: 1px;
     .day {
       border: solid 1px black;
       border-bottom: none;
