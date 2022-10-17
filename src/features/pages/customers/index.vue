@@ -1,6 +1,6 @@
 <template>
   <div id="customers-page">
-    <Table
+    <!--     <Table
       :columns="[
         {
           title: 'Lastname',
@@ -31,8 +31,33 @@
       <template #action="{ item }">
         <Button @click.stop="deleteById(item)" color="danger" icon="delete" />
       </template>
-    </Table>
-    <DataTable> </DataTable>
+    </Table> -->
+    <DataTable
+      :columns="[
+        {
+          title: 'Lastname',
+          key: 'lastname',
+        },
+        {
+          title: 'Firstname',
+          key: 'firstname',
+        },
+        {
+          title: 'Email',
+          key: 'email',
+        },
+        {
+          title: 'Birthdate',
+          key: 'birthdate',
+          data: (item: Customer) => formatDate(item.birthdate)
+        },
+        {
+          title: '',
+          key: 'action',
+        },
+      ]"
+      :items="customers"
+    />
     <Button @click="$router.push(`/customers/new`)" class="add-btn" icon="add">
       Ajouter un utilisateur
     </Button>
