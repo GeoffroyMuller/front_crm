@@ -7,6 +7,7 @@
           :model-value="displayed"
           icon="calendar_month"
           :error="internalError || error ? true : false"
+          readonly
         />
       </template>
       <template #default>
@@ -162,7 +163,7 @@ const daysToDisplay = computed(() => {
   }
   return res.map((date) => ({
     ...date,
-    id: date.day + "-" + date.month + "-" + date.year,
+    id: date.day + "-" + date.month + "-" + date.year + `current-${current.value.month}`,
   }));
 });
 
