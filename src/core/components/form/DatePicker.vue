@@ -163,7 +163,7 @@ const daysToDisplay = computed(() => {
   }
   return res.map((date) => ({
     ...date,
-    id: date.day + "-" + date.month + "-" + date.year,
+    id: date.day + "-" + date.month + "-" + date.year + `current-${current.value.month}`,
   }));
 });
 

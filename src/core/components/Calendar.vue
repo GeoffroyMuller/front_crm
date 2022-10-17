@@ -29,7 +29,7 @@
           'not-this-month': day.month != current.month && day.year == current.year,
         }"
       >
-        {{ day.day }}
+        {{ day.id }}
       </div>
     </div>
   </div>
@@ -115,10 +115,6 @@ const datesToDisplay = computed(() => {
     .year(res[res.length - 1].year)
     .month(res[res.length - 1].month)
     .date(res[res.length - 1].day);
-  console.error({
-    "date.day": date.day(),
-    "props.firstDayDisplayIndex": props.firstDayDisplayIndex,
-  });
   while (date.day() != limitDay) {
     res.push({
       day: date.date(),
@@ -130,7 +126,7 @@ const datesToDisplay = computed(() => {
 
   return res.map((date) => ({
     ...date,
-    id: date.day + "-" + date.month + "-" + date.year,
+    id: date.day + "-" + date.month + "-" + date.year + `current-${current.value.month}`,
   }));
 });
 
