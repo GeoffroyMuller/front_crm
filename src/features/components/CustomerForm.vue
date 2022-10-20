@@ -1,7 +1,14 @@
 <template>
-  <Card id="edit-customer-page" title="Edit Customer Form" v-if="isPageLoaded">
+  <div class="edit-customer-form" v-if="isPageLoaded">
     <Form :defaultValue="customer" @submit="handleSubmit">
       <template v-slot:default="{ hasError }">
+        <div class="title">
+          {{
+            isAddAction
+              ? "Ajout d'un utilisateur"
+              : `${customer.firstname} ${customer.lastname}`
+          }}
+        </div>
         <TextField name="firstname" label="Prenom" :rules="[$rules.required()]" />
         <TextField name="lastname" label="Nom" :rules="[$rules.required()]" />
         <TextField name="email" type="email" label="Email" :rules="[$rules.required()]" />
@@ -62,14 +69,12 @@
         <Button v-else type="submit" :loading="loading" :disabled="hasError" icon="save">
           Modifier
         </Button>
-
-        <Button @click.stop="sidebarOpen = true">Open sidebar</Button>
-        <Sidebar v-model:open="sidebarOpen">
-          <CustomerForm :customerId="customer?.id" />
-        </Sidebar>
       </template>
     </Form>
-  </Card>
+  </div>
+  <div v-else>
+    <Spinner />
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -80,65 +85,44 @@ import Card from "@/core/components/Card.vue";
 import TextField from "@/core/components/form/TextField.vue";
 import Form from "@/core/components/form/Form.vue";
 import { isNil } from "lodash";
-import Button from "../../../core/components/Button.vue";
-import usePage from "@/features/composables/page";
-import { useRouter } from "vue-router";
+import Button from "@/core/components/Button.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import Select from "@/core/components/form/Select.vue";
 import DatePicker from "@/core/components/form/DatePicker.vue";
 import Autocomplete from "@/core/components/form/Autocomplete.vue";
 import RadioGroup from "@/core/components/form/RadioGroup.vue";
 import Switch from "@/core/components/form/Switch.vue";
-import Sidebar from "@/core/components/Sidebar.vue";
-import CustomerForm from "../../components/CustomerForm.vue";
+import Spinner from "@/core/components/Spinner.vue";
+
+interface CustomerFormProps {
+  customerId?: number | string;
+  isAddAction?: boolean;
+}
+
+const props = withDefaults(defineProps<CustomerFormProps>(), {});
+const emit = defineEmits(["done"]);
 
 const customerStore = useCustomerStore();
 
-const router = useRouter();
 const route = useRoute();
 
-const isAddAction = computed(() => !route.params.id);
-
-const isPageLoaded = computed(() => isAddAction.value || !isNil(customer.value));
+const isPageLoaded = computed(() => props.isAddAction || !isNil(customer.value));
 
 const loading = ref(false);
-const sidebarOpen = ref(false);
 
 const customer = computed(() => {
-  if (isAddAction.value) {
+  if (props.isAddAction) {
     return null;
   }
-  return customerStore.getById(route.params.id as string);
+  return customerStore.getById(props.customerId as string);
 });
-
-const { setLoading: setPageLoading } = usePage(
-  computed(() => {
-    if (!isAddAction.value) {
-      return !isNil(customer.value?.id)
-        ? `${customer.value.firstname}${
-            customer.value.lastname ? " " + customer.value.lastname : ""
-          }`
-        : "";
-    } else {
-      return "New user";
-    }
-  })
-);
 
 const { toast, confirm } = useUI();
-
-onMounted(async () => {
-  if (!isAddAction.value && isNil(customer.value?.id)) {
-    setPageLoading(true);
-  }
-  await customerStore.fetchById(route.params.id);
-  setPageLoading(false);
-});
 
 async function handleSubmit(data: any) {
   loading.value = true;
   try {
-    if (isAddAction.value) {
+    if (props.isAddAction) {
       await customerStore.create(data);
       toast({
         type: "success",
@@ -152,8 +136,8 @@ async function handleSubmit(data: any) {
           customer.value.lastname ? " " + customer.value.lastname : ""
         }</b> modifié avec succes`,
       });
-      router.push("/customers");
     }
+    emit("done");
   } catch (err) {
     console.error(err);
     toast({
@@ -166,7 +150,7 @@ async function handleSubmit(data: any) {
 </script>
 
 <style lang="scss" scoped>
-#edit-customer-page {
+.edit-customer-form {
   form {
     width: 100%;
     @include flex(col, center, flex-start, 1.5);

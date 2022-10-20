@@ -29,9 +29,7 @@
       </div>
     </div>
     <Alert
-      v-if="
-        (internalError || error) && typeof (internalError || error) === 'string'
-      "
+      v-if="(internalError || error) && typeof (internalError || error) === 'string'"
     >
       {{ internalError || error }}
     </Alert>

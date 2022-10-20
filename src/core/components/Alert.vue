@@ -14,5 +14,7 @@ const props = withDefaults(defineProps<AlertProps>(), {});
 <style lang="scss">
 .alert {
   color: color("danger", 500);
+  width: fit-content;
+  max-width: 100%;
 }
 </style>
