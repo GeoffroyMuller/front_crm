@@ -6,7 +6,7 @@ function documentClickHandlerFactory(
 ) {
   return (el: MouseEvent) => {
     //@ts-ignore
-    if (!el.target?.contains(target)) {
+    if (!target?.contains(el.target)) {
       binding.value(el);
     }
   };

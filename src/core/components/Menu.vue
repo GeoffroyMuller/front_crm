@@ -1,11 +1,10 @@
 <template>
-  <div :class="!needClickToSwitchOpen ? 'hover-menu' : ''" class="menu" @click.stop>
-    <div
-      class="activator"
-      @click="open = !open"
-      ref="activator"
-      v-click-outside="onClickOutside"
-    >
+  <div
+    v-click-outside="onClickOutside"
+    :class="!needClickToSwitchOpen ? 'hover-menu' : ''"
+    class="menu"
+  >
+    <div class="activator" @click="open = true" ref="activator">
       <slot name="activator" :open="open" />
     </div>
     <Card
@@ -24,7 +23,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { nextTick, onMounted, ref, watch } from "vue";
+import { nextTick, ref, watch } from "vue";
 import Card from "./Card.vue";
 
 const content = ref();
@@ -37,8 +36,6 @@ interface MenuProps {
 const props = withDefaults(defineProps<MenuProps>(), {
   needClickToSwitchOpen: true,
 });
-
-onMounted(() => {});
 
 const open = ref(false);
 
