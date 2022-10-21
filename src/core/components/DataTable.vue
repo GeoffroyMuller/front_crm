@@ -1,5 +1,5 @@
 <template>
-  <Table v-bind="$props">
+  <Table v-bind="$props" @row-click="($item) => $emit('row-click', $item)">
     <template #footer>
       <div class="data-table-pagination">
         <Pagination

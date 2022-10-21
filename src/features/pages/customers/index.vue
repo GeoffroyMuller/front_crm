@@ -33,6 +33,7 @@
       </template>
     </Table> -->
     <DataTable
+      @row-click="(customer) => $router.push(`/customers/${customer.id}`)"
       :columns="[
         {
           title: 'Lastname',
