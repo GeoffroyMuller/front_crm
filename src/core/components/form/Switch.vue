@@ -60,12 +60,11 @@ const { internalValue, internalError, validate } = useValidatable({
   }
   .switch {
     border-radius: 10px;
-    border: solid 1px black;
+    border: solid 1px #d1d5db;
     width: $width;
     height: $height;
     position: relative;
     &.selected {
-      border: solid 1px color("primary", 500);
       background-color: color("primary", 50);
       transition: 0.5s ease;
       .switch-inner {
