@@ -119,11 +119,6 @@ $menuHeight: spacing(10);
   }
   .nav {
     width: $miniNavWidth;
-    .logo-container {
-      justify-content: center;
-      padding-right: 0;
-      padding-left: 0;
-    }
   }
 }
 .loading {
@@ -205,8 +200,8 @@ $menuHeight: spacing(10);
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding-left: spacing(2.5);
-    padding-right: spacing(2.5);
+    padding-left: 20px;
+    padding-right: 20px;
     height: spacing(10);
     & span {
       font-weight: 600;
