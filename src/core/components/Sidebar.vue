@@ -7,15 +7,14 @@
       }"
       @click.stop
     >
-      <Card>
+      <div>
         <slot />
-      </Card>
+      </div>
     </div>
   </Teleport>
 </template>
 <script setup lang="ts">
 import useEventListener from "../helpers/vue/composables/eventListener";
-import Card from "./Card.vue";
 
 interface SidebarProps {
   open: boolean;
@@ -42,6 +41,9 @@ useEventListener(document.body, "click", () => {
   transition: max-width 0.3s ease;
   z-index: 5;
   width: fit-content;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 10%), 0 8px 10px -6px rgb(0 0 0 / 10%);
+  border: #ebebeb 1px solid;
+  background-color: white;
   > * {
     height: 100%;
     height: 100vh;
