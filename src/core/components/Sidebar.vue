@@ -22,7 +22,7 @@ const emit = defineEmits(["update:open"]);
 
 function onClickOutside() {
   if (props.open) {
-    emit("update:open", !props.open);
+    emit("update:open", false);
   }
 }
 </script>

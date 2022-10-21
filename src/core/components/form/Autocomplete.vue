@@ -142,9 +142,13 @@ const selected = computed(() => {
 });
 
 const displayed = computed<string>(() => {
-  if (props.multiple) {
-    return selected.value.map((v: any) => props.getOptionLabel(v)).join(", ");
+  if (selected.value == null) {
+    return "";
   }
+  if (props.multiple && selected.value?.length == 0)
+    if (props.multiple) {
+      return selected.value.map((v: any) => props.getOptionLabel(v)).join(", ");
+    }
   return props.getOptionLabel(selected.value);
 });
 

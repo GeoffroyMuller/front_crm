@@ -66,10 +66,19 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   }
 }
 
+.button-black,
+.button-white {
+  background-color: #9ca3af;
+  &:hover {
+    background-color: #6b7280;
+  }
+}
+
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .button-#{$key} {
       background-color: map-deep-get($value, 500);
+      color: white;
 
       &:hover:not(:disabled) {
         background-color: map-deep-get($value, 600);

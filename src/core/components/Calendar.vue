@@ -1,7 +1,7 @@
 <template>
-  <div class="calendar">
+  <component :is="isCard ? Card : 'div'" class="calendar">
     <div class="calendar-header">
-      <div>{{ monthNames[current.month] }} {{ current.year }}</div>
+      <div class="date">{{ monthNames[current.month] }} {{ current.year }}</div>
       <div class="buttons">
         <IconButton name="chevron_left" @click.stop="decrementMonth()" />
         <IconButton name="chevron_right" @click.stop="incrementMonth()" />
@@ -15,19 +15,23 @@
         class="day"
         v-for="day in datesToDisplay"
         :key="day.id"
+        @click.stop="clickOnDay(day)"
         :class="{
           'not-this-month': day.month != current.month || day.year != current.year,
         }"
       >
-        {{ day.day }}/{{ day.month }}/{{ day.year }}
+        {{ day.day }}
       </div>
     </div>
-  </div>
+  </component>
 </template>
 <script setup lang="ts">
 import dayjs from "dayjs";
 import { computed, onMounted, ref } from "vue";
-import Button from "./Button.vue";
+import IconButton from "./IconButton.vue";
+import Card from "./Card.vue";
+
+export type Day = { day: number; year: number; month: number; id?: string };
 
 const calendarContent = ref();
 
@@ -62,12 +66,7 @@ const weekdaysName = dayjs().localeData().weekdays();
 
 const datesToDisplay = computed(() => {
   const daysInCurrentMonth = dayjs().month(current.value.month).daysInMonth();
-  const res: Array<{
-    day: number;
-    year: number;
-    month: number;
-    id?: string;
-  }> = [];
+  const res: Array<Day> = [];
   const firstDayCurrentMonth = dayjs()
     .year(current.value.year)
     .month(current.value.month)
@@ -116,7 +115,7 @@ const datesToDisplay = computed(() => {
 
   return res.map((date) => ({
     ...date,
-    id: date.day + "-" + date.month + "-" + date.year + `current-${current.value.month}`,
+    id: `${date.day}-${date.month}-${date.year}-current-${current.value.month}`,
   }));
 });
 
@@ -160,14 +159,21 @@ function decrementMonth() {
   }
 }
 
+function clickOnDay(day: Day) {
+  emit("click", day);
+}
+
 interface CalendarProps {
   // 0 for sunday, 6 for saturday
   firstDayDisplayIndex?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  isCard?: boolean;
 }
 
 const props = withDefaults(defineProps<CalendarProps>(), {
   firstDayDisplayIndex: 1,
 });
+
+const emit = defineEmits(["click"]);
 </script>
 
 <style lang="scss">
@@ -176,7 +182,10 @@ const props = withDefaults(defineProps<CalendarProps>(), {
   .calendar-header {
     border-bottom: solid 1px black;
     @include flex(row, flex-start, center, 1);
-    padding: spacing(2);
+    padding-top: spacing(2);
+    padding-bottom: spacing(2);
+    .date {
+    }
     .buttons {
       display: flex;
       button {
@@ -196,6 +205,10 @@ const props = withDefaults(defineProps<CalendarProps>(), {
       border-right: none;
       height: 180px;
       padding: spacing(1);
+      &:hover {
+        background-color: color("primary", 50);
+        cursor: pointer;
+      }
       &.not-this-month {
         color: rgb(175, 173, 173);
       }
