@@ -168,6 +168,7 @@ $menuHeight: spacing(10);
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    gap: spacing(1.5);
     .auth {
       font-weight: 600;
       color: color("primary", 500);

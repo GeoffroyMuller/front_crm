@@ -1,6 +1,6 @@
 <template>
   <div class="autocomplete">
-    <Menu @close="handleClose">
+    <Menu @close="handleClose" :close-on-second-click="false">
       <template #activator="{ open }">
         <TextField
           v-model="search"

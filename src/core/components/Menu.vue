@@ -4,7 +4,7 @@
     :class="!needClickToSwitchOpen ? 'hover-menu' : ''"
     class="menu"
   >
-    <div class="activator" @click="open = true" ref="activator">
+    <div class="activator" @click="onClickActivator" ref="activator">
       <slot name="activator" :open="open" />
     </div>
     <Card
@@ -31,10 +31,12 @@ const activator = ref();
 
 interface MenuProps {
   needClickToSwitchOpen?: boolean;
+  closeOnSecondClick?: boolean;
 }
 
 const props = withDefaults(defineProps<MenuProps>(), {
   needClickToSwitchOpen: true,
+  closeOnSecondClick: true,
 });
 
 const style = computed(() => {
@@ -48,6 +50,14 @@ const style = computed(() => {
 
   return style;
 });
+
+function onClickActivator() {
+  if (!props.closeOnSecondClick) {
+    open.value = true;
+  } else {
+    open.value = !open.value;
+  }
+}
 
 const open = ref(false);
 
