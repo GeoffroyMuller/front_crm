@@ -56,6 +56,9 @@ function onClickActivator() {
     open.value = true;
   } else {
     open.value = !open.value;
+    if (!open.value) {
+      emit("close");
+    }
   }
 }
 
