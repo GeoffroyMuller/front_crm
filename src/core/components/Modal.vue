@@ -33,14 +33,15 @@ $zIndexModal: 55;
   position: absolute;
   background-color: black;
   opacity: 0.4;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: $zIndexModal;
 }
 .modal {
-  position: absolute;
+  position: fixed;
   top: 40%;
   left: 50%;
   transform: translateX(-50%);
