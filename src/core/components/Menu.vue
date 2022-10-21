@@ -1,6 +1,11 @@
 <template>
   <div :class="!needClickToSwitchOpen ? 'hover-menu' : ''" class="menu" @click.stop>
-    <div class="activator" @click="open = !open" ref="activator">
+    <div
+      class="activator"
+      @click="open = !open"
+      ref="activator"
+      v-click-outside="onClickOutside"
+    >
       <slot name="activator" :open="open" />
     </div>
     <Card
@@ -39,10 +44,6 @@ onMounted(() => {});
 const open = ref(false);
 
 const emit = defineEmits(["close"]);
-
-useEventListener(document.body, "click", () => {
-  onClickOutside();
-});
 
 function onClickOutside() {
   if (open.value) {
