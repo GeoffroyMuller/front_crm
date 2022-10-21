@@ -25,8 +25,12 @@
         </div>
       </div>
 
-      <div class="footer" v-if="!isNavMini">
-        <Button variant="text" color="black" @click="disconnect"> Disconnect </Button>
+      <div class="footer">
+        <Button v-if="!isNavMini" variant="text" color="black" @click="disconnect">
+          Disconnect
+        </Button>
+
+        <IconButton @click="disconnect" name="door_open" v-if="isNavMini" />
       </div>
     </div>
     <div class="page-menu">
