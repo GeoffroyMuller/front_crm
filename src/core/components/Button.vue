@@ -93,7 +93,27 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 
 .button-text {
   background-color: transparent;
-  color: black;
+  color: #6b7280;
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  &:hover {
+    color: #4b5563;
+    &::before {
+      transform: translateX(0);
+      transition: transform 0.3s ease;
+    }
+  }
+  &::before {
+    width: 100%;
+    content: "";
+    transform: translateX(-100%);
+    position: absolute;
+    bottom: 0;
+    height: 1px;
+    background-color: #6b7280;
+    border-radius: 2px;
+  }
 }
 
 @each $key, $value in $colors {

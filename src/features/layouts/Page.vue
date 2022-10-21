@@ -22,7 +22,7 @@
       </div>
 
       <div class="footer">
-        <Button variant="text" color="primary" @click="disconnect"> Disconnect </Button>
+        <Button variant="text" color="black" @click="disconnect"> Disconnect </Button>
       </div>
     </div>
     <div class="page-menu">
@@ -169,7 +169,7 @@ $menuHeight: spacing(10);
     padding: spacing(0.5) spacing(3);
     bottom: 0;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     width: 100%;
   }
   .logo-container {
