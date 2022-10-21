@@ -37,7 +37,7 @@ function onClickOutside() {
   height: 100vh;
   max-width: 0;
   overflow: hidden;
-  transition: max-width 0.3s ease;
+  transition: max-width 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   z-index: 5;
   width: fit-content;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 10%), 0 8px 10px -6px rgb(0 0 0 / 10%);

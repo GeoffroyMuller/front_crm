@@ -1,5 +1,5 @@
 <template>
-  <button class="icon-button">
+  <button class="icon-button" type="button">
     <Icon v-bind="$props" />
   </button>
 </template>

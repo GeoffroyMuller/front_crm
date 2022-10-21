@@ -1,5 +1,5 @@
 <template>
-  <span :class="classes">
+  <span class="icon" :class="classes">
     {{ name }}
   </span>
 </template>
@@ -34,6 +34,10 @@ const props = withDefaults(defineProps<IconProps>(), {
 </script>
 
 <style lang="scss">
+.icon {
+  transition: color 0.15s ease;
+}
+
 .icon-sm {
   font-size: 16px;
 }
