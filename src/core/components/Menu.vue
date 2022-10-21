@@ -41,11 +41,15 @@ const open = ref(false);
 const emit = defineEmits(["close"]);
 
 useEventListener(document.body, "click", () => {
+  onClickOutside();
+});
+
+function onClickOutside() {
   if (open.value) {
     open.value = false;
     emit("close");
   }
-});
+}
 
 function handleClickContent() {
   open.value = false;
