@@ -22,21 +22,7 @@
       </div>
 
       <div class="footer">
-        <Button variant="text" color="primary" @click="modalDisconnectOpen = true">
-          Disconnect
-        </Button>
-        <Modal v-model:open="modalDisconnectOpen">
-          <div>Are you sure your want to disconnect ?</div>
-
-          <div class="actions">
-            <Button variant="text" color="primary" @click="modalDisconnectOpen = false">
-              Cancel
-            </Button>
-            <Button variant="text" color="primary" @click="disconnect">
-              Disconnect
-            </Button>
-          </div>
-        </Modal>
+        <Button variant="text" color="primary" @click="disconnect"> Disconnect </Button>
       </div>
     </div>
     <div class="page-menu">
@@ -70,15 +56,13 @@ import Icon from "@/core/components/Icon.vue";
 import Button from "@/core/components/Button.vue";
 import { useUserStore } from "@/features/stores/user";
 import { useRouter } from "vue-router";
-import Modal from "@/core/components/Modal.vue";
 import Spinner from "@/core/components/Spinner.vue";
 import Menu from "@/core/components/Menu.vue";
 import IconButton from "@/core/components/IconButton.vue";
+import useUI from "@/core/helpers/vue/composables/ui";
 
 const title = ref("");
 const loading = ref<boolean>(false);
-
-const modalDisconnectOpen = ref(false);
 
 const userStore = useUserStore();
 
@@ -87,6 +71,7 @@ const auth = computed(() => {
 });
 
 const router = useRouter();
+const { confirm } = useUI();
 
 const menu = ref([
   { path: "/", title: "Home", icon: "home" },
@@ -95,9 +80,11 @@ const menu = ref([
   { path: "/reservations", title: "Reservations", icon: "calendar_month" },
 ]);
 
-function disconnect() {
-  userStore.disconnect();
-  router.replace("/login");
+async function disconnect() {
+  if (await confirm("Are you sure your want to disconnect ?")) {
+    userStore.disconnect();
+    router.replace("/login");
+  }
 }
 
 provide("layout-page", {
