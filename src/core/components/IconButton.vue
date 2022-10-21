@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<IconButtonProps>(), {});
   height: fit-content;
   border: none;
   transition: background-color 0.15s ease;
+  padding: 0;
   &:hover {
     color: color("primary", 500);
   }

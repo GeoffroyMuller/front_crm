@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div id="container" :class="{ 'mini-nav': isNavMini }">
     <div class="nav">
       <div class="logo-container">
         <!-- <img
@@ -7,7 +7,11 @@
         alt="logo"
         :style="{ height: '50px', width: '50px' }"
       /> -->
-        <span> CRM </span>
+        <span v-if="!isNavMini"> CRM </span>
+        <IconButton
+          @click="isNavMini = !isNavMini"
+          :name="!isNavMini ? 'chevron_left' : 'menu'"
+        />
       </div>
       <div class="nav-items">
         <div
@@ -17,11 +21,11 @@
           class="nav-item"
         >
           <Icon :name="item.icon" color="black" />
-          {{ item.title }}
+          <div v-if="!isNavMini">{{ item.title }}</div>
         </div>
       </div>
 
-      <div class="footer">
+      <div class="footer" v-if="!isNavMini">
         <Button variant="text" color="black" @click="disconnect"> Disconnect </Button>
       </div>
     </div>
@@ -66,6 +70,8 @@ const loading = ref<boolean>(false);
 
 const userStore = useUserStore();
 
+const isNavMini = ref(false);
+
 const auth = computed(() => {
   return userStore.getAuth;
 });
@@ -100,8 +106,26 @@ provide("layout-page", {
 
 <style lang="scss" scoped>
 $navWidth: 240px;
+$miniNavWidth: 60px;
 $menuHeight: spacing(10);
 
+.mini-nav {
+  .page-menu {
+    margin-left: $miniNavWidth;
+  }
+  .page-container {
+    left: $miniNavWidth;
+    width: calc(100% - $miniNavWidth);
+  }
+  .nav {
+    width: $miniNavWidth;
+    .logo-container {
+      justify-content: center;
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+}
 .loading {
   position: absolute;
   top: 50%;
@@ -118,6 +142,7 @@ $menuHeight: spacing(10);
 }
 .page-container {
   position: absolute;
+  transition: left 0.3s ease, width 0.3s ease;
   top: 0;
   left: $navWidth;
   width: calc(100% - $navWidth);
@@ -141,6 +166,7 @@ $menuHeight: spacing(10);
   padding-right: spacing(4);
   height: $menuHeight;
   margin-left: $navWidth;
+  transition: margin-left 0.3s ease;
   z-index: 2;
 
   .buttons {
@@ -164,6 +190,8 @@ $menuHeight: spacing(10);
   width: $navWidth;
   height: 100vh;
   position: fixed;
+  transition: width 0.3s ease;
+
   .footer {
     position: absolute;
     padding: spacing(0.5) spacing(3);
@@ -174,11 +202,11 @@ $menuHeight: spacing(10);
   }
   .logo-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding-left: spacing(4);
-    padding-right: spacing(4);
+    padding-left: spacing(2.5);
+    padding-right: spacing(2.5);
     height: spacing(10);
     & span {
       font-weight: 600;
@@ -188,9 +216,11 @@ $menuHeight: spacing(10);
   .nav-items {
     width: 100%;
     .nav-item {
+      $paddingX: calc(20px - spacing(1));
+
       padding: spacing(1);
-      padding-left: spacing(2.5);
-      padding-right: spacing(2.5);
+      padding-left: $paddingX;
+      padding-right: $paddingX;
       margin-left: spacing(1);
       margin-right: spacing(1);
       gap: spacing(2);
