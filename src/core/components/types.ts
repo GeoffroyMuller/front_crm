@@ -12,12 +12,15 @@ export interface FormInputProps<T> {
 
 export interface Notification {
   id?: string;
-  type: Color;
+  type?: Color;
   message: string;
-  title: string;
+  title?: string;
   duration?: number;
   autoClose?: boolean;
 }
+
+export type ToastFunc = (n: Notification | string) => void;
+export type ConfirmFunc = (c: Confirmation | string) => Promise<boolean>;
 
 export interface Confirmation {
   type?: Notification["type"];
