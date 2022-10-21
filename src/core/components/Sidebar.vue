@@ -6,6 +6,7 @@
         'sidebar-open': open,
       }"
       @click.stop
+      v-click-outside="onClickOutside"
     >
       <div>
         <slot />
@@ -14,19 +15,17 @@
   </Teleport>
 </template>
 <script setup lang="ts">
-import useEventListener from "../helpers/vue/composables/eventListener";
-
 interface SidebarProps {
   open: boolean;
 }
 const props = withDefaults(defineProps<SidebarProps>(), {});
 const emit = defineEmits(["update:open"]);
 
-useEventListener(document.body, "click", () => {
+function onClickOutside() {
   if (props.open) {
     emit("update:open", !props.open);
   }
-});
+}
 </script>
 
 <style lang="scss">

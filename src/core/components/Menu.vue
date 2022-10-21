@@ -25,7 +25,6 @@
 </template>
 <script setup lang="ts">
 import { nextTick, onMounted, ref, watch } from "vue";
-import useEventListener from "../helpers/vue/composables/eventListener";
 import Card from "./Card.vue";
 
 const content = ref();
