@@ -1,11 +1,11 @@
 <template>
   <component :is="isCard ? Card : 'div'" class="calendar">
     <div class="calendar-header">
-      <div class="date">{{ monthNames[current.month] }} {{ current.year }}</div>
       <div class="buttons">
         <IconButton name="chevron_left" @click.stop="decrementMonth()" />
         <IconButton name="chevron_right" @click.stop="incrementMonth()" />
       </div>
+      <div class="date">{{ monthNames[current.month] }} {{ current.year }}</div>
     </div>
     <div class="calendar-content" ref="calendarContent">
       <div v-for="day of weekDaysLabels" :key="day" class="weekday">
