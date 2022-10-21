@@ -14,7 +14,3 @@
     }
     @return $map;
 };
-
-@function boxShadow($shadow) {
-    @return map-deep-get($boxShadow, $shadow);
-}

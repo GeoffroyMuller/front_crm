@@ -5,10 +5,18 @@
         <TextField
           :label="label"
           :model-value="displayed"
-          icon="calendar_month"
           :error="internalError || error ? true : false"
           readonly
-        />
+          @focus="isFocus = true"
+          @blur="isFocus = false"
+        >
+          <template #icon>
+            <Icon
+              name="calendar_month"
+              :color="!isFocus ? 'black' : internalError || error ? 'danger' : 'primary'"
+            />
+          </template>
+        </TextField>
       </template>
       <template #default>
         <div class="datepicker">
@@ -56,6 +64,9 @@ import TextField from "./TextField.vue";
 import Button from "../Button.vue";
 import Alert from "../Alert.vue";
 import IconButton from "../IconButton.vue";
+import Icon from "../Icon.vue";
+
+const isFocus = ref(false);
 
 const monthNames = dayjs()
   .localeData()

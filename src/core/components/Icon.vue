@@ -22,6 +22,7 @@ const classes = computed(() => {
   } else {
     res.push("material-symbols-sharp");
   }
+  res.push(`icon-${props.color}`);
   return res;
 });
 
@@ -44,5 +45,13 @@ const props = withDefaults(defineProps<IconProps>(), {
 }
 .icon-xl {
   font-size: 30px;
+}
+
+@each $key, $value in $colors {
+  @if type-of($value) == "map" {
+    .icon-#{$key} {
+      color: map-deep-get($value, 500);
+    }
+  }
 }
 </style>

@@ -7,8 +7,16 @@
           :disabled="disabled"
           :label="label"
           :error="internalError || error ? true : false"
-          icon="search"
-        />
+          @focus="isFocus = true"
+          @blur="isFocus = false"
+        >
+          <template #icon>
+            <Icon
+              name="search"
+              :color="!isFocus ? 'black' : internalError || error ? 'danger' : 'primary'"
+            />
+          </template>
+        </TextField>
       </template>
       <template #default>
         <OptionsList
@@ -37,6 +45,7 @@ import TextField from "./TextField.vue";
 import { isEqual } from "lodash";
 import Alert from "../Alert.vue";
 import OptionsList from "../OptionsList.vue";
+import Icon from "../Icon.vue";
 
 interface AutocompleteProps extends FormInputProps<any> {
   multiple?: boolean;
@@ -80,6 +89,7 @@ const props = withDefaults(defineProps<AutocompleteProps>(), {
   },
 });
 const search = ref("");
+const isFocus = ref();
 
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,

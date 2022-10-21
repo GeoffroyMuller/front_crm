@@ -12,17 +12,19 @@
     <div class="relative">
       <textarea
         v-if="multiline"
-        @blur="validate"
+        @blur="onBlur"
         v-bind="$props"
         ref="internalRef"
         v-model="internalValue"
+        @focus="onFocus"
       />
       <input
-        @blur="validate"
+        @blur="onBlur"
         v-bind="$props"
         ref="internalRef"
         v-model="internalValue"
         v-if="!multiline"
+        @focus="onFocus"
       />
       <div v-if="(icon || $slots.icon) && !multiline" class="icon-hook">
         <Icon v-if="icon" :name="icon" />
@@ -74,6 +76,14 @@ const emit = defineEmits([
   "input",
   "change",
 ]);
+
+function onBlur() {
+  emit("blur");
+}
+
+function onFocus() {
+  emit("focus");
+}
 
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
