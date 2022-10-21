@@ -5,7 +5,6 @@
       :class="{
         'sidebar-open': open,
       }"
-      @click.stop
       v-click-outside="onClickOutside"
     >
       <div>
