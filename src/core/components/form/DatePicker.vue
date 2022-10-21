@@ -15,18 +15,8 @@
           <div class="datepicker-header">
             <div>{{ monthNames[current.month] }} {{ current.year }}</div>
             <div class="datepicker-header-actions">
-              <Button
-                icon="chevron_left"
-                variant="text"
-                color="black"
-                @click.stop="decrementMonth()"
-              />
-              <Button
-                icon="chevron_right"
-                variant="text"
-                color="black"
-                @click.stop="incrementMonth()"
-              />
+              <IconButton name="chevron_left" @click.stop="decrementMonth()" />
+              <IconButton name="chevron_right" @click.stop="incrementMonth()" />
             </div>
           </div>
           <div class="datepicker-content">
@@ -65,6 +55,7 @@ import Menu from "../Menu.vue";
 import TextField from "./TextField.vue";
 import Button from "../Button.vue";
 import Alert from "../Alert.vue";
+import IconButton from "../IconButton.vue";
 
 const monthNames = dayjs()
   .localeData()

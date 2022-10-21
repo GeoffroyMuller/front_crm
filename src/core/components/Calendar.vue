@@ -3,18 +3,8 @@
     <div class="calendar-header">
       <div>{{ monthNames[current.month] }} {{ current.year }}</div>
       <div class="buttons">
-        <Button
-          icon="chevron_left"
-          variant="text"
-          color="black"
-          @click.stop="decrementMonth()"
-        />
-        <Button
-          icon="chevron_right"
-          variant="text"
-          color="black"
-          @click.stop="incrementMonth()"
-        />
+        <IconButton name="chevron_left" @click.stop="decrementMonth()" />
+        <IconButton name="chevron_right" @click.stop="incrementMonth()" />
       </div>
     </div>
     <div class="calendar-content" ref="calendarContent">
