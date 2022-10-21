@@ -2,7 +2,7 @@
   <div id="login-container">
     <div id="login-card">
       <TextField label="Email" v-model="formData.email" />
-      <TextField label="Password" v-model="formData.password" />
+      <PasswordInput label="Password" v-model="formData.password" />
       <div id="login-actions">
         <Button @click="login" :loading="loading"> Login </Button>
       </div>
@@ -16,6 +16,7 @@ import TextField from "@/core/components/form/TextField.vue";
 import Button from "@/core/components/Button.vue";
 import { useUserStore } from "@/features/stores/user";
 import { useRouter } from "vue-router";
+import PasswordInput from "@/core/components/form/PasswordInput.vue";
 
 const userStore = useUserStore();
 

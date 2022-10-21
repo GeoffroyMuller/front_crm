@@ -49,7 +49,7 @@
         </Button>
         <Menu>
           <template #activator>
-            <Icon name="notifications" />
+            <IconButton name="notifications" />
           </template>
           <template #default> dqsjbsqdnsqdbhs </template>
         </Menu>
@@ -73,6 +73,7 @@ import { useRouter } from "vue-router";
 import Modal from "@/core/components/Modal.vue";
 import Spinner from "@/core/components/Spinner.vue";
 import Menu from "@/core/components/Menu.vue";
+import IconButton from "@/core/components/IconButton.vue";
 
 const title = ref("");
 const loading = ref<boolean>(false);

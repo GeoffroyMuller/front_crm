@@ -24,8 +24,9 @@
         v-model="internalValue"
         v-if="!multiline"
       />
-      <div v-if="icon && !multiline" class="icon-hook">
-        <Icon :name="icon" />
+      <div v-if="(icon || $slots.icon) && !multiline" class="icon-hook">
+        <Icon v-if="icon" :name="icon" />
+        <slot name="icon" />
       </div>
     </div>
     <Alert

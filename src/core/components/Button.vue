@@ -47,6 +47,8 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.15s ease;
+  user-select: none;
 
   .content {
     display: flex;
@@ -70,7 +72,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
       background-color: map-deep-get($value, 500);
 
       &:hover:not(:disabled) {
-        background-color: map-deep-get($value, 700);
+        background-color: map-deep-get($value, 600);
       }
 
       &:disabled {

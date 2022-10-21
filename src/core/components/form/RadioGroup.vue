@@ -137,7 +137,6 @@ function handleClickOption(opt: any) {
         }
       }
       &.error {
-        color: color("danger", 500);
         .btn {
           border: solid 1px color("danger", 500);
           > * {
