@@ -213,9 +213,11 @@ $borderRadius: map-deep-get($rounded, "md");
       border-radius: $borderRadius $borderRadius 0 0;
     }
     .days {
-      border-right: 0;
       border-top: none;
       border-radius: 0 0 $borderRadius $borderRadius;
+      :nth-child(7n) {
+        border-right: 0;
+      }
     }
     overflow-y: auto;
     .day {
