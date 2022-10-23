@@ -229,8 +229,6 @@ $menuHeight: spacing(10);
       justify-content: flex-start;
       align-items: center;
       cursor: pointer;
-      font-weight: 500;
-      font-size: 14px;
       transition: all 0.3s;
       &:hover {
         background-color: color("primary", 100);

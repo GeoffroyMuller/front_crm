@@ -1,7 +1,4 @@
 <template>
-  <pre class="code" v-if="value">
-  {{ value }}
-  </pre>
   <Form :defaultValue="value" @submit="handleSubmit" class="reservation-form">
     <template v-slot:default="{ hasError }">
       <div class="title">
@@ -9,6 +6,9 @@
       </div>
 
       <div class="reservation-form-content">
+        <pre class="code" v-if="value">
+          {{ value }}
+        </pre>
         <Autocomplete
           :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
           :getOptionValue="(opt) => opt.id"
