@@ -57,9 +57,7 @@
                 "lastname": "ROBERT",
                 "gender": "M", 
                 "birthdate": "2022-10-05", 
-                "city": "Metz", 
-                "valid": false,
-                "description": "Cette utilisateur est un habitué, \nIl vient très souvent ici.\n\nMerci de le prioriser.\n\nSigner:\nLa direction."
+                "city": "Metz"
             },
             {
                 "id": 2,
@@ -68,8 +66,7 @@
                 "lastname": "MARTIN",
                 "gender": "M", 
                 "birthdate": "2022-10-05", 
-                "city": "Metz", 
-                "valid": false 
+                "city": "Metz"
             },
             { 
                 "id": 3,
@@ -78,8 +75,7 @@
                 "lastname": "MULLER", 
                 "gender": "M", 
                 "birthdate": "2022-10-05", 
-                "city": "Metz", 
-                "valid": false 
+                "city": "Metz"
             },
             {
                 "id": 4,
@@ -88,8 +84,7 @@
                 "lastname": "DUPONT",
                 "gender": "M", 
                 "birthdate": "2022-10-05", 
-                "city": "Metz", 
-                "valid": false 
+                "city": "Metz"
             }
         ]
     }

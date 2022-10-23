@@ -40,6 +40,7 @@ import Button from "@/core/components/Button.vue";
 import type Reservation from "../types/reservation";
 import Autocomplete from "../../core/components/form/Autocomplete.vue";
 import { useCustomerStore } from "../stores/customers";
+import dayjs from "dayjs";
 
 interface ReservationFormProps {
   value?: Reservation;
@@ -61,7 +62,8 @@ const title = computed(() => {
   }
 
   const reservation = props.value as Reservation;
-  return `${reservation.customer?.firstname} ${reservation.customer?.lastname}`;
+  return `${reservation.customer?.firstname} ${reservation.customer?.lastname} - 
+  ${dayjs(reservation.date).format("DD/MM/YYYY")}`;
 });
 
 const loading = ref(false);
