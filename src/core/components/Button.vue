@@ -69,6 +69,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 .button-black,
 .button-white {
   background-color: #9ca3af;
+  color: white;
   &:hover {
     background-color: #6b7280;
   }
