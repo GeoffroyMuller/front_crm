@@ -8,19 +8,24 @@
       <div class="date">{{ monthNames[current.month] }} {{ current.year }}</div>
     </div>
     <div class="calendar-content" ref="calendarContent">
-      <div v-for="day of weekDaysLabels" :key="day" class="weekday">
-        {{ day }}
+      <div class="weekdays">
+        <div v-for="day of weekDaysLabels" :key="day" class="weekday">
+          {{ day }}
+        </div>
       </div>
-      <div
-        class="day"
-        v-for="day in datesToDisplay"
-        :key="day.id"
-        @click.stop="clickOnDay(day)"
-        :class="{
-          'not-this-month': day.month != current.month || day.year != current.year,
-        }"
-      >
-        {{ day.day }}
+      <div class="days">
+        <div
+          class="day"
+          v-for="day in datesToDisplay"
+          :key="day.id"
+          @click.stop="clickOnDay(day)"
+          :class="{
+            'not-this-month': day.month != current.month || day.year != current.year,
+          }"
+        >
+          {{ day.day }}
+          <slot name="mounth-day" :day="day" />
+        </div>
       </div>
     </div>
   </component>
@@ -177,10 +182,11 @@ const emit = defineEmits(["click"]);
 </script>
 
 <style lang="scss">
+$borderColor: #dbdcdc;
+$borderRadius: map-deep-get($rounded, "md");
+
 .calendar {
-  border-radius: map-deep-get($rounded, "sm");
   .calendar-header {
-    border-bottom: solid 1px black;
     @include flex(row, flex-start, center, 1);
     padding-top: spacing(2);
     padding-bottom: spacing(2);
@@ -194,17 +200,27 @@ const emit = defineEmits(["click"]);
     }
   }
   .calendar-content {
-    @include grid(7, 0, 0);
-    border: solid 1px black;
-    border-left: none;
-    border-top: none;
+    .weekdays,
+    .days {
+      @include grid(7, 0, 0);
+      border: 1px solid $borderColor;
+    }
+    .weekdays {
+      border-bottom: 0;
+      border-radius: $borderRadius $borderRadius 0 0;
+    }
+    .days {
+      border-right: 0;
+      border-top: none;
+      border-radius: 0 0 $borderRadius $borderRadius;
+    }
     overflow-y: auto;
     .day {
-      border: solid 1px black;
-      border-bottom: none;
-      border-right: none;
       height: 180px;
       padding: spacing(1);
+      border: 1px solid $borderColor;
+      border-left: none;
+      border-bottom: none;
       &:hover {
         background-color: color("primary", 50);
         cursor: pointer;
@@ -214,11 +230,11 @@ const emit = defineEmits(["click"]);
       }
     }
     .weekday {
-      border: solid 1px black;
-      border-bottom: none;
-      border-right: none;
-      border-top: none;
       padding: spacing(1);
+      border-right: 1px solid $borderColor;
+      &:last-child {
+        border-right: none;
+      }
     }
   }
 }

@@ -25,6 +25,9 @@ import Sidebar from "@/core/components/Sidebar.vue";
 import ReservationForm from "../../components/ReservationForm.vue";
 import Tabs from "@/core/components/Tabs.vue";
 import DataTable from "@/core/components/DataTable.vue";
+import usePage from "@/features/composables/page";
+
+usePage("Reservations");
 
 const sidebarOpen = ref(false);
 const task = ref();
