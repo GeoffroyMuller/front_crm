@@ -20,9 +20,7 @@
                 {{ reservation.customer.firstname }}
                 {{ reservation.customer.lastname }}
               </div>
-              <div>
-                {{ reservation.customer.email }}
-              </div>
+              <div>Reservation : {{ reservation.date }}</div>
             </Card>
           </div>
         </template>
@@ -84,6 +82,7 @@ function clickOnDay(day: Day) {
 }
 
 function clickOnReservation(reservation: Reservation) {
+  sidebarOpen.value = true;
   selectedReservation.value = reservation;
 }
 
@@ -108,7 +107,8 @@ function getDayReservations(day: Day): Array<Reservation> {
   .reservation {
     overflow: hidden;
     padding: spacing(0.5);
-    background-color: color("primary", 50);
+    background-color: rgb(84, 84, 84);
+    color: white;
   }
 }
 </style>
