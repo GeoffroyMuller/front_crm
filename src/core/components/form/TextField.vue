@@ -115,6 +115,7 @@ const { internalValue, internalError, validate } = useValidatable({
   }
   input,
   textarea {
+    min-height: 33px;
     background-color: white;
     border-radius: map-get($rounded, "sm");
     display: block;
