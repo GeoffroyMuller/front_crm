@@ -1,6 +1,6 @@
 <template>
   <div class="select">
-    <Menu @close="validate">
+    <Menu @close="validate" :disabled="disabled">
       <template #activator="{ open }">
         <TextField
           :model-value="displayed"
