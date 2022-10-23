@@ -6,7 +6,11 @@
     <div class="radio-buttons">
       <div
         class="radio-button"
-        :class="{ selected: isSelected(opt), error: internalError || error }"
+        :class="{
+          selected: isSelected(opt),
+          error: internalError || error,
+          disabled: disabled,
+        }"
         v-for="opt of options"
         :key="getOptionValue(opt)"
         @click="handleClickOption(opt)"
@@ -102,6 +106,8 @@ const { internalValue, internalError, validate } = useValidatable({
 });
 
 function handleClickOption(opt: any) {
+  if (props.disabled) return;
+
   if (props.multiple) {
     if (isSelected(opt)) {
       internalValue.value = internalValue.value.filter((v: any) => {
@@ -142,12 +148,12 @@ function handleClickOption(opt: any) {
           fill: #d1d5db;
         }
       }
-      &.error {
+      &.error:not(.disabled) {
         svg {
           fill: color("danger", 500);
         }
       }
-      &.selected {
+      &.selected:not(.disabled) {
         color: color("primary", 500);
         svg {
           fill: color("primary", 500);

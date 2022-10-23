@@ -32,6 +32,7 @@ const activator = ref();
 interface MenuProps {
   needClickToSwitchOpen?: boolean;
   closeOnSecondClick?: boolean;
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<MenuProps>(), {
@@ -52,6 +53,7 @@ const style = computed(() => {
 });
 
 function onClickActivator() {
+  if (props.disabled) return;
   if (!props.closeOnSecondClick) {
     open.value = true;
   } else {

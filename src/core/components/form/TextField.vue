@@ -124,6 +124,11 @@ const { internalValue, internalError, validate } = useValidatable({
     color: black;
     transition: border-color 0.5s, box-shadow 0.5s;
 
+    &:disabled {
+      background-color: #f0f0f0;
+      cursor: not-allowed;
+    }
+
     &:focus {
       outline: none;
       border-color: color("primary", 500);

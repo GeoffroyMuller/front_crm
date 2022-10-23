@@ -1,12 +1,13 @@
 <template>
   <div class="datepicker-container">
-    <Menu @close="validate()">
+    <Menu @close="validate()" :disabled="disabled">
       <template #activator>
         <TextField
           :label="label"
           :model-value="displayed"
           :error="internalError || error ? true : false"
           readonly
+          :disabled="disabled"
           @focus="isFocus = true"
           @blur="isFocus = false"
         >
@@ -86,6 +87,7 @@ interface DatePickerProps {
   name?: string;
   error?: string;
   rules?: Rules;
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<DatePickerProps>(), {
