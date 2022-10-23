@@ -23,7 +23,10 @@
             'not-this-month': day.month != current.month || day.year != current.year,
           }"
         >
-          {{ day.day }}
+          <span v-if="!$slots['mounth-day']">
+            {{ day.day }}
+          </span>
+
           <slot name="mounth-day" :day="day" />
         </div>
       </div>

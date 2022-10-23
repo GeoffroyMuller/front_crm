@@ -6,7 +6,11 @@
     ]"
   >
     <template #calendar>
-      <Calendar is-card @click="clickOnDay" />
+      <Calendar is-card @click="clickOnDay">
+        <template #mounth-day="{ day }">
+          {{ day.day }}
+        </template>
+      </Calendar>
     </template>
     <template #table>
       <DataTable />
