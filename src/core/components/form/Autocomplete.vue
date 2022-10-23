@@ -47,7 +47,7 @@ import Alert from "../Alert.vue";
 import OptionsList from "../OptionsList.vue";
 import Icon from "../Icon.vue";
 
-interface AutocompleteProps extends FormInputProps<any> {
+export interface AutocompleteProps extends FormInputProps<any> {
   multiple?: boolean;
 
   getOptionValue?: (opt: any) => any;
@@ -105,9 +105,7 @@ function handleClose() {
 function isSelected(opt: any) {
   if (props.multiple) {
     return (
-      internalValue.value.find((v: any) =>
-        props.options.find((o) => isEqual(props.getOptionValue(o), v))
-      ) != null
+      internalValue.value.find((v: any) => isEqual(props.getOptionValue(opt), v)) != null
     );
   }
   return isEqual(props.getOptionValue(opt), internalValue.value);

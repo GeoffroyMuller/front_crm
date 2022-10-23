@@ -9,12 +9,10 @@
         <pre class="code" v-if="value">
           {{ value }}
         </pre>
-        <Autocomplete
+        <MagicAutocomplete
+          :store="customerStore"
           :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
           :getOptionValue="(opt) => opt.id"
-          :autoFilter="false"
-          @search="searchCustomer"
-          :options="customers"
           name="customerId"
           :disabled="!isAddAction"
           label="Customer"
@@ -38,9 +36,9 @@ import { computed, ref } from "vue";
 import Form from "@/core/components/form/Form.vue";
 import Button from "@/core/components/Button.vue";
 import type Reservation from "../types/reservation";
-import Autocomplete from "../../core/components/form/Autocomplete.vue";
 import { useCustomerStore } from "../stores/customers";
 import dayjs from "dayjs";
+import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 
 interface ReservationFormProps {
   value?: Reservation;
@@ -67,13 +65,6 @@ const title = computed(() => {
 });
 
 const loading = ref(false);
-const customers = ref([]);
-
-async function searchCustomer(searchStr: string) {
-  const response = await customerStore.fetchAll();
-  console.error({ response });
-  customers.value = response;
-}
 
 function handleSubmit(data: any) {
   console.error({ data });
