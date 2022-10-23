@@ -38,10 +38,10 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 
 <style lang="scss" scoped>
 .button {
-  padding: 4px 8px;
+  padding: spacing(0.5) spacing(1);
   border: none;
   border-radius: map-deep-get($rounded, "sm");
-  min-height: 35px;
+  min-height: 33px;
   color: white;
   display: flex;
   justify-content: center;

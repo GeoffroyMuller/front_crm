@@ -1,13 +1,43 @@
 <template>
   <component :is="isCard ? Card : 'div'" class="calendar">
     <div class="calendar-header">
-      <div class="buttons">
-        <IconButton name="chevron_left" @click.stop="decrementMonth()" />
-        <IconButton name="chevron_right" @click.stop="incrementMonth()" />
+      <div class="date">
+        <div class="buttons">
+          <IconButton name="chevron_left" @click.stop="decrement()" />
+          <IconButton name="chevron_right" @click.stop="increment()" />
+        </div>
+        <div>{{ monthNames[current.month] }} {{ current.year }}</div>
       </div>
-      <div class="date">{{ monthNames[current.month] }} {{ current.year }}</div>
+      <div class="modes">
+        <div
+          class="mode"
+          :class="{ selected: displayMonth }"
+          @click="displayMonth = true"
+        >
+          month
+        </div>
+        <div
+          class="mode"
+          :class="{ selected: !displayMonth }"
+          @click="displayMonth = false"
+        >
+          week
+        </div>
+      </div>
     </div>
-    <div class="calendar-content" ref="calendarContent">
+    <div class="calendar-content-week" v-if="!displayMonth">
+      <div class="weekdays">
+        <div v-for="day of weekDaysLabels" :key="day" class="weekday">
+          {{ day }}
+        </div>
+      </div>
+      <div class="days">
+        <div class="day" v-for="day of datesToDisplayWeek" :key="day.id">
+          {{ format(day.dayjs) }}
+        </div>
+      </div>
+    </div>
+    <div class="calendar-content" ref="calendarContent" v-if="displayMonth">
       <div class="weekdays">
         <div v-for="day of weekDaysLabels" :key="day" class="weekday">
           {{ day }}
@@ -38,6 +68,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { computed, onMounted, ref } from "vue";
 import IconButton from "./IconButton.vue";
 import Card from "./Card.vue";
+import Button from "./Button.vue";
 
 export type Day = {
   day: number;
@@ -77,6 +108,18 @@ const monthNames = dayjs()
   .map((m: string) => m[0].toUpperCase() + m.substring(1));
 
 const weekdaysName = dayjs().localeData().weekdays();
+
+const datesToDisplayWeek = computed(() => {
+  const indexMin = current.value.week * 7;
+  const indexMax = indexMin + 6;
+  return datesToDisplay.value.filter(
+    (d, index) => index >= indexMin && index <= indexMax
+  );
+});
+
+function format(date: Dayjs) {
+  return date.format("DD/MM/YYYY");
+}
 
 const datesToDisplay = computed(() => {
   const daysInCurrentMonth = dayjs().month(current.value.month).daysInMonth();
@@ -134,7 +177,10 @@ const datesToDisplay = computed(() => {
   }));
 });
 
+const displayMonth = ref(true);
+
 const current = ref({
+  week: 0,
   month: dayjs().month(),
   year: dayjs().year(),
 });
@@ -156,7 +202,17 @@ function scrollToCenter() {
   calendarContent.value.scrollTo(0, pageBottom / 2);
 }
 
-function incrementMonth() {
+function increment() {
+  if (!displayMonth.value) {
+    const nextWeekFirstIndex = current.value.week + 1 * 7;
+    const nextWeek = datesToDisplay.value?.[nextWeekFirstIndex];
+    if (nextWeek != null) {
+      current.value.week += 1;
+      return;
+    }
+  }
+  current.value.week = 0;
+
   if (current.value.month < 11) {
     current.value.month = current.value.month + 1;
   } else {
@@ -165,13 +221,20 @@ function incrementMonth() {
   }
 }
 
-function decrementMonth() {
+function decrement() {
+  if (!displayMonth.value) {
+    if (current.value.week > 0) {
+      current.value.week -= 1;
+      return;
+    }
+  }
   if (current.value.month === 0) {
     current.value.month = 11;
     current.value.year = current.value.year - 1;
   } else {
     current.value.month = current.value.month - 1;
   }
+  current.value.week = (datesToDisplay.value.length % 7) - 1;
 }
 
 function clickOnDay(day: Day) {
@@ -197,15 +260,52 @@ $borderRadius: map-deep-get($rounded, "md");
 
 .calendar {
   .calendar-header {
-    @include flex(row, flex-start, center, 1);
+    @include flex(row, space-between, center, 1);
     padding-top: spacing(2);
     padding-bottom: spacing(2);
+    .modes,
     .date {
+      @include flex(row, flex-start, center, 1);
     }
-    .buttons {
-      display: flex;
-      button {
-        padding: 0;
+    .mode {
+      cursor: pointer;
+      user-select: none;
+      padding: spacing(1);
+      border-radius: map-deep-get($rounded, "sm");
+
+      &.selected {
+        background-color: color("primary", 500);
+        color: white;
+      }
+    }
+
+    .date {
+      .buttons {
+        display: flex;
+        button {
+          padding: 0;
+        }
+      }
+    }
+  }
+  .calendar-content-week {
+    .weekdays {
+      @include grid(7, 0, 0);
+      border: 1px solid $borderColor;
+      border-radius: $borderRadius $borderRadius 0 0;
+      background-color: #fafafa;
+    }
+    .days {
+      @include grid(7, 0, 0);
+      border: 1px solid $borderColor;
+      border-radius: 0 0 $borderRadius $borderRadius;
+      border-top: 0;
+      .day {
+        border-left: 1px solid $borderColor;
+        padding: spacing(1);
+        &:first-child {
+          border-left: none;
+        }
       }
     }
   }
