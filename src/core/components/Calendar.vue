@@ -211,6 +211,7 @@ $borderRadius: map-deep-get($rounded, "md");
     .weekdays {
       border-bottom: 0;
       border-radius: $borderRadius $borderRadius 0 0;
+      background-color: #fafafa;
     }
     .days {
       border-top: none;
