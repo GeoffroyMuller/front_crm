@@ -57,6 +57,7 @@ const { internalValue, internalError, validate } = useValidatable({
   cursor: pointer;
   label {
     cursor: pointer;
+    @include typo(text2);
   }
   .switch {
     border-radius: 10px;

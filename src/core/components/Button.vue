@@ -43,12 +43,12 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   border-radius: map-deep-get($rounded, "sm");
   min-height: 35px;
   color: white;
-  text-transform: uppercase;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: background-color 0.15s ease;
   user-select: none;
+  @include typo(text);
 
   .content {
     display: flex;

@@ -98,6 +98,9 @@ const { internalValue, internalError, validate } = useValidatable({
   flex-direction: column;
   gap: spacing(1);
   width: 100%;
+  label {
+    @include typo(text2);
+  }
   .relative {
     position: relative;
   }

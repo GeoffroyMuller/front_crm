@@ -229,6 +229,7 @@ $menuHeight: spacing(10);
       justify-content: flex-start;
       align-items: center;
       cursor: pointer;
+      @include typo(text2);
       transition: all 0.3s;
       &:hover {
         background-color: color("primary", 100);

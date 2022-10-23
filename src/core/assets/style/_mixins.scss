@@ -92,7 +92,7 @@
 @mixin typo($_type: none) {
     @if $_type==text or $_type==none {
         font-weight: 400;
-        font-size:  14px;
+        font-size:  15px;
         color: #636363;
     }
 
