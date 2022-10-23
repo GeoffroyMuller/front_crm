@@ -1,5 +1,5 @@
 <template>
-  <div class="switch-container" @click="internalValue = !internalValue">
+  <div class="switch-container" @click="handleSwitch">
     <label>
       {{ label }}
     </label>
@@ -46,6 +46,12 @@ const { internalValue, internalError, validate } = useValidatable({
   error: props.error,
   rules: props.rules,
 });
+
+function handleSwitch() {
+  if (!props.disabled) {
+    internalValue.value = !internalValue.value;
+  }
+}
 </script>
 
 <style lang="scss">
@@ -72,6 +78,7 @@ const { internalValue, internalError, validate } = useValidatable({
 
     &.disabled {
       background-color: #d1d5db;
+      cursor: not-allowed;
       &.selected {
         .switch-inner {
           margin-left: calc($width - $dotSize - 2 * $dotMargin);
