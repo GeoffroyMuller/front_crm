@@ -4,6 +4,51 @@
             "Voiture",
             "Maison"
         ],
+        "/reservations" : [
+            {
+                "id": 1,
+                "date": "2022-10-05", 
+                "customerId": 1,
+                "customer": {
+                    "id": 1,
+                    "email": "etienne.robert1698@gmail.com",
+                    "firstname": "Etienne",
+                    "lastname": "ROBERT",
+                    "gender": "M", 
+                    "birthdate": "1998-10-05", 
+                    "city": "Metz"
+                }
+            },
+            {
+                "id": 2,
+                "date": "2022-10-05", 
+                "customerId": 2,
+                "customer": {
+                    "id": 2,
+                    "email": "client2@gmail.com",
+                    "firstname": "Etienne",
+                    "lastname": "MARTIN",
+                    "gender": "M", 
+                    "birthdate": "2022-10-05", 
+                    "city": "Metz" 
+                    
+                }
+            },
+            {
+                "id": 3,
+                "date": "2022-10-07", 
+                "customerId": 3,
+                "customer":  { 
+                    "id": 3,
+                    "email": "geoff@gmail.com", 
+                    "firstname": "Geoffroy",
+                    "lastname": "MULLER", 
+                    "gender": "M", 
+                    "birthdate": "2022-10-05", 
+                    "city": "Metz"
+                }
+            }
+        ],
         "/customers": [
             {
                 "id": 1,
@@ -46,12 +91,6 @@
                 "city": "Metz", 
                 "valid": false 
             }
-        ],
-        "/customers/1": {
-            "id": 1,
-            "email": "etienne.robert1698@gmail.com",
-            "firstname": "Etienne",
-            "lastname": "Robert"
-        }
+        ]
     }
 }

@@ -1,4 +1,7 @@
 <template>
+  <pre class="code" v-if="value">
+  {{ value }}
+  </pre>
   <Form :defaultValue="value" @submit="handleSubmit" class="reservation-form">
     <template v-slot:default="{ hasError }">
       <div class="title">

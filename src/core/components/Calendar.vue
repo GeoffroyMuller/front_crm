@@ -34,12 +34,18 @@
   </component>
 </template>
 <script setup lang="ts">
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { computed, onMounted, ref } from "vue";
 import IconButton from "./IconButton.vue";
 import Card from "./Card.vue";
 
-export type Day = { day: number; year: number; month: number; id?: string };
+export type Day = {
+  day: number;
+  year: number;
+  month: number;
+  id?: string;
+  dayjs?: Dayjs;
+};
 
 const calendarContent = ref();
 
@@ -124,6 +130,7 @@ const datesToDisplay = computed(() => {
   return res.map((date) => ({
     ...date,
     id: `${date.day}-${date.month}-${date.year}-current-${current.value.month}`,
+    dayjs: dayjs().date(date.day).month(date.month).year(date.year),
   }));
 });
 
@@ -227,6 +234,8 @@ $borderRadius: map-deep-get($rounded, "md");
       border: 1px solid $borderColor;
       border-left: none;
       border-bottom: none;
+      overflow: hidden;
+      overflow-y: auto;
       &:hover {
         background-color: color("primary", 50);
         cursor: pointer;
