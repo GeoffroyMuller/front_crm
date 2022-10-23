@@ -1,5 +1,18 @@
 <template>
-  <Calendar is-card @click="clickOnDay" />
+  <Tabs
+    :tabs="[
+      { id: 'calendar', title: 'Calendar' },
+      { id: 'table', title: 'Table' },
+    ]"
+  >
+    <template #calendar>
+      <Calendar is-card @click="clickOnDay" />
+    </template>
+    <template #table>
+      <DataTable />
+    </template>
+  </Tabs>
+
   <Sidebar v-model:open="sidebarOpen">
     <ReservationForm :date="selectedDate" @done="sidebarOpen = false" :value="task" />
   </Sidebar>
@@ -8,8 +21,10 @@
 import Calendar, { type Day } from "@/core/components/Calendar.vue";
 import dayjs from "dayjs";
 import { computed, ref } from "vue";
-import Sidebar from "../../../core/components/Sidebar.vue";
+import Sidebar from "@/core/components/Sidebar.vue";
 import ReservationForm from "../../components/ReservationForm.vue";
+import Tabs from "@/core/components/Tabs.vue";
+import DataTable from "@/core/components/DataTable.vue";
 
 const sidebarOpen = ref(false);
 const task = ref();
