@@ -29,6 +29,7 @@ export interface Column<T = any> {
   title: string;
   key: keyof T | string;
   data?: (item: T) => keyof T;
+  sortable?: boolean;
 }
 
 export type Color =

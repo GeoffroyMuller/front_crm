@@ -37,6 +37,7 @@
         {
           title: 'Lastname',
           key: 'lastname',
+          sortable: true,
         },
         {
           title: 'Firstname',
