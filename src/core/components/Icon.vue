@@ -1,5 +1,5 @@
 <template>
-  <span :class="classes">
+  <span class="icon" :class="classes">
     {{ name }}
   </span>
 </template>
@@ -11,28 +11,33 @@ import type { Color, IconName, Size } from "./types";
 interface IconProps {
   name: IconName;
   color?: Color;
-  outlined?: boolean;
-  size: Size;
+  sharp?: boolean;
+  size?: Size;
 }
 
 const classes = computed(() => {
   const res = [`icon-${props.size}`];
-  if (props.outlined) {
+  if (!props.sharp) {
     res.push("material-symbols-outlined");
   } else {
     res.push("material-symbols-sharp");
   }
+  res.push(`icon-${props.color}`);
   return res;
 });
 
 const props = withDefaults(defineProps<IconProps>(), {
   color: "black",
-  outlined: true,
+  sharp: false,
   size: "md",
 });
 </script>
 
 <style lang="scss">
+.icon {
+  transition: color 0.15s ease;
+}
+
 .icon-sm {
   font-size: 16px;
 }
@@ -44,5 +49,13 @@ const props = withDefaults(defineProps<IconProps>(), {
 }
 .icon-xl {
   font-size: 30px;
+}
+
+@each $key, $value in $colors {
+  @if type-of($value) == "map" {
+    .icon-#{$key} {
+      color: map-deep-get($value, 500);
+    }
+  }
 }
 </style>

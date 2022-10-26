@@ -1,14 +1,22 @@
 <template>
   <div class="autocomplete">
-    <Menu @close="handleClose">
+    <Menu @close="handleClose" :close-on-second-click="false" :disabled="disabled">
       <template #activator="{ open }">
         <TextField
           v-model="search"
           :disabled="disabled"
           :label="label"
           :error="internalError || error ? true : false"
-          icon="search"
-        />
+          @focus="isFocus = true"
+          @blur="isFocus = false"
+        >
+          <template #icon>
+            <Icon
+              name="search"
+              :color="!isFocus ? 'black' : internalError || error ? 'danger' : 'primary'"
+            />
+          </template>
+        </TextField>
       </template>
       <template #default>
         <OptionsList
@@ -37,8 +45,9 @@ import TextField from "./TextField.vue";
 import { isEqual } from "lodash";
 import Alert from "../Alert.vue";
 import OptionsList from "../OptionsList.vue";
+import Icon from "../Icon.vue";
 
-interface AutocompleteProps extends FormInputProps<any> {
+export interface AutocompleteProps extends FormInputProps<any> {
   multiple?: boolean;
 
   getOptionValue?: (opt: any) => any;
@@ -80,6 +89,7 @@ const props = withDefaults(defineProps<AutocompleteProps>(), {
   },
 });
 const search = ref("");
+const isFocus = ref();
 
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
@@ -95,9 +105,7 @@ function handleClose() {
 function isSelected(opt: any) {
   if (props.multiple) {
     return (
-      internalValue.value.find((v: any) =>
-        props.options.find((o) => isEqual(props.getOptionValue(o), v))
-      ) != null
+      internalValue.value.find((v: any) => isEqual(props.getOptionValue(opt), v)) != null
     );
   }
   return isEqual(props.getOptionValue(opt), internalValue.value);
@@ -132,9 +140,13 @@ const selected = computed(() => {
 });
 
 const displayed = computed<string>(() => {
-  if (props.multiple) {
-    return selected.value.map((v: any) => props.getOptionLabel(v)).join(", ");
+  if (selected.value == null) {
+    return "";
   }
+  if (props.multiple && selected.value?.length == 0)
+    if (props.multiple) {
+      return selected.value.map((v: any) => props.getOptionLabel(v)).join(", ");
+    }
   return props.getOptionLabel(selected.value);
 });
 

@@ -1,5 +1,5 @@
 <template>
-  <Table v-bind="$props">
+  <Table v-bind="$props" @row-click="($item) => $emit('row-click', $item)">
     <template #title="{ column }">
       <div
         class="column-title"
@@ -33,9 +33,7 @@ import {
   defineProps,
   ref,
   watch,
-  computed,
   onBeforeMount,
-  nextTick,
 } from "vue";
 import Table from "./Table.vue";
 import type { Column } from "./types";

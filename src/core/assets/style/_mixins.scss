@@ -98,14 +98,14 @@
 @mixin typo($_type: none) {
     @if $_type==text or $_type==none {
         font-weight: 400;
-        font-size: 18px;
-        color: black;
+        font-size:  15px;
+        color: #636363;
     }
 
     @if $_type==text2 {
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 400;
-        color: #626262;
+        color: #636363;
     }
 
     @if $_type==subtitle {
@@ -116,5 +116,6 @@
     @if $_type==title {
         font-size: 21px;
         font-weight: 500;
+        color: #636363;
     }
 }

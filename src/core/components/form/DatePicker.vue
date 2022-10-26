@@ -1,32 +1,31 @@
 <template>
   <div class="datepicker-container">
-    <Menu @close="validate()">
+    <Menu @close="validate()" :disabled="disabled">
       <template #activator>
         <TextField
           :label="label"
           :model-value="displayed"
-          icon="calendar_month"
           :error="internalError || error ? true : false"
           readonly
-        />
+          :disabled="disabled"
+          @focus="isFocus = true"
+          @blur="isFocus = false"
+        >
+          <template #icon>
+            <Icon
+              name="calendar_month"
+              :color="!isFocus ? 'black' : internalError || error ? 'danger' : 'primary'"
+            />
+          </template>
+        </TextField>
       </template>
       <template #default>
         <div class="datepicker">
           <div class="datepicker-header">
             <div>{{ monthNames[current.month] }} {{ current.year }}</div>
             <div class="datepicker-header-actions">
-              <Button
-                icon="chevron_left"
-                variant="text"
-                color="black"
-                @click.stop="decrementMonth()"
-              />
-              <Button
-                icon="chevron_right"
-                variant="text"
-                color="black"
-                @click.stop="incrementMonth()"
-              />
+              <IconButton name="chevron_left" @click.stop="decrementMonth()" />
+              <IconButton name="chevron_right" @click.stop="incrementMonth()" />
             </div>
           </div>
           <div class="datepicker-content">
@@ -65,6 +64,10 @@ import Menu from "../Menu.vue";
 import TextField from "./TextField.vue";
 import Button from "../Button.vue";
 import Alert from "../Alert.vue";
+import IconButton from "../IconButton.vue";
+import Icon from "../Icon.vue";
+
+const isFocus = ref(false);
 
 const monthNames = dayjs()
   .localeData()
@@ -84,6 +87,7 @@ interface DatePickerProps {
   name?: string;
   error?: string;
   rules?: Rules;
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<DatePickerProps>(), {

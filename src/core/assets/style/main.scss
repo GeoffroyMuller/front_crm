@@ -6,13 +6,15 @@ html, body {
 
 * {
     box-sizing: border-box;
-    font-family: "Gill Sans", sans-serif;
+    font-family: 'Montserrat', sans-serif;
     letter-spacing: 0.05em;
     line-height: 1;
 }
 
 body {
     background-color: #f8fafc;
+    font-family: 'Montserrat', sans-serif;
+    @include typo($_type: text);
 }
 
 pre.code {
@@ -36,7 +38,7 @@ pre.code {
 }
 
 * {
-    scrollbar-color: color("primary", 500) color("primary", 100);
+    scrollbar-color: color("primary", 600) color("primary", 100);
     scrollbar-width: thin;
 }
 
@@ -46,9 +48,7 @@ pre.code {
 
 *::-webkit-scrollbar-thumb {
     background-color: color("primary", 600);
-    border-radius: 10px;
 }
 *::-webkit-scrollbar {
     width: spacing(1);
-    border-radius: inherit;
 }

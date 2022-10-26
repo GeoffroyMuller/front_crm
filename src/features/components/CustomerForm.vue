@@ -1,14 +1,14 @@
 <template>
-  <div class="edit-customer-form" v-if="isPageLoaded">
-    <Form :defaultValue="customer" @submit="handleSubmit">
+  <div class="customer-form" v-if="isPageLoaded">
+    <div class="title">
+      {{
+        isAddAction
+          ? "Ajout d'un utilisateur"
+          : `${customer.firstname} ${customer.lastname}`
+      }}
+    </div>
+    <Form :defaultValue="customer" @submit="handleSubmit" class="customer-form-content">
       <template v-slot:default="{ hasError }">
-        <div class="title">
-          {{
-            isAddAction
-              ? "Ajout d'un utilisateur"
-              : `${customer.firstname} ${customer.lastname}`
-          }}
-        </div>
         <TextField name="firstname" label="Prenom" :rules="[$rules.required()]" />
         <TextField name="lastname" label="Nom" :rules="[$rules.required()]" />
         <TextField name="email" type="email" label="Email" :rules="[$rules.required()]" />
@@ -57,18 +57,14 @@
 
         <Switch label="Authorisé" name="authorized" />
 
-        <Button
-          v-if="isAddAction"
-          type="submit"
-          :loading="loading"
-          :disabled="hasError"
-          icon="save"
-        >
-          Ajouter
-        </Button>
-        <Button v-else type="submit" :loading="loading" :disabled="hasError" icon="save">
-          Modifier
-        </Button>
+        <div class="actions">
+          <Button type="button" :disabled="hasError || loading" color="black">
+            Annuler
+          </Button>
+          <Button type="submit" :loading="loading" :disabled="hasError" icon="save">
+            {{ isAddAction ? "Ajouter" : "Modifier" }}
+          </Button>
+        </div>
       </template>
     </Form>
   </div>
@@ -150,10 +146,15 @@ async function handleSubmit(data: any) {
 </script>
 
 <style lang="scss" scoped>
-.edit-customer-form {
-  form {
-    width: 100%;
-    @include flex(col, center, flex-start, 1.5);
+.customer-form {
+  @include grid(1, 0, 5);
+  padding: spacing(2);
+  .customer-form-content {
+    @include grid(1, 0, 2);
+    .actions {
+      display: flex;
+      gap: spacing(1);
+    }
   }
 }
 </style>

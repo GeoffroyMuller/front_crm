@@ -1,11 +1,15 @@
 <template>
-  <div class="switch-container" @click="internalValue = !internalValue">
+  <div class="switch-container" @click="handleSwitch">
     <label>
       {{ label }}
     </label>
     <div
       class="switch"
-      :class="{ selected: !!internalValue, error: internalError || error }"
+      :class="{
+        selected: !!internalValue,
+        error: internalError || error,
+        disabled: disabled,
+      }"
     >
       <div class="switch-inner" />
     </div>
@@ -42,6 +46,12 @@ const { internalValue, internalError, validate } = useValidatable({
   error: props.error,
   rules: props.rules,
 });
+
+function handleSwitch() {
+  if (!props.disabled) {
+    internalValue.value = !internalValue.value;
+  }
+}
 </script>
 
 <style lang="scss">
@@ -57,23 +67,32 @@ const { internalValue, internalError, validate } = useValidatable({
   cursor: pointer;
   label {
     cursor: pointer;
+    @include typo(text2);
   }
   .switch {
     border-radius: 10px;
-    border: solid 1px black;
+    border: solid 1px #d1d5db;
     width: $width;
     height: $height;
     position: relative;
-    &.selected {
-      border: solid 1px color("primary", 500);
+
+    &.disabled {
+      background-color: #d1d5db;
+      cursor: not-allowed;
+      &.selected {
+        .switch-inner {
+          margin-left: calc($width - $dotSize - 2 * $dotMargin);
+        }
+      }
+    }
+    &.selected:not(.disabled) {
       background-color: color("primary", 50);
-      transition: 0.5s ease;
       .switch-inner {
         margin-left: calc($width - $dotSize - 2 * $dotMargin);
         background-color: color("primary", 500);
       }
     }
-    &.error {
+    &.error:not(.disabled) {
       border: solid 1px color("danger", 500);
       background-color: color("danger", 50);
       .switch-inner {

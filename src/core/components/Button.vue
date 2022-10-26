@@ -38,15 +38,17 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 
 <style lang="scss" scoped>
 .button {
-  padding: 4px 8px;
+  padding: spacing(0.5) spacing(1);
   border: none;
   border-radius: map-deep-get($rounded, "sm");
-  min-height: 35px;
+  min-height: 33px;
   color: white;
-  text-transform: uppercase;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.15s ease;
+  user-select: none;
+  @include typo(text);
 
   .content {
     display: flex;
@@ -64,13 +66,23 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   }
 }
 
+.button-black,
+.button-white {
+  background-color: #9ca3af;
+  color: white;
+  &:hover {
+    background-color: #6b7280;
+  }
+}
+
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .button-#{$key} {
       background-color: map-deep-get($value, 500);
+      color: white;
 
       &:hover:not(:disabled) {
-        background-color: map-deep-get($value, 700);
+        background-color: map-deep-get($value, 600);
       }
 
       &:disabled {
@@ -82,7 +94,12 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 
 .button-text {
   background-color: transparent;
-  color: black;
+  color: #6b7280;
+  position: relative;
+  padding: 0;
+  &:hover {
+    color: #4b5563;
+  }
 }
 
 @each $key, $value in $colors {

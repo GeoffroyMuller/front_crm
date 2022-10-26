@@ -12,20 +12,23 @@
     <div class="relative">
       <textarea
         v-if="multiline"
-        @blur="validate"
+        @blur="onBlur"
         v-bind="$props"
         ref="internalRef"
         v-model="internalValue"
+        @focus="onFocus"
       />
       <input
-        @blur="validate"
+        @blur="onBlur"
         v-bind="$props"
         ref="internalRef"
         v-model="internalValue"
         v-if="!multiline"
+        @focus="onFocus"
       />
-      <div v-if="icon && !multiline" class="icon-hook">
-        <Icon :name="icon" />
+      <div v-if="(icon || $slots.icon) && !multiline" class="icon-hook">
+        <Icon v-if="icon" :name="icon" />
+        <slot name="icon" />
       </div>
     </div>
     <Alert
@@ -74,6 +77,14 @@ const emit = defineEmits([
   "change",
 ]);
 
+function onBlur() {
+  emit("blur");
+}
+
+function onFocus() {
+  emit("focus");
+}
+
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
   error: props.error,
@@ -87,6 +98,9 @@ const { internalValue, internalError, validate } = useValidatable({
   flex-direction: column;
   gap: spacing(1);
   width: 100%;
+  label {
+    @include typo(text2);
+  }
   .relative {
     position: relative;
   }
@@ -101,6 +115,7 @@ const { internalValue, internalError, validate } = useValidatable({
   }
   input,
   textarea {
+    min-height: 33px;
     background-color: white;
     border-radius: map-get($rounded, "sm");
     display: block;
@@ -109,6 +124,11 @@ const { internalValue, internalError, validate } = useValidatable({
     width: 100%;
     color: black;
     transition: border-color 0.5s, box-shadow 0.5s;
+
+    &:disabled {
+      background-color: #f0f0f0;
+      cursor: not-allowed;
+    }
 
     &:focus {
       outline: none;

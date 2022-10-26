@@ -1,6 +1,6 @@
 <template>
   <div class="select">
-    <Menu @close="validate">
+    <Menu @close="validate" :disabled="disabled">
       <template #activator="{ open }">
         <TextField
           :model-value="displayed"
@@ -8,8 +8,16 @@
           :disabled="disabled"
           :label="label"
           :error="internalError || error ? true : false"
-          :icon="!open ? 'expand_more' : 'expand_less'"
-        />
+          @focus="isFocus = true"
+          @blur="isFocus = false"
+        >
+          <template #icon>
+            <Icon
+              :name="!open ? 'expand_more' : 'expand_less'"
+              :color="!isFocus ? 'black' : internalError || error ? 'danger' : 'primary'"
+            />
+          </template>
+        </TextField>
       </template>
       <template #default>
         <OptionsList
@@ -29,13 +37,16 @@
 <script setup lang="ts">
 import type { Rules } from "@/core/helpers/rules";
 import useValidatable from "@/core/helpers/vue/composables/validatable";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import Menu from "../Menu.vue";
 import type { FormInputProps } from "../types";
 import TextField from "./TextField.vue";
 import { isEqual } from "lodash";
 import Alert from "../Alert.vue";
 import OptionsList from "../OptionsList.vue";
+import Icon from "../Icon.vue";
+
+const isFocus = ref(false);
 
 interface SelectProps extends FormInputProps<any> {
   multiple?: boolean;

@@ -1,6 +1,10 @@
 <template>
-  <div :class="!needClickToSwitchOpen ? 'hover-menu' : ''" class="menu" @click.stop>
-    <div class="activator" @click="open = !open" ref="activator">
+  <div
+    v-click-outside="onClickOutside"
+    :class="!needClickToSwitchOpen ? 'hover-menu' : ''"
+    class="menu"
+  >
+    <div class="activator" @click="onClickActivator" ref="activator">
       <slot name="activator" :open="open" />
     </div>
     <Card
@@ -9,7 +13,7 @@
         left: displayLeft,
         top: displayTop,
       }"
-      :style="{ display: open ? 'block' : 'none' }"
+      :style="style"
       @click="handleClickContent()"
     >
       <div ref="content" :style="{ width: 'fit-content' }">
@@ -19,8 +23,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { nextTick, onMounted, ref, watch } from "vue";
-import useEventListener from "../helpers/vue/composables/eventListener";
+import { computed, nextTick, ref, watch } from "vue";
 import Card from "./Card.vue";
 
 const content = ref();
@@ -28,24 +31,49 @@ const activator = ref();
 
 interface MenuProps {
   needClickToSwitchOpen?: boolean;
+  closeOnSecondClick?: boolean;
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<MenuProps>(), {
   needClickToSwitchOpen: true,
+  closeOnSecondClick: true,
 });
 
-onMounted(() => {});
+const style = computed(() => {
+  const style: any = {
+    display: open.value ? "block" : "none",
+  };
+
+  if (displayLeft.value) {
+    style["margin-left"] = `${activatorDimensions.value.width}px`;
+  }
+
+  return style;
+});
+
+function onClickActivator() {
+  if (props.disabled) return;
+  if (!props.closeOnSecondClick) {
+    open.value = true;
+  } else {
+    open.value = !open.value;
+    if (!open.value) {
+      emit("close");
+    }
+  }
+}
 
 const open = ref(false);
 
 const emit = defineEmits(["close"]);
 
-useEventListener(document.body, "click", () => {
+function onClickOutside() {
   if (open.value) {
     open.value = false;
     emit("close");
   }
-});
+}
 
 function handleClickContent() {
   open.value = false;
@@ -54,27 +82,39 @@ function handleClickContent() {
 
 const displayTop = ref(false);
 const displayLeft = ref(false);
+const activatorDimensions = ref({
+  width: 0,
+  height: 0,
+});
 
 watch(
   () => open.value,
   () => {
     nextTick(() => {
       if (content.value != null) {
-        const boundingClientRect = content.value.getBoundingClientRect();
+        const contentBoundingClientRect = content.value.getBoundingClientRect();
 
-        const width = content.value.offsetWidth;
-        const left = boundingClientRect.left;
-        const height = content.value.offsetHeight;
-        const top = boundingClientRect.top;
+        const contentDimensions = {
+          width: content.value.offsetWidth,
+          left: contentBoundingClientRect.left,
+          height: content.value.offsetHeight,
+          top: contentBoundingClientRect.top,
+        };
+
+        activatorDimensions.value = {
+          width: activator.value.offsetWidth,
+          height: activator.value.offsetHeight,
+        };
+
         const pageHeight = window.innerHeight;
         const pageWidth = window.innerWidth;
 
-        if (width + left >= pageWidth) {
+        if (contentDimensions.width + contentDimensions.left >= pageWidth) {
           displayLeft.value = true;
         } else {
           displayTop.value = false;
         }
-        if (height + top >= pageHeight) {
+        if (contentDimensions.height + top >= pageHeight) {
           displayTop.value = true;
         } else {
           displayTop.value = false;

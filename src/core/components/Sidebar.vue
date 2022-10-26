@@ -5,29 +5,26 @@
       :class="{
         'sidebar-open': open,
       }"
-      @click.stop
+      v-click-outside="onClickOutside"
     >
-      <Card>
+      <div>
         <slot />
-      </Card>
+      </div>
     </div>
   </Teleport>
 </template>
 <script setup lang="ts">
-import useEventListener from "../helpers/vue/composables/eventListener";
-import Card from "./Card.vue";
-
 interface SidebarProps {
   open: boolean;
 }
 const props = withDefaults(defineProps<SidebarProps>(), {});
 const emit = defineEmits(["update:open"]);
 
-useEventListener(document.body, "click", () => {
+function onClickOutside() {
   if (props.open) {
-    emit("update:open", !props.open);
+    emit("update:open", false);
   }
-});
+}
 </script>
 
 <style lang="scss">
@@ -39,9 +36,12 @@ useEventListener(document.body, "click", () => {
   height: 100vh;
   max-width: 0;
   overflow: hidden;
-  transition: max-width 0.3s ease;
+  transition: max-width 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   z-index: 5;
   width: fit-content;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 10%), 0 8px 10px -6px rgb(0 0 0 / 10%);
+  border: #ebebeb 1px solid;
+  background-color: white;
   > * {
     height: 100%;
     height: 100vh;

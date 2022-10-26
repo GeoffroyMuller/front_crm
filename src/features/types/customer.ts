@@ -4,4 +4,6 @@ export default interface Customer {
   firstname: string;
   lastname: string;
   birthdate: string;
+  gender: string;
+  city: string;
 }

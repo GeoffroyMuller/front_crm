@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div id="container" :class="{ 'mini-nav': isNavMini }">
     <div class="nav">
       <div class="logo-container">
         <!-- <img
@@ -7,7 +7,11 @@
         alt="logo"
         :style="{ height: '50px', width: '50px' }"
       /> -->
-        <span> CRM </span>
+        <span v-if="!isNavMini"> CRM </span>
+        <IconButton
+          @click="isNavMini = !isNavMini"
+          :name="!isNavMini ? 'chevron_left' : 'menu'"
+        />
       </div>
       <div class="nav-items">
         <div
@@ -17,26 +21,16 @@
           class="nav-item"
         >
           <Icon :name="item.icon" color="black" />
-          {{ item.title }}
+          <div v-if="!isNavMini">{{ item.title }}</div>
         </div>
       </div>
 
       <div class="footer">
-        <Button variant="text" color="primary" @click="modalDisconnectOpen = true">
+        <Button v-if="!isNavMini" variant="text" color="black" @click="disconnect">
           Disconnect
         </Button>
-        <Modal v-model:open="modalDisconnectOpen">
-          <div>Are you sure your want to disconnect ?</div>
 
-          <div class="actions">
-            <Button variant="text" color="primary" @click="modalDisconnectOpen = false">
-              Cancel
-            </Button>
-            <Button variant="text" color="primary" @click="disconnect">
-              Disconnect
-            </Button>
-          </div>
-        </Modal>
+        <IconButton @click="disconnect" name="door_open" v-if="isNavMini" />
       </div>
     </div>
     <div class="page-menu">
@@ -49,7 +43,7 @@
         </Button>
         <Menu>
           <template #activator>
-            <Icon name="notifications" />
+            <IconButton name="notifications" />
           </template>
           <template #default> dqsjbsqdnsqdbhs </template>
         </Menu>
@@ -70,22 +64,24 @@ import Icon from "@/core/components/Icon.vue";
 import Button from "@/core/components/Button.vue";
 import { useUserStore } from "@/features/stores/user";
 import { useRouter } from "vue-router";
-import Modal from "@/core/components/Modal.vue";
 import Spinner from "@/core/components/Spinner.vue";
 import Menu from "@/core/components/Menu.vue";
+import IconButton from "@/core/components/IconButton.vue";
+import useUI from "@/core/helpers/vue/composables/ui";
 
 const title = ref("");
 const loading = ref<boolean>(false);
 
-const modalDisconnectOpen = ref(false);
-
 const userStore = useUserStore();
+
+const isNavMini = ref(false);
 
 const auth = computed(() => {
   return userStore.getAuth;
 });
 
 const router = useRouter();
+const { confirm } = useUI();
 
 const menu = ref([
   { path: "/", title: "Home", icon: "home" },
@@ -94,9 +90,11 @@ const menu = ref([
   { path: "/reservations", title: "Reservations", icon: "calendar_month" },
 ]);
 
-function disconnect() {
-  userStore.disconnect();
-  router.replace("/login");
+async function disconnect() {
+  if (await confirm("Are you sure your want to disconnect ?")) {
+    userStore.disconnect();
+    router.replace("/login");
+  }
 }
 
 provide("layout-page", {
@@ -112,8 +110,21 @@ provide("layout-page", {
 
 <style lang="scss" scoped>
 $navWidth: 240px;
+$miniNavWidth: 60px;
 $menuHeight: spacing(10);
 
+.mini-nav {
+  .page-menu {
+    margin-left: $miniNavWidth;
+  }
+  .page-container {
+    left: $miniNavWidth;
+    width: calc(100% - $miniNavWidth);
+  }
+  .nav {
+    width: $miniNavWidth;
+  }
+}
 .loading {
   position: absolute;
   top: 50%;
@@ -130,6 +141,7 @@ $menuHeight: spacing(10);
 }
 .page-container {
   position: absolute;
+  transition: left 0.3s ease, width 0.3s ease;
   top: 0;
   left: $navWidth;
   width: calc(100% - $navWidth);
@@ -153,12 +165,14 @@ $menuHeight: spacing(10);
   padding-right: spacing(4);
   height: $menuHeight;
   margin-left: $navWidth;
+  transition: margin-left 0.3s ease;
   z-index: 2;
 
   .buttons {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    gap: spacing(1.5);
     .auth {
       font-weight: 600;
       color: color("primary", 500);
@@ -176,21 +190,23 @@ $menuHeight: spacing(10);
   width: $navWidth;
   height: 100vh;
   position: fixed;
+  transition: width 0.3s ease;
+
   .footer {
     position: absolute;
     padding: spacing(0.5) spacing(3);
     bottom: 0;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     width: 100%;
   }
   .logo-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding-left: spacing(4);
-    padding-right: spacing(4);
+    padding-left: 20px;
+    padding-right: 20px;
     height: spacing(10);
     & span {
       font-weight: 600;
@@ -200,9 +216,11 @@ $menuHeight: spacing(10);
   .nav-items {
     width: 100%;
     .nav-item {
+      $paddingX: calc(20px - spacing(1));
+
       padding: spacing(1);
-      padding-left: spacing(2.5);
-      padding-right: spacing(2.5);
+      padding-left: $paddingX;
+      padding-right: $paddingX;
       margin-left: spacing(1);
       margin-right: spacing(1);
       gap: spacing(2);
@@ -211,8 +229,7 @@ $menuHeight: spacing(10);
       justify-content: flex-start;
       align-items: center;
       cursor: pointer;
-      font-weight: 500;
-      font-size: 14px;
+      @include typo(text2);
       transition: all 0.3s;
       &:hover {
         background-color: color("primary", 100);

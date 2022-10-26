@@ -13,6 +13,9 @@ import App from "./components/App.vue";
 
 import "./plugins//typescript";
 
+import clickOutside from "./directives/clickOutside";
+import setupComponents from "./setupComponents";
+
 interface SetupOptions {
   routes: Readonly<RouteRecordRaw[]>;
 }
@@ -28,6 +31,10 @@ export default function setup(options: SetupOptions) {
   });
 
   app.use(pinia).use(router).use(lodashPlugin).use(validationPlugin);
+
+  app.directive("click-outside", clickOutside);
+
+  setupComponents(app);
 
   return {
     router,
