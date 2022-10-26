@@ -3,7 +3,11 @@
     <thead>
       <tr>
         <th v-for="column in internalColumns" :key="column.key">
-          {{ column.title }}
+          <div v-if="$slots[column.key as string]">
+            {{ column.title }}
+          </div>
+          <slot :name="`title-${column.key as string}`" :column="column" />
+          <slot name="title" :column="column" />
         </th>
       </tr>
     </thead>
@@ -14,7 +18,7 @@
         @click="$emit('row-click', item)"
       >
         <td v-for="column in columns" :key="column.key" :style="styleItem">
-          <div v-if="!$slots[`${column.key as string}`]">
+          <div v-if="!$slots[`content-${column.key as string}`]">
             {{
               (column?.data ? column?.data(item) : undefined) ||
               item[column.key]
@@ -22,10 +26,11 @@
           </div>
           <slot
             v-else
-            :name="`${column.key as string}`"
+            :name="`content-${column.key as string}`"
             :column="column"
             :item="item"
           ></slot>
+          <slot name="content" :column="column" :item="item" />
         </td>
       </tr>
     </tbody>
@@ -40,18 +45,17 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults, defineProps, onMounted, ref, watch } from "vue";
-import { isNavigationFailure } from "vue-router";
-import type { Column, Item } from "./types";
+import { withDefaults, defineProps, ref, watch } from "vue";
+import type { Column } from "./types";
 import { isNil } from "lodash";
 
-interface TableProps<Item> {
+export interface TableProps<T = any> {
   columns: Array<Column> | null;
-  items: Array<Item>;
+  items: Array<T>;
   styleItem?: string;
 }
 
-const props = withDefaults(defineProps<TableProps<Item>>(), {
+const props = withDefaults(defineProps<TableProps>(), {
   columns: null,
   items: Array,
 });
