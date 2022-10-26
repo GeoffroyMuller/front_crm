@@ -1,12 +1,16 @@
 <template>
   <Table v-bind="$props">
     <template #title="{ column }">
-      <div>
+      <div
+        class="column-title"
+        :class="{ sortable: isSortableColumn(column) }"
+        @click="handleClickTitle(column)"
+      >
         {{ column.title }}
         <Icon
-          v-if="column.sortable === true"
+          v-if="isSortableColumn(column)"
           class="icons-chevron"
-          :class="{'icons-chevron-active': internalActiveColumn?.key == column.key as string}"
+          :class="{ active: isActiveColumn(column), up: !sortDesc }"
           name="chevron_left"
         />
       </div>
@@ -23,6 +27,7 @@
 </template>
 
 <script setup lang="ts">
+//v-if="isActiveColumn(column) && isSortableColumn(column)"
 import {
   withDefaults,
   defineProps,
@@ -30,6 +35,7 @@ import {
   watch,
   computed,
   onBeforeMount,
+  nextTick,
 } from "vue";
 import Table from "./Table.vue";
 import type { Column } from "./types";
@@ -42,22 +48,54 @@ export interface DataTableProps<T = any> {
   items: Array<T>;
   itemsPerPage?: number;
   currentPage?: number;
-  activeColumn?: Column<T> | null;
+  activeColumn?: Column;
 }
 
 const props = withDefaults(defineProps<DataTableProps>(), {
   columns: null,
   items: Array,
   itemsPerPage: 5,
-  activeColumn: null,
 });
-const emit = defineEmits(["update:currentPage", "update:activeColumn"]);
+const emit = defineEmits(["update:currentPage", "update:activeColumn", "sort"]);
 
+const sortDesc = ref<boolean | null>(null);
 const internalActiveColumn = ref<Column | null>();
-
 onBeforeMount(() => {
   internalActiveColumn.value = props.activeColumn;
 });
+
+const handleClickTitle = (column: Column) => {
+  if (isSortableColumn(column)) {
+    if (isActiveColumn(column)) {
+      if (sortDesc.value === true) {
+        internalActiveColumn.value = null;
+        sortDesc.value = null;
+        emitSort(null, null);
+      } else {
+        sortDesc.value = true;
+        emitSort(internalActiveColumn.value, true);
+      }
+    } else {
+      internalActiveColumn.value = column;
+      sortDesc.value = false;
+      emitSort(column, false);
+    }
+  }
+};
+
+const emitSort = (
+  column: Column | null | undefined,
+  _sortDesc: boolean | null
+) => {
+  emit("sort", { column, sortDesc: _sortDesc });
+};
+const isSortableColumn = (column: Column) => {
+  return column.sortable === true;
+};
+const isActiveColumn = (column: Column) => {
+  return internalActiveColumn.value?.key === column.key;
+};
+
 watch(
   () => internalActiveColumn.value,
   (val) => {
@@ -72,10 +110,25 @@ watch(
   margin: auto;
   width: 100%;
 }
+.column-title {
+  display: flex;
+  align-items: center;
+  font-size: small;
+  @include unselectable;
+}
+.column-title.sortable {
+  cursor: pointer;
+}
 .icons-chevron {
   transform: rotate(90deg * 3);
+  transition: all 0.2s;
+  line-height: 0px;
+  opacity: 0;
 }
-.icons-chevron-active {
+.icons-chevron.active {
+  opacity: 100%;
+}
+.icons-chevron.up {
   transform: rotate(90deg * 5);
 }
 </style>
