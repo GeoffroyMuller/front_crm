@@ -42,10 +42,12 @@
         {
           title: 'Firstname',
           key: 'firstname',
+          sortable: true,
         },
         {
           title: 'Email',
           key: 'email',
+          sortable: true,
         },
         {
           title: 'Birthdate',
