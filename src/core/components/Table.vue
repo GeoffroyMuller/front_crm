@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults, defineProps, ref, watch } from "vue";
+import { withDefaults, defineProps, ref, watch, onMounted } from "vue";
 import type { Column } from "./types";
 import { isNil } from "lodash";
 
@@ -73,6 +73,10 @@ const getColumnsByItems = () => {
   });
   return columnsRes;
 };
+
+onMounted(() => {
+  internalColumns.value = props.columns || getColumnsByItems();
+});
 
 watch(
   () => props.items,
