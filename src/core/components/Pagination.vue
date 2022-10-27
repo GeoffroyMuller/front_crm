@@ -37,32 +37,40 @@ const props = withDefaults(defineProps<PaginationProps>(), {
   max: 10,
 });
 const emit = defineEmits(["update:currentPage"]);
-const internalCurrentPage = ref<number>(props.currentPage);
+const internalCurrentPage = ref<number | null>(props.currentPage);
 
 const substractOne = () => {
-  if (isNil(props.min) || internalCurrentPage.value - 1 >= props.min) {
-    internalCurrentPage.value--;
+  if (isNil(props.min) || internalCurrentPage.value! - 1 >= props.min) {
+    internalCurrentPage.value!--;
   }
 };
 const addOne = () => {
-  if (isNil(props.max) || internalCurrentPage.value + 1 <= props.max) {
-    internalCurrentPage.value++;
+  if (isNil(props.max) || internalCurrentPage.value! + 1 <= props.max) {
+    internalCurrentPage.value!++;
   }
 };
 const handleInput = (e: any) => {
   const val = e.target.value;
-  if (val < props.min!) {
-    internalCurrentPage.value = props.min as number;
-  }
-  if (val > props.max!) {
-    internalCurrentPage.value = props.max as number;
+  if (val === "") {
+    internalCurrentPage.value = null;
+  } else {
+    if (val < props.min!) {
+      internalCurrentPage.value = props.min as number;
+    }
+    if (val > props.max!) {
+      internalCurrentPage.value = props.max as number;
+    }
   }
 };
 
 watch(
   () => internalCurrentPage.value,
   (val) => {
-    emit("update:currentPage", val);
+    if (isNil(val)) {
+      emit("update:currentPage", props.min);
+    } else {
+      emit("update:currentPage", val);
+    }
   }
 );
 </script>
