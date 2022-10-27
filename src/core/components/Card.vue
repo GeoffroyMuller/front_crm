@@ -1,5 +1,5 @@
 <template>
-  <div class="card" :class="`card-rd-${rounded}`">
+  <div class="card" :class="[`card-rd-${rounded}`, { padding: withPadding }]">
     <div class="card-head" v-if="title?.length || subtitle?.length">
       <div v-if="title?.length" class="title">
         {{ title }}
@@ -22,10 +22,12 @@ export interface CardProps {
   rounded: Size;
   title?: string;
   subtitle?: string;
+  withPadding?: boolean;
 }
 
 const props = withDefaults(defineProps<CardProps>(), {
   rounded: "md",
+  withPadding: true,
 });
 </script>
 
@@ -33,13 +35,15 @@ const props = withDefaults(defineProps<CardProps>(), {
 .card {
   background-color: white;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  .card-head {
+    margin-bottom: spacing(3.5);
+  }
+}
+.padding {
   padding-left: spacing(2);
   padding-right: spacing(2);
   padding-top: spacing(1.5);
   padding-bottom: spacing(1.5);
-  .card-head {
-    margin-bottom: spacing(3.5);
-  }
 }
 @each $key, $value in $rounded {
   .card-rd-#{$key} {
