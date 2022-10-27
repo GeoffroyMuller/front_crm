@@ -21,6 +21,7 @@
       <input
         @blur="onBlur"
         v-bind="$props"
+        :class="{ 'appearance-none': appearanceNone === true }"
         ref="internalRef"
         v-model="internalValue"
         v-if="!multiline"
@@ -32,7 +33,9 @@
       </div>
     </div>
     <Alert
-      v-if="(internalError || error) && typeof (internalError || error) === 'string'"
+      v-if="
+        (internalError || error) && typeof (internalError || error) === 'string'
+      "
     >
       {{ internalError || error }}
     </Alert>
@@ -63,6 +66,7 @@ interface InputProps extends FormInputProps<string | number> {
   rules?: Rules;
   min?: number | undefined | null;
   max?: number | undefined | null;
+  appearanceNone?: boolean | null;
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
@@ -145,7 +149,22 @@ const { internalValue, internalError, validate } = useValidatable({
   input {
     height: 35px;
   }
+  input.appearance-none {
+    /* Firefox */
+    -moz-appearance: textfield;
 
+    /* Chrome */
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Opéra*/
+    &::-o-inner-spin-button {
+      -o-appearance: none;
+      margin: 0;
+    }
+  }
   &.error {
     input,
     textarea {

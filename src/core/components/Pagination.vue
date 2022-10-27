@@ -4,6 +4,7 @@
     <TextField
       class="input-number-page"
       type="number"
+      :appearance-none="true"
       :min="min"
       :max="max"
       v-model="internalCurrentPage"
