@@ -61,6 +61,9 @@ watch(
 .input-number-page {
   width: 4rem;
 }
+.input-number-page:deep(.input-class) {
+  text-align: center;
+}
 .btn-arrow {
   width: 2rem;
 }

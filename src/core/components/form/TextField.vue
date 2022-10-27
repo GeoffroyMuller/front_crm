@@ -21,6 +21,7 @@
       <input
         @blur="onBlur"
         v-bind="$props"
+        class="input-class"
         :class="{ 'appearance-none': appearanceNone === true }"
         ref="internalRef"
         v-model="internalValue"
@@ -66,6 +67,7 @@ interface InputProps extends FormInputProps<string | number> {
   rules?: Rules;
   min?: number | undefined | null;
   max?: number | undefined | null;
+
   appearanceNone?: boolean | null;
 }
 
@@ -148,21 +150,21 @@ const { internalValue, internalError, validate } = useValidatable({
   }
   input {
     height: 35px;
-  }
-  input.appearance-none {
-    /* Firefox */
-    -moz-appearance: textfield;
+    &.appearance-none {
+      /* Firefox */
+      -moz-appearance: textfield;
 
-    /* Chrome */
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+      /* Chrome */
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
 
-    /* Opéra*/
-    &::-o-inner-spin-button {
-      -o-appearance: none;
-      margin: 0;
+      /* Opéra*/
+      &::-o-inner-spin-button {
+        -o-appearance: none;
+        margin: 0;
+      }
     }
   }
   &.error {
