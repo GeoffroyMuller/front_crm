@@ -27,6 +27,7 @@
         v-model="internalValue"
         v-if="!multiline"
         @focus="onFocus"
+        @input="(e) => onInput(e)"
       />
       <div v-if="(icon || $slots.icon) && !multiline" class="icon-hook">
         <Icon v-if="icon" :name="icon" />
@@ -89,6 +90,10 @@ function onBlur() {
 
 function onFocus() {
   emit("focus");
+}
+
+function onInput(e: InputEvent) {
+  emit("input", e);
 }
 
 const { internalValue, internalError, validate } = useValidatable({

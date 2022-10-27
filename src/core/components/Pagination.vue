@@ -8,6 +8,7 @@
         :min="min"
         :max="max"
         v-model="internalCurrentPage"
+        @input="(e) => handleInput(e)"
       />
       <span v-if="!isNil(max)">/ {{ max }}</span>
     </div>
@@ -46,6 +47,15 @@ const substractOne = () => {
 const addOne = () => {
   if (isNil(props.max) || internalCurrentPage.value + 1 <= props.max) {
     internalCurrentPage.value++;
+  }
+};
+const handleInput = (e: any) => {
+  const val = e.target.value;
+  if (val < props.min!) {
+    internalCurrentPage.value = props.min as number;
+  }
+  if (val > props.max!) {
+    internalCurrentPage.value = props.max as number;
   }
 };
 
