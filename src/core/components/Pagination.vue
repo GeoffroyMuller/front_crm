@@ -8,7 +8,8 @@
         :min="min"
         :max="max"
         v-model="internalCurrentPage"
-        @input="(e) => handleInput(e)"
+        @input="(e) => onInput(e)"
+        @blur="onBlur"
       />
       <span v-if="!isNil(max)">/ {{ max }}</span>
     </div>
@@ -49,7 +50,12 @@ const addOne = () => {
     internalCurrentPage.value!++;
   }
 };
-const handleInput = (e: any) => {
+const onBlur = () => {
+  if (isNil(internalCurrentPage.value)) {
+    internalCurrentPage.value = props.min as number;
+  }
+};
+const onInput = (e: any) => {
   const val = e.target.value;
   if (val === "") {
     internalCurrentPage.value = null;
