@@ -99,7 +99,8 @@ watch(
 
 <style lang="scss" scoped>
 .data-table-pagination {
-  margin: auto;
+  display: flex;
+  justify-content: flex-end;
   width: 100%;
 }
 .column-title {
