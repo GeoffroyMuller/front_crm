@@ -1,5 +1,20 @@
 <template>
   <div class="pagination">
+    <div class="pagination-items-per-page">
+      <span>Lignes par page</span>
+      <Select
+        class="items-per-page"
+        :options="[
+          { label: '5', value: 5 },
+          { label: '10', value: 10 },
+          { label: '15', value: 15 },
+          { label: '20', value: 20 },
+        ]"
+        :modelValue="itemsPerPage"
+        @update:modelValue="(val) => $emit('update:itemsPerPage', val)"
+      />
+    </div>
+
     <div class="pagination-number-page">
       <TextField
         class="input-number-page"
@@ -14,30 +29,41 @@
       <span v-if="!isNil(max)">/ {{ max }}</span>
     </div>
 
-    <IconButton name="chevron_left" @click.stop="substractOne()" />
-    <IconButton name="chevron_right" @click.stop="addOne()" />
+    <div class="pagination-buttons">
+      <IconButton name="chevron_left" @click.stop="substractOne()" />
+      <IconButton name="chevron_right" @click.stop="addOne()" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { withDefaults, defineProps, defineEmits, ref, watch } from "vue";
-import Button from "./Button.vue";
+import {
+  withDefaults,
+  defineProps,
+  defineEmits,
+  ref,
+  watch,
+  onMounted,
+} from "vue";
 import { isNil } from "lodash";
 import TextField from "./form/TextField.vue";
 import IconButton from "./IconButton.vue";
+import Select from "@/core/components/form/Select.vue";
 
 interface PaginationProps {
   currentPage: number;
   min?: number | undefined | null;
   max?: number | undefined | null;
+  itemsPerPage?: number;
 }
 
 const props = withDefaults(defineProps<PaginationProps>(), {
   currentPage: 1,
   min: 1,
   max: 10,
+  itemsPerPage: 5,
 });
-const emit = defineEmits(["update:currentPage"]);
+const emit = defineEmits(["update:currentPage", "update:itemsPerPage"]);
 const internalCurrentPage = ref<number | null>(props.currentPage);
 
 const substractOne = () => {
@@ -82,16 +108,23 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+span {
+  white-space: nowrap;
+}
 .pagination {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 160px;
+  @include flex(row, space-between, center);
+  gap: spacing(4);
+}
+.pagination-items-per-page {
+  @include flex(row, center, center);
+  & span {
+    margin-right: 1rem;
+  }
 }
 .pagination-number-page {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: spacing(1);
 }
 .input-number-page {
   width: 3rem;
@@ -101,5 +134,11 @@ watch(
 }
 .btn-arrow {
   width: 2rem;
+}
+.pagination-buttons {
+  @include flex(row, center, center);
+}
+.items-per-page {
+  width: 3rem;
 }
 </style>
