@@ -54,14 +54,14 @@ import Card from "./Card.vue";
 
 export interface TableProps<T = any> {
   columns: Array<Column> | null;
-  items: Array<T>;
+  items: Array<T> | null;
   styleItem?: string;
   isCard?: boolean;
 }
 
 const props = withDefaults(defineProps<TableProps>(), {
   columns: null,
-  items: Array,
+  items: null,
   isCard: true,
 });
 
@@ -70,7 +70,7 @@ const itemsIsInit = ref<boolean>(false);
 
 const getColumnsByItems = () => {
   const columnsKey: string[] = [];
-  props.items.forEach((item) => {
+  props.items?.forEach((item) => {
     columnsKey.push(...Object.keys(item));
   });
   const columnsRes = Array.from(new Set(columnsKey)).map((colKey) => {
@@ -99,10 +99,12 @@ watch(
 td,
 th {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  padding: 16px;
+  padding: 0px 16px;
+  height: 48px;
 }
 th {
   text-align: left;
+  height: 56px;
 }
 table {
   font-size: 14px;
@@ -119,9 +121,9 @@ table {
     }
   }
   tfoot tr td {
-    padding-top: 25px;
     padding-right: 25px;
     border-bottom: 0;
+    height: 56px;
   }
 }
 .table-footer {
