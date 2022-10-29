@@ -61,6 +61,8 @@
         },
       ]"
       :items="customers"
+      v-model:currentPage="currentPage"
+      v-model:itemsPerPage="itemsPerPage"
     />
     <Button @click="$router.push(`/customers/new`)" class="add-btn" icon="add">
       Ajouter un utilisateur
@@ -70,13 +72,11 @@
 
 <script setup lang="ts">
 import { useCustomerStore } from "@/features/stores/customers.js";
-import { computed, nextTick, onMounted } from "vue";
-import Card from "@/core/components/Card.vue";
+import { computed, nextTick, onMounted, ref } from "vue";
 import Button from "@/core/components/Button.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import type Customer from "@/features/types/customer";
 import usePage from "@/features/composables/page";
-import Table from "@/core/components/Table.vue";
 import dayjs from "dayjs";
 import DataTable from "../../../core/components/DataTable.vue";
 
@@ -85,6 +85,8 @@ const ui = useUI();
 
 const { setLoading } = usePage("Customers");
 
+const currentPage = ref<number>(1);
+const itemsPerPage = ref<number>(10);
 function formatDate(date: string) {
   return dayjs(date).format("DD/MM/YYYY");
 }
