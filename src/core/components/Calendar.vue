@@ -337,7 +337,7 @@ $borderRadius: map-deep-get($rounded, "md");
       overflow: hidden;
       overflow-y: auto;
       &:hover {
-        background-color: color("primary", 50);
+        background-color: lighten(color("primary", 50), 1.5%);
         cursor: pointer;
       }
       &.not-this-month {
