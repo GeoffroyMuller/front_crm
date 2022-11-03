@@ -20,6 +20,7 @@
         <Pagination
           :current-page="currentPage"
           :itemsPerPage="itemsPerPage"
+          :max="nbPage"
           @update:current-page="(val) => $emit('update:currentPage', val)"
           @update:items-per-page="(val) => $emit('update:itemsPerPage', val)"
         />
@@ -41,6 +42,7 @@ export interface DataTableProps<T = any> {
   columns: Array<Column<T>> | null;
   items: Array<T> | null;
   itemsPerPage?: number;
+  nbPage?: number;
   currentPage?: number;
   activeColumn?: Column;
 }

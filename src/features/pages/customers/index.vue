@@ -63,6 +63,7 @@
       :items="customers"
       v-model:currentPage="currentPage"
       v-model:itemsPerPage="itemsPerPage"
+      :nbPage="25"
     />
     <Button @click="$router.push(`/customers/new`)" class="add-btn" icon="add">
       Ajouter un utilisateur
@@ -86,7 +87,7 @@ const ui = useUI();
 const { setLoading } = usePage("Customers");
 
 const currentPage = ref<number>(1);
-const itemsPerPage = ref<number>(10);
+const itemsPerPage = ref<number>(5);
 function formatDate(date: string) {
   return dayjs(date).format("DD/MM/YYYY");
 }
