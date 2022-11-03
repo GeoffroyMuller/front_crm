@@ -19,7 +19,9 @@
       <div class="data-table-pagination">
         <Pagination
           :current-page="currentPage"
+          :itemsPerPage="itemsPerPage"
           @update:current-page="(val) => $emit('update:currentPage', val)"
+          @update:items-per-page="(val) => $emit('update:itemsPerPage', val)"
         />
       </div>
     </template>
@@ -37,7 +39,7 @@ import { isNil } from "lodash";
 
 export interface DataTableProps<T = any> {
   columns: Array<Column<T>> | null;
-  items: Array<T>;
+  items: Array<T> | null;
   itemsPerPage?: number;
   currentPage?: number;
   activeColumn?: Column;
@@ -45,10 +47,14 @@ export interface DataTableProps<T = any> {
 
 const props = withDefaults(defineProps<DataTableProps>(), {
   columns: null,
-  items: Array,
-  itemsPerPage: 5,
+  items: null,
 });
-const emit = defineEmits(["update:currentPage", "update:activeColumn", "sort"]);
+const emit = defineEmits([
+  "update:currentPage",
+  "update:activeColumn",
+  "update:itemsPerPage",
+  "sort",
+]);
 
 const sortDesc = ref<boolean | null>(null);
 const internalActiveColumn = ref<Column | null>();
