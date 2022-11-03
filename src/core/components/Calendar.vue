@@ -156,11 +156,12 @@ const datesToDisplay = computed(() => {
     });
   }
 
-  const limitDay = props.firstDayDisplayIndex > 0 ? props.firstDayDisplayIndex - 1 : 7;
+  const limitDay = props.firstDayDisplayIndex;
   let date = dayjs()
     .year(res[res.length - 1].year)
     .month(res[res.length - 1].month)
-    .date(res[res.length - 1].day);
+    .date(res[res.length - 1].day)
+    .add(1, "day");
   while (date.day() != limitDay) {
     res.push({
       day: date.date(),
@@ -204,7 +205,7 @@ function scrollToCenter() {
 
 function increment() {
   if (!displayMonth.value) {
-    const nextWeekFirstIndex = current.value.week + 1 * 7;
+    const nextWeekFirstIndex = (current.value.week + 1) * 7;
     const nextWeek = datesToDisplay.value?.[nextWeekFirstIndex];
     if (nextWeek != null) {
       current.value.week += 1;
@@ -234,7 +235,12 @@ function decrement() {
   } else {
     current.value.month = current.value.month - 1;
   }
-  current.value.week = (datesToDisplay.value.length % 7) - 1;
+
+  if (!displayMonth.value) {
+    current.value.week = (datesToDisplay.value.length % 7) - 1;
+  } else {
+    current.value.week = 0;
+  }
 }
 
 function clickOnDay(day: Day) {
