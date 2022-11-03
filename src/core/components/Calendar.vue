@@ -156,11 +156,12 @@ const datesToDisplay = computed(() => {
     });
   }
 
-  const limitDay = props.firstDayDisplayIndex > 0 ? props.firstDayDisplayIndex - 1 : 7;
+  const limitDay = props.firstDayDisplayIndex;
   let date = dayjs()
     .year(res[res.length - 1].year)
     .month(res[res.length - 1].month)
-    .date(res[res.length - 1].day);
+    .date(res[res.length - 1].day)
+    .add(1, "day");
   while (date.day() != limitDay) {
     res.push({
       day: date.date(),
