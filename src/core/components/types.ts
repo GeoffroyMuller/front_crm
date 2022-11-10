@@ -1,4 +1,4 @@
-import type { Rules } from "@/core/helpers/rules";
+import type { AnySchema } from "yup";
 
 export interface FormInputProps<T> {
   label?: string;
@@ -7,7 +7,7 @@ export interface FormInputProps<T> {
   name?: string;
   error?: string | boolean;
   disabled?: boolean;
-  rules?: Rules;
+  rules?: AnySchema;
 }
 
 export interface Notification {

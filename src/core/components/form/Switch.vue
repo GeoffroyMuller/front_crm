@@ -19,10 +19,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Rules } from "@/core/helpers/rules";
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import type { FormInputProps, IconName } from "../types";
 import Alert from "../Alert.vue";
+import type { AnySchema } from "yup";
 
 interface SwitchProps extends FormInputProps<string | number> {
   icon?: IconName;
@@ -36,7 +36,7 @@ interface SwitchProps extends FormInputProps<string | number> {
   name?: string;
   error?: string | boolean;
   disabled?: boolean;
-  rules?: Rules;
+  rules?: AnySchema;
 }
 
 const props = withDefaults(defineProps<SwitchProps>(), {});

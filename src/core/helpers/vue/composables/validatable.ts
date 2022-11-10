@@ -8,8 +8,6 @@ import {
 } from "vue";
 
 import { isNil } from "lodash";
-import type { Rules } from "../../rules";
-import yupPlugin from "@/core/plugins/yup";
 import { ValidationError, type AnySchema } from "yup";
 
 interface ValidatableProps<T> {

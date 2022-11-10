@@ -41,7 +41,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Rules } from "@/core/helpers/rules";
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import { computed, ref } from "vue";
 import Menu from "../Menu.vue";
@@ -51,6 +50,7 @@ import { isEqual } from "lodash";
 import Alert from "../Alert.vue";
 import OptionsList from "../OptionsList.vue";
 import Icon from "../Icon.vue";
+import type { AnySchema } from "yup";
 
 const isFocus = ref(false);
 
@@ -72,7 +72,7 @@ interface SelectProps extends FormInputProps<any> {
   name?: string;
   error?: string | boolean;
   disabled?: boolean;
-  rules?: Rules;
+  rules?: AnySchema;
 }
 
 const props = withDefaults(defineProps<SelectProps>(), {

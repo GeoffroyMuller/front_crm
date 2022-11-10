@@ -39,12 +39,12 @@
 </template>
 
 <script setup lang="ts">
-import type { Rules } from "@/core/helpers/rules";
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import { ref } from "vue";
 import type { FormInputProps } from "../types";
 import { isEqual } from "lodash";
 import Alert from "../Alert.vue";
+import type { AnySchema } from "yup";
 
 interface RadioGroupProps extends FormInputProps<any> {
   multiple?: boolean;
@@ -66,7 +66,7 @@ interface RadioGroupProps extends FormInputProps<any> {
   name?: string;
   error?: string | boolean;
   disabled?: boolean;
-  rules?: Rules;
+  rules?: AnySchema;
 }
 
 const emit = defineEmits(["update:modelValue", "search"]);
