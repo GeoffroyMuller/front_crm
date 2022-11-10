@@ -5,6 +5,7 @@ import pinia from "./plugins/pinia";
 import setupRouter from "./plugins/router";
 import lodashPlugin from "./plugins/lodash";
 import yupPlugin from "./plugins/yup";
+import { i18n } from "./plugins/i18n";
 
 import { createApp } from "vue";
 import { createWebHistory, type RouteRecordRaw } from "vue-router";
@@ -30,7 +31,7 @@ export default function setup(options: SetupOptions) {
     routes,
   });
 
-  app.use(pinia).use(router).use(lodashPlugin).use(yupPlugin);
+  app.use(pinia).use(router).use(i18n).use(lodashPlugin).use(yupPlugin);
 
   app.directive("click-outside", clickOutside);
 
