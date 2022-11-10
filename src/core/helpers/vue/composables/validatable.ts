@@ -9,11 +9,13 @@ import {
 
 import { isNil } from "lodash";
 import type { Rules } from "../../rules";
+import yupPlugin from "@/core/plugins/yup";
+import { ValidationError, type AnySchema } from "yup";
 
 interface ValidatableProps<T> {
   value?: T;
   error?: boolean | string;
-  rules?: Rules;
+  rules?: AnySchema;
 }
 
 export default function useValidatable<T>(props: ValidatableProps<T>) {
@@ -23,21 +25,21 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
   const internalValue = ref<T | undefined>(props.value);
   const internalError = ref<string | boolean | undefined>(props.error);
 
-  function validate() {
-    let valid: string | boolean | null | undefined = true;
-    if (props.rules?.length) {
-      for (const rule of props.rules) {
-        const ruleValid = rule(internalValue.value);
-        if (ruleValid === false || typeof ruleValid === "string") {
-          valid = ruleValid;
+  async function validate() {
+    let valid = true;
+    if (props.rules != null) {
+      try {
+        await props.rules.validate(internalValue.value);
+        internalError.value = undefined;
+        valid = true;
+      } catch (err) {
+        valid = false;
+        if (err instanceof ValidationError) {
+          internalError.value = err.message;
+        } else {
+          throw err;
         }
       }
-    }
-
-    if (typeof valid === "string" || valid === false) {
-      internalError.value = (valid || true) as string | boolean;
-    } else {
-      internalError.value = undefined;
     }
 
     return valid;
