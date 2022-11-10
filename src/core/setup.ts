@@ -4,7 +4,6 @@ import "./plugins/daysjs";
 import pinia from "./plugins/pinia";
 import setupRouter from "./plugins/router";
 import lodashPlugin from "./plugins/lodash";
-import validationPlugin from "./plugins/validation";
 import yupPlugin from "./plugins/yup";
 
 import { createApp } from "vue";
@@ -31,12 +30,7 @@ export default function setup(options: SetupOptions) {
     routes,
   });
 
-  app
-    .use(pinia)
-    .use(router)
-    .use(lodashPlugin)
-    .use(validationPlugin)
-    .use(yupPlugin);
+  app.use(pinia).use(router).use(lodashPlugin).use(yupPlugin);
 
   app.directive("click-outside", clickOutside);
 
