@@ -5,5 +5,6 @@ declare module "vue" {
   interface ComponentCustomProperties {
     $rules: { [key: string]: (...args: any) => Rule };
     $_: lodash;
+    $yup: any;
   }
 }
