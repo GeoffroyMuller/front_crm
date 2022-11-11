@@ -1,9 +1,9 @@
 <template>
   <div
-    class="chips"
-    :class="isOutline ? `chips-outline-${color}` : `chips-${color}`"
+    class="chip"
+    :class="isOutline ? `chip-outline-${color}` : `chip-${color}`"
   >
-    <Icon :name="icon" class="icon-chips" size="sm" v-if="icon" />
+    <Icon :name="icon" class="icon-chip" size="sm" v-if="icon" />
     <span v-if="$slots.default"><slot /></span>
     <span v-else-if="text">{{ text }}</span>
     <IconButton
@@ -22,21 +22,21 @@ import Icon from "./Icon.vue";
 import type { Color, IconName } from "./types";
 import IconButton from "./IconButton.vue";
 
-interface ChipsProps {
+interface ChipProps {
   icon?: IconName;
   text?: string;
   color?: Color;
   isClosable?: boolean;
   isOutline?: boolean;
 }
-const props = withDefaults(defineProps<ChipsProps>(), {
+const props = withDefaults(defineProps<ChipProps>(), {
   isClosable: false,
   isOutline: false,
 });
 </script>
 
 <style lang="scss" scoped>
-.chips {
+.chip {
   @include flex(row, center, center);
   border-radius: 50px;
   background-color: #e0e0e0;
@@ -48,17 +48,17 @@ const props = withDefaults(defineProps<ChipsProps>(), {
 .icon-btn-cancel {
   margin-left: 8px;
 }
-.icon-chips {
+.icon-chip {
   margin-right: 4px;
 }
 
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
-    .chips-#{$key} {
+    .chip-#{$key} {
       background-color: color($key, 500);
       color: white;
     }
-    .chips-outline-#{$key} {
+    .chip-outline-#{$key} {
       border: 1px solid color($key, 500);
       background-color: white;
       color: color($key, 500);

@@ -1,8 +1,8 @@
 <template>
   <div>{{ $t("WELCOME") }}</div>
-  <Chips isClosable isOutline color="primary" icon="expand_more">Chips</Chips>
+  <Chip isClosable isOutline color="primary" icon="expand_more">Chip</Chip>
 </template>
 
 <script setup lang="ts">
-import Chips from "@/core/components/Chips.vue";
+import Chip from "@/core/components/Chip.vue";
 </script>
