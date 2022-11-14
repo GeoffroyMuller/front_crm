@@ -22,10 +22,10 @@ const props = withDefaults(defineProps<TooltipProps>(), {
 const display = ref<boolean>(false);
 const tooltip = ref();
 
-const position = (placement: "top" | "bottom" | "left" | "right") => {
+const position = () => {
   const parentHeight = props.parentElement.offsetHeight;
   const parentWidth = props.parentElement.offsetWidth;
-  switch (placement) {
+  switch (props.placement) {
     case "top":
       tooltip.value.style.transform =
         "translateY(calc(-100% - " + props.pxGap + "px))";
@@ -62,7 +62,9 @@ onMounted(() => {
     },
     false
   );
-  position(props.placement);
+  const resizeObserver = new ResizeObserver(() => position());
+  resizeObserver.observe(props.parentElement);
+  position();
 });
 
 watch(
@@ -70,7 +72,7 @@ watch(
   (val) => {
     if (isNil(val)) return;
 
-    position(val);
+    position();
   }
 );
 watch(
