@@ -1,7 +1,11 @@
 <template>
   <button
     class="button"
-    :class="variant === 'text' ? `button-text button-text-${color}` : `button-${color}`"
+    :class="
+      variant === 'text'
+        ? `button-text button-text-${color}`
+        : `button-${color}`
+    "
     :type="type"
     :disabled="disabled || loading"
   >
@@ -10,7 +14,11 @@
       <span v-if="$slots.default"> <slot /></span>
     </div>
 
-    <Spinner size="sm" v-if="loading" :color="variant === 'text' ? color : 'white'" />
+    <Spinner
+      size="sm"
+      v-if="loading"
+      :color="variant === 'text' ? color : 'white'"
+    />
   </button>
 </template>
 
