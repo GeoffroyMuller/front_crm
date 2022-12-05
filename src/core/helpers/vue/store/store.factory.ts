@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import mock from "../../mock";
-import axios from "../../../plugins/axios";
+import axios from "@/core/plugins/axios";
 import config from "@/const";
 import type { ID } from "@/features/types/utils";
 import { sleep } from "../../utils";

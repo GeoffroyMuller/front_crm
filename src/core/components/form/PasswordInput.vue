@@ -1,5 +1,10 @@
 <template>
-  <TextField v-bind="$props" :type="showPassword ? 'text' : 'password'">
+  <TextField
+    v-bind="$props"
+    :type="showPassword ? 'text' : 'password'"
+    :model-value="modelValue"
+    @update:model-value="($data) => $emit('update:modelValue', $data)"
+  >
     <template #icon>
       <IconButton
         :name="showPassword ? 'visibility' : 'visibility_off'"

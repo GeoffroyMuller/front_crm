@@ -11,7 +11,7 @@ import { createWebHistory, type RouteRecordRaw } from "vue-router";
 
 import App from "./components/App.vue";
 
-import "./plugins//typescript";
+import "./plugins/typescript";
 
 import clickOutside from "./directives/clickOutside";
 import setupComponents from "./setupComponents";
