@@ -36,7 +36,6 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import type { Rules } from "@/core/helpers/rules";
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import { computed } from "vue";
 import Menu from "../Menu.vue";
@@ -46,6 +45,7 @@ import { isEqual } from "lodash";
 import Alert from "../Alert.vue";
 import OptionsList from "../OptionsList.vue";
 import Icon from "../Icon.vue";
+import type { AnySchema } from "yup";
 
 export interface AutocompleteProps extends FormInputProps<any> {
   multiple?: boolean;
@@ -67,7 +67,7 @@ export interface AutocompleteProps extends FormInputProps<any> {
   name?: string;
   error?: string | boolean;
   disabled?: boolean;
-  rules?: Rules;
+  rules?: AnySchema;
 }
 
 const emit = defineEmits(["update:modelValue", "search"]);

@@ -48,9 +48,9 @@
 import useValidatable from "../../helpers/vue/composables/validatable";
 import { defineEmits, defineProps, withDefaults, watch } from "vue";
 import type { FormInputProps, IconName } from "../types";
-import type { Rules } from "@/core/helpers/rules";
 import Icon from "../Icon.vue";
 import Alert from "../Alert.vue";
+import type { AnySchema } from "yup";
 interface InputProps extends FormInputProps<string | number> {
   icon?: IconName;
   multiline?: boolean;
@@ -65,7 +65,7 @@ interface InputProps extends FormInputProps<string | number> {
   name?: string;
   error?: string | boolean;
   disabled?: boolean;
-  rules?: Rules;
+  rules?: AnySchema;
   min?: number | undefined | null;
   max?: number | undefined | null;
 

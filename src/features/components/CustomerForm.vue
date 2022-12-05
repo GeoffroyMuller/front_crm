@@ -7,35 +7,35 @@
           : `${customer.firstname} ${customer.lastname}`
       }}
     </div>
-    <Form :defaultValue="customer" @submit="handleSubmit" class="customer-form-content">
+    <Form
+      :defaultValue="customer"
+      @submit="handleSubmit"
+      class="customer-form-content"
+    >
       <template v-slot:default="{ hasError }">
-        <TextField name="firstname" label="Prenom" :rules="[$rules.required()]" />
-        <TextField name="lastname" label="Nom" :rules="[$rules.required()]" />
-        <TextField name="email" type="email" label="Email" :rules="[$rules.required()]" />
+        <TextField name="firstname" label="Prenom" />
+        <TextField name="lastname" label="Nom" />
+        <TextField name="email" type="email" label="Email" />
 
         <TextField name="description" label="Description" multiline />
 
         <Select
           name="gender"
           label="Genre"
+          :rules="$yup.string().required()"
           :options="[
             { label: 'Monsieur', value: 'M' },
             { label: 'Madame', value: 'Mme' },
           ]"
-          :rules="[$rules.required()]"
         />
 
-        <DatePicker
-          name="birthdate"
-          label="Date de naissance"
-          :rules="[$rules.required()]"
-        />
+        <DatePicker name="birthdate" label="Date de naissance" />
 
         <Autocomplete
           label="Ville"
           name="city"
           auto-filter
-          :rules="[$rules.required()]"
+          :rules="$yup.string().required()"
           :options="[
             { label: 'Metz', value: 'Metz' },
             { label: 'Paris', value: 'Paris' },
@@ -52,19 +52,28 @@
             { label: 'Oui', value: true },
             { label: 'Non', value: false },
           ]"
-          :rules="[$rules.required()]"
         />
 
         <Switch label="Authorisé" name="authorized" />
 
-        <div class="actions">
-          <Button type="button" :disabled="hasError || loading" color="black">
-            Annuler
-          </Button>
-          <Button type="submit" :loading="loading" :disabled="hasError" icon="save">
-            {{ isAddAction ? "Ajouter" : "Modifier" }}
-          </Button>
-        </div>
+        <Button
+          v-if="isAddAction"
+          type="submit"
+          :loading="loading"
+          :disabled="hasError"
+          icon="save"
+        >
+          Ajouter
+        </Button>
+        <Button
+          v-else
+          type="submit"
+          :loading="loading"
+          :disabled="hasError"
+          icon="save"
+        >
+          Modifier
+        </Button>
       </template>
     </Form>
   </div>
@@ -102,7 +111,9 @@ const customerStore = useCustomerStore();
 
 const route = useRoute();
 
-const isPageLoaded = computed(() => props.isAddAction || !isNil(customer.value));
+const isPageLoaded = computed(
+  () => props.isAddAction || !isNil(customer.value)
+);
 
 const loading = ref(false);
 

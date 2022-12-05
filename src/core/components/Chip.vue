@@ -1,0 +1,68 @@
+<template>
+  <div
+    class="chip"
+    :class="isOutline ? `chip-outline-${color}` : `chip-${color}`"
+  >
+    <Icon :name="icon" class="icon-chip" size="sm" v-if="icon" />
+    <span v-if="$slots.default"><slot /></span>
+    <span v-else-if="text">{{ text }}</span>
+    <IconButton
+      v-if="isClosable"
+      name="cancel"
+      class="icon-btn-cancel"
+      size="sm"
+      :color="isOutline ? color : color ? 'white' : 'black'"
+      @click.stop="$emit('close')"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+import Icon from "./Icon.vue";
+import type { Color, IconName } from "./types";
+import IconButton from "./IconButton.vue";
+
+interface ChipProps {
+  icon?: IconName;
+  text?: string;
+  color?: Color;
+  isClosable?: boolean;
+  isOutline?: boolean;
+}
+const props = withDefaults(defineProps<ChipProps>(), {
+  isClosable: false,
+  isOutline: false,
+});
+</script>
+
+<style lang="scss" scoped>
+.chip {
+  @include flex(row, center, center);
+  border-radius: 50px;
+  background-color: #e0e0e0;
+  color: black;
+  width: max-content;
+  padding: 8px 15px;
+  line-height: unset;
+}
+.icon-btn-cancel {
+  margin-left: 8px;
+}
+.icon-chip {
+  margin-right: 4px;
+}
+
+@each $key, $value in $colors {
+  @if type-of($value) == "map" {
+    .chip-#{$key} {
+      background-color: color($key, 500);
+      color: white;
+    }
+    .chip-outline-#{$key} {
+      border: 1px solid color($key, 500);
+      background-color: white;
+      color: color($key, 500);
+    }
+  }
+}
+</style>

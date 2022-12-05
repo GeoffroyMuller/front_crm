@@ -55,17 +55,16 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Rules } from "@/core/helpers/rules";
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { computed, ref } from "vue";
 import Menu from "../Menu.vue";
 import TextField from "./TextField.vue";
-import Button from "../Button.vue";
 import Alert from "../Alert.vue";
 import IconButton from "../IconButton.vue";
 import Icon from "../Icon.vue";
+import type { AnySchema } from "yup";
 
 const isFocus = ref(false);
 
@@ -86,7 +85,7 @@ interface DatePickerProps {
   label?: string;
   name?: string;
   error?: string;
-  rules?: Rules;
+  rules?: AnySchema;
   disabled?: boolean;
 }
 

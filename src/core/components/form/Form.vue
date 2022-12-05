@@ -50,17 +50,17 @@ function inputErrorChange(name: string) {
 function validate() {
   errors.value = {};
 
-  return Object.keys(inputs.value).reduce((prev, currentKey) => {
+  return Object.keys(inputs.value).reduce(async (prev, currentKey) => {
     const input: _CustomInput = inputs.value[currentKey];
     // @ts-ignore
-    const valid = input.validate();
+    const valid = await input.validate();
 
     if (!valid || typeof valid === "string") {
       // @ts-ignore
       errors.value[input.name] = valid;
     }
-    return prev && valid;
-  }, true);
+    return (await prev) && valid;
+  }, new Promise((resolve) => resolve(true)));
 }
 
 const hasError = computed(() => !isEmpty(omitBy(errors.value, isNil)));

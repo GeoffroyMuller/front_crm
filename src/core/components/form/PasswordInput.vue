@@ -17,10 +17,10 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import type { Rules } from "@/core/helpers/rules";
 import type { FormInputProps } from "../types";
 import TextField from "./TextField.vue";
 import IconButton from "../IconButton.vue";
+import type { AnySchema } from "yup";
 
 interface PasswordInputProps extends FormInputProps<string | number> {
   /*
@@ -33,7 +33,7 @@ interface PasswordInputProps extends FormInputProps<string | number> {
   name?: string;
   error?: string | boolean;
   disabled?: boolean;
-  rules?: Rules;
+  rules?: AnySchema;
   min?: number | undefined | null;
   max?: number | undefined | null;
 }

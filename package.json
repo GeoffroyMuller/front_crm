@@ -17,7 +17,9 @@
     "pinia": "^2.0.16",
     "pinia-plugin-persistedstate": "^1.6.3",
     "vue": "^3.2.37",
-    "vue-router": "^4.1.2"
+    "vue-i18n": "9",
+    "vue-router": "^4.1.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",

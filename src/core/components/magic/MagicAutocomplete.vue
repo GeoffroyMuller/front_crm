@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import type { Rules } from "@/core/helpers/rules";
 import Autocomplete, { type AutocompleteProps } from "../form/Autocomplete.vue";
+import type { AnySchema } from "yup";
 
 interface MagicAutocompleteProps /* extends AutocompleteProps */ {
   multiple?: boolean;
@@ -33,7 +33,7 @@ interface MagicAutocompleteProps /* extends AutocompleteProps */ {
   name?: string;
   error?: string | boolean;
   disabled?: boolean;
-  rules?: Rules;
+  rules?: AnySchema;
 }
 
 const emit = defineEmits(["update:modelValue", "search"]);

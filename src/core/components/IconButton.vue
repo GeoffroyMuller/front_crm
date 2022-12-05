@@ -1,5 +1,5 @@
 <template>
-  <button class="icon-button" type="button">
+  <button class="icon-button" :class="`icon-button-${color}`" type="button">
     <Icon v-bind="$props" />
   </button>
 </template>
@@ -28,6 +28,17 @@ const props = withDefaults(defineProps<IconButtonProps>(), {});
   line-height: 0;
   &:hover {
     color: color("primary", 500);
+  }
+}
+@each $key, $value in $colors {
+  @if type-of($value) == "map" {
+    .icon-button-#{$key} {
+      color: color($key, 500);
+    }
+  } @else {
+    .icon-button-#{$key} {
+      color: $value;
+    }
   }
 }
 </style>
