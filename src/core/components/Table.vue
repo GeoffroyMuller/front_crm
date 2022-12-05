@@ -4,10 +4,14 @@
       <thead>
         <tr>
           <th v-for="column in internalColumns" :key="column.key">
-            <div v-if="$slots[column.key as string]">
+            <div v-if="!$slots.title && !$slots['title-' + (column.key as string)]">
               {{ column.title }}
             </div>
-            <slot :name="`title-${column.key as string}`" :column="column" />
+            <slot
+              v-if="!$slots.title"
+              :name="`title-${column.key as string}`"
+              :column="column"
+            />
             <slot name="title" :column="column" />
           </th>
         </tr>
@@ -28,7 +32,7 @@
           </td>
         </tr>
       </tbody>
-      <tfoot>
+      <tfoot v-if="$slots.footer">
         <tr>
           <td :colspan="internalColumns?.length">
             <slot class="table-footer" name="footer"></slot>
