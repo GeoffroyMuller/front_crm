@@ -17,10 +17,13 @@ import Button from "@/core/components/Button.vue";
 import { useUserStore } from "@/stores/user";
 import { useRouter } from "vue-router";
 import PasswordInput from "@/core/components/form/PasswordInput.vue";
+import useUI from "@/core/helpers/vue/composables/ui";
+import type { AxiosError } from "axios";
 
 const userStore = useUserStore();
 
 const router = useRouter();
+const { toast } = useUI();
 
 const formData = reactive({
   email: "",
@@ -31,8 +34,20 @@ const loading = ref(false);
 
 async function login() {
   loading.value = true;
-  await userStore.login(formData.email, formData.password);
-  router.push({ name: "home" });
+  try {
+    const user = await userStore.login(formData.email, formData.password);
+    console.error({ user });
+    router.push({ name: "home" });
+    toast({
+      type: "success",
+      message: `Bienvenue ${user.firstname} !`,
+    });
+  } catch (err) {
+    toast({
+      type: "danger",
+      message: err.response.data.message,
+    });
+  }
   loading.value = false;
 }
 </script>

@@ -1,3 +1,25 @@
 {
-    "WELCOME": "Bienvenue Feature"
+    "data": {
+        "status": {
+            "draft": "Brouillon",
+            "refused": "Refusé",
+            "validated": "Validé"
+        }
+    },
+    "pages": {
+        "quotes": {
+            "sure_archive_quote": "Etes vous sur de vouloir archiver ce devis ?"
+        }
+    },
+    "customer": "Client",
+    "status": "Etat",
+    "ID": "ID",
+    "to_archive": "Archiver",
+    "quotes": "Devis",
+    "quote": "Devis",
+    "title": "Titre",
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "archived": "archivé",
+    "home": "Accueil"
 }

@@ -61,7 +61,7 @@ const selectedReservation = ref();
 const newTaskDay = ref<Dayjs>();
 
 onMounted(async () => {
-  await reservationStore.fetchAll();
+  await reservationStore.fetchList();
 });
 
 const reservations = computed(() => {

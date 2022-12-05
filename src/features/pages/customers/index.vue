@@ -94,7 +94,7 @@ function formatDate(date: string) {
 
 onMounted(async () => {
   !customers?.value?.length && setLoading(true);
-  await customersStore.fetchAll();
+  await customersStore.fetchList();
   setLoading(false);
 });
 
@@ -110,7 +110,7 @@ async function deleteById(customer: Customer) {
           }"</b> supprimé`,
         });
       });
-      customersStore.fetchAll();
+      customersStore.fetchList();
     }
   } catch (err) {
     console.error(err);

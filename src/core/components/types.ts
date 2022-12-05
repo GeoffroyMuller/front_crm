@@ -33,6 +33,8 @@ export interface Column<T = any> {
   key: keyof T | string;
   data?: (item: T) => keyof T;
   sortable?: boolean;
+  align?: "left" | "right" | "center";
+  titleAlign?: "left" | "right" | "center";
 }
 
 export type Color =

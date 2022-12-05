@@ -15,6 +15,18 @@
         />
       </div>
     </template>
+    <template #content="{ column, item }">
+      <div v-if="!$slots.content && !$slots[`content-${column.key as string}`]">
+        {{ (column?.data ? column?.data(item) : undefined) || item[column.key] }}
+      </div>
+      <slot
+        v-else-if="!$slots.content"
+        :name="`content-${column.key as string}`"
+        :column="column"
+        :item="item"
+      ></slot>
+      <slot name="content" :column="column" :item="item" />
+    </template>
     <template #footer>
       <div class="data-table-pagination">
         <Pagination
@@ -83,10 +95,7 @@ const handleClickTitle = (column: Column) => {
   }
 };
 
-const emitSort = (
-  column: Column | null | undefined,
-  _sortDesc: boolean | null
-) => {
+const emitSort = (column: Column | null | undefined, _sortDesc: boolean | null) => {
   emit("sort", { column, sortDesc: _sortDesc });
 };
 const isSortableColumn = (column: Column) => {

@@ -27,16 +27,14 @@ const position = () => {
   const parentWidth = props.parentElement.offsetWidth;
   switch (props.placement) {
     case "top":
-      tooltip.value.style.transform =
-        "translateY(calc(-100% - " + props.pxGap + "px))";
+      tooltip.value.style.transform = "translateY(calc(-100% - " + props.pxGap + "px))";
       break;
     case "bottom":
       tooltip.value.style.transform =
         "translateY(calc(" + parentHeight + "px + " + props.pxGap + "px))";
       break;
     case "left":
-      tooltip.value.style.transform =
-        "translateX(calc(-100% - " + props.pxGap + "px))";
+      tooltip.value.style.transform = "translateX(calc(-100% - " + props.pxGap + "px))";
       break;
     case "right":
       tooltip.value.style.transform =
@@ -104,6 +102,7 @@ watch(
   width: max-content;
   border-radius: 5px;
   padding: 8px 16px;
+  z-index: 99;
   & p {
     margin: 0;
   }

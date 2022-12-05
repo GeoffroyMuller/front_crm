@@ -1,8 +1,10 @@
 import Home from "./pages/Home.vue";
+import Quotes from "./pages/quotes/index.vue";
+import EditQuote from "./pages/quotes/EditQuote.vue";
 import Login from "./pages/Login.vue";
 
 import Default from "./layouts/Default.vue";
-import Page from "./layouts/Page.vue";
+import LayoutPage from "./layouts/LayoutPage.vue";
 
 import auth from "./middleware/auth";
 
@@ -13,7 +15,25 @@ export default [
     component: Home,
     meta: {
       middleware: [auth],
-      layout: Page,
+      layout: LayoutPage,
+    },
+  },
+  {
+    path: "/quotes",
+    name: "quotes",
+    component: Quotes,
+    meta: {
+      middleware: [auth],
+      layout: LayoutPage,
+    },
+  },
+  {
+    path: "/quotes/:id",
+    name: "quotes-id",
+    component: EditQuote,
+    meta: {
+      middleware: [auth],
+      layout: LayoutPage,
     },
   },
   {

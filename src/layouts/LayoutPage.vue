@@ -33,57 +33,34 @@
         <IconButton @click="disconnect" name="door_open" v-if="isNavMini" />
       </div>
     </div>
-    <div class="page-menu">
-      <div class="title">
-        {{ title }}
-      </div>
-      <div class="buttons">
-        <Button variant="text" class="auth">
-          {{ auth.firstname }} {{ auth.lastname }}
-        </Button>
-        <Menu>
-          <template #activator>
-            <IconButton name="notifications" />
-          </template>
-          <template #default> dqsjbsqdnsqdbhs </template>
-        </Menu>
-      </div>
-    </div>
     <div class="page-container">
-      <Spinner v-show="loading" class="loading" />
-      <div v-show="!loading">
-        <slot />
-      </div>
+      <slot />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, provide } from "vue";
+import { ref } from "vue";
 import Icon from "@/core/components/Icon.vue";
 import Button from "@/core/components/Button.vue";
 import { useUserStore } from "@/stores/user";
 import { useRouter } from "vue-router";
-import Spinner from "@/core/components/Spinner.vue";
-import Menu from "@/core/components/Menu.vue";
 import IconButton from "@/core/components/IconButton.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 
-const title = ref("");
 const loading = ref<boolean>(false);
 
 const userStore = useUserStore();
 
 const isNavMini = ref(false);
 
-const auth = computed(() => {
-  return userStore.getAuth;
-});
-
 const router = useRouter();
 const { confirm } = useUI();
 
-const menu = ref([{ path: "/", title: "Home", icon: "home" }]);
+const menu = ref([
+  { path: "/", title: "Home", icon: "home" },
+  { path: "/quotes", title: "Devis", icon: "description" },
+]);
 
 async function disconnect() {
   if (await confirm("Are you sure your want to disconnect ?")) {
@@ -91,22 +68,11 @@ async function disconnect() {
     router.replace("/login");
   }
 }
-
-provide("layout-page", {
-  setTitle: (t: string) => {
-    title.value = t;
-  },
-  getTitle: () => title.value,
-  setLoading: (l: boolean) => {
-    loading.value = l;
-  },
-});
 </script>
 
 <style lang="scss" scoped>
 $navWidth: 240px;
 $miniNavWidth: 60px;
-$menuHeight: spacing(10);
 
 .mini-nav {
   .page-menu {
@@ -141,7 +107,6 @@ $menuHeight: spacing(10);
   left: $navWidth;
   width: calc(100% - $navWidth);
   padding: spacing(1) spacing(2);
-  padding-top: $menuHeight;
   height: 100%;
 }
 .actions {
@@ -151,30 +116,7 @@ $menuHeight: spacing(10);
   align-items: center;
   margin-top: spacing(2);
 }
-.page-menu {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-grow: 1;
-  padding-left: spacing(4);
-  padding-right: spacing(4);
-  height: $menuHeight;
-  margin-left: $navWidth;
-  transition: margin-left 0.3s ease;
-  z-index: 2;
 
-  .buttons {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: spacing(1.5);
-    .auth {
-      font-weight: 600;
-      color: color("primary", 500);
-      margin-right: spacing(0.25);
-    }
-  }
-}
 .nav {
   display: flex;
   flex-direction: column;

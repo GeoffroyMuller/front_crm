@@ -58,9 +58,8 @@ const props = withDefaults(defineProps<MagicAutocompleteProps>(), {
 const options = ref([]);
 
 // TODO :  do not fetchAll, fetch the required string
-async function onSearch() {
-  const response = await props.store.fetchAll();
-  console.error({ response });
+async function onSearch(q: string) {
+  const response = await props.store.search({ q });
   options.value = response;
 }
 </script>

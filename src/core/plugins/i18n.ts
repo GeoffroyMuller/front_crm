@@ -20,6 +20,7 @@ const en = {
 export const i18n = createI18n({
   locale: i18nLocale ? i18nLocale : "fr",
   globalInjection: true,
+  legacy: false,
   messages: {
     en,
     fr,
