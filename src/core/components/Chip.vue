@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="chip"
-    :class="isOutline ? `chip-outline-${color}` : `chip-${color}`"
-  >
+  <div class="chip" :class="isOutline ? `chip-outline-${color}` : `chip-${color}`">
     <Icon :name="icon" class="icon-chip" size="sm" v-if="icon" />
     <span v-if="$slots.default"><slot /></span>
     <span v-else-if="text">{{ text }}</span>
@@ -39,8 +36,8 @@ const props = withDefaults(defineProps<ChipProps>(), {
 .chip {
   @include flex(row, center, center);
   border-radius: 50px;
-  background-color: #e0e0e0;
-  color: black;
+  background-color: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.87);
   width: max-content;
   padding: 8px 15px;
   line-height: unset;
