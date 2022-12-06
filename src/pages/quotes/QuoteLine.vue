@@ -85,6 +85,23 @@ const internalLine = toRef(props, "line");
   .description {
     max-width: 35%;
   }
+
+  @media screen and (min-width: 450px) {
+    .description {
+      max-width: 40%;
+    }
+  }
+  @media screen and (min-width: 900px) {
+    .description {
+      max-width: 50%;
+    }
+  }
+  @media screen and (min-width: 1400px) {
+    .description {
+      max-width: 65%;
+    }
+  }
+
   .total {
     display: flex;
     justify-content: center;

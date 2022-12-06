@@ -52,13 +52,3 @@ pre.code {
 *::-webkit-scrollbar {
     width: spacing(1);
 }
-
-trix-editor {
-    background-color: white;
-    transition: border-color 0.5s, box-shadow 0.5s;
-    &:focus {
-        outline: none;
-        border-color: color("primary", 500);
-        box-shadow: 0 0 5pt 0.5pt color("primary", 200);
-    }
-}

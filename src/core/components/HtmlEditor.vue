@@ -48,7 +48,7 @@ onMounted(() => {
 
 document.addEventListener("trix-before-initialize", (e) => {
   // Change Trix.config if you need
-  console.error(Trix.config);
+  console.log(Trix.config);
 });
 </script>
 
@@ -59,6 +59,18 @@ document.addEventListener("trix-before-initialize", (e) => {
 }
 trix-toolbar .trix-button-group:not(:first-child) {
   margin-left: 0 !important;
+}
+trix-toolbar .trix-button-group {
+  flex-wrap: wrap;
+}
+trix-editor {
+  background-color: white;
+  transition: border-color 0.5s, box-shadow 0.5s;
+  &:focus {
+    outline: none;
+    border-color: color("primary", 500);
+    box-shadow: 0 0 5pt 0.5pt color("primary", 200);
+  }
 }
 .html-editor {
   display: flex;
