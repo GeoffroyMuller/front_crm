@@ -1,4 +1,4 @@
-import type { ID } from "@/features/types/utils";
+import type { ID } from "@/types/utils";
 import mock from "@/mock.json";
 import { merge, uniqueId } from "lodash";
 

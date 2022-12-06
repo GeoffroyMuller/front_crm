@@ -16,6 +16,7 @@
     "lodash": "^4.17.21",
     "pinia": "^2.0.16",
     "pinia-plugin-persistedstate": "^1.6.3",
+    "trix": "^2.0.3",
     "vue": "^3.2.37",
     "vue-i18n": "9",
     "vue-router": "^4.1.2",

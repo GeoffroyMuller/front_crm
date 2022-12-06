@@ -17,6 +17,7 @@
         ref="internalRef"
         v-model="internalValue"
         @focus="onFocus"
+        :id="id"
       />
       <input
         @blur="onBlur"
@@ -28,6 +29,7 @@
         v-if="!multiline"
         @focus="onFocus"
         @input="(e) => onInput(e)"
+        :id="id"
       />
       <div v-if="(icon || $slots.icon) && !multiline" class="icon-hook">
         <Icon v-if="icon" :name="icon" />
@@ -35,9 +37,7 @@
       </div>
     </div>
     <Alert
-      v-if="
-        (internalError || error) && typeof (internalError || error) === 'string'
-      "
+      v-if="(internalError || error) && typeof (internalError || error) === 'string'"
     >
       {{ internalError || error }}
     </Alert>
@@ -69,6 +69,7 @@ interface InputProps extends FormInputProps<string | number> {
   min?: number | undefined | null;
   max?: number | undefined | null;
 
+  id?: string;
   appearanceNone?: boolean | null;
 }
 

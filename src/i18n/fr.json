@@ -9,6 +9,16 @@
     "pages": {
         "quotes": {
             "sure_archive_quote": "Etes vous sur de vouloir archiver ce devis ?"
+        },
+        "edit-quote": {
+            "qty": "Quantitée",
+            "unit_price": "Prix unitaire (HT)",
+            "description": "Description",
+            "vat": "TVA",
+            "total": "Total TTC",
+            "total-without-taxes": "Total HT",
+            "add-line-product": "Ajouter une ligne de produit",
+            "footer": "Pied de page"
         }
     },
     "customer": "Client",

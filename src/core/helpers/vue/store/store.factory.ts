@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import mock from "../../mock";
 import axios from "@/core/plugins/axios";
 import config from "@/const";
-import type { ID } from "@/features/types/utils";
+import type { ID } from "@/types/utils";
 import { sleep } from "../../utils";
 import type { AxiosResponse } from "axios";
 import type { PaginateResult } from "./types";
