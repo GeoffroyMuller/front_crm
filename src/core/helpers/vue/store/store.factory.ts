@@ -74,6 +74,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
     id: props.id,
     state: () => ({
       list: [] as Array<T>,
+      all: [] as Array<T>,
       byId: {} as { [key: ID]: T },
       resources: {} as { [name: string]: { [key: ID]: any } },
 
@@ -87,6 +88,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
     }),
     getters: {
       getList: (state) => state.list,
+      getAll: (state) => state.all,
       getById: (state) => (id: ID) => state.byId[id],
       ...props.getters,
     },
@@ -150,6 +152,27 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
         );
         return response.data;
       },
+      async fetchAll(filters?: { [key: string]: string }): Promise<Array<T>> {
+        if (config.IS_MOCK) {
+          await sleep(config.MOCK_DURATION);
+        }
+
+        const _filters = filters
+          ? {
+              ...filters,
+              ...this.filters,
+            }
+          : this.filters;
+
+        // @ts-ignore
+        const response = _formatResponse<Array<T>>(
+          config.IS_MOCK
+            ? mock.getAll(_getPath({ filters: _filters }))
+            : await axios.get(_getPath({ filters: _filters }))
+        );
+        this.all = response.data;
+        return response.data;
+      },
       async search(filters?: { [key: string]: string }): Promise<Array<T>> {
         if (config.IS_MOCK) {
           await sleep(config.MOCK_DURATION);
@@ -177,19 +200,19 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
         );
         return response.data;
       },
-      /* async create(body: T) {
+      async create(body: T): Promise<T> {
         if (config.IS_MOCK) {
           await sleep(config.MOCK_DURATION);
-          if (config.MOCK_ERROR.add) {
-            throw config.MOCK_ERROR.add;
-          }
         }
-        // @ts-ignore
-        const response: T = config.IS_MOCK
-          ? mock.add(_getPath(), body)
-          : await axios.post(_getPath(), body);
-        return response;
+
+        const response = _formatResponse<T>(
+          config.IS_MOCK
+            ? mock.add(_getPath(), body)
+            : await axios.post(_getPath(), body)
+        );
+        return response.data;
       },
+      /*
       async delete(id: ID) {
         if (config.IS_MOCK) {
           await sleep(config.MOCK_DURATION);

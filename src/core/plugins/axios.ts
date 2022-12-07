@@ -1,9 +1,10 @@
+import config from "@/const";
 import axios from "axios";
 import { getJWT } from "../helpers/utils";
 
 const instance = axios.create({
   // todo: get baseURL from .env
-  baseURL: "http://localhost:3002",
+  baseURL: config.API_URL,
 });
 
 instance.interceptors.request.use(

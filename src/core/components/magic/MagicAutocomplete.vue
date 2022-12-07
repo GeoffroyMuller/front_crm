@@ -1,8 +1,8 @@
 <template>
   <Autocomplete
-    v-bind="$props"
-    :model-value="modelValue"
-    @update:model-value="($event) => $emit('update:modelValue', $event)"
+    v-bind="autocompleteProps"
+    :model-value="internalValue"
+    @update:model-value="($event) => (internalValue = $event)"
     @search="onSearch"
     :options="options"
     :autoFilter="false"
@@ -10,9 +10,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import Autocomplete, { type AutocompleteProps } from "../form/Autocomplete.vue";
 import type { AnySchema } from "yup";
+import useValidatable from "@/core/helpers/vue/composables/validatable";
 
 interface MagicAutocompleteProps /* extends AutocompleteProps */ {
   multiple?: boolean;
@@ -55,11 +56,29 @@ const props = withDefaults(defineProps<MagicAutocompleteProps>(), {
   },
 });
 
+const { internalValue, internalError, validate } = useValidatable({
+  value: props.modelValue,
+  error: props.error,
+  rules: props.rules,
+});
+
 const options = ref([]);
+
+const autocompleteProps = computed(() => {
+  const result = { ...props };
+  delete result.name;
+  return result;
+});
 
 // TODO :  do not fetchAll, fetch the required string
 async function onSearch(q: string) {
   const response = await props.store.search({ q });
   options.value = response;
 }
+
+onMounted(() => {
+  if (internalValue.value != null) {
+    onSearch(internalValue.value);
+  }
+});
 </script>

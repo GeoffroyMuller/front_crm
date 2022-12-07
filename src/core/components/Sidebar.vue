@@ -8,16 +8,28 @@
       v-click-outside="onClickOutside"
     >
       <div>
+        <IconButton
+          @click="onClickOutside"
+          v-if="displayCloseBtn && open"
+          name="close"
+          class="close-button"
+          size="xl"
+        />
         <slot />
       </div>
     </div>
   </Teleport>
 </template>
 <script setup lang="ts">
+import IconButton from "@/core/components/IconButton.vue";
+
 interface SidebarProps {
   open: boolean;
+  displayCloseBtn?: boolean;
 }
-const props = withDefaults(defineProps<SidebarProps>(), {});
+const props = withDefaults(defineProps<SidebarProps>(), {
+  displayCloseBtn: true,
+});
 const emit = defineEmits(["update:open"]);
 
 function onClickOutside() {
@@ -46,9 +58,21 @@ function onClickOutside() {
     height: 100%;
     height: 100vh;
     min-width: 500px;
+    position: relative;
+  }
+  .close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: spacing(1);
+    opacity: 0;
+    transition: opacity 0.4s linear;
   }
   &.sidebar-open {
     max-width: 100%;
+    .close-button {
+      opacity: 1;
+    }
   }
 }
 </style>

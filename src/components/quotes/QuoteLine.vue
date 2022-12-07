@@ -19,7 +19,9 @@
     />
     <Select
       class="input"
-      :options="[]"
+      :options="vats"
+      :get-option-label="(opt) => `${opt.rate}%`"
+      :get-option-value="(opt) => opt.id"
       v-model="internalLine.idVat"
       :label="$t('pages.edit-quote.vat')"
     />
@@ -51,10 +53,15 @@ import { computed, toRef } from "vue";
 import TextField from "@/core/components/form/TextField.vue";
 import Select from "@/core/components/form/Select.vue";
 import HtmlEditor from "@/core/components/HtmlEditor.vue";
+import useVatStore from "@/stores/vat";
 
 interface QuoteLineProps {
   line: QuoteLine;
 }
+
+const vatsStore = useVatStore();
+
+const vats = computed(() => vatsStore.getAll);
 
 const totalWithoutTaxes = computed(
   () => internalLine.value.unit_price * internalLine.value.qty
@@ -88,17 +95,7 @@ const internalLine = toRef(props, "line");
 
   @media screen and (min-width: 450px) {
     .description {
-      max-width: 40%;
-    }
-  }
-  @media screen and (min-width: 900px) {
-    .description {
-      max-width: 50%;
-    }
-  }
-  @media screen and (min-width: 1400px) {
-    .description {
-      max-width: 65%;
+      max-width: 45%;
     }
   }
 

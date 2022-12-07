@@ -32,6 +32,13 @@
             </Button>
           </div>
         </div>
+        <div class="form-modalities">
+          <HtmlEditor
+            id="modalities"
+            name="modalities"
+            :label="$t('pages.edit-quote.modalities')"
+          />
+        </div>
         <div class="form-footer">
           <HtmlEditor id="footer" name="footer" :label="$t('pages.edit-quote.footer')" />
         </div>
@@ -44,12 +51,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, onMounted, watch } from "vue";
 import Form from "@/core/components/form/Form.vue";
 import TextField from "@/core/components/form/TextField.vue";
 import Button from "@/core/components/Button.vue";
 import Page from "@/components/Page.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import useQuoteStore from "@/stores/quotes";
 import { useI18n } from "vue-i18n";
 import useUI from "@/core/helpers/vue/composables/ui";
@@ -57,17 +64,22 @@ import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import useClientStore from "@/stores/clients";
 import Table from "@/core/components/Table.vue";
 import type { Quote } from "@/types/quote";
-import QuoteLine from "./QuoteLine.vue";
+import QuoteLine from "@/components/quotes/QuoteLine.vue";
 import HtmlEditor from "@/core/components/HtmlEditor.vue";
+import useVatStore from "@/stores/vat";
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();
+const vatsStore = useVatStore();
 
+const router = useRouter();
 const { id } = useRoute().params;
 const { t } = useI18n();
 const { toast, confirm } = useUI();
 
-const isAddAction = computed(() => !id);
+const isAddAction = computed(
+  () => !quote.value && (!id || Number.isNaN(Number.parseInt(id as string)))
+);
 const loading = computed(() => {
   return isAddAction.value ? false : !quote.value;
 });
@@ -82,6 +94,7 @@ const title = computed(() => {
 });
 
 onMounted(() => {
+  vatsStore.fetchAll();
   if (!isAddAction.value) {
     quotesStore
       .fetchById(id)
@@ -95,10 +108,13 @@ onMounted(() => {
 });
 
 async function handleSubmit(data: any) {
-  console.error({ data });
   try {
     if (!isAddAction.value) {
-      await quotesStore.update(id, data);
+      await quotesStore.update((quote.value as Quote).id, data);
+    } else {
+      const res = await quotesStore.create(data);
+      router.push("/quotes/" + res.id);
+      quote.value = res;
     }
     toast({
       type: "success",

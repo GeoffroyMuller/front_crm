@@ -172,7 +172,7 @@ watch(
 );
 
 watch(
-  () => internalValue.value,
+  () => internalValue.value && props.options,
   (val) => {
     search.value = displayed.value;
   },

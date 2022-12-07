@@ -14,6 +14,9 @@
             />
             <slot name="title" :column="column" />
           </th>
+          <th v-if="$slots['actions-title'] || $slots['actions']" class="actions-block">
+            <slot name="actions-title"></slot>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -30,11 +33,23 @@
             ></slot>
             <slot name="content" :column="column" :item="item" />
           </td>
+          <td
+            v-if="$slots['actions-title'] || $slots['actions']"
+            :style="styleItem"
+            class="actions-block"
+          >
+            <slot name="actions" :item="item"></slot>
+          </td>
         </tr>
       </tbody>
       <tfoot v-if="$slots.footer">
         <tr>
-          <td :colspan="internalColumns?.length">
+          <td
+            :colspan="
+              internalColumns?.length +
+              ($slots['actions-title'] || $slots['actions'] ? 1 : 0)
+            "
+          >
             <slot class="table-footer" name="footer"></slot>
           </td>
         </tr>
@@ -125,5 +140,11 @@ table {
 }
 .table-footer {
   width: 100%;
+}
+
+.actions-block {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 </style>

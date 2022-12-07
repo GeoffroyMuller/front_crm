@@ -18,7 +18,8 @@
             "total": "Total TTC",
             "total-without-taxes": "Total HT",
             "add-line-product": "Ajouter une ligne de produit",
-            "footer": "Pied de page"
+            "footer": "Pied de page",
+            "modalities": "Modalitées"
         }
     },
     "customer": "Client",
@@ -31,5 +32,8 @@
     "save": "Enregistrer",
     "saved": "Enregistré",
     "archived": "archivé",
-    "home": "Accueil"
+    "home": "Accueil",
+    "preview": "Visualiser",
+    "download": "Telecharger",
+    "add": "Ajouter"
 }
