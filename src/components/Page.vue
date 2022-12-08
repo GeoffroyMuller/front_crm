@@ -15,7 +15,7 @@
       </Menu>
     </div>
   </div>
-  <Spinner v-if="loading" class="loading" />
+  <Spinner v-if="true" class="page-spinner" />
   <slot v-else />
 </template>
 
@@ -44,6 +44,12 @@ const auth = computed(() => {
 </script>
 
 <style lang="scss">
+.page-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-100%, -100%);
+}
 .page-menu {
   display: flex;
   justify-content: space-between;
