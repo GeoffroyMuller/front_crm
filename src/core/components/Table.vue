@@ -112,11 +112,11 @@ td,
 th {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   padding: 0px 16px;
-  height: 48px;
+  height: 55px;
 }
 th {
   text-align: left;
-  height: 56px;
+  height: 60px;
 }
 table {
   font-size: 14px;
@@ -135,7 +135,7 @@ table {
   tfoot tr td {
     padding-right: 25px;
     border-bottom: 0;
-    height: 56px;
+    height: 60px;
   }
 }
 .table-footer {
