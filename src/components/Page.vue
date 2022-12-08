@@ -16,7 +16,9 @@
     </div>
   </div>
   <Spinner v-if="loading" class="page-spinner" />
-  <slot v-else />
+  <div v-else class="page-content">
+    <slot />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -50,14 +52,15 @@ const auth = computed(() => {
   left: 50%;
   transform: translate(-100%, -100%);
 }
+.page-content {
+  padding: spacing(1) spacing(2);
+}
 .page-menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-grow: 1;
-  padding: spacing(3) 0;
-  transition: margin-left 0.3s ease;
-  z-index: 2;
+  padding: 0 spacing(2);
+  height: spacing(10);
   .buttons {
     display: flex;
     justify-content: flex-end;

@@ -106,7 +106,6 @@ $miniNavWidth: 60px;
   top: 0;
   left: $navWidth;
   width: calc(100% - $navWidth);
-  padding: spacing(1) spacing(2);
   height: 100%;
 }
 .actions {
