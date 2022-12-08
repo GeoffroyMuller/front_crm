@@ -13,7 +13,21 @@
           />
         </div>
         <div class="form-table">
-          <Table
+          <Repetable name="lines" :label="$t('products')">
+            <template #default="{ data }">
+              <QuoteLineVue :line="(data as unknown as QuoteLine)" />
+            </template>
+            <template #actions="{ addSection }">
+              <Button
+                type="button"
+                variant="text"
+                @click="addSection({ type: 'product' })"
+              >
+                {{ $t("pages.edit-quote.add-line-product") }}
+              </Button>
+            </template>
+          </Repetable>
+          <!-- <Table
             :columns="[
               {
                 title: '',
@@ -30,7 +44,7 @@
             <Button type="button" variant="text">
               {{ $t("pages.edit-quote.add-line-product") }}
             </Button>
-          </div>
+          </div> -->
         </div>
         <div class="form-modalities">
           <HtmlEditor
@@ -63,10 +77,11 @@ import useUI from "@/core/helpers/vue/composables/ui";
 import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import useClientStore from "@/stores/clients";
 import Table from "@/core/components/Table.vue";
-import type { Quote } from "@/types/quote";
-import QuoteLine from "@/components/quotes/QuoteLine.vue";
+import type { Quote, QuoteLine } from "@/types/quote";
+import QuoteLineVue from "@/components/quotes/QuoteLine.vue";
 import HtmlEditor from "@/core/components/HtmlEditor.vue";
 import useVatStore from "@/stores/vat";
+import Repetable from "@/core/components/form/repetable/Repetable.vue";
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();
@@ -108,6 +123,14 @@ onMounted(() => {
 });
 
 async function handleSubmit(data: any) {
+  if (data.lines) {
+    data.lines = data.lines.map((line) => {
+      const newLine = { ...line };
+      delete newLine.vat;
+      return newLine;
+    });
+  }
+  delete data.client;
   try {
     if (!isAddAction.value) {
       await quotesStore.update((quote.value as Quote).id, data);

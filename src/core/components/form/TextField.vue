@@ -61,6 +61,7 @@ interface InputProps extends FormInputProps<string | number> {
   label?: string;
   modelValue?: any;
   type?: string;
+  step?: number;
   readonly?: boolean;
   name?: string;
   error?: string | boolean;

@@ -1,9 +1,10 @@
 <template>
   <button class="icon-button" :class="`icon-button-${color}`" type="button">
-    <Icon v-bind="$props" />
+    <Icon v-bind="iconProps" />
   </button>
 </template>
 <script setup lang="ts">
+import { computed } from "vue";
 import Icon from "./Icon.vue";
 import type { IconName, Size, Color } from "./types";
 interface IconButtonProps {
@@ -14,6 +15,12 @@ interface IconButtonProps {
 }
 
 const props = withDefaults(defineProps<IconButtonProps>(), {});
+
+const iconProps = computed(() => {
+  const p = { ...props };
+  delete p.color;
+  return p;
+});
 </script>
 <style lang="scss">
 .icon-button {
@@ -33,12 +40,11 @@ const props = withDefaults(defineProps<IconButtonProps>(), {});
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .icon-button-#{$key} {
-      color: color($key, 500);
+      &:hover {
+        color: color($key, 500);
+      }
     }
   } @else {
-    .icon-button-#{$key} {
-      color: $value;
-    }
   }
 }
 </style>

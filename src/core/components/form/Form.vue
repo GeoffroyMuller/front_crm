@@ -8,11 +8,11 @@
 import { ref, provide, defineEmits, computed } from "vue";
 import { isEmpty, omitBy, isNil } from "lodash";
 
-interface FormProps {
+export interface FormProps {
   defaultValue?: any;
 }
 
-interface _CustomInput {
+export interface _CustomInput {
   name: string;
   getValue: () => any;
   validate: () => boolean | string;

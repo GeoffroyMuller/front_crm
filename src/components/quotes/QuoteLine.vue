@@ -6,24 +6,33 @@
       class="description"
       :label="$t('pages.edit-quote.description')"
       v-model="internalLine.description"
+      name="description"
     />
     <TextField
       class="input"
+      type="number"
       v-model="internalLine.qty"
       :label="$t('pages.edit-quote.qty')"
+      :step="1"
+      name="qty"
     />
     <TextField
       class="input"
+      type="number"
+      :step="0.01"
       v-model="internalLine.unit_price"
       :label="$t('pages.edit-quote.unit_price')"
+      name="unit_price"
     />
     <Select
       class="input"
       :options="vats"
-      :get-option-label="(opt) => `${opt.rate}%`"
+      :get-option-label="(opt) => (opt?.rate != null ? `${opt?.rate}%` : '')"
       :get-option-value="(opt) => opt.id"
       v-model="internalLine.idVat"
       :label="$t('pages.edit-quote.vat')"
+      @update:model-value="($id) => (internalLine.vat = vats.find((v) => v.id == $id))"
+      name="idVat"
     />
 
     <div class="total">
@@ -32,15 +41,11 @@
           <div class="label">
             {{ $t("pages.edit-quote.total-without-taxes") }}
           </div>
-          <div class="value">
-            {{ totalWithoutTaxes }}
-          </div>
+          <div class="value">{{ totalWithoutTaxes }} €</div>
         </div>
         <div>
           <div class="label">{{ $t("pages.edit-quote.total") }}</div>
-          <div class="value">
-            {{ totalWithTaxes }}
-          </div>
+          <div class="value">{{ totalWithTaxes }} €</div>
         </div>
       </div>
     </div>
@@ -63,15 +68,20 @@ const vatsStore = useVatStore();
 
 const vats = computed(() => vatsStore.getAll);
 
-const totalWithoutTaxes = computed(
-  () => internalLine.value.unit_price * internalLine.value.qty
-);
+const totalWithoutTaxes = computed(() => {
+  if (!internalLine.value.unit_price || !internalLine.value.qty) {
+    return "-";
+  }
+  return (internalLine.value.unit_price * internalLine.value.qty).toFixed(2);
+});
 
-const totalWithTaxes = computed(
-  () =>
-    totalWithoutTaxes.value +
-    totalWithoutTaxes.value * (internalLine.value.vat.rate / 100)
-);
+const totalWithTaxes = computed(() => {
+  if (totalWithoutTaxes.value === "-" || internalLine.value?.vat?.rate == null) {
+    return "-";
+  }
+  const twt = Number.parseFloat(totalWithoutTaxes.value);
+  return (twt + twt * (internalLine.value.vat.rate / 100)).toFixed(2);
+});
 
 const props = withDefaults(defineProps<QuoteLineProps>(), {});
 
@@ -87,7 +97,8 @@ const internalLine = toRef(props, "line");
   padding: spacing(1) spacing(0.2);
 
   .input {
-    width: 10%;
+    max-width: 12%;
+    width: fit-content;
   }
   .description {
     max-width: 35%;

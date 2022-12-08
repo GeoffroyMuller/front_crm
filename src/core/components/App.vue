@@ -12,7 +12,7 @@
 import { computed } from "vue";
 import { RouterView, useRoute } from "vue-router";
 
-import Default from "@/features/layouts/Default.vue";
+import Default from "@/layouts/Default.vue";
 import NotificationsContainer from "./providers/NotificationsContainer.vue";
 import ConfirmModalContainer from "./providers/ConfirmModalContainer.vue";
 
