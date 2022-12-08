@@ -51,7 +51,7 @@
               @click.stop="setArchived(item)"
               color="danger"
               icon="archive"
-              v-tooltip="{ text: $t('to_archive'), placement: 'bottom' }"
+              v-tooltip="{ text: $t('archive'), placement: 'bottom' }"
               v-if="!item.archived"
             />
           </div>

@@ -1,3 +1,16 @@
 {
-    "WELCOME": "Bienvenue Core"
+    "delete": "Supprimer",
+    "disconnect": "Se deconnecter",
+    "home": "Accueil",
+    "preview": "Visualiser",
+    "download": "Telecharger",
+    "add": "Ajouter",
+    "title": "Titre",
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "archived": "Archivé",
+    "archive": "Archiver",
+    "customer": "Client",
+    "status": "Etat",
+    "ID": "ID"
 }

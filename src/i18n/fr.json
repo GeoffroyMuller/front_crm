@@ -22,22 +22,9 @@
             "modalities": "Modalitées"
         }
     },
-    "customer": "Client",
-    "status": "Etat",
-    "ID": "ID",
-    "to_archive": "Archiver",
     "quotes": "Devis",
     "quote": "Devis",
-    "title": "Titre",
-    "save": "Enregistrer",
-    "saved": "Enregistré",
-    "archived": "archivé",
-    "home": "Accueil",
-    "preview": "Visualiser",
-    "download": "Telecharger",
-    "add": "Ajouter",
     "new-quote": "Nouveau devis",
-    "products": "Produits",
-    "delete": "Supprimer",
-    "disconnect": "Se deconnecter"
+    "products": "Produits"
+    
 }
