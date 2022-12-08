@@ -10,7 +10,10 @@
       :alt="imgAlt ? imgAlt : 'avatar'"
       :class="[size ? `avatar-${size}` : '']"
     />
-    <span class="text" v-else>{{ text }}</span>
+    <span class="text" v-else>
+      {{ text }}
+      <slot />
+    </span>
   </div>
 </template>
 
