@@ -12,12 +12,15 @@
         @inputChange="({ name, value }) => handleSectionInputChange(key, name, value)"
       >
         <slot :data="section" />
-        <IconButton
-          class="icon-delete"
-          name="delete"
-          color="danger"
-          @click="handleDeleteSection(key)"
-        />
+        <div class="icon-delete">
+          <IconButton
+            class=""
+            name="delete"
+            color="danger"
+            v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
+            @click="handleDeleteSection(key)"
+          />
+        </div>
       </RepetableSection>
       <div class="repetable-actions">
         <Button @click="() => addSection()" v-if="!$slots['actions']">

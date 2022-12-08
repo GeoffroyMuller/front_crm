@@ -27,7 +27,7 @@
 
       <div class="footer">
         <Button v-if="!isNavMini" variant="text" color="black" @click="disconnect">
-          Disconnect
+          {{ $t("disconnect") }}
         </Button>
 
         <IconButton @click="disconnect" name="door_open" v-if="isNavMini" />
