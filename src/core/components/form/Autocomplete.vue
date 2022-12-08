@@ -1,6 +1,6 @@
 <template>
   <div class="autocomplete">
-    <Menu @close="handleClose" :close-on-second-click="false" :disabled="disabled">
+    <Menu @close="handleClose" :close-on-second-click="false" :disabled="menuDisabled">
       <template #activator="{ open }">
         <TextField
           v-model="search"
@@ -88,6 +88,7 @@ const props = withDefaults(defineProps<AutocompleteProps>(), {
     return opt?.value;
   },
 });
+
 const search = ref("");
 const isFocus = ref();
 
@@ -96,6 +97,10 @@ const { internalValue, internalError, validate } = useValidatable({
   error: props.error,
   rules: props.rules,
 });
+
+const menuDisabled = computed(
+  () => props.disabled || !props.options?.length || !search.value?.length
+);
 
 function handleClose() {
   validate();

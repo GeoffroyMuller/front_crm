@@ -11,7 +11,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, toRef } from "vue";
 import useMenu from "../helpers/vue/composables/menu";
 import Card from "./Card.vue";
 
@@ -29,14 +29,16 @@ const props = withDefaults(defineProps<MenuProps>(), {
   closeOnSecondClick: true,
 });
 
+const isDisabled = toRef(props, "disabled");
+
 const { open } = useMenu({
   activator,
   content,
   openOnHover: !props.needClickToSwitchOpen,
+  disabled: isDisabled,
 });
 
 function onClickActivator() {
-  if (props.disabled) return;
   if (!props.closeOnSecondClick) {
     open.value = true;
   } else {

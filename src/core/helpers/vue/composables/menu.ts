@@ -6,6 +6,7 @@ export interface MenuProps {
   placement?: "top" | "bottom" | "left" | "right";
   gap?: number;
   openOnHover?: boolean;
+  disabled?: Ref;
 }
 
 /**
@@ -130,9 +131,21 @@ export default function useMenu(props: MenuProps) {
   });
 
   watch(
+    () => props.disabled?.value,
+    () => {
+      if (props.disabled?.value) {
+        hide();
+      } else {
+        if (open.value) {
+          display();
+        }
+      }
+    }
+  );
+  watch(
     () => open.value,
     () => {
-      if (open.value) {
+      if (open.value && !props.disabled?.value) {
         display();
       } else {
         hide();

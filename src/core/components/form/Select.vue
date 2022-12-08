@@ -1,6 +1,6 @@
 <template>
   <div class="select">
-    <Menu @close="validate" :disabled="disabled">
+    <Menu @close="validate" :disabled="menuDisabled">
       <template #activator="{ open }">
         <TextField
           :model-value="displayed"
@@ -98,6 +98,8 @@ const { internalValue, internalError, validate } = useValidatable({
   error: props.error,
   rules: props.rules,
 });
+
+const menuDisabled = computed(() => props.disabled || !props.options?.length);
 
 function isSelected(opt: any) {
   if (props.multiple) {
