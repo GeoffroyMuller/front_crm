@@ -144,17 +144,13 @@ export default function useMenu(props: MenuProps) {
     content.value.style.display = "unset";
     compute();
     setStyle();
-    setTimeout(() => {
-      content.value.style.opacity = "100";
-    }, 150);
+    content.value.style.opacity = "100";
   }
 
   function hide() {
     content.value.style.opacity = "0";
-    setTimeout(() => {
-      content.value.style.display = "none";
-      resetStyle();
-    }, 150);
+    content.value.style.display = "none";
+    resetStyle();
   }
 
   return {

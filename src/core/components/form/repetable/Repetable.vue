@@ -13,13 +13,15 @@
       >
         <slot :data="section" />
         <div class="icon-delete">
-          <IconButton
-            class=""
-            name="delete"
-            color="danger"
-            v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
-            @click="handleDeleteSection(key)"
-          />
+          <div>
+            <IconButton
+              class=""
+              name="delete"
+              color="danger"
+              v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
+              @click="handleDeleteSection(key)"
+            />
+          </div>
         </div>
       </RepetableSection>
       <div class="repetable-actions">

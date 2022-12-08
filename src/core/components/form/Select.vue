@@ -14,13 +14,7 @@
           <template #icon>
             <Icon
               :name="!open ? 'expand_more' : 'expand_less'"
-              :color="
-                !isFocus
-                  ? 'black'
-                  : internalError || error
-                  ? 'danger'
-                  : 'primary'
-              "
+              :color="!isFocus ? 'black' : internalError || error ? 'danger' : 'primary'"
             />
           </template>
         </TextField>
@@ -141,9 +135,7 @@ const selected = computed(() => {
       props.options.find((o) => isEqual(props.getOptionValue(o), v))
     );
   }
-  return props.options.find((o) =>
-    isEqual(props.getOptionValue(o), internalValue.value)
-  );
+  return props.options.find((o) => isEqual(props.getOptionValue(o), internalValue.value));
 });
 
 const displayed = computed<string>(() => {
@@ -159,6 +151,9 @@ const displayed = computed<string>(() => {
   display: grid;
   gap: spacing(1);
   width: 100%;
+  input {
+    cursor: pointer;
+  }
 }
 .select-option {
   cursor: pointer;
