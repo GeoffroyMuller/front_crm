@@ -6,6 +6,7 @@ const tooltip: Directive = {
   mounted(target, binding) {
     const elChild = document.createElement("div");
     target.before(elChild);
+    target.parentElement.style.position = "relative";
 
     const appTooltip = createApp(Tooltip, {
       ...binding.value,
