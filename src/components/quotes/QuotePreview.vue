@@ -1,11 +1,6 @@
 <template>
   <Sidebar v-model:open="isOpen" class="sidebar-quote-preview">
-    <iframe
-      v-if="quote"
-      width="100%"
-      :src="`${config.API_URL}/quotes/${quote.id}/preview?token=${getJWT()}`"
-      class="quote-iframe"
-    />
+    <iframe ref="iframe" class="quote-iframe" />
   </Sidebar>
 </template>
 
@@ -24,6 +19,7 @@ const props = withDefaults(defineProps<QuotePreviewProps>(), {});
 const emit = defineEmits(["close"]);
 
 const isOpen = ref(false);
+const iframe = ref();
 
 watch(
   () => isOpen.value,
@@ -41,6 +37,7 @@ watch(
       isOpen.value = false;
     } else {
       isOpen.value = true;
+      iframe.value.src = `${config.API_URL}/quotes/${quote.id}/preview?token=${getJWT()}`;
     }
   },
   { immediate: true }
