@@ -15,7 +15,7 @@
       </Menu>
     </div>
   </div>
-  <Spinner v-if="true" class="page-spinner" />
+  <Spinner v-if="loading" class="page-spinner" />
   <slot v-else />
 </template>
 
