@@ -1,12 +1,36 @@
 <template>
-  <div id="container" :class="{ 'mini-nav': isNavMini }">
+  <div class="mobile-layout">
+    <div class="mobile-nav">
+      <IconButton name="menu" @click.stop="mobileNavOpen = true" />
+      <Avatar color="primary" size="sm">
+        {{ user.firstname.substr(0, 1) }}{{ user.lastname.substr(0, 1) }}
+      </Avatar>
+      <Sidebar v-model:open="mobileNavOpen">
+        <div class="mobile-nav-items-container">
+          <div class="mobile-nav-items">
+            <div
+              v-for="item of menu"
+              :key="item.title"
+              @click="
+                () => {
+                  $router.push(item.path);
+                  mobileNavOpen = false;
+                }
+              "
+              class="mobile-nav-item"
+            >
+              <Icon :name="(item.icon as IconName)" color="black" />
+              <div v-if="!isNavMini">{{ item.title }}</div>
+            </div>
+          </div>
+        </div>
+      </Sidebar>
+    </div>
+    <slot />
+  </div>
+  <div class="desktop-layout" id="container" :class="{ 'mini-nav': isNavMini }">
     <div class="nav">
       <div class="logo-container">
-        <!-- <img
-        src="@/assets/img/logo.png"
-        alt="logo"
-        :style="{ height: '50px', width: '50px' }"
-      /> -->
         <span v-if="!isNavMini"> CRM </span>
         <IconButton
           @click="isNavMini = !isNavMini"
@@ -40,19 +64,21 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import Icon from "@/core/components/Icon.vue";
 import Button from "@/core/components/Button.vue";
 import { useUserStore } from "@/stores/user";
 import { useRouter } from "vue-router";
 import IconButton from "@/core/components/IconButton.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
-
-const loading = ref<boolean>(false);
+import Avatar from "@/core/components/Avatar.vue";
+import Sidebar from "@/core/components/Sidebar.vue";
+import type { IconName } from "@/core/components/types";
 
 const userStore = useUserStore();
 
 const isNavMini = ref(false);
+const mobileNavOpen = ref(false);
 
 const router = useRouter();
 const { confirm } = useUI();
@@ -61,6 +87,8 @@ const menu = ref([
   { path: "/", title: "Home", icon: "home" },
   { path: "/quotes", title: "Devis", icon: "description" },
 ]);
+
+const user = computed(() => userStore.getAuth);
 
 async function disconnect() {
   if (await confirm("Are you sure your want to disconnect ?")) {
@@ -71,6 +99,49 @@ async function disconnect() {
 </script>
 
 <style lang="scss" scoped>
+//mobile
+@media screen and (max-width: 450px) {
+  .mobile-layout {
+    display: block;
+  }
+  .desktop-layout {
+    display: none;
+  }
+}
+//desktop
+@media screen and (min-width: 450px) {
+  .mobile-layout {
+    display: none;
+  }
+  .desktop-layout {
+    display: flex;
+  }
+}
+
+.mobile-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: spacing(0.5) spacing(2);
+}
+.mobile-nav-items-container {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  .mobile-nav-items {
+    display: flex;
+    flex-direction: column;
+    gap: spacing(2.5);
+    align-items: flex-start;
+    justify-content: center;
+    .mobile-nav-item {
+      display: flex;
+      align-items: flex-end;
+      gap: spacing(0.5);
+    }
+  }
+}
+
 $navWidth: 240px;
 $miniNavWidth: 60px;
 
@@ -96,8 +167,7 @@ $miniNavWidth: 60px;
   transform: translate(-50%, -50%);
 }
 
-#container {
-  display: flex;
+.desktop-layout {
   flex-wrap: wrap;
 }
 .page-container {

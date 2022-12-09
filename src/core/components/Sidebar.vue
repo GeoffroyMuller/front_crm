@@ -75,4 +75,16 @@ function onClickOutside() {
     }
   }
 }
+@media screen and (max-width: 450px) {
+  .sidebar {
+    padding: 0;
+    margin: 0;
+    > * {
+      min-width: 0;
+      width: 100vw;
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
 </style>

@@ -53,7 +53,7 @@ const auth = computed(() => {
   transform: translate(-100%, -100%);
 }
 .page-content {
-  padding: spacing(1) spacing(2);
+  padding: 0 spacing(2);
 }
 .page-menu {
   display: flex;
