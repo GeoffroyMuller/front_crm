@@ -25,5 +25,7 @@
     "quotes": "Devis",
     "quote": "Devis",
     "products": "Produits",
-    "product": "Produit"
+    "product": "Produit",
+    "login": "Se connecter",
+    "password": "Mot de passe"
 }

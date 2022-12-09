@@ -1,12 +1,16 @@
 <template>
   <div id="login-container">
-    <div id="login-card">
-      <TextField label="Email" v-model="formData.email" />
-      <PasswordInput label="Password" v-model="formData.password" />
-      <div id="login-actions">
-        <Button @click="login" :loading="loading"> Login </Button>
-      </div>
-    </div>
+    <Form id="login-card" @submit="login">
+      <template #default="{ hasError }">
+        <TextField :label="$t('email')" name="email" />
+        <PasswordInput :label="$t('password')" name="password" />
+        <div id="login-actions">
+          <Button :disabled="hasError" :loading="loading" type="submit">
+            {{ $t("login") }}
+          </Button>
+        </div>
+      </template>
+    </Form>
   </div>
 </template>
 
@@ -19,24 +23,19 @@ import { useRouter } from "vue-router";
 import PasswordInput from "@/core/components/form/PasswordInput.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import type { AxiosError } from "axios";
+import Form from "@/core/components/form/Form.vue";
 
 const userStore = useUserStore();
 
 const router = useRouter();
 const { toast } = useUI();
 
-const formData = reactive({
-  email: "",
-  password: "",
-});
-
 const loading = ref(false);
 
-async function login() {
+async function login(data: { email: string; password: string }) {
   loading.value = true;
   try {
-    const user = await userStore.login(formData.email, formData.password);
-    console.error({ user });
+    const user = await userStore.login(data.email, data.password);
     router.push({ name: "home" });
     toast({
       type: "success",
