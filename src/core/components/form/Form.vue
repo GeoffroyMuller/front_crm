@@ -47,10 +47,10 @@ function inputErrorChange(name: string) {
   errors.value[name] = inputs.value[name].getError();
 }
 
-function validate() {
+async function validate() {
   errors.value = {};
 
-  return Object.keys(inputs.value).reduce(async (prev, currentKey) => {
+  return await Object.keys(inputs.value).reduce(async (prev, currentKey) => {
     const input: _CustomInput = inputs.value[currentKey];
     // @ts-ignore
     const valid = await input.validate();
@@ -76,9 +76,9 @@ function getFormData() {
   }, {});
 }
 
-function handleSumbit(event: Event) {
+async function handleSumbit(event: Event) {
   event.preventDefault();
-  validate();
+  await validate();
   if (!hasError.value) {
     emit("submit", getFormData());
   }

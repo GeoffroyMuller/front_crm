@@ -74,7 +74,6 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
     id: props.id,
     state: () => ({
       list: [] as Array<T>,
-      all: [] as Array<T>,
       byId: {} as { [key: ID]: T },
       resources: {} as { [name: string]: { [key: ID]: any } },
 
@@ -88,7 +87,6 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
     }),
     getters: {
       getList: (state) => state.list,
-      getAll: (state) => state.all,
       getById: (state) => (id: ID) => state.byId[id],
       ...props.getters,
     },
@@ -141,49 +139,40 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
           : this.filters;
 
         // @ts-ignore
-        const response = _formatResponse<PaginateResult<T>>(
+        const response = _formatResponse<Array<T> | PaginateResult<T>>(
           config.IS_MOCK
             ? mock.getAll(_getPath({ filters: _filters }))
             : await axios.get(_getPath({ filters: _filters }))
         );
-        this.list = response.data.results;
-        this.totalPages = Math.ceil(
-          response.data.total / this.filters.pageSize
-        );
-        return response.data;
-      },
-      async fetchAll(filters?: { [key: string]: string }): Promise<Array<T>> {
-        if (config.IS_MOCK) {
-          await sleep(config.MOCK_DURATION);
+        if ((response.data as PaginateResult<T>)?.total) {
+          this.list = (response.data as PaginateResult<T>).results;
+          this.totalPages = Math.ceil(
+            (response.data as PaginateResult<T>).total / this.filters.pageSize
+          );
+          return response.data as PaginateResult<T>;
+        } else {
+          this.list = response.data as Array<T>;
+          this.totalPages = 1;
+          return {
+            total: 1,
+            results: response.data as Array<T>,
+          } as PaginateResult<T>;
         }
-
-        const _filters = filters
-          ? {
-              ...filters,
-              ...this.filters,
-            }
-          : this.filters;
-
-        // @ts-ignore
-        const response = _formatResponse<Array<T>>(
-          config.IS_MOCK
-            ? mock.getAll(_getPath({ filters: _filters }))
-            : await axios.get(_getPath({ filters: _filters }))
-        );
-        this.all = response.data;
-        return response.data;
       },
       async search(filters?: { [key: string]: string }): Promise<Array<T>> {
         if (config.IS_MOCK) {
           await sleep(config.MOCK_DURATION);
         }
         // @ts-ignore
-        const response = _formatResponse<Array<T>>(
+        const response = _formatResponse<Array<T> | PaginateResult<T>>(
           config.IS_MOCK
             ? mock.getAll(_getPath({ filters }))
             : await axios.get(_getPath({ filters }))
         );
-        return response.data;
+        if ((response.data as PaginateResult<T>)?.total) {
+          return (response.data as PaginateResult<T>).results;
+        }
+        return response.data as Array<T>;
       },
       async update(id: ID, body: T) {
         if (config.IS_MOCK) {

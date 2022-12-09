@@ -1,19 +1,25 @@
 <template>
-  <Autocomplete
-    v-bind="autocompleteProps"
-    :model-value="internalValue"
-    @update:model-value="($event) => (internalValue = $event)"
-    @search="onSearch"
-    :options="options"
-    :autoFilter="false"
-  />
+  <div class="magicAutocomplete">
+    <Autocomplete
+      v-bind="autocompleteProps"
+      :model-value="internalValue"
+      @update:model-value="($event) => (internalValue = $event)"
+      @search="onSearch"
+      :options="options"
+      :autoFilter="false"
+    />
+    <Button v-if="canAdd" variant="text" @click.stop="$emit('add')">
+      {{ addText || $t("add") }}
+    </Button>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import Autocomplete, { type AutocompleteProps } from "../form/Autocomplete.vue";
 import type { AnySchema } from "yup";
 import useValidatable from "@/core/helpers/vue/composables/validatable";
+import Button from "../Button.vue";
 
 interface MagicAutocompleteProps /* extends AutocompleteProps */ {
   multiple?: boolean;
@@ -23,6 +29,9 @@ interface MagicAutocompleteProps /* extends AutocompleteProps */ {
 
   // magic autocomplete props
   store: any;
+  addText?: string;
+  canAdd?: boolean;
+  options?: Array<any>;
 
   /*
     TODO : this is a duplicate of props in FormInputProps<string | number>
@@ -35,9 +44,10 @@ interface MagicAutocompleteProps /* extends AutocompleteProps */ {
   error?: string | boolean;
   disabled?: boolean;
   rules?: AnySchema;
+
 }
 
-const emit = defineEmits(["update:modelValue", "search"]);
+const emit = defineEmits(["update:modelValue", "update:options", "search"]);
 
 const props = withDefaults(defineProps<MagicAutocompleteProps>(), {
   multiple: false,
@@ -63,6 +73,18 @@ const { internalValue, internalError, validate } = useValidatable({
 });
 
 const options = ref([]);
+watch(
+  () => props.options,
+  () => {
+    options.value = props.options;
+  }
+);
+watch(
+  () => options.value,
+  () => {
+    emit("update:options", options.value);
+  }
+);
 
 const autocompleteProps = computed(() => {
   const result = { ...props };
@@ -70,7 +92,6 @@ const autocompleteProps = computed(() => {
   return result;
 });
 
-// TODO :  do not fetchAll, fetch the required string
 async function onSearch(q: string) {
   const response = await props.store.search({ q });
   options.value = response;
@@ -82,3 +103,11 @@ onMounted(() => {
   }
 });
 </script>
+
+<style>
+.magicAutocomplete {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+</style>

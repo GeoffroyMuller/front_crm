@@ -1,5 +1,6 @@
 import Home from "./pages/Home.vue";
 import Quotes from "./pages/quotes/index.vue";
+import Customers from "./pages/clients/index.vue";
 import EditQuote from "./pages/quotes/EditQuote.vue";
 import Login from "./pages/Login.vue";
 
@@ -31,6 +32,15 @@ export default [
     path: "/quotes/:id",
     name: "quotes-id",
     component: EditQuote,
+    meta: {
+      middleware: [auth],
+      layout: LayoutPage,
+    },
+  },
+  {
+    path: "/customers",
+    name: "customers",
+    component: Customers,
     meta: {
       middleware: [auth],
       layout: LayoutPage,

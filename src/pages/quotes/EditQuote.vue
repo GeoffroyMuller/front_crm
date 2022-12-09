@@ -4,12 +4,18 @@
       <template #default="{ hasError }">
         <div class="form-head">
           <TextField name="name" :label="$t('title')" />
+
           <MagicAutocomplete
             :label="$t('customer')"
             :store="clientsStore"
             :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
             :getOptionValue="(opt) => opt.id"
             name="idClient"
+            :addText="$t(`pages.edit-quote.add-customer`)"
+            can-add
+            @add="isAddClientOpen = true"
+            v-model:options="clientOptions"
+            v-model="idClient"
           />
         </div>
         <div class="form-table">
@@ -27,24 +33,6 @@
               </Button>
             </template>
           </Repetable>
-          <!-- <Table
-            :columns="[
-              {
-                title: '',
-                key: 'id',
-              },
-            ]"
-            :items="quote?.lines || []"
-          >
-            <template #content="{ item }">
-              <QuoteLine :line="item" />
-            </template>
-          </Table>
-          <div class="actions">
-            <Button type="button" variant="text">
-              {{ $t("pages.edit-quote.add-line-product") }}
-            </Button>
-          </div> -->
         </div>
         <div class="form-modalities">
           <HtmlEditor
@@ -62,6 +50,7 @@
       </template>
     </Form>
   </Page>
+  <EditClientSidebar @add="onAddClient" v-model:open="isAddClientOpen" />
 </template>
 
 <script setup lang="ts">
@@ -82,6 +71,8 @@ import QuoteLineVue from "@/components/quotes/QuoteLine.vue";
 import HtmlEditor from "@/core/components/HtmlEditor.vue";
 import useVatStore from "@/stores/vat";
 import Repetable from "@/core/components/form/repetable/Repetable.vue";
+import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
+import type Client from "@/types/client";
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();
@@ -91,6 +82,10 @@ const router = useRouter();
 const { id } = useRoute().params;
 const { t } = useI18n();
 const { toast, confirm } = useUI();
+
+const isAddClientOpen = ref(false);
+const idClient = ref();
+const clientOptions = ref();
 
 const isAddAction = computed(
   () => !quote.value && (!id || Number.isNaN(Number.parseInt(id as string)))
@@ -109,7 +104,7 @@ const title = computed(() => {
 });
 
 onMounted(() => {
-  vatsStore.fetchAll();
+  vatsStore.fetchList();
   if (!isAddAction.value) {
     quotesStore
       .fetchById(id)
@@ -121,6 +116,11 @@ onMounted(() => {
       });
   }
 });
+
+function onAddClient(client: Client) {
+  idClient.value = client.id;
+  clientOptions.value = [client];
+}
 
 async function handleSubmit(data: any) {
   if (data.lines) {
@@ -171,5 +171,11 @@ async function handleSubmit(data: any) {
       gap: spacing(1);
     }
   }
+}
+.input-and-button-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0;
+  align-items: center;
 }
 </style>

@@ -19,12 +19,15 @@
             "total-without-taxes": "Total HT",
             "add-line-product": "Ajouter une ligne de produit",
             "footer": "Pied de page",
-            "modalities": "Modalitées"
+            "modalities": "Modalitées",
+            "add-customer": "Ajouter un client"
         }
     },
     "quotes": "Devis",
     "quote": "Devis",
     "new-quote": "Nouveau devis",
-    "products": "Produits"
+    "products": "Produits",
+    "new-customer": "new-customer",
+    "client-add-success": "Client ajouté"
     
 }

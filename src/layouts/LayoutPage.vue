@@ -86,6 +86,7 @@ const { confirm } = useUI();
 const menu = ref([
   { path: "/", title: "Home", icon: "home" },
   { path: "/quotes", title: "Devis", icon: "description" },
+  { path: "/customers", title: "Client", icon: "person" },
 ]);
 
 const user = computed(() => userStore.getAuth);

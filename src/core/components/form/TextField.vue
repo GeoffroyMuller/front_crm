@@ -88,6 +88,7 @@ const emit = defineEmits([
 
 function onBlur() {
   emit("blur");
+  validate();
 }
 
 function onFocus() {
@@ -97,7 +98,6 @@ function onFocus() {
 function onInput(e: InputEvent) {
   emit("input", e);
 }
-
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
   error: props.error,

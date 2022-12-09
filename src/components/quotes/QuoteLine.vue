@@ -1,6 +1,5 @@
 <template>
   <div v-if="line.type === 'product'">
-    <!-- <div v-html="line.description" class="description" /> -->
     <HtmlEditor
       :id="`description-${line.id}`"
       class="description"
@@ -69,7 +68,7 @@ interface QuoteLineProps {
 
 const vatsStore = useVatStore();
 
-const vats = computed(() => vatsStore.getAll);
+const vats = computed(() => vatsStore.getList);
 
 const totalWithoutTaxes = computed(() => {
   if (!internalLine.value.unit_price || !internalLine.value.qty) {
