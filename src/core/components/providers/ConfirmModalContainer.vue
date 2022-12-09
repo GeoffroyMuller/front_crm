@@ -5,8 +5,12 @@
     </div>
     <div>{{ confirmationData?.message }}</div>
     <div class="actions">
-      <Button variant="text" color="black" @click="cancelConfirm"> Cancel </Button>
-      <Button color="primary" @click="confirmConfirm"> Confirm </Button>
+      <Button variant="text" color="black" @click="cancelConfirm">
+        {{ $t("cancel") }}
+      </Button>
+      <Button color="primary" @click="confirmConfirm">
+        {{ $t("confirm") }}
+      </Button>
     </div>
   </Modal>
   <slot />

@@ -74,6 +74,7 @@ import useUI from "@/core/helpers/vue/composables/ui";
 import Avatar from "@/core/components/Avatar.vue";
 import Sidebar from "@/core/components/Sidebar.vue";
 import type { IconName } from "@/core/components/types";
+import { useI18n } from "vue-i18n";
 
 const userStore = useUserStore();
 
@@ -82,6 +83,7 @@ const mobileNavOpen = ref(false);
 
 const router = useRouter();
 const { confirm } = useUI();
+const { t } = useI18n();
 
 const menu = ref([
   { path: "/", title: "Home", icon: "home" },
@@ -92,7 +94,7 @@ const menu = ref([
 const user = computed(() => userStore.getAuth);
 
 async function disconnect() {
-  if (await confirm("Are you sure your want to disconnect ?")) {
+  if (await confirm(t("sure-disconnect"))) {
     userStore.disconnect();
     router.replace("/login");
   }

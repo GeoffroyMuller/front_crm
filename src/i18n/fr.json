@@ -28,6 +28,7 @@
     "client-add-success": "Client ajouté",
     "client-update-success": "Client modifié",
     "new-company-name": "Nom",
-    "new-company": "Nouvelle entreprise"
+    "new-company": "Nouvelle entreprise",
+    "sure-disconnect": "Confirmer la deconnexion ?"
     
 }

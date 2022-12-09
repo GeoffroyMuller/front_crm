@@ -27,5 +27,6 @@
     "products": "Produits",
     "product": "Produit",
     "login": "Se connecter",
-    "password": "Mot de passe"
+    "password": "Mot de passe",
+    "confirm": "Confirmer"
 }
