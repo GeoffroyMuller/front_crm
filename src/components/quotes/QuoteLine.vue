@@ -102,12 +102,6 @@ const internalLine = toRef(props, "line");
     width: fit-content;
   }
 
-  @media screen and (min-width: 450px) {
-    .description {
-      max-width: 45%;
-    }
-  }
-
   .total {
     display: flex;
     justify-content: center;
