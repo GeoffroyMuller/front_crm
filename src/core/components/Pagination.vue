@@ -1,7 +1,7 @@
 <template>
   <div class="pagination">
     <div class="pagination-items-per-page">
-      <span>Lignes par page</span>
+      <span>{{ $t("lines-per-page") }}</span>
       <Select
         class="items-per-page"
         :options="[
@@ -37,14 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  withDefaults,
-  defineProps,
-  defineEmits,
-  ref,
-  watch,
-  onMounted,
-} from "vue";
+import { withDefaults, defineProps, defineEmits, ref, watch, onMounted } from "vue";
 import { isNil } from "lodash";
 import TextField from "./form/TextField.vue";
 import IconButton from "./IconButton.vue";

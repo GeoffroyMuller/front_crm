@@ -28,5 +28,6 @@
     "product": "Produit",
     "login": "Se connecter",
     "password": "Mot de passe",
-    "confirm": "Confirmer"
+    "confirm": "Confirmer",
+    "lines-per-page": "Lignes par page"
 }
