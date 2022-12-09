@@ -1,6 +1,6 @@
 <template>
   <Page :title="title" :loading="loading">
-    <Form :defaultValue="quote" @submit="handleSubmit" class="quote-form-content">
+    <Form :model-value="quote" @submit="handleSubmit" class="quote-form-content">
       <template #default="{ hasError }">
         <div class="form-head">
           <TextField name="name" :label="$t('title')" />

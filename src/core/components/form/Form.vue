@@ -5,28 +5,54 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, provide, defineEmits, computed } from "vue";
+import { ref, provide, defineEmits, computed, watch } from "vue";
 import { isEmpty, omitBy, isNil } from "lodash";
 
 export interface FormProps {
-  defaultValue?: any;
+  modelValue?: any;
 }
 
 export interface _CustomInput {
   name: string;
   getValue: () => any;
+  setValue: (val: any) => void;
   validate: () => boolean | string;
   getError: () => boolean | string | undefined;
 }
 
-const props = withDefaults(defineProps<FormProps>(), {
-  defaultValue: {},
-});
+const props = withDefaults(defineProps<FormProps>(), {});
 
-const emit = defineEmits(["submit", "inputChange"]);
+const emit = defineEmits(["update:modelValue", "submit", "inputChange"]);
 
 const inputs = ref<{ [key: string]: _CustomInput }>({});
 const errors = ref<{ [key: string]: string | boolean | undefined }>({});
+const internalValue = ref<any>({});
+
+watch(
+  () => props.modelValue,
+  () => {
+    internalValue.value = props.modelValue;
+    if (props.modelValue != null) {
+      Object.keys(inputs.value).forEach((key) => {
+        if (props.modelValue[key]) {
+          inputs.value[key].setValue(props.modelValue[key]);
+        }
+      });
+    } else {
+      Object.keys(inputs.value).forEach((key) => {
+        inputs.value[key].setValue(undefined);
+      });
+    }
+  },
+  {
+    immediate: true,
+  }
+);
+
+watch(
+  () => internalValue.value,
+  () => emit("update:modelValue", internalValue.value)
+);
 
 function register(props: _CustomInput) {
   inputs.value[props.name] = props;
@@ -37,9 +63,14 @@ function unregister(name: string) {
 }
 
 function inputChange(name: string) {
+  const value = inputs.value[name].getValue();
+  internalValue.value = {
+    ...internalValue.value,
+    [name]: value,
+  };
   emit("inputChange", {
-    name: name,
-    value: inputs.value[name].getValue(),
+    name,
+    value,
   });
 }
 
@@ -80,7 +111,9 @@ async function handleSumbit(event: Event) {
   event.preventDefault();
   await validate();
   if (!hasError.value) {
-    emit("submit", getFormData());
+    const data = getFormData();
+    internalValue.value = data;
+    emit("submit", data);
   }
 }
 
@@ -89,6 +122,6 @@ provide("form", {
   unregister,
   inputChange,
   inputErrorChange,
-  defaultValue: props.defaultValue,
+  defaultValue: props.modelValue,
 });
 </script>

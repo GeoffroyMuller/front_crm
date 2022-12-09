@@ -1,6 +1,11 @@
 <template>
   <Sidebar :open="open" @update:open="($event) => $emit('update:open', $event)">
-    <Form class="edit-client-form" @submit="handleSubmit">
+    <Form
+      v-if="open"
+      :model-value="client"
+      class="edit-client-form"
+      @submit="handleSubmit"
+    >
       <template #default="{ hasError }">
         <div class="title">
           {{ $t("new-customer") }}
@@ -60,7 +65,7 @@
         </Card>
         <div class="actions">
           <Button type="submit" color="success" icon="add" :disabled="hasError">
-            {{ $t("add") }}
+            {{ isAddAction ? $t("add") : $t("save") }}
           </Button>
         </div>
       </template>
@@ -77,14 +82,16 @@ import Sidebar from "@/core/components/Sidebar.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import useClientStore from "@/stores/clients";
 import useCompaniesStore from "@/stores/companies";
-import { ref } from "vue";
+import type Client from "@/types/client";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 interface EditClientSidebarProps {
   open: boolean;
+  client?: Client;
 }
 
-const emit = defineEmits(["update:open", "add"]);
+const emit = defineEmits(["update:open", "add", "update"]);
 const props = withDefaults(defineProps<EditClientSidebarProps>(), {});
 
 const clientStore = useClientStore();
@@ -97,6 +104,8 @@ const isAddCompanyLoading = ref(false);
 const companyName = ref("");
 const idCompany = ref();
 const companiesOptions = ref();
+
+const isAddAction = computed(() => props.client == null);
 
 async function addCompany() {
   isAddCompanyLoading.value = true;
@@ -118,19 +127,40 @@ async function addCompany() {
 }
 
 async function handleSubmit(data: any) {
-  try {
-    const newClient = await clientStore.create(data);
-    emit("add", newClient);
-    toast({
-      type: "success",
-      message: t("client-add-success"),
-    });
-    emit("update:open", false);
-  } catch (err) {
-    toast({
-      type: "danger",
-      message: err.response.data.message,
-    });
+  if (isAddAction.value) {
+    try {
+      const newClient = await clientStore.create(data);
+      emit("add", newClient);
+      toast({
+        type: "success",
+        message: t("client-add-success"),
+      });
+      emit("update:open", false);
+    } catch (err) {
+      toast({
+        type: "danger",
+        message: err.response.data.message,
+      });
+    }
+  } else {
+    try {
+      const id = (props.client as Client).id;
+      const c = await clientStore.update(id, data);
+      emit("update", {
+        data: c,
+        id,
+      });
+      toast({
+        type: "success",
+        message: t("client-update-success"),
+      });
+      emit("update:open", false);
+    } catch (err) {
+      toast({
+        type: "danger",
+        message: err.response.data.message,
+      });
+    }
   }
 }
 </script>

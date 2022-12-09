@@ -12,5 +12,18 @@
     "archive": "Archiver",
     "customer": "Client",
     "status": "Etat",
-    "ID": "ID"
+    "ID": "ID",
+    "cancel": "Annuler",
+    "name": "Nom",
+    "email": "Email",
+    "firstname": "Prenom",
+    "lastname": "Nom",
+    "phone": "Telephone",
+    "address": "Adresse",
+    "company": "Entreprise",
+    "customers": "Clients",
+    "quotes": "Devis",
+    "quote": "Devis",
+    "products": "Produits",
+    "product": "Produit"
 }

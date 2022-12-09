@@ -20,7 +20,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in items" :key="index" @click="$emit('row-click', item)">
+        <tr
+          v-for="(item, index) in items"
+          :key="index"
+          @click.stop="$emit('row-click', item)"
+        >
           <td v-for="column in columns" :key="column.key" :style="styleItem">
             <div v-if="!$slots.content && !$slots[`content-${column.key as string}`]">
               {{ (column?.data ? column?.data(item) : undefined) || item[column.key] }}

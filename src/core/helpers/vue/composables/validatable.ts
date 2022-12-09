@@ -52,6 +52,7 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
       form?.register({
         name: instance?.props.name,
         getValue: () => internalValue.value,
+        setValue: (val: any) => (internalValue.value = val),
         getError: () => internalError.value,
         validate,
       });

@@ -23,11 +23,11 @@
             "add-customer": "Ajouter un client"
         }
     },
-    "quotes": "Devis",
-    "quote": "Devis",
     "new-quote": "Nouveau devis",
-    "products": "Produits",
-    "new-customer": "new-customer",
-    "client-add-success": "Client ajouté"
+    "new-customer": "Nouveau client",
+    "client-add-success": "Client ajouté",
+    "client-update-success": "Client modifié",
+    "new-company-name": "Nom",
+    "new-company": "Nouvelle entreprise"
     
 }

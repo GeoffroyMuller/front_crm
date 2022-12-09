@@ -1,3 +1,5 @@
+import type { Company } from "./company";
+
 export default interface Client {
   id: number;
   firstname: string;
@@ -6,4 +8,5 @@ export default interface Client {
   phone: string;
   address: string;
   idCompany: number;
+  company: Company;
 }
