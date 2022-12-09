@@ -8,7 +8,7 @@
     >
       <template #default="{ hasError }">
         <div class="title">
-          {{ $t("new-customer") }}
+          {{ isAddAction ? $t("new-customer") : $t("customer") }}
         </div>
         <TextField
           :rules="$yup.string().required()"
