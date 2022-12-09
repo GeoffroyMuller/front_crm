@@ -88,7 +88,6 @@ const emit = defineEmits([
 
 function onBlur() {
   emit("blur");
-  validate();
 }
 
 function onFocus() {
