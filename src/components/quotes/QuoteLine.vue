@@ -1,5 +1,5 @@
 <template>
-  <div v-if="line.type === 'product'" class="line-product">
+  <div v-if="line.type === 'product'">
     <!-- <div v-html="line.description" class="description" /> -->
     <HtmlEditor
       :id="`description-${line.id}`"
@@ -8,44 +8,47 @@
       v-model="internalLine.description"
       name="description"
     />
-    <TextField
-      class="input"
-      type="number"
-      v-model="internalLine.qty"
-      :label="$t('pages.edit-quote.qty')"
-      :step="1"
-      name="qty"
-    />
-    <TextField
-      class="input"
-      type="number"
-      :step="0.01"
-      v-model="internalLine.unit_price"
-      :label="$t('pages.edit-quote.unit_price')"
-      name="unit_price"
-    />
-    <Select
-      class="input"
-      :options="vats"
-      :get-option-label="(opt) => (opt?.rate != null ? `${opt?.rate}%` : '')"
-      :get-option-value="(opt) => opt.id"
-      v-model="internalLine.idVat"
-      :label="$t('pages.edit-quote.vat')"
-      @update:model-value="($id) => (internalLine.vat = vats.find((v) => v.id == $id))"
-      name="idVat"
-    />
+    <div class="line-product">
+      <TextField
+        class="input"
+        type="number"
+        v-model="internalLine.qty"
+        :label="$t('pages.edit-quote.qty')"
+        :step="1"
+        name="qty"
+      />
+      <TextField
+        class="input"
+        type="number"
+        :step="0.01"
+        v-model="internalLine.unit_price"
+        :label="$t('pages.edit-quote.unit_price')"
+        name="unit_price"
+      />
 
-    <div class="total">
-      <div class="inner">
-        <div>
-          <div class="label">
-            {{ $t("pages.edit-quote.total-without-taxes") }}
+      <Select
+        class="input"
+        :options="vats"
+        :get-option-label="(opt) => (opt?.rate != null ? `${opt?.rate}%` : '')"
+        :get-option-value="(opt) => opt.id"
+        v-model="internalLine.idVat"
+        :label="$t('pages.edit-quote.vat')"
+        @update:model-value="($id) => (internalLine.vat = vats.find((v) => v.id == $id))"
+        name="idVat"
+      />
+
+      <div class="total">
+        <div class="inner">
+          <div>
+            <div class="label">
+              {{ $t("pages.edit-quote.total-without-taxes") }}
+            </div>
+            <div class="value">{{ totalWithoutTaxes }} €</div>
           </div>
-          <div class="value">{{ totalWithoutTaxes }} €</div>
-        </div>
-        <div>
-          <div class="label">{{ $t("pages.edit-quote.total") }}</div>
-          <div class="value">{{ totalWithTaxes }} €</div>
+          <div>
+            <div class="label">{{ $t("pages.edit-quote.total") }}</div>
+            <div class="value">{{ totalWithTaxes }} €</div>
+          </div>
         </div>
       </div>
     </div>
@@ -94,14 +97,9 @@ const internalLine = toRef(props, "line");
   justify-content: space-between;
   align-items: center;
   gap: spacing(1);
-  padding: spacing(1) spacing(0.2);
-
+  margin-top: spacing(1.5);
   .input {
-    max-width: 12%;
     width: fit-content;
-  }
-  .description {
-    max-width: 35%;
   }
 
   @media screen and (min-width: 450px) {
