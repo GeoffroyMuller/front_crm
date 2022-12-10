@@ -44,6 +44,7 @@ import type { Store } from "pinia";
 import { computed, onMounted, ref } from "vue";
 import DataTable from "@/core/components/DataTable.vue";
 import type { Column } from "../types";
+import type { PaginateResult } from "@/core/helpers/vue/store/types";
 
 interface MagicDataTableProps<T> {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -57,7 +58,7 @@ interface MagicDataTableProps<T> {
     // eslint-disable-next-line @typescript-eslint/ban-types
     {},
     {
-      fetchList: () => Promise<Array<T>>;
+      fetchList: () => Promise<PaginateResult<T>>;
       setPage: (page: number) => void;
       setPageSize: (pageSize: number) => void;
     }
