@@ -70,6 +70,7 @@ export interface DataTableProps<T = any> {
   nbPage?: number;
   currentPage?: number;
   activeColumn?: Column;
+  loading?: boolean;
 }
 
 const props = withDefaults(defineProps<DataTableProps>(), {

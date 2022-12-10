@@ -8,6 +8,7 @@
     @update:current-page="store.setPage"
     @update:items-per-page="store.setPageSize"
     :nbPage="totalPages"
+    :loading="loading"
   >
     <template #title="{ column }">
       <slot
@@ -40,7 +41,7 @@
 </template>
 <script setup lang="ts">
 import type { Store } from "pinia";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import DataTable from "@/core/components/DataTable.vue";
 import type { Column } from "../types";
 
@@ -66,13 +67,24 @@ interface MagicDataTableProps<T> {
 
 const props = withDefaults(defineProps<MagicDataTableProps<any>>(), {});
 
+const loading = ref(false);
+
 const filters = computed(() => props.store.filters);
 const items = computed(() => props.store.list);
 const totalPages = computed(() => props.store.totalPages);
 
 onMounted(() => {
-  props.store?.fetchList().catch((err) => {
-    console.error(err);
-  });
+  if (!items.value.length) {
+    loading.value = true;
+  }
+  props.store
+    .fetchList()
+    .then(() => {
+      loading.value = false;
+    })
+    .catch((err) => {
+      console.error(err);
+      loading.value = false;
+    });
 });
 </script>

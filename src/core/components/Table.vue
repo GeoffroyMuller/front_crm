@@ -1,6 +1,10 @@
 <template>
   <component :is="isCard ? Card : 'div'" :withPadding="false">
-    <table>
+    <table
+      :class="{
+        'table-loading': loading,
+      }"
+    >
       <thead>
         <tr>
           <th v-for="column in internalColumns" :key="column.key">
@@ -20,31 +24,50 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="(item, index) in items"
-          :key="index"
-          @click.stop="$emit('row-click', item)"
-        >
-          <td v-for="column in columns" :key="column.key" :style="styleItem">
-            <div v-if="!$slots.content && !$slots[`content-${column.key as string}`]">
-              {{ (column?.data ? column?.data(item) : undefined) || item[column.key] }}
-            </div>
-            <slot
-              v-else-if="!$slots.content"
-              :name="`content-${column.key as string}`"
-              :column="column"
-              :item="item"
-            ></slot>
-            <slot name="content" :column="column" :item="item" />
-          </td>
-          <td
-            v-if="$slots['actions-title'] || $slots['actions']"
-            :style="styleItem"
-            class="actions-block"
+        <template v-if="loading">
+          <!-- <tr>
+            <td
+              :colspan="
+                internalColumns?.length +
+                ($slots['actions-title'] || $slots['actions'] ? 1 : 0)
+              "
+            >
+              <div>
+                <Spinner />
+              </div>
+            </td>
+          </tr> -->
+          <div>
+            <Spinner />
+          </div>
+        </template>
+        <template v-else>
+          <tr
+            v-for="(item, index) in items"
+            :key="index"
+            @click.stop="$emit('row-click', item)"
           >
-            <slot name="actions" :item="item"></slot>
-          </td>
-        </tr>
+            <td v-for="column in columns" :key="column.key" :style="styleItem">
+              <div v-if="!$slots.content && !$slots[`content-${column.key as string}`]">
+                {{ (column?.data ? column?.data(item) : undefined) || item[column.key] }}
+              </div>
+              <slot
+                v-else-if="!$slots.content"
+                :name="`content-${column.key as string}`"
+                :column="column"
+                :item="item"
+              ></slot>
+              <slot name="content" :column="column" :item="item" />
+            </td>
+            <td
+              v-if="$slots['actions-title'] || $slots['actions']"
+              :style="styleItem"
+              class="actions-block"
+            >
+              <slot name="actions" :item="item"></slot>
+            </td>
+          </tr>
+        </template>
       </tbody>
       <tfoot v-if="$slots.footer">
         <tr>
@@ -67,12 +90,14 @@ import { withDefaults, defineProps, ref, watch, onMounted } from "vue";
 import type { Column } from "./types";
 import { isNil } from "lodash";
 import Card from "./Card.vue";
+import Spinner from "./Spinner.vue";
 
 export interface TableProps<T = any> {
   columns: Array<Column> | null;
   items: Array<T> | null;
   styleItem?: string;
   isCard?: boolean;
+  loading?: boolean;
 }
 
 const props = withDefaults(defineProps<TableProps>(), {
@@ -112,6 +137,28 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+.table-loading {
+  tbody {
+    position: relative;
+    height: 300px;
+    div {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-100%, -100%);
+    }
+  }
+  tbody tr td {
+    height: 300px;
+    div {
+      display: grid;
+      width: 100%;
+      height: 100%;
+      place-items: center;
+    }
+  }
+}
+
 td,
 th {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
