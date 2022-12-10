@@ -1,9 +1,3 @@
-import Home from "./pages/Home.vue";
-import Quotes from "./pages/quotes/index.vue";
-import Customers from "./pages/clients/index.vue";
-import EditQuote from "./pages/quotes/EditQuote.vue";
-import Login from "./pages/Login.vue";
-
 import Default from "./layouts/Default.vue";
 import LayoutPage from "./layouts/LayoutPage.vue";
 
@@ -13,7 +7,7 @@ export default [
   {
     path: "/",
     name: "home",
-    component: Home,
+    component: () => import("./pages/Home.vue"),
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -22,7 +16,7 @@ export default [
   {
     path: "/quotes",
     name: "quotes",
-    component: Quotes,
+    component: () => import("./pages/quotes/index.vue"),
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -31,7 +25,7 @@ export default [
   {
     path: "/quotes/:id",
     name: "quotes-id",
-    component: EditQuote,
+    component: () => import("./pages/quotes/EditQuote.vue"),
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -40,7 +34,7 @@ export default [
   {
     path: "/customers",
     name: "customers",
-    component: Customers,
+    component: () => import("./pages/clients/index.vue"),
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -49,7 +43,7 @@ export default [
   {
     path: "/login",
     name: "login",
-    component: Login,
+    component: () => import("./pages/Login.vue"),
     meta: {
       layout: Default,
     },
