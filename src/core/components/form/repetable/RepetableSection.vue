@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="repetable-section">
     <slot />
   </div>
 </template>
@@ -46,3 +46,9 @@ provide("form", {
   defaultValue: props.value,
 });
 </script>
+
+<style lang="scss">
+.repetable-section {
+  background-color: #fafafa;
+}
+</style>

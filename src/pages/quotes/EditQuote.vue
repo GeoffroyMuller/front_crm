@@ -1,54 +1,64 @@
 <template>
   <Page :title="title" :loading="loading">
-    <Form :model-value="quote" @submit="handleSubmit" class="quote-form-content">
-      <template #default="{ hasError }">
-        <div class="form-head">
-          <TextField name="name" :label="$t('title')" />
+    <Card>
+      <Form
+        :model-value="quote"
+        @submit="handleSubmit"
+        class="quote-form-content"
+      >
+        <template #default="{ hasError }">
+          <div class="form-head">
+            <TextField name="name" :label="$t('title')" />
 
-          <MagicAutocomplete
-            :label="$t('customer')"
-            :store="clientsStore"
-            :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
-            :getOptionValue="(opt) => opt.id"
-            name="idClient"
-            :addText="$t(`pages.edit-quote.add-customer`)"
-            can-add
-            @add="isAddClientOpen = true"
-            v-model:options="clientOptions"
-            v-model="idClient"
-          />
-        </div>
-        <div class="form-table">
-          <Repetable name="lines" :label="$t('products')">
-            <template #default="{ data }">
-              <QuoteLineVue :line="(data as unknown as QuoteLine)" />
-            </template>
-            <template #actions="{ addSection }">
-              <Button
-                type="button"
-                variant="text"
-                @click="addSection({ type: 'product' })"
-              >
-                {{ $t("pages.edit-quote.add-line-product") }}
-              </Button>
-            </template>
-          </Repetable>
-        </div>
-        <div class="form-modalities">
-          <HtmlEditor
-            id="modalities"
-            name="modalities"
-            :label="$t('pages.edit-quote.modalities')"
-          />
-        </div>
-        <div class="form-footer">
-          <HtmlEditor id="footer" name="footer" :label="$t('pages.edit-quote.footer')" />
-        </div>
-        <div class="actions">
-          <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
-        </div>
-      </template>
-    </Form>
+            <MagicAutocomplete
+              :label="$t('customer')"
+              :store="clientsStore"
+              :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
+              :getOptionValue="(opt) => opt.id"
+              name="idClient"
+              :addText="$t(`pages.edit-quote.add-customer`)"
+              can-add
+              @add="isAddClientOpen = true"
+              v-model:options="clientOptions"
+              v-model="idClient"
+            />
+          </div>
+          <div class="form-table">
+            <Repetable name="lines" :label="$t('products')">
+              <template #default="{ data }">
+                <QuoteLineVue :line="(data as unknown as QuoteLine)" />
+              </template>
+              <template #actions="{ addSection }">
+                <Button
+                  type="button"
+                  variant="text"
+                  @click="addSection({ type: 'product' })"
+                >
+                  {{ $t("pages.edit-quote.add-line-product") }}
+                </Button>
+              </template>
+            </Repetable>
+          </div>
+          <div class="form-modalities">
+            <HtmlEditor
+              id="modalities"
+              name="modalities"
+              :label="$t('pages.edit-quote.modalities')"
+            />
+          </div>
+          <div class="form-footer">
+            <HtmlEditor
+              id="footer"
+              name="footer"
+              :label="$t('pages.edit-quote.footer')"
+            />
+          </div>
+          <div class="actions">
+            <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
+          </div>
+        </template>
+      </Form>
+    </Card>
   </Page>
   <EditClientSidebar @add="onAddClient" v-model:open="isAddClientOpen" />
 </template>
@@ -73,6 +83,7 @@ import useVatStore from "@/stores/vat";
 import Repetable from "@/core/components/form/repetable/Repetable.vue";
 import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import type Client from "@/types/client";
+import Card from "@/core/components/Card.vue";
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();
