@@ -88,6 +88,7 @@ const { t } = useI18n();
 const menu = ref([
   { path: "/", title: "Home", icon: "home" },
   { path: "/quotes", title: "Devis", icon: "description" },
+  { path: "/invoices", title: "Facture", icon: "request_quote" },
   { path: "/customers", title: "Client", icon: "person" },
 ]);
 

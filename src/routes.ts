@@ -1,5 +1,6 @@
 import Default from "./layouts/Default.vue";
 import LayoutPage from "./layouts/LayoutPage.vue";
+import Layout404 from "./layouts/404Layout.vue";
 
 import auth from "./middleware/auth";
 
@@ -46,6 +47,13 @@ export default [
     component: () => import("./pages/Login.vue"),
     meta: {
       layout: Default,
+    },
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    component: () => import("./pages/404.vue"),
+    meta: {
+      layout: Layout404,
     },
   },
 ];

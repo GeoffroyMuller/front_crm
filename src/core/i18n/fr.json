@@ -29,5 +29,7 @@
     "login": "Se connecter",
     "password": "Mot de passe",
     "confirm": "Confirmer",
-    "lines-per-page": "Lignes par page"
+    "lines-per-page": "Lignes par page",
+    "page-not-found": "Page non trouvé",
+    "back": "Retour"
 }
