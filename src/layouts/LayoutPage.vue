@@ -207,8 +207,9 @@ $miniNavWidth: 60px;
     padding: spacing(0.5) spacing(3);
     bottom: 0;
     display: flex;
-    justify-content: center;
     width: 100%;
+    align-items: center;
+    gap: spacing(1.5);
   }
   .logo-container {
     display: flex;
@@ -250,6 +251,13 @@ $miniNavWidth: 60px;
         }
       }
     }
+  }
+}
+.mini-nav {
+  .footer {
+    justify-content: center;
+    padding: 0;
+    padding-bottom: spacing(0.5);
   }
 }
 </style>

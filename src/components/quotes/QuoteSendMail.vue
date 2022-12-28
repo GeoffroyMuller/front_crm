@@ -12,6 +12,7 @@
             icon="download"
             type="button"
             variant="text"
+            align="end"
           >
             {{ $t("quote") }}.pdf
           </Button>

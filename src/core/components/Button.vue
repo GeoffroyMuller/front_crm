@@ -1,7 +1,13 @@
 <template>
+  <!-- :class="variant === 'text' ? `button-text button-text-${color}` : `button-${color}`" -->
   <button
     class="button"
-    :class="variant === 'text' ? `button-text button-text-${color}` : `button-${color}`"
+    :class="{
+      [`button-text button-text-${color}`]: variant === 'text',
+      [`button-${color}`]: variant !== 'text',
+      'align-end': align === 'end',
+      'align-start': align === 'start',
+    }"
     :type="type"
     :disabled="disabled || loading"
   >
@@ -26,6 +32,7 @@ interface ButtonProps {
   variant?: "base" | "text";
   type?: "button" | "submit";
 
+  align?: "center" | "end" | "start";
   icon?: IconName;
 }
 
@@ -33,6 +40,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   color: "primary",
   variant: "base",
   type: "button",
+  align: "center",
 });
 </script>
 
@@ -49,11 +57,21 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   transition: background-color 0.15s ease;
   user-select: none;
   @include typo(text);
-
   .content {
     display: flex;
     align-items: center;
     gap: spacing(1);
+  }
+  &.align-end {
+    .content {
+      align-items: flex-end;
+    }
+  }
+
+  &.align-start {
+    .content {
+      align-items: flex-start;
+    }
   }
 
   gap: spacing(1);
@@ -101,7 +119,6 @@ const props = withDefaults(defineProps<ButtonProps>(), {
     color: #4b5563;
   }
   .content {
-    align-items: flex-end;
     gap: spacing(0.5);
   }
 }
