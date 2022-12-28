@@ -87,7 +87,7 @@ import useUI from "@/core/helpers/vue/composables/ui";
 import Page from "@/components/Page.vue";
 import { useI18n } from "vue-i18n";
 import QuotePreview from "@/components/quotes/QuotePreview.vue";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import type { Quote } from "@/types/quote";
 import { getJWT } from "@/core/helpers/utils";
 import config from "@/const";

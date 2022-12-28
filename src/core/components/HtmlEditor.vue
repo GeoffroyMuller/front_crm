@@ -4,75 +4,46 @@
       {{ label }}
     </label>
     <div class="html-editor-content">
-      <TextField type="hidden" ref="textfield" :id="id" :name="name" />
-      <trix-editor ref="trixEditorRef" :input="id"></trix-editor>
+      <QuillEditor ref="quill" @ready="init" @update:content="handleChange" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import Trix from "trix";
-import "trix/dist/trix.css";
-import TextField from "./form/TextField.vue";
-import { ref, onMounted, toRef } from "vue";
+import useValidatable from "../helpers/vue/composables/validatable";
+import { QuillEditor } from "@vueup/vue-quill";
+import { ref } from "vue";
 
 interface HtmlEditorProps {
   name?: string;
-  id: string;
   label?: string;
   modelValue?: string;
+  error?: string;
 }
 
 const props = withDefaults(defineProps<HtmlEditorProps>(), {});
 
-const trixEditorRef = ref();
-const internalValue = toRef(props, "modelValue");
-const textfield = ref();
+const quill = ref();
 
-onMounted(() => {
-  if (trixEditorRef.value && textfield.value) {
-    trixEditorRef.value.addEventListener("trix-initialize", () => {
-      const valueFromForm = textfield.value.$refs.internalRef.value;
-      if (valueFromForm.length) {
-        trixEditorRef.value.editor.insertHTML(valueFromForm);
-      }
-      if (internalValue.value?.length) {
-        trixEditorRef.value.editor.insertHTML(internalValue.value);
-      }
-    });
-    trixEditorRef.value.addEventListener("trix-change", () => {
-      textfield.value.$refs.internalRef.dispatchEvent(new Event("input"));
-    });
+const { internalValue } = useValidatable({
+  error: props.error,
+  value: props.modelValue,
+});
+
+function init() {
+  if (internalValue.value?.length) {
+    quill.value.pasteHTML(internalValue.value);
   }
-});
+}
 
-document.addEventListener("trix-before-initialize", (e) => {
-  // Change Trix.config if you need
-  console.log(Trix.config);
-});
+function handleChange() {
+  internalValue.value = quill.value.getHTML();
+}
 </script>
 
 <style lang="scss">
-.trix-button-row {
-  flex-wrap: wrap !important;
-  gap: 0 spacing(2);
-}
-trix-toolbar .trix-button-group:not(:first-child) {
-  margin-left: 0 !important;
-}
-trix-toolbar .trix-button-group {
-  flex-wrap: wrap;
-}
-trix-editor {
-  background-color: white;
-  transition: border-color 0.5s, box-shadow 0.5s;
-  &:focus {
-    outline: none;
-    border-color: color("primary", 500);
-    box-shadow: 0 0 5pt 0.5pt color("primary", 200);
-  }
-}
 .html-editor {
+  height: fit-content;
   display: flex;
   flex-direction: column;
   label {
@@ -80,6 +51,31 @@ trix-editor {
   }
   gap: spacing(1);
   .html-editor-content {
+    &:focus-within {
+      .ql-editor {
+        border-color: color("primary", 500);
+        box-shadow: 0 0 5pt 0.5pt color("primary", 200);
+      }
+      .ql-toolbar {
+        border-color: color("primary", 500);
+        box-shadow: 0 0 5pt 0.5pt color("primary", 200);
+      }
+    }
+    height: fit-content;
+    .ql-toolbar {
+      border-radius: map-get($rounded, "sm") map-get($rounded, "sm") 0 0;
+      transition: border-color 0.5s, box-shadow 0.5s;
+    }
+    .ql-container {
+      border: none;
+    }
+    .ql-editor {
+      border: solid 1px #d1d5db;
+      border-radius: 0 0 map-get($rounded, "sm") map-get($rounded, "sm");
+      border-top: 0;
+      transition: border-color 0.5s, box-shadow 0.5s;
+      background-color: white;
+    }
   }
 }
 </style>

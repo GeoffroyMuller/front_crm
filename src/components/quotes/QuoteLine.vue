@@ -1,7 +1,6 @@
 <template>
   <div v-if="line.type === 'product'">
     <HtmlEditor
-      :id="`description-${line.id}`"
       class="description"
       :label="$t('pages.edit-quote.description')"
       v-model="internalLine.description"
@@ -78,9 +77,7 @@ const totalWithoutTaxes = computed(() => {
 });
 
 const totalWithTaxes = computed(() => {
-  const vatRate = vats.value.find(
-    (vat: Vat) => vat.id == internalLine.value.idVat
-  )?.rate;
+  const vatRate = vats.value.find((vat: Vat) => vat.id == internalLine.value.idVat)?.rate;
   if (totalWithoutTaxes.value === "-" || vatRate == null) {
     return "-";
   }

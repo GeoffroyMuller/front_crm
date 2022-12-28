@@ -10,13 +10,13 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@vueup/vue-quill": "^1.0.1",
     "axios": "^0.27.2",
     "dayjs": "^1.11.4",
     "dotenv": "^16.0.2",
     "lodash": "^4.17.21",
     "pinia": "^2.0.16",
     "pinia-plugin-persistedstate": "^1.6.3",
-    "trix": "^2.0.3",
     "vue": "^3.2.37",
     "vue-i18n": "9",
     "vue-router": "^4.1.2",

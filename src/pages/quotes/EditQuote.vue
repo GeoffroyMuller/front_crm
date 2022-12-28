@@ -1,11 +1,7 @@
 <template>
   <Page :title="title" :loading="loading">
     <Card>
-      <Form
-        :model-value="quote"
-        @submit="handleSubmit"
-        class="quote-form-content"
-      >
+      <Form :model-value="quote" @submit="handleSubmit" class="quote-form-content">
         <template #default="{ hasError }">
           <div class="form-head">
             <TextField name="name" :label="$t('title')" />
@@ -39,20 +35,13 @@
               </template>
             </Repetable>
           </div>
-          <div class="form-modalities">
-            <HtmlEditor
-              id="modalities"
-              name="modalities"
-              :label="$t('pages.edit-quote.modalities')"
-            />
-          </div>
-          <div class="form-footer">
-            <HtmlEditor
-              id="footer"
-              name="footer"
-              :label="$t('pages.edit-quote.footer')"
-            />
-          </div>
+          <HtmlEditor
+            id="modalities"
+            name="modalities"
+            :label="$t('pages.edit-quote.modalities')"
+          />
+
+          <HtmlEditor id="footer" name="footer" :label="$t('pages.edit-quote.footer')" />
           <div class="actions">
             <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
           </div>
