@@ -104,7 +104,7 @@ async function disconnect() {
 
 <style lang="scss" scoped>
 //mobile
-@media screen and (max-width: 450px) {
+@include media-down(md) {
   .mobile-layout {
     display: block;
   }
@@ -113,7 +113,7 @@ async function disconnect() {
   }
 }
 //desktop
-@media screen and (min-width: 450px) {
+@include media-up(md) {
   .mobile-layout {
     display: none;
   }

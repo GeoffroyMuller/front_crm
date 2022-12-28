@@ -75,7 +75,8 @@ function onClickOutside() {
     }
   }
 }
-@media screen and (max-width: 450px) {
+
+@include media-down(md) {
   .sidebar {
     padding: 0;
     margin: 0;
