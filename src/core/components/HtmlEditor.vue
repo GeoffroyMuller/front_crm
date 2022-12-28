@@ -42,6 +42,13 @@ function handleChange() {
 </script>
 
 <style lang="scss">
+button.ql-active {
+  background-color: color("primary", 50) !important;
+  color: color("primary", 500) !important;
+}
+button.ql-active .ql-stroke {
+  stroke: color("primary", 500) !important;
+}
 .html-editor {
   height: fit-content;
   display: flex;
