@@ -16,7 +16,7 @@
           <div>
             <IconButton
               class=""
-              name="delete"
+              name="close"
               color="danger"
               v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
               @click="handleDeleteSection(key)"
@@ -155,7 +155,7 @@ watch(
       .icon-delete {
         position: absolute;
         top: spacing(1);
-        right: spacing(1);
+        right: spacing(2);
       }
     }
     .repetable-actions {

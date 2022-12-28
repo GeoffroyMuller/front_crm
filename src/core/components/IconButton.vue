@@ -10,7 +10,7 @@ import type { IconName, Size, Color } from "./types";
 interface IconButtonProps {
   name: IconName;
   color?: Color;
-  outlined?: boolean;
+  sharp?: boolean;
   size?: Size;
 }
 

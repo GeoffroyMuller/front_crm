@@ -53,6 +53,7 @@ button.ql-active .ql-stroke {
   height: fit-content;
   display: flex;
   flex-direction: column;
+  width: 100%;
   label {
     @include typo(text2);
   }
