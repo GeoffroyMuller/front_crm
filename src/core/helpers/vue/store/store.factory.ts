@@ -178,9 +178,6 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
       async update(id: ID, body: T) {
         if (config.IS_MOCK) {
           await sleep(config.MOCK_DURATION);
-          if (config.MOCK_ERROR.update) {
-            throw config.MOCK_ERROR.update;
-          }
         }
         // @ts-ignore
         const response = _formatResponse<T>(
@@ -202,22 +199,6 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
         );
         return response.data;
       },
-      /*
-      async delete(id: ID) {
-        if (config.IS_MOCK) {
-          await sleep(config.MOCK_DURATION);
-          if (config.MOCK_ERROR.delete) {
-            throw config.MOCK_ERROR.delete;
-          }
-        }
-        // @ts-ignore
-        const response: T = config.IS_MOCK
-          ? mock.deleteData(_getPath(), id)
-          : await axios.delete(_getPath(id));
-        this.byId[id] = undefined;
-        delete this.byId[id];
-        return response;
-      }, */
       ...props.actions,
     },
     persist: props.persist,

@@ -1,14 +1,7 @@
-// todo: get consts from .env
 const config = {
-  API_URL: "http://localhost:3002",
-  IS_MOCK: false,
-  MOCK_DURATION: 500,
-  MOCK_ERROR: {
-    fetch: undefined,
-    update: undefined,
-    delete: undefined,
-    add: undefined,
-  },
+  API_URL: import.meta.env.VITE_API_URL,
+  IS_MOCK: import.meta.env.VITE_IS_MOCK,
+  MOCK_DURATION: import.meta.env.VITE_MOCK_DURATION,
 };
 
 export default config;
