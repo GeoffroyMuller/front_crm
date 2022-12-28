@@ -86,10 +86,10 @@ const { confirm } = useUI();
 const { t } = useI18n();
 
 const menu = ref([
-  { path: "/", title: "Home", icon: "home" },
-  { path: "/quotes", title: "Devis", icon: "description" },
-  { path: "/invoices", title: "Facture", icon: "request_quote" },
-  { path: "/customers", title: "Client", icon: "person" },
+  { path: "/", title: t("home"), icon: "home" },
+  { path: "/quotes", title: t("quotes"), icon: "description" },
+  { path: "/invoices", title: t("invoices"), icon: "request_quote" },
+  { path: "/customers", title: t("customers"), icon: "person" },
 ]);
 
 const user = computed(() => userStore.getAuth);

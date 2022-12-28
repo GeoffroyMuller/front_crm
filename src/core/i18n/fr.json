@@ -31,5 +31,8 @@
     "confirm": "Confirmer",
     "lines-per-page": "Lignes par page",
     "page-not-found": "Page non trouvé",
-    "back": "Retour"
+    "back": "Retour",
+    "bad-email-or-password": "Mauvais email ou mot de passe",
+    "welcome": "Bienvenue {name}",
+    "invoices": "Factures"
 }

@@ -24,11 +24,13 @@ import PasswordInput from "@/core/components/form/PasswordInput.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import type { AxiosError } from "axios";
 import Form from "@/core/components/form/Form.vue";
+import { useI18n } from "vue-i18n";
 
 const userStore = useUserStore();
 
 const router = useRouter();
 const { toast } = useUI();
+const { t } = useI18n();
 
 const loading = ref(false);
 
@@ -39,15 +41,16 @@ async function login(data: { email: string; password: string }) {
     router.push({ name: "home" });
     toast({
       type: "success",
-      message: `Bienvenue ${user.firstname} !`,
+      message: t("welcome", { name: user.firstname }),
     });
+    loading.value = false;
   } catch (err) {
     toast({
       type: "danger",
-      message: err.response.data.message,
+      message: t("bad-email-or-password"),
     });
+    loading.value = false;
   }
-  loading.value = false;
 }
 </script>
 
