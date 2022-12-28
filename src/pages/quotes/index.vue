@@ -71,10 +71,23 @@
               v-tooltip="{ text: $t('download'), placement: 'bottom' }"
             />
           </div>
+          <div>
+            <Button
+              @click.stop="sendMail(item)"
+              color="success"
+              icon="mail"
+              v-tooltip="{ text: $t('send_by_mail'), placement: 'bottom' }"
+            />
+          </div>
         </div>
       </template>
     </MagicDataTable>
     <QuotePreview @close="() => (quoteToPreview = null)" :quote="quoteToPreview" />
+    <QuoteSendMail
+      @clickDownloadPDF="() => downloadPdf(quoteToSendMail)"
+      @close="quoteToSendMail = null"
+      :quote="quoteToSendMail"
+    />
   </Page>
 </template>
 
@@ -91,12 +104,14 @@ import { ref } from "vue";
 import type { Quote } from "@/types/quote";
 import { getJWT } from "@/core/helpers/utils";
 import config from "@/const";
+import QuoteSendMail from "@/components/quotes/QuoteSendMail.vue";
 
 const { toast, confirm } = useUI();
 const { t } = useI18n();
 
 const selected = ref<Array<Quote>>([]);
 const quoteToPreview = ref<Quote | null>(null);
+const quoteToSendMail = ref<Quote | null>(null);
 
 function preview(item: Quote) {
   quoteToPreview.value = item;
@@ -105,6 +120,10 @@ function preview(item: Quote) {
 function downloadPdf(item: Quote) {
   const url = `${config.API_URL}/quotes/${item.id}/pdf?token=${getJWT()}`;
   window.open(url, "_blank");
+}
+
+function sendMail(item: Quote) {
+  quoteToSendMail.value = item;
 }
 
 function getStatusColor(status: string) {

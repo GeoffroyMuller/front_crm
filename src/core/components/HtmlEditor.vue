@@ -78,6 +78,7 @@ button.ql-active .ql-stroke {
       border: none;
     }
     .ql-editor {
+      min-height: 120px;
       border: solid 1px #d1d5db;
       border-radius: 0 0 map-get($rounded, "sm") map-get($rounded, "sm");
       border-top: 0;

@@ -50,6 +50,8 @@ $zIndexModal: 55;
   opacity: 1;
   z-index: $zIndexModal;
   padding: spacing(1.5) spacing(3);
+  max-width: 90%;
+  overflow-x: hidden;
   & .no-padding {
     padding: 0;
   }

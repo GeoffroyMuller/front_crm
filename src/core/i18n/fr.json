@@ -34,5 +34,10 @@
     "back": "Retour",
     "bad-email-or-password": "Mauvais email ou mot de passe",
     "welcome": "Bienvenue {name}",
-    "invoices": "Factures"
+    "invoices": "Factures",
+    "send_by_mail": "Envoyer par email",
+    "send": "Envoyer",
+    "error_while_send_mail": "Une erreur est survenue lors de l'envoie de l'email",
+    "mail_sended": "Email envoyé",
+    "content": "Contenu"
 }

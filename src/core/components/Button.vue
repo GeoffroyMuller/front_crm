@@ -100,6 +100,10 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   &:hover {
     color: #4b5563;
   }
+  .content {
+    align-items: flex-end;
+    gap: spacing(0.5);
+  }
 }
 
 @each $key, $value in $colors {
