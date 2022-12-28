@@ -75,7 +75,6 @@ import { useI18n } from "vue-i18n";
 import useUI from "@/core/helpers/vue/composables/ui";
 import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import useClientStore from "@/stores/clients";
-import Table from "@/core/components/Table.vue";
 import type { Quote, QuoteLine } from "@/types/quote";
 import QuoteLineVue from "@/components/quotes/QuoteLine.vue";
 import HtmlEditor from "@/core/components/HtmlEditor.vue";
@@ -92,7 +91,7 @@ const vatsStore = useVatStore();
 const router = useRouter();
 const { id } = useRoute().params;
 const { t } = useI18n();
-const { toast, confirm } = useUI();
+const { toast } = useUI();
 
 const isAddClientOpen = ref(false);
 const idClient = ref();

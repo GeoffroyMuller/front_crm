@@ -32,7 +32,6 @@
         :get-option-value="(opt) => opt.id"
         v-model="internalLine.idVat"
         :label="$t('pages.edit-quote.vat')"
-        @update:model-value="($id) => (internalLine.vat = vats.find((v) => v.id == $id))"
         name="idVat"
       />
 
@@ -61,6 +60,7 @@ import TextField from "@/core/components/form/TextField.vue";
 import Select from "@/core/components/form/Select.vue";
 import HtmlEditor from "@/core/components/HtmlEditor.vue";
 import useVatStore from "@/stores/vat";
+import type { Vat } from "@/types/vat";
 
 interface QuoteLineProps {
   line: QuoteLine;
@@ -78,11 +78,14 @@ const totalWithoutTaxes = computed(() => {
 });
 
 const totalWithTaxes = computed(() => {
-  if (totalWithoutTaxes.value === "-" || internalLine.value?.vat?.rate == null) {
+  const vatRate = vats.value.find(
+    (vat: Vat) => vat.id == internalLine.value.idVat
+  )?.rate;
+  if (totalWithoutTaxes.value === "-" || vatRate == null) {
     return "-";
   }
   const twt = Number.parseFloat(totalWithoutTaxes.value);
-  return (twt + twt * (internalLine.value.vat.rate / 100)).toFixed(2);
+  return (twt + twt * (vatRate / 100)).toFixed(2);
 });
 
 const props = withDefaults(defineProps<QuoteLineProps>(), {});
