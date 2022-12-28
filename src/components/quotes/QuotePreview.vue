@@ -50,7 +50,7 @@ watch(
   height: 100vh;
 }
 
-@media screen and (max-width: 900px) {
+@include media-down(md) {
   .quote-iframe {
     width: 100vw;
   }
