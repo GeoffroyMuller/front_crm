@@ -163,7 +163,7 @@ td,
 th {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   padding: 0px 16px;
-  height: 55px;
+  height: 52px;
 }
 th {
   text-align: left;

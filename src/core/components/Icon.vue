@@ -16,12 +16,13 @@ interface IconProps {
 }
 
 const classes = computed(() => {
-  const res = [`icon-${props.size}`];
+  const res = [];
   if (!props.sharp) {
     res.push("material-symbols-outlined");
   } else {
     res.push("material-symbols-sharp");
   }
+  res.push(`icon-${props.size}`);
   res.push(`icon-${props.color}`);
   return res;
 });
@@ -39,16 +40,16 @@ const props = withDefaults(defineProps<IconProps>(), {
 }
 
 .icon-sm {
-  font-size: 16px;
+  font-size: 20px !important;
 }
 .icon-md {
-  font-size: 20px;
+  font-size: 22px !important;
 }
 .icon-lg {
-  font-size: 24px;
+  font-size: 24px !important;
 }
 .icon-xl {
-  font-size: 30px;
+  font-size: 26px !important;
 }
 
 @each $key, $value in $colors {

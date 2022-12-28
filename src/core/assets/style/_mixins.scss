@@ -105,12 +105,13 @@
     @if $_type==text2 {
         font-size: .9em;
         font-weight: 400;
-        color: #636363;
+        color: #5a5a5a;
     }
 
     @if $_type==subtitle {
-        font-size: 1.3em;
+        font-size: 1.2em;
         font-weight: 500;
+        color: #5a5a5a;
     }
 
     @if $_type==title {
