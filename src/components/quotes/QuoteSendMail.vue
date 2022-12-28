@@ -109,7 +109,7 @@ watch(
 .quote_send_mail {
   display: flex;
   flex-direction: column;
-  gap: spacing(2);
+  gap: spacing(3);
   width: 100%;
   .actions {
     display: flex;
