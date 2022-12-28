@@ -9,6 +9,29 @@ $rounded: (
   xl: 0.6rem,
 );
 
+$typos: (
+  title: (
+    font-size: 1.5em,
+    font-weight: 500,
+    color: #636363,
+  ),
+  subtitle: (
+    font-size: 1.2em,
+    font-weight: 500,
+    color: #5a5a5a,
+  ),
+  text2: (
+    font-size: .9em,
+    font-weight: 400,
+    color: #5a5a5a,
+  ),
+  text: (
+    font-weight: 400,
+    font-size:  1em,
+    color: #636363,
+  )
+);
+
 $colors: (
   white: white,
   black: black,

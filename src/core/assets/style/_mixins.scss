@@ -1,5 +1,6 @@
 @use "sass:list";
 @import "./functions";
+@import './_variables';
 
 @mixin modifiers($map, $attribute, $prefix: '', $separator: '-', $base: 'base') {
 
@@ -83,8 +84,6 @@
     @if $gap != 0 {
         gap: spacing($gap);
     }
-    
-    
 }
 
 @mixin unselectable {
@@ -96,27 +95,9 @@
 }
 
 @mixin typo($_type: none) {
-    @if $_type==text or $_type==none {
-        font-weight: 400;
-        font-size:  1em;
-        color: #636363;
-    }
-
-    @if $_type==text2 {
-        font-size: .9em;
-        font-weight: 400;
-        color: #5a5a5a;
-    }
-
-    @if $_type==subtitle {
-        font-size: 1.2em;
-        font-weight: 500;
-        color: #5a5a5a;
-    }
-
-    @if $_type==title {
-        font-size: 1.5em;
-        font-weight: 500;
-        color: #636363;
+    @if type-of(map-deep-get($typos, $_type)) == "map" {
+        @each $key, $value in map-deep-get($typos, $_type) {
+            #{$key}: $value
+        }
     }
 }

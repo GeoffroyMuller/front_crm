@@ -1,4 +1,5 @@
 @import './_variables.scss';
+@import './mixins.scss';
 @import './fonts.scss';
 
 html, body {
@@ -23,11 +24,10 @@ pre.code {
     overflow: auto;
 }
 
-.title {
-    @include typo($_type: title);
-}
-.subtitle {
-    @include typo($_type: subtitle);
+@each $key, $value in $typos {
+    .#{$key} {
+        @include typo($key);
+    } 
 }
 
 * {
