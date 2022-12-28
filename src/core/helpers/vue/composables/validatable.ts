@@ -51,34 +51,15 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
     onMounted(() => {
       form?.register({
         name: instance?.props.name,
-        getValue: () => internalValue.value,
-        setValue: (val: any) => (internalValue.value = val),
-        getError: () => internalError.value,
+        internalValue,
+        internalError,
         validate,
       });
-      const defaultValue =
-        form?.defaultValue?.[instance?.props.name as unknown as string];
-      if (!isNil(defaultValue)) {
-        internalValue.value = defaultValue;
-      }
     });
 
     onUnmounted(() => {
       form?.unregister(instance?.props.name);
     });
-
-    watch(
-      () => internalValue.value,
-      () => {
-        form?.inputChange(instance?.props.name);
-      }
-    );
-    watch(
-      () => internalError.value,
-      () => {
-        form?.inputErrorChange(instance?.props.name);
-      }
-    );
   }
 
   watch(

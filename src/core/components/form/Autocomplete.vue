@@ -177,7 +177,7 @@ watch(
 );
 
 watch(
-  () => internalValue.value && props.options,
+  () => internalValue.value + props.options,
   (val) => {
     search.value = displayed.value;
   },

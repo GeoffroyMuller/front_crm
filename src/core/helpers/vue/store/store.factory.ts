@@ -144,6 +144,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
             ? mock.getAll(_getPath({ filters: _filters }))
             : await axios.get(_getPath({ filters: _filters }))
         );
+
         if ((response.data as PaginateResult<T>)?.total) {
           this.list = (response.data as PaginateResult<T>).results;
           this.totalPages = Math.ceil(

@@ -20,6 +20,7 @@ import Autocomplete, { type AutocompleteProps } from "../form/Autocomplete.vue";
 import type { AnySchema } from "yup";
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import Button from "../Button.vue";
+import { isEqual } from "lodash";
 
 interface MagicAutocompleteProps /* extends AutocompleteProps */ {
   multiple?: boolean;
@@ -44,7 +45,6 @@ interface MagicAutocompleteProps /* extends AutocompleteProps */ {
   error?: string | boolean;
   disabled?: boolean;
   rules?: AnySchema;
-
 }
 
 const emit = defineEmits(["update:modelValue", "update:options", "search"]);
@@ -97,11 +97,21 @@ async function onSearch(q: string) {
   options.value = response;
 }
 
-onMounted(() => {
-  if (internalValue.value != null) {
-    onSearch(internalValue.value);
-  }
-});
+watch(
+  () => internalValue.value,
+  () => {
+    if (internalValue.value != null) {
+      if (
+        options.value.find((opt) =>
+          isEqual(props.getOptionValue(opt), internalValue.value)
+        ) == null
+      ) {
+        onSearch(internalValue.value);
+      }
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style>

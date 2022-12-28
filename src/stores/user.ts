@@ -1,8 +1,11 @@
-import { setJWT, sleep } from "@/core/helpers/utils";
+import { setJWT } from "@/core/helpers/utils";
 import type { User } from "@/types/user";
-import axios from "@/core/plugins/axios";
 import { defineStore } from "pinia";
 import config from "@/const";
+import { useRouter } from "vue-router";
+import { getJWT } from "@/core/helpers/utils";
+import axios from "@/core/plugins/axios";
+import mock from "@/mock.json";
 
 export const useUserStore = defineStore({
   id: "user",
@@ -14,7 +17,10 @@ export const useUserStore = defineStore({
   },
   actions: {
     async disconnect() {
+      this.auth = {};
       setJWT(null);
+      const router = useRouter();
+      router.push("/login");
     },
     async login(email: string, password: string) {
       const response = !config.IS_MOCK
@@ -22,21 +28,9 @@ export const useUserStore = defineStore({
             email,
             password,
           })
-        : {
-            data: {
-              user: {
-                id: 1,
-                idCompany: 1,
-                firstname: "[MOCK]Etienne",
-                lastname: "ROBERT",
-                address: "7 rue du ruisseau, Noisseville",
-                phone: "0781568685",
-                email: "etienne@local.fr",
-              },
-              token:
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjcwMjU3Mjc5LCJleHAiOjE2NzAzNDM2Nzl9.B9naGOll85mO6ics5FWl_ndQLzeapWcpLOU7PSuIObg",
-            },
-          };
+        : mock.GET["/auth/login"];
+
+      console.error(response);
 
       if (response.data?.token) {
         setJWT(response.data.token);
@@ -48,3 +42,29 @@ export const useUserStore = defineStore({
   },
   persist: true,
 });
+
+axios.interceptors.request.use(
+  async (config) => {
+    config.headers = {
+      Authorization: `${getJWT()}`,
+    };
+    return config;
+  },
+  (error) => {
+    Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  async (config) => {
+    return config;
+  },
+  (error) => {
+    const userStore = useUserStore();
+    if (error.response.status == 403) {
+      /** Token no more valid */
+      userStore.disconnect();
+    }
+    Promise.reject(error);
+  }
+);

@@ -1,91 +1,193 @@
 {
     "GET": {
-        "/customers/1/wishlist": [
-            "Voiture",
-            "Maison"
-        ],
-        "/reservations" : [
-            {
-                "id": 1,
-                "date": "2022-10-05", 
-                "customerId": 1,
-                "customer": {
+        "/quotes": {
+            "results": [
+                {
                     "id": 1,
-                    "email": "etienne.robert1698@gmail.com",
-                    "firstname": "Etienne",
-                    "lastname": "ROBERT",
-                    "gender": "M", 
-                    "birthdate": "1998-10-05", 
-                    "city": "Metz"
-                }
-            },
-            {
-                "id": 2,
-                "date": "2022-10-05", 
-                "customerId": 2,
-                "customer": {
+                    "idClient": 4,
+                    "idResponsible": 1,
+                    "idCompany": 1,
+                    "identifier": "#1",
+                    "name": "Devisqsd",
+                    "footer": "<div><strong><em>Pied de page</em></strong></div>",
+                    "modalities": "<div><strong>TVA non applicable, art. 293B du CG</strong></div>",
+                    "madeAt": "",
+                    "madeOn": "2022-01-26T23:00:00.000Z",
+                    "status": "draft",
+                    "archived": null,
+                    "responsible": {
+                        "id": 1,
+                        "idCompany": 1,
+                        "firstname": "Etienne",
+                        "lastname": "ROBERT",
+                        "address": "7 rue du ruisseau, Noisseville",
+                        "phone": "0781568685",
+                        "email": "etienne@local.fr"
+                    },
+                    "invoices": [
+                        {
+                            "id": 9,
+                            "idClient": 1,
+                            "idResponsible": 1,
+                            "idCompany": 1,
+                            "identifier": "#1",
+                            "jsonCopy": "{\"client\":{\"id\":1,\"firstname\":\"Guillaume\",\"lastname\":\"BREHELIN\",\"address\":null,\"phone\":\"0622998721\",\"email\":\"guillaume.brehelin@gmail.com\",\"description\":null,\"idCompany\":2,\"company\":{\"id\":2,\"name\":\"Proconsultant Informatique\",\"idCompany\":1}},\"footer\":\"\",\"idClient\":1,\"idCompany\":1,\"idResponsible\":1,\"madeAt\":\"\",\"madeOn\":\"2022-01-26T23:00:00.000Z\",\"modalities\":\"\",\"idQuote\":\"1\",\"responsible\":{\"id\":1,\"idCompany\":1,\"firstname\":\"Etienne\",\"lastname\":\"ROBERT\",\"address\":\"7 rue du ruisseau, Noisseville\",\"phone\":\"0781568685\",\"email\":\"etienne@local.fr\",\"company\":{\"id\":1,\"name\":\"ET Développement \",\"idCompany\":null}},\"name\":\"Facture : Devis #1\",\"lines\":[{\"description\":\"<p>Le <strong>Lorem Ipsum</strong> est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.&nbsp;</p>\",\"qty\":1,\"unit_price\":1500,\"discount\":null,\"discount_type\":null,\"type\":\"product\",\"idVat\":1,\"vat\":{\"id\":1,\"rate\":0,\"idCompany\":null}}],\"identifier\":\"1\",\"totalPrice\":1500}",
+                            "name": "Facture : Devis #1",
+                            "modalities": "",
+                            "footer": "",
+                            "madeAt": "",
+                            "madeOn": "2022-01-25T23:00:00.000Z",
+                            "idQuote": 1,
+                            "archived": null,
+                            "totalPrice": 1500
+                        }
+                    ],
+                    "client": {
+                        "id": 4,
+                        "firstname": "Eric",
+                        "lastname": "ROBERT",
+                        "address": "18 rue raymond-mondon",
+                        "phone": "0781564540",
+                        "email": "eric@oui.fr",
+                        "description": null,
+                        "idCompany": 10
+                    }
+                },
+                {
                     "id": 2,
-                    "email": "client2@gmail.com",
-                    "firstname": "Etienne",
-                    "lastname": "MARTIN",
-                    "gender": "M", 
-                    "birthdate": "2022-10-05", 
-                    "city": "Metz" 
-                    
+                    "idClient": 1,
+                    "idResponsible": 1,
+                    "idCompany": 1,
+                    "identifier": "#2",
+                    "name": "Devis blsqd",
+                    "footer": "",
+                    "modalities": "",
+                    "madeAt": "",
+                    "madeOn": "2022-02-21T23:00:00.000Z",
+                    "status": "refused",
+                    "archived": 0,
+                    "responsible": {
+                        "id": 1,
+                        "idCompany": 1,
+                        "firstname": "Etienne",
+                        "lastname": "ROBERT",
+                        "address": "7 rue du ruisseau, Noisseville",
+                        "phone": "0781568685",
+                        "email": "etienne@local.fr"
+                    },
+                    "invoices": [],
+                    "client": {
+                        "id": 1,
+                        "firstname": "Guillaume",
+                        "lastname": "BREHELIN",
+                        "address": "dsq",
+                        "phone": "0622998724",
+                        "email": "guillaume.brehelin@gmail.com",
+                        "description": null,
+                        "idCompany": 2
+                    }
+                },
+                {
+                    "id": 7,
+                    "idClient": 1,
+                    "idResponsible": 1,
+                    "idCompany": 1,
+                    "identifier": "#3",
+                    "name": "Devis 3",
+                    "footer": "",
+                    "modalities": null,
+                    "madeAt": "",
+                    "madeOn": "2022-02-21T23:00:00.000Z",
+                    "status": "validated",
+                    "archived": 0,
+                    "responsible": {
+                        "id": 1,
+                        "idCompany": 1,
+                        "firstname": "Etienne",
+                        "lastname": "ROBERT",
+                        "address": "7 rue du ruisseau, Noisseville",
+                        "phone": "0781568685",
+                        "email": "etienne@local.fr"
+                    },
+                    "invoices": [],
+                    "client": {
+                        "id": 1,
+                        "firstname": "Guillaume",
+                        "lastname": "BREHELIN",
+                        "address": "dsq",
+                        "phone": "0622998724",
+                        "email": "guillaume.brehelin@gmail.com",
+                        "description": null,
+                        "idCompany": 2
+                    }
+                },
+                {
+                    "id": 8,
+                    "idClient": null,
+                    "idResponsible": 1,
+                    "idCompany": 1,
+                    "identifier": "#4",
+                    "name": null,
+                    "footer": "<div>sqd</div>",
+                    "modalities": null,
+                    "madeAt": null,
+                    "madeOn": null,
+                    "status": "draft",
+                    "archived": null,
+                    "responsible": {
+                        "id": 1,
+                        "idCompany": 1,
+                        "firstname": "Etienne",
+                        "lastname": "ROBERT",
+                        "address": "7 rue du ruisseau, Noisseville",
+                        "phone": "0781568685",
+                        "email": "etienne@local.fr"
+                    },
+                    "invoices": [],
+                    "client": null
+                },
+                {
+                    "id": 9,
+                    "idClient": null,
+                    "idResponsible": 1,
+                    "idCompany": 1,
+                    "identifier": "#5",
+                    "name": null,
+                    "footer": "<div><em>sqdsqdsq</em></div>",
+                    "modalities": null,
+                    "madeAt": null,
+                    "madeOn": null,
+                    "status": "draft",
+                    "archived": null,
+                    "responsible": {
+                        "id": 1,
+                        "idCompany": 1,
+                        "firstname": "Etienne",
+                        "lastname": "ROBERT",
+                        "address": "7 rue du ruisseau, Noisseville",
+                        "phone": "0781568685",
+                        "email": "etienne@local.fr"
+                    },
+                    "invoices": [],
+                    "client": null
                 }
-            },
-            {
-                "id": 3,
-                "date": "2022-10-07", 
-                "customerId": 3,
-                "customer":  { 
-                    "id": 3,
-                    "email": "geoff@gmail.com", 
-                    "firstname": "Geoffroy",
-                    "lastname": "MULLER", 
-                    "gender": "M", 
-                    "birthdate": "2022-10-05", 
-                    "city": "Metz"
-                }
-            }
-        ],
-        "/customers": [
-            {
+            ],
+            "total": 11
+        },
+        "/auth/login": {
+            "data": {
+              "user": {
                 "id": 1,
-                "email": "etienne.robert1698@gmail.com",
-                "firstname": "Etienne",
+                "idCompany": 1,
+                "firstname": "[MOCK]Etienne",
                 "lastname": "ROBERT",
-                "gender": "M", 
-                "birthdate": "2022-10-05", 
-                "city": "Metz"
-            },
-            {
-                "id": 2,
-                "email": "client2@gmail.com",
-                "firstname": "Etienne",
-                "lastname": "MARTIN",
-                "gender": "M", 
-                "birthdate": "2022-10-05", 
-                "city": "Metz"
-            },
-            { 
-                "id": 3,
-                "email": "geoff@gmail.com", 
-                "firstname": "Geoffroy",
-                "lastname": "MULLER", 
-                "gender": "M", 
-                "birthdate": "2022-10-05", 
-                "city": "Metz"
-            },
-            {
-                "id": 4,
-                "email": "elise@gmail.com",
-                "firstname": "Elise",
-                "lastname": "DUPONT",
-                "gender": "M", 
-                "birthdate": "2022-10-05", 
-                "city": "Metz"
+                "address": "7 rue du ruisseau, Noisseville",
+                "phone": "0781568685",
+                "email": "etienne@local.fr"
+              },
+              "token":
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjcwMjU3Mjc5LCJleHAiOjE2NzAzNDM2Nzl9.B9naGOll85mO6ics5FWl_ndQLzeapWcpLOU7PSuIObg"
             }
-        ]
+        }
     }
 }
