@@ -54,7 +54,7 @@ $zIndexModal: 55;
     border-radius: map-deep-get($rounded, "md");
     opacity: 1;
     z-index: $zIndexModal;
-    padding: spacing(1.5) spacing(3);
+    padding: spacing(3);
     max-width: 90%;
     overflow-x: hidden;
     & .no-padding {
