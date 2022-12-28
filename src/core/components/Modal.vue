@@ -1,12 +1,14 @@
 <template>
   <Teleport to="body" v-if="open">
-    <div
-      class="container"
-      :class="{ 'no-padding': !withPadding }"
-      @click="$emit('update:open', false)"
-    ></div>
-    <div class="modal">
-      <slot />
+    <div class="modal-container">
+      <div
+        class="modal-background"
+        :class="{ 'no-padding': !withPadding }"
+        @click="$emit('update:open', false)"
+      ></div>
+      <div class="modal">
+        <slot />
+      </div>
     </div>
   </Teleport>
 </template>
@@ -29,7 +31,7 @@ const emit = defineEmits(["update:open"]);
 
 <style lang="scss" scoped>
 $zIndexModal: 55;
-.container {
+.modal-background {
   position: absolute;
   background-color: black;
   opacity: 0.4;
@@ -40,20 +42,24 @@ $zIndexModal: 55;
   left: 0;
   z-index: $zIndexModal;
 }
-.modal {
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: white;
-  border-radius: map-deep-get($rounded, "md");
-  opacity: 1;
+.modal-container {
   z-index: $zIndexModal;
-  padding: spacing(1.5) spacing(3);
-  max-width: 90%;
-  overflow-x: hidden;
-  & .no-padding {
-    padding: 0;
+  width: 100%;
+  position: absolute;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  .modal {
+    background-color: white;
+    border-radius: map-deep-get($rounded, "md");
+    opacity: 1;
+    z-index: $zIndexModal;
+    padding: spacing(1.5) spacing(3);
+    max-width: 90%;
+    overflow-x: hidden;
+    & .no-padding {
+      padding: 0;
+    }
   }
 }
 </style>
