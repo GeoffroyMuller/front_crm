@@ -120,4 +120,15 @@ const internalLine = toRef(props, "line");
     }
   }
 }
+@include media-up(md) {
+}
+@include media-down(md) {
+  .line-product {
+    display: grid;
+    gap: spacing(1);
+    .total {
+      justify-content: start;
+    }
+  }
+}
 </style>
