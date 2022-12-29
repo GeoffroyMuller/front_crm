@@ -1,5 +1,8 @@
 <template>
-  <div class="card" :class="[`card-rd-${rounded}`, { padding: withPadding }]">
+  <div
+    class="card"
+    :class="[`card-rd-${rounded}`, { padding: withPadding }, $props.class]"
+  >
     <div class="card-head" v-if="title?.length || subtitle?.length">
       <div v-if="title?.length" class="title">
         {{ title }}
