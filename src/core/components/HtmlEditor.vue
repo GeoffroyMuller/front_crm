@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import useValidatable from "../helpers/vue/composables/validatable";
 import { QuillEditor } from "@vueup/vue-quill";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 interface HtmlEditorProps {
   name?: string;
@@ -35,6 +35,18 @@ function init() {
     quill.value.pasteHTML(internalValue.value);
   }
 }
+
+watch(
+  () => internalValue.value,
+  () => {
+    if (
+      internalValue.value?.length &&
+      internalValue.value != quill.value.getHTML()
+    ) {
+      quill.value.pasteHTML(internalValue.value);
+    }
+  }
+);
 
 function handleChange() {
   internalValue.value = quill.value.getHTML();
