@@ -53,6 +53,7 @@
               icon="archive"
               v-tooltip="{ text: $t('archive'), placement: 'bottom' }"
               v-if="!item.archived"
+              variant="outlined"
             />
           </div>
           <div>
@@ -61,6 +62,7 @@
               color="primary"
               icon="preview"
               v-tooltip="{ text: $t('preview'), placement: 'bottom' }"
+              variant="outlined"
             />
           </div>
           <div>
@@ -69,6 +71,7 @@
               color="primary"
               icon="download"
               v-tooltip="{ text: $t('download'), placement: 'bottom' }"
+              variant="outlined"
             />
           </div>
           <div>
@@ -77,6 +80,7 @@
               color="success"
               icon="mail"
               v-tooltip="{ text: $t('send_by_mail'), placement: 'bottom' }"
+              variant="outlined"
             />
           </div>
         </div>

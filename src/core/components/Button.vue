@@ -4,6 +4,7 @@
     class="button"
     :class="{
       [`button-text button-text-${color}`]: variant === 'text',
+      [`button-outlined button-outlined-${color}`]: variant === 'outlined',
       [`button-${color}`]: variant !== 'text',
       'align-end': align === 'end',
       'align-start': align === 'start',
@@ -16,7 +17,11 @@
       <span v-if="$slots.default"> <slot /></span>
     </div>
 
-    <Spinner size="sm" v-if="loading" :color="variant === 'text' ? color : 'white'" />
+    <Spinner
+      size="sm"
+      v-if="loading"
+      :color="variant === 'text' ? color : 'white'"
+    />
   </button>
 </template>
 
@@ -29,7 +34,7 @@ interface ButtonProps {
   color?: Color;
   disabled?: boolean;
   loading?: boolean;
-  variant?: "base" | "text";
+  variant?: "base" | "text" | "outlined";
   type?: "button" | "submit";
 
   align?: "center" | "end" | "start";
@@ -54,7 +59,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.15s ease;
+  transition: background-color 0.15s ease, color 0.05s linear;
   user-select: none;
   @include typo(text);
   .content {
@@ -130,6 +135,34 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 
       &:hover:not(:disabled) {
         color: map-deep-get($value, 700);
+      }
+
+      &:disabled {
+        color: map-deep-get($value, 200);
+      }
+    }
+  }
+}
+
+.button-outlined {
+  background-color: transparent;
+  position: relative;
+  color: #6b7280;
+  border: solid 1px #6b7280;
+  .content {
+    gap: spacing(0.5);
+  }
+}
+
+@each $key, $value in $colors {
+  @if type-of($value) == "map" {
+    .button-outlined-#{$key} {
+      color: map-deep-get($value, 500);
+      border: solid 1px map-deep-get($value, 500);
+
+      &:hover:not(:disabled) {
+        color: white;
+        background-color: map-deep-get($value, 500);
       }
 
       &:disabled {
