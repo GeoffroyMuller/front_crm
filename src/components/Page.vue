@@ -54,6 +54,7 @@ const auth = computed(() => {
 }
 .page-content {
   padding: 0 spacing(2);
+  padding-bottom: spacing(2);
 }
 .page-menu {
   display: flex;
