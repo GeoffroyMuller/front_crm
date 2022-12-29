@@ -30,7 +30,6 @@ export const useUserStore = defineStore({
           })
         : mock.GET["/auth/login"];
 
-      console.error(response);
 
       if (response.data?.token) {
         setJWT(response.data.token);
