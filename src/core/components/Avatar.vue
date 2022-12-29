@@ -10,7 +10,7 @@
       :alt="imgAlt ? imgAlt : 'avatar'"
       :class="[size ? `avatar-${size}` : '']"
     />
-    <span class="text" v-else>
+    <span class="txt" v-else>
       {{ text }}
       <slot />
     </span>
@@ -46,7 +46,7 @@ const props = withDefaults(defineProps<AvatarProps>(), {
   font-size: 16px;
   font-weight: bold;
   @include flex(row, center, center);
-  & .text {
+  & .txt {
     padding-left: 1px;
     padding-top: 1px;
   }
