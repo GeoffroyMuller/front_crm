@@ -72,7 +72,6 @@ $zIndexModal: 55;
   top: 0;
   right: 0;
   padding: spacing(1);
-  transition: opacity 0.4s linear;
   z-index: $zIndexModal;
 }
 </style>
