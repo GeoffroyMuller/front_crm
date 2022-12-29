@@ -7,6 +7,15 @@
     ></div>
     <Card class="modal">
       <slot />
+
+      <div>
+        <IconButton
+          @click="$emit('update:open', false)"
+          name="close"
+          class="close-button"
+          size="xl"
+        />
+      </div>
     </Card>
   </Teleport>
 </template>
@@ -14,6 +23,7 @@
 import { withDefaults, defineProps, defineEmits } from "vue";
 import Media from "../Media.vue";
 import Card from "./Card.vue";
+import IconButton from "./IconButton.vue";
 
 interface ModalProps {
   open: boolean;
@@ -56,5 +66,13 @@ $zIndexModal: 55;
   .modal {
     width: 95%;
   }
+}
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: spacing(1);
+  transition: opacity 0.4s linear;
+  z-index: $zIndexModal;
 }
 </style>
