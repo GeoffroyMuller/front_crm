@@ -3,7 +3,7 @@
     <div class="mobile-nav">
       <IconButton name="menu" @click.stop="mobileNavOpen = true" />
       <Avatar color="primary" size="sm">
-        {{ user.firstname.substr(0, 1) }}{{ user.lastname.substr(0, 1) }}
+        {{ user.firstname?.[0] || "" }}{{ user.lastname?.[0] || "" }}
       </Avatar>
       <Sidebar v-model:open="mobileNavOpen">
         <div class="mobile-nav-items-container">
@@ -126,7 +126,7 @@ async function disconnect() {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: spacing(0.5) spacing(2);
+  padding: spacing(1) spacing(2);
 }
 .mobile-nav-items-container {
   display: grid;
