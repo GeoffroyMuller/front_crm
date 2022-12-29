@@ -202,10 +202,20 @@ watch(
   .table-mobile-card {
     display: grid;
     gap: spacing(1);
+    max-width: 100%;
+    overflow: hidden;
     .table-mobile-line {
+      max-width: 100%;
+      overflow: hidden;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: spacing(1);
+      :last-child {
+        display: flex;
+        justify-content: flex-end;
+        text-align: end;
+      }
     }
   }
 }

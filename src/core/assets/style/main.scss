@@ -5,8 +5,14 @@
 
 html, body {
     margin: 0;
+    font-size: 16px;
 }
 
+@include media-down(md) {
+    html {
+        font-size: 13px;
+    }
+}
 body {
     background-color: #f8fafc;
     @include typo($_type: text);
