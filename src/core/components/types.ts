@@ -37,6 +37,8 @@ export interface Column<T = any> {
   titleAlign?: "left" | "right" | "center";
 }
 
+export type Breakpoints = "xs" | "sm" | "md" | "lg" | "xl";
+
 export type Color =
   | "primary"
   | "danger"
