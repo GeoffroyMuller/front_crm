@@ -21,17 +21,8 @@
       />
       <slot name="title" :column="column" />
     </template>
-    <template #content="{ column, item }">
-      <div v-if="!$slots.content && !$slots[`content-${column.key as string}`]">
-        {{ (column?.data ? column?.data(item) : undefined) || item[column.key] }}
-      </div>
-      <slot
-        v-else-if="!$slots.content"
-        :name="`content-${column.key as string}`"
-        :column="column"
-        :item="item"
-      ></slot>
-      <slot name="content" :column="column" :item="item" />
+    <template v-for="(index, name) in $slots" v-slot:[name]="data">
+      <slot :name="name" v-bind="data"></slot>
     </template>
     <template #footer>
       <div class="data-table-pagination">
@@ -43,13 +34,6 @@
           @update:items-per-page="(val) => $emit('update:itemsPerPage', val)"
         />
       </div>
-    </template>
-
-    <template #actions="{ item }" v-if="$slots['actions']">
-      <slot name="actions" :item="item" />
-    </template>
-    <template #actions-title v-if="$slots['actions-title']">
-      <slot name="actions-title" />
     </template>
   </Table>
 </template>
