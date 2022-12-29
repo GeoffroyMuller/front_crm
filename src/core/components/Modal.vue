@@ -1,19 +1,19 @@
 <template>
   <Teleport to="body" v-if="open">
-    <div class="modal-container">
-      <div
-        class="modal-background"
-        :class="{ 'no-padding': !withPadding }"
-        @click="$emit('update:open', false)"
-      ></div>
-      <div class="modal">
-        <slot />
-      </div>
-    </div>
+    <div
+      class="modal-background"
+      :class="{ 'no-padding': !withPadding }"
+      @click="$emit('update:open', false)"
+    ></div>
+    <Card class="modal">
+      <slot />
+    </Card>
   </Teleport>
 </template>
 <script lang="ts" setup>
 import { withDefaults, defineProps, defineEmits } from "vue";
+import Media from "../Media.vue";
+import Card from "./Card.vue";
 
 interface ModalProps {
   open: boolean;
@@ -42,25 +42,19 @@ $zIndexModal: 55;
   left: 0;
   z-index: $zIndexModal;
 }
-.modal-container {
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 50%;
+  transform: translate(-50%, -50%);
   z-index: $zIndexModal;
-  width: 100%;
-  position: absolute;
-  height: 100vh;
-  display: grid;
-  place-items: center;
+  padding: spacing(3);
+}
+@include media-down(md) {
   .modal {
-    background-color: white;
-    border-radius: map-deep-get($rounded, "md");
-    opacity: 1;
-    z-index: $zIndexModal;
-    padding: spacing(3);
-    max-width: 90%;
-    min-width: 40%;
-    overflow-x: hidden;
-    & .no-padding {
-      padding: 0;
-    }
+    width: 95%;
   }
 }
 </style>
