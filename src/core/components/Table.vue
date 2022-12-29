@@ -49,7 +49,7 @@
     </div>
   </Media>
   <Media up="md">
-    <component :is="isCard ? Card : 'div'" :withPadding="false">
+    <component :is="isCard ? Card : 'div'" :withPadding="false" class="table-container">
       <table
         :class="{
           'table-loading': loading,
@@ -191,6 +191,9 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+.table-container {
+  overflow-x: auto;
+}
 .table-mobile {
   width: 100%;
   display: grid;
@@ -252,7 +255,6 @@ th {
   height: 60px;
 }
 table {
-  font-size: 14px;
   width: 100%;
   border-collapse: collapse;
   tbody td {
