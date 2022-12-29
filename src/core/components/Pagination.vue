@@ -1,39 +1,63 @@
 <template>
-  <div class="pagination">
+  <Media down="md">
     <div class="pagination-items-per-page">
-      <span>{{ $t("lines-per-page") }}</span>
-      <Select
-        class="items-per-page"
-        :options="[
-          { label: '5', value: 5 },
-          { label: '10', value: 10 },
-          { label: '15', value: 15 },
-          { label: '20', value: 20 },
-        ]"
-        :modelValue="itemsPerPage"
-        @update:modelValue="(val) => $emit('update:itemsPerPage', val)"
-      />
-    </div>
+      <div class="pagination-number-page">
+        <TextField
+          class="input-number-page"
+          type="number"
+          :appearance-none="true"
+          :min="min"
+          :max="max"
+          v-model="internalCurrentPage"
+          @input="(e) => onInput(e)"
+          @blur="onBlur"
+        />
+        <span v-if="!isNil(max)">/ {{ max }}</span>
+      </div>
 
-    <div class="pagination-number-page">
-      <TextField
-        class="input-number-page"
-        type="number"
-        :appearance-none="true"
-        :min="min"
-        :max="max"
-        v-model="internalCurrentPage"
-        @input="(e) => onInput(e)"
-        @blur="onBlur"
-      />
-      <span v-if="!isNil(max)">/ {{ max }}</span>
+      <div class="pagination-buttons">
+        <IconButton name="chevron_left" @click.stop="substractOne()" />
+        <IconButton name="chevron_right" @click.stop="addOne()" />
+      </div>
     </div>
+  </Media>
+  <Media up="md">
+    <div class="pagination">
+      <div class="pagination-items-per-page">
+        <span>{{ $t("lines-per-page") }}</span>
+        <Select
+          class="items-per-page"
+          :options="[
+            { label: '5', value: 5 },
+            { label: '10', value: 10 },
+            { label: '15', value: 15 },
+            { label: '20', value: 20 },
+          ]"
+          :modelValue="itemsPerPage"
+          @update:modelValue="(val) => $emit('update:itemsPerPage', val)"
+        />
+      </div>
 
-    <div class="pagination-buttons">
-      <IconButton name="chevron_left" @click.stop="substractOne()" />
-      <IconButton name="chevron_right" @click.stop="addOne()" />
+      <div class="pagination-number-page">
+        <TextField
+          class="input-number-page"
+          type="number"
+          :appearance-none="true"
+          :min="min"
+          :max="max"
+          v-model="internalCurrentPage"
+          @input="(e) => onInput(e)"
+          @blur="onBlur"
+        />
+        <span v-if="!isNil(max)">/ {{ max }}</span>
+      </div>
+
+      <div class="pagination-buttons">
+        <IconButton name="chevron_left" @click.stop="substractOne()" />
+        <IconButton name="chevron_right" @click.stop="addOne()" />
+      </div>
     </div>
-  </div>
+  </Media>
 </template>
 
 <script setup lang="ts">
@@ -42,6 +66,7 @@ import { isNil } from "lodash";
 import TextField from "./form/TextField.vue";
 import IconButton from "./IconButton.vue";
 import Select from "@/core/components/form/Select.vue";
+import Media from "../Media.vue";
 
 interface PaginationProps {
   currentPage: number;
