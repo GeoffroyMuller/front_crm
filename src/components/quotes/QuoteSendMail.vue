@@ -57,7 +57,7 @@ interface QuoteSendMailProps {
 }
 
 const props = withDefaults(defineProps<QuoteSendMailProps>(), {});
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close", "clickDownloadPDF"]);
 
 const { toast } = useUI();
 const { t } = useI18n();

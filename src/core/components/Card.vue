@@ -19,10 +19,11 @@ import { defineProps, withDefaults } from "vue";
 import type { Size } from "./types";
 
 export interface CardProps {
-  rounded: Size;
+  rounded?: Size;
   title?: string;
   subtitle?: string;
   withPadding?: boolean;
+  class?: string;
 }
 
 const props = withDefaults(defineProps<CardProps>(), {

@@ -40,5 +40,6 @@
     "error_while_send_mail": "Une erreur est survenue lors de l'envoie de l'email",
     "mail_sended": "Email envoyé",
     "content": "Contenu",
-    "subject": "Sujet"
+    "subject": "Sujet",
+    "pdf": "PDF"
 }

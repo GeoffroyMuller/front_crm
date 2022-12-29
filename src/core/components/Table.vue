@@ -13,7 +13,9 @@
             class="table-mobile-line"
           >
             <div>
-              <div v-if="!$slots.title && !$slots['title-' + (column.key as string)]">
+              <div
+                v-if="!$slots.title && !$slots['title-' + (column.key as string)]"
+              >
                 {{ column.title }}
               </div>
               <slot
@@ -24,8 +26,13 @@
               <slot name="title" :column="column" />
             </div>
             <div>
-              <div v-if="!$slots.content && !$slots[`content-${column.key as string}`]">
-                {{ (column?.data ? column?.data(item) : undefined) || item[column.key] }}
+              <div
+                v-if="!$slots.content && !$slots[`content-${column.key as string}`]"
+              >
+                {{
+                  (column?.data ? column?.data(item) : undefined) ||
+                  item[column.key]
+                }}
               </div>
               <slot
                 v-else-if="!$slots.content"
@@ -49,7 +56,11 @@
     </div>
   </Media>
   <Media up="md">
-    <component :is="isCard ? Card : 'div'" :withPadding="false" class="table-container">
+    <component
+      :is="isCard ? Card : 'div'"
+      :withPadding="false"
+      class="table-container"
+    >
       <table
         :class="{
           'table-loading': loading,
@@ -58,7 +69,9 @@
         <thead>
           <tr>
             <th v-for="column in internalColumns" :key="column.key">
-              <div v-if="!$slots.title && !$slots['title-' + (column.key as string)]">
+              <div
+                v-if="!$slots.title && !$slots['title-' + (column.key as string)]"
+              >
                 {{ column.title }}
               </div>
               <slot
@@ -68,7 +81,10 @@
               />
               <slot name="title" :column="column" />
             </th>
-            <th v-if="$slots['actions-title'] || $slots['actions']" class="actions-block">
+            <th
+              v-if="$slots['actions-title'] || $slots['actions']"
+              class="actions-block"
+            >
               <slot name="actions-title"></slot>
             </th>
           </tr>
@@ -97,10 +113,17 @@
               :key="index"
               @click.stop="$emit('row-click', item)"
             >
-              <td v-for="column in columns" :key="column.key" :style="styleItem">
-                <div v-if="!$slots.content && !$slots[`content-${column.key as string}`]">
+              <td
+                v-for="column in columns"
+                :key="column.key"
+                :style="styleItem"
+              >
+                <div
+                  v-if="!$slots.content && !$slots[`content-${column.key as string}`]"
+                >
                   {{
-                    (column?.data ? column?.data(item) : undefined) || item[column.key]
+                    (column?.data ? column?.data(item) : undefined) ||
+                    item[column.key]
                   }}
                 </div>
                 <slot
@@ -160,6 +183,8 @@ const props = withDefaults(defineProps<TableProps>(), {
   isCard: true,
 });
 
+const emit = defineEmits(["row-click"]);
+
 const internalColumns = ref<Array<Column> | null>(null);
 const itemsIsInit = ref<boolean>(false);
 
@@ -192,7 +217,7 @@ watch(
 
 <style lang="scss" scoped>
 .table-container {
-  overflow-x: auto;
+  overflow-x: auto; // TODO : pourquoi il prend la taille des menu en compte pour sa taille
 }
 .table-mobile {
   width: 100%;

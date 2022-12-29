@@ -18,7 +18,7 @@ interface ValidatableProps<T> {
 
 export default function useValidatable<T>(props: ValidatableProps<T>) {
   const instance = getCurrentInstance();
-  const form = inject<any>("form");
+  const form = inject<any>("form", () => null);
 
   const internalValue = ref<T | undefined>(props.value);
   const internalError = ref<string | boolean | undefined>(props.error);
