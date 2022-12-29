@@ -104,7 +104,7 @@ const { internalValue, internalError, validate } = useValidatable({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .text-field {
   display: flex;
   flex-direction: column;
@@ -124,6 +124,9 @@ const { internalValue, internalError, validate } = useValidatable({
     display: grid;
     place-items: center;
     margin-right: spacing(1);
+    .icon {
+      background-color: white;
+    }
   }
   input,
   textarea {
