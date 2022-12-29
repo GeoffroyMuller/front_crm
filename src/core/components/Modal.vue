@@ -71,7 +71,7 @@ $zIndexModal: 55;
   position: absolute;
   top: 0;
   right: 0;
-  padding: spacing(1);
+  padding: spacing(0.5);
   z-index: $zIndexModal;
 }
 </style>

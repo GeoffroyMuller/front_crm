@@ -64,7 +64,7 @@ function onClickOutside() {
     position: absolute;
     top: 0;
     right: 0;
-    padding: spacing(1);
+    padding: spacing(0.5);
     opacity: 0;
     transition: opacity 0.4s linear;
   }
