@@ -37,7 +37,7 @@
           :name="!isNavMini ? 'chevron_left' : 'menu'"
         />
       </div>
-      <div class="nav-items">
+      <!--       <div class="nav-items">
         <div
           v-for="item of menu"
           :key="item.title"
@@ -47,10 +47,29 @@
           <Icon :name="item.icon" color="black" />
           <div v-if="!isNavMini">{{ item.title }}</div>
         </div>
-      </div>
+      </div> -->
+      <Tree :list="menutree">
+        <template #item-rollable="{ data }">
+          <div class="tree-items">
+            <Icon name="arrow_right" color="black" />
+            <div>{{ data.title }}</div>
+          </div>
+        </template>
+        <template #item="{ data }">
+          <div class="tree-items" @click="$router.push(data.path)">
+            <Icon :name="data.icon" color="black" />
+            <div>{{ data.title }}</div>
+          </div>
+        </template>
+      </Tree>
 
       <div class="footer">
-        <Button v-if="!isNavMini" variant="text" color="black" @click="disconnect">
+        <Button
+          v-if="!isNavMini"
+          variant="text"
+          color="black"
+          @click="disconnect"
+        >
           {{ $t("disconnect") }}
         </Button>
 
@@ -75,6 +94,7 @@ import Avatar from "@/core/components/Avatar.vue";
 import Sidebar from "@/core/components/Sidebar.vue";
 import type { IconName } from "@/core/components/types";
 import { useI18n } from "vue-i18n";
+import Tree from "@/core/components/Tree.vue";
 
 const userStore = useUserStore();
 
@@ -90,6 +110,47 @@ const menu = ref([
   { path: "/quotes", title: t("quotes"), icon: "description" },
   { path: "/invoices", title: t("invoices"), icon: "request_quote" },
   { path: "/customers", title: t("customers"), icon: "person" },
+]);
+
+const menutree = ref([
+  {
+    key: "home",
+    path: "/",
+    title: t("home"),
+    icon: "home",
+  },
+  {
+    key: "projets",
+    title: "Projets",
+    children: [
+      { key: "calendar", title: "Calendar", path: "/projet-calendar" },
+      { key: "stats", title: "Stats", path: "/projet-stats" },
+    ],
+  },
+  {
+    key: "facturation",
+    title: "Facturation",
+    children: [
+      {
+        key: "quotes",
+        path: "/quotes",
+        title: t("quotes"),
+        icon: "description",
+      },
+      {
+        key: "invoices",
+        path: "/invoices",
+        title: t("invoices"),
+        icon: "request_quote",
+      },
+    ],
+  },
+  {
+    key: "customers",
+    path: "/customers",
+    title: t("customers"),
+    icon: "person",
+  },
 ]);
 
 const user = computed(() => userStore.getAuth);
@@ -252,6 +313,31 @@ $miniNavWidth: 60px;
           fill: color("primary", 700);
         }
       }
+    }
+  }
+}
+.tree-items {
+  $paddingX: calc(20px - spacing(1));
+  height: 38px;
+  padding: spacing(1);
+  padding-left: $paddingX;
+  padding-right: $paddingX;
+  margin-left: spacing(1);
+  margin-right: spacing(1);
+  gap: spacing(2);
+  border-radius: 6px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  @include typo(text2);
+  transition: all 0.3s;
+  &:hover {
+    background-color: color("primary", 100);
+    color: color("primary", 700);
+
+    svg {
+      fill: color("primary", 700);
     }
   }
 }
