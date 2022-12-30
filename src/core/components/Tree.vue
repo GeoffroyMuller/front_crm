@@ -5,7 +5,11 @@
         v-if="!$_.isNil(getChildrenList(item))"
         @click="toggleOpenByKey(item.key)"
       >
-        <slot name="item-rollable" :data="item"></slot>
+        <slot
+          name="item-rollable"
+          :data="item"
+          :isOpen="itemsOpen[item.key]"
+        ></slot>
       </div>
       <slot v-else name="item" :data="item"></slot>
       <Tree
@@ -26,10 +30,8 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults, defineProps, ref, onMounted } from "vue";
-import List from "./List.vue";
+import { withDefaults, defineProps, ref } from "vue";
 import Tree from "./Tree.vue";
-import { isNil } from "lodash";
 interface TreeProps {
   list: Array<any>;
   childrenKey: string;
@@ -42,7 +44,6 @@ const props = withDefaults(defineProps<TreeProps>(), {
 const itemsOpen = ref<any>({});
 
 const toggleOpenByKey = (key: string) => {
-  console.error("toggle", { key });
   // eslint-disable-next-line no-prototype-builtins
   if (itemsOpen.value.hasOwnProperty(key)) {
     itemsOpen.value[key] = !itemsOpen.value[key];
@@ -62,6 +63,9 @@ const getChildrenList = (data: any) => {
 </script>
 
 <style lang="scss" scoped>
+.tree {
+  width: 100%;
+}
 .tree-recursive {
   margin-left: 1rem;
 }
