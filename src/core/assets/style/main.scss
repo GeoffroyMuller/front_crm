@@ -31,7 +31,7 @@ pre.code {
     overflow: auto;
 }
 
-* {
+/* * {
     scrollbar-color: color("primary", 600) color("primary", 100);
     scrollbar-width: thin;
 }
@@ -45,7 +45,7 @@ pre.code {
 }
 *::-webkit-scrollbar {
     width: spacing(1);
-}
+} */
 
 iframe {
     border: none;
