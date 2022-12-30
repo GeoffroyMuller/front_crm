@@ -37,21 +37,15 @@
           :name="!isNavMini ? 'chevron_left' : 'menu'"
         />
       </div>
-      <!--       <div class="nav-items">
-        <div
-          v-for="item of menu"
-          :key="item.title"
-          @click="$router.push(item.path)"
-          class="nav-item"
-        >
-          <Icon :name="item.icon" color="black" />
-          <div v-if="!isNavMini">{{ item.title }}</div>
-        </div>
-      </div> -->
-      <Tree :list="menutree">
-        <template #item-rollable="{ data }">
+      <Tree :list="menu">
+        <template #item-rollable="{ data, isOpen }">
           <div class="tree-items">
-            <Icon name="arrow_right" color="black" />
+            <Icon
+              name="arrow_right"
+              class="icons-arrow"
+              :class="{ active: isOpen }"
+              color="black"
+            />
             <div>{{ data.title }}</div>
           </div>
         </template>
@@ -106,13 +100,6 @@ const { confirm } = useUI();
 const { t } = useI18n();
 
 const menu = ref([
-  { path: "/", title: t("home"), icon: "home" },
-  { path: "/quotes", title: t("quotes"), icon: "description" },
-  { path: "/invoices", title: t("invoices"), icon: "request_quote" },
-  { path: "/customers", title: t("customers"), icon: "person" },
-]);
-
-const menutree = ref([
   {
     key: "home",
     path: "/",
@@ -339,6 +326,13 @@ $miniNavWidth: 60px;
 
     svg {
       fill: color("primary", 700);
+    }
+  }
+  .icons-arrow {
+    transition: all 0.2s;
+    line-height: 0px;
+    &.active {
+      transform: rotate(90deg * 1);
     }
   }
 }
