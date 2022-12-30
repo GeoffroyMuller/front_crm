@@ -10,7 +10,7 @@
       :label="label"
       :error="internalError || error ? true : false"
       @focus="isFocus = true"
-      @blur="isFocus = false"
+      @blur="handleBlur"
       @click="clickTextField"
     >
       <template #icon>
@@ -176,6 +176,9 @@ function clickTextField() {
 watch(
   () => search.value,
   (searchValue) => {
+    if (search.value.length === 0) {
+      open.value = false;
+    }
     if (searchValue !== displayed.value) {
       emit("search", searchValue);
       if (optionsFiltered.value?.length) {
@@ -197,15 +200,26 @@ watch(
   }
 );
 
-/* watch(
+watch(
   () => optionsFiltered.value,
   () => {
-    console.error(autocomplete.value)
-    if (optionsFiltered.value?.length && autocomplete.value.hasFocus()) {
-      open.value = true;
+    if (optionsFiltered.value?.length) {
+      /* if (autocomplete.value.contains(document.activeElement)) { */
+      if (isFocus.value) {
+        open.value = true;
+      } else {
+        if (internalValue.value != null) {
+          search.value = displayed.value;
+        }
+      }
     }
   }
-); */
+);
+
+function handleBlur() {
+  isFocus.value = false;
+  search.value = displayed.value;
+}
 
 const { open } = useMenu({
   activator: autocomplete,
