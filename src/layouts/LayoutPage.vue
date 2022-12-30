@@ -39,14 +39,21 @@
       </div>
       <Tree :list="menu" class="tree-menu" :isHidden="isNavMini">
         <template #item-rollable="{ data, isOpen }">
-          <div class="tree-items">
+          <div class="tree-items" v-if="!isNavMini">
             <Icon
               name="arrow_right"
               class="icons-arrow"
               :class="{ active: isOpen }"
               color="black"
             />
-            <div v-if="!isNavMini">{{ data.title }}</div>
+            <div>{{ data.title }}</div>
+          </div>
+          <div
+            class="tree-items"
+            v-else
+            @click="($e) => iconMiniClick($e, isOpen)"
+          >
+            <Icon :name="data.icon" color="black" />
           </div>
         </template>
         <template #item="{ data }">
@@ -109,14 +116,26 @@ const menu = ref([
   {
     key: "projets",
     title: "Projets",
+    icon: "calendar_month",
     children: [
-      { key: "calendar", title: "Calendar", path: "/projet-calendar" },
-      { key: "stats", title: "Stats", path: "/projet-stats" },
+      {
+        key: "calendar",
+        title: "Calendar",
+        icon: "calendar_month",
+        path: "/projet-calendar",
+      },
+      {
+        key: "stats",
+        title: "Stats",
+        path: "/projet-stats",
+        icon: "query_stats",
+      },
     ],
   },
   {
     key: "facturation",
     title: "Facturation",
+    icon: "description",
     children: [
       {
         key: "quotes",
@@ -141,6 +160,13 @@ const menu = ref([
 ]);
 
 const user = computed(() => userStore.getAuth);
+
+function iconMiniClick(event: Event, isOpen: boolean) {
+  if (isOpen) {
+    event.stopPropagation();
+  }
+  isNavMini.value = false;
+}
 
 async function disconnect() {
   if (await confirm(t("sure-disconnect"))) {
