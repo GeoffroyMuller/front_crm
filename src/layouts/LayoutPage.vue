@@ -37,7 +37,7 @@
           :name="!isNavMini ? 'chevron_left' : 'menu'"
         />
       </div>
-      <Tree :list="menu" class="tree-menu">
+      <Tree :list="menu" class="tree-menu" :isHidden="isNavMini">
         <template #item-rollable="{ data, isOpen }">
           <div class="tree-items">
             <Icon

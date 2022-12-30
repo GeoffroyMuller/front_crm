@@ -13,7 +13,9 @@
       </div>
       <slot v-else name="item" :data="item"></slot>
       <Tree
-        v-if="!$_.isNil(getChildrenList(item)) && itemsOpen[item.key]"
+        v-if="
+          !$_.isNil(getChildrenList(item)) && itemsOpen[item.key] && !isHidden
+        "
         :list="getChildrenList(item)"
         :childrenKey="childrenKey"
         class="tree-recursive"
@@ -35,10 +37,12 @@ import Tree from "./Tree.vue";
 interface TreeProps {
   list: Array<any>;
   childrenKey: string;
+  isHidden: boolean;
 }
 
 const props = withDefaults(defineProps<TreeProps>(), {
   childrenKey: "children",
+  isHidden: false,
 });
 
 const itemsOpen = ref<any>({});
