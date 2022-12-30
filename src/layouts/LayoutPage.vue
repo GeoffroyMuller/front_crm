@@ -183,7 +183,7 @@ $miniNavWidth: 60px;
   left: $navWidth;
   width: calc(100% - $navWidth);
   height: 100%;
-  overflow: auto;
+  overflow-x: auto;
 }
 .actions {
   display: flex;

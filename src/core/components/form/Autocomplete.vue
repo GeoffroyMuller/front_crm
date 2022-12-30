@@ -1,33 +1,27 @@
 <template>
-  <div class="autocomplete">
-    <Menu @close="handleClose" :close-on-second-click="false" :disabled="menuDisabled">
-      <template #activator="{ open }">
-        <TextField
-          v-model="search"
-          :disabled="disabled"
-          :label="label"
-          :error="internalError || error ? true : false"
-          @focus="isFocus = true"
-          @blur="isFocus = false"
-        >
-          <template #icon>
-            <Icon
-              name="search"
-              :color="!isFocus ? 'black' : internalError || error ? 'danger' : 'primary'"
-            />
-          </template>
-        </TextField>
-      </template>
-      <template #default>
-        <OptionsList
-          :handle-click-option="handleClickOption"
-          :get-option-value="getOptionValue"
-          :get-option-label="getOptionLabel"
-          :is-selected="isSelected"
-          :options="optionsFiltered"
+  <div
+    class="autocomplete"
+    ref="autocomplete"
+    v-click-outside="() => (open = false)"
+  >
+    <TextField
+      v-model="search"
+      :disabled="disabled"
+      :label="label"
+      :error="internalError || error ? true : false"
+      @focus="isFocus = true"
+      @blur="isFocus = false"
+      @click="clickTextField"
+    >
+      <template #icon>
+        <Icon
+          name="search"
+          :color="
+            !isFocus ? 'black' : internalError || error ? 'danger' : 'primary'
+          "
         />
       </template>
-    </Menu>
+    </TextField>
     <Alert v-if="internalError || error">
       {{ internalError || error }}
     </Alert>
@@ -46,6 +40,7 @@ import Alert from "../Alert.vue";
 import OptionsList from "../OptionsList.vue";
 import Icon from "../Icon.vue";
 import type { AnySchema } from "yup";
+import useMenu from "@/core/helpers/vue/composables/menu";
 
 export interface AutocompleteProps extends FormInputProps<any> {
   multiple?: boolean;
@@ -91,6 +86,7 @@ const props = withDefaults(defineProps<AutocompleteProps>(), {
 
 const search = ref("");
 const isFocus = ref();
+const autocomplete = ref();
 
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
@@ -110,7 +106,9 @@ function handleClose() {
 function isSelected(opt: any) {
   if (props.multiple) {
     return (
-      internalValue.value.find((v: any) => isEqual(props.getOptionValue(opt), v)) != null
+      internalValue.value.find((v: any) =>
+        isEqual(props.getOptionValue(opt), v)
+      ) != null
     );
   }
   return isEqual(props.getOptionValue(opt), internalValue.value);
@@ -141,7 +139,9 @@ const selected = computed(() => {
       props.options.find((o) => isEqual(props.getOptionValue(o), v))
     );
   }
-  return props.options.find((o) => isEqual(props.getOptionValue(o), internalValue.value));
+  return props.options.find((o) =>
+    isEqual(props.getOptionValue(o), internalValue.value)
+  );
 });
 
 const displayed = computed<string>(() => {
@@ -167,17 +167,28 @@ const optionsFiltered = computed(() => {
   return props.options;
 });
 
+function clickTextField() {
+  if (optionsFiltered.value?.length) {
+    open.value = true;
+  }
+}
+
 watch(
   () => search.value,
   (searchValue) => {
     if (searchValue !== displayed.value) {
       emit("search", searchValue);
+      if (optionsFiltered.value?.length) {
+        open.value = true;
+      } else {
+        open.value = false;
+      }
     }
   }
 );
 
 watch(
-  () => internalValue.value + props.options,
+  () => internalValue.value,
   (val) => {
     search.value = displayed.value;
   },
@@ -185,6 +196,29 @@ watch(
     immediate: true,
   }
 );
+
+watch(
+  () => optionsFiltered.value,
+  () => {
+    console.error(autocomplete.value)
+    if (optionsFiltered.value?.length && autocomplete.value.hasFocus()) {
+      open.value = true;
+    }
+  }
+);
+
+const { open } = useMenu({
+  activator: autocomplete,
+  component: OptionsList,
+  openOnHover: false,
+  componentProps: {
+    "handle-click-option": handleClickOption,
+    "get-option-value": props.getOptionValue,
+    "get-option-label": props.getOptionLabel,
+    "is-selected": isSelected,
+    options: optionsFiltered,
+  },
+});
 </script>
 
 <style lang="scss">

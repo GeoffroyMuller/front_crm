@@ -1,134 +1,146 @@
-import { nextTick, onMounted, ref, watch, type Ref } from "vue";
+import {
+  computed,
+  createApp,
+  isRef,
+  onMounted,
+  ref,
+  watch,
+  type Component,
+  type Ref,
+} from "vue";
 
 export interface MenuProps {
-  content: Ref;
-  activator: Ref;
+  component: Component;
+  componentProps?: any;
+  activator: HTMLElement | Ref<HTMLElement>;
   placement?: "top" | "bottom" | "left" | "right";
   gap?: number;
   openOnHover?: boolean;
   disabled?: Ref;
 }
 
-/**
- * Pour fonctionner, useMenu a besoin que "content" soit
- * au même niveau que "activator" sous une div en position relative
- */
+const mount = (component: Component, props: any, element: HTMLElement) => {
+  const el = element || document.createElement("div");
+  createApp(component, props).mount(el);
+  return { el };
+};
+
 export default function useMenu(props: MenuProps) {
   const open = ref();
-  const content = ref(props.content);
-  const activator = ref(props.activator);
   const placement = props.placement || "bottom";
   const openOnHover = props.openOnHover == null ? true : props.openOnHover;
 
-  const forceDisplay = ref({
-    top: false,
-    left: false,
-  });
-  const activatorDimensions = ref({
-    width: 0,
-    height: 0,
-  });
+  const container = document.createElement("div");
+  const activator = isRef(props.activator)
+    ? props.activator
+    : ref<HTMLElement>(props.activator);
 
-  function compute() {
-    const contentBoundingClientRect = content.value.getBoundingClientRect();
+  watch(
+    () => activator.value,
+    (elem?: HTMLElement) => {
+      if (elem) {
+        if (openOnHover) {
+          elem.addEventListener(
+            "mouseenter",
+            () => {
+              open.value = true;
+            },
+            false
+          );
+          elem.addEventListener(
+            "mouseleave",
+            () => {
+              open.value = false;
+            },
+            false
+          );
 
-    const contentDimensions = {
-      width: content.value.offsetWidth,
-      left: contentBoundingClientRect.left,
-      height: content.value.offsetHeight,
-      top: contentBoundingClientRect.top,
+          elem.addEventListener(
+            "click",
+            () => {
+              open.value = false;
+            },
+            false
+          );
+        }
+      }
+    },
+    { immediate: true }
+  );
+
+  function _getDimensions(element: HTMLElement) {
+    const elemBoundingClientRect = element.getBoundingClientRect();
+    return {
+      width: element.offsetWidth,
+      left: elemBoundingClientRect.left,
+      height: element.offsetHeight,
+      top: elemBoundingClientRect.top,
     };
+  }
 
-    activatorDimensions.value = {
-      width: activator.value.offsetWidth,
-      height: activator.value.offsetHeight,
+  function _setStyle() {
+    const dimensions = {
+      container: _getDimensions(container),
+      activator: _getDimensions(activator.value as HTMLElement),
     };
 
     const pageHeight = window.innerHeight;
     const pageWidth = window.innerWidth;
 
-    if (contentDimensions.width + contentDimensions.left >= pageWidth) {
-      forceDisplay.value.left = true;
-    } else {
-      forceDisplay.value.left = false;
-    }
+    const coord = { left: 0, top: 0 };
 
-    if (contentDimensions.height + contentDimensions.top >= pageHeight) {
-      forceDisplay.value.top = true;
-    } else {
-      forceDisplay.value.top = false;
-    }
-  }
-
-  function setStyle() {
-    const parentHeight = activator.value.offsetHeight;
-    const parentWidth = activator.value.offsetWidth;
-
-    const gap = props.gap || 0;
-
-    const translate: { x?: string; y?: string } = {
-      x: undefined,
-      y: undefined,
-    };
     switch (placement) {
       case "top":
-        translate.y = `calc(-100% - ${gap}px)`;
+        coord.top = dimensions.activator.top - dimensions.activator.height;
+        if (
+          dimensions.container.width + dimensions.activator.left >=
+          pageWidth
+        ) {
+          coord.left =
+            dimensions.activator.left -
+            dimensions.container.width +
+            dimensions.activator.width;
+        } else {
+          coord.left = dimensions.activator.left;
+        }
         break;
       case "bottom":
-        translate.y = `calc(${parentHeight}px + ${gap}px)`;
-        break;
-      case "left":
-        translate.x = `calc(-100% - ${gap}px)`;
-        break;
-      case "right":
-        translate.x = `calc(${parentWidth}px + ${gap}px)`;
+        coord.top = dimensions.activator.top + dimensions.activator.height;
+        if (
+          dimensions.container.width + dimensions.activator.left >=
+          pageWidth
+        ) {
+          coord.left =
+            dimensions.activator.left -
+            dimensions.container.width +
+            dimensions.activator.width;
+        } else {
+          coord.left = dimensions.activator.left;
+        }
+
         break;
       default:
         break;
     }
-    if (forceDisplay.value.left) {
-      if (placement === "bottom" || placement === "top") {
-        translate.x = `calc(-100% + ${activatorDimensions.value.width}px)`;
-      } else {
-        translate.x = "calc(-100% - " + gap + "px)";
-      }
-    }
-    const res = `translate(${translate.x || "0"}, ${translate.y || "0"})`;
-    content.value.style.transform = res;
+    Object.assign(container.style, {
+      top: coord.top + "px",
+      left: coord.left + "px",
+    });
   }
 
-  function resetStyle() {
-    forceDisplay.value = { left: false, top: false };
-    setStyle();
+  function _resetStyle() {
+    _setStyle();
   }
 
   function init() {
-    content.value.style.position = "absolute";
-    content.value.style.zIndex = 99;
-    activator.value.style.position = "relative";
-    content.value.style.top = 0;
-    hide();
+    container.style.position = "absolute";
+    document.body.appendChild(container);
+    container.style.opacity = "0";
+    container.style.display = "none";
+    mount(props.component, props.componentProps || {}, container);
   }
 
-  onMounted(() => {
-    init();
-    if (openOnHover) {
-      activator.value.addEventListener(
-        "mouseenter",
-        () => {
-          open.value = true;
-        },
-        false
-      );
-      activator.value.addEventListener(
-        "mouseleave",
-        () => {
-          open.value = false;
-        },
-        false
-      );
-    }
-  });
+  init();
 
   watch(
     () => props.disabled?.value,
@@ -154,23 +166,18 @@ export default function useMenu(props: MenuProps) {
   );
 
   function display() {
-    content.value.style.display = "unset";
-    compute();
-    setStyle();
-    content.value.style.opacity = "100";
+    container.style.display = "unset";
+    _setStyle();
+    container.style.opacity = "100";
   }
 
   function hide() {
-    content.value.style.opacity = "0";
-    content.value.style.display = "none";
-    resetStyle();
+    container.style.opacity = "0";
+    container.style.display = "none";
+    _resetStyle();
   }
 
   return {
-    forceDisplay,
-    activatorDimensions,
-    compute,
-    setStyle,
     display,
     hide,
     open,

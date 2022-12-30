@@ -1,34 +1,24 @@
 <template>
-  <div class="select">
-    <Menu @close="validate" :disabled="menuDisabled">
-      <template #activator="{ open }">
-        <TextField
-          :model-value="displayed"
-          readonly
-          :disabled="disabled"
-          :label="label"
-          :error="internalError || error ? true : false"
-          @focus="isFocus = true"
-          @blur="isFocus = false"
-        >
-          <template #icon>
-            <Icon
-              :name="!open ? 'expand_more' : 'expand_less'"
-              :color="!isFocus ? 'black' : internalError || error ? 'danger' : 'primary'"
-            />
-          </template>
-        </TextField>
-      </template>
-      <template #default>
-        <OptionsList
-          :handle-click-option="handleClickOption"
-          :get-option-value="getOptionValue"
-          :get-option-label="getOptionLabel"
-          :is-selected="isSelected"
-          :options="options"
+  <div class="select" ref="selectRef" v-click-outside="() => (open = false)">
+    <TextField
+      :model-value="displayed"
+      readonly
+      :disabled="disabled"
+      :label="label"
+      :error="internalError || error ? true : false"
+      @focus="isFocus = true"
+      @blur="isFocus = false"
+      @click="open = !open"
+    >
+      <template #icon>
+        <Icon
+          :name="!open ? 'expand_more' : 'expand_less'"
+          :color="
+            !isFocus ? 'black' : internalError || error ? 'danger' : 'primary'
+          "
         />
       </template>
-    </Menu>
+    </TextField>
     <Alert v-if="internalError || error">
       {{ internalError || error }}
     </Alert>
@@ -37,7 +27,6 @@
 <script setup lang="ts">
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import { computed, ref } from "vue";
-import Menu from "../Menu.vue";
 import type { FormInputProps } from "../types";
 import TextField from "./TextField.vue";
 import { isEqual } from "lodash";
@@ -45,8 +34,7 @@ import Alert from "../Alert.vue";
 import OptionsList from "../OptionsList.vue";
 import Icon from "../Icon.vue";
 import type { AnySchema } from "yup";
-
-const isFocus = ref(false);
+import useMenu from "@/core/helpers/vue/composables/menu";
 
 interface SelectProps extends FormInputProps<any> {
   multiple?: boolean;
@@ -93,6 +81,9 @@ const emit = defineEmits([
   "change",
 ]);
 
+const isFocus = ref(false);
+const selectRef = ref();
+
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
   error: props.error,
@@ -111,6 +102,19 @@ function isSelected(opt: any) {
   }
   return isEqual(props.getOptionValue(opt), internalValue.value);
 }
+
+const { open } = useMenu({
+  activator: selectRef,
+  component: OptionsList,
+  openOnHover: false,
+  componentProps: {
+    "handle-click-option": handleClickOption,
+    "get-option-value": props.getOptionValue,
+    "get-option-label": props.getOptionLabel,
+    "is-selected": isSelected,
+    options: props.options,
+  },
+});
 
 function handleClickOption(opt: any) {
   if (props.multiple) {
@@ -137,7 +141,9 @@ const selected = computed(() => {
       props.options.find((o) => isEqual(props.getOptionValue(o), v))
     );
   }
-  return props.options.find((o) => isEqual(props.getOptionValue(o), internalValue.value));
+  return props.options.find((o) =>
+    isEqual(props.getOptionValue(o), internalValue.value)
+  );
 });
 
 const displayed = computed<string>(() => {
