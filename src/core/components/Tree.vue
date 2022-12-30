@@ -63,9 +63,6 @@ const getChildrenList = (data: any) => {
 </script>
 
 <style lang="scss" scoped>
-.tree {
-  width: 100%;
-}
 .tree-recursive {
   margin-left: 1rem;
 }

@@ -37,7 +37,7 @@
           :name="!isNavMini ? 'chevron_left' : 'menu'"
         />
       </div>
-      <Tree :list="menu">
+      <Tree :list="menu" class="tree-menu">
         <template #item-rollable="{ data, isOpen }">
           <div class="tree-items">
             <Icon
@@ -304,38 +304,42 @@ $miniNavWidth: 60px;
     }
   }
 }
-.tree-items {
-  $paddingX: calc(20px - spacing(1));
-  height: 38px;
-  padding: spacing(1);
-  padding-left: $paddingX;
-  padding-right: $paddingX;
-  margin-left: spacing(1);
-  margin-right: spacing(1);
-  gap: spacing(2);
-  border-radius: 6px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  cursor: pointer;
-  @include typo(text2);
-  transition: all 0.3s;
-  &:hover {
-    background-color: color("primary", 100);
-    color: color("primary", 700);
+.tree-menu {
+  width: 100%;
+  .tree-items {
+    $paddingX: calc(20px - spacing(1));
+    height: 38px;
+    padding: spacing(1);
+    padding-left: $paddingX;
+    padding-right: $paddingX;
+    margin-left: spacing(1);
+    margin-right: spacing(1);
+    gap: spacing(2);
+    border-radius: 6px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    @include typo(text2);
+    transition: all 0.3s;
+    &:hover {
+      background-color: color("primary", 100);
+      color: color("primary", 700);
 
-    svg {
-      fill: color("primary", 700);
+      svg {
+        fill: color("primary", 700);
+      }
     }
-  }
-  .icons-arrow {
-    transition: all 0.2s;
-    line-height: 0px;
-    &.active {
-      transform: rotate(90deg * 1);
+    .icons-arrow {
+      transition: all 0.2s;
+      line-height: 0px;
+      &.active {
+        transform: rotate(90deg * 1);
+      }
     }
   }
 }
+
 .mini-nav {
   .footer {
     justify-content: center;
