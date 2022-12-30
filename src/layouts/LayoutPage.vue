@@ -46,13 +46,13 @@
               :class="{ active: isOpen }"
               color="black"
             />
-            <div>{{ data.title }}</div>
+            <div v-if="!isNavMini">{{ data.title }}</div>
           </div>
         </template>
         <template #item="{ data }">
           <div class="tree-items" @click="$router.push(data.path)">
             <Icon :name="data.icon" color="black" />
-            <div>{{ data.title }}</div>
+            <div v-if="!isNavMini">{{ data.title }}</div>
           </div>
         </template>
       </Tree>
