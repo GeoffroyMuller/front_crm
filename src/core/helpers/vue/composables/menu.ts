@@ -34,7 +34,8 @@ function getScrollParent(element: HTMLElement) {
     if (excludeStaticParent && style.position === "static") {
       continue;
     }
-    if (overflowRegex.test(style.overflow + style.overflowX)) return parent;
+    if (overflowRegex.test(style.overflow + style.overflowX + style.overflowY))
+      return parent;
   }
 
   return document.body;
@@ -60,11 +61,15 @@ export default function useMenu(props: MenuProps) {
     () => activator.value,
     (elem?: HTMLElement) => {
       if (elem) {
-        getScrollParent(elem).addEventListener("scroll", () => {
-          if (open.value) {
-            _setStyle();
-          }
-        });
+        let scrollableParent = elem;
+        while (scrollableParent != document.body) {
+          scrollableParent = getScrollParent(scrollableParent);
+          scrollableParent.addEventListener("scroll", () => {
+            if (open.value) {
+              _setStyle();
+            }
+          });
+        }
 
         if (openOnHover) {
           elem.addEventListener(
@@ -76,14 +81,6 @@ export default function useMenu(props: MenuProps) {
           );
           elem.addEventListener(
             "mouseleave",
-            () => {
-              open.value = false;
-            },
-            false
-          );
-
-          elem.addEventListener(
-            "click",
             () => {
               open.value = false;
             },
