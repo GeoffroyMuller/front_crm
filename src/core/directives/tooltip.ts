@@ -5,12 +5,16 @@ import useMenu from "../helpers/vue/composables/menu";
 
 const tooltip: Directive = {
   mounted(target, binding, vnode) {
-    useMenu({
+    const { destroy } = useMenu({
       activator: target,
       component: Tooltip,
       componentProps: binding.value,
       openOnHover: true,
     });
+    target["data-destroy-tooltip"] = destroy;
+  },
+  unmounted(target, binding, vnode) {
+    target["data-destroy-tooltip"]();
   },
 };
 

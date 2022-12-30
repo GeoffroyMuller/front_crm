@@ -1,8 +1,7 @@
 import {
-  computed,
   createApp,
   isRef,
-  onMounted,
+  onUnmounted,
   ref,
   watch,
   type Component,
@@ -24,21 +23,49 @@ const mount = (component: Component, props: any, element: HTMLElement) => {
   createApp(component, props).mount(el);
   return { el };
 };
+function getScrollParent(element: HTMLElement) {
+  let style = getComputedStyle(element);
+  const excludeStaticParent = style.position === "absolute";
+  const overflowRegex = /(auto|scroll)/;
+
+  if (style.position === "fixed") return document.body;
+  for (let parent = element; (parent = parent.parentElement); ) {
+    style = getComputedStyle(parent);
+    if (excludeStaticParent && style.position === "static") {
+      continue;
+    }
+    if (overflowRegex.test(style.overflow + style.overflowX)) return parent;
+  }
+
+  return document.body;
+}
 
 export default function useMenu(props: MenuProps) {
   const open = ref();
   const placement = props.placement || "bottom";
   const openOnHover = props.openOnHover == null ? true : props.openOnHover;
 
+  if (isRef(props.activator)) {
+    onUnmounted(() => {
+      destroy();
+    });
+  }
+
   const container = document.createElement("div");
   const activator = isRef(props.activator)
     ? props.activator
     : ref<HTMLElement>(props.activator);
 
-  watch(
+  const unwatchActivator = watch(
     () => activator.value,
     (elem?: HTMLElement) => {
       if (elem) {
+        getScrollParent(elem).addEventListener("scroll", () => {
+          if (open.value) {
+            _setStyle();
+          }
+        });
+
         if (openOnHover) {
           elem.addEventListener(
             "mouseenter",
@@ -142,7 +169,7 @@ export default function useMenu(props: MenuProps) {
 
   init();
 
-  watch(
+  const unwatchDisabled = watch(
     () => props.disabled?.value,
     () => {
       if (props.disabled?.value) {
@@ -154,7 +181,7 @@ export default function useMenu(props: MenuProps) {
       }
     }
   );
-  watch(
+  const unwatchOpen = watch(
     () => open.value,
     () => {
       if (open.value && !props.disabled?.value) {
@@ -177,9 +204,17 @@ export default function useMenu(props: MenuProps) {
     _resetStyle();
   }
 
+  function destroy() {
+    unwatchActivator();
+    unwatchDisabled();
+    unwatchOpen();
+    container.remove();
+  }
+
   return {
     display,
     hide,
     open,
+    destroy,
   };
 }

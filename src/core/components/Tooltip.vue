@@ -9,7 +9,6 @@ import { ref } from "vue";
 
 export interface TooltipProps {
   text?: string;
-  parentElement: HTMLElement;
   placement?: "top" | "bottom" | "left" | "right";
   pxGap?: number;
 }

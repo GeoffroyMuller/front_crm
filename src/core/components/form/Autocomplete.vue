@@ -197,7 +197,7 @@ watch(
   }
 );
 
-watch(
+/* watch(
   () => optionsFiltered.value,
   () => {
     console.error(autocomplete.value)
@@ -205,7 +205,7 @@ watch(
       open.value = true;
     }
   }
-);
+); */
 
 const { open } = useMenu({
   activator: autocomplete,
