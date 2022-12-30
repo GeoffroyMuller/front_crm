@@ -1,19 +1,20 @@
-import { createApp, h, type Directive, type DirectiveBinding } from "vue";
+import type { Directive } from "vue";
 
 import Tooltip from "@/core/components/Tooltip.vue";
+import useMenu from "../helpers/vue/composables/menu";
 
 const tooltip: Directive = {
-  mounted(target, binding) {
-    const elChild = document.createElement("div");
-    target.before(elChild);
-    target.parentElement.style.position = "relative";
-
-    const appTooltip = createApp(Tooltip, {
-      ...binding.value,
-      parentElement: target,
+  mounted(target, binding, vnode) {
+    const { destroy } = useMenu({
+      activator: target,
+      component: Tooltip,
+      componentProps: binding.value,
+      openOnHover: true,
     });
-
-    appTooltip.mount(elChild);
+    target["data-destroy-tooltip"] = destroy;
+  },
+  unmounted(target, binding, vnode) {
+    target["data-destroy-tooltip"]();
   },
 };
 

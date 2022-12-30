@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
-import Autocomplete, { type AutocompleteProps } from "../form/Autocomplete.vue";
+import { computed, ref, watch } from "vue";
+import Autocomplete from "../form/Autocomplete.vue";
 import type { AnySchema } from "yup";
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import Button from "../Button.vue";

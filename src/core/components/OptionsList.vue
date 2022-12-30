@@ -1,25 +1,34 @@
 <template>
-  <div
-    class="select-option"
-    :class="{
-      selected: isSelected(opt),
-    }"
-    v-for="opt of options"
-    :key="getOptionValue(opt)"
-    @click="handleClickOption(opt)"
-  >
-    {{ getOptionLabel(opt) }}
-  </div>
+  <Card>
+    <div
+      class="select-option"
+      :class="{
+        selected: isSelected(opt),
+      }"
+      v-for="opt of _opt"
+      :key="getOptionValue(opt)"
+      @click="handleClickOption(opt)"
+    >
+      {{ getOptionLabel(opt) }}
+    </div>
+  </Card>
 </template>
 
 <script setup lang="ts">
+import { computed, isRef, type Ref } from "vue";
+import Card from "./Card.vue";
+
 interface OptionsListProps {
   getOptionValue: (opt: any) => any;
   getOptionLabel: (opt: any) => string;
   handleClickOption: (opt: any) => void;
   isSelected: (opt: any) => boolean;
-  options: Array<any>;
+  options: Array<any> | Ref<Array<any>>;
 }
 
 const props = withDefaults(defineProps<OptionsListProps>(), {});
+
+const _opt = isRef(props.options)
+  ? computed(() => (props.options as Ref).value)
+  : props.options;
 </script>
