@@ -163,15 +163,4 @@ const displayed = computed<string>(() => {
     cursor: pointer;
   }
 }
-.select-option {
-  cursor: pointer;
-  padding-top: spacing(0.75);
-  padding-bottom: spacing(0.75);
-  &.selected {
-    color: color("primary", 500);
-  }
-  &:hover {
-    color: color("primary", 500);
-  }
-}
 </style>

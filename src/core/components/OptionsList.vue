@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card :withPadding="false">
     <div
       class="select-option"
       :class="{
@@ -32,3 +32,23 @@ const _opt = isRef(props.options)
   ? computed(() => (props.options as Ref).value)
   : props.options;
 </script>
+
+<style lang="scss">
+.select-option {
+  cursor: pointer;
+  padding: spacing(0.75) spacing(1);
+  &.selected {
+    color: color("primary", 500);
+  }
+  &:hover {
+    background-color: color("primary", 50);
+    color: color("primary", 500);
+  }
+  &:last-child {
+    border-radius: 0 0 map-get($rounded, md) map-get($rounded, md);
+  }
+  &:first-child {
+    border-radius: map-get($rounded, md) map-get($rounded, md) 0 0;
+  }
+}
+</style>
