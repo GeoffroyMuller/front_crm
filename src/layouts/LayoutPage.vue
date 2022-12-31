@@ -46,7 +46,7 @@
               :class="{ active: isOpen }"
               color="black"
             />
-            <div>{{ data.title }}</div>
+            <div>{{ $t(data.title) }}</div>
           </div>
           <div
             class="tree-items"
@@ -59,7 +59,7 @@
         <template #item="{ data }">
           <div class="tree-items" @click="$router.push(data.path)">
             <Icon :name="data.icon" color="black" />
-            <div v-if="!isNavMini">{{ data.title }}</div>
+            <div v-if="!isNavMini">{{ $t(data.title) }}</div>
           </div>
         </template>
       </Tree>
@@ -110,39 +110,39 @@ const menu = ref([
   {
     key: "home",
     path: "/",
-    title: t("home"),
+    title: "home",
     icon: "home",
   },
   {
     key: "projets",
-    title: "Projets",
+    title: "menu.projects",
     icon: "calendar_month",
     path: "/projects-calendar",
     children: [
       {
         key: "calendar",
-        title: "Calendar",
+        title: "menu.projects-calendar",
         icon: "calendar_month",
         path: "/projects-calendar",
       },
     ],
   },
   {
-    key: "facturation",
-    title: "Facturation",
+    key: "billing",
+    title: "menu.billing",
     icon: "description",
     path: "/quotes",
     children: [
       {
         key: "quotes",
         path: "/quotes",
-        title: t("quotes"),
+        title: "quotes",
         icon: "description",
       },
       {
         key: "invoices",
         path: "/invoices",
-        title: t("invoices"),
+        title: "invoices",
         icon: "request_quote",
       },
     ],
@@ -150,7 +150,7 @@ const menu = ref([
   {
     key: "customers",
     path: "/customers",
-    title: t("customers"),
+    title: "customers",
     icon: "person",
   },
 ]);
