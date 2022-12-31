@@ -40,8 +40,10 @@ const currentTab = ref(props.tabs?.[0]?.id);
   user-select: none;
   margin-bottom: spacing(2);
   .tab {
-    border-radius: map-deep-get($rounded, "xl");
+    border-radius: map-deep-get($rounded, "sm");
     padding: spacing(1) spacing(1);
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+
     &.selected {
       background-color: color("primary", 500);
       color: white;

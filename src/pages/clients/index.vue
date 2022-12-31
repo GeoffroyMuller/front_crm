@@ -1,50 +1,60 @@
 <template>
   <Page :title="$t('customers')">
-    <MagicDataTable
-      @row-click="($item) => clickEdit($item)"
-      :store="clientsStore"
-      :columns="[
-        {
-          title: $t('name'),
-          key: 'name',
-          sortable: true,
-        },
-        {
-          title: $t('email'),
-          key: 'email',
-        },
-        {
-          title: $t('company'),
-          key: 'company',
-        },
+    <Tabs
+      :tabs="[
+        { id: 'clients', title: $t('customers') },
+        { id: 'companies', title: $t('companies') },
       ]"
     >
-      <template #content-name="{ item }">
-        {{ item?.firstname || "" }} {{ item?.lastname || "" }}
+      <template #clients>
+        <MagicDataTable
+          @row-click="($item) => clickEdit($item)"
+          :store="clientsStore"
+          :columns="[
+            {
+              title: $t('name'),
+              key: 'name',
+              sortable: true,
+            },
+            {
+              title: $t('email'),
+              key: 'email',
+            },
+            {
+              title: $t('company'),
+              key: 'company',
+            },
+          ]"
+        >
+          <template #content-name="{ item }">
+            {{ item?.firstname || "" }} {{ item?.lastname || "" }}
+          </template>
+          <template #content-company="{ item }">
+            {{ item.company.name }}
+          </template>
+          <template #actions-title>
+            <div>
+              <Button
+                color="success"
+                icon="add"
+                v-tooltip="{ text: $t('add'), placement: 'bottom' }"
+                @click.stop="() => clickEdit()"
+              >
+                {{ $t("add") }}
+              </Button>
+            </div>
+          </template>
+        </MagicDataTable>
+
+        <EditClientSidebar
+          @update="onEditClient"
+          @add="onAddClient"
+          v-model:open="isSidebarOpen"
+          :client="(clientSelected as Client)"
+        />
       </template>
-      <template #content-company="{ item }">
-        {{ item.company.name }}
-      </template>
-      <template #actions-title>
-        <div>
-          <Button
-            color="success"
-            icon="add"
-            v-tooltip="{ text: $t('add'), placement: 'bottom' }"
-            @click.stop="() => clickEdit()"
-          >
-            {{ $t("add") }}
-          </Button>
-        </div>
-      </template>
-    </MagicDataTable>
+    </Tabs>
   </Page>
-  <EditClientSidebar
-    @update="onEditClient"
-    @add="onAddClient"
-    v-model:open="isSidebarOpen"
-    :client="(clientSelected as Client)"
-  />
 </template>
 
 <script lang="ts" setup>
@@ -56,6 +66,7 @@ import { ref } from "vue";
 import useClientStore from "@/stores/clients";
 import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import type Client from "@/types/client";
+import Tabs from "@/core/components/Tabs.vue";
 
 const selected = ref<Array<Client>>([]);
 const isSidebarOpen = ref(false);
