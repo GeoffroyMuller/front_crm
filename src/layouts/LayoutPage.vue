@@ -8,20 +8,31 @@
       <Sidebar v-model:open="mobileNavOpen">
         <div class="mobile-nav-items-container">
           <div class="mobile-nav-items">
-            <div
-              v-for="item of menu"
-              :key="item.title"
-              @click="
-                () => {
-                  $router.push(item.path);
-                  mobileNavOpen = false;
-                }
-              "
-              class="mobile-nav-item"
-            >
-              <Icon :name="(item.icon as IconName)" color="black" />
-              <div v-if="!isNavMini">{{ item.title }}</div>
-            </div>
+            <Tree :list="menu" class="tree-menu">
+              <template #item-rollable="{ data, isOpen }">
+                <div class="tree-items">
+                  <Icon
+                    name="arrow_right"
+                    class="icons-arrow"
+                    :class="{ active: isOpen }"
+                    color="black"
+                  />
+                  <div>{{ $t(data.title) }}</div>
+                </div>
+              </template>
+              <template #item="{ data }">
+                <div
+                  class="tree-items"
+                  @click="
+                    mobileNavOpen = false;
+                    $router.push(data.path);
+                  "
+                >
+                  <Icon :name="data.icon" color="black" />
+                  <div>{{ $t(data.title) }}</div>
+                </div>
+              </template>
+            </Tree>
           </div>
         </div>
       </Sidebar>
