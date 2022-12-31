@@ -51,6 +51,15 @@ export default [
     },
   },
   {
+    path: "/invoices",
+    name: "invoices",
+    component: () => import("./pages/invoices/index.vue"),
+    meta: {
+      middleware: [auth],
+      layout: LayoutPage,
+    },
+  },
+  {
     path: "/login",
     name: "login",
     component: () => import("./pages/Login.vue"),
