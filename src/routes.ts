@@ -42,6 +42,15 @@ export default [
     },
   },
   {
+    path: "/projects-calendar",
+    name: "projects-calendar",
+    component: () => import("./pages/projects/Calendar.vue"),
+    meta: {
+      middleware: [auth],
+      layout: LayoutPage,
+    },
+  },
+  {
     path: "/login",
     name: "login",
     component: () => import("./pages/Login.vue"),

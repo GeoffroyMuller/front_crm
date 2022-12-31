@@ -122,7 +122,7 @@ const menu = ref([
         key: "calendar",
         title: "Calendar",
         icon: "calendar_month",
-        path: "/projet-calendar",
+        path: "/projects-calendar",
       },
       {
         key: "stats",
