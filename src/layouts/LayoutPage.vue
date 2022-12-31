@@ -51,7 +51,7 @@
           <div
             class="tree-items"
             v-else
-            @click="($e) => iconMiniClick($e, isOpen)"
+            @click="($e) => iconMiniClick($e, isOpen, data)"
           >
             <Icon :name="data.icon" color="black" />
           </div>
@@ -117,6 +117,7 @@ const menu = ref([
     key: "projets",
     title: "Projets",
     icon: "calendar_month",
+    path: "/projects-calendar",
     children: [
       {
         key: "calendar",
@@ -124,18 +125,13 @@ const menu = ref([
         icon: "calendar_month",
         path: "/projects-calendar",
       },
-      {
-        key: "stats",
-        title: "Stats",
-        path: "/projet-stats",
-        icon: "query_stats",
-      },
     ],
   },
   {
     key: "facturation",
     title: "Facturation",
     icon: "description",
+    path: "/quotes",
     children: [
       {
         key: "quotes",
@@ -161,9 +157,12 @@ const menu = ref([
 
 const user = computed(() => userStore.getAuth);
 
-function iconMiniClick(event: Event, isOpen: boolean) {
+function iconMiniClick(event: Event, isOpen: boolean, data: any) {
   if (isOpen) {
     event.stopPropagation();
+  }
+  if (data.path) {
+    router.push(data.path);
   }
   isNavMini.value = false;
 }
