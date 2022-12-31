@@ -158,6 +158,7 @@ export default function useMenu(props: MenuProps) {
 
   function init() {
     container.style.position = "absolute";
+    container.style.zIndex = "6";
     document.body.appendChild(container);
     container.style.opacity = "0";
     container.style.display = "none";
