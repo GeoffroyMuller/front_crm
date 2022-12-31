@@ -35,7 +35,7 @@
 import { withDefaults, defineProps, ref } from "vue";
 import Tree from "./Tree.vue";
 interface TreeProps {
-  list: Array<any>;
+  list: Array<{ [key: string]: any }>;
   childrenKey: string;
   isHidden: boolean;
 }
@@ -45,7 +45,7 @@ const props = withDefaults(defineProps<TreeProps>(), {
   isHidden: false,
 });
 
-const itemsOpen = ref<any>({});
+const itemsOpen = ref<{ [key: string]: boolean }>({});
 
 const toggleOpenByKey = (key: string) => {
   // eslint-disable-next-line no-prototype-builtins
