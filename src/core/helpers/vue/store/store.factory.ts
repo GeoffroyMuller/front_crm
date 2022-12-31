@@ -145,7 +145,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
             : await axios.get(_getPath({ filters: _filters }))
         );
 
-        if ((response.data as PaginateResult<T>)?.total) {
+        if ((response.data as PaginateResult<T>)?.results) {
           this.list = (response.data as PaginateResult<T>).results;
           this.totalPages = Math.ceil(
             (response.data as PaginateResult<T>).total / this.filters.pageSize
