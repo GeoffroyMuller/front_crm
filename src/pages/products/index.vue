@@ -1,0 +1,51 @@
+<template>
+  <Page :title="$t('products')">
+    <MagicDataTable
+      :store="productsStore"
+      :columns="[
+        {
+          title: $t('ID'),
+          key: 'id',
+        },
+        {
+          title: $t('name'),
+          key: 'name',
+          sortable: true,
+        },
+        {
+          title: $t('description'),
+          key: 'description',
+          sortable: true,
+        },
+        {
+          title: $t('price'),
+          key: 'price',
+        },
+      ]"
+      @row-click="(product: Product) => $router.push(`/products/${product.id}`)"
+    >
+      <template #actions-title>
+        <div>
+          <Button
+            color="success"
+            icon="add"
+            v-tooltip="{ text: $t('add'), placement: 'bottom' }"
+            @click="$router.push(`/products/new`)"
+          >
+            {{ $t("add") }}
+          </Button>
+        </div>
+      </template>
+    </MagicDataTable>
+  </Page>
+</template>
+
+<script lang="ts" setup>
+import MagicDataTable from "@/core/components/magic/MagicDataTable.vue";
+import Button from "@/core/components/Button.vue";
+import Page from "@/components/Page.vue";
+import useProductStore from "@/stores/products";
+import type { Product } from "@/types/product";
+
+const productsStore = useProductStore();
+</script>
