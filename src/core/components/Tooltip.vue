@@ -14,17 +14,9 @@ export interface TooltipProps {
 }
 const props = withDefaults(defineProps<TooltipProps>(), {
   placement: "top",
-  pxGap: 8,
 });
 
 const tooltip = ref();
-/* 
-useMenu({
-  activator: ref(props.parentElement),
-  content: tooltip,
-  gap: props.pxGap,
-  placement: props.placement,
-}); */
 </script>
 
 <style lang="scss" scoped>
