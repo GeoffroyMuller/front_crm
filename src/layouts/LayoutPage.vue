@@ -159,6 +159,12 @@ const menu = ref([
     ],
   },
   {
+    key: "products",
+    path: "/products",
+    title: "products",
+    icon: "inventory_2",
+  },
+  {
     key: "customers",
     path: "/customers",
     title: "customers",
