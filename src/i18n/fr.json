@@ -21,6 +21,9 @@
             "footer": "Pied de page",
             "modalities": "Modalitées",
             "add-customer": "Ajouter un client"
+        },
+        "edit-product": {
+            "description": "Description"
         }
     },
     "new-quote": "Nouveau devis",
