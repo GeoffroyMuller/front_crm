@@ -1,7 +1,11 @@
 <template>
   <Page :title="title" :loading="loading">
     <Card>
-      <Form :model-value="quote" @submit="handleSubmit" class="quote-form-content">
+      <Form
+        :model-value="quote"
+        @submit="handleSubmit"
+        class="quote-form-content"
+      >
         <template #default="{ hasError }">
           <div class="form-head">
             <TextField name="name" :label="$t('title')" />
@@ -41,7 +45,11 @@
             :label="$t('pages.edit-quote.modalities')"
           />
 
-          <HtmlEditor id="footer" name="footer" :label="$t('pages.edit-quote.footer')" />
+          <HtmlEditor
+            id="footer"
+            name="footer"
+            :label="$t('pages.edit-quote.footer')"
+          />
           <div class="actions">
             <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
           </div>
