@@ -15,6 +15,24 @@ export default [
     },
   },
   {
+    path: "/products",
+    name: "products",
+    component: () => import("./pages/products/index.vue"),
+    meta: {
+      middleware: [auth],
+      layout: LayoutPage,
+    },
+  },
+  {
+    path: "/products/:id",
+    name: "products-id",
+    component: () => import("./pages/products/EditProduct.vue"),
+    meta: {
+      middleware: [auth],
+      layout: LayoutPage,
+    },
+  },
+  {
     path: "/quotes",
     name: "quotes",
     component: () => import("./pages/quotes/index.vue"),
