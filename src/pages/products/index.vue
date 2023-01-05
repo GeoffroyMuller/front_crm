@@ -4,8 +4,9 @@
       :store="productsStore"
       :columns="[
         {
-          title: $t('ID'),
-          key: 'id',
+          title: $t('reference'),
+          key: 'reference',
+          sortable: true,
         },
         {
           title: $t('name'),
@@ -20,6 +21,7 @@
         {
           title: $t('price'),
           key: 'price',
+          sortable: true,
         },
       ]"
       @row-click="(product: Product) => $router.push(`/products/${product.id}`)"

@@ -2,7 +2,10 @@
   <Form :model-value="product" @submit="handleSubmit">
     <template #default="{ hasError }">
       <div class="form-product">
-        <TextField name="name" :label="$t('name')" />
+        <div class="form-head">
+          <TextField name="name" :label="$t('name')" />
+          <TextField name="reference" :label="$t('reference')" />
+        </div>
         <TextField
           name="description"
           :label="$t('pages.edit-product.description')"
@@ -51,5 +54,8 @@ async function handleSubmit(data: any) {
 <style lang="scss">
 .form-product {
   @include grid(1, 0, 2);
+  .form-head {
+    @include grid(2, 0, 2);
+  }
 }
 </style>

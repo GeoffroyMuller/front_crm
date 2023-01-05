@@ -43,5 +43,6 @@
     "subject": "Sujet",
     "pdf": "PDF",
     "companies": "Entreprises",
-    "price": "Prix"
+    "price": "Prix",
+    "reference": "Référence"
 }
