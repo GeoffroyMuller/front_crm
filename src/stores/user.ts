@@ -60,7 +60,7 @@ axios.interceptors.response.use(
   },
   (error) => {
     const userStore = useUserStore();
-    if (error.response.status == 403) {
+    if (error.response.status == 401) {
       /** Token no more valid */
       userStore.disconnect();
     }

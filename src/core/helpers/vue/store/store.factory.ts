@@ -56,16 +56,22 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
     if (queryStrKeys.length === 0) {
       return "";
     }
+    const queryStrString = queryStrKeys
+      .filter((key) => !Array.isArray(queryObject[key]))
+      .map((key) => `${key}=${queryObject[key]}`)
+      .join("&");
+    const queryStrArr = queryStrKeys
+      .filter((key) => Array.isArray(queryObject[key]))
+      .map((key, index) =>
+        queryObject[key]
+          .map((str: string) => `${key}[${index}]=${str}`)
+          .join("&")
+      )
+      .join("&");
     return (
       "?" +
-      queryStrKeys
-        .filter((key) => !Array.isArray(queryObject[key]))
-        .map((key) => `${key}=${queryObject[key]}`)
-        .join("&") +
-      queryStrKeys
-        .filter((key) => Array.isArray(queryObject[key]))
-        .map((key) => queryObject[key].join("&"))
-        .join("&")
+      queryStrString +
+      (queryStrString?.length ? `&${queryStrArr}` : queryStrArr)
     );
   }
 
