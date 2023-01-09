@@ -14,7 +14,7 @@ export interface makeAPIStoreProps {
 
   persist?: boolean;
   filters?: {
-    [key: string]: string;
+    [key: string]: string | string[];
   };
 
   // todo : need to be typed
@@ -31,7 +31,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
   }: {
     id?: ID;
     resource?: string;
-    filters?: { [key: string]: string };
+    filters?: { [key: string]: string | string[] };
   } = {}) {
     let resPath = "";
     resPath = props.path ? `${props.path}` : `/${props.id}`;
@@ -57,7 +57,15 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
       return "";
     }
     return (
-      "?" + queryStrKeys.map((key) => `${key}=${queryObject[key]}`).join("&")
+      "?" +
+      queryStrKeys
+        .filter((key) => !Array.isArray(queryObject[key]))
+        .map((key) => `${key}=${queryObject[key]}`)
+        .join("&") +
+      queryStrKeys
+        .filter((key) => Array.isArray(queryObject[key]))
+        .map((key) => queryObject[key].join("&"))
+        .join("&")
     );
   }
 
