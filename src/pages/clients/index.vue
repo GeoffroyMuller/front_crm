@@ -30,7 +30,7 @@
             {{ item?.firstname || "" }} {{ item?.lastname || "" }}
           </template>
           <template #content-company="{ item }">
-            {{ item.company.name }}
+            {{ item.company?.name || "" }}
           </template>
           <template #actions-title>
             <div>

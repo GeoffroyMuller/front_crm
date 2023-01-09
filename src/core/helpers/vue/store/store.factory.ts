@@ -13,6 +13,9 @@ export interface makeAPIStoreProps {
   path?: string;
 
   persist?: boolean;
+  filters?: {
+    [key: string]: string;
+  };
 
   // todo : need to be typed
   actions?: any;
@@ -124,16 +127,14 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
         this.byId[id] = response;
         return response.data;
       },
-      async fetchList(filters?: {
-        [key: string]: string;
-      }): Promise<PaginateResult<T>> {
+      async fetchList(): Promise<PaginateResult<T>> {
         if (config.IS_MOCK) {
           await sleep(config.MOCK_DURATION);
         }
 
-        const _filters = filters
+        const _filters = props.filters
           ? {
-              ...filters,
+              ...props.filters,
               ...this.filters,
             }
           : this.filters;
