@@ -4,7 +4,6 @@
       <div class="form-product">
         <div class="form-head">
           <TextField name="name" :label="$t('name')" />
-          <TextField name="reference" :label="$t('reference')" />
         </div>
         <TextField
           name="description"
@@ -12,7 +11,10 @@
           :multiline="true"
         />
         <TextField name="price" :label="$t('price')" type="number" />
-        <div>
+        <div class="form-bottom">
+          <Button @click="$emit('cancel')" variant="text">{{
+            $t("cancel")
+          }}</Button>
           <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
         </div>
       </div>
@@ -33,7 +35,7 @@ const productsStore = useProductStore();
 interface ProductFormProps {
   product: Product | null;
 }
-const emit = defineEmits(["saved"]);
+const emit = defineEmits(["saved", "cancel"]);
 const props = withDefaults(defineProps<ProductFormProps>(), {
   product: null,
 });
@@ -56,6 +58,9 @@ async function handleSubmit(data: any) {
   @include grid(1, 0, 2);
   .form-head {
     @include grid(2, 0, 2);
+  }
+  .form-bottom {
+    @include flex(row, flex-end, center, 2);
   }
 }
 </style>

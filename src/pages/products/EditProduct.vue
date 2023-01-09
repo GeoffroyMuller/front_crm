@@ -1,7 +1,12 @@
 <template>
   <Page :title="$t('new_product')">
     <Card>
-      <ProductForm :product="product" @saved="handleSaved"> </ProductForm>
+      <ProductForm
+        :product="product"
+        @saved="goToProductsPage"
+        @cancel="goToProductsPage"
+      >
+      </ProductForm>
     </Card>
   </Page>
 </template>
@@ -20,7 +25,7 @@ const productsStore = useProductStore();
 
 const product = ref<Product | null>(null);
 
-const handleSaved = () => {
+const goToProductsPage = () => {
   router.push("/products");
 };
 

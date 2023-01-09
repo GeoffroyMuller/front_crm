@@ -4,11 +4,6 @@
       :store="productsStore"
       :columns="[
         {
-          title: $t('reference'),
-          key: 'reference',
-          sortable: true,
-        },
-        {
           title: $t('name'),
           key: 'name',
           sortable: true,
