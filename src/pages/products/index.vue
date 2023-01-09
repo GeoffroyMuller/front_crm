@@ -4,6 +4,11 @@
       :store="productsStore"
       :columns="[
         {
+          title: $t('id'),
+          key: 'id',
+          sortable: true,
+        },
+        {
           title: $t('name'),
           key: 'name',
           sortable: true,

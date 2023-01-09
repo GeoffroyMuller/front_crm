@@ -5,12 +5,23 @@
         <div class="form-head">
           <TextField name="name" :label="$t('name')" />
         </div>
+        <TextField name="price" :label="$t('price')" type="number" />
+        <Switch name="isNumeraryStock" :label="$t('stored-numerary')" />
         <TextField
           name="description"
           :label="$t('pages.edit-product.description')"
           :multiline="true"
         />
-        <TextField name="price" :label="$t('price')" type="number" />
+        <Repetable name="product_fields" :label="$t('fields')">
+          <template #default>
+            <TextField name="name" :label="$t('name')" />
+          </template>
+          <template #actions="{ addSection }">
+            <Button type="button" variant="text" @click="addSection()">
+              {{ $t("add") }}
+            </Button>
+          </template>
+        </Repetable>
         <div class="form-bottom">
           <Button @click="$emit('cancel')" variant="text">{{
             $t("cancel")
@@ -29,6 +40,8 @@ import TextField from "@/core/components/form/TextField.vue";
 import type { Product } from "@/types/product";
 import { ref } from "vue";
 import { isNil } from "lodash";
+import Switch from "@/core/components/form/Switch.vue";
+import Repetable from "@/core/components/form/repetable/Repetable.vue";
 
 const productsStore = useProductStore();
 
@@ -57,7 +70,7 @@ async function handleSubmit(data: any) {
 .form-product {
   @include grid(1, 0, 2);
   .form-head {
-    @include grid(2, 0, 2);
+    @include grid(1, 0, 2);
   }
   .form-bottom {
     @include flex(row, flex-end, center, 2);
