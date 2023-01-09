@@ -81,11 +81,10 @@
               />
               <slot name="title" :column="column" />
             </th>
-            <th
-              v-if="$slots['actions-title'] || $slots['actions']"
-              class="actions-block"
-            >
-              <slot name="actions-title"></slot>
+            <th v-if="$slots['actions-title'] || $slots['actions']">
+              <div class="actions-block">
+                <slot name="actions-title"></slot>
+              </div>
             </th>
           </tr>
         </thead>
