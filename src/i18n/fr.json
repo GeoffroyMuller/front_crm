@@ -23,7 +23,8 @@
             "add-customer": "Ajouter un client"
         },
         "edit-product": {
-            "description": "Description"
+            "description": "Description",
+            "stored-numerary": "Stockage numéraire"
         }
     },
     "new-quote": "Nouveau devis",

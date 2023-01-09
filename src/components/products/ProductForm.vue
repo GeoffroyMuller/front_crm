@@ -15,16 +15,22 @@
           <Switch
             name="isNumeraryStock"
             v-model="isNumeraryStock"
-            :label="$t('stored-numerary')"
+            :label="$t('pages.edit-product.stored-numerary')"
           />
-          <TextField
-            :disabled="!(isNumeraryStock == true)"
-            name="stock"
-            :label="$t('quantity')"
-            type="number"
-          />
+          <KeepAlive>
+            <TextField
+              v-if="isNumeraryStock == true"
+              name="stock"
+              :label="$t('quantity')"
+              type="number"
+            />
+          </KeepAlive>
         </div>
-        <Repetable name="product_fields" :label="$t('fields')">
+        <Repetable
+          v-show="$_.isNil(isNumeraryStock) || isNumeraryStock == false"
+          name="product_fields"
+          :label="$t('fields')"
+        >
           <template #default>
             <TextField name="name" :label="$t('name')" />
           </template>
