@@ -21,6 +21,7 @@
             <TextField
               v-if="isNumeraryStock == true"
               name="stock"
+              :min="0"
               :label="$t('quantity')"
               type="number"
             />

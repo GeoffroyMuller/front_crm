@@ -22,7 +22,7 @@ export interface ProductReal {
 
 export interface ProductField {
   id?: ID;
-  idProduit?: ID;
+  idProduct?: ID;
   name?: string;
   type?: string;
   product?: Product;

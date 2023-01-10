@@ -19,6 +19,11 @@
           sortable: true,
         },
         {
+          title: $t('quantity'),
+          key: 'stock',
+          sortable: true,
+        },
+        {
           title: $t('price'),
           key: 'price',
           sortable: true,
@@ -36,6 +41,11 @@
           >
             {{ $t("add") }}
           </Button>
+        </div>
+      </template>
+      <template #content-stock="{ item }">
+        <div>
+          {{ item.isNumeraryStock ? item.stock : "-" }}
         </div>
       </template>
     </MagicDataTable>
