@@ -31,6 +31,7 @@
           :label="$t('company')"
           :getOptionLabel="(opt) => opt.name"
           optionKey="id"
+          :get-filters="(str) => ({ $contains: { name: str } })"
           :store="companiesStore"
           can-add
           @add="isAddCompanyOpen = true"

@@ -13,6 +13,7 @@
             <MagicAutocomplete
               :label="$t('customer')"
               :store="clientsStore"
+              :get-filters="(str) => ({ $contains: { lastname: str } })"
               :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
               optionKey="id"
               name="idClient"
