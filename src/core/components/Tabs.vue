@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 export interface Tab {
   id: string;
@@ -29,6 +29,13 @@ interface TabsProps {
 const props = withDefaults(defineProps<TabsProps>(), {});
 
 const currentTab = ref(props.tabs?.[0]?.id);
+
+watch(
+  () => props.tabs,
+  (val) => {
+    currentTab.value = val?.[0]?.id;
+  }
+);
 </script>
 
 <style lang="scss">
