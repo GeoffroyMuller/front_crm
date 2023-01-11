@@ -13,9 +13,7 @@ export interface makeAPIStoreProps {
   path?: string;
 
   persist?: boolean;
-  filters?: {
-    [key: string]: string | string[];
-  };
+  filters?: Filters;
 
   // todo : need to be typed
   actions?: any;
@@ -57,7 +55,11 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
       return "";
     }
     const queryStrString = queryStrKeys
-      .filter((key) => !Array.isArray(queryObject[key]))
+      .filter(
+        (key) =>
+          typeof queryObject[key] !== "object" &&
+          !Array.isArray(queryObject[key])
+      )
       .map((key) => `${key}=${queryObject[key]}`)
       .join("&");
     const queryStrArr = queryStrKeys
@@ -68,10 +70,25 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
           .join("&")
       )
       .join("&");
+    const queryStrObj = queryStrKeys
+      .filter(
+        (key) =>
+          typeof queryObject[key] === "object" &&
+          !Array.isArray(queryObject[key])
+      )
+      .map((key) => {
+        return Object.keys(queryObject[key])
+          .map((objKey) => `${key}[${objKey}]=${queryObject[key][objKey]}`)
+          .join("&");
+      })
+      .join("&");
     return (
       "?" +
       queryStrString +
-      (queryStrString?.length ? `&${queryStrArr}` : queryStrArr)
+      (queryStrString?.length ? `&${queryStrArr}` : queryStrArr) +
+      (queryStrString?.length || queryStrArr?.length
+        ? `&${queryStrObj}`
+        : queryStrObj)
     );
   }
 
