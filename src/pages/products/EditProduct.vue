@@ -92,7 +92,8 @@ onMounted(async () => {
 async function handleSubmit(data: Product) {
   try {
     if (id != "new") {
-      product.value = await productsStore.update(id, data);
+      await productsStore.update(id, data);
+      product.value = { ...product.value, ...data };
     } else {
       await productsStore.create(data);
       goToProductsPage();

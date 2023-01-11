@@ -157,6 +157,6 @@ span {
   @include flex(row, center, center);
 }
 .items-per-page {
-  width: 3rem;
+  width: 4rem;
 }
 </style>
