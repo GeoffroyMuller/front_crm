@@ -30,7 +30,7 @@
           name="idCompany"
           :label="$t('company')"
           :getOptionLabel="(opt) => opt.name"
-          :getOptionValue="(opt) => opt.id"
+          optionKey="id"
           :store="companiesStore"
           can-add
           @add="isAddCompanyOpen = true"
