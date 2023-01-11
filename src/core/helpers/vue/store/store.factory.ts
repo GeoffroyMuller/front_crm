@@ -5,7 +5,7 @@ import config from "@/const";
 import type { ID } from "@/types/utils";
 import { sleep } from "../../utils";
 import type { AxiosResponse } from "axios";
-import type { PaginateResult } from "./types";
+import type { Filters, PaginateResult, PaginateResult2 } from "./types";
 
 export interface makeAPIStoreProps {
   id: string;
@@ -31,7 +31,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
   }: {
     id?: ID;
     resource?: string;
-    filters?: { [key: string]: string | string[] };
+    filters?: Filters;
   } = {}) {
     let resPath = "";
     resPath = props.path ? `${props.path}` : `/${props.id}`;
@@ -141,17 +141,19 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
         this.byId[id] = response;
         return response.data;
       },
-      async fetchList(): Promise<PaginateResult<T>> {
+      async fetchList(
+        filters?: Filters,
+        applyState = true
+      ): Promise<PaginateResult2<T>> {
         if (config.IS_MOCK) {
           await sleep(config.MOCK_DURATION);
         }
 
-        const _filters = props.filters
-          ? {
-              ...props.filters,
-              ...this.filters,
-            }
-          : this.filters;
+        const _filters = {
+          ...(props.filters || {}),
+          ...(this.filters || {}),
+          ...(filters || {}),
+        };
 
         // @ts-ignore
         const response = _formatResponse<Array<T> | PaginateResult<T>>(
@@ -160,22 +162,25 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
             : await axios.get(_getPath({ filters: _filters }))
         );
 
+        const res: PaginateResult2<T> = {
+          results: [],
+          totalPages: 1,
+        };
         if ((response.data as PaginateResult<T>)?.results) {
-          this.list = (response.data as PaginateResult<T>).results;
-          this.totalPages = Math.ceil(
-            (response.data as PaginateResult<T>).total / this.filters.pageSize
+          res.results = (response.data as PaginateResult<T>).results;
+          res.totalPages = Math.ceil(
+            (response.data as PaginateResult<T>).total / _filters.pageSize
           );
-          return response.data as PaginateResult<T>;
         } else {
-          this.list = response.data as Array<T>;
-          this.totalPages = 1;
-          return {
-            total: 1,
-            results: response.data as Array<T>,
-          } as PaginateResult<T>;
+          res.results = response.data as Array<T>;
         }
+        if (applyState) {
+          this.list = res.results;
+          this.totalPages = res.totalPages;
+        }
+        return res;
       },
-      async search(filters?: { [key: string]: string }): Promise<Array<T>> {
+      async search(filters?: Filters): Promise<Array<T>> {
         if (config.IS_MOCK) {
           await sleep(config.MOCK_DURATION);
         }
