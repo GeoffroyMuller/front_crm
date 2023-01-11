@@ -8,4 +8,10 @@ export interface PaginateResult2<T> {
   totalPages: number;
 }
 
-export type Filters = { [key: string]: string | number };
+export type Filters = {
+  [key: string]:
+    | string
+    | number
+    | (string | number)[]
+    | { [key: string]: string | number };
+};

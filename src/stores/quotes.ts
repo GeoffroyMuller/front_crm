@@ -9,6 +9,9 @@ const useQuoteStore = makeAPIStore({
       return await axiosIntance.post(`/quotes/${id}/send_mail`);
     },
   },
+  filters: {
+    populate: ["client"],
+  },
 });
 
 export default useQuoteStore;
