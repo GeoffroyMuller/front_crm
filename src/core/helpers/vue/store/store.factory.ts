@@ -62,9 +62,9 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
       .join("&");
     const queryStrArr = queryStrKeys
       .filter((key) => Array.isArray(queryObject[key]))
-      .map((key, index) =>
+      .map((key) =>
         queryObject[key]
-          .map((str: string) => `${key}[${index}]=${str}`)
+          .map((str: string, index: number) => `${key}[${index}]=${str}`)
           .join("&")
       )
       .join("&");
@@ -128,7 +128,11 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
         //this.byId[id] = response;
         return response;
       }, */
-      async fetchById(id: ID): Promise<T> {
+      async fetchById(
+        id: ID,
+        filters?: Filters,
+        applyState = true
+      ): Promise<T> {
         if (config.IS_MOCK) {
           await sleep(config.MOCK_DURATION);
         }
@@ -136,9 +140,11 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
         const response = _formatResponse<T>(
           config.IS_MOCK
             ? mock.getById(_getPath(), id)
-            : await axios.get(_getPath({ id }))
+            : await axios.get(_getPath({ id, filters: filters || {} }))
         );
-        this.byId[id] = response;
+        if (applyState) {
+          this.byId[id] = response.data;
+        }
         return response.data;
       },
       async fetchList(

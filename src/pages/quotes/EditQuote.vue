@@ -114,7 +114,9 @@ onMounted(() => {
   vatsStore.fetchList();
   if (!isAddAction.value) {
     quotesStore
-      .fetchById(id)
+      .fetchById(id, {
+        populate: ["client.company", "responsible.company", "lines.vat"],
+      })
       .then((res) => {
         quote.value = res;
       })
