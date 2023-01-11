@@ -96,7 +96,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
 
       filters: {
         page: 1,
-        pageSize: 5,
+        pageSize: 10,
       },
       totalPages: 1,
 

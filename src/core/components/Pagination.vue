@@ -79,7 +79,7 @@ const props = withDefaults(defineProps<PaginationProps>(), {
   currentPage: 1,
   min: 1,
   max: 10,
-  itemsPerPage: 5,
+  itemsPerPage: 10,
 });
 const emit = defineEmits(["update:currentPage", "update:itemsPerPage"]);
 const internalCurrentPage = ref<number | null>(props.currentPage);

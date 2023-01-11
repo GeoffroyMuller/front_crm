@@ -1,4 +1,4 @@
-import { clone, isEmpty, omitBy, isNil } from "lodash";
+import { clone, isEmpty, omitBy, isNil, isEqual } from "lodash";
 import { computed, getCurrentInstance, provide, ref, watch } from "vue";
 
 export interface _CustomInput {
@@ -51,7 +51,9 @@ export default function useForm(props: userFormProps) {
   watch(
     () => internalValue.value,
     () => {
-      instance?.emit("update:modelValue", internalValue.value);
+      if (!isEqual(internalValue.value, props.modelValue)) {
+        instance?.emit("update:modelValue", internalValue.value);
+      }
     }
   );
 
