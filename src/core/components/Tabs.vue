@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
+import { isEqual } from "lodash";
 
 export interface Tab {
   id: string;
@@ -32,8 +33,10 @@ const currentTab = ref(props.tabs?.[0]?.id);
 
 watch(
   () => props.tabs,
-  (val) => {
-    currentTab.value = val?.[0]?.id;
+  (val, oldVal) => {
+    if (!isEqual(val, oldVal)) {
+      currentTab.value = val?.[0]?.id;
+    }
   }
 );
 </script>
