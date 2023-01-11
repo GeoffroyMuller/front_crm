@@ -8,7 +8,7 @@
       <Sidebar v-model:open="mobileNavOpen">
         <div class="mobile-nav-items-container">
           <div class="mobile-nav-items">
-            <Tree :list="menu" class="tree-menu">
+            <Tree :list="menu" class="tree-menu" default-open>
               <template #item-rollable="{ data, isOpen }">
                 <div class="tree-items">
                   <Icon
@@ -48,7 +48,7 @@
           :name="!isNavMini ? 'chevron_left' : 'menu'"
         />
       </div>
-      <Tree :list="menu" class="tree-menu" :isHidden="isNavMini">
+      <Tree :list="menu" class="tree-menu" :isHidden="isNavMini" default-open>
         <template #item-rollable="{ data, isOpen }">
           <div class="tree-items" v-if="!isNavMini">
             <Icon

@@ -19,6 +19,7 @@
         :list="getChildrenList(item)"
         :childrenKey="childrenKey"
         class="tree-recursive"
+        :default-open="defaultOpen"
       >
         <template #item-rollable="{ data }">
           <slot name="item-rollable" :data="data"></slot>
@@ -32,12 +33,14 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults, defineProps, ref } from "vue";
+import { withDefaults, defineProps, ref, onMounted } from "vue";
 import Tree from "./Tree.vue";
+
 interface TreeProps {
   list: Array<{ [key: string]: any }>;
   childrenKey: string;
   isHidden: boolean;
+  defaultOpen?: boolean;
 }
 
 const props = withDefaults(defineProps<TreeProps>(), {
@@ -64,6 +67,14 @@ const getChildrenList = (data: any) => {
     return null;
   }
 };
+
+onMounted(() => {
+  if (props.defaultOpen) {
+    props.list.forEach((item) => {
+      itemsOpen.value[item.key] = true;
+    });
+  }
+});
 </script>
 
 <style lang="scss" scoped>
