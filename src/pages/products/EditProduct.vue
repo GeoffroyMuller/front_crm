@@ -1,27 +1,33 @@
 <template>
   <Page :title="$t('new_product')">
-    <Button @click="goToProductsPage" variant="text" icon="chevron_left">{{
-      $t("back")
-    }}</Button>
+    <Button
+      class="btn-back"
+      @click="goToProductsPage"
+      variant="text"
+      icon="chevron_left"
+      >{{ $t("back") }}</Button
+    >
     <div class="edit-product">
-      <Card v-if="id != 'new'">
-        <Tabs :tabs="productTabs">
-          <template #informations>
+      <Tabs v-if="id != 'new'" :tabs="productTabs">
+        <template #informations>
+          <Card>
             <ProductForm
               :product="product"
               @saved="handleSubmit"
               @cancel="goToProductsPage"
             >
             </ProductForm>
-          </template>
-          <template #stock>
-            <div>stock</div>
-          </template>
-          <template #advanced_settings>
-            <ProductAvancedSettings :product="product" @saved="handleSubmit" />
-          </template>
-        </Tabs>
-      </Card>
+          </Card>
+        </template>
+        <template #stock>
+          <ProductStock :product="product" />
+        </template>
+        <template #advanced_settings>
+          <Card
+            ><ProductAvancedSettings :product="product" @saved="handleSubmit" />
+          </Card>
+        </template>
+      </Tabs>
       <Card v-else>
         <ProductForm
           :product="product"
@@ -45,6 +51,7 @@ import Button from "@/core/components/Button.vue";
 import Tabs from "@/core/components/Tabs.vue";
 import { useI18n } from "vue-i18n";
 import ProductAvancedSettings from "@/components/products/ProductAvancedSettings.vue";
+import ProductStock from "@/components/products/ProductStock.vue";
 
 const router = useRouter();
 const { id } = useRoute().params;
@@ -96,7 +103,10 @@ async function handleSubmit(data: Product) {
 }
 </script>
 <style lang="scss">
+.btn-back {
+  margin-bottom: spacing(2);
+}
 .edit-product {
-  @include grid(1, 0, 2);
+  @include grid(1, 0, 0);
 }
 </style>

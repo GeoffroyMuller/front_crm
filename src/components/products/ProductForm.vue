@@ -1,9 +1,5 @@
 <template>
-  <Form
-    :model-value="product"
-    @update:model-value="($data) => $emit('update:product', $data)"
-    @submit="handleSubmit"
-  >
+  <Form :model-value="product" @submit="handleSubmit">
     <template #default="{ hasError }">
       <div class="form-product">
         <div class="form-head">

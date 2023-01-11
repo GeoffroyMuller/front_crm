@@ -18,6 +18,7 @@ export interface ProductReal {
   idProduct?: ID;
   product?: Product;
   reference?: string;
+  product_real_fields?: Array<ProductRealField>;
 }
 
 export interface ProductField {
@@ -26,4 +27,10 @@ export interface ProductField {
   name?: string;
   type?: string;
   product?: Product;
+}
+
+export interface ProductRealField {
+  idProductReal?: ID;
+  idProductField?: ID;
+  value?: string | number;
 }
