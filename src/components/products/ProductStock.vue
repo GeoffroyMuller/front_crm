@@ -26,7 +26,7 @@
       :filters="{
         populate: ['product'],
         $eq: {
-          idProduct: product?.id || 0,
+          idProduct: product?.id,
         },
       }"
       isCard

@@ -9,5 +9,11 @@ export interface PaginateResult2<T> {
 }
 
 export type Filters = {
-  [key: string]: string | number | Array<string | number | Filters> | Filters;
+  [key: string]:
+    | string
+    | number
+    | Array<string | number | Filters>
+    | Filters
+    | undefined
+    | null;
 };
