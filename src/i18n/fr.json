@@ -24,7 +24,8 @@
         },
         "edit-product": {
             "description": "Description",
-            "stored-numerary": "Stockage numéraire"
+            "stored-numerary": "Stockage numéraire",
+            "stock-management": "Gestion du stock"
         }
     },
     "new-quote": "Nouveau devis",

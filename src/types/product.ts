@@ -6,12 +6,15 @@ export interface Product {
   name?: string;
   description?: string;
   price?: number;
+  stockManagement?: StockManagement;
   isNumeraryStock?: boolean;
   stock?: number;
 
   products_real?: Array<ProductReal>;
   product_fields?: Array<ProductField>;
 }
+
+export type StockManagement = "none" | "numerary" | "physical" | null;
 
 export interface ProductReal {
   id?: ID;

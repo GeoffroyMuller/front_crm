@@ -2,9 +2,20 @@
   <Form :model-value="productReal" @submit="handleSubmit">
     <template #default="{ hasError }">
       <div class="form-product-real">
-        <TextField name="reference" :label="$t('reference')" />
+        <TextField
+          :rules="$yup.string().required()"
+          name="reference"
+          :label="$t('reference')"
+        />
 
-        <p>{{ $t("fields") }}</p>
+        <p
+          v-if="
+            product?.product_fields?.length != undefined &&
+            product?.product_fields?.length > 0
+          "
+        >
+          {{ $t("fields") }}
+        </p>
         <div class="real-fields">
           <div
             v-for="field in product?.product_fields"

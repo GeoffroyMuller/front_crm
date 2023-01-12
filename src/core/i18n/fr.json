@@ -45,5 +45,8 @@
     "companies": "Entreprises",
     "price": "Prix",
     "reference": "Référence",
-    "quantity": "Quantité"
+    "quantity": "Quantité",
+    "none": "Aucun",
+    "numerary": "Numéraire",
+    "physical": "Physique"
 }
