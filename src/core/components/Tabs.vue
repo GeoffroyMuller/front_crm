@@ -45,18 +45,33 @@ watch(
 .tabs {
   display: flex;
   align-items: center;
-  gap: spacing(1);
-  cursor: pointer;
+  gap: spacing(2);
   user-select: none;
   margin-bottom: spacing(2);
   .tab {
     border-radius: map-deep-get($rounded, "sm");
-    padding: spacing(1) spacing(1);
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
-
-    &.selected {
-      background-color: color("primary", 500);
-      color: white;
+    padding: spacing(1) 0;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    &::before {
+      content: " ";
+      width: 100%;
+      transform: scale(0);
+      height: 1px;
+      position: absolute;
+      bottom: 0;
+      background-color: color("primary", 400);
+      box-shadow: 0 0 5pt 0.1pt color("primary", 200);
+      left: 0;
+      transition: transform 0.25s ease-in-out;
+      border-radius: 1px;
+    }
+    &.selected,
+    &:hover {
+      &::before {
+        transform: scale(1);
+      }
     }
   }
 }
