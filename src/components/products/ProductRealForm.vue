@@ -1,6 +1,9 @@
 <template>
   <Form :model-value="productReal" @submit="handleSubmit">
     <template #default="{ hasError }">
+      <div class="title">
+        {{ $t("new-product-real") }}
+      </div>
       <div class="form-product-real">
         <TextField
           :rules="$yup.string().required()"
@@ -41,6 +44,7 @@ import Button from "@/core/components/Button.vue";
 import TextField from "@/core/components/form/TextField.vue";
 import useProductRealStore from "@/stores/products_real";
 import type { Product, ProductReal } from "@/types/product";
+import { isNil } from "lodash";
 
 interface ProductRealFormProps {
   product: Product | null;
@@ -54,7 +58,7 @@ const props = withDefaults(defineProps<ProductRealFormProps>(), {
   productReal: null,
 });
 
-function mapData(data: any) {
+/* function mapData(data: any) {
   const res = { idProduct: props.product?.id, reference: data.reference };
   const realFields = Object.keys(data)
     .filter((elem: string) => elem.includes("field-"))
@@ -64,17 +68,41 @@ function mapData(data: any) {
     });
 
   return { ...res, product_real_fields: realFields };
+} */
+function mapDataFieldsInArray(data: any) {
+  const realFields = Object.keys(data)
+    .filter((elem: string) => elem.includes("field-"))
+    .map((elem) => {
+      const fieldId = elem.replace("field-", "");
+      return { idProductField: fieldId, value: data[elem] };
+    });
+
+  return realFields;
 }
 
 function handleSubmit(data: any) {
-  const productRealRes = mapData(data);
-  productRealStore.create(productRealRes);
+  const productRealRes = {
+    idProduct: props.product?.id,
+    reference: data.reference,
+    product_real_fields: mapDataFieldsInArray(data),
+  };
+  if (isNil(props.productReal)) {
+    productRealStore.create(productRealRes);
+  } else {
+    productRealStore.update(productRealRes);
+  }
   emit("saved", data);
 }
 </script>
 <style lang="scss">
 .form-product-real {
-  @include grid(1, 0, 2);
+  padding: spacing(2);
+  display: flex;
+  flex-direction: column;
+  gap: spacing(1);
+  .title {
+    margin-bottom: spacing(2);
+  }
   .real-fields {
     @include grid(1, 0, 2);
   }

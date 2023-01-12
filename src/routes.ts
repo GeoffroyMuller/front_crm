@@ -33,7 +33,7 @@ export default [
     },
   },
   {
-    path: "/products/:idProduit/products-real/new",
+    path: "/products/:idProduct/products-real/new",
     name: "products-id-products-real-new",
     component: () => import("./pages/products/EditProductReal.vue"),
     meta: {

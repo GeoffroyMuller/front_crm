@@ -2,7 +2,7 @@
   <Page :title="$t('new_product_real')">
     <div class="edit-product-real">
       <Card>
-        <ProductRealForm :product="product" />
+        <ProductRealForm :product="product" :product-real="productReal" />
       </Card>
     </div>
   </Page>
@@ -29,7 +29,13 @@ const { id, idProduct } = useRoute().params;
 onMounted(async () => {
   try {
     if (!isNil(id)) {
-      productReal.value = await productsRealStore.fetchById(id);
+      const res = await productsRealStore.fetchById(id, {
+        populate: ["product"],
+      });
+      productReal.value = res;
+      product.value = res.product;
+    } else if (!isNil(idProduct)) {
+      product.value = await productsStore.fetchById(idProduct);
     }
   } catch (error) {
     console.error(error);
