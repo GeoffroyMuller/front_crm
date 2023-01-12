@@ -41,55 +41,36 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
       resPath += `/${resource}`;
     }
 
-    resPath += _getQueryString(filters);
+    const queryString = _getQueryString(filters);
+    if (queryString) {
+      resPath += `?${queryString}`;
+    }
 
     return resPath;
   }
 
-  function _getQueryString(queryObject: any) {
-    if (!queryObject) {
+  function _getQueryString(q: any, base?: string): string {
+    if (!q || typeof q !== "object") {
       return "";
     }
-    const queryStrKeys = Object.keys(queryObject);
-    if (queryStrKeys.length === 0) {
-      return "";
-    }
-    const queryStrString = queryStrKeys
-      .filter(
-        (key) =>
-          typeof queryObject[key] !== "object" &&
-          !Array.isArray(queryObject[key])
-      )
-      .map((key) => `${key}=${queryObject[key]}`)
-      .join("&");
-    const queryStrArr = queryStrKeys
-      .filter((key) => Array.isArray(queryObject[key]))
-      .map((key) =>
-        queryObject[key]
-          .map((str: string, index: number) => `${key}[${index}]=${str}`)
-          .join("&")
-      )
-      .join("&");
+
+    const queryStrKeys = Object.keys(q);
+
     const queryStrObj = queryStrKeys
-      .filter(
-        (key) =>
-          typeof queryObject[key] === "object" &&
-          !Array.isArray(queryObject[key])
-      )
-      .map((key) => {
-        return Object.keys(queryObject[key])
-          .map((objKey) => `${key}[${objKey}]=${queryObject[key][objKey]}`)
-          .join("&");
-      })
-      .join("&");
-    return (
-      "?" +
-      queryStrString +
-      (queryStrString?.length ? `&${queryStrArr}` : queryStrArr) +
-      (queryStrString?.length || queryStrArr?.length
-        ? `&${queryStrObj}`
-        : queryStrObj)
-    );
+      .filter((key) => typeof q[key] === "object")
+      .map((key: string) => {
+        return _getQueryString(q[key], base ? `${base}[${key}]` : key);
+      });
+    const queryStrString = queryStrKeys
+      .filter((key) => typeof q[key] !== "object")
+      .map((key: string) => {
+        if (base) {
+          return `${base}[${key}]=${q[key]}`;
+        }
+        return `${key}=${q[key]}`;
+      });
+
+    return [...queryStrString, ...queryStrObj].join("&");
   }
 
   function _formatResponse<FORMAT_TYPE>(

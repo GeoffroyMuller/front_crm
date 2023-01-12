@@ -115,7 +115,7 @@ watch(
         const filters =
           props.optionKey == null
             ? { $eq: { id: internalValue.value.id } }
-            : { $eq: { [props.optionKey || ""]: internalValue.value } };
+            : { $eq: { [props.optionKey]: internalValue.value } };
         const response = await props.store.search(filters);
         options.value = response;
       }
