@@ -22,6 +22,13 @@
           sortable: true,
         },
       ]"
+      has-local-state
+      :filters="{
+        populate: ['product'],
+        $eq: {
+          idProduct: product?.id || 0,
+        },
+      }"
       isCard
       :store="productsRealStore"
     >
