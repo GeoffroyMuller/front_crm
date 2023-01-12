@@ -5,17 +5,27 @@
     @submit="handleSubmit"
     class="magic-form"
   >
-    <template #default="{ hasError }">
+    <template #default="form">
+      <slot v-bind="form" :loading="loading" />
       <component
         v-for="field of fields"
         :key="field.name"
         :is="getComponent(field.type)"
         :rules="field.rules"
+        :name="field.name"
+        :label="$t(field.label)"
         :options="field.options"
+        :disabled="loading"
       ></component>
-      <Button type="submit" :disabled="hasError">
-        {{ btnSaveText || $t("save") }}
-      </Button>
+      <div class="magic-form-footer">
+        <Button
+          type="submit"
+          :loading="loading"
+          :disabled="form.hasError || loading"
+        >
+          {{ btnSaveText ? $t(btnSaveText) : $t("save") }}
+        </Button>
+      </div>
     </template>
   </Form>
 </template>
@@ -28,6 +38,8 @@ import { useI18n } from "vue-i18n";
 import useUI from "@/core/helpers/vue/composables/ui";
 import TextField from "../form/TextField.vue";
 import Select from "../form/Select.vue";
+import type { Notification } from "../types";
+import { ref } from "vue";
 
 export type MagicFormFieldType = "string" | "number" | "select";
 
@@ -43,17 +55,56 @@ export interface MagicFormProps {
   fields: Array<MagicFormField>;
   modelValue?: any;
   btnSaveText?: string;
+
+  submitAction?: (formData: any) => Promise<any>;
+  /* if submitAction is not set, following props useless */
+  successToastParams?: (data: any) => Notification | string;
+  errorToastParams?: (err: any) => Notification | string;
 }
 
 const emit = defineEmits(["update:modelValue", "submit"]);
 const props = withDefaults(defineProps<MagicFormProps>(), {});
 
-async function handleSubmit(data: any) {
-  try {
-    await emit("submit", data);
-  } catch (err) {
-    console.error(err);
+const loading = ref(false);
+
+function getSuccessToastParams(res: any): Notification | string {
+  if (props.successToastParams) {
+    const notif = props.successToastParams(res);
+    return typeof notif === "string"
+      ? t(notif)
+      : { type: "success", ...notif, message: t(notif.message) };
   }
+  return {
+    type: "success",
+    message: t("saved"),
+  };
+}
+function getErrorToastParams(err: any): Notification | string {
+  if (props.errorToastParams) {
+    const notif = props.errorToastParams(err);
+    return typeof notif === "string"
+      ? t(notif)
+      : { type: "danger", ...notif, message: t(notif.message) };
+  }
+  return {
+    type: "danger",
+    message: t("error_occured"),
+  };
+}
+
+async function handleSubmit(data: any) {
+  loading.value = true;
+  if (props.submitAction) {
+    try {
+      const res = await props.submitAction(data);
+      toast(getSuccessToastParams(res));
+    } catch (err) {
+      console.error(err);
+      toast(getErrorToastParams(err));
+    }
+  }
+  await emit("submit", data);
+  loading.value = false;
 }
 
 const { toast } = useUI();
@@ -79,5 +130,9 @@ function getComponent(type: MagicFormFieldType) {
   display: flex;
   flex-direction: column;
   gap: spacing(1);
+  .magic-form-footer {
+    display: flex;
+    gap: spacing(1);
+  }
 }
 </style>
