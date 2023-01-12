@@ -1,5 +1,5 @@
 <template>
-  <Page :title="$t('new_product')">
+  <Page :title="$t('new_product')" :loading="id !== 'new' && product == null">
     <Button
       class="btn-back"
       @click="goToProductsPage"
