@@ -1,7 +1,7 @@
 <template>
   <Page :title="$t('invoices')">
     <MagicDataTable
-      :store="invoiceStore"
+      :store="useInvoicesStore()"
       :columns="[
         {
           title: $t('ID'),

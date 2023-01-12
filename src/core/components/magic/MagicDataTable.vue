@@ -24,7 +24,7 @@ import type { PaginateResult2, Filters } from "@/core/helpers/vue/store/types";
 import type { APIStore } from "@/core/helpers/vue/store/store.factory";
 
 interface MagicDataTableProps<T> {
-  filters: Filters;
+  filters?: Filters;
   store: APIStore<T>;
   hasLocalState?: boolean;
   columns?: Array<Column<T>> | null;

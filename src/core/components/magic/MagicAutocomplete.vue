@@ -24,17 +24,17 @@ import { isEqual } from "lodash";
 import type { Filters } from "@/core/helpers/vue/store/types";
 import type { APIStore } from "@/core/helpers/vue/store/store.factory";
 
-interface MagicAutocompleteProps /* extends AutocompleteProps */ {
+interface MagicAutocompleteProps<T> /* extends AutocompleteProps */ {
   multiple?: boolean;
 
   optionKey?: string;
-  getOptionLabel?: (opt: any) => string;
+  getOptionLabel?: (T: any) => string;
 
   // magic autocomplete props
-  store: APIStore<any>;
+  store: APIStore<T>;
   addText?: string;
   canAdd?: boolean;
-  options?: Array<any>;
+  options?: Array<T>;
   getFilters?: (str: string) => Filters;
 
   /*
@@ -52,7 +52,7 @@ interface MagicAutocompleteProps /* extends AutocompleteProps */ {
 
 const emit = defineEmits(["update:modelValue", "update:options", "search"]);
 
-const props = withDefaults(defineProps<MagicAutocompleteProps>(), {
+const props = withDefaults(defineProps<MagicAutocompleteProps<any>>(), {
   multiple: false,
   autoFilter: false,
   getOptionLabel: (opt: any) => {
