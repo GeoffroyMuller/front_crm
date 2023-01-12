@@ -51,7 +51,8 @@ import type { FormInputProps, IconName } from "../types";
 import Icon from "../Icon.vue";
 import Alert from "../Alert.vue";
 import type { AnySchema } from "yup";
-interface InputProps extends FormInputProps<string | number> {
+
+export interface InputProps extends FormInputProps<string | number> {
   icon?: IconName;
   multiline?: boolean;
   /*

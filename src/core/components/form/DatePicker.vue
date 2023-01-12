@@ -66,16 +66,7 @@ import IconButton from "../IconButton.vue";
 import Icon from "../Icon.vue";
 import type { AnySchema } from "yup";
 
-const isFocus = ref(false);
-
-const monthNames = dayjs()
-  .localeData()
-  .months()
-  .map((m: string) => m[0].toUpperCase() + m.substring(1));
-
-const weekdaysName = dayjs().localeData().weekdays();
-
-interface DatePickerProps {
+export interface DatePickerProps {
   // 0 for sunday, 6 for saturday
   firstDayDisplayIndex?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -88,6 +79,15 @@ interface DatePickerProps {
   rules?: AnySchema;
   disabled?: boolean;
 }
+
+const isFocus = ref(false);
+
+const monthNames = dayjs()
+  .localeData()
+  .months()
+  .map((m: string) => m[0].toUpperCase() + m.substring(1));
+
+const weekdaysName = dayjs().localeData().weekdays();
 
 const props = withDefaults(defineProps<DatePickerProps>(), {
   firstDayDisplayIndex: 1,

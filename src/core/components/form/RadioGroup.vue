@@ -46,7 +46,7 @@ import { isEqual } from "lodash";
 import Alert from "../Alert.vue";
 import type { AnySchema } from "yup";
 
-interface RadioGroupProps extends FormInputProps<any> {
+export interface RadioGroupProps extends FormInputProps<any> {
   multiple?: boolean;
 
   getOptionValue?: (opt: any) => any;

@@ -22,7 +22,7 @@ import TextField from "./TextField.vue";
 import IconButton from "../IconButton.vue";
 import type { AnySchema } from "yup";
 
-interface PasswordInputProps extends FormInputProps<string | number> {
+export interface PasswordInputProps extends FormInputProps<string | number> {
   /*
   TODO : this is a duplicate of props in FormInputProps<string | number>
         need to found why extends do not work proprely

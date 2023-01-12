@@ -36,7 +36,7 @@ import Icon from "../Icon.vue";
 import type { AnySchema } from "yup";
 import useMenu from "@/core/helpers/vue/composables/menu";
 
-interface SelectProps extends FormInputProps<any> {
+export interface SelectProps extends FormInputProps<any> {
   multiple?: boolean;
 
   getOptionValue?: (opt: any) => any;

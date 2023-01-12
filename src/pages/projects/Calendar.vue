@@ -3,7 +3,17 @@
     <MagicForm
       :submit-action="(data) => useCompaniesStore().create(data)"
       :fields="formFields"
-    ></MagicForm>
+    >
+      <!-- <template #footer="{ hasError, loading }">
+        {{ hasError }}
+        {{ loading }}
+        <button type="submit" :disabled="loading || hasError">envoyer</button>
+      </template> -->
+      <!-- <template #fields="{ hasError, loading }">
+        {{ hasError }}
+        {{ loading }}
+      </template> -->
+    </MagicForm>
   </Page>
 </template>
 
@@ -18,10 +28,20 @@ import { string } from "yup";
 const formFields = computed<Array<MagicFormField>>(() => {
   return [
     {
-      label: "name",
+      props: {
+        label: "name",
+        name: "name",
+        rules: string().required(),
+      },
       type: "string",
-      name: "name",
-      rules: string().required(),
+    },
+    {
+      props: {
+        label: "status",
+        name: "status",
+        options: ["brouillon", "validé"],
+      },
+      type: "select",
     },
   ];
 });

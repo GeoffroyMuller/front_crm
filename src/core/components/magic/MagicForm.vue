@@ -6,18 +6,18 @@
     class="magic-form"
   >
     <template #default="form">
-      <slot v-bind="form" :loading="loading" />
-      <component
-        v-for="field of fields"
-        :key="field.name"
-        :is="getComponent(field.type)"
-        :rules="field.rules"
-        :name="field.name"
-        :label="$t(field.label)"
-        :options="field.options"
-        :disabled="loading"
-      ></component>
-      <div class="magic-form-footer">
+      <slot name="fields" v-bind="form" :loading="loading" />
+      <template v-if="$slots.fields == null">
+        <template v-for="field of fields" :key="field.props.name">
+          <component
+            :is="getComponent(field)"
+            v-bind="field.props"
+            :label="$t(field.props.label || '')"
+          />
+        </template>
+      </template>
+      <slot name="footer" v-bind="form" :loading="loading" />
+      <div class="magic-form-footer" v-if="$slots.footer == null">
         <Button
           type="submit"
           :loading="loading"
@@ -33,22 +33,38 @@
 <script setup lang="ts">
 import Button from "../Button.vue";
 import Form from "../form/Form.vue";
-import type { AnySchema } from "yup";
 import { useI18n } from "vue-i18n";
 import useUI from "@/core/helpers/vue/composables/ui";
-import TextField from "../form/TextField.vue";
-import Select from "../form/Select.vue";
+import TextField, { type InputProps } from "../form/TextField.vue";
+import Select, { type SelectProps } from "../form/Select.vue";
 import type { Notification } from "../types";
-import { ref } from "vue";
+import { ref, type Component } from "vue";
+import Autocomplete, { type AutocompleteProps } from "../form/Autocomplete.vue";
+import DatePicker, { type DatePickerProps } from "../form/DatePicker.vue";
+import RadioGroup, { type RadioGroupProps } from "../form/RadioGroup.vue";
+import Switch, { type SwitchProps } from "../form/Switch.vue";
 
-export type MagicFormFieldType = "string" | "number" | "select";
+export type MagicFormFieldType =
+  | "string"
+  | "number"
+  | "select"
+  | "autocomplete"
+  | "datepicker"
+  | "radiogroup"
+  | "switch";
+export type MagicFormFieldProps =
+  | AutocompleteProps
+  | InputProps
+  | DatePickerProps
+  | SelectProps
+  | RadioGroupProps
+  | SwitchProps;
 
 export interface MagicFormField {
-  name: string;
-  label: string;
+  props: MagicFormFieldProps;
+  component?: Component;
+  /* if component is set, following props useless */
   type: MagicFormFieldType;
-  rules?: AnySchema;
-  options?: Array<any>;
 }
 
 export interface MagicFormProps {
@@ -71,8 +87,8 @@ function getSuccessToastParams(res: any): Notification | string {
   if (props.successToastParams) {
     const notif = props.successToastParams(res);
     return typeof notif === "string"
-      ? t(notif)
-      : { type: "success", ...notif, message: t(notif.message) };
+      ? { type: "success", message: t(notif) }
+      : notif;
   }
   return {
     type: "success",
@@ -83,8 +99,8 @@ function getErrorToastParams(err: any): Notification | string {
   if (props.errorToastParams) {
     const notif = props.errorToastParams(err);
     return typeof notif === "string"
-      ? t(notif)
-      : { type: "danger", ...notif, message: t(notif.message) };
+      ? { type: "danger", message: t(notif) }
+      : notif;
   }
   return {
     type: "danger",
@@ -110,14 +126,25 @@ async function handleSubmit(data: any) {
 const { toast } = useUI();
 const { t } = useI18n();
 
-function getComponent(type: MagicFormFieldType) {
-  switch (type) {
+function getComponent(field: MagicFormField): Component {
+  if (field.component != null) {
+    return field.component;
+  }
+  switch (field.type) {
     case "string":
       return TextField;
     case "number":
       return TextField;
     case "select":
       return Select;
+    case "switch":
+      return Switch;
+    case "radiogroup":
+      return RadioGroup;
+    case "autocomplete":
+      return Autocomplete;
+    case "datepicker":
+      return DatePicker;
     default:
       return TextField;
   }

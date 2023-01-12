@@ -24,7 +24,7 @@ import type { FormInputProps, IconName } from "../types";
 import Alert from "../Alert.vue";
 import type { AnySchema } from "yup";
 
-interface SwitchProps extends FormInputProps<string | number> {
+export interface SwitchProps extends FormInputProps<string | number> {
   icon?: IconName;
   /*
   TODO : this is a duplicate of props in FormInputProps<string | number>
