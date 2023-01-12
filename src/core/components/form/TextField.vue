@@ -72,6 +72,7 @@ export interface InputProps extends FormInputProps<string | number> {
   max?: number | undefined | null;
 
   id?: string;
+  //hide arrows input number
   appearanceNone?: boolean | null;
 }
 
