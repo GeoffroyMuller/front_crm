@@ -6,6 +6,20 @@
         { id: 'companies', title: $t('companies') },
       ]"
     >
+      <template #companies>
+        <MagicDataTable
+          :store="companiesStore"
+          :columns="[
+            {
+              title: $t('company'),
+              key: 'name',
+              sortable: true,
+            },
+          ]"
+        >
+          <template #actions-title> </template>
+        </MagicDataTable>
+      </template>
       <template #clients>
         <MagicDataTable
           @row-click="($item) => clickEdit($item)"
@@ -67,6 +81,7 @@ import useClientStore from "@/stores/clients";
 import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import type Client from "@/types/client";
 import Tabs from "@/core/components/Tabs.vue";
+import useCompaniesStore from "@/stores/companies";
 
 const selected = ref<Array<Client>>([]);
 const isSidebarOpen = ref(false);
@@ -98,6 +113,7 @@ function clickEdit(item?: Client) {
 }
 
 const clientsStore = useClientStore();
+const companiesStore = useCompaniesStore();
 </script>
 
 <style lang="scss" scoped>
