@@ -23,8 +23,8 @@
           <ProductStock :product="product" />
         </template>
         <template #advanced_settings>
-          <Card
-            ><ProductAvancedSettings :product="product" @saved="handleSubmit" />
+          <Card>
+            <ProductAvancedSettings :product="product" @saved="handleSubmit" />
           </Card>
         </template>
       </Tabs>
@@ -66,7 +66,7 @@ const productTabs = computed(() => {
     { id: "stock", title: t("stock") },
     { id: "advanced_settings", title: t("advanced_settings") },
   ];
-  if (product.value?.isNumeraryStock) {
+  if (!productsStore.isPhysicalStock(product.value)) {
     res.splice(
       res.findIndex((elem) => elem.id === "stock"),
       1

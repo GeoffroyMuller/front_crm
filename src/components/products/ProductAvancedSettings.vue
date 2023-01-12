@@ -33,18 +33,19 @@ import TextField from "@/core/components/form/TextField.vue";
 import type { Product } from "@/types/product";
 import { ref } from "vue";
 import Repetable from "@/core/components/form/repetable/Repetable.vue";
+import useProductsStore from "@/stores/products";
 
 interface ProductAvancedSettingsProps {
   product: Product | null;
 }
-
+const productStore = useProductsStore();
 const emit = defineEmits(["saved", "cancel", "update:product"]);
 const props = withDefaults(defineProps<ProductAvancedSettingsProps>(), {
   product: null,
 });
 
 const isNumeraryStock = ref<boolean>(
-  props.product?.isNumeraryStock ? true : false
+  productStore.isNumeraryStock(props.product)
 );
 
 function handleSubmit(data: any) {

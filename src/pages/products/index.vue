@@ -45,7 +45,7 @@
       </template>
       <template #content-stock="{ item }">
         <div>
-          {{ item.isNumeraryStock ? item.stock : "-" }}
+          {{ productsStore.isNumeraryStock(item) ? item.stock : "-" }}
         </div>
       </template>
     </MagicDataTable>

@@ -3,7 +3,11 @@
     <template #default="{ hasError }">
       <div class="form-product">
         <div class="form-head">
-          <TextField name="name" :label="$t('name')" />
+          <TextField
+            name="name"
+            :label="$t('name')"
+            :rules="$yup.string().required()"
+          />
         </div>
         <TextField
           name="price"
@@ -17,11 +21,20 @@
           :multiline="true"
         />
         <div class="form-stock">
-          <Switch
-            name="isNumeraryStock"
-            v-model="isNumeraryStock"
-            :label="$t('pages.edit-product.stored-numerary')"
-          />
+          <RadioGroup
+            :rules="$yup.string().nullable().required()"
+            name="stockManagement"
+            v-model="stockManagement"
+            :label="$t('pages.edit-product.stock-management')"
+            :options="[
+              { label: $t('none'), value: 'none' },
+              { label: $t('numerary'), value: 'numerary' },
+              { label: $t('physical'), value: 'physical' },
+            ]"
+            :getOptionLabel="(opt) => opt.label"
+            :getOptionValue="(opt) => opt.value"
+          >
+          </RadioGroup>
           <KeepAlive>
             <TextField
               v-if="isNumeraryStock"
@@ -46,9 +59,10 @@
 import Form from "@/core/components/form/Form.vue";
 import Button from "@/core/components/Button.vue";
 import TextField from "@/core/components/form/TextField.vue";
-import type { Product } from "@/types/product";
-import { ref } from "vue";
+import type { Product, StockManagement } from "@/types/product";
+import { computed, ref } from "vue";
 import Switch from "@/core/components/form/Switch.vue";
+import RadioGroup from "@/core/components/form/RadioGroup.vue";
 
 interface ProductFormProps {
   product: Product | null;
@@ -58,9 +72,13 @@ const props = withDefaults(defineProps<ProductFormProps>(), {
   product: null,
 });
 
-const isNumeraryStock = ref<boolean>(
-  props.product?.isNumeraryStock ? true : false
+const stockManagement = ref<StockManagement>(
+  props.product?.stockManagement || null
 );
+
+const isNumeraryStock = computed(() => {
+  return stockManagement.value == "numerary";
+});
 
 function handleSubmit(data: any) {
   emit("update:product", data);
