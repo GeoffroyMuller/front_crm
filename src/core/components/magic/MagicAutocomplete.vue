@@ -21,11 +21,12 @@ import type { AnySchema } from "yup";
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import Button from "../Button.vue";
 import { isEqual } from "lodash";
+import type { Filters } from "@/core/helpers/vue/store/types";
 
 interface MagicAutocompleteProps /* extends AutocompleteProps */ {
   multiple?: boolean;
 
-  getOptionValue?: (opt: any) => any;
+  optionKey?: string;
   getOptionLabel?: (opt: any) => string;
 
   // magic autocomplete props
@@ -33,6 +34,7 @@ interface MagicAutocompleteProps /* extends AutocompleteProps */ {
   addText?: string;
   canAdd?: boolean;
   options?: Array<any>;
+  getFilters?: (str: string) => Filters;
 
   /*
     TODO : this is a duplicate of props in FormInputProps<string | number>
@@ -58,13 +60,17 @@ const props = withDefaults(defineProps<MagicAutocompleteProps>(), {
     }
     return opt?.label;
   },
-  getOptionValue: (opt: any) => {
+  getFilters: () => ({}),
+});
+
+function _getOptionValue(opt: any) {
+  if (props.optionKey != null) {
     if (typeof opt === "string" || typeof opt === "number") {
       return opt;
     }
-    return opt?.value;
-  },
-});
+  }
+  return opt;
+}
 
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
@@ -93,20 +99,25 @@ const autocompleteProps = computed(() => {
 });
 
 async function onSearch(q: string) {
-  const response = await props.store.search({ q });
+  const response = await props.store.search(props.getFilters(q));
   options.value = response;
 }
 
 watch(
   () => internalValue.value,
-  () => {
+  async () => {
     if (internalValue.value != null) {
       if (
         options.value.find((opt) =>
-          isEqual(props.getOptionValue(opt), internalValue.value)
+          isEqual(_getOptionValue(opt), internalValue.value)
         ) == null
       ) {
-        onSearch(internalValue.value);
+        const filters =
+          props.optionKey == null
+            ? { $eq: { id: internalValue.value.id } }
+            : { $eq: { [props.optionKey]: internalValue.value } };
+        const response = await props.store.search(filters);
+        options.value = response;
       }
     }
   },

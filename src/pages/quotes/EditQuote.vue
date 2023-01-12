@@ -13,8 +13,15 @@
             <MagicAutocomplete
               :label="$t('customer')"
               :store="clientsStore"
+              :get-filters="
+                (str) => ({
+                  $or: {
+                    $contains: { lastname: str, firstname: str },
+                  },
+                })
+              "
               :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
-              :getOptionValue="(opt) => opt.id"
+              optionKey="id"
               name="idClient"
               :addText="$t(`pages.edit-quote.add-customer`)"
               can-add

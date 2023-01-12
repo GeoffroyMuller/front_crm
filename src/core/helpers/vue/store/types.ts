@@ -9,9 +9,5 @@ export interface PaginateResult2<T> {
 }
 
 export type Filters = {
-  [key: string]:
-    | string
-    | number
-    | (string | number)[]
-    | { [key: string]: string | number };
+  [key: string]: string | Filters;
 };

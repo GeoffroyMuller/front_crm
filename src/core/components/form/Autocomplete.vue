@@ -45,7 +45,7 @@ import useMenu from "@/core/helpers/vue/composables/menu";
 export interface AutocompleteProps extends FormInputProps<any> {
   multiple?: boolean;
 
-  getOptionValue?: (opt: any) => any;
+  optionKey?: string;
   getOptionLabel?: (opt: any) => string;
 
   options: Array<any>;
@@ -76,13 +76,17 @@ const props = withDefaults(defineProps<AutocompleteProps>(), {
     }
     return opt?.label;
   },
-  getOptionValue: (opt: any) => {
+});
+
+function _getOptionValue(opt: any) {
+  if (props.optionKey != null) {
     if (typeof opt === "string" || typeof opt === "number") {
       return opt;
     }
-    return opt?.value;
-  },
-});
+    return opt[props.optionKey];
+  }
+  return opt;
+}
 
 const search = ref("");
 const isFocus = ref();
@@ -106,28 +110,27 @@ function handleClose() {
 function isSelected(opt: any) {
   if (props.multiple) {
     return (
-      internalValue.value.find((v: any) =>
-        isEqual(props.getOptionValue(opt), v)
-      ) != null
+      internalValue.value.find((v: any) => isEqual(_getOptionValue(opt), v)) !=
+      null
     );
   }
-  return isEqual(props.getOptionValue(opt), internalValue.value);
+  return isEqual(_getOptionValue(opt), internalValue.value);
 }
 
 function handleClickOption(opt: any) {
   if (props.multiple) {
     if (isSelected(opt)) {
       internalValue.value = internalValue.value.filter((v: any) => {
-        return !isEqual(props.getOptionValue(opt), v);
+        return !isEqual(_getOptionValue(opt), v);
       });
     } else {
-      internalValue.value.push(props.getOptionValue(opt));
+      internalValue.value.push(_getOptionValue(opt));
     }
   } else {
     if (isSelected(opt)) {
       internalValue.value = undefined;
     } else {
-      internalValue.value = props.getOptionValue(opt);
+      internalValue.value = _getOptionValue(opt);
     }
   }
   validate();
@@ -136,11 +139,11 @@ function handleClickOption(opt: any) {
 const selected = computed(() => {
   if (props.multiple) {
     return internalValue.value.map((v: any) =>
-      props.options.find((o) => isEqual(props.getOptionValue(o), v))
+      props.options.find((o) => isEqual(_getOptionValue(o), v))
     );
   }
   return props.options.find((o) =>
-    isEqual(props.getOptionValue(o), internalValue.value)
+    isEqual(_getOptionValue(o), internalValue.value)
   );
 });
 
@@ -227,7 +230,7 @@ const { open } = useMenu({
   openOnHover: false,
   componentProps: {
     "handle-click-option": handleClickOption,
-    "get-option-value": props.getOptionValue,
+    "get-option-value": _getOptionValue,
     "get-option-label": props.getOptionLabel,
     "is-selected": isSelected,
     options: optionsFiltered,
