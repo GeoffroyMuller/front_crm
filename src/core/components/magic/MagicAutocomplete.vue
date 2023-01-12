@@ -22,6 +22,7 @@ import useValidatable from "@/core/helpers/vue/composables/validatable";
 import Button from "../Button.vue";
 import { isEqual } from "lodash";
 import type { Filters } from "@/core/helpers/vue/store/types";
+import type { APIStore } from "@/core/helpers/vue/store/store.factory";
 
 interface MagicAutocompleteProps /* extends AutocompleteProps */ {
   multiple?: boolean;
@@ -30,7 +31,7 @@ interface MagicAutocompleteProps /* extends AutocompleteProps */ {
   getOptionLabel?: (opt: any) => string;
 
   // magic autocomplete props
-  store: any;
+  store: APIStore<any>;
   addText?: string;
   canAdd?: boolean;
   options?: Array<any>;

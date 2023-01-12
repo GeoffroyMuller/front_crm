@@ -21,28 +21,11 @@ import { computed, onMounted, ref } from "vue";
 import DataTable from "@/core/components/DataTable.vue";
 import type { Column } from "../types";
 import type { PaginateResult2, Filters } from "@/core/helpers/vue/store/types";
+import type { APIStore } from "@/core/helpers/vue/store/store.factory";
 
 interface MagicDataTableProps<T> {
   filters: Filters;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  store: Store<
-    string,
-    {
-      filters: Filters;
-      list: Array<T>;
-      totalPages: number;
-    },
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    {},
-    {
-      fetchList: (
-        filters?: Filters,
-        applyState?: boolean
-      ) => Promise<PaginateResult2<T>>;
-      setPage: (page: number) => void;
-      setPageSize: (pageSize: number) => void;
-    }
-  >;
+  store: APIStore<T>;
   hasLocalState?: boolean;
   columns?: Array<Column<T>> | null;
 }

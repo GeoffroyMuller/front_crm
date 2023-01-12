@@ -1,4 +1,9 @@
-import { defineStore } from "pinia";
+import {
+  defineStore,
+  type Store,
+  type StoreDefinition,
+  type _GettersTree,
+} from "pinia";
 import mock from "../../mock";
 import axios from "@/core/plugins/axios";
 import config from "@/const";
@@ -21,7 +26,50 @@ export interface makeAPIStoreProps {
   state?: any;
 }
 
-export function makeAPIStore<T>(props: makeAPIStoreProps) {
+export interface APIStoreStateTree<T> {
+  list: Array<T>;
+  byId: { [key: ID]: T };
+
+  filters: {
+    page: number;
+    pageSize: number;
+  };
+  totalPages: number;
+}
+
+export interface APIStoreActions<T> {
+  setPage: (page: number) => void;
+  setPageSize: (pageSize: number) => void;
+  fetchById: (id: ID, filters?: Filters, applyState?: boolean) => Promise<T>;
+  fetchList: (
+    filters?: Filters,
+    applyState?: boolean
+  ) => Promise<PaginateResult2<T>>;
+  search: (filters?: Filters) => Promise<Array<T>>;
+  update: (id: ID, body: T) => void;
+  create: (body: T) => Promise<T>;
+}
+
+export interface APIStoreGetters<T> extends _GettersTree<APIStoreStateTree<T>> {
+  getList: () => Array<T>;
+  getById: () => (id: ID) => T;
+}
+
+export type APIStoreDef<T> = StoreDefinition<
+  string,
+  APIStoreStateTree<T>,
+  APIStoreGetters<T>,
+  APIStoreActions<T>
+>;
+
+export type APIStore<T> = Store<
+  string,
+  APIStoreStateTree<T>,
+  APIStoreGetters<T>,
+  APIStoreActions<T>
+>;
+
+export function makeAPIStore<T>(props: makeAPIStoreProps): APIStoreDef<T> {
   function _getPath({
     id,
     resource,
@@ -85,13 +133,17 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
     }
   }
 
-  return defineStore({
+  return defineStore<
+    string,
+    APIStoreStateTree<T>,
+    APIStoreGetters<T>,
+    APIStoreActions<T>
+  >({
     id: props.id,
     state: () => ({
       list: [] as Array<T>,
       byId: {} as { [key: ID]: T },
-      resources: {} as { [name: string]: { [key: ID]: any } },
-
+      a: 1,
       filters: {
         page: 1,
         pageSize: 10,
@@ -114,18 +166,6 @@ export function makeAPIStore<T>(props: makeAPIStoreProps) {
         this.filters.pageSize = pageSize;
         this.fetchList();
       },
-      /*
-      async fetchResourceById(id: ID, resource: string): Promise<any> {
-        if (config.IS_MOCK) {
-          await sleep(config.MOCK_DURATION);
-        }
-        // @ts-ignore
-        const response: any = config.IS_MOCK
-          ? mock.getAll(_getPath(id, resource))
-          : await axios.get(_getPath(id, resource));
-        //this.byId[id] = response;
-        return response;
-      }, */
       async fetchById(
         id: ID,
         filters?: Filters,

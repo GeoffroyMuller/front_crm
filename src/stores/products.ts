@@ -1,7 +1,7 @@
 import { makeAPIStore } from "@/core/helpers/vue/store/store.factory";
 import type { Product } from "@/types/product";
 
-const useProductsStore = makeAPIStore({
+const useProductsStore = makeAPIStore<Product>({
   id: "products",
   actions: {
     isPhysicalStock: (product: Product) =>

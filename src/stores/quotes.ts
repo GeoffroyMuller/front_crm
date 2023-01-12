@@ -1,8 +1,9 @@
 import { makeAPIStore } from "@/core/helpers/vue/store/store.factory";
 import axiosIntance from "@/core/plugins/axios";
+import type { Quote } from "@/types/quote";
 import type { ID } from "@/types/utils";
 
-const useQuoteStore = makeAPIStore({
+const useQuoteStore = makeAPIStore<Quote>({
   id: "quotes",
   actions: {
     async sendByMail(id: ID) {
