@@ -1,5 +1,5 @@
 <template>
-  <Form :model-value="productReal" @submit="handleSubmit">
+  <Form :model-value="productRealInternal" @submit="handleSubmit">
     <template #default="{ hasError }">
       <div class="title">
         {{ $t("new-product-real") }}
@@ -11,31 +11,19 @@
           :label="$t('reference')"
         />
 
-        <p
-          v-if="
-            product?.product_fields?.length != undefined &&
-            product?.product_fields?.length > 0
-          "
-        >
-          {{ $t("fields") }}
-        </p>
         <div class="real-fields">
-          <div
-            v-for="field in product?.product_fields"
-            :key="field.id"
-            class="real-field"
-          >
-            <TextField :name="`field-${field.id}`" :label="field.name" />
-          </div>
+          <Repetable name="product_real_fields" :label="$t('fields')">
+            <template #default="{ data }">
+              {{ data }}
+              <TextField name="value" :label="data.idProductField" />
+            </template>
+          </Repetable>
         </div>
         <div class="form-bottom">
           <Button @click="$emit('cancel')" variant="text">{{
             $t("cancel")
           }}</Button>
           <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
-          <Button @click="mapProductRealForForm(productReal)">{{
-            $t("entrer")
-          }}</Button>
         </div>
       </div>
     </template>
@@ -46,8 +34,10 @@ import Form from "@/core/components/form/Form.vue";
 import Button from "@/core/components/Button.vue";
 import TextField from "@/core/components/form/TextField.vue";
 import useProductRealStore from "@/stores/products_real";
-import type { Product, ProductReal, ProductRealField } from "@/types/product";
+import type { Product, ProductReal } from "@/types/product";
 import { isNil } from "lodash";
+import Repetable from "@/core/components/form/repetable/Repetable.vue";
+import { ref, watch } from "vue";
 
 interface ProductRealFormProps {
   product: Product | null;
@@ -60,58 +50,41 @@ const props = withDefaults(defineProps<ProductRealFormProps>(), {
   product: null,
   productReal: null,
 });
+const productRealInternal = ref<ProductReal | null>(null);
 
-/* function mapData(data: any) {
-  const res = { idProduct: props.product?.id, reference: data.reference };
-  const realFields = Object.keys(data)
-    .filter((elem: string) => elem.includes("field-"))
-    .map((elem) => {
-      const fieldId = elem.replace("field-", "");
-      return { idProductField: fieldId, value: data[elem] };
-    });
-
-  return { ...res, product_real_fields: realFields };
-} */
-function mapProductRealForForm(productReal: ProductReal | null) {
-  console.error({ productReal });
-  const resFieldsInObject = productReal?.product_real_fields?.reduce(
-    (accumulator, currentValue: ProductRealField) => {
-      return {
-        ...accumulator,
-        [`field-${currentValue.idProductField}`]: currentValue.value,
+watch(
+  () => props.productReal,
+  (val) => {
+    if (isNil(val)) {
+      productRealInternal.value = {
+        product_real_fields: props.product?.product_fields?.map((field) => {
+          return { idProductReal: undefined, idProductField: field.id };
+        }),
       };
-    },
-    {}
-  );
-  console.error({ resFieldsInObject });
-  delete productReal?.product_real_fields;
-  return { ...productReal, resFieldsInObject };
-}
-function mapDataFieldsInArray(data: any): Array<ProductRealField> {
-  const realFields = Object.keys(data)
-    .filter((elem: string) => elem.includes("field-"))
-    .map((elem) => {
-      const fieldId = elem.replace("field-", "");
-      return {
-        idProductReal: props.productReal ? props.productReal.id : null,
-        idProductField: fieldId,
-        value: data[elem],
-      } as ProductRealField;
-    });
-  return realFields;
-}
+    } else {
+      productRealInternal.value = val;
+    }
+  },
+  { immediate: true }
+);
 
 function handleSubmit(data: any) {
-  const productRealRes = {
-    ...props.productReal,
-    idProduct: props.product?.id,
-    reference: data.reference,
-    product_real_fields: mapDataFieldsInArray(data),
-  };
+  console.error({ data });
   if (isNil(props.productReal)) {
-    productRealStore.create(productRealRes);
-  } else if (!isNil(productRealRes.id)) {
-    productRealStore.update(productRealRes.id, productRealRes);
+    productRealStore.create({ idProduct: props.product?.id, ...data });
+  } else if (!isNil(props.productReal.id)) {
+    productRealStore.update(props.productReal.id, {
+      ...props.productReal,
+      ...data,
+      product_real_fields: props.productReal.product_real_fields?.map(
+        (field) => {
+          return {
+            ...field,
+            idProductReal: props.productReal ? props.productReal.id : "",
+          };
+        }
+      ),
+    });
   }
   emit("saved", data);
 }
