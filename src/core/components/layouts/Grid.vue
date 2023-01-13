@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="'div'"
+    :is="component || 'div'"
     class="grid"
     ref="grid"
     :class="{
@@ -12,25 +12,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-
-export type GridColumnsOptions =
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 9
-  | 10
-  | 11
-  | 12;
+import { ref, watch, type Component } from "vue";
+import type { GridColumnsOptions } from "./types";
 
 export interface GridProps {
   columns?: GridColumnsOptions;
   gap?: number;
+  component?: Component;
 }
 
 const grid = ref();

@@ -22,7 +22,7 @@ import { ref, watch } from "vue";
 import Card from "../Card.vue";
 import MagicForm from "./MagicForm.vue";
 import type { MagicFormFieldProps } from "@/core/components/magic/MagicFormField.vue";
-import type { GridColumnsOptions } from "../layouts/Grid.vue";
+import type { GridColumnsOptions } from "../layouts/types";
 
 export interface MagicFilterBarProps<T> {
   store: APIStore<T>;

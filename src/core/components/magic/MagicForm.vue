@@ -38,7 +38,8 @@ import type { Notification } from "../types";
 import { ref } from "vue";
 import type { MagicFormFieldProps } from "./MagicFormField.vue";
 import MagicFormField from "./MagicFormField.vue";
-import Grid, { type GridColumnsOptions } from "../layouts/Grid.vue";
+import Grid from "../layouts/Grid.vue";
+import type { GridColumnsOptions } from "../layouts/types";
 
 export interface MagicFormProps {
   fields: Array<MagicFormFieldProps>;
