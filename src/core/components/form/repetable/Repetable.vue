@@ -9,7 +9,9 @@
         v-for="(section, key) in sections"
         :key="key"
         :value="section"
-        @inputChange="({ name, value }) => handleSectionInputChange(key, name, value)"
+        @inputChange="
+          ({ name, value }) => handleSectionInputChange(key, name, value)
+        "
       >
         <slot :data="section" />
         <div class="icon-delete">
@@ -67,7 +69,11 @@ interface RepetableProps {
 }
 
 const props = withDefaults(defineProps<RepetableProps>(), {});
-const emit = defineEmits(["update:modelValue", "update:error", "sectionChange"]);
+const emit = defineEmits([
+  "update:modelValue",
+  "update:error",
+  "sectionChange",
+]);
 
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
@@ -86,7 +92,11 @@ function addSection(data?: any) {
   };
 }
 
-function handleSectionInputChange(key: string, inputName: string, inputValue: any) {
+function handleSectionInputChange(
+  key: string,
+  inputName: string,
+  inputValue: any
+) {
   sections.value[key] = {
     ...sections.value[key],
     [inputName]: inputValue,
@@ -115,6 +125,15 @@ watch(
         },
         {}
       );
+    } else {
+      if (!isEqual(sectionsList.value, internalValue.value)) {
+        sections.value = internalValue.value.reduce(
+          (prev: { [key: string]: ISection }, section: ISection) => {
+            return { ...prev, [generateId()]: section };
+          },
+          {}
+        );
+      }
     }
   },
   { immediate: true }
@@ -122,7 +141,10 @@ watch(
 watch(
   () => sectionsList.value,
   () => {
-    if (sectionsList.value?.length && !isEqual(sectionsList.value, internalValue.value)) {
+    if (
+      sectionsList.value?.length &&
+      !isEqual(sectionsList.value, internalValue.value)
+    ) {
       internalValue.value = sectionsList.value;
     }
   },
