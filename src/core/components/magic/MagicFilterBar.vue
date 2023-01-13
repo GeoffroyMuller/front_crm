@@ -4,11 +4,7 @@
     :withPadding="false"
     class="magic-filter-bar"
   >
-    <MagicForm
-      v-model="filtersValues"
-      :fields="filters"
-      @inputChange="handleChange"
-    >
+    <MagicForm v-model="filtersValues" :fields="filters">
       <template #footer></template>
     </MagicForm>
   </component>
@@ -16,8 +12,8 @@
 
 <script setup lang="ts">
 import type { APIStore } from "@/core/helpers/vue/store/store.factory";
-import type { Filters } from "@/core/helpers/vue/store/types";
-import { ref } from "vue";
+import { get, set } from "lodash";
+import { ref, watch } from "vue";
 import Card from "../Card.vue";
 import MagicForm, { type MagicFormField } from "./MagicForm.vue";
 
@@ -25,19 +21,45 @@ export interface MagicFilterBarProps<T> {
   store: APIStore<T>;
   filters: Array<MagicFormField>;
   isCard?: boolean;
-
-  mapFormFilters: (f: any) => Filters;
+  map: { [key: string]: string };
 }
 
-function handleChange() {
-  props.store.setFilters(props.mapFormFilters(filtersValues.value));
+function mapFiltersFromStore() {
+  const res = {};
+
+  for (const storeFilterKey of Object.keys(props.map)) {
+    const value = get(props.store.filters, storeFilterKey);
+    if (value) {
+      // @ts-ignore
+      set(res, props.map[storeFilterKey], value);
+    }
+  }
+  return res;
 }
 
-const filtersValues = ref<any>({});
+function mapFormFilters() {
+  const res = {};
+  for (const storeFilterKey of Object.keys(props.map)) {
+    // @ts-ignore
+    const value = get(filtersValues.value, props.map[storeFilterKey]);
+    if (value) {
+      set(res, storeFilterKey, value);
+    }
+  }
+  return res;
+}
 
 const props = withDefaults(defineProps<MagicFilterBarProps<any>>(), {
   isCard: true,
 });
+
+const filtersValues = ref<any>(mapFiltersFromStore());
+watch(
+  () => filtersValues.value,
+  () => {
+    props.store.setFilters(mapFormFilters());
+  }
+);
 </script>
 
 <style lang="scss">

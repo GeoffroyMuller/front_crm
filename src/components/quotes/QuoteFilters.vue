@@ -1,7 +1,10 @@
 <template>
   <MagicFilterBar
     :store="quotesStore"
-    :map-form-filters="mapFormFilters"
+    :map="{
+      '$contains.name': 'name',
+      '$eq.status': 'status',
+    }"
     :filters="[
       { type: 'string', props: { name: 'name', label: 'title' } },
       {
@@ -20,15 +23,4 @@ import MagicFilterBar from "@/core/components/magic/MagicFilterBar.vue";
 import useQuoteStore from "@/stores/quotes";
 
 const quotesStore = useQuoteStore();
-
-function mapFormFilters(form: any) {
-  const filters: any = {
-    $eq: {},
-    $contains: { name: form.name },
-  };
-  if (form.status != null) {
-    filters.$eq.status = form.status;
-  }
-  return filters;
-}
 </script>
