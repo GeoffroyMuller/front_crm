@@ -1,5 +1,6 @@
 <template>
-  <Page :title="$t('quotes')">
+  <Page :title="$t('quotes')" class="quotes-page">
+    <QuoteFilters />
     <MagicDataTable
       :store="quotesStore"
       :columns="[
@@ -123,6 +124,8 @@ import config from "@/const";
 import QuoteSendMail from "@/components/quotes/QuoteSendMail.vue";
 import Media from "@/core/Media.vue";
 import FloatingButton from "@/core/components/FloatingButton.vue";
+import MagicFilterBar from "@/core/components/magic/MagicFilterBar.vue";
+import QuoteFilters from "@/components/quotes/QuoteFilters.vue";
 
 const { toast, confirm } = useUI();
 const { t } = useI18n();
@@ -178,7 +181,11 @@ async function setArchived(item: any) {
 const quotesStore = useQuoteStore();
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.quotes-page {
+  display: grid;
+  gap: spacing(2);
+}
 .actions {
   display: flex;
   align-items: center;

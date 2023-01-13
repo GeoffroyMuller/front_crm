@@ -4,6 +4,7 @@
     @update:model-value="($val) => $emit('update:modelValue', $val)"
     @submit="handleSubmit"
     class="magic-form"
+    @input-change="($data) => $emit('inputChange', $data)"
   >
     <template #default="form">
       <slot name="fields" v-bind="form" :loading="loading" />
@@ -78,7 +79,7 @@ export interface MagicFormProps {
   errorToastParams?: (err: any) => Notification | string;
 }
 
-const emit = defineEmits(["update:modelValue", "submit"]);
+const emit = defineEmits(["update:modelValue", "submit", "inputChange"]);
 const props = withDefaults(defineProps<MagicFormProps>(), {});
 
 const loading = ref(false);
