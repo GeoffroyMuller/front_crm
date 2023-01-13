@@ -33,24 +33,6 @@ export default [
     },
   },
   {
-    path: "/products/:idProduct/products-real/new",
-    name: "products-id-products-real-new",
-    component: () => import("./pages/products/EditProductReal.vue"),
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
-    path: "/products-real/:id",
-    name: "products-real-id",
-    component: () => import("./pages/products/EditProductReal.vue"),
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
     path: "/quotes",
     name: "quotes",
     component: () => import("./pages/quotes/index.vue"),

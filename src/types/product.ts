@@ -35,5 +35,5 @@ export interface ProductField {
 export interface ProductRealField {
   idProductReal?: ID;
   idProductField?: ID;
-  value?: string | number;
+  value?: string;
 }

@@ -20,7 +20,7 @@
       ]"
       has-local-state
       :filters="{
-        populate: ['product'],
+        populate: ['product', 'product_real_fields'],
         $eq: {
           idProduct: product?.id,
         },
@@ -49,7 +49,10 @@
 
     <Sidebar v-model:open="isSidebarOpen">
       <div class="product-real-sidebar">
-        <ProductRealForm :product="product" :productReal="currentProductReal" />
+        <ProductRealForm
+          :product="product"
+          :product-real="currentProductReal"
+        />
       </div>
     </Sidebar>
   </div>

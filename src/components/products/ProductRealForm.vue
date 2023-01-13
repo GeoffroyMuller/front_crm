@@ -33,6 +33,9 @@
             $t("cancel")
           }}</Button>
           <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
+          <Button @click="mapProductRealForForm(productReal)">{{
+            $t("entrer")
+          }}</Button>
         </div>
       </div>
     </template>
@@ -43,7 +46,7 @@ import Form from "@/core/components/form/Form.vue";
 import Button from "@/core/components/Button.vue";
 import TextField from "@/core/components/form/TextField.vue";
 import useProductRealStore from "@/stores/products_real";
-import type { Product, ProductReal } from "@/types/product";
+import type { Product, ProductReal, ProductRealField } from "@/types/product";
 import { isNil } from "lodash";
 
 interface ProductRealFormProps {
@@ -69,27 +72,46 @@ const props = withDefaults(defineProps<ProductRealFormProps>(), {
 
   return { ...res, product_real_fields: realFields };
 } */
-function mapDataFieldsInArray(data: any) {
+function mapProductRealForForm(productReal: ProductReal | null) {
+  console.error({ productReal });
+  const resFieldsInObject = productReal?.product_real_fields?.reduce(
+    (accumulator, currentValue: ProductRealField) => {
+      return {
+        ...accumulator,
+        [`field-${currentValue.idProductField}`]: currentValue.value,
+      };
+    },
+    {}
+  );
+  console.error({ resFieldsInObject });
+  delete productReal?.product_real_fields;
+  return { ...productReal, resFieldsInObject };
+}
+function mapDataFieldsInArray(data: any): Array<ProductRealField> {
   const realFields = Object.keys(data)
     .filter((elem: string) => elem.includes("field-"))
     .map((elem) => {
       const fieldId = elem.replace("field-", "");
-      return { idProductField: fieldId, value: data[elem] };
+      return {
+        idProductReal: props.productReal ? props.productReal.id : null,
+        idProductField: fieldId,
+        value: data[elem],
+      } as ProductRealField;
     });
-
   return realFields;
 }
 
 function handleSubmit(data: any) {
   const productRealRes = {
+    ...props.productReal,
     idProduct: props.product?.id,
     reference: data.reference,
     product_real_fields: mapDataFieldsInArray(data),
   };
   if (isNil(props.productReal)) {
     productRealStore.create(productRealRes);
-  } else {
-    productRealStore.update(productRealRes);
+  } else if (!isNil(productRealRes.id)) {
+    productRealStore.update(productRealRes.id, productRealRes);
   }
   emit("saved", data);
 }

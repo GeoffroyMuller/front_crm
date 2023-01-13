@@ -11,6 +11,7 @@ import type { ID } from "@/types/utils";
 import { sleep } from "../../utils";
 import type { AxiosResponse } from "axios";
 import type { Filters, PaginateResult, PaginateResult2 } from "./types";
+import { cloneDeep, merge } from "lodash";
 
 export interface makeAPIStoreProps {
   id: string;
@@ -191,18 +192,17 @@ export function makeAPIStore<T>(props: makeAPIStoreProps): APIStoreDef<T> {
         return response.data;
       },
       async fetchList(
-        filters?: Filters,
+        f?: Filters,
         applyState = true
       ): Promise<PaginateResult2<T>> {
         if (config.IS_MOCK) {
           await sleep(config.MOCK_DURATION);
         }
 
-        const _filters = {
-          ...(props.filters || {}),
-          ...(this.filters || {}),
-          ...(filters || {}),
-        };
+        const _filters = merge(
+          cloneDeep(this.filters),
+          merge(cloneDeep(f), cloneDeep(props.filters))
+        );
 
         // @ts-ignore
         const response = _formatResponse<Array<T> | PaginateResult<T>>(
