@@ -78,6 +78,15 @@ export default [
     },
   },
   {
+    path: "/companies/:id",
+    name: "edit-company",
+    component: () => import("./pages/clients/EditCompany.vue"),
+    meta: {
+      middleware: [auth],
+      layout: LayoutPage,
+    },
+  },
+  {
     path: "/projects-calendar",
     name: "projects-calendar",
     component: () => import("./pages/projects/Calendar.vue"),

@@ -16,11 +16,10 @@
   </DataTable>
 </template>
 <script setup lang="ts">
-import type { Store } from "pinia";
 import { computed, onMounted, ref } from "vue";
 import DataTable from "@/core/components/DataTable.vue";
 import type { Column } from "../types";
-import type { PaginateResult2, Filters } from "@/core/helpers/vue/store/types";
+import type { Filters } from "@/core/helpers/vue/store/types";
 import type { APIStore } from "@/core/helpers/vue/store/store.factory";
 
 interface MagicDataTableProps<T> {

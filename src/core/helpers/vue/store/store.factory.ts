@@ -17,6 +17,8 @@ export interface makeAPIStoreProps {
   // if path is different of the id
   path?: string;
 
+  primaryKey?: string;
+
   persist?: boolean;
   filters?: Filters;
 
@@ -46,8 +48,9 @@ export interface APIStoreActions<T> {
     applyState?: boolean
   ) => Promise<PaginateResult2<T>>;
   search: (filters?: Filters) => Promise<Array<T>>;
-  update: (id: ID, body: T) => void;
+  update: (id: ID, body: T) => Promise<T>;
   create: (body: T) => Promise<T>;
+  delete: (id: ID) => Promise<T>;
 }
 
 export interface APIStoreGetters<T> extends _GettersTree<APIStoreStateTree<T>> {
@@ -70,6 +73,8 @@ export type APIStore<T> = Store<
 >;
 
 export function makeAPIStore<T>(props: makeAPIStoreProps): APIStoreDef<T> {
+  const _primaryKey = props.primaryKey || "id";
+
   function _getPath({
     id,
     resource,
@@ -260,6 +265,18 @@ export function makeAPIStore<T>(props: makeAPIStoreProps): APIStoreDef<T> {
           config.IS_MOCK
             ? mock.add(_getPath(), body)
             : await axios.post(_getPath(), body)
+        );
+        return response.data;
+      },
+      async delete(id: ID): Promise<T> {
+        if (config.IS_MOCK) {
+          await sleep(config.MOCK_DURATION);
+        }
+
+        const response = _formatResponse<T>(
+          config.IS_MOCK
+            ? mock.deleteData(_getPath(), id)
+            : await axios.delete(_getPath({ id }))
         );
         return response.data;
       },

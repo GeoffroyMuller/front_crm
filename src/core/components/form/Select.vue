@@ -131,6 +131,7 @@ function handleClickOption(opt: any) {
     } else {
       internalValue.value = props.getOptionValue(opt);
     }
+    open.value = false;
   }
   validate();
 }

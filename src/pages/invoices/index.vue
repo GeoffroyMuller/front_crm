@@ -22,7 +22,7 @@
           key: 'status',
         },
       ]"
-      @row-click="(quote) => $router.push(`/invoices/${quote.id}`)"
+      @row-click="(i) => $router.push(`/invoices/${i.id}`)"
     >
       <template #content-client="{ item }">
         {{ item?.client?.firstname || "" }} {{ item?.client?.lastname || "" }}

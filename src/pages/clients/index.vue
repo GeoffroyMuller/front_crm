@@ -2,13 +2,14 @@
   <Page :title="$t('customers')">
     <Tabs
       :tabs="[
-        { id: 'clients', title: $t('customers') },
         { id: 'companies', title: $t('companies') },
+        { id: 'clients', title: $t('customers') },
       ]"
     >
       <template #companies>
         <MagicDataTable
           :store="companiesStore"
+          @row-click="(c) => $router.push(`/companies/${c.id}`)"
           :columns="[
             {
               title: $t('company'),
@@ -17,7 +18,25 @@
             },
           ]"
         >
-          <template #actions-title> </template>
+          <template #actions="{ item }">
+            <Button
+              @click.stop="deleteCompany(item)"
+              color="danger"
+              icon="delete"
+              v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
+              variant="outlined"
+            />
+          </template>
+          <template #actions-title>
+            <Button
+              color="success"
+              icon="add"
+              v-tooltip="{ text: $t('add'), placement: 'bottom' }"
+              @click.stop="() => $router.push(`/companies/new`)"
+            >
+              {{ $t("add") }}
+            </Button>
+          </template>
         </MagicDataTable>
       </template>
       <template #clients>
@@ -82,10 +101,35 @@ import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import type Client from "@/types/client";
 import Tabs from "@/core/components/Tabs.vue";
 import useCompaniesStore from "@/stores/companies";
+import useUI from "@/core/helpers/vue/composables/ui";
+import type { Company } from "@/types/company";
+import { useI18n } from "vue-i18n";
 
 const selected = ref<Array<Client>>([]);
 const isSidebarOpen = ref(false);
 const clientSelected = ref<Client | null>(null);
+
+const { confirm, toast } = useUI();
+const { t } = useI18n();
+
+async function deleteCompany(company: Company) {
+  if (await confirm("clients.sure_delete_company")) {
+    try {
+      await companiesStore.delete(company.id);
+      toast({
+        type: "primary",
+        message: t("deleted"),
+      });
+      await companiesStore.fetchList();
+    } catch (err) {
+      console.error(err);
+      toast({
+        type: "danger",
+        message: t("error_occured"),
+      });
+    }
+  }
+}
 
 function onAddClient(client: Client) {
   try {

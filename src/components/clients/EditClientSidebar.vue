@@ -30,6 +30,7 @@
           name="idCompany"
           :label="$t('company')"
           :getOptionLabel="(opt) => opt.name"
+          :rules="$yup.string().required()"
           optionKey="id"
           :get-filters="(str) => ({ $contains: { name: str } })"
           :store="companiesStore"

@@ -7,12 +7,6 @@
       <Button variant="text" class="auth">
         {{ auth.firstname }} {{ auth.lastname }}
       </Button>
-      <Menu>
-        <template #activator>
-          <IconButton name="notifications" />
-        </template>
-        <template #default> dqsjbsqdnsqdbhs </template>
-      </Menu>
     </div>
   </div>
   <Spinner v-if="loading" class="page-spinner" />

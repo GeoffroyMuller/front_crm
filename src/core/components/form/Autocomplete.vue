@@ -132,6 +132,7 @@ function handleClickOption(opt: any) {
     } else {
       internalValue.value = _getOptionValue(opt);
     }
+    open.value = false;
   }
   validate();
 }
