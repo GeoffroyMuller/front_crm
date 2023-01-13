@@ -1,6 +1,9 @@
 <template>
   <Media down="md">
     <div class="table-mobile">
+      <div>
+        <slot name="actions-title"></slot>
+      </div>
       <Card
         v-for="(item, index) in items"
         :key="index"
