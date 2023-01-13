@@ -1,6 +1,8 @@
 <template>
   <MagicFilterBar
     :store="quotesStore"
+    :columns="2"
+    :gap="1"
     :map="{
       '$contains.name': 'name',
       '$eq.status': 'status',

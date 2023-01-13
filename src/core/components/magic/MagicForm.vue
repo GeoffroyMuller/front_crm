@@ -9,9 +9,11 @@
     <template #default="form">
       <slot name="fields" v-bind="form" :loading="loading" />
       <template v-if="$slots.fields == null">
-        <template v-for="field of fields" :key="field.props.name">
-          <MagicFormField v-bind="field" />
-        </template>
+        <Grid :gap="gap" :columns="columns">
+          <template v-for="field of fields" :key="field.props.name">
+            <MagicFormField v-bind="field" />
+          </template>
+        </Grid>
       </template>
       <slot name="footer" v-bind="form" :loading="loading" />
       <div class="magic-form-footer" v-if="$slots.footer == null">
@@ -36,11 +38,15 @@ import type { Notification } from "../types";
 import { ref } from "vue";
 import type { MagicFormFieldProps } from "./MagicFormField.vue";
 import MagicFormField from "./MagicFormField.vue";
+import Grid, { type GridColumnsOptions } from "../layouts/Grid.vue";
 
 export interface MagicFormProps {
   fields: Array<MagicFormFieldProps>;
   modelValue?: any;
   btnSaveText?: string;
+
+  columns?: GridColumnsOptions;
+  gap?: number;
 
   submitAction?: (formData: any) => Promise<any>;
   /* if submitAction is not set, following props useless */

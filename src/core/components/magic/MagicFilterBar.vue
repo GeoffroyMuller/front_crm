@@ -4,7 +4,12 @@
     :withPadding="false"
     class="magic-filter-bar"
   >
-    <MagicForm v-model="filtersValues" :fields="filters">
+    <MagicForm
+      :columns="columns"
+      :gap="gap"
+      v-model="filtersValues"
+      :fields="filters"
+    >
       <template #footer></template>
     </MagicForm>
   </component>
@@ -17,10 +22,13 @@ import { ref, watch } from "vue";
 import Card from "../Card.vue";
 import MagicForm from "./MagicForm.vue";
 import type { MagicFormFieldProps } from "@/core/components/magic/MagicFormField.vue";
+import type { GridColumnsOptions } from "../layouts/Grid.vue";
 
 export interface MagicFilterBarProps<T> {
   store: APIStore<T>;
   filters: Array<MagicFormFieldProps>;
+  columns?: GridColumnsOptions;
+  gap?: number;
   isCard?: boolean;
   map: { [key: string]: string };
 }
