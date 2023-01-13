@@ -33,7 +33,7 @@ export interface APIStoreStateTree<T> {
   list: Array<T>;
   byId: { [key: ID]: T };
 
-  filters: {
+  filters: Filters & {
     page: number;
     pageSize: number;
   };
@@ -41,6 +41,7 @@ export interface APIStoreStateTree<T> {
 }
 
 export interface APIStoreActions<T> {
+  setFilters: (f: Filters) => void;
   setPage: (page: number) => void;
   setPageSize: (pageSize: number) => void;
   fetchById: (id: ID, filters?: Filters, applyState?: boolean) => Promise<T>;
@@ -164,6 +165,14 @@ export function makeAPIStore<T>(props: makeAPIStoreProps): APIStoreDef<T> {
       ...props.getters,
     },
     actions: {
+      async setFilters(f: Filters) {
+        this.filters = {
+          ...f,
+          page: this.filters.page,
+          pageSize: this.filters.pageSize,
+        };
+        this.fetchList();
+      },
       async setPage(page: number) {
         this.filters.page = page;
         this.fetchList();

@@ -10,7 +10,7 @@
     </div>
   </div>
   <Spinner v-if="loading" class="page-spinner" />
-  <div v-else class="page-content">
+  <div v-else class="page-content" :class="$props.class">
     <slot />
   </div>
 </template>
@@ -28,6 +28,7 @@ import Spinner from "@/core/components/Spinner.vue";
 interface PageProps {
   title: string;
   loading?: boolean;
+  class?: any;
 }
 
 const props = withDefaults(defineProps<PageProps>(), {});

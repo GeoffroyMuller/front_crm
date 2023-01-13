@@ -4,17 +4,16 @@
     @update:model-value="($val) => $emit('update:modelValue', $val)"
     @submit="handleSubmit"
     class="magic-form"
+    @input-change="($data) => $emit('inputChange', $data)"
   >
     <template #default="form">
       <slot name="fields" v-bind="form" :loading="loading" />
       <template v-if="$slots.fields == null">
-        <template v-for="field of fields" :key="field.props.name">
-          <component
-            :is="getComponent(field)"
-            v-bind="field.props"
-            :label="$t(field.props.label || '')"
-          />
-        </template>
+        <Grid :gap="gap" :columns="columns">
+          <template v-for="field of fields" :key="field.props.name">
+            <MagicFormField v-bind="field" />
+          </template>
+        </Grid>
       </template>
       <slot name="footer" v-bind="form" :loading="loading" />
       <div class="magic-form-footer" v-if="$slots.footer == null">
@@ -35,42 +34,20 @@ import Button from "../Button.vue";
 import Form from "../form/Form.vue";
 import { useI18n } from "vue-i18n";
 import useUI from "@/core/helpers/vue/composables/ui";
-import TextField, { type InputProps } from "../form/TextField.vue";
-import Select, { type SelectProps } from "../form/Select.vue";
 import type { Notification } from "../types";
-import { ref, type Component } from "vue";
-import Autocomplete, { type AutocompleteProps } from "../form/Autocomplete.vue";
-import DatePicker, { type DatePickerProps } from "../form/DatePicker.vue";
-import RadioGroup, { type RadioGroupProps } from "../form/RadioGroup.vue";
-import Switch, { type SwitchProps } from "../form/Switch.vue";
-
-export type MagicFormFieldType =
-  | "string"
-  | "number"
-  | "select"
-  | "autocomplete"
-  | "datepicker"
-  | "radiogroup"
-  | "switch";
-export type MagicFormFieldProps =
-  | AutocompleteProps
-  | InputProps
-  | DatePickerProps
-  | SelectProps
-  | RadioGroupProps
-  | SwitchProps;
-
-export interface MagicFormField {
-  props: MagicFormFieldProps;
-  component?: Component;
-  /* if component is set, following props useless */
-  type: MagicFormFieldType;
-}
+import { ref } from "vue";
+import type { MagicFormFieldProps } from "./MagicFormField.vue";
+import MagicFormField from "./MagicFormField.vue";
+import Grid from "../layouts/Grid.vue";
+import type { GridColumnsOptions } from "../layouts/types";
 
 export interface MagicFormProps {
-  fields: Array<MagicFormField>;
+  fields: Array<MagicFormFieldProps>;
   modelValue?: any;
   btnSaveText?: string;
+
+  columns?: GridColumnsOptions;
+  gap?: number;
 
   submitAction?: (formData: any) => Promise<any>;
   /* if submitAction is not set, following props useless */
@@ -78,7 +55,7 @@ export interface MagicFormProps {
   errorToastParams?: (err: any) => Notification | string;
 }
 
-const emit = defineEmits(["update:modelValue", "submit"]);
+const emit = defineEmits(["update:modelValue", "submit", "inputChange"]);
 const props = withDefaults(defineProps<MagicFormProps>(), {});
 
 const loading = ref(false);
@@ -125,30 +102,6 @@ async function handleSubmit(data: any) {
 
 const { toast } = useUI();
 const { t } = useI18n();
-
-function getComponent(field: MagicFormField): Component {
-  if (field.component != null) {
-    return field.component;
-  }
-  switch (field.type) {
-    case "string":
-      return TextField;
-    case "number":
-      return TextField;
-    case "select":
-      return Select;
-    case "switch":
-      return Switch;
-    case "radiogroup":
-      return RadioGroup;
-    case "autocomplete":
-      return Autocomplete;
-    case "datepicker":
-      return DatePicker;
-    default:
-      return TextField;
-  }
-}
 </script>
 
 <style lang="scss">

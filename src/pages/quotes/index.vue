@@ -1,5 +1,6 @@
 <template>
-  <Page :title="$t('quotes')">
+  <Page :title="$t('quotes')" class="quotes-page">
+    <QuoteFilters />
     <MagicDataTable
       :store="quotesStore"
       :columns="[
@@ -34,14 +35,23 @@
       </template>
       <template #actions-title>
         <div>
-          <Button
-            color="success"
-            icon="add"
-            v-tooltip="{ text: $t('add'), placement: 'bottom' }"
-            @click="$router.push(`/quotes/new`)"
-          >
-            {{ $t("add") }}
-          </Button>
+          <Media up="md">
+            <Button
+              color="success"
+              icon="add"
+              v-tooltip="{ text: $t('add'), placement: 'bottom' }"
+              @click="$router.push(`/quotes/new`)"
+            >
+              {{ $t("add") }}
+            </Button>
+          </Media>
+          <Media down="md">
+            <FloatingButton
+              color="success"
+              icon="add"
+              @click="$router.push(`/quotes/new`)"
+            />
+          </Media>
         </div>
       </template>
       <template #actions="{ item }">
@@ -86,7 +96,10 @@
         </div>
       </template>
     </MagicDataTable>
-    <QuotePreview @close="() => (quoteToPreview = null)" :quote="quoteToPreview" />
+    <QuotePreview
+      @close="() => (quoteToPreview = null)"
+      :quote="quoteToPreview"
+    />
     <QuoteSendMail
       @clickDownloadPDF="() => downloadPdf(quoteToSendMail)"
       @close="quoteToSendMail = null"
@@ -109,6 +122,10 @@ import type { Quote } from "@/types/quote";
 import { getJWT } from "@/core/helpers/utils";
 import config from "@/const";
 import QuoteSendMail from "@/components/quotes/QuoteSendMail.vue";
+import Media from "@/core/Media.vue";
+import FloatingButton from "@/core/components/FloatingButton.vue";
+import MagicFilterBar from "@/core/components/magic/MagicFilterBar.vue";
+import QuoteFilters from "@/components/quotes/QuoteFilters.vue";
 
 const { toast, confirm } = useUI();
 const { t } = useI18n();
@@ -164,7 +181,11 @@ async function setArchived(item: any) {
 const quotesStore = useQuoteStore();
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.quotes-page {
+  display: grid;
+  gap: spacing(2);
+}
 .actions {
   display: flex;
   align-items: center;
