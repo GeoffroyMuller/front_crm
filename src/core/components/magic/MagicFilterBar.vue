@@ -15,11 +15,12 @@ import type { APIStore } from "@/core/helpers/vue/store/store.factory";
 import { get, set } from "lodash";
 import { ref, watch } from "vue";
 import Card from "../Card.vue";
-import MagicForm, { type MagicFormField } from "./MagicForm.vue";
+import MagicForm from "./MagicForm.vue";
+import type { MagicFormFieldProps } from "@/core/components/magic/MagicFormField.vue";
 
 export interface MagicFilterBarProps<T> {
   store: APIStore<T>;
-  filters: Array<MagicFormField>;
+  filters: Array<MagicFormFieldProps>;
   isCard?: boolean;
   map: { [key: string]: string };
 }

@@ -19,13 +19,13 @@
 
 <script setup lang="ts">
 import Page from "@/components/Page.vue";
-import type { MagicFormField } from "@/core/components/magic/MagicForm.vue";
+import type { MagicFormFieldProps } from "@/core/components/magic/MagicFormField.vue";
 import MagicForm from "@/core/components/magic/MagicForm.vue";
 import useCompaniesStore from "@/stores/companies";
 import { computed } from "vue";
 import { string } from "yup";
 
-const formFields = computed<Array<MagicFormField>>(() => {
+const formFields = computed<Array<MagicFormFieldProps>>(() => {
   return [
     {
       props: {
