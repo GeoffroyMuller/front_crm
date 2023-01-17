@@ -4,8 +4,9 @@
     :columns="2"
     :gap="1"
     :map="{
-      '$contains.name': 'name',
-      '$eq.status': 'status',
+      name: '$contains.name',
+      status: '$eq.status',
+      test: ['$or.$contains.name', '$or.$contains.status'],
     }"
     :filters="[
       { type: 'string', props: { name: 'name', label: 'title' } },
@@ -16,6 +17,10 @@
           label: 'status',
           options: ['draft', 'refused', 'validated'],
         },
+      },
+      {
+        type: 'string',
+        props: { name: 'test', label: 'test' },
       },
     ]"
   />
