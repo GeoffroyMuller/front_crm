@@ -151,7 +151,7 @@ const displayed = computed<string>(() => {
   if (props.multiple) {
     return selected.value.map((v: any) => props.getOptionLabel(v)).join(", ");
   }
-  return props.getOptionLabel(selected.value);
+  return selected.value != null ? props.getOptionLabel(selected.value) : "";
 });
 </script>
 
