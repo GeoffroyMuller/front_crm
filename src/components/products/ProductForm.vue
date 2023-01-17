@@ -1,6 +1,8 @@
 <template>
   <Form :model-value="product" @submit="handleSubmit">
-    <template #default="{ hasError }">
+    <template #default="{ hasError, hasChanged }">
+      <pre class="code">{{ hasChanged }}</pre>
+
       <div class="form-product">
         <div class="form-head">
           <TextField
