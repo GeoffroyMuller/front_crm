@@ -76,16 +76,7 @@ watch(
         }),
       };
     } else {
-      const productRealFields = props.product?.product_fields?.map((field) => {
-        const realFieldExist = val.product_real_fields?.find(
-          (elem) => elem.idProductField == field.id
-        );
-        if (!isNil(realFieldExist)) {
-          return realFieldExist;
-        }
-        return { idProductReal: val.id, idProductField: field.id };
-      });
-      console.error({ productRealFields });
+      const productRealFields = mergeRealFieldsWithFields(val, props.product);
       productRealInternal.value = {
         ...val,
         product_real_fields: productRealFields,
@@ -95,25 +86,40 @@ watch(
   { immediate: true }
 );
 
+function mergeRealFieldsWithFields(
+  productReal: ProductReal,
+  product: Product | null
+) {
+  return product?.product_fields?.map((field) => {
+    const realFieldExist = productReal.product_real_fields?.find(
+      (elem) => elem.idProductField == field.id
+    );
+    if (!isNil(realFieldExist)) {
+      return realFieldExist;
+    }
+
+    return { idProductReal: productReal.id, idProductField: field.id };
+  });
+}
+
 function getFieldById(id: ID) {
   return props.product?.product_fields?.find(
     (field: ProductField) => field.id === id
   );
 }
 
-function handleSubmit(data: any) {
-  console.error({ data });
+async function handleSubmit(data: any) {
   if (isNil(props.productReal)) {
-    productRealStore.create({ idProduct: props.product?.id, ...data });
+    await productRealStore.create({ idProduct: props.product?.id, ...data });
   } else if (!isNil(props.productReal.id)) {
-    productRealStore.update(props.productReal.id, {
+    await productRealStore.update(props.productReal.id, {
       ...props.productReal,
       ...data,
       product_real_fields: data.product_real_fields?.map(
         (field: ProductRealField) => {
           return {
             ...field,
-            idProductReal: props.productReal ? props.productReal.id : "",
+            idProductReal: props.productReal ? props.productReal.id : null,
           };
         }
       ),

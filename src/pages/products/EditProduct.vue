@@ -52,6 +52,7 @@ import Tabs from "@/core/components/Tabs.vue";
 import { useI18n } from "vue-i18n";
 import ProductAvancedSettings from "@/components/products/ProductAvancedSettings.vue";
 import ProductStock from "@/components/products/ProductStock.vue";
+import type { ID } from "@/types/utils";
 
 const router = useRouter();
 const { id } = useRoute().params;
@@ -82,7 +83,7 @@ const goToProductsPage = () => {
 onMounted(async () => {
   try {
     if (id != "new") {
-      product.value = await productsStore.fetchById(id);
+      product.value = await productsStore.fetchById(id as ID);
     }
   } catch (error) {
     console.error(error);
@@ -92,10 +93,9 @@ onMounted(async () => {
 async function handleSubmit(data: Product) {
   try {
     if (id != "new") {
-      await productsStore.update(id, data);
-      product.value = { ...product.value, ...data };
+      product.value = await productsStore.update(id as ID, data);
     } else {
-      await productsStore.create(data);
+      product.value = await productsStore.create(data);
       goToProductsPage();
     }
   } catch (error) {
