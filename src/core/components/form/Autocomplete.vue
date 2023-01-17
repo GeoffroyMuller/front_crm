@@ -180,9 +180,6 @@ function clickTextField() {
 watch(
   () => search.value,
   (searchValue) => {
-    if (search.value.length === 0) {
-      open.value = false;
-    }
     if (searchValue !== displayed.value) {
       emit("search", searchValue);
       if (optionsFiltered.value?.length) {

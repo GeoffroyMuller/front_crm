@@ -224,7 +224,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps): APIStoreDef<T> {
           results: [],
           totalPages: 1,
         };
-        if ((response.data as PaginateResult<T>)?.results) {
+        if (Array.isArray((response.data as PaginateResult<T>)?.results)) {
           res.results = (response.data as PaginateResult<T>).results;
           res.totalPages = Math.ceil(
             (response.data as PaginateResult<T>).total / _filters.pageSize
@@ -248,7 +248,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps): APIStoreDef<T> {
             ? mock.getAll(_getPath({ filters }))
             : await axios.get(_getPath({ filters }))
         );
-        if ((response.data as PaginateResult<T>)?.total) {
+        if (Array.isArray((response.data as PaginateResult<T>)?.results)) {
           return (response.data as PaginateResult<T>).results;
         }
         return response.data as Array<T>;

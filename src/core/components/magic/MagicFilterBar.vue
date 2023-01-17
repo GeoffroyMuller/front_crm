@@ -1,9 +1,9 @@
 <template>
-  <component
-    :is="isCard ? Card : 'div'"
-    :withPadding="false"
-    class="magic-filter-bar"
-  >
+  <Card :withPadding="false" class="magic-filter-bar">
+    <template #title>
+      <Icon name="filter_alt" />
+      {{ $t("filters") }}
+    </template>
     <MagicForm
       :columns="columns"
       :gap="gap"
@@ -12,7 +12,7 @@
     >
       <template #footer></template>
     </MagicForm>
-  </component>
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -23,13 +23,13 @@ import Card from "../Card.vue";
 import MagicForm from "./MagicForm.vue";
 import type { MagicFormFieldProps } from "@/core/components/magic/MagicFormField.vue";
 import type { GridColumnsOptions } from "../layouts/types";
+import Icon from "../Icon.vue";
 
 export interface MagicFilterBarProps<T> {
   store: APIStore<T>;
   filters: Array<MagicFormFieldProps>;
   columns?: GridColumnsOptions;
   gap?: number;
-  isCard?: boolean;
   map: { [key: string]: string | Array<string> };
 }
 

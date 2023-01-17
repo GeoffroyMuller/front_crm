@@ -3,12 +3,19 @@
     class="card"
     :class="[`card-rd-${rounded}`, { padding: withPadding }, $props.class]"
   >
-    <div class="card-head" v-if="title?.length || subtitle?.length">
-      <div v-if="title?.length" class="title">
+    <div
+      class="card-head"
+      v-if="
+        title?.length || subtitle?.length || $slots.title || $slots.subtitle
+      "
+    >
+      <div v-if="title?.length || $slots.title" class="title">
         {{ title }}
+        <slot name="title" />
       </div>
-      <div v-if="subtitle?.length" class="subtitle">
+      <div v-if="subtitle?.length || $slots.subtitle" class="subtitle">
         {{ subtitle }}
+        <slot name="subtitle" />
       </div>
     </div>
     <div class="card-content">
