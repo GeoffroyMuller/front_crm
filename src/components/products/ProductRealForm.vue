@@ -18,8 +18,12 @@
         <div class="real-fields">
           <Repetable name="product_real_fields" :label="$t('fields')">
             <template #default="{ data }">
-              {{ data }}
-              <TextField name="value" :label="data.idProductField" />
+              <TextField
+                name="value"
+                :label="
+                  getFieldById(data.idProductField)?.name || data.idProductField
+                "
+              />
             </template>
           </Repetable>
         </div>
@@ -38,10 +42,16 @@ import Form from "@/core/components/form/Form.vue";
 import Button from "@/core/components/Button.vue";
 import TextField from "@/core/components/form/TextField.vue";
 import useProductRealStore from "@/stores/products_real";
-import type { Product, ProductReal } from "@/types/product";
+import type {
+  Product,
+  ProductField,
+  ProductReal,
+  ProductRealField,
+} from "@/types/product";
 import { isNil } from "lodash";
 import Repetable from "@/core/components/form/repetable/Repetable.vue";
 import { ref, watch } from "vue";
+import type { ID } from "@/types/utils";
 
 interface ProductRealFormProps {
   product: Product | null;
@@ -62,15 +72,34 @@ watch(
     if (isNil(val)) {
       productRealInternal.value = {
         product_real_fields: props.product?.product_fields?.map((field) => {
-          return { idProductReal: undefined, idProductField: field.id };
+          return { idProductField: field.id };
         }),
       };
     } else {
-      productRealInternal.value = val;
+      const productRealFields = props.product?.product_fields?.map((field) => {
+        const realFieldExist = val.product_real_fields?.find(
+          (elem) => elem.idProductField == field.id
+        );
+        if (!isNil(realFieldExist)) {
+          return realFieldExist;
+        }
+        return { idProductReal: val.id, idProductField: field.id };
+      });
+      console.error({ productRealFields });
+      productRealInternal.value = {
+        ...val,
+        product_real_fields: productRealFields,
+      };
     }
   },
   { immediate: true }
 );
+
+function getFieldById(id: ID) {
+  return props.product?.product_fields?.find(
+    (field: ProductField) => field.id === id
+  );
+}
 
 function handleSubmit(data: any) {
   console.error({ data });
@@ -80,8 +109,8 @@ function handleSubmit(data: any) {
     productRealStore.update(props.productReal.id, {
       ...props.productReal,
       ...data,
-      product_real_fields: props.productReal.product_real_fields?.map(
-        (field) => {
+      product_real_fields: data.product_real_fields?.map(
+        (field: ProductRealField) => {
           return {
             ...field,
             idProductReal: props.productReal ? props.productReal.id : "",
