@@ -30,27 +30,40 @@ export interface MagicFilterBarProps<T> {
   columns?: GridColumnsOptions;
   gap?: number;
   isCard?: boolean;
-  map: { [key: string]: string };
+  map: { [key: string]: string | Array<string> };
 }
 
-function mapFiltersFromStore() {
+function mapFormFilters() {
   const res = {};
 
   for (const storeFilterKey of Object.keys(props.map)) {
-    const value = get(props.store.filters, storeFilterKey);
+    const value = get(filtersValues.value, storeFilterKey);
     if (value) {
-      // @ts-ignore
-      set(res, props.map[storeFilterKey], value);
+      const storeKeys = props.map[storeFilterKey];
+      if (Array.isArray(storeKeys)) {
+        storeKeys.forEach((sk) => {
+          // @ts-ignore
+          set(res, sk, value);
+        });
+      } else {
+        // @ts-ignore
+        set(res, storeKeys, value);
+      }
     }
   }
   return res;
 }
 
-function mapFormFilters() {
+function mapFiltersFromStore() {
   const res = {};
   for (const storeFilterKey of Object.keys(props.map)) {
     // @ts-ignore
-    const value = get(filtersValues.value, props.map[storeFilterKey]);
+    const value = get(
+      props.store.filters,
+      Array.isArray(props.map[storeFilterKey])
+        ? props.map[storeFilterKey][0]
+        : props.map[storeFilterKey]
+    );
     if (value) {
       set(res, storeFilterKey, value);
     }
