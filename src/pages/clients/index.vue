@@ -77,6 +77,15 @@
               </Button>
             </div>
           </template>
+          <template #actions="{ item }">
+            <Button
+              @click.stop="deleteClient(item)"
+              color="danger"
+              icon="delete"
+              v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
+              variant="outlined"
+            />
+          </template>
         </MagicDataTable>
 
         <EditClientSidebar
@@ -121,6 +130,25 @@ async function deleteCompany(company: Company) {
         message: t("deleted"),
       });
       await companiesStore.fetchList();
+    } catch (err) {
+      console.error(err);
+      toast({
+        type: "danger",
+        message: t("error_occured"),
+      });
+    }
+  }
+}
+
+async function deleteClient(client: Client) {
+  if (await confirm("clients.sure_delete_company")) {
+    try {
+      await clientsStore.delete(client.id);
+      toast({
+        type: "primary",
+        message: t("deleted"),
+      });
+      await clientsStore.fetchList();
     } catch (err) {
       console.error(err);
       toast({
