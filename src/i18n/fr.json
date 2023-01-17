@@ -1,44 +1,46 @@
 {
-    "data": {
-        "status": {
-            "draft": "Brouillon",
-            "refused": "Refusé",
-            "validated": "Validé"
-        }
-    },
-    "pages": {
-        "quotes": {
-            "sure_archive_quote": "Etes vous sur de vouloir archiver ce devis ?"
-        },
-        "edit-quote": {
-            "qty": "Quantitée",
-            "unit_price": "Prix unitaire (HT)",
-            "description": "Description",
-            "vat": "TVA",
-            "total": "Total TTC",
-            "total-without-taxes": "Total HT",
-            "add-line-product": "Ajouter une ligne de produit",
-            "footer": "Pied de page",
-            "modalities": "Modalitées",
-            "add-customer": "Ajouter un client"
-        },
-        "edit-product": {
-            "description": "Description",
-            "stored-numerary": "Stockage numéraire",
-            "stock-management": "Gestion du stock"
-        }
-    },
-    "new-quote": "Nouveau devis",
-    "new-customer": "Nouveau client",
-    "client-add-success": "Client ajouté",
-    "client-update-success": "Client modifié",
-    "new-company-name": "Nom",
-    "new-company": "Nouvelle entreprise",
-    "sure-disconnect": "Confirmer la deconnexion ?",
-    "menu": {
-        "projects-calendar": "Calendrier",
-        "projects": "Projets",
-        "billing": "Facturation"
+  "data": {
+    "status": {
+      "draft": "Brouillon",
+      "refused": "Refusé",
+      "validated": "Validé"
     }
-    
+  },
+  "pages": {
+    "quotes": {
+      "sure_archive_quote": "Etes vous sur de vouloir archiver ce devis ?"
+    },
+    "edit-quote": {
+      "qty": "Quantitée",
+      "unit_price": "Prix unitaire (HT)",
+      "description": "Description",
+      "vat": "TVA",
+      "total": "Total TTC",
+      "total-without-taxes": "Total HT",
+      "add-line-product": "Ajouter une ligne de produit",
+      "footer": "Pied de page",
+      "modalities": "Modalitées",
+      "add-customer": "Ajouter un client"
+    },
+    "edit-product": {
+      "description": "Description",
+      "stored-numerary": "Stockage numéraire",
+      "stock-management": "Gestion du stock",
+      "new-product": "Nouveau produit",
+      "creat-product-real": "Creer un produit physique",
+      "edit-product-real": "Modifier le produit"
+    }
+  },
+  "new-quote": "Nouveau devis",
+  "new-customer": "Nouveau client",
+  "client-add-success": "Client ajouté",
+  "client-update-success": "Client modifié",
+  "new-company-name": "Nom",
+  "new-company": "Nouvelle entreprise",
+  "sure-disconnect": "Confirmer la deconnexion ?",
+  "menu": {
+    "projects-calendar": "Calendrier",
+    "projects": "Projets",
+    "billing": "Facturation"
+  }
 }

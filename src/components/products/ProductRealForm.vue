@@ -4,8 +4,8 @@
       <div class="title">
         {{
           productRealInternal?.id
-            ? $t("edit-product-real")
-            : $t("new-product-real")
+            ? $t("pages.edit-product.edit-product-real")
+            : $t("pages.edit-product.creat-product-real")
         }}
       </div>
       <div class="form-product-real">

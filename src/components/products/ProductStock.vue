@@ -102,6 +102,9 @@ const openSideProductReal = async (productReal: ProductReal | null) => {
       loadingProductReal.value = false;
       console.error(error);
     }
+  } else {
+    currentProductReal.value = null;
+    isSidebarOpen.value = true;
   }
 };
 </script>
