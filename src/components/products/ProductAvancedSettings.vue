@@ -8,7 +8,25 @@
           :label="$t('fields')"
         >
           <template #default>
-            <TextField name="name" :label="$t('name')" />
+            <div class="product_field">
+              <TextField
+                :rules="$yup.string().required()"
+                name="name"
+                :label="$t('name')"
+              />
+              <Select
+                :rules="$yup.string().required()"
+                :options="[
+                  { label: $t('text'), value: 'string' },
+                  { label: $t('number'), value: 'number' },
+                  { label: $t('select'), value: 'select' },
+                ]"
+                :label="$t('type')"
+                :get-option-label="(opt) => opt.label"
+                :get-option-value="(opt) => opt.value"
+                name="type"
+              />
+            </div>
           </template>
           <template #actions="{ addSection }">
             <Button type="button" variant="text" @click="addSection()">
@@ -34,6 +52,7 @@ import type { Product } from "@/types/product";
 import { ref } from "vue";
 import Repetable from "@/core/components/form/repetable/Repetable.vue";
 import useProductsStore from "@/stores/products";
+import Select from "@/core/components/form/Select.vue";
 
 interface ProductAvancedSettingsProps {
   product: Product | null;
@@ -57,6 +76,9 @@ function handleSubmit(data: any) {
 <style lang="scss">
 .avanced-settings-product {
   @include grid(1, 0, 2);
+  .product_field {
+    @include grid(2, 0, 2);
+  }
   .avanced-settings-bottom {
     @include flex(row, flex-end, center, 2);
   }

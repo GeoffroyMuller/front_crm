@@ -28,7 +28,7 @@ export interface ProductField {
   id?: ID;
   idProduct?: ID;
   name?: string;
-  type?: string;
+  type?: "string" | "select" | "number";
   product?: Product;
 }
 
