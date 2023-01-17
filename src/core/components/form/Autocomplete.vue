@@ -22,7 +22,7 @@
         />
       </template>
     </TextField>
-    <Alert v-if="internalError || error">
+    <Alert v-if="typeof (internalError || error) === 'string'">
       {{ internalError || error }}
     </Alert>
   </div>

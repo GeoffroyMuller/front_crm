@@ -7,10 +7,16 @@
       @search="onSearch"
       :options="options"
       :autoFilter="false"
+      :error="!!internalError"
     />
-    <Button v-if="canAdd" variant="text" @click.stop="$emit('add')">
-      {{ addText || $t("add") }}
-    </Button>
+    <div class="footer" :class="{ alert: internalError || error }">
+      <Alert v-if="internalError || error">
+        {{ internalError || error }}
+      </Alert>
+      <Button v-if="canAdd" variant="text" @click.stop="$emit('add')">
+        {{ addText || $t("add") }}
+      </Button>
+    </div>
   </div>
 </template>
 
@@ -23,6 +29,7 @@ import Button from "../Button.vue";
 import { isEqual } from "lodash";
 import type { Filters } from "@/core/helpers/vue/store/types";
 import type { APIStore } from "@/core/helpers/vue/store/store.factory";
+import Alert from "../Alert.vue";
 
 interface MagicAutocompleteProps<T> /* extends AutocompleteProps */ {
   multiple?: boolean;
@@ -95,6 +102,7 @@ watch(
 
 const autocompleteProps = computed(() => {
   const result = { ...props };
+  delete result.rules;
   delete result.name;
   return result;
 });
@@ -126,10 +134,16 @@ watch(
 );
 </script>
 
-<style>
+<style lang="scss">
 .magicAutocomplete {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  .footer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    align-items: center;
+    &.alert {
+      justify-content: space-between;
+    }
+  }
 }
 </style>
