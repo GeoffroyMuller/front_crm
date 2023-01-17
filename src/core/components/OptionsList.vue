@@ -7,7 +7,7 @@
       }"
       v-for="opt of _opt"
       :key="getOptionValue(opt)"
-      @click="handleClickOption(opt)"
+      @click.stop="handleClickOption(opt)"
     >
       {{ getOptionLabel(opt) }}
     </div>
