@@ -2,7 +2,11 @@
   <Form :model-value="productRealInternal" @submit="handleSubmit">
     <template #default="{ hasError }">
       <div class="title">
-        {{ productRealInternal?.id ? $t("edit") : $t("new") }}
+        {{
+          productRealInternal?.id
+            ? $t("pages.edit-product.edit-product-real")
+            : $t("pages.edit-product.creat-product-real")
+        }}
       </div>
       <div class="form-product-real">
         <TextField

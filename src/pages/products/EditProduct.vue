@@ -1,5 +1,12 @@
 <template>
-  <Page :title="$t('new_product')" :loading="id !== 'new' && product == null">
+  <Page
+    :title="
+      id == 'new' && product == null
+        ? $t('pages.edit-product.new-product')
+        : product?.name || ''
+    "
+    :loading="id !== 'new' && product == null"
+  >
     <Button
       class="btn-back"
       @click="goToProductsPage"

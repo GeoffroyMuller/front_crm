@@ -50,5 +50,7 @@
     "quantity": "Quantité",
     "none": "Aucun",
     "numerary": "Numéraire",
-    "physical": "Physique"
+    "physical": "Physique",
+    "advanced_settings": "Paramètres avancés",
+    "informations": "Informations"
 }
