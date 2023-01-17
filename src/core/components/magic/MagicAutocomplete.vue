@@ -31,7 +31,7 @@ import type { Filters } from "@/core/helpers/vue/store/types";
 import type { APIStore } from "@/core/helpers/vue/store/store.factory";
 import Alert from "../Alert.vue";
 
-interface MagicAutocompleteProps<T> /* extends AutocompleteProps */ {
+export interface MagicAutocompleteProps<T> /* extends AutocompleteProps */ {
   multiple?: boolean;
 
   optionKey?: string;

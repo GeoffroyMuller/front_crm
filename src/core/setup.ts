@@ -8,7 +8,7 @@ import yupPlugin from "./plugins/yup";
 import { i18n } from "./plugins/i18n";
 
 import { createApp } from "vue";
-import { createWebHistory, type RouteRecordRaw } from "vue-router";
+import { createWebHashHistory, type RouteRecordRaw } from "vue-router";
 
 import App from "./components/App.vue";
 
@@ -28,7 +28,7 @@ export default function setup(options: SetupOptions) {
   const { routes } = options;
 
   const router = setupRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHashHistory(import.meta.env.BASE_URL),
     routes,
   });
 
