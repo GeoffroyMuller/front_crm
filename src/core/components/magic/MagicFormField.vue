@@ -14,6 +14,9 @@ import RadioGroup, { type RadioGroupProps } from "../form/RadioGroup.vue";
 import Select, { type SelectProps } from "../form/Select.vue";
 import Switch, { type SwitchProps } from "../form/Switch.vue";
 import TextField, { type InputProps } from "../form/TextField.vue";
+import MagicAutocomplete, {
+  type MagicAutocompleteProps,
+} from "./MagicAutocomplete.vue";
 
 export type MagicFormFieldType =
   | "string"
@@ -22,14 +25,16 @@ export type MagicFormFieldType =
   | "autocomplete"
   | "datepicker"
   | "radiogroup"
-  | "switch";
+  | "switch"
+  | "magicautocomplete";
 export type MagicFormFieldPropsProps =
   | AutocompleteProps
   | InputProps
   | DatePickerProps
   | SelectProps
   | RadioGroupProps
-  | SwitchProps;
+  | SwitchProps
+  | MagicAutocompleteProps<any>;
 
 export interface MagicFormFieldProps {
   props: MagicFormFieldPropsProps;
@@ -59,6 +64,8 @@ function getComponent(): Component {
       return Autocomplete;
     case "datepicker":
       return DatePicker;
+    case "magicautocomplete":
+      return MagicAutocomplete;
     default:
       return TextField;
   }

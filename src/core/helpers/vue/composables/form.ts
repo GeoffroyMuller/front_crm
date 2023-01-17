@@ -51,11 +51,15 @@ export default function useForm(props: userFormProps) {
   watch(
     () => internalValue.value,
     () => {
-      if (!isEqual(internalValue.value, props.modelValue)) {
+      if (hasChanged.value) {
         instance?.emit("update:modelValue", internalValue.value);
       }
     }
   );
+
+  const hasChanged = computed(() => {
+    return !isEqual(internalValue.value, props.modelValue);
+  });
 
   function register(input: _CustomInput) {
     inputs.value[input.name] = input;
@@ -148,5 +152,6 @@ export default function useForm(props: userFormProps) {
     reset,
     validate,
     hasError,
+    hasChanged,
   };
 }

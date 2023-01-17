@@ -1,33 +1,76 @@
 <template>
-  <MagicFilterBar
-    :store="quotesStore"
-    :columns="2"
-    :gap="1"
-    :map="{
-      name: '$contains.name',
-      status: '$eq.status',
-      test: ['$or.$contains.name', '$or.$contains.status'],
-    }"
-    :filters="[
-      { type: 'string', props: { name: 'name', label: 'title' } },
+  <MagicFilterBar v-bind="filterBarProps" />
+</template>
+<script setup lang="ts">
+import type { MagicAutocompleteProps } from "@/core/components/magic/MagicAutocomplete.vue";
+import MagicFilterBar, {
+  type MagicFilterBarProps,
+} from "@/core/components/magic/MagicFilterBar.vue";
+import useClientStore from "@/stores/clients";
+import useCompaniesStore from "@/stores/companies";
+import useQuoteStore from "@/stores/quotes";
+import type Client from "@/types/client";
+import type { Company } from "@/types/company";
+import type { Quote } from "@/types/quote";
+import { computed } from "vue";
+
+const clientsStore = useClientStore();
+const companiesStore = useCompaniesStore();
+
+const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
+  return {
+    store: quotesStore,
+    gap: 1,
+    columns: 2,
+    map: {
+      name: "$contains.name",
+      status: "$eq.status",
+      customer: "$eq.idClient",
+      company: "$eq.client.idCompany",
+      //test: ["$or.$contains.name", "$or.$contains.status"],
+    },
+    filters: [
+      { type: "string", props: { name: "name", label: "title" } },
       {
-        type: 'select',
+        type: "select",
         props: {
-          name: 'status',
-          label: 'status',
-          options: ['draft', 'refused', 'validated'],
+          name: "status",
+          label: "status",
+          options: ["draft", "refused", "validated"],
         },
       },
       {
-        type: 'string',
-        props: { name: 'test', label: 'test' },
+        type: "magicautocomplete",
+        props: {
+          name: "customer",
+          label: "customer",
+          store: clientsStore,
+          getOptionLabel: (opt) => `${opt.firstname} ${opt.lastname}`,
+          optionKey: "id",
+          getFilters: (str) => ({
+            $or: {
+              $contains: { firstname: str, lastname: str },
+            },
+          }),
+        } as MagicAutocompleteProps<Client>,
       },
-    ]"
-  />
-</template>
-<script setup lang="ts">
-import MagicFilterBar from "@/core/components/magic/MagicFilterBar.vue";
-import useQuoteStore from "@/stores/quotes";
+      {
+        type: "magicautocomplete",
+        props: {
+          name: "company",
+          label: "company",
+          store: companiesStore,
+          getOptionLabel: (opt) => `${opt.name}`,
+          optionKey: "id",
+          getFilters: (str) => ({
+            $contains: { name: str },
+          }),
+        } as MagicAutocompleteProps<Company>,
+      },
+      //{ type: "string", props: { name: "test", label: "test" } },
+    ],
+  };
+});
 
 const quotesStore = useQuoteStore();
 </script>

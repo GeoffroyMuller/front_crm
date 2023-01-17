@@ -1,6 +1,6 @@
 <template>
   <form @submit="handleSumbit">
-    <slot :hasError="hasError" />
+    <slot :hasError="hasError" :hasChanged="hasChanged" />
   </form>
 </template>
 
@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<FormProps>(), {});
 
 const emit = defineEmits(["update:modelValue", "submit", "inputChange"]);
 
-const { hasError, validate, getData } = useForm(props);
+const { hasError, validate, getData, hasChanged } = useForm(props);
 
 async function handleSumbit(event: Event) {
   event.preventDefault();
