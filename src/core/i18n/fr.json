@@ -53,5 +53,7 @@
     "physical": "Physique",
     "advanced_settings": "Paramètres avancés",
     "informations": "Informations",
-    "stock": "Stock"
+    "stock": "Stock",
+    "type": "Type",
+    "text": "Texte"
 }

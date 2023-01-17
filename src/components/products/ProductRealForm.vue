@@ -23,11 +23,12 @@
             :max="productRealInternal?.product_real_fields?.length"
           >
             <template #default="{ data }">
-              <TextField
-                name="value"
+              <MagicFormField
+                :props="{ name: 'value' }"
                 :label="
                   getFieldById(data.idProductField)?.name || data.idProductField
                 "
+                :type="data.type ? data.type : 'string'"
               />
             </template>
           </Repetable>
@@ -57,6 +58,7 @@ import { isNil } from "lodash";
 import Repetable from "@/core/components/form/repetable/Repetable.vue";
 import { ref, watch } from "vue";
 import type { ID } from "@/types/utils";
+import MagicFormField from "@/core/components/magic/MagicFormField.vue";
 
 interface ProductRealFormProps {
   product: Product | null;
