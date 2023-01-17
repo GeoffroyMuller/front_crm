@@ -16,7 +16,12 @@
         />
 
         <div class="real-fields">
-          <Repetable name="product_real_fields" :label="$t('fields')">
+          <Repetable
+            name="product_real_fields"
+            :label="$t('fields')"
+            :min="productRealInternal?.product_real_fields?.length"
+            :max="productRealInternal?.product_real_fields?.length"
+          >
             <template #default="{ data }">
               <TextField
                 name="value"
@@ -59,7 +64,7 @@ interface ProductRealFormProps {
 }
 
 const productRealStore = useProductRealStore();
-const emit = defineEmits(["saved", "cancel", "update:product"]);
+const emit = defineEmits(["product-created", "cancel", "update:product"]);
 const props = withDefaults(defineProps<ProductRealFormProps>(), {
   product: null,
   productReal: null,
@@ -70,11 +75,7 @@ watch(
   () => props.productReal,
   (val) => {
     if (isNil(val)) {
-      productRealInternal.value = {
-        product_real_fields: props.product?.product_fields?.map((field) => {
-          return { idProductField: field.id };
-        }),
-      };
+      initProductRealInternal();
     } else {
       const productRealFields = mergeRealFieldsWithFields(val, props.product);
       productRealInternal.value = {
@@ -85,6 +86,15 @@ watch(
   },
   { immediate: true }
 );
+
+function initProductRealInternal() {
+  productRealInternal.value = null;
+  productRealInternal.value = {
+    product_real_fields: props.product?.product_fields?.map((field) => {
+      return { idProductField: field.id };
+    }),
+  };
+}
 
 function mergeRealFieldsWithFields(
   productReal: ProductReal,
@@ -109,23 +119,28 @@ function getFieldById(id: ID) {
 }
 
 async function handleSubmit(data: any) {
-  if (isNil(props.productReal)) {
-    await productRealStore.create({ idProduct: props.product?.id, ...data });
-  } else if (!isNil(props.productReal.id)) {
-    await productRealStore.update(props.productReal.id, {
-      ...props.productReal,
-      ...data,
-      product_real_fields: data.product_real_fields?.map(
-        (field: ProductRealField) => {
-          return {
-            ...field,
-            idProductReal: props.productReal ? props.productReal.id : null,
-          };
-        }
-      ),
-    });
+  try {
+    if (isNil(props.productReal)) {
+      await productRealStore.create({ idProduct: props.product?.id, ...data });
+      initProductRealInternal();
+      emit("product-created", data);
+    } else if (!isNil(props.productReal.id)) {
+      await productRealStore.update(props.productReal.id, {
+        ...props.productReal,
+        ...data,
+        product_real_fields: data.product_real_fields?.map(
+          (field: ProductRealField) => {
+            return {
+              ...field,
+              idProductReal: props.productReal ? props.productReal.id : null,
+            };
+          }
+        ),
+      });
+    }
+  } catch (error) {
+    console.error(error);
   }
-  emit("saved", data);
 }
 </script>
 <style lang="scss">

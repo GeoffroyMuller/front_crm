@@ -53,8 +53,9 @@
       </div>
       <div v-else class="product-real-sidebar">
         <ProductRealForm
+          @product-created="handleCreated"
           :product="product"
-          :product-real="currentProductReal"
+          :productReal="currentProductReal"
         />
       </div>
     </Sidebar>
@@ -106,6 +107,9 @@ const openSideProductReal = async (productReal: ProductReal | null) => {
     currentProductReal.value = null;
     isSidebarOpen.value = true;
   }
+};
+const handleCreated = () => {
+  isSidebarOpen.value = false;
 };
 </script>
 <style lang="scss">
