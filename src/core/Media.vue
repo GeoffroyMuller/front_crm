@@ -1,6 +1,7 @@
 <template>
   <component
     :is="component"
+    class="media"
     :class="{
       [`up-${up}`]: !!up,
       [`down-${down}`]: !!down && !up,
@@ -25,6 +26,9 @@ const props = withDefaults(defineProps<MediaProps>(), {
 </script>
 
 <style lang="scss" scoped>
+.media {
+  width: 100%;
+}
 @each $key, $value in $grid-breakpoints {
   @include media-down($key) {
     .up-#{$key} {

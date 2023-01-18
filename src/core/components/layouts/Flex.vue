@@ -21,7 +21,7 @@ interface FlexProps {
   alignItems?: AlignItemsOptions;
   justifyContent?: JustifyContentOptions;
   component?: Component;
-  gap: number;
+  gap?: number;
 }
 
 const flex = ref();
@@ -42,6 +42,7 @@ const props = withDefaults(defineProps<FlexProps>(), {});
 <style lang="scss">
 .flex {
   display: flex;
+  width: 100%;
   gap: calc(spacing(1) * var(--flex-gap));
 }
 </style>
