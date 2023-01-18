@@ -6,7 +6,7 @@
     <Card :withPadding="false" class="repetable">
       <RepetableSection
         class="repetable-section"
-        v-for="(section, key, index) in sections"
+        v-for="(section, key) in sections"
         :key="key"
         :value="section"
         @inputChange="
@@ -14,10 +14,7 @@
         "
       >
         <slot :data="section" />
-        <div
-          class="icon-delete"
-          v-if="isNil(min) || (!isNil(min) && min <= index)"
-        >
+        <div class="icon-delete" v-if="!isMin">
           <div>
             <IconButton
               class=""
@@ -117,6 +114,12 @@ const sectionsList = computed(() =>
 
 const isMax = computed(() => {
   if (!isNil(props.max) && props.max <= Object.keys(sections.value).length) {
+    return true;
+  }
+  return false;
+});
+const isMin = computed(() => {
+  if (!isNil(props.min) && props.min >= Object.keys(sections.value).length) {
     return true;
   }
   return false;

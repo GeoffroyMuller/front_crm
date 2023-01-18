@@ -19,7 +19,7 @@
                 :options="[
                   { label: $t('text'), value: 'string' },
                   { label: $t('number'), value: 'number' },
-                  { label: $t('select'), value: 'select' },
+                  { label: $t('selector'), value: 'select' },
                 ]"
                 :label="$t('type')"
                 :get-option-label="(opt) => opt.label"
@@ -38,9 +38,12 @@
           <Button @click="$emit('cancel')" variant="text">{{
             $t("cancel")
           }}</Button>
-          <Button :disabled="hasError || !hasChanged" type="submit">{{
-            $t("save")
-          }}</Button>
+          <Button
+            :disabled="hasError || !hasChanged"
+            :loading="loading"
+            type="submit"
+            >{{ $t("save") }}</Button
+          >
         </div>
       </div>
     </template>
@@ -60,19 +63,29 @@ interface ProductAvancedSettingsProps {
   product: Product | null;
 }
 const productStore = useProductsStore();
-const emit = defineEmits(["saved", "cancel", "update:product"]);
+const emit = defineEmits(["saved", "cancel"]);
 const props = withDefaults(defineProps<ProductAvancedSettingsProps>(), {
   product: null,
 });
 
+const loading = ref<boolean>(false);
 const isNumeraryStock = ref<boolean>(
   productStore.isNumeraryStock(props.product)
 );
 
 function handleSubmit(data: any) {
+  loading.value = true;
   const productRes = { ...props.product, product_fields: data.product_fields };
-  emit("update:product", productRes);
-  emit("saved", productRes);
+  emit(
+    "saved",
+    productRes,
+    () => {
+      loading.value = false;
+    },
+    () => {
+      loading.value = false;
+    }
+  );
 }
 </script>
 <style lang="scss">

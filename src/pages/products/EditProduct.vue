@@ -60,11 +60,14 @@ import { useI18n } from "vue-i18n";
 import ProductAvancedSettings from "@/components/products/ProductAvancedSettings.vue";
 import ProductStock from "@/components/products/ProductStock.vue";
 import type { ID } from "@/types/utils";
+import useUI from "@/core/helpers/vue/composables/ui";
+import { isNil } from "lodash";
 
 const router = useRouter();
 const { id } = useRoute().params;
 const productsStore = useProductStore();
 const { t } = useI18n();
+const { toast } = useUI();
 
 const product = ref<Product | null>(null);
 
@@ -97,7 +100,11 @@ onMounted(async () => {
   }
 });
 
-async function handleSubmit(data: Product) {
+async function handleSubmit(
+  data: Product,
+  afterSaved: () => any | null,
+  afterError: () => any | null
+) {
   try {
     if (id != "new") {
       product.value = await productsStore.update(id as ID, data);
@@ -105,8 +112,22 @@ async function handleSubmit(data: Product) {
       product.value = await productsStore.create(data);
       goToProductsPage();
     }
-  } catch (error) {
+    if (!isNil(afterSaved)) {
+      afterSaved();
+    }
+    toast({
+      type: "success",
+      message: t("saved"),
+    });
+  } catch (error: any) {
     console.error(error);
+    if (!isNil(afterError)) {
+      afterError();
+    }
+    toast({
+      type: "danger",
+      message: `${t("error_occured")}${": " + error?.message}`,
+    });
   }
 }
 </script>

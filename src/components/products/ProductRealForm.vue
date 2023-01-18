@@ -115,7 +115,7 @@ function mergeRealFieldsWithFields(
   productReal: ProductReal,
   product: Product | null
 ) {
-  return product?.product_fields?.map((field) => {
+  return product?.product_fields?.map((field: ProductField) => {
     const realFieldExist = productReal.product_real_fields?.find(
       (elem) => elem.idProductField == field.id
     );
@@ -123,7 +123,10 @@ function mergeRealFieldsWithFields(
       return realFieldExist;
     }
 
-    return { idProductReal: productReal.id, idProductField: field.id };
+    return {
+      idProductReal: productReal.id,
+      idProductField: field.id,
+    };
   });
 }
 
