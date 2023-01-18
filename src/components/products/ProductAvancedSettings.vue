@@ -1,6 +1,6 @@
 <template>
   <Form :model-value="product" @submit="handleSubmit">
-    <template #default="{ hasError }">
+    <template #default="{ hasError, hasChanged }">
       <div class="avanced-settings-product">
         <Repetable
           v-show="!isNumeraryStock"
@@ -38,7 +38,9 @@
           <Button @click="$emit('cancel')" variant="text">{{
             $t("cancel")
           }}</Button>
-          <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
+          <Button :disabled="hasError || !hasChanged" type="submit">{{
+            $t("save")
+          }}</Button>
         </div>
       </div>
     </template>
