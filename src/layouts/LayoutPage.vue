@@ -125,18 +125,10 @@ const menu = ref([
     icon: "home",
   },
   {
-    key: "projets",
-    title: "menu.projects",
+    key: "events",
+    title: "menu.events",
     icon: "calendar_month",
-    path: "/projects-calendar",
-    children: [
-      {
-        key: "calendar",
-        title: "menu.projects-calendar",
-        icon: "calendar_month",
-        path: "/projects-calendar",
-      },
-    ],
+    path: "/events",
   },
   {
     key: "billing",

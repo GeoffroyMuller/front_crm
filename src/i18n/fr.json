@@ -41,6 +41,11 @@
   "menu": {
     "projects-calendar": "Calendrier",
     "projects": "Projets",
-    "billing": "Facturation"
+    "billing": "Facturation",
+    "events": "Evenements"
+  },
+  "events": {
+    "new-event": "Nouvel Evenement",
+    "event": "Evenement"
   }
 }
