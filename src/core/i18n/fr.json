@@ -56,5 +56,7 @@
     "informations": "Informations",
     "stock": "Stock",
     "type": "Type",
-    "text": "Texte"
+    "text": "Texte",
+    "number": "Nombre",
+    "selector": "Sélecteur"
 }
