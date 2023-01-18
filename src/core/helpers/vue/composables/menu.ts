@@ -12,6 +12,9 @@ export interface MenuProps {
   component: Component;
   componentProps?: any;
   activator: HTMLElement | Ref<HTMLElement>;
+
+  fullActivatorWidth?: boolean;
+
   placement?: "top" | "bottom" | "left" | "right";
   gap?: number;
   openOnHover?: boolean;
@@ -150,6 +153,9 @@ export default function useMenu(props: MenuProps) {
       top: coord.top + "px",
       left: coord.left + "px",
     });
+    if (props.fullActivatorWidth) {
+      container.style.width = `${dimensions.activator.width}px`;
+    }
   }
 
   function _resetStyle() {

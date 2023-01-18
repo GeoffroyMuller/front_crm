@@ -84,6 +84,7 @@ const { open } = useMenu({
   activator: datepicker,
   component: DatepickerContent,
   openOnHover: false,
+  fullActivatorWidth: true,
   componentProps: {
     modelValue: internalValue,
     onUpdate: onSelectDate,

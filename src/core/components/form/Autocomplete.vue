@@ -226,6 +226,7 @@ const { open } = useMenu({
   activator: autocomplete,
   component: OptionsList,
   openOnHover: false,
+  fullActivatorWidth: true,
   componentProps: {
     "handle-click-option": handleClickOption,
     "get-option-value": _getOptionValue,

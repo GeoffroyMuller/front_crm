@@ -107,6 +107,7 @@ const { open } = useMenu({
   activator: selectRef,
   component: OptionsList,
   openOnHover: false,
+  fullActivatorWidth: true,
   componentProps: {
     "handle-click-option": handleClickOption,
     "get-option-value": props.getOptionValue,
