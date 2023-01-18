@@ -1,5 +1,11 @@
 <template>
   <Page :title="title" :loading="loading">
+    <EditClientSidebar
+      v-model:open="editClientOpen"
+      @update="editClientOpen = false"
+      @add="editClientOpen = false"
+      :client="clientSelected"
+    />
     <Flex align-items="start" direction="column" :gap="2">
       <MagicFormVue
         :fields="[{ type: 'string', props: { name: 'name', label: 'name' } }]"
@@ -15,6 +21,9 @@
         <div class="text2">{{ $t("customers") }}</div>
         <MagicDataTable
           :store="useClientStore()"
+          @row-click="
+            ($item) => ((clientSelected = $item), (editClientOpen = true))
+          "
           has-local-state
           :filters="{
             $eq: {
@@ -49,6 +58,7 @@
   </Page>
 </template>
 <script lang="ts" setup>
+import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import Page from "@/components/Page.vue";
 import Flex from "@/core/components/layouts/Flex.vue";
 import Grid from "@/core/components/layouts/Grid.vue";
@@ -56,8 +66,9 @@ import MagicDataTable from "@/core/components/magic/MagicDataTable.vue";
 import MagicFormVue from "@/core/components/magic/MagicForm.vue";
 import useClientStore from "@/stores/clients";
 import useCompaniesStore from "@/stores/companies";
+import type Client from "@/types/client";
 import type { Company } from "@/types/company";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 
@@ -82,6 +93,9 @@ const isAddAction = computed(
 const loading = computed(() => {
   return isAddAction.value ? false : !company.value;
 });
+
+const clientSelected = ref<Client>();
+const editClientOpen = ref<boolean>(false);
 
 const title = computed(() => {
   if (isAddAction.value) {
