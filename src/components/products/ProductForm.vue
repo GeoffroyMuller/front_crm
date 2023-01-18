@@ -49,7 +49,12 @@
           <Button @click="$emit('cancel')" variant="text">{{
             $t("cancel")
           }}</Button>
-          <Button :disabled="hasError || !hasChanged" type="submit">{{ $t("save") }}</Button>
+          <Button
+            :disabled="hasError || !hasChanged"
+            :loading="loading"
+            type="submit"
+            >{{ $t("save") }}</Button
+          >
         </div>
       </div>
     </template>
@@ -61,17 +66,16 @@ import Button from "@/core/components/Button.vue";
 import TextField from "@/core/components/form/TextField.vue";
 import type { Product, StockManagement } from "@/types/product";
 import { computed, ref } from "vue";
-import Switch from "@/core/components/form/Switch.vue";
 import RadioGroup from "@/core/components/form/RadioGroup.vue";
 
 interface ProductFormProps {
   product: Product | null;
 }
-const emit = defineEmits(["saved", "cancel", "update:product"]);
+const emit = defineEmits(["saved", "cancel"]);
 const props = withDefaults(defineProps<ProductFormProps>(), {
   product: null,
 });
-
+const loading = ref<boolean>(false);
 const stockManagement = ref<StockManagement>(
   props.product?.stockManagement || null
 );
@@ -81,8 +85,17 @@ const isNumeraryStock = computed(() => {
 });
 
 function handleSubmit(data: any) {
-  emit("update:product", data);
-  emit("saved", data);
+  loading.value = true;
+  emit(
+    "saved",
+    data,
+    () => {
+      loading.value = false;
+    },
+    () => {
+      loading.value = false;
+    }
+  );
 }
 </script>
 <style lang="scss">
