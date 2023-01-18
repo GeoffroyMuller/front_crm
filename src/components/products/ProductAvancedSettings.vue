@@ -7,7 +7,7 @@
           name="product_fields"
           :label="$t('fields')"
         >
-          <template #default>
+          <template #default="{ data }">
             <div class="product_field">
               <TextField
                 :rules="$yup.string().required()"
@@ -26,6 +26,17 @@
                 :get-option-value="(opt) => opt.value"
                 name="type"
               />
+              <Repetable
+                v-if="data.type == 'select'"
+                :label="$t('pages.edit-product.add-selectable-options')"
+                name="options"
+              >
+                <TextField
+                  :rules="$yup.string().required()"
+                  name="value"
+                  :label="$t('value')"
+                />
+              </Repetable>
             </div>
           </template>
           <template #actions="{ addSection }">

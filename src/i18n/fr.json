@@ -28,7 +28,8 @@
       "stock-management": "Gestion du stock",
       "new-product": "Nouveau produit",
       "creat-product-real": "Creer un produit physique",
-      "edit-product-real": "Modifier le produit"
+      "edit-product-real": "Modifier le produit",
+      "add-selectable-options": "Ajouter des options de selection"
     }
   },
   "new-quote": "Nouveau devis",
