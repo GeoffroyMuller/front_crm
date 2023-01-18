@@ -23,13 +23,15 @@
             :max="productRealInternal?.product_real_fields?.length"
           >
             <template #default="{ data }">
-              {{ getFieldById(data.idProductField)?.type }}
               <MagicFormField
-                :props="{ name: 'value' }"
+                :props="{
+                  ...getFieldById(data.idProductField)?.props,
+                  name: 'value',
+                }"
                 :label="
                   getFieldById(data.idProductField)?.name || data.idProductField
                 "
-                :type="'string'"
+                :type="getFieldById(data.idProductField)?.type || 'string'"
               />
             </template>
           </Repetable>
