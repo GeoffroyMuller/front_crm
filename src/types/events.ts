@@ -1,10 +1,11 @@
+import type { Dayjs } from "dayjs";
 import type { Company } from "./company";
 
-export type Event = {
+export interface Event {
   id?: number;
-  dtstamp?: string;
-  dtstart?: string;
-  dtend?: string;
+  dtstamp?: string | Dayjs;
+  dtstart?: string | Dayjs;
+  dtend?: string | Dayjs;
   summary?: string;
   description?: string;
   location?: string;
@@ -15,4 +16,4 @@ export type Event = {
 
   idCompany?: number;
   company?: Company;
-};
+}

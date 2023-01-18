@@ -46,7 +46,7 @@ const { toast } = useUI();
 const { t } = useI18n();
 const eventStore = useEventsStore();
 
-const isAddAction = computed(() => props.event == null);
+const isAddAction = computed(() => props.event?.id == null);
 
 async function handleSubmit(data: any) {
   if (isAddAction.value) {
