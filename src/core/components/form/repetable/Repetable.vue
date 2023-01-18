@@ -6,7 +6,7 @@
     <Card :withPadding="false" class="repetable">
       <RepetableSection
         class="repetable-section"
-        v-for="(section, key, index) in sections"
+        v-for="(section, key) in sections"
         :key="key"
         :value="section"
         @inputChange="
@@ -14,7 +14,6 @@
         "
       >
         <slot :data="section" />
-        {{ key }}: {{ index }}
         <div class="icon-delete" v-if="!isMin">
           <div>
             <IconButton
