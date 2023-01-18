@@ -63,15 +63,17 @@ import { ref, watch } from "vue";
 import type { ID } from "@/types/utils";
 import MagicFormField from "@/core/components/magic/MagicFormField.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
+import { useI18n } from "vue-i18n";
 
 interface ProductRealFormProps {
   product: Product | null;
   productReal: ProductReal | null;
 }
 
+const { t } = useI18n();
 const { toast } = useUI();
 const productRealStore = useProductRealStore();
-const emit = defineEmits(["product-created", "cancel", "update:product"]);
+const emit = defineEmits(["saved", "cancel", "update:product"]);
 const props = withDefaults(defineProps<ProductRealFormProps>(), {
   product: null,
   productReal: null,
@@ -130,7 +132,6 @@ async function handleSubmit(data: any) {
     if (isNil(props.productReal)) {
       await productRealStore.create({ idProduct: props.product?.id, ...data });
       initProductRealInternal();
-      emit("product-created", data);
     } else if (!isNil(props.productReal.id)) {
       await productRealStore.update(props.productReal.id, {
         ...props.productReal,
@@ -145,11 +146,16 @@ async function handleSubmit(data: any) {
         ),
       });
     }
-  } catch (error) {
+    emit("saved", data);
+    toast({
+      type: "success",
+      message: t("saved"),
+    });
+  } catch (error: any) {
     console.error(error);
     toast({
       type: "danger",
-      message: error?.message,
+      message: `${t("error_occured")}${": " + error?.message}`,
     });
   }
 }
