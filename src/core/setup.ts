@@ -16,7 +16,6 @@ import "./plugins/typescript";
 
 import clickOutside from "./directives/clickOutside";
 import tooltip from "./directives/tooltip";
-import setupComponents from "./setupComponents";
 
 interface SetupOptions {
   routes: Readonly<RouteRecordRaw[]>;
@@ -36,8 +35,6 @@ export default function setup(options: SetupOptions) {
 
   app.directive("click-outside", clickOutside);
   app.directive("tooltip", tooltip);
-
-  setupComponents(app);
 
   return {
     router,
