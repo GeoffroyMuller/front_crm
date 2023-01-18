@@ -14,10 +14,8 @@
         "
       >
         <slot :data="section" />
-        <div
-          class="icon-delete"
-          v-if="isNil(min) || (!isNil(min) && min <= index)"
-        >
+        {{ key }}: {{ index }}
+        <div class="icon-delete" v-if="!isMin">
           <div>
             <IconButton
               class=""
@@ -117,6 +115,12 @@ const sectionsList = computed(() =>
 
 const isMax = computed(() => {
   if (!isNil(props.max) && props.max <= Object.keys(sections.value).length) {
+    return true;
+  }
+  return false;
+});
+const isMin = computed(() => {
+  if (!isNil(props.min) && props.min >= Object.keys(sections.value).length) {
     return true;
   }
   return false;
