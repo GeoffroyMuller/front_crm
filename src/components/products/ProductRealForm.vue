@@ -77,7 +77,7 @@ interface ProductRealFormProps {
 const { t } = useI18n();
 const { toast } = useUI();
 const productRealStore = useProductRealStore();
-const emit = defineEmits(["saved", "cancel", "update:product"]);
+const emit = defineEmits(["cancel", "update:product"]);
 const props = withDefaults(defineProps<ProductRealFormProps>(), {
   product: null,
   productReal: null,
@@ -97,6 +97,7 @@ watch(
         product_real_fields: productRealFields,
       };
     }
+    loading.value = false;
   },
   { immediate: true }
 );
@@ -155,8 +156,6 @@ async function handleSubmit(data: any) {
     if (!isNil(props.afterSaved)) {
       props.afterSaved();
     }
-    loading.value = false;
-    emit("saved", data);
     toast({
       type: "success",
       message: t("saved"),
