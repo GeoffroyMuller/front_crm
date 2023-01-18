@@ -154,7 +154,7 @@ export default function useMenu(props: MenuProps) {
       left: coord.left + "px",
     });
     if (props.fullActivatorWidth) {
-      container.style.width = `${dimensions.activator.width}px`;
+      container.style.minWidth = `${dimensions.activator.width}px`;
     }
   }
 
