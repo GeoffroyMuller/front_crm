@@ -1,6 +1,6 @@
 <template>
   <Form :model-value="productRealInternal" @submit="handleSubmit">
-    <template #default="{ hasError }">
+    <template #default="{ hasError, hasChanged }">
       <div class="title">
         {{
           productRealInternal?.id
@@ -38,7 +38,9 @@
           <Button @click="$emit('cancel')" variant="text">{{
             $t("cancel")
           }}</Button>
-          <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
+          <Button :disabled="hasError || !hasChanged" type="submit">{{
+            $t("save")
+          }}</Button>
         </div>
       </div>
     </template>
@@ -60,12 +62,14 @@ import Repetable from "@/core/components/form/repetable/Repetable.vue";
 import { ref, watch } from "vue";
 import type { ID } from "@/types/utils";
 import MagicFormField from "@/core/components/magic/MagicFormField.vue";
+import useUI from "@/core/helpers/vue/composables/ui";
 
 interface ProductRealFormProps {
   product: Product | null;
   productReal: ProductReal | null;
 }
 
+const { toast } = useUI();
 const productRealStore = useProductRealStore();
 const emit = defineEmits(["product-created", "cancel", "update:product"]);
 const props = withDefaults(defineProps<ProductRealFormProps>(), {
@@ -143,6 +147,10 @@ async function handleSubmit(data: any) {
     }
   } catch (error) {
     console.error(error);
+    toast({
+      type: "danger",
+      message: error?.message,
+    });
   }
 }
 </script>
