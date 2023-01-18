@@ -50,6 +50,7 @@ const gridClasses = computed<string[]>(() => {
 <style lang="scss">
 .grid {
   display: grid;
+  width: 100%;
   gap: calc(spacing(1) * var(--grid-gap));
 }
 

@@ -4,14 +4,16 @@
     class="flex"
     ref="flex"
     :style="{
-      justifyContent: justifyContent,
+      justifyContent,
+      alignItems,
+      flexDirection: direction,
     }"
   >
     <slot />
   </component>
 </template>
 <script setup lang="ts">
-import type { Component } from "vue";
+import { ref, watch, type Component } from "vue";
 import type { AlignItemsOptions, JustifyContentOptions } from "./types";
 
 interface FlexProps {
@@ -19,8 +21,20 @@ interface FlexProps {
   alignItems?: AlignItemsOptions;
   justifyContent?: JustifyContentOptions;
   component?: Component;
-  gap: number;
+  gap?: number;
 }
+
+const flex = ref();
+
+watch(
+  () => flex.value && props.gap,
+  () => {
+    if (flex.value) {
+      flex.value.style.setProperty("--flex-gap", props.gap);
+    }
+  },
+  { immediate: true }
+);
 
 const props = withDefaults(defineProps<FlexProps>(), {});
 </script>
@@ -28,6 +42,7 @@ const props = withDefaults(defineProps<FlexProps>(), {});
 <style lang="scss">
 .flex {
   display: flex;
+  width: 100%;
   gap: calc(spacing(1) * var(--flex-gap));
 }
 </style>
