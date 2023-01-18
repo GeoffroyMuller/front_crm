@@ -9,7 +9,9 @@
           @click.stop="edit(e)"
         >
           <Card>
-            {{ e.summary }}
+            <div class="text">
+              {{ e.summary }}
+            </div>
             <div class="text2">
               {{ e.description }}
             </div>

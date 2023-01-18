@@ -5,13 +5,20 @@
         <div class="title">
           {{ isAddAction ? $t("events.new-event") : $t("events.event") }}
         </div>
-        <DatePicker name="dtstamp" :label="$t('dtstamp')" />
-        <DatePicker name="dtstart" :label="$t('dtstart')" />
-        <DatePicker name="dtend" :label="$t('dtend')" />
+        <TextField name="summary" :label="$t('events.summary')" />
+        <TextField
+          name="description"
+          multiline
+          :label="$t('events.descriptions')"
+        />
 
-        <TextField name="summary" :label="$t('summary')" />
-        <TextField name="description" :label="$t('descriptions')" />
-        <TextField name="location" :label="$t('location')" />
+        <DatePicker name="dtstamp" :label="$t('events.dtstamp')" />
+        <Flex align-items="center" :gap="1">
+          <DatePicker name="dtstart" :label="$t('events.dtstart')" />
+          <DatePicker name="dtend" :label="$t('events.dtend')" />
+        </Flex>
+
+        <TextField name="location" :label="$t('events.location')" />
 
         <div class="actions">
           <Button type="submit" color="success" icon="add" :disabled="hasError">
@@ -27,6 +34,7 @@ import Button from "@/core/components/Button.vue";
 import DatePicker from "@/core/components/form/Datepicker/DatePicker.vue";
 import Form from "@/core/components/form/Form.vue";
 import TextField from "@/core/components/form/TextField.vue";
+import Flex from "@/core/components/layouts/Flex.vue";
 import Sidebar from "@/core/components/Sidebar.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import useEventsStore from "@/stores/events";

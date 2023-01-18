@@ -46,6 +46,12 @@
   },
   "events": {
     "new-event": "Nouvel Evenement",
-    "event": "Evenement"
+    "event": "Evenement",
+    "dtstamp": "dtstamp",
+    "dtstart": "Date de début",
+    "dtend": "Date de fin",
+    "summary": "Titre",
+    "descriptions": "Description",
+    "location": "Localisation"
   }
 }
