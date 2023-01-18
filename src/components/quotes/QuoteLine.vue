@@ -77,7 +77,9 @@ const totalWithoutTaxes = computed(() => {
 });
 
 const totalWithTaxes = computed(() => {
-  const vatRate = vats.value.find((vat: Vat) => vat.id == internalLine.value.idVat)?.rate;
+  const vatRate = vats.value.find(
+    (vat: Vat) => vat.id == internalLine.value.idVat
+  )?.rate;
   if (totalWithoutTaxes.value === "-" || vatRate == null) {
     return "-";
   }
