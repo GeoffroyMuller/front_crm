@@ -21,7 +21,10 @@ const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
   return {
     store: quotesStore,
     gap: 1,
-    columns: 2,
+    columns: {
+      xs: 2,
+      xl: 4,
+    },
     map: {
       name: "$contains.name",
       status: "$eq.status",

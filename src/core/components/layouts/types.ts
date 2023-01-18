@@ -1,16 +1,12 @@
+import type { Breakpoints } from "../types";
+
+export type OnetoTwelve = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+
 export type GridColumnsOptions =
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 9
-  | 10
-  | 11
-  | 12;
+  | OnetoTwelve
+  | {
+      [key in Breakpoints]: OnetoTwelve;
+    };
 
 export type AlignItemsOptions =
   | "center"
