@@ -44,6 +44,7 @@ const props = withDefaults(defineProps<FloatingButtonProps>(), {
   align-items: center;
   justify-content: center;
   box-shadow: 2px 2px 3px #999;
+  cursor: pointer;
 }
 
 .float-button-black,

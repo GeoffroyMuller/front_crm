@@ -69,9 +69,9 @@ export default [
     },
   },
   {
-    path: "/projects-calendar",
-    name: "projects-calendar",
-    component: () => import("./pages/projects/Calendar.vue"),
+    path: "/events",
+    name: "events",
+    component: () => import("./pages/events/index.vue"),
     meta: {
       middleware: [auth],
       layout: LayoutPage,
