@@ -38,9 +38,12 @@
           <Button @click="$emit('cancel')" variant="text">{{
             $t("cancel")
           }}</Button>
-          <Button :disabled="hasError || !hasChanged" type="submit">{{
-            $t("save")
-          }}</Button>
+          <Button
+            :disabled="hasError || !hasChanged"
+            :loading="loading"
+            type="submit"
+            >{{ $t("save") }}</Button
+          >
         </div>
       </div>
     </template>
@@ -68,6 +71,7 @@ import { useI18n } from "vue-i18n";
 interface ProductRealFormProps {
   product: Product | null;
   productReal: ProductReal | null;
+  afterSaved: () => any | null;
 }
 
 const { t } = useI18n();
@@ -79,6 +83,7 @@ const props = withDefaults(defineProps<ProductRealFormProps>(), {
   productReal: null,
 });
 const productRealInternal = ref<ProductReal | null>(null);
+const loading = ref<boolean>(false);
 
 watch(
   () => props.productReal,
@@ -129,6 +134,7 @@ function getFieldById(id: ID) {
 
 async function handleSubmit(data: any) {
   try {
+    loading.value = true;
     if (isNil(props.productReal)) {
       await productRealStore.create({ idProduct: props.product?.id, ...data });
       initProductRealInternal();
@@ -146,12 +152,17 @@ async function handleSubmit(data: any) {
         ),
       });
     }
+    if (!isNil(props.afterSaved)) {
+      props.afterSaved();
+    }
+    loading.value = false;
     emit("saved", data);
     toast({
       type: "success",
       message: t("saved"),
     });
   } catch (error: any) {
+    loading.value = false;
     console.error(error);
     toast({
       type: "danger",
