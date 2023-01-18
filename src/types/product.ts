@@ -30,6 +30,7 @@ export interface ProductField {
   name?: string;
   type?: "string" | "select" | "number";
   product?: Product;
+  props?: any;
 }
 
 export interface ProductRealField {
