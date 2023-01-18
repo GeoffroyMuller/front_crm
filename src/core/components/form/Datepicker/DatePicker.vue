@@ -33,10 +33,8 @@ import useValidatable from "@/core/helpers/vue/composables/validatable";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { computed, ref } from "vue";
-import Menu from "../../Menu.vue";
 import TextField from "../TextField.vue";
 import Alert from "../../Alert.vue";
-import IconButton from "../../IconButton.vue";
 import Icon from "../../Icon.vue";
 import type { AnySchema } from "yup";
 import DatepickerContent from "./DatepickerContent.vue";
@@ -79,6 +77,7 @@ const displayed = computed(() => {
 function onSelectDate(date: string) {
   internalValue.value = date;
   validate();
+  open.value = false;
 }
 
 const { open } = useMenu({
@@ -86,8 +85,11 @@ const { open } = useMenu({
   component: DatepickerContent,
   openOnHover: false,
   componentProps: {
-    "model-value": "internalValue",
-    onUpdate: "onSelectDate",
+    modelValue: internalValue,
+    onUpdate: onSelectDate,
+    firstDayDisplayIndex: props.firstDayDisplayIndex,
+    min: props.min,
+    max: props.max,
   },
 });
 </script>

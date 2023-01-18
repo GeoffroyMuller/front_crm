@@ -31,15 +31,16 @@
 <script setup lang="ts">
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
-import { computed, ref } from "vue";
+import { computed, ref, type Ref } from "vue";
 import Card from "../../Card.vue";
 import IconButton from "../../IconButton.vue";
 
 export interface DatePickerContentProps {
+  modelValue: Ref;
+
   // 0 for sunday, 6 for saturday
   firstDayDisplayIndex?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
-  modelValue?: string;
   min?: Dayjs;
   max?: Dayjs;
 
@@ -148,7 +149,10 @@ const weekDaysLabels = computed(() => {
 });
 
 function isSelected(date: any) {
-  const value = dayjs(props.modelValue);
+  if (props.modelValue.value == null) {
+    return false;
+  }
+  const value = dayjs(props.modelValue.value);
   return (
     value?.date() == date.day &&
     value?.month() == date.month &&
@@ -193,6 +197,7 @@ const current = ref({
 .datepicker {
   @include grid(1, 0, 2);
   .datepicker-header {
+    margin-bottom: spacing(1.5);
     display: flex;
     align-items: center;
     justify-content: space-between;
