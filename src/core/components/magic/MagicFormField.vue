@@ -9,7 +9,9 @@
 <script setup lang="ts">
 import type { Component } from "vue";
 import Autocomplete, { type AutocompleteProps } from "../form/Autocomplete.vue";
-import DatePicker, { type DatePickerProps } from "../form/DatePicker.vue";
+import DatePicker, {
+  type DatePickerProps,
+} from "../form/Datepicker/DatePicker.vue";
 import RadioGroup, { type RadioGroupProps } from "../form/RadioGroup.vue";
 import Select, { type SelectProps } from "../form/Select.vue";
 import Switch, { type SwitchProps } from "../form/Switch.vue";
