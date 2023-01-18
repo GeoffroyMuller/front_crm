@@ -53,7 +53,7 @@
       </div>
       <div v-else class="product-real-sidebar">
         <ProductRealForm
-          @product-created="handleCreated"
+          :afterSaved="() => (isSidebarOpen = false)"
           :product="product"
           :productReal="currentProductReal"
         />
@@ -90,13 +90,14 @@ const openSideProductReal = async (productReal: ProductReal | null) => {
   if (!isNil(productReal) && !isNil(productReal.id)) {
     try {
       loadingProductReal.value = true;
-      isSidebarOpen.value = true;
+
       currentProductReal.value = await productsRealStore.fetchById(
         productReal?.id,
         {
           populate: ["product_real_fields"],
         }
       );
+      isSidebarOpen.value = true;
       loadingProductReal.value = false;
     } catch (error) {
       isSidebarOpen.value = false;
@@ -107,9 +108,6 @@ const openSideProductReal = async (productReal: ProductReal | null) => {
     currentProductReal.value = null;
     isSidebarOpen.value = true;
   }
-};
-const handleCreated = () => {
-  isSidebarOpen.value = false;
 };
 </script>
 <style lang="scss">

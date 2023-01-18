@@ -6,7 +6,7 @@
     <Card :withPadding="false" class="repetable">
       <RepetableSection
         class="repetable-section"
-        v-for="(section, key) in sections"
+        v-for="(section, key, index) in sections"
         :key="key"
         :value="section"
         @inputChange="
@@ -14,7 +14,10 @@
         "
       >
         <slot :data="section" />
-        <div class="icon-delete">
+        <div
+          class="icon-delete"
+          v-if="isNil(min) || (!isNil(min) && min <= index)"
+        >
           <div>
             <IconButton
               class=""
@@ -26,7 +29,7 @@
           </div>
         </div>
       </RepetableSection>
-      <div class="repetable-actions">
+      <div class="repetable-actions" v-if="!isMax">
         <Button @click="() => addSection()" v-if="!$slots['actions']">
           {{ buttonText || $t("add") }}
         </Button>
@@ -40,7 +43,7 @@
 import useValidatable from "../../../helpers/vue/composables/validatable";
 import type { AnySchema } from "yup";
 import { computed, ref, watch } from "vue";
-import { isEmpty, isEqual, uniqueId } from "lodash";
+import { isEmpty, isEqual, isNil, uniqueId } from "lodash";
 import RepetableSection from "./RepetableSection.vue";
 import Button from "../../Button.vue";
 import Card from "../../Card.vue";
@@ -111,6 +114,13 @@ function handleDeleteSection(key: string) {
 const sectionsList = computed(() =>
   Object.values(sections.value).filter((obj: any) => !isEmpty(obj))
 );
+
+const isMax = computed(() => {
+  if (!isNil(props.max) && props.max <= Object.keys(sections.value).length) {
+    return true;
+  }
+  return false;
+});
 
 watch(
   () => internalValue.value,

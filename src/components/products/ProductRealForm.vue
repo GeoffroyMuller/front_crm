@@ -1,6 +1,6 @@
 <template>
   <Form :model-value="productRealInternal" @submit="handleSubmit">
-    <template #default="{ hasError }">
+    <template #default="{ hasError, hasChanged }">
       <div class="title">
         {{
           productRealInternal?.id
@@ -23,12 +23,13 @@
             :max="productRealInternal?.product_real_fields?.length"
           >
             <template #default="{ data }">
+              {{ getFieldById(data.idProductField)?.type }}
               <MagicFormField
                 :props="{ name: 'value' }"
                 :label="
                   getFieldById(data.idProductField)?.name || data.idProductField
                 "
-                :type="data.type ? data.type : 'string'"
+                :type="'string'"
               />
             </template>
           </Repetable>
@@ -37,7 +38,12 @@
           <Button @click="$emit('cancel')" variant="text">{{
             $t("cancel")
           }}</Button>
-          <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
+          <Button
+            :disabled="hasError || !hasChanged"
+            :loading="loading"
+            type="submit"
+            >{{ $t("save") }}</Button
+          >
         </div>
       </div>
     </template>
@@ -59,19 +65,25 @@ import Repetable from "@/core/components/form/repetable/Repetable.vue";
 import { ref, watch } from "vue";
 import type { ID } from "@/types/utils";
 import MagicFormField from "@/core/components/magic/MagicFormField.vue";
+import useUI from "@/core/helpers/vue/composables/ui";
+import { useI18n } from "vue-i18n";
 
 interface ProductRealFormProps {
   product: Product | null;
   productReal: ProductReal | null;
+  afterSaved: () => any | null;
 }
 
+const { t } = useI18n();
+const { toast } = useUI();
 const productRealStore = useProductRealStore();
-const emit = defineEmits(["product-created", "cancel", "update:product"]);
+const emit = defineEmits(["cancel", "update:product"]);
 const props = withDefaults(defineProps<ProductRealFormProps>(), {
   product: null,
   productReal: null,
 });
 const productRealInternal = ref<ProductReal | null>(null);
+const loading = ref<boolean>(false);
 
 watch(
   () => props.productReal,
@@ -85,6 +97,7 @@ watch(
         product_real_fields: productRealFields,
       };
     }
+    loading.value = false;
   },
   { immediate: true }
 );
@@ -122,10 +135,10 @@ function getFieldById(id: ID) {
 
 async function handleSubmit(data: any) {
   try {
+    loading.value = true;
     if (isNil(props.productReal)) {
       await productRealStore.create({ idProduct: props.product?.id, ...data });
       initProductRealInternal();
-      emit("product-created", data);
     } else if (!isNil(props.productReal.id)) {
       await productRealStore.update(props.productReal.id, {
         ...props.productReal,
@@ -140,8 +153,20 @@ async function handleSubmit(data: any) {
         ),
       });
     }
-  } catch (error) {
+    if (!isNil(props.afterSaved)) {
+      props.afterSaved();
+    }
+    toast({
+      type: "success",
+      message: t("saved"),
+    });
+  } catch (error: any) {
+    loading.value = false;
     console.error(error);
+    toast({
+      type: "danger",
+      message: `${t("error_occured")}${": " + error?.message}`,
+    });
   }
 }
 </script>

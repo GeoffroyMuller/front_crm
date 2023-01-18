@@ -1,8 +1,6 @@
 <template>
   <Form :model-value="product" @submit="handleSubmit">
     <template #default="{ hasError, hasChanged }">
-      <pre class="code">à changé : {{ hasChanged }}</pre>
-
       <div class="form-product">
         <div class="form-head">
           <TextField
@@ -51,7 +49,7 @@
           <Button @click="$emit('cancel')" variant="text">{{
             $t("cancel")
           }}</Button>
-          <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
+          <Button :disabled="hasError || !hasChanged" type="submit">{{ $t("save") }}</Button>
         </div>
       </div>
     </template>
