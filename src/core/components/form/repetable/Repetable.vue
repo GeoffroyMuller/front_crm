@@ -11,6 +11,7 @@
         @start="handleDragStart"
         @end="handleDragEnd"
         item-key="key"
+        ghost-class="repetable-section-ghost"
         handle=".drag_handle"
       >
         <template #item="{ element }">
@@ -155,7 +156,7 @@ const sectionListForDnD = computed({
 });
 
 function handleDragStart(e: any) {
-  console.error(e);
+  console.error(e)
 }
 function handleDragEnd(e: any) {
   console.error(e);
