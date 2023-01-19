@@ -127,7 +127,7 @@ const { internalValue, internalError, validate } = useValidatable({
     place-items: center;
     margin-right: spacing(1);
     .icon {
-      background-color: white;
+      background-color: transparent;
     }
   }
   input,
