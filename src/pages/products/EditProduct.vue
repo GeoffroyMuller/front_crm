@@ -93,7 +93,9 @@ const goToProductsPage = () => {
 onMounted(async () => {
   try {
     if (id != "new") {
-      product.value = await productsStore.fetchById(id as ID);
+      product.value = await productsStore.fetchById(id as ID, {
+        populate: ["products_real", "product_fields"],
+      });
     }
   } catch (error) {
     console.error(error);

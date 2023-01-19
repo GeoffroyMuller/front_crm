@@ -27,18 +27,14 @@
                 name="type"
               />
               <Repetable
-                v-if="data.type == 'select'"
+                v-show="data.type == 'select'"
                 :rules="$yup.array().min(1)"
                 :label="$t('pages.edit-product.add-selectable-options')"
                 name="props"
                 :min="1"
               >
                 <template #default>
-                  <TextField
-                    :rules="$yup.string().required()"
-                    name="option"
-                    :label="$t('value')"
-                  />
+                  <TextField name="option" :label="$t('value')" />
                 </template>
               </Repetable>
             </div>
