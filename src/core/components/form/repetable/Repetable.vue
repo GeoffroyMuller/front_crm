@@ -4,28 +4,65 @@
       {{ label }}
     </label>
     <Card :withPadding="false" class="repetable">
-      <RepetableSection
-        class="repetable-section"
-        v-for="(section, key) in sections"
-        :key="key"
-        :value="section"
-        @inputChange="
-          ({ name, value }) => handleSectionInputChange(key, name, value)
-        "
+      <draggable
+        v-if="orderable"
+        v-model="sectionListForDnD"
+        group="section"
+        @start="handleDragStart"
+        @end="handleDragEnd"
+        item-key="key"
+        handle=".drag_handle"
       >
-        <slot :data="section" />
-        <div class="icon-delete" v-if="!isMin">
-          <div>
-            <IconButton
-              class=""
-              name="close"
-              color="danger"
-              v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
-              @click="handleDeleteSection(key)"
-            />
+        <template #item="{ element }">
+          <RepetableSection
+            orderable
+            class="repetable-section"
+            :value="element.value"
+            @inputChange="
+              ({ name, value }) =>
+                handleSectionInputChange(element.key, name, value)
+            "
+          >
+            <div class="icon-delete" v-if="!isMin">
+              <div>
+                <IconButton
+                  class=""
+                  name="close"
+                  color="danger"
+                  v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
+                  @click="handleDeleteSection(element.key)"
+                />
+              </div>
+            </div>
+            <slot :data="element.value" />
+          </RepetableSection>
+        </template>
+      </draggable>
+      <template v-if="!orderable">
+        <RepetableSection
+          class="repetable-section"
+          v-for="(section, key) in sections"
+          :key="key"
+          :value="section"
+          @inputChange="
+            ({ name, value }) => handleSectionInputChange(key, name, value)
+          "
+        >
+          <div class="icon-delete" v-if="!isMin">
+            <div>
+              <IconButton
+                class=""
+                name="close"
+                color="danger"
+                v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
+                @click="handleDeleteSection(key)"
+              />
+            </div>
           </div>
-        </div>
-      </RepetableSection>
+          <slot :data="section" />
+        </RepetableSection>
+      </template>
+
       <div class="repetable-actions" v-if="!isMax">
         <Button @click="() => addSection()" v-if="!$slots['actions']">
           {{ buttonText || $t("add") }}
@@ -45,6 +82,7 @@ import RepetableSection from "./RepetableSection.vue";
 import Button from "../../Button.vue";
 import Card from "../../Card.vue";
 import IconButton from "../../IconButton.vue";
+import draggable from "vuedraggable";
 
 export interface ISection {
   [name: string]: any;
@@ -66,6 +104,8 @@ interface RepetableProps {
   max?: number | undefined | null;
 
   buttonText?: string;
+
+  orderable?: boolean;
 }
 
 const props = withDefaults(defineProps<RepetableProps>(), {});
@@ -83,12 +123,53 @@ const { internalValue, internalError, validate } = useValidatable({
 
 const sections = ref<{ [key: string]: ISection }>({});
 
+const keyOrderForDnD = ref<string[]>([]);
+const sectionListForDnD = computed({
+  get: () => {
+    const res: { key: string; value: any }[] = [];
+    for (const key of keyOrderForDnD.value) {
+      const value = sections.value[key];
+      res.push({ key, value });
+    }
+
+    return [
+      ...res,
+      ...Object.keys(sections.value)
+        .filter((k) => !keyOrderForDnD.value.find((key) => k == key))
+        .map((key) => ({
+          key,
+          value: sections.value[key],
+        })),
+    ];
+  },
+  set: (val) => {
+    const obj: { [key: string]: ISection } = {};
+    const order: string[] = [];
+    for (const kv of val) {
+      obj[kv.key] = kv.value;
+      order.push(kv.key);
+    }
+    keyOrderForDnD.value = order;
+    sections.value = obj;
+  },
+});
+
+function handleDragStart(e: any) {
+  console.error(e);
+}
+function handleDragEnd(e: any) {
+  console.error(e);
+}
+
 const generateId = () => uniqueId();
 
 function addSection(data?: any) {
+  const key = generateId();
+  keyOrderForDnD.value.push(key);
+
   sections.value = {
     ...sections.value,
-    [generateId()]: data || {},
+    [key]: data || {},
   };
 }
 
@@ -109,7 +190,7 @@ function handleDeleteSection(key: string) {
 }
 
 const sectionsList = computed(() =>
-  Object.values(sections.value).filter((obj: any) => !isEmpty(obj))
+  sectionListForDnD.value.map(({ value }) => value)
 );
 
 const isMax = computed(() => {
@@ -134,7 +215,9 @@ watch(
     if (internalValue.value?.length > 0 && sectionsList.value.length === 0) {
       sections.value = internalValue.value.reduce(
         (prev: { [key: string]: ISection }, section: ISection) => {
-          return { ...prev, [generateId()]: section };
+          const key = generateId();
+          keyOrderForDnD.value.push(key);
+          return { ...prev, [key]: section };
         },
         {}
       );
@@ -142,7 +225,9 @@ watch(
       if (!isEqual(sectionsList.value, internalValue.value)) {
         sections.value = internalValue.value.reduce(
           (prev: { [key: string]: ISection }, section: ISection) => {
-            return { ...prev, [generateId()]: section };
+            const key = generateId();
+            keyOrderForDnD.value.push(key);
+            return { ...prev, [key]: section };
           },
           {}
         );

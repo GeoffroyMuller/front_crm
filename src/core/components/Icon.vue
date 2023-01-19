@@ -38,6 +38,7 @@ const props = withDefaults(defineProps<IconProps>(), {
 .icon {
   transition: color 0.15s ease;
   background-color: transparent;
+  user-select: none;
 }
 
 .icon-sm {

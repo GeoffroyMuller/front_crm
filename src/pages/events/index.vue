@@ -27,16 +27,13 @@
 import BlockCalendarEvents from "@/components/events/BlockCalendarEvents.vue";
 import EditEventSidebar from "@/components/events/EditEventSidebar.vue";
 import Page from "@/components/Page.vue";
-import Button from "@/core/components/Button.vue";
 import Calendar from "@/core/components/Calendar.vue";
-import Card from "@/core/components/Card.vue";
 import FloatingButton from "@/core/components/FloatingButton.vue";
 import Icon from "@/core/components/Icon.vue";
-import Flex from "@/core/components/layouts/Flex.vue";
 import useEventsStore from "@/stores/events";
 import type { Event } from "@/types/events";
 import type { Dayjs } from "dayjs";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 const eventStore = useEventsStore();
 
