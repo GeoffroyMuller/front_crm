@@ -8,8 +8,8 @@
     >
       <Card :with-padding="false">
         <Flex align-items="center" :gap="0.5" :p="0.5">
-          <div>{{ dayjs(e.dtstart).format("H") }}h</div>
-          <div>-</div>
+          <div class="text">{{ dayjs(e.dtstart).format("H") }}h</div>
+          <div class="text">-</div>
           <div class="text">
             {{ e.summary }}
           </div>
