@@ -67,7 +67,6 @@ import type { Product, ProductReal } from "@/types/product";
 import useProductsRealStore from "@/stores/products_real";
 import ProductRealForm from "./ProductRealForm.vue";
 
-import Card from "@/core/components/Card.vue";
 import Sidebar from "@/core/components/Sidebar.vue";
 import { ref } from "vue";
 import Button from "@/core/components/Button.vue";
