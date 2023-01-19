@@ -1,7 +1,7 @@
 <template>
   <component
     :is="getComponent()"
-    v-bind="$props.props"
+    v-bind="getProps()"
     :label="$t($props.props.label || '')"
   />
 </template>
@@ -46,6 +46,13 @@ export interface MagicFormFieldProps {
 }
 
 const props = withDefaults(defineProps<MagicFormFieldProps>(), {});
+
+function getProps(): any {
+  if (props.type == "number") {
+    return { ...props.props, type: props.type };
+  }
+  return props.props;
+}
 
 function getComponent(): Component {
   if (props.component != null) {
