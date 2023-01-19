@@ -4,11 +4,11 @@
       <template #mounth-day="{ day }">
         <BlockCalendarEvents @edit="edit" :events="events" :date="day.dayjs" />
       </template>
-      <template #hover-footer>
+      <!--   <template #hover-footer>
         <Flex align-items="center" justify-content="center">
           <Button type="button" variant="text">{{ $t("add") }}</Button>
         </Flex>
-      </template>
+      </template> -->
     </Calendar>
     <FloatingButton @click.stop="editOpen = true">
       <Icon name="add" />
