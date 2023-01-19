@@ -1,4 +1,14 @@
 <template>
+  <div v-if="line.type === 'comment'">
+    <TextField
+      multiline
+      :label="$t('pages.edit-quote.comment')"
+      name="description"
+    />
+  </div>
+  <div v-if="line.type === 'title'">
+    <TextField :label="$t('pages.edit-quote.title')" name="description" />
+  </div>
   <div v-if="line.type === 'product'">
     <HtmlEditor
       class="description"

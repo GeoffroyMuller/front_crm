@@ -197,6 +197,8 @@ watch(
       display: flex;
       justify-content: flex-end;
       align-items: center;
+      gap: spacing(1);
+      @include flex-separator();
     }
   }
 }
