@@ -18,9 +18,13 @@
       "total": "Total TTC",
       "total-without-taxes": "Total HT",
       "add-line-product": "Ajouter une ligne de produit",
+      "add-line-title": "Ajouter une ligne de titre",
+      "add-line-comment": "Ajouter une ligne de commentaire",
       "footer": "Pied de page",
       "modalities": "Modalitées",
-      "add-customer": "Ajouter un client"
+      "add-customer": "Ajouter un client",
+      "title": "Titre",
+      "comment": "Commentaire"
     },
     "edit-product": {
       "description": "Description",

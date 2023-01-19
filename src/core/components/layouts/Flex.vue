@@ -2,6 +2,9 @@
   <component
     :is="component || 'div'"
     class="flex layout-component"
+    :class="{
+      divided,
+    }"
     ref="flex"
     :style="{
       justifyContent,
@@ -23,6 +26,8 @@ interface FlexProps {
   alignItems?: AlignItemsOptions;
   justifyContent?: JustifyContentOptions;
   component?: Component;
+  divided?: boolean;
+
   gap?: number;
 
   p?: number;
@@ -62,5 +67,8 @@ useLayoutComponent({
 .flex {
   display: flex;
   width: 100%;
+}
+.divided {
+  @include flex-separator();
 }
 </style>

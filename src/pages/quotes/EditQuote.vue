@@ -43,6 +43,20 @@
                 >
                   {{ $t("pages.edit-quote.add-line-product") }}
                 </Button>
+                <Button
+                  type="button"
+                  variant="text"
+                  @click="addSection({ type: 'comment' })"
+                >
+                  {{ $t("pages.edit-quote.add-line-comment") }}
+                </Button>
+                <Button
+                  type="button"
+                  variant="text"
+                  @click="addSection({ type: 'title' })"
+                >
+                  {{ $t("pages.edit-quote.add-line-title") }}
+                </Button>
               </template>
             </Repetable>
           </div>
