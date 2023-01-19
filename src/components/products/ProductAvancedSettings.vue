@@ -28,8 +28,10 @@
               />
               <Repetable
                 v-if="data.type == 'select'"
+                :rules="$yup.array().min(1)"
                 :label="$t('pages.edit-product.add-selectable-options')"
                 name="props"
+                :min="1"
               >
                 <template #default>
                   <TextField
