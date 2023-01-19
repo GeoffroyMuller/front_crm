@@ -31,7 +31,7 @@
             />
           </div>
           <div class="form-table">
-            <Repetable name="lines" :label="$t('products')">
+            <Repetable name="lines" :label="$t('products')" orderable>
               <template #default="{ data }">
                 <QuoteLineVue :line="(data as unknown as QuoteLine)" />
               </template>
