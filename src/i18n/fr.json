@@ -48,11 +48,11 @@
   "events": {
     "new-event": "Nouvel Evenement",
     "event": "Evenement",
-    "dtstamp": "dtstamp",
     "dtstart": "Date de début",
     "dtend": "Date de fin",
     "summary": "Titre",
     "descriptions": "Description",
-    "location": "Localisation"
+    "location": "Localisation",
+    "all_day_event": "Cette evenement dure toute la journée"
   }
 }

@@ -2,21 +2,12 @@
   <Page :title="$t('menu.events')">
     <Calendar is-card @click="($d) => clickOnDate($d.dayjs)">
       <template #mounth-day="{ day }">
-        {{ day.day }}
-        <div
-          v-for="e of getEventsForDtstart(day.dayjs)"
-          :key="e.id"
-          @click.stop="edit(e)"
-        >
-          <Card>
-            <div class="text">
-              {{ e.summary }}
-            </div>
-            <div class="text2">
-              {{ e.description }}
-            </div>
-          </Card>
-        </div>
+        <BlockCalendarEvents @edit="edit" :events="events" :date="day.dayjs" />
+      </template>
+      <template #hover-footer>
+        <Flex align-items="center" justify-content="center">
+          <Button type="button" variant="text">{{ $t("add") }}</Button>
+        </Flex>
       </template>
     </Calendar>
     <FloatingButton @click.stop="editOpen = true">
@@ -33,28 +24,19 @@
 </template>
 
 <script setup lang="ts">
+import BlockCalendarEvents from "@/components/events/BlockCalendarEvents.vue";
 import EditEventSidebar from "@/components/events/EditEventSidebar.vue";
 import Page from "@/components/Page.vue";
+import Button from "@/core/components/Button.vue";
 import Calendar from "@/core/components/Calendar.vue";
 import Card from "@/core/components/Card.vue";
 import FloatingButton from "@/core/components/FloatingButton.vue";
 import Icon from "@/core/components/Icon.vue";
+import Flex from "@/core/components/layouts/Flex.vue";
 import useEventsStore from "@/stores/events";
 import type { Event } from "@/types/events";
-import dayjs, { type Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
 import { computed, onMounted, ref } from "vue";
-
-function getEventsForDtstart(dtstart: Dayjs) {
-  return (
-    events.value.filter((e) => isDateEqual(e.dtstart as string, dtstart)) || []
-  );
-}
-
-function isDateEqual(date1: Dayjs | string, date2: Dayjs | string) {
-  const date1Djs = typeof date1 === "string" ? dayjs(date1) : date1;
-  const date2Djs = typeof date2 === "string" ? dayjs(date2) : date2;
-  return date1Djs.format("YYYY-MM-DD") === date2Djs.format("YYYY-MM-DD");
-}
 
 const eventStore = useEventsStore();
 

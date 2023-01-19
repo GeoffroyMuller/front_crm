@@ -1,7 +1,11 @@
 <template>
   <Sidebar :open="open" @update:open="($event) => $emit('update:open', $event)">
-    <Form :model-value="event" class="edit-event-form" @submit="handleSubmit">
-      <template #default="{ hasError }">
+    <Form
+      :model-value="{ ...event, all_day_event: event?.dtend == null }"
+      class="edit-event-form"
+      @submit="handleSubmit"
+    >
+      <template #default="{ hasError, value }">
         <div class="title">
           {{ isAddAction ? $t("events.new-event") : $t("events.event") }}
         </div>
@@ -12,11 +16,15 @@
           :label="$t('events.descriptions')"
         />
 
-        <DatePicker name="dtstamp" :label="$t('events.dtstamp')" />
         <Flex align-items="center" :gap="1">
           <DatePicker name="dtstart" :label="$t('events.dtstart')" />
-          <DatePicker name="dtend" :label="$t('events.dtend')" />
+          <DatePicker
+            name="dtend"
+            :label="$t('events.dtend')"
+            :disabled="value.all_day_event"
+          />
         </Flex>
+        <Switch name="all_day_event" :label="$t('events.all_day_event')" />
 
         <TextField name="location" :label="$t('events.location')" />
 
@@ -33,6 +41,7 @@
 import Button from "@/core/components/Button.vue";
 import DatePicker from "@/core/components/form/Datepicker/DatePicker.vue";
 import Form from "@/core/components/form/Form.vue";
+import Switch from "@/core/components/form/Switch.vue";
 import TextField from "@/core/components/form/TextField.vue";
 import Flex from "@/core/components/layouts/Flex.vue";
 import Sidebar from "@/core/components/Sidebar.vue";
@@ -57,6 +66,10 @@ const eventStore = useEventsStore();
 const isAddAction = computed(() => props.event?.id == null);
 
 async function handleSubmit(data: any) {
+  if (data.all_day_event) {
+    data.dtend = null;
+  }
+  delete data.all_day_event;
   if (isAddAction.value) {
     try {
       const newEvent = await eventStore.create(data);

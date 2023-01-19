@@ -50,7 +50,8 @@
           :key="day.id"
           @click.stop="clickOnDay(day)"
           :class="{
-            'not-this-month': day.month != current.month || day.year != current.year,
+            'not-this-month':
+              day.month != current.month || day.year != current.year,
           }"
         >
           <span v-if="!$slots['mounth-day']">
@@ -58,6 +59,9 @@
           </span>
 
           <slot name="mounth-day" :day="day" />
+          <div class="hover-footer" v-if="$slots['hover-footer']">
+            <slot name="hover-footer" :day="day" />
+          </div>
         </div>
       </div>
     </div>
@@ -189,7 +193,11 @@ const weekDaysLabels = computed(() => {
   const firstDay =
     typeof props.firstDayDisplayIndex !== "undefined"
       ? props.firstDayDisplayIndex
-      : dayjs().year(current.value.year).month(current.value.month).date(0).day() + 1;
+      : dayjs()
+          .year(current.value.year)
+          .month(current.value.month)
+          .date(0)
+          .day() + 1;
   const list = [
     ...weekdaysName.filter((d: string, index: number) => index >= firstDay),
     ...weekdaysName.filter((d: string, index: number) => index < firstDay),
@@ -342,6 +350,15 @@ $borderRadius: map-deep-get($rounded, "md");
       border-bottom: none;
       overflow: hidden;
       overflow-y: auto;
+      &:hover {
+        .hover-footer {
+          display: block;
+        }
+      }
+      .hover-footer {
+        display: none;
+        text-align: center;
+      }
       &:hover {
         background-color: lighten(color("primary", 50), 1.5%);
         cursor: pointer;

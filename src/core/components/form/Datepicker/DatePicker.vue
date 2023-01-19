@@ -12,7 +12,7 @@
       :disabled="disabled"
       @focus="isFocus = true"
       @blur="isFocus = false"
-      @click="open = true"
+      @click="!disabled && (open = true)"
     >
       <template #icon>
         <Icon
