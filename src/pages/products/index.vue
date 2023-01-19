@@ -19,6 +19,11 @@
           sortable: true,
         },
         {
+          title: $t('stock-management'),
+          key: 'stockManagement',
+          sortable: true,
+        },
+        {
           title: $t('quantity'),
           key: 'stock',
           sortable: true,

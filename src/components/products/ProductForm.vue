@@ -22,12 +22,11 @@
         />
         <div class="form-stock">
           <RadioGroup
-            :rules="$yup.string().nullable().required()"
             name="stockManagement"
             v-model="stockManagement"
             :label="$t('pages.edit-product.stock-management')"
             :options="[
-              { label: $t('none'), value: 'none' },
+              { label: $t('none'), value: null },
               { label: $t('numerary'), value: 'numerary' },
               { label: $t('physical'), value: 'physical' },
             ]"
