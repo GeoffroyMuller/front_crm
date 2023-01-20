@@ -109,12 +109,12 @@ function handleSubmit(data: any) {
         props: {
           options: field?.props?.map((elem: any) => {
             // eslint-disable-next-line no-prototype-builtins
-            if (elem.hasOwnProperty("option")) {
+            if (elem?.hasOwnProperty("option")) {
               const option =
                 elem.option == "" || isNil(elem.option) ? null : elem.option;
               return { label: option, value: option };
             } else {
-              return { label: undefined, value: undefined };
+              return { label: null, value: null };
             }
           }),
         },
