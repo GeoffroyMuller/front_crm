@@ -69,6 +69,7 @@ import { computed, ref } from "vue";
 import Repetable from "@/core/components/form/repetable/Repetable.vue";
 import useProductsStore from "@/stores/products";
 import Select from "@/core/components/form/Select.vue";
+import { isNil } from "lodash";
 
 interface ProductAvancedSettingsProps {
   product: Product | null;
@@ -91,7 +92,7 @@ const productInternal = computed(() => {
       return {
         ...field,
         props: field?.props?.options?.map((elem: any) => {
-          return { option: elem.value };
+          return { option: elem?.value };
         }),
       };
     }),
@@ -107,7 +108,14 @@ function handleSubmit(data: any) {
         ...field,
         props: {
           options: field?.props?.map((elem: any) => {
-            return { label: elem.option, value: elem.option };
+            // eslint-disable-next-line no-prototype-builtins
+            if (elem.hasOwnProperty("option")) {
+              const option =
+                elem.option == "" || isNil(elem.option) ? null : elem.option;
+              return { label: option, value: option };
+            } else {
+              return { label: undefined, value: undefined };
+            }
           }),
         },
       };
