@@ -34,7 +34,11 @@
                 :min="1"
               >
                 <template #default>
-                  <TextField name="option" :label="$t('value')" />
+                  <TextField
+                    :rules="$yup.string().required()"
+                    name="option"
+                    :label="$t('value')"
+                  />
                 </template>
               </Repetable>
             </div>
@@ -61,18 +65,22 @@
   </Form>
 </template>
 <script setup lang="ts">
-import Form from "@/core/components/form/Form.vue";
 import Button from "@/core/components/Button.vue";
-import TextField from "@/core/components/form/TextField.vue";
-import type { Product, ProductField } from "@/types/product";
-import { computed, ref } from "vue";
+import Form from "@/core/components/form/Form.vue";
 import Repetable from "@/core/components/form/repetable/Repetable.vue";
-import useProductsStore from "@/stores/products";
 import Select from "@/core/components/form/Select.vue";
+import TextField from "@/core/components/form/TextField.vue";
+import useProductsStore from "@/stores/products";
+import type { Product, ProductField } from "@/types/product";
 import { isNil } from "lodash";
+import { computed, ref } from "vue";
 
 interface ProductAvancedSettingsProps {
   product: Product | null;
+}
+interface IFieldOption {
+  label: string;
+  value: string;
 }
 const productStore = useProductsStore();
 const emit = defineEmits(["saved", "cancel"]);
@@ -99,29 +107,46 @@ const productInternal = computed(() => {
   };
 });
 
+function _mapProductFields(formDataProductFields: any): Array<ProductField> {
+  return formDataProductFields.reduce(
+    (accumulator: Array<ProductField>, field: any) => {
+      if (!isNil(field)) {
+        accumulator.push({
+          ...field,
+          props: {
+            options: field?.props?.reduce(
+              (accumulator: Array<IFieldOption>, elem: any) => {
+                if (
+                  !isNil(elem) &&
+                  // eslint-disable-next-line no-prototype-builtins
+                  elem?.hasOwnProperty("option") &&
+                  !isNil(elem?.option) &&
+                  elem?.option != ""
+                ) {
+                  accumulator.push({
+                    label: elem.option,
+                    value: elem.option,
+                  });
+                }
+                return accumulator;
+              },
+              []
+            ),
+          },
+        });
+      }
+      return accumulator;
+    },
+    []
+  );
+}
+
 function handleSubmit(data: any) {
   loading.value = true;
   const productRes = {
     ...props.product,
-    product_fields: data.product_fields.map((field: any) => {
-      return {
-        ...field,
-        props: {
-          options: field?.props?.map((elem: any) => {
-            // eslint-disable-next-line no-prototype-builtins
-            if (elem?.hasOwnProperty("option")) {
-              const option =
-                elem.option == "" || isNil(elem.option) ? null : elem.option;
-              return { label: option, value: option };
-            } else {
-              return { label: null, value: null };
-            }
-          }),
-        },
-      };
-    }),
+    product_fields: _mapProductFields(data.product_fields),
   };
-  /* */
   emit(
     "saved",
     productRes,
