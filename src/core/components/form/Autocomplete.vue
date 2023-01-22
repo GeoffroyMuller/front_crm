@@ -32,7 +32,6 @@
 import { ref, watch } from "vue";
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import { computed } from "vue";
-import Menu from "../Menu.vue";
 import type { FormInputProps } from "../types";
 import TextField from "./TextField.vue";
 import { isEqual } from "lodash";

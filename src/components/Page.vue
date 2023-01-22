@@ -16,7 +16,6 @@
 </template>
 
 <script setup lang="ts">
-import Menu from "@/core/components/Menu.vue";
 import Button from "@/core/components/Button.vue";
 import IconButton from "@/core/components/IconButton.vue";
 import { useUserStore } from "@/stores/user";

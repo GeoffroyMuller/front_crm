@@ -56,43 +56,38 @@
       </template>
       <template #actions="{ item }">
         <div class="actions">
-          <div>
-            <Button
-              @click.stop="setArchived(item)"
-              color="danger"
-              icon="archive"
-              v-tooltip="{ text: $t('archive'), placement: 'bottom' }"
-              v-if="!item.archived"
-              variant="outlined"
-            />
-          </div>
-          <div>
-            <Button
-              @click.stop="preview(item)"
-              color="primary"
-              icon="preview"
-              v-tooltip="{ text: $t('preview'), placement: 'bottom' }"
-              variant="outlined"
-            />
-          </div>
-          <div>
-            <Button
-              @click.stop="downloadPdf(item)"
-              color="primary"
-              icon="download"
-              v-tooltip="{ text: $t('download'), placement: 'bottom' }"
-              variant="outlined"
-            />
-          </div>
-          <div>
-            <Button
-              @click.stop="sendMail(item)"
-              color="success"
-              icon="mail"
-              v-tooltip="{ text: $t('send_by_mail'), placement: 'bottom' }"
-              variant="outlined"
-            />
-          </div>
+          <Button
+            @click.stop="setArchived(item)"
+            color="danger"
+            icon="archive"
+            v-tooltip="{ text: $t('archive'), placement: 'bottom' }"
+            v-if="!item.archived"
+            variant="outlined"
+          />
+
+          <Button
+            @click.stop="preview(item)"
+            color="primary"
+            icon="preview"
+            v-tooltip="{ text: $t('preview'), placement: 'bottom' }"
+            variant="outlined"
+          />
+
+          <Button
+            @click.stop="downloadPdf(item)"
+            color="primary"
+            icon="download"
+            v-tooltip="{ text: $t('download'), placement: 'bottom' }"
+            variant="outlined"
+          />
+
+          <Button
+            @click.stop="sendMail(item)"
+            color="success"
+            icon="mail"
+            v-tooltip="{ text: $t('send_by_mail'), placement: 'bottom' }"
+            variant="outlined"
+          />
         </div>
       </template>
     </MagicDataTable>

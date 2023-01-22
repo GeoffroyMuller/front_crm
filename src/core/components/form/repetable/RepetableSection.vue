@@ -39,4 +39,7 @@ useForm({
     cursor: grab;
   }
 }
+.repetable-section-ghost {
+  opacity: 0.6;
+}
 </style>

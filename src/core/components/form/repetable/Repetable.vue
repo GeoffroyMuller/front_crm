@@ -11,31 +11,34 @@
         @start="handleDragStart"
         @end="handleDragEnd"
         item-key="key"
+        ghost-class="repetable-section-ghost"
         handle=".drag_handle"
       >
         <template #item="{ element }">
-          <RepetableSection
-            orderable
-            class="repetable-section"
-            :value="element.value"
-            @inputChange="
-              ({ name, value }) =>
-                handleSectionInputChange(element.key, name, value)
-            "
-          >
-            <div class="icon-delete" v-if="!isMin">
-              <div>
-                <IconButton
-                  class=""
-                  name="close"
-                  color="danger"
-                  v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
-                  @click="handleDeleteSection(element.key)"
-                />
+          <template v-if="element.value">
+            <RepetableSection
+              orderable
+              class="repetable-section"
+              :value="element.value"
+              @inputChange="
+                ({ name, value }) =>
+                  handleSectionInputChange(element.key, name, value)
+              "
+            >
+              <div class="icon-delete" v-if="!isMin">
+                <div>
+                  <IconButton
+                    class=""
+                    name="close"
+                    color="danger"
+                    v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
+                    @click.stop="handleDeleteSection(element.key)"
+                  />
+                </div>
               </div>
-            </div>
-            <slot :data="element.value" />
-          </RepetableSection>
+              <slot :data="element.value" />
+            </RepetableSection>
+          </template>
         </template>
       </draggable>
       <template v-if="!orderable">
@@ -55,7 +58,7 @@
                 name="close"
                 color="danger"
                 v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
-                @click="handleDeleteSection(key)"
+                @click.stop="handleDeleteSection(key)"
               />
             </div>
           </div>
