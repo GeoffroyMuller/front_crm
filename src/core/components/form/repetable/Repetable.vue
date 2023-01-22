@@ -32,7 +32,7 @@
                     name="close"
                     color="danger"
                     v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
-                    @click="handleDeleteSection(element.key)"
+                    @click.stop="handleDeleteSection(element.key)"
                   />
                 </div>
               </div>
@@ -58,7 +58,7 @@
                 name="close"
                 color="danger"
                 v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
-                @click="handleDeleteSection(key)"
+                @click.stop="handleDeleteSection(key)"
               />
             </div>
           </div>
