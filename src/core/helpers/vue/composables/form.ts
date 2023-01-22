@@ -24,7 +24,7 @@ export default function useForm(props: userFormProps) {
       internalValue.value = clone(props.modelValue || {});
       if (!isEmpty(internalValue.value)) {
         Object.keys(inputs.value).forEach((key) => {
-          if (internalValue.value[key] != null) {
+          if (internalValue.value[key] !== undefined) {
             inputs.value[key].internalValue = internalValue.value[key];
           } else {
             inputs.value[key].internalValue = undefined;
