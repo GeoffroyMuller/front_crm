@@ -157,6 +157,12 @@ const menu = ref([
     icon: "inventory_2",
   },
   {
+    key: "sales",
+    path: "/sales",
+    title: "sales",
+    icon: "sell",
+  },
+  {
     key: "customers",
     path: "/customers",
     title: "customers",
