@@ -45,9 +45,6 @@
           </KeepAlive>
         </div>
         <div class="form-bottom">
-          <Button @click="$emit('cancel')" variant="text">{{
-            $t("cancel")
-          }}</Button>
           <Button
             :disabled="hasError || !hasChanged"
             :loading="loading"
@@ -70,7 +67,7 @@ import RadioGroup from "@/core/components/form/RadioGroup.vue";
 interface ProductFormProps {
   product: Product | null;
 }
-const emit = defineEmits(["saved", "cancel"]);
+const emit = defineEmits(["saved"]);
 const props = withDefaults(defineProps<ProductFormProps>(), {
   product: null,
 });
