@@ -64,36 +64,37 @@
       :withPadding="false"
       class="table-container"
     >
-      <table
-        :class="{
-          'table-loading': loading,
-        }"
-      >
-        <thead>
-          <tr>
-            <th v-for="column in internalColumns" :key="column.key">
-              <div
-                v-if="!$slots.title && !$slots['title-' + (column.key as string)]"
-              >
-                {{ column.title }}
-              </div>
-              <slot
-                v-if="!$slots.title"
-                :name="`title-${column.key as string}`"
-                :column="column"
-              />
-              <slot name="title" :column="column" />
-            </th>
-            <th v-if="$slots['actions-title'] || $slots['actions']">
-              <div class="actions-block">
-                <slot name="actions-title"></slot>
-              </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <template v-if="loading">
-            <!-- <tr>
+      <div class="table-wrapper">
+        <table
+          :class="{
+            'table-loading': loading,
+          }"
+        >
+          <thead>
+            <tr>
+              <th v-for="column in internalColumns" :key="column.key">
+                <div
+                  v-if="!$slots.title && !$slots['title-' + (column.key as string)]"
+                >
+                  {{ column.title }}
+                </div>
+                <slot
+                  v-if="!$slots.title"
+                  :name="`title-${column.key as string}`"
+                  :column="column"
+                />
+                <slot name="title" :column="column" />
+              </th>
+              <th v-if="$slots['actions-title'] || $slots['actions']">
+                <div class="actions-block">
+                  <slot name="actions-title"></slot>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <template v-if="loading">
+              <!-- <tr>
             <td
               :colspan="
                 internalColumns?.length +
@@ -105,60 +106,61 @@
               </div>
             </td>
           </tr> -->
-            <div>
-              <Spinner />
-            </div>
-          </template>
-          <template v-else>
-            <tr
-              v-for="(item, index) in items"
-              :key="index"
-              @click.stop="$emit('row-click', item)"
-            >
-              <td
-                v-for="column in columns"
-                :key="column.key"
-                :style="styleItem"
+              <div>
+                <Spinner />
+              </div>
+            </template>
+            <template v-else>
+              <tr
+                v-for="(item, index) in items"
+                :key="index"
+                @click.stop="$emit('row-click', item)"
               >
-                <div
-                  v-if="!$slots.content && !$slots[`content-${column.key as string}`]"
+                <td
+                  v-for="column in columns"
+                  :key="column.key"
+                  :style="styleItem"
                 >
-                  {{
-                    (column?.data ? column?.data(item) : undefined) ||
-                    item[column.key]
-                  }}
-                </div>
-                <slot
-                  v-else-if="!$slots.content"
-                  :name="`content-${column.key as string}`"
-                  :column="column"
-                  :item="item"
-                ></slot>
-                <slot name="content" :column="column" :item="item" />
-              </td>
+                  <div
+                    v-if="!$slots.content && !$slots[`content-${column.key as string}`]"
+                  >
+                    {{
+                      (column?.data ? column?.data(item) : undefined) ||
+                      item[column.key]
+                    }}
+                  </div>
+                  <slot
+                    v-else-if="!$slots.content"
+                    :name="`content-${column.key as string}`"
+                    :column="column"
+                    :item="item"
+                  ></slot>
+                  <slot name="content" :column="column" :item="item" />
+                </td>
+                <td
+                  v-if="$slots['actions-title'] || $slots['actions']"
+                  :style="styleItem"
+                  class="actions-block"
+                >
+                  <slot name="actions" :item="item"></slot>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+          <tfoot v-if="$slots.footer">
+            <tr>
               <td
-                v-if="$slots['actions-title'] || $slots['actions']"
-                :style="styleItem"
-                class="actions-block"
+                :colspan="
+                  internalColumns?.length +
+                  ($slots['actions-title'] || $slots['actions'] ? 1 : 0)
+                "
               >
-                <slot name="actions" :item="item"></slot>
+                <slot class="table-footer" name="footer"></slot>
               </td>
             </tr>
-          </template>
-        </tbody>
-        <tfoot v-if="$slots.footer">
-          <tr>
-            <td
-              :colspan="
-                internalColumns?.length +
-                ($slots['actions-title'] || $slots['actions'] ? 1 : 0)
-              "
-            >
-              <slot class="table-footer" name="footer"></slot>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+          </tfoot>
+        </table>
+      </div>
     </component>
   </Media>
 </template>
@@ -220,6 +222,9 @@ watch(
 <style lang="scss" scoped>
 .table-container {
   overflow-x: auto; // TODO : pourquoi il prend la taille des menu en compte pour sa taille
+}
+.table-wrapper {
+  overflow-y: auto;
 }
 .table-mobile {
   width: 100%;
