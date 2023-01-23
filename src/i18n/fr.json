@@ -26,6 +26,9 @@
       "title": "Titre",
       "comment": "Commentaire"
     },
+    "edit-sale": {
+      "add-products": "Ajouter des produits a la vente"
+    },
     "edit-product": {
       "description": "Description",
       "stored-numerary": "Stockage numéraire",
