@@ -173,18 +173,7 @@ const { internalValue, internalError } = useValidatable({
   error: props.error,
   rules: props.rules,
   validate,
-  watchInternalValue: false,
 });
-
-watch(
-  () => internalValue.value,
-  () => {
-    if (internalError.value) {
-      validate();
-    }
-    emit("update:modelValue", internalValue.value);
-  }
-);
 
 const keyOrderForDnD = ref<string[]>([]);
 const sectionListForDnD = computed({

@@ -15,7 +15,6 @@ interface ValidatableProps<T> {
   error?: boolean | string;
   rules?: AnySchema;
   validate?: () => boolean | Promise<boolean>;
-  watchInternalValue?: boolean;
 }
 
 export default function useValidatable<T>(props: ValidatableProps<T>) {
@@ -67,15 +66,15 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
     });
   }
 
-  if (props.watchInternalValue == null || props.watchInternalValue === true) {
-    watch(
-      () => internalValue.value,
-      () => {
+  watch(
+    () => internalValue.value,
+    () => {
+      if (internalError.value) {
         validate();
-        instance?.emit("update:modelValue", internalValue.value);
       }
-    );
-  }
+      instance?.emit("update:modelValue", internalValue.value);
+    }
+  );
 
   watch(
     () => instance?.props.modelValue,
