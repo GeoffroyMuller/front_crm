@@ -1,7 +1,7 @@
 import { makeAPIStore } from "@/core/helpers/vue/store/store.factory";
-import type { Sales } from "@/types/sales";
+import type { Sale } from "@/types/sale";
 
-const useSaleStore = makeAPIStore<Sales>({
+const useSaleStore = makeAPIStore<Sale>({
   id: "sales",
 });
 
