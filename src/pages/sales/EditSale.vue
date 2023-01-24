@@ -1,7 +1,7 @@
 <template>
   <Page :title="title" :loading="loading">
     <Card>
-      <SalesForm></SalesForm>
+      <SalesForm :sale="sale"></SalesForm>
     </Card>
   </Page>
 </template>
@@ -38,7 +38,7 @@ onMounted(async () => {
   try {
     if (!isNew.value) {
       sale.value = await salesStore.fetchById(id as ID, {
-        populate: ["customer"],
+        populate: ["customer", "product_lines"],
       });
     }
   } catch (error) {
