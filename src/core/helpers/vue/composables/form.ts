@@ -77,7 +77,8 @@ export default function useForm(props: userFormProps) {
           name: input.name,
           value: input.internalValue.value,
         });
-      }
+      },
+      { immediate: true }
     );
     watch(
       () => input.internalError.value,
