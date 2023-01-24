@@ -26,7 +26,7 @@ const sale = ref<Sale | null>(null);
 const isNew = computed(() => id == "new");
 const title = computed(() => {
   if (isNew.value) {
-    return t("new-sale");
+    return t("pages.edit-sale.new-sale");
   }
   return `${t("sale")}`;
 });
