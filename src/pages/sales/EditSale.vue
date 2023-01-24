@@ -1,7 +1,7 @@
 <template>
   <Page :title="title" :loading="loading">
     <Card>
-      <SalesForm :sale="sale"></SalesForm>
+      <SaleForm :sale="sale"></SaleForm>
     </Card>
   </Page>
 </template>
@@ -13,7 +13,7 @@ import type { ID } from "@/types/utils";
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import SalesForm from "@/components/sales/SalesForm.vue";
+import SaleForm from "@/components/sales/SaleForm.vue";
 import Card from "@/core/components/Card.vue";
 import Page from "@/components/Page.vue";
 
