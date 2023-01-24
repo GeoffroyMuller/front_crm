@@ -11,7 +11,32 @@ export interface Sale {
   date?: string | Dayjs;
   created_at?: string | Dayjs;
 
-  products?: Array<Product>;
-  products_real?: Array<ProductReal>;
+  product_lines?: Array<SaleProductLine>;
+  product_real_lines?: Array<SaleProductRealLine>;
   customer?: Client;
+}
+
+export interface SaleProductLine extends Product {
+  saleProductPrice?: number;
+  quantity?: number;
+}
+
+export interface SaleProductRealLine extends ProductReal {
+  saleProductPrice?: number;
+}
+
+/* interface for form data */
+export interface SaleForm {
+  idCustomer?: ID;
+  form_product_lines?: Array<SaleFormProductLine>;
+}
+export interface SaleFormProductLine {
+  product?: Product;
+  form_product_real_lines?: Array<SaleFormProductRealLine>;
+  price?: number;
+  quantity?: number;
+}
+export interface SaleFormProductRealLine {
+  product_real?: ProductReal;
+  price?: number;
 }
