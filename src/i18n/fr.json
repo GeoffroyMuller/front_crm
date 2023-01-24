@@ -27,7 +27,10 @@
       "comment": "Commentaire"
     },
     "edit-sale": {
-      "add-products": "Ajouter des produits a la vente"
+      "new-sale": "Nouvelle vente",
+      "add-product": "Ajouter un produit",
+      "add-products": "Ajouter des produits a la vente",
+      "total-price": "Prix total de la vente: {price} €"
     },
     "edit-product": {
       "description": "Description",
