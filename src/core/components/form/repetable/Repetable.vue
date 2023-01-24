@@ -24,6 +24,8 @@
                 ({ name, value }) =>
                   handleSectionInputChange(element.key, name, value)
               "
+              @register="($v) => registerValidator(key, $v)"
+              @unregister="() => unregisterValidator(key)"
             >
               <div class="icon-delete" v-if="!isMin">
                 <div>
@@ -50,6 +52,8 @@
           @inputChange="
             ({ name, value }) => handleSectionInputChange(key, name, value)
           "
+          @register="($v) => registerValidator(key, $v)"
+          @unregister="() => unregisterValidator(key)"
         >
           <div class="icon-delete" v-if="!isMin">
             <div>
@@ -78,9 +82,9 @@
 
 <script setup lang="ts">
 import useValidatable from "../../../helpers/vue/composables/validatable";
-import type { AnySchema } from "yup";
+import { ValidationError, type AnySchema } from "yup";
 import { computed, ref, watch } from "vue";
-import { isEmpty, isEqual, isNil, uniqueId } from "lodash";
+import { isEqual, isNil, uniqueId } from "lodash";
 import RepetableSection from "./RepetableSection.vue";
 import Button from "../../Button.vue";
 import Card from "../../Card.vue";
@@ -92,10 +96,6 @@ export interface ISection {
 }
 
 interface RepetableProps {
-  /*
-  TODO : this is a duplicate of props in FormInputProps<string | number>
-        need to found why extends do not work proprely
-  */
   label?: string;
   modelValue?: any;
   readonly?: boolean;
@@ -118,13 +118,73 @@ const emit = defineEmits([
   "sectionChange",
 ]);
 
-const { internalValue, internalError, validate } = useValidatable({
+const sections = ref<{ [key: string]: ISection }>({});
+const sectionsValidators = ref<{
+  [key: string]: {
+    validate: () => Promise<boolean | string>;
+    errors: any;
+  };
+}>({});
+
+function registerValidator(
+  key: string,
+  obj: {
+    validate: () => Promise<boolean | string>;
+    errors: any;
+  }
+) {
+  sectionsValidators.value[key] = obj;
+}
+
+function unregisterValidator(key: string) {
+  delete sectionsValidators.value[key];
+}
+
+async function validate() {
+  let valid = true;
+  for (const v of Object.values(sectionsValidators.value)) {
+    valid = valid && (await v.validate());
+  }
+  if (!valid) {
+    internalError.value = true;
+    return false;
+  }
+  if (props.rules != null) {
+    try {
+      await props.rules.validate(internalValue.value);
+      internalError.value = undefined;
+      return true;
+    } catch (err) {
+      if (err instanceof ValidationError) {
+        internalError.value = err.message;
+      } else {
+        throw err;
+      }
+      return false;
+    }
+  } else {
+    internalError.value = false;
+    return true;
+  }
+}
+
+const { internalValue, internalError } = useValidatable({
   value: props.modelValue,
   error: props.error,
   rules: props.rules,
+  validate,
+  watchInternalValue: false,
 });
 
-const sections = ref<{ [key: string]: ISection }>({});
+watch(
+  () => internalValue.value,
+  () => {
+    if (internalError.value) {
+      validate();
+    }
+    emit("update:modelValue", internalValue.value);
+  }
+);
 
 const keyOrderForDnD = ref<string[]>([]);
 const sectionListForDnD = computed({

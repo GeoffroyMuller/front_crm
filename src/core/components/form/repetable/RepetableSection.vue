@@ -12,6 +12,7 @@ import type { _CustomInput } from "@/core/helpers/vue/composables/form";
 import type { ISection } from "./Repetable.vue";
 import useForm from "@/core/helpers/vue/composables/form";
 import Icon from "../../Icon.vue";
+import { onMounted, onUnmounted } from "vue";
 
 interface RepetableSectionProps {
   value: ISection;
@@ -19,10 +20,21 @@ interface RepetableSectionProps {
 }
 
 const props = withDefaults(defineProps<RepetableSectionProps>(), {});
-const emit = defineEmits(["inputChange"]);
+const emit = defineEmits(["inputChange", "register", "unregister"]);
 
-useForm({
+const { validate, errors } = useForm({
   modelValue: props.value,
+});
+
+onMounted(() => {
+  emit("register", {
+    validate,
+    errors,
+  });
+});
+
+onUnmounted(() => {
+  emit("unregister");
 });
 </script>
 
