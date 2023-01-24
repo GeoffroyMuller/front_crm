@@ -14,7 +14,7 @@
 
         <Repetable
           :label="$t('pages.edit-sale.add-products')"
-          name="sales_products"
+          name="form_product_lines"
         >
           <template #default="{ data: dataProduct }">
             <Grid :gap="2" :columns="1">
@@ -40,7 +40,7 @@
                       :label="$t('unit-price')"
                     />
                     <TextField
-                      v-if="productStore.isNumeraryStock(dataProduct.product)"
+                      v-if="!productStore.isPhysicalStock(dataProduct.product)"
                       :rules="$yup.string().required()"
                       :model-value="1"
                       :min="1"
@@ -54,12 +54,12 @@
               </Grid>
               <Repetable
                 v-if="productStore.isPhysicalStock(dataProduct.product)"
-                name="sales_products_real"
+                name="form_product_real_lines"
               >
                 <template #default>
                   <Grid :gap="2" :columns="2">
                     <MagicAutocomplete
-                      name="products_real"
+                      name="product_real"
                       :label="$t('reference')"
                       :getOptionLabel="displayProductRealAutocomplete"
                       :get-filters="
@@ -111,7 +111,6 @@
 </template>
 <script setup lang="ts">
 import Button from "@/core/components/Button.vue";
-import DataTable from "@/core/components/DataTable.vue";
 import Form from "@/core/components/form/Form.vue";
 import Repetable from "@/core/components/form/repetable/Repetable.vue";
 import TextField from "@/core/components/form/TextField.vue";
@@ -123,10 +122,16 @@ import useProductsStore from "@/stores/products";
 import useProductsRealStore from "@/stores/products_real";
 import useSaleStore from "@/stores/sales";
 import type { Product, ProductReal } from "@/types/product";
-import type { Sale } from "@/types/sale";
-import type { ID } from "@/types/utils";
+import type {
+  Sale,
+  SaleForm,
+  SaleFormProductLine,
+  SaleFormProductRealLine,
+  SaleProductLine,
+  SaleProductRealLine,
+} from "@/types/sale";
 import { isNil } from "lodash";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
 interface SaleFormProps {
@@ -159,14 +164,61 @@ function displayProductAutocomplete(product: Product): string {
 function displayProductRealAutocomplete(productReal: ProductReal) {
   return `${productReal.reference}`;
 }
-function _mapDataFormToSales(data: any): Sale {
+function _mapDataFormToProductRealLines(
+  productRealLinesForm: Array<SaleFormProductRealLine> | null | undefined
+): Array<SaleProductRealLine> {
+  if (isNil(productRealLinesForm)) {
+    return [];
+  }
+  return productRealLinesForm?.reduce(
+    (
+      acc: Array<SaleProductRealLine>,
+      product_real_line: SaleFormProductRealLine
+    ) => {
+      if (!isNil(product_real_line)) {
+        acc.push({
+          ...product_real_line.product_real,
+          saleProductPrice: product_real_line.price,
+        });
+      }
+      return acc;
+    },
+    []
+  );
+}
+function _mapDataFormToSale(data: SaleForm): Sale {
+  const saleLines = data.form_product_lines?.reduce(
+    (accumulator: any, product_line: SaleFormProductLine) => {
+      if (!isNil(product_line)) {
+        accumulator.product_lines.push({
+          ...product_line.product,
+          saleProductPrice: product_line.price,
+          quantity: product_line.quantity,
+        } as SaleProductLine);
+
+        if (productStore.isPhysicalStock(product_line.product)) {
+          const product_real_lines = _mapDataFormToProductRealLines(
+            product_line.form_product_real_lines
+          );
+          accumulator.product_real_lines = [
+            ...accumulator.product_real_lines,
+            ...product_real_lines,
+          ];
+        }
+      }
+      return accumulator;
+    },
+    { product_lines: [], product_real_lines: [] }
+  );
   return {
     idCustomer: data.idCustomer,
+    ...saleLines,
   };
 } //TODO
 
 async function handleSubmit(data: any) {
-  console.error({ data });
+  const dataMapped = _mapDataFormToSale(data);
+  console.error({ dataMapped });
   /*   if (isNew.value) {
     try {
       const newSale = await saleStore.create(data);
