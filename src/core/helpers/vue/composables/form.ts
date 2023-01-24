@@ -94,7 +94,6 @@ export default function useForm(props: userFormProps) {
 
   async function validate() {
     errors.value = {};
-
     return await Object.keys(inputs.value).reduce(async (prev, currentKey) => {
       const input: _CustomInput = inputs.value[currentKey];
       try {
@@ -103,7 +102,7 @@ export default function useForm(props: userFormProps) {
 
         if (!valid || typeof valid === "string") {
           // @ts-ignore
-          errors.value[input.name] = valid;
+          errors.value[input.name] = valid === false ? true : valid;
           return false;
         }
         return (await prev) && valid;
@@ -114,7 +113,9 @@ export default function useForm(props: userFormProps) {
     }, new Promise((resolve) => resolve(true)));
   }
 
-  const hasError = computed(() => !isEmpty(omitBy(errors.value, isNil)));
+  const hasError = computed(
+    () => !isEmpty(omitBy(omitBy(errors.value, isNil), (v) => v === false))
+  );
 
   function getData() {
     // @ts-ignore

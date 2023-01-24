@@ -14,6 +14,7 @@ interface ValidatableProps<T> {
   value?: T;
   error?: boolean | string;
   rules?: AnySchema;
+  validate?: () => boolean | Promise<boolean>;
 }
 
 export default function useValidatable<T>(props: ValidatableProps<T>) {
@@ -24,23 +25,26 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
   const internalError = ref<string | boolean | undefined>(props.error);
 
   async function validate() {
-    let valid = true;
+    if (props.validate) {
+      return await props.validate();
+    }
     if (props.rules != null) {
       try {
         await props.rules.validate(internalValue.value);
         internalError.value = undefined;
-        valid = true;
+        return true;
       } catch (err) {
-        valid = false;
         if (err instanceof ValidationError) {
           internalError.value = err.message;
         } else {
           throw err;
         }
+        return false;
       }
+    } else {
+      internalError.value = undefined;
+      return true;
     }
-
-    return valid;
   }
 
   if (
@@ -65,7 +69,9 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
   watch(
     () => internalValue.value,
     () => {
-      validate();
+      if (internalError.value) {
+        validate();
+      }
       instance?.emit("update:modelValue", internalValue.value);
     }
   );

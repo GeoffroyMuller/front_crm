@@ -2,7 +2,7 @@
   <div
     class="autocomplete"
     ref="autocomplete"
-    v-click-outside="() => (open = false)"
+    v-click-outside="() => handleClose()"
   >
     <TextField
       v-model="search"
@@ -102,6 +102,7 @@ const menuDisabled = computed(
 );
 
 function handleClose() {
+  open.value = false;
   validate();
   search.value = displayed.value;
 }
@@ -131,7 +132,7 @@ function handleClickOption(opt: any) {
     } else {
       internalValue.value = _getOptionValue(opt);
     }
-    open.value = false;
+    handleClose();
   }
   validate();
 }
