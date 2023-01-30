@@ -26,7 +26,7 @@
 </template>
 <script setup lang="ts">
 import useValidatable from "@/core/helpers/vue/composables/validatable";
-import { computed, ref } from "vue";
+import { computed, ref, type Component } from "vue";
 import type { FormInputProps } from "../types";
 import TextField from "./TextField.vue";
 import { isEqual } from "lodash";
@@ -43,6 +43,8 @@ export interface SelectProps extends FormInputProps<any> {
   getOptionLabel?: (opt: any) => string;
 
   options: Array<any>;
+
+  option?: Component;
 
   /*
   TODO : this is a duplicate of props in FormInputProps<string | number>
@@ -114,6 +116,7 @@ const { open } = useMenu({
     "get-option-value": props.getOptionValue,
     "get-option-label": props.getOptionLabel,
     "is-selected": isSelected,
+    option: props.option,
     options: props.options,
   },
 });

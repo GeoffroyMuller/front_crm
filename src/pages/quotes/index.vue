@@ -55,40 +55,13 @@
         </div>
       </template>
       <template #actions="{ item }">
-        <div class="actions">
-          <Button
-            @click.stop="setArchived(item)"
-            color="danger"
-            icon="archive"
-            v-tooltip="{ text: $t('archive'), placement: 'bottom' }"
-            v-if="!item.archived"
-            variant="outlined"
-          />
-
-          <Button
-            @click.stop="preview(item)"
-            color="primary"
-            icon="preview"
-            v-tooltip="{ text: $t('preview'), placement: 'bottom' }"
-            variant="outlined"
-          />
-
-          <Button
-            @click.stop="downloadPdf(item)"
-            color="primary"
-            icon="download"
-            v-tooltip="{ text: $t('download'), placement: 'bottom' }"
-            variant="outlined"
-          />
-
-          <Button
-            @click.stop="sendMail(item)"
-            color="success"
-            icon="mail"
-            v-tooltip="{ text: $t('send_by_mail'), placement: 'bottom' }"
-            variant="outlined"
-          />
-        </div>
+        <QuoteActionsMenu
+          :item="item"
+          @setArchived="setArchived"
+          @preview="preview"
+          @downloadPdf="downloadPdf"
+          @sendMail="sendMail"
+        />
       </template>
     </MagicDataTable>
     <QuotePreview
@@ -120,6 +93,7 @@ import QuoteSendMail from "@/components/quotes/QuoteSendMail.vue";
 import Media from "@/core/Media.vue";
 import FloatingButton from "@/core/components/FloatingButton.vue";
 import QuoteFilters from "@/components/quotes/QuoteFilters.vue";
+import QuoteActionsMenu from "@/components/quotes/QuoteActionsMenu.vue";
 
 const { toast, confirm } = useUI();
 const { t } = useI18n();
