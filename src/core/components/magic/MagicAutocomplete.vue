@@ -4,6 +4,7 @@
       v-bind="autocompleteProps"
       :model-value="internalValue"
       @update:model-value="($event) => (internalValue = $event)"
+      @update:selected="($event) => $emit('update:selected', $event)"
       @search="onSearch"
       :options="options"
       :autoFilter="false"
@@ -57,7 +58,12 @@ export interface MagicAutocompleteProps<T> /* extends AutocompleteProps */ {
   rules?: AnySchema;
 }
 
-const emit = defineEmits(["update:modelValue", "update:options", "search"]);
+const emit = defineEmits([
+  "update:modelValue",
+  "update:options",
+  "search",
+  "update:selected",
+]);
 
 const props = withDefaults(defineProps<MagicAutocompleteProps<any>>(), {
   multiple: false,

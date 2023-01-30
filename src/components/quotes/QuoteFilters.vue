@@ -30,6 +30,7 @@ const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
       status: "$eq.status",
       customer: "$eq.idClient",
       company: "$eq.client.idCompany",
+      archived: "$eq.archived",
       //test: ["$or.$contains.name", "$or.$contains.status"],
     },
     filters: [
@@ -69,6 +70,13 @@ const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
             $contains: { name: str },
           }),
         } as MagicAutocompleteProps<Company>,
+      },
+      {
+        type: "switch",
+        props: {
+          name: "archived",
+          label: "archived",
+        },
       },
       //{ type: "string", props: { name: "test", label: "test" } },
     ],

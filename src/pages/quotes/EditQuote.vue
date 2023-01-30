@@ -101,6 +101,7 @@ import Repetable from "@/core/components/form/repetable/Repetable.vue";
 import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import type Client from "@/types/client";
 import Card from "@/core/components/Card.vue";
+import { isEmpty } from "lodash";
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();
@@ -154,11 +155,13 @@ function onAddClient(client: Client) {
 
 async function handleSubmit(data: any) {
   if (data.lines) {
-    data.lines = data.lines.map((line) => {
-      const newLine = { ...line };
-      delete newLine.vat;
-      return newLine;
-    });
+    data.lines = data.lines
+      .map((line) => {
+        const newLine = { ...line };
+        delete newLine.vat;
+        return newLine;
+      })
+      .filter((line) => !isEmpty(line));
   }
   delete data.client;
   try {
