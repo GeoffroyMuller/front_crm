@@ -122,15 +122,16 @@ watch(
   () => internalValue.value,
   async () => {
     if (internalValue.value != null) {
-      if (
-        options.value.find((opt) =>
-          isEqual(_getOptionValue(opt), internalValue.value)
-        ) == null
-      ) {
-        const filters =
-          props.optionKey == null
-            ? { $eq: { id: internalValue.value.id } }
-            : { $eq: { [props.optionKey]: internalValue.value } };
+      if (!options.value?.length) {
+        let filters: any = {};
+        if (props.multiple) {
+          filters = { $in: { [props.optionKey || "id"]: internalValue.value } };
+        } else {
+          filters =
+            props.optionKey == null
+              ? { $eq: { id: internalValue.value.id } }
+              : { $eq: { [props.optionKey]: internalValue.value } };
+        }
         const response = await props.store.search(filters);
         options.value = response;
       }

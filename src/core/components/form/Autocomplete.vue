@@ -109,6 +109,7 @@ function handleClose() {
 
 function isSelected(opt: any) {
   if (props.multiple) {
+    if (!internalValue.value?.length) return false;
     return (
       internalValue.value.find((v: any) => isEqual(_getOptionValue(opt), v)) !=
       null
@@ -124,7 +125,8 @@ function handleClickOption(opt: any) {
         return !isEqual(_getOptionValue(opt), v);
       });
     } else {
-      internalValue.value.push(_getOptionValue(opt));
+      if (!internalValue.value) internalValue.value = [];
+      internalValue.value = [...internalValue.value, _getOptionValue(opt)];
     }
   } else {
     if (isSelected(opt)) {
@@ -139,6 +141,7 @@ function handleClickOption(opt: any) {
 
 const selected = computed(() => {
   if (props.multiple) {
+    if (!internalValue.value?.length) return [];
     return internalValue.value.map((v: any) =>
       props.options.find((o) => isEqual(_getOptionValue(o), v))
     );
@@ -152,10 +155,10 @@ const displayed = computed<string>(() => {
   if (selected.value == null) {
     return "";
   }
-  if (props.multiple && selected.value?.length == 0)
-    if (props.multiple) {
-      return selected.value.map((v: any) => props.getOptionLabel(v)).join(", ");
-    }
+
+  if (props.multiple) {
+    return selected.value.map((v: any) => props.getOptionLabel(v)).join(", ");
+  }
   return props.getOptionLabel(selected.value);
 });
 
