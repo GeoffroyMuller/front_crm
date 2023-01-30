@@ -46,12 +46,9 @@
   </Menu>
 </template>
 <script setup lang="ts">
-import useQuoteStore from "@/stores/quotes";
 import type { Quote } from "@/types/quote";
 import Button from "@/core/components/Button.vue";
 import IconButton from "@/core/components/IconButton.vue";
-import useMenu from "@/core/helpers/vue/composables/menu";
-import { ref } from "vue";
 import Menu from "@/core/components/Menu.vue";
 
 const emit = defineEmits([]);
