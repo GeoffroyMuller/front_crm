@@ -28,8 +28,8 @@ const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
     map: {
       name: "$contains.name",
       status: "$in.status",
-      customer: "$in.idClient",
-      company: "$in.client.idCompany",
+      customer: "$eq.idClient",
+      company: "$eq.client.idCompany",
       archived: "$eq.archived",
       //test: ["$or.$contains.name", "$or.$contains.status"],
     },
@@ -49,7 +49,6 @@ const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
         props: {
           name: "customer",
           label: "customer",
-          multiple: true,
           store: clientsStore,
           getOptionLabel: (opt) => `${opt.firstname} ${opt.lastname}`,
           optionKey: "id",
@@ -65,7 +64,6 @@ const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
         props: {
           name: "company",
           label: "company",
-          multiple: true,
           store: companiesStore,
           getOptionLabel: (opt) => `${opt.name}`,
           optionKey: "id",
