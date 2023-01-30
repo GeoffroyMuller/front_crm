@@ -115,9 +115,7 @@ const props = withDefaults(defineProps<QuoteLineProps>(), {});
 const internalLine = ref(props.line);
 
 function handleProductChange(product: Product) {
-  console.error({ product });
   if (product != null) {
-    console.error(product.price);
     internalLine.value = {
       ...internalLine.value,
       description: product.description as string,
