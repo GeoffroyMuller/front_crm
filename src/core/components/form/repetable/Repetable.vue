@@ -210,10 +210,8 @@ const sectionListForDnD = computed({
 });
 
 function handleDragStart(e: any) {
-  console.error(e);
 }
 function handleDragEnd(e: any) {
-  console.error(e);
 }
 
 const generateId = () => uniqueId();
