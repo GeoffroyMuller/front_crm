@@ -1,6 +1,6 @@
 <template>
   <Media down="md">
-    <div class="pagination">
+    <div class="pagination pagination-mobile">
       <div class="pagination-items-per-page">
         <div class="pagination-number-page">
           <TextField
@@ -140,8 +140,12 @@ span {
 }
 .pagination {
   @include flex(row, end, center);
+  &.pagination-mobile {
+    justify-content: start;
+  }
   gap: spacing(4);
 }
+
 .pagination-items-per-page {
   @include flex(row, center, center);
   & span {
