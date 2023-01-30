@@ -94,9 +94,10 @@ const menuDisabled = computed(() => props.disabled || !props.options?.length);
 
 function isSelected(opt: any) {
   if (props.multiple) {
+    if (!internalValue.value?.length) return false;
     return (
       internalValue.value.find((v: any) =>
-        props.options.find((o) => isEqual(props.getOptionValue(o), v))
+        isEqual(props.getOptionValue(opt), v)
       ) != null
     );
   }
@@ -124,7 +125,8 @@ function handleClickOption(opt: any) {
         return !isEqual(props.getOptionValue(opt), v);
       });
     } else {
-      internalValue.value.push(props.getOptionValue(opt));
+      if (!internalValue.value) internalValue.value = [];
+      internalValue.value = [...internalValue.value, props.getOptionValue(opt)];
     }
   } else {
     if (isSelected(opt)) {
@@ -139,6 +141,7 @@ function handleClickOption(opt: any) {
 
 const selected = computed(() => {
   if (props.multiple) {
+    if (!internalValue.value?.length) return [];
     return internalValue.value.map((v: any) =>
       props.options.find((o) => isEqual(props.getOptionValue(o), v))
     );

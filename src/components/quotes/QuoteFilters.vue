@@ -27,7 +27,7 @@ const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
     },
     map: {
       name: "$contains.name",
-      status: "$eq.status",
+      status: "$in.status",
       customer: "$eq.idClient",
       company: "$eq.client.idCompany",
       archived: "$eq.archived",
@@ -40,6 +40,7 @@ const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
         props: {
           name: "status",
           label: "status",
+          multiple: true,
           options: ["draft", "refused", "validated"],
         },
       },
