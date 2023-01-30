@@ -8,7 +8,7 @@
   </div>
   <Teleport to="body">
     <div ref="content">
-      <Card>
+      <Card :withPadding="false">
         <slot name="content" />
       </Card>
     </div>
