@@ -13,6 +13,9 @@
         item-key="key"
         ghost-class="repetable-section-ghost"
         handle=".drag_handle"
+        :forceFallback="true"
+        dragClass="repetable-section-cloned-element"
+        direction="vertical"
       >
         <template #item="{ element }">
           <template v-if="element.value">
@@ -24,8 +27,8 @@
                 ({ name, value }) =>
                   handleSectionInputChange(element.key, name, value)
               "
-              @register="($v) => registerValidator(key, $v)"
-              @unregister="() => unregisterValidator(key)"
+              @register="($v) => registerValidator(element.key, $v)"
+              @unregister="() => unregisterValidator(element.key)"
             >
               <div class="icon-delete" v-if="!isMin">
                 <div>
