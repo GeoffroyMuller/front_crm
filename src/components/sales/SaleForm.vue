@@ -17,75 +17,7 @@
           name="form_product_lines"
         >
           <template #default="{ data: dataProduct }">
-            <Grid :gap="2" :columns="1">
-              <Grid :gap="2" :columns="2">
-                <MagicAutocomplete
-                  name="product"
-                  :label="$t('product')"
-                  :getOptionLabel="displayProductAutocomplete"
-                  :get-filters="
-                    (str) => ({ $or: { $contains: { name: str, price: str } } })
-                  "
-                  :store="productStore"
-                />
-                <template v-if="dataProduct.product">
-                  <Grid :gap="2" :columns="2">
-                    <TextField
-                      v-if="!productStore.isPhysicalStock(dataProduct.product)"
-                      :rules="$yup.string().required()"
-                      :model-value="dataProduct.product?.price"
-                      type="number"
-                      :step="0.01"
-                      name="price"
-                      :label="$t('unit-price')"
-                    />
-                    <TextField
-                      v-if="!productStore.isPhysicalStock(dataProduct.product)"
-                      :rules="$yup.string().required()"
-                      :model-value="1"
-                      :min="1"
-                      type="number"
-                      :step="1"
-                      name="quantity"
-                      :label="$t('quantity')"
-                    />
-                  </Grid>
-                </template>
-              </Grid>
-              <Repetable
-                v-if="productStore.isPhysicalStock(dataProduct.product)"
-                name="form_product_real_lines"
-              >
-                <template #default>
-                  <Grid :gap="2" :columns="2">
-                    <MagicAutocomplete
-                      name="product_real"
-                      :label="$t('reference')"
-                      :getOptionLabel="displayProductRealAutocomplete"
-                      :get-filters="
-                        (str) => ({
-                          $contains: {
-                            reference: str,
-                            idProduct: dataProduct.product.id,
-                          },
-                        })
-                      "
-                      :store="productRealStore"
-                    />
-                    <Grid :gap="2" :columns="2">
-                      <TextField
-                        :rules="$yup.string().required()"
-                        :model-value="dataProduct.product?.price"
-                        type="number"
-                        :step="0.01"
-                        name="price"
-                        :label="$t('unit-price')"
-                      />
-                    </Grid>
-                  </Grid>
-                </template>
-              </Repetable>
-            </Grid>
+            <SaleProductLine :line="dataProduct"></SaleProductLine>
           </template>
           <template #actions="{ addSection }">
             <Button type="button" variant="text" @click="addSection()">
@@ -113,29 +45,23 @@
 import Button from "@/core/components/Button.vue";
 import Form from "@/core/components/form/Form.vue";
 import Repetable from "@/core/components/form/repetable/Repetable.vue";
-import TextField from "@/core/components/form/TextField.vue";
-import Grid from "@/core/components/layouts/Grid.vue";
 import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
-import auth from "@/middleware/auth";
 import useClientStore from "@/stores/clients";
-import useProductsStore from "@/stores/products";
-import useProductsRealStore from "@/stores/products_real";
 import useSaleStore from "@/stores/sales";
-import { useUserStore } from "@/stores/user";
-import type { Product, ProductReal } from "@/types/product";
 import type {
   Sale,
   SaleForm,
   SaleFormProductLine,
   SaleFormProductRealLine,
-  SaleProductLine,
-  SaleProductRealLine,
+  SaleProductLineType,
+  SaleProductRealLineType,
 } from "@/types/sale";
 import type { ID } from "@/types/utils";
 import { isNil } from "lodash";
 import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import SaleProductLine from "./SaleProductLine.vue";
 
 interface SaleFormProps {
   sale: Sale | null;
@@ -150,9 +76,6 @@ const { toast } = useUI();
 const { t } = useI18n();
 const saleStore = useSaleStore();
 const clientStore = useClientStore();
-const productStore = useProductsStore();
-const productRealStore = useProductsRealStore();
-const userStore = useUserStore();
 
 const isNew = computed(() => props.sale == null);
 
@@ -166,23 +89,13 @@ onMounted(() => {
   }
 });
 
-function displayProductAutocomplete(product: Product): string {
-  return `${product.name} ${"| " + t("price") + " : " + product.price} ${
-    productStore.isNumeraryStock(product)
-      ? "| " + t("stock") + " : " + product.stock
-      : ""
-  }`;
-}
-function displayProductRealAutocomplete(productReal: ProductReal) {
-  return `${productReal.reference}`;
-}
 function _mapSaleToDataForm(data: Sale): SaleForm {
   return {
     idCustomer: data?.idCustomer,
     form_product_lines: data?.product_lines?.reduce(
       (
         accumulator: Array<SaleFormProductLine>,
-        saleProduct: SaleProductLine
+        saleProduct: SaleProductLineType
       ) => {
         if (!isNil(saleProduct)) {
           accumulator.push({
@@ -192,7 +105,7 @@ function _mapSaleToDataForm(data: Sale): SaleForm {
             form_product_real_lines: data?.product_real_lines?.reduce(
               (
                 acc: Array<SaleFormProductRealLine>,
-                saleProductReal: SaleProductRealLine
+                saleProductReal: SaleProductRealLineType
               ) => {
                 if (!isNil(saleProductReal)) {
                   acc.push({
@@ -214,22 +127,21 @@ function _mapSaleToDataForm(data: Sale): SaleForm {
 }
 function _mapDataFormToProductRealLines(
   productRealLinesForm: Array<SaleFormProductRealLine> | null | undefined
-): Array<SaleProductRealLine> {
+): Array<SaleProductRealLineType> {
   if (isNil(productRealLinesForm)) {
     return [];
   }
   return productRealLinesForm?.reduce(
     (
-      acc: Array<SaleProductRealLine>,
+      acc: Array<SaleProductRealLineType>,
       product_real_line: SaleFormProductRealLine
     ) => {
       if (
         !isNil(product_real_line) &&
-        // eslint-disable-next-line no-prototype-builtins
-        product_real_line?.product_real?.hasOwnProperty("id")
+        !isNil(product_real_line?.idProductReal)
       ) {
         acc.push({
-          ...product_real_line.product_real,
+          idProductReal: product_real_line.idProductReal,
           saleProductRealPrice: product_real_line.price,
         });
       }
@@ -243,15 +155,16 @@ function _mapDataFormToSale(data: SaleForm): Sale {
     (accumulator: any, product_line: SaleFormProductLine) => {
       if (!isNil(product_line)) {
         accumulator.product_lines.push({
-          ...product_line.product,
+          ...product_line,
           saleProductPrice: product_line.price,
           quantity: product_line.quantity,
-        } as SaleProductLine);
+        } as SaleProductLineType);
 
-        if (productStore.isPhysicalStock(product_line.product)) {
+        if (!isNil(product_line.form_product_real_lines)) {
           const product_real_lines = _mapDataFormToProductRealLines(
             product_line.form_product_real_lines
           );
+          console.error({ product_real_lines });
           accumulator.product_real_lines = [
             ...accumulator.product_real_lines,
             ...product_real_lines,
