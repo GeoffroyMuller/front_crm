@@ -52,7 +52,11 @@ onUnmounted(() => {
   }
 }
 .repetable-section-ghost {
-  opacity: 0;
+  > * {
+    opacity: 0;
+  }
+  background-color: transparent;
+  border: 1px dashed #ccc;
 }
 .repetable-section-cloned-element {
   opacity: 1 !important;
