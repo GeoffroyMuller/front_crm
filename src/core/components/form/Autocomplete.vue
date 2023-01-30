@@ -19,7 +19,9 @@
           :color="
             !isFocus ? 'black' : internalError || error ? 'danger' : 'primary'
           "
+          v-if="multiple || internalValue == null"
         />
+        <IconButton name="close" v-else @click.stop="internalValue = null" />
       </template>
     </TextField>
     <Alert v-if="typeof (internalError || error) === 'string'">
@@ -40,6 +42,7 @@ import OptionsList from "../OptionsList.vue";
 import Icon from "../Icon.vue";
 import type { AnySchema } from "yup";
 import useMenu from "@/core/helpers/vue/composables/menu";
+import IconButton from "../IconButton.vue";
 
 export interface AutocompleteProps extends FormInputProps<any> {
   multiple?: boolean;
@@ -109,6 +112,7 @@ function handleClose() {
 
 function isSelected(opt: any) {
   if (props.multiple) {
+    if (!internalValue.value?.length) return false;
     return (
       internalValue.value.find((v: any) => isEqual(_getOptionValue(opt), v)) !=
       null
@@ -124,7 +128,8 @@ function handleClickOption(opt: any) {
         return !isEqual(_getOptionValue(opt), v);
       });
     } else {
-      internalValue.value.push(_getOptionValue(opt));
+      if (!internalValue.value) internalValue.value = [];
+      internalValue.value = [...internalValue.value, _getOptionValue(opt)];
     }
   } else {
     if (isSelected(opt)) {
@@ -139,6 +144,7 @@ function handleClickOption(opt: any) {
 
 const selected = computed(() => {
   if (props.multiple) {
+    if (!internalValue.value?.length) return [];
     return internalValue.value.map((v: any) =>
       props.options.find((o) => isEqual(_getOptionValue(o), v))
     );
@@ -152,23 +158,37 @@ const displayed = computed<string>(() => {
   if (selected.value == null) {
     return "";
   }
-  if (props.multiple && selected.value?.length == 0)
-    if (props.multiple) {
-      return selected.value.map((v: any) => props.getOptionLabel(v)).join(", ");
-    }
+
+  if (props.multiple) {
+    return selected.value.map((v: any) => props.getOptionLabel(v)).join(", ");
+  }
   return props.getOptionLabel(selected.value);
 });
 
 const optionsFiltered = computed(() => {
+  let res: any[] = [];
   if (props.autoFilter) {
-    return props.options.filter((opt: any) =>
+    res = props.options.filter((opt: any) =>
       props
         .getOptionLabel(opt)
         .toLowerCase()
         .includes((search.value || "").toLowerCase())
     );
   }
-  return props.options;
+  res = props.options;
+
+  if (storedOpt.value != null) {
+    if (
+      !props.multiple &&
+      !res.find((o) =>
+        isEqual(_getOptionValue(o), _getOptionValue(storedOpt.value))
+      )
+    ) {
+      res.push(storedOpt.value);
+    }
+  }
+
+  return res;
 });
 
 function clickTextField() {
@@ -191,10 +211,14 @@ watch(
   }
 );
 
+// here to store the option that correspond to the current value
+const storedOpt = ref();
+
 watch(
   () => internalValue.value,
   (val) => {
     search.value = displayed.value;
+    storedOpt.value = selected.value;
     emit("update:selected", selected.value);
   },
   {

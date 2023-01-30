@@ -1,21 +1,33 @@
 <template>
   <Card :withPadding="false">
-    <div
-      class="select-option"
-      :class="{
-        selected: isSelected(opt),
-      }"
-      v-for="opt of _opt"
-      :key="getOptionValue(opt)"
-      @click.stop="handleClickOption(opt)"
-    >
-      {{ getOptionLabel(opt) }}
-    </div>
+    <template v-if="option">
+      <component
+        :is="option"
+        v-for="opt of _opt"
+        :key="getOptionValue(opt)"
+        @click.stop="handleClickOption(opt)"
+        :option="opt"
+        :selected="isSelected(opt)"
+      ></component>
+    </template>
+    <template v-else>
+      <div
+        class="select-option"
+        :class="{
+          selected: isSelected(opt),
+        }"
+        v-for="opt of _opt"
+        :key="getOptionValue(opt)"
+        @click.stop="handleClickOption(opt)"
+      >
+        {{ getOptionLabel(opt) }}
+      </div>
+    </template>
   </Card>
 </template>
 
 <script setup lang="ts">
-import { computed, isRef, type Ref } from "vue";
+import { computed, isRef, type Component, type Ref } from "vue";
 import Card from "./Card.vue";
 
 interface OptionsListProps {
@@ -24,6 +36,7 @@ interface OptionsListProps {
   handleClickOption: (opt: any) => void;
   isSelected: (opt: any) => boolean;
   options: Array<any> | Ref<Array<any>>;
+  option?: Component;
 }
 
 const props = withDefaults(defineProps<OptionsListProps>(), {});
@@ -33,7 +46,7 @@ const _opt = isRef(props.options)
   : props.options;
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .select-option {
   cursor: pointer;
   padding: spacing(0.75) spacing(1);

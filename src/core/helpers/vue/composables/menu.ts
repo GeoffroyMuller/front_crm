@@ -1,3 +1,7 @@
+import { i18n } from "@/core/plugins/i18n";
+import lodashPlugin from "@/core/plugins/lodash";
+import pinia from "@/core/plugins/pinia";
+import yupPlugin from "@/core/plugins/yup";
 import {
   createApp,
   isRef,
@@ -9,9 +13,10 @@ import {
 } from "vue";
 
 export interface MenuProps {
-  component: Component;
+  component?: Component;
   componentProps?: any;
   activator: HTMLElement | Ref<HTMLElement>;
+  container?: HTMLElement | Ref<HTMLElement>;
 
   fullActivatorWidth?: boolean;
 
@@ -55,11 +60,24 @@ export default function useMenu(props: MenuProps) {
     });
   }
 
-  const container = document.createElement("div");
+  const container = props.container
+    ? isRef(props.container)
+      ? props.container
+      : ref<HTMLElement>(props.container)
+    : ref(document.createElement("div"));
   const activator = isRef(props.activator)
     ? props.activator
     : ref<HTMLElement>(props.activator);
 
+  const unwatchContainer = watch(
+    () => container.value,
+    (elem: HTMLElement) => {
+      if (elem) {
+        init();
+      }
+    },
+    { immediate: true }
+  );
   const unwatchActivator = watch(
     () => activator.value,
     (elem?: HTMLElement) => {
@@ -107,7 +125,7 @@ export default function useMenu(props: MenuProps) {
 
   function _setStyle() {
     const dimensions = {
-      container: _getDimensions(container),
+      container: _getDimensions(container.value as HTMLElement),
       activator: _getDimensions(activator.value as HTMLElement),
     };
 
@@ -117,6 +135,10 @@ export default function useMenu(props: MenuProps) {
     const coord = { left: 0, top: 0 };
 
     switch (placement) {
+      case "left":
+        coord.top = dimensions.activator.top;
+        coord.left = dimensions.activator.left - dimensions.container.width;
+        break;
       case "top":
         coord.top = dimensions.activator.top - dimensions.activator.height;
         if (
@@ -149,12 +171,12 @@ export default function useMenu(props: MenuProps) {
       default:
         break;
     }
-    Object.assign(container.style, {
+    Object.assign(container.value.style, {
       top: coord.top + "px",
       left: coord.left + "px",
     });
     if (props.fullActivatorWidth) {
-      container.style.minWidth = `${dimensions.activator.width}px`;
+      container.value.style.minWidth = `${dimensions.activator.width}px`;
     }
   }
 
@@ -163,16 +185,22 @@ export default function useMenu(props: MenuProps) {
   }
 
   function init() {
-    container.style.position = "absolute";
-    container.style.zIndex = "6";
-    document.body.appendChild(container);
-    container.style.opacity = "0";
-    container.style.display = "none";
-    container.onclick = (e) => e.stopPropagation();
-    mount(props.component, props.componentProps || {}, container);
+    container.value.style.position = "absolute";
+    container.value.style.zIndex = "6";
+    if (!props.container) {
+      document.body.appendChild(container.value);
+    }
+    container.value.style.opacity = "0";
+    container.value.style.display = "none";
+    container.value.onclick = (e) => e.stopPropagation();
+    if (!props.container) {
+      mount(
+        props.component as Component,
+        props.componentProps || {},
+        container.value
+      );
+    }
   }
-
-  init();
 
   const unwatchDisabled = watch(
     () => props.disabled?.value,
@@ -198,14 +226,14 @@ export default function useMenu(props: MenuProps) {
   );
 
   function display() {
-    container.style.display = "unset";
+    container.value.style.display = "unset";
     _setStyle();
-    container.style.opacity = "100";
+    container.value.style.opacity = "100";
   }
 
   function hide() {
-    container.style.opacity = "0";
-    container.style.display = "none";
+    container.value.style.opacity = "0";
+    container.value.style.display = "none";
     _resetStyle();
   }
 
@@ -213,7 +241,10 @@ export default function useMenu(props: MenuProps) {
     unwatchActivator();
     unwatchDisabled();
     unwatchOpen();
-    container.remove();
+    unwatchContainer();
+    if (!props.container) {
+      container.value.remove();
+    }
   }
 
   return {

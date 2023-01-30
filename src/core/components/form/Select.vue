@@ -16,7 +16,9 @@
           :color="
             !isFocus ? 'black' : internalError || error ? 'danger' : 'primary'
           "
+          v-if="multiple || internalValue == null"
         />
+        <IconButton name="close" v-else @click.stop="internalValue = null" />
       </template>
     </TextField>
     <Alert v-if="internalError || error">
@@ -26,7 +28,7 @@
 </template>
 <script setup lang="ts">
 import useValidatable from "@/core/helpers/vue/composables/validatable";
-import { computed, ref } from "vue";
+import { computed, ref, type Component } from "vue";
 import type { FormInputProps } from "../types";
 import TextField from "./TextField.vue";
 import { isEqual } from "lodash";
@@ -35,6 +37,7 @@ import OptionsList from "../OptionsList.vue";
 import Icon from "../Icon.vue";
 import type { AnySchema } from "yup";
 import useMenu from "@/core/helpers/vue/composables/menu";
+import IconButton from "../IconButton.vue";
 
 export interface SelectProps extends FormInputProps<any> {
   multiple?: boolean;
@@ -43,6 +46,8 @@ export interface SelectProps extends FormInputProps<any> {
   getOptionLabel?: (opt: any) => string;
 
   options: Array<any>;
+
+  option?: Component;
 
   /*
   TODO : this is a duplicate of props in FormInputProps<string | number>
@@ -94,9 +99,10 @@ const menuDisabled = computed(() => props.disabled || !props.options?.length);
 
 function isSelected(opt: any) {
   if (props.multiple) {
+    if (!internalValue.value?.length) return false;
     return (
       internalValue.value.find((v: any) =>
-        props.options.find((o) => isEqual(props.getOptionValue(o), v))
+        isEqual(props.getOptionValue(opt), v)
       ) != null
     );
   }
@@ -113,6 +119,7 @@ const { open } = useMenu({
     "get-option-value": props.getOptionValue,
     "get-option-label": props.getOptionLabel,
     "is-selected": isSelected,
+    option: props.option,
     options: props.options,
   },
 });
@@ -124,7 +131,8 @@ function handleClickOption(opt: any) {
         return !isEqual(props.getOptionValue(opt), v);
       });
     } else {
-      internalValue.value.push(props.getOptionValue(opt));
+      if (!internalValue.value) internalValue.value = [];
+      internalValue.value = [...internalValue.value, props.getOptionValue(opt)];
     }
   } else {
     if (isSelected(opt)) {
@@ -139,6 +147,7 @@ function handleClickOption(opt: any) {
 
 const selected = computed(() => {
   if (props.multiple) {
+    if (!internalValue.value?.length) return [];
     return internalValue.value.map((v: any) =>
       props.options.find((o) => isEqual(props.getOptionValue(o), v))
     );

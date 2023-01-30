@@ -16,6 +16,7 @@ import "./plugins/typescript";
 
 import clickOutside from "./directives/clickOutside";
 import tooltip from "./directives/tooltip";
+import utilsPlugin from "./plugins/utils";
 
 interface SetupOptions {
   routes: Readonly<RouteRecordRaw[]>;
@@ -31,7 +32,13 @@ export default function setup(options: SetupOptions) {
     routes,
   });
 
-  app.use(pinia).use(router).use(i18n).use(lodashPlugin).use(yupPlugin);
+  app
+    .use(pinia)
+    .use(router)
+    .use(i18n)
+    .use(lodashPlugin)
+    .use(yupPlugin)
+    .use(utilsPlugin);
 
   app.directive("click-outside", clickOutside);
   app.directive("tooltip", tooltip);

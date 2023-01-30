@@ -13,9 +13,12 @@ import type Client from "@/types/client";
 import type { Company } from "@/types/company";
 import type { Quote } from "@/types/quote";
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 const clientsStore = useClientStore();
 const companiesStore = useCompaniesStore();
+
+const { t } = useI18n();
 
 const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
   return {
@@ -27,7 +30,7 @@ const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
     },
     map: {
       name: "$contains.name",
-      status: "$eq.status",
+      status: "$in.status",
       customer: "$eq.idClient",
       company: "$eq.client.idCompany",
       archived: "$eq.archived",
@@ -40,7 +43,11 @@ const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
         props: {
           name: "status",
           label: "status",
+          multiple: true,
           options: ["draft", "refused", "validated"],
+          getOptionLabel(opt) {
+            return t(`data.status.${opt}`);
+          },
         },
       },
       {

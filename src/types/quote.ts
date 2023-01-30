@@ -20,7 +20,8 @@ export interface Quote {
   modalities: string;
   name: string;
   responsible: User;
-  status: "draft";
+  status: "draft" | "refused" | "validated";
+  price?: number;
 }
 
 export interface QuoteLine {
