@@ -4,7 +4,10 @@
     @return $number * $spacing + px
 };
 
-@function color($colorName, $intensity) {
+@function color($colorName, $intensity: none) {
+    @if $intensity==none {
+        @return map-get($colors, $colorName);
+    }
     @return map-deep-get($colors, $colorName, $intensity);
 }
 

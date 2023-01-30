@@ -33,6 +33,7 @@ const iconProps = computed(() => {
   transition: background-color 0.15s ease;
   padding: 0;
   line-height: 0;
+  color: color("black");
   &:hover {
     color: color("primary", 500);
   }

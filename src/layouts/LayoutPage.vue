@@ -215,7 +215,7 @@ async function disconnect() {
   justify-content: space-between;
   align-items: center;
   padding: spacing(1) spacing(2);
-  background-color: white;
+  background-color: color("white");
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
 .mobile-nav-items-container {
@@ -286,8 +286,9 @@ $miniNavWidth: 60px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-color: white;
-  box-shadow: 2px 2px 0px 0px #f1f5f9;
+  background-color: color("white");
+  color: color("black");
+  box-shadow: 2px 2px 0px 0px color("zinc", 100);
   width: $navWidth;
   height: 100vh;
   position: fixed;

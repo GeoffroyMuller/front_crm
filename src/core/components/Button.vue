@@ -117,11 +117,11 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 
 .button-text {
   background-color: transparent;
-  color: #6b7280;
+  color: color("black");
   position: relative;
   padding: 0;
   &:hover {
-    color: #4b5563;
+    color: color("black");
   }
   .content {
     gap: spacing(0.5);

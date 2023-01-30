@@ -134,13 +134,13 @@ const { internalValue, internalError, validate } = useValidatable({
   input,
   textarea {
     min-height: 33px;
-    background-color: white;
+    background-color: color("white");
     border-radius: map-get($rounded, "sm");
     display: block;
     padding: 4px 8px;
     border: 1px solid #d1d5db;
     width: 100%;
-    color: black;
+    color: color("black");
     transition: border-color 0.5s, box-shadow 0.5s;
 
     &:disabled {

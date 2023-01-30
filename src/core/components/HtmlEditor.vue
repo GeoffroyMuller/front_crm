@@ -95,7 +95,7 @@ button.ql-active .ql-stroke {
       border-radius: 0 0 map-get($rounded, "sm") map-get($rounded, "sm");
       border-top: 0;
       transition: border-color 0.5s, box-shadow 0.5s;
-      background-color: white;
+      background-color: color("white");
     }
   }
 }

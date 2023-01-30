@@ -68,14 +68,14 @@ async function login(data: { email: string; password: string }) {
 }
 
 #login-card {
-  background-color: white;
+  background-color: color("white");
   padding: 16px 24px;
   min-width: 350px;
   width: fit-content;
   display: grid;
   gap: spacing(1.5);
   border-radius: map-deep-get($rounded, "md");
-  box-shadow: 10px 10px 5px 0px #f1f5f9;
+  box-shadow: 10px 10px 5px 0px color("zinc", 100);
 }
 
 #login-actions {

@@ -14,7 +14,7 @@ html, body {
     }
 }
 body {
-    background-color: #f8fafc;
+    background-color: color("background");
     @include typo($_type: text);
 }
 

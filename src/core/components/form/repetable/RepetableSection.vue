@@ -40,7 +40,7 @@ onUnmounted(() => {
 
 <style lang="scss">
 .repetable-section {
-  background-color: #fafafa;
+  background-color: color("zinc", 50);
   display: flex;
   align-items: center;
   gap: spacing(2);
