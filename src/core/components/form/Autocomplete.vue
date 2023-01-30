@@ -166,15 +166,29 @@ const displayed = computed<string>(() => {
 });
 
 const optionsFiltered = computed(() => {
+  let res: any[] = [];
   if (props.autoFilter) {
-    return props.options.filter((opt: any) =>
+    res = props.options.filter((opt: any) =>
       props
         .getOptionLabel(opt)
         .toLowerCase()
         .includes((search.value || "").toLowerCase())
     );
   }
-  return props.options;
+  res = props.options;
+
+  if (storedOpt.value != null) {
+    if (
+      !props.multiple &&
+      !res.find((o) =>
+        isEqual(_getOptionValue(o), _getOptionValue(storedOpt.value))
+      )
+    ) {
+      res.push(storedOpt.value);
+    }
+  }
+
+  return res;
 });
 
 function clickTextField() {
@@ -197,10 +211,14 @@ watch(
   }
 );
 
+// here to store the option that correspond to the current value
+const storedOpt = ref();
+
 watch(
   () => internalValue.value,
   (val) => {
     search.value = displayed.value;
+    storedOpt.value = selected.value;
     emit("update:selected", selected.value);
   },
   {
