@@ -19,7 +19,9 @@
           :color="
             !isFocus ? 'black' : internalError || error ? 'danger' : 'primary'
           "
+          v-if="multiple || internalValue == null"
         />
+        <IconButton name="close" v-else @click.stop="internalValue = null" />
       </template>
     </TextField>
     <Alert v-if="typeof (internalError || error) === 'string'">
@@ -40,6 +42,7 @@ import OptionsList from "../OptionsList.vue";
 import Icon from "../Icon.vue";
 import type { AnySchema } from "yup";
 import useMenu from "@/core/helpers/vue/composables/menu";
+import IconButton from "../IconButton.vue";
 
 export interface AutocompleteProps extends FormInputProps<any> {
   multiple?: boolean;
