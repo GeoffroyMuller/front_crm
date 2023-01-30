@@ -38,7 +38,7 @@ onMounted(async () => {
   try {
     if (!isNew.value) {
       sale.value = await salesStore.fetchById(id as ID, {
-        populate: ["customer", "product_lines"],
+        populate: ["customer", "product_lines", "product_real_lines"],
       });
     }
   } catch (error) {

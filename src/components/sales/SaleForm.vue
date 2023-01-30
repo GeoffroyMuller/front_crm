@@ -1,5 +1,5 @@
 <template>
-  <Form :model-value="sale" @submit="handleSubmit">
+  <Form :model-value="saleDataForm" @submit="handleSubmit">
     <template #default="{ hasError, hasChanged }">
       <div class="form-sales">
         <MagicAutocomplete
@@ -117,10 +117,12 @@ import TextField from "@/core/components/form/TextField.vue";
 import Grid from "@/core/components/layouts/Grid.vue";
 import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
+import auth from "@/middleware/auth";
 import useClientStore from "@/stores/clients";
 import useProductsStore from "@/stores/products";
 import useProductsRealStore from "@/stores/products_real";
 import useSaleStore from "@/stores/sales";
+import { useUserStore } from "@/stores/user";
 import type { Product, ProductReal } from "@/types/product";
 import type {
   Sale,
@@ -130,8 +132,9 @@ import type {
   SaleProductLine,
   SaleProductRealLine,
 } from "@/types/sale";
+import type { ID } from "@/types/utils";
 import { isNil } from "lodash";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 interface SaleFormProps {
@@ -149,10 +152,17 @@ const saleStore = useSaleStore();
 const clientStore = useClientStore();
 const productStore = useProductsStore();
 const productRealStore = useProductsRealStore();
+const userStore = useUserStore();
 
 const isNew = computed(() => props.sale == null);
 
 const totalPrice = computed(() => 10.0); //TODO
+
+const saleDataForm = ref<SaleForm | null>(null);
+
+onMounted(() => {
+  saleDataForm.value = _mapSaleToDataForm(props.sale);
+});
 
 function displayProductAutocomplete(product: Product): string {
   return `${product.name} ${"| " + t("price") + " : " + product.price} ${
@@ -163,6 +173,42 @@ function displayProductAutocomplete(product: Product): string {
 }
 function displayProductRealAutocomplete(productReal: ProductReal) {
   return `${productReal.reference}`;
+}
+function _mapSaleToDataForm(data: Sale): SaleForm {
+  return {
+    idCustomer: data.idCustomer,
+    form_product_lines: data.product_lines?.reduce(
+      (
+        accumulator: Array<SaleFormProductLine>,
+        saleProduct: SaleProductLine
+      ) => {
+        if (!isNil(saleProduct)) {
+          accumulator.push({
+            price: saleProduct.saleProductPrice,
+            product: saleProduct,
+            quantity: saleProduct.quantity,
+            form_product_real_lines: data.product_real_lines?.reduce(
+              (
+                acc: Array<SaleFormProductRealLine>,
+                saleProductReal: SaleProductRealLine
+              ) => {
+                if (!isNil(saleProductReal)) {
+                  acc.push({
+                    price: saleProductReal.saleProductRealPrice,
+                    product_real: saleProductReal,
+                  } as SaleFormProductRealLine);
+                }
+                return acc;
+              },
+              []
+            ),
+          } as SaleFormProductLine);
+        }
+        return accumulator;
+      },
+      []
+    ),
+  };
 }
 function _mapDataFormToProductRealLines(
   productRealLinesForm: Array<SaleFormProductRealLine> | null | undefined
@@ -175,10 +221,14 @@ function _mapDataFormToProductRealLines(
       acc: Array<SaleProductRealLine>,
       product_real_line: SaleFormProductRealLine
     ) => {
-      if (!isNil(product_real_line)) {
+      if (
+        !isNil(product_real_line) &&
+        // eslint-disable-next-line no-prototype-builtins
+        product_real_line?.product_real?.hasOwnProperty("id")
+      ) {
         acc.push({
           ...product_real_line.product_real,
-          saleProductPrice: product_real_line.price,
+          saleProductRealPrice: product_real_line.price,
         });
       }
       return acc;
@@ -214,14 +264,14 @@ function _mapDataFormToSale(data: SaleForm): Sale {
     idCustomer: data.idCustomer,
     ...saleLines,
   };
-} //TODO
+}
 
 async function handleSubmit(data: any) {
   const dataMapped = _mapDataFormToSale(data);
   console.error({ dataMapped });
-  /*   if (isNew.value) {
+  if (isNew.value) {
     try {
-      const newSale = await saleStore.create(data);
+      const newSale = await saleStore.create(dataMapped);
       emit("add", newSale);
       toast({
         type: "success",
@@ -236,7 +286,7 @@ async function handleSubmit(data: any) {
   } else {
     try {
       const id = (props.sale as Sale).id as ID;
-      const saleRes = await saleStore.update(id, data);
+      const saleRes = await saleStore.update(id, dataMapped);
       emit("update", { data: saleRes, id });
       toast({
         type: "success",
@@ -248,7 +298,7 @@ async function handleSubmit(data: any) {
         message: error.response.data.message,
       });
     }
-  } */
+  }
 }
 </script>
 <style lang="scss">

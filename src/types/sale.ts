@@ -22,7 +22,7 @@ export interface SaleProductLine extends Product {
 }
 
 export interface SaleProductRealLine extends ProductReal {
-  saleProductPrice?: number;
+  saleProductRealPrice?: number;
 }
 
 /* interface for form data */
