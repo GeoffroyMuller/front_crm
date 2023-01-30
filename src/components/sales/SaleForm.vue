@@ -161,7 +161,9 @@ const totalPrice = computed(() => 10.0); //TODO
 const saleDataForm = ref<SaleForm | null>(null);
 
 onMounted(() => {
-  saleDataForm.value = _mapSaleToDataForm(props.sale);
+  if (!isNil(props.sale)) {
+    saleDataForm.value = _mapSaleToDataForm(props.sale);
+  }
 });
 
 function displayProductAutocomplete(product: Product): string {
@@ -176,8 +178,8 @@ function displayProductRealAutocomplete(productReal: ProductReal) {
 }
 function _mapSaleToDataForm(data: Sale): SaleForm {
   return {
-    idCustomer: data.idCustomer,
-    form_product_lines: data.product_lines?.reduce(
+    idCustomer: data?.idCustomer,
+    form_product_lines: data?.product_lines?.reduce(
       (
         accumulator: Array<SaleFormProductLine>,
         saleProduct: SaleProductLine
@@ -187,7 +189,7 @@ function _mapSaleToDataForm(data: Sale): SaleForm {
             price: saleProduct.saleProductPrice,
             product: saleProduct,
             quantity: saleProduct.quantity,
-            form_product_real_lines: data.product_real_lines?.reduce(
+            form_product_real_lines: data?.product_real_lines?.reduce(
               (
                 acc: Array<SaleFormProductRealLine>,
                 saleProductReal: SaleProductRealLine
