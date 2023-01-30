@@ -19,7 +19,7 @@
           sortable: true,
         },
         {
-          title: $t('price'),
+          title: $t('price_without_vat'),
           key: 'price',
           sortable: true,
         },

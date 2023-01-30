@@ -47,6 +47,7 @@
   "pdf": "PDF",
   "companies": "Entreprises",
   "price": "Prix",
+  "price_without_vat": "Prix HT",
   "reference": "Référence",
   "quantity": "Quantité",
   "none": "Aucun",
