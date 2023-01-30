@@ -31,7 +31,7 @@
       @row-click="(quote) => $router.push(`/quotes/${quote.id}`)"
     >
       <template #content-price="{ item }">
-        {{ $utils.formatPrice(item.price) }}
+        {{ $utils.formatPrice(item.price) || "-" }}
       </template>
       <template #content-client="{ item }">
         {{ item?.client?.firstname || "" }} {{ item?.client?.lastname || "" }}
