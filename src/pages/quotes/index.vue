@@ -19,12 +19,20 @@
           sortable: true,
         },
         {
+          title: $t('price'),
+          key: 'price',
+          sortable: true,
+        },
+        {
           title: $t('status'),
           key: 'status',
         },
       ]"
       @row-click="(quote) => $router.push(`/quotes/${quote.id}`)"
     >
+      <template #content-price="{ item }">
+        {{ $utils.formatPrice(item.price) }}
+      </template>
       <template #content-client="{ item }">
         {{ item?.client?.firstname || "" }} {{ item?.client?.lastname || "" }}
       </template>

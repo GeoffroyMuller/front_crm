@@ -21,6 +21,7 @@ export interface Quote {
   name: string;
   responsible: User;
   status: "draft" | "refused" | "validated";
+  price?: number;
 }
 
 export interface QuoteLine {
