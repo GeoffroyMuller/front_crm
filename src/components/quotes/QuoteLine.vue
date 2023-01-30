@@ -9,7 +9,16 @@
   <div v-if="line.type === 'title'">
     <TextField :label="$t('pages.edit-quote.title')" name="description" />
   </div>
-  <div v-if="line.type === 'product'">
+  <div v-if="line.type === 'product'" class="line-product-container">
+    <MagicAutocomplete
+      class="input"
+      :label="$t('pages.edit-quote.product')"
+      :store="productsStore"
+      :get-option-label="(opt) => opt?.name"
+      @update:selected="handleProductChange"
+      option-key="id"
+      name="idProduct"
+    />
     <HtmlEditor
       class="description"
       :label="$t('pages.edit-quote.description')"
@@ -64,18 +73,22 @@
 
 <script setup lang="ts">
 import type { QuoteLine } from "@/types/quote";
-import { computed, toRef } from "vue";
+import { computed, ref, toRef } from "vue";
 import TextField from "@/core/components/form/TextField.vue";
 import Select from "@/core/components/form/Select.vue";
 import HtmlEditor from "@/core/components/HtmlEditor.vue";
 import useVatStore from "@/stores/vat";
+import useProductStore from "@/stores/products";
 import type { Vat } from "@/types/vat";
+import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
+import type { Product } from "@/types/product";
 
 interface QuoteLineProps {
   line: QuoteLine;
 }
 
 const vatsStore = useVatStore();
+const productsStore = useProductStore();
 
 const vats = computed(() => vatsStore.getList);
 
@@ -99,7 +112,20 @@ const totalWithTaxes = computed(() => {
 
 const props = withDefaults(defineProps<QuoteLineProps>(), {});
 
-const internalLine = toRef(props, "line");
+const internalLine = ref(props.line);
+
+function handleProductChange(product: Product) {
+  console.error({ product });
+  if (product != null) {
+    console.error(product.price);
+    internalLine.value = {
+      ...internalLine.value,
+      description: product.description as string,
+      unit_price: product.price,
+      idVat: product.idVat as number,
+    };
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -108,7 +134,6 @@ const internalLine = toRef(props, "line");
   justify-content: space-between;
   align-items: center;
   gap: spacing(1);
-  margin-top: spacing(1.5);
   .input {
     width: fit-content;
   }
@@ -137,10 +162,14 @@ const internalLine = toRef(props, "line");
 @include media-down(md) {
   .line-product {
     display: grid;
-    gap: spacing(1);
+    gap: spacing(1.5);
     .total {
       justify-content: start;
     }
   }
+}
+.line-product-container {
+  display: grid;
+  gap: spacing(1.5);
 }
 </style>

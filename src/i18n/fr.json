@@ -24,7 +24,8 @@
       "modalities": "Modalitées",
       "add-customer": "Ajouter un client",
       "title": "Titre",
-      "comment": "Commentaire"
+      "comment": "Commentaire",
+      "product": "Produit"
     },
     "edit-sale": {
       "new-sale": "Nouvelle vente",

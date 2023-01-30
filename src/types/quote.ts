@@ -34,4 +34,5 @@ export interface QuoteLine {
   type: "title" | "product" | "comment" | "discount";
   unit_price?: number;
   vat: Vat;
+  idProduct?: number;
 }

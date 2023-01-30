@@ -64,7 +64,7 @@ export interface AutocompleteProps extends FormInputProps<any> {
   rules?: AnySchema;
 }
 
-const emit = defineEmits(["update:modelValue", "search"]);
+const emit = defineEmits(["update:modelValue", "search", "update:selected"]);
 
 const props = withDefaults(defineProps<AutocompleteProps>(), {
   multiple: false,
@@ -195,6 +195,7 @@ watch(
   () => internalValue.value,
   (val) => {
     search.value = displayed.value;
+    emit("update:selected", selected.value);
   },
   {
     immediate: true,
