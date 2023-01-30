@@ -129,8 +129,6 @@ export default function useMenu(props: MenuProps) {
       activator: _getDimensions(activator.value as HTMLElement),
     };
 
-    console.error({ dimensions });
-
     const pageHeight = window.innerHeight;
     const pageWidth = window.innerWidth;
 
