@@ -41,18 +41,15 @@
             }}
           </div>
           <Grid :gap="1">
-            <TextField
-              name="firstname"
-              :label="$t('settings.teams.firstname')"
-            />
-            <TextField name="lastname" :label="$t('settings.teams.lastname')" />
-            <TextField name="email" :label="$t('settings.teams.email')" />
-            <TextField name="phone" :label="$t('settings.teams.phone')" />
-            <TextField name="address" :label="$t('settings.teams.address')" />
+            <TextField name="firstname" :label="$t('firstname')" />
+            <TextField name="lastname" :label="$t('lastname')" />
+            <TextField name="email" :label="$t('email')" />
+            <TextField name="phone" :label="$t('phone')" />
+            <TextField name="address" :label="$t('address')" />
             <MagicAutocomplete
               name="idRole"
               :store="roleStore"
-              :label="$t('settings.teams.role')"
+              :label="$t('role')"
               option-key="id"
               :get-option-label="(opt) => opt.name"
             />
