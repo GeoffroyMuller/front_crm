@@ -39,12 +39,6 @@
                 {{ $t("settings.role.rights") }}
               </div>
             </Grid>
-            <Switch
-              v-for="right in rights"
-              :key="right.id"
-              :name="right.id + ''"
-              :label="right.name"
-            />
           </Grid>
           <Flex align-items="center" justify-content="end">
             <Button
@@ -72,7 +66,6 @@ import Grid from "@/core/components/layouts/Grid.vue";
 import MagicDataTable from "@/core/components/magic/MagicDataTable.vue";
 import Sidebar from "@/core/components/Sidebar.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
-import useRightStore from "@/stores/rights";
 import useRoleStore from "@/stores/roles";
 import type { Role } from "@/types/roles";
 import type { ID } from "@/types/utils";
@@ -85,17 +78,11 @@ const roleSelected = ref<Role>();
 const isSidebarOpen = ref(false);
 
 const roleStore = useRoleStore();
-const rightStore = useRightStore();
 const { toast, confirm } = useUI();
 const { t } = useI18n();
 
 const isAddAction = computed(() => roleSelected.value == null);
 
-const rights = computed(() => rightStore.getList);
-
-onMounted(() => {
-  rightStore.fetchList();
-});
 
 function handleClickAdd() {
   roleSelected.value = undefined;
