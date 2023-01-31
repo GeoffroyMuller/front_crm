@@ -134,6 +134,9 @@ watch(
         }
         const response = await props.store.search(filters);
         options.value = response;
+        if (response?.[0] != null) {
+          emit("update:selected", response[0]);
+        }
       }
     }
   },
