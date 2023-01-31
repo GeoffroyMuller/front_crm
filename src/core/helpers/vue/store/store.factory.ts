@@ -171,7 +171,6 @@ export function makeAPIStore<T>(props: makeAPIStoreProps): APIStoreDef<T> {
           page: this.filters.page,
           pageSize: this.filters.pageSize,
         };
-        this.fetchList();
       },
       async setPage(page: number) {
         this.filters.page = page;
