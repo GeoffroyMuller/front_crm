@@ -22,7 +22,7 @@
 
   <Sidebar v-model:open="isSidebarOpen">
     <Form :model-value="roleSelected" @submit="handleSubmit">
-      <template #default="{ hasError }">
+      <template #default="{ hasError, value }">
         <Grid :p="2" :gap="3">
           <div class="title">
             {{
@@ -39,7 +39,22 @@
                 {{ $t("settings.role.rights") }}
               </div>
             </Grid>
-            <Switch v-for="r in rights" :key="r.id" :label="r.lang.fr"></Switch>
+
+            <Switch
+              v-for="r in rights"
+              :key="r.id"
+              :label="r.lang.fr"
+              :model-value="rightsSelected.find((rr: any) => rr == r.id)"
+              @update:model-value="
+                ($val) => (rightsSelected = $_.xor(rightsSelected, [r.id]))
+              "
+            />
+
+            <TextField
+              type="hidden"
+              name="rights"
+              :model-value="rightsSelected"
+            />
           </Grid>
           <Flex align-items="center" justify-content="end">
             <Button
@@ -77,12 +92,13 @@ const emit = defineEmits(["add", "update"]);
 
 const roleSelected = ref<Role>();
 const isSidebarOpen = ref(false);
+const rightsSelected = ref<Array<string>>([]);
 
 const roleStore = useRoleStore();
 const { toast, confirm } = useUI();
 const { t } = useI18n();
 
-const isAddAction = computed(() => roleSelected.value == null);
+const isAddAction = computed(() => roleSelected.value?.id == null);
 
 onMounted(() => {
   roleStore.fetchRights();
@@ -91,11 +107,13 @@ const rights = computed(() => roleStore.rights);
 
 function handleClickAdd() {
   roleSelected.value = undefined;
+  rightsSelected.value = [];
   isSidebarOpen.value = true;
 }
 
 function handleRowClick(data: Role) {
   roleSelected.value = data;
+  rightsSelected.value = data.rights;
   isSidebarOpen.value = true;
 }
 
