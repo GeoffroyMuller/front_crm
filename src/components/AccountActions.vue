@@ -10,7 +10,7 @@
 import Button from "@/core/components/Button.vue";
 import Grid from "@/core/components/layouts/Grid.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
-import { useUserStore } from "@/stores/user";
+import useUserStore from "@/stores/user";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
