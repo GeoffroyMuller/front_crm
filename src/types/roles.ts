@@ -1,6 +1,6 @@
 import type { ID } from "./utils";
 
-export interface Rights {
+export interface Right {
   id: ID;
   name: string;
 }
@@ -8,5 +8,5 @@ export interface Rights {
 export interface Role {
   id: ID;
   name: string;
-  rights?: Array<Rights>;
+  rights?: Array<Right>;
 }

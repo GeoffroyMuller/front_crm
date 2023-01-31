@@ -32,10 +32,19 @@
             }}
           </div>
           <Grid :gap="1">
-            <TextField
-              name="name"
-              :label="$t('settings.role.rolename')"
-            ></TextField>
+            <TextField name="name" :label="$t('settings.role.rolename')">
+            </TextField>
+            <Grid :mb="1" :mt="1">
+              <div class="subtitle">
+                {{ $t("settings.role.rights") }}
+              </div>
+            </Grid>
+            <Switch
+              v-for="right in rights"
+              :key="right.id"
+              :name="right.id + ''"
+              :label="right.name"
+            />
           </Grid>
           <Flex align-items="center" justify-content="end">
             <Button
@@ -56,16 +65,18 @@
 <script setup lang="ts">
 import Button from "@/core/components/Button.vue";
 import Form from "@/core/components/form/Form.vue";
+import Switch from "@/core/components/form/Switch.vue";
 import TextField from "@/core/components/form/TextField.vue";
 import Flex from "@/core/components/layouts/Flex.vue";
 import Grid from "@/core/components/layouts/Grid.vue";
 import MagicDataTable from "@/core/components/magic/MagicDataTable.vue";
 import Sidebar from "@/core/components/Sidebar.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
+import useRightStore from "@/stores/rights";
 import useRoleStore from "@/stores/roles";
 import type { Role } from "@/types/roles";
 import type { ID } from "@/types/utils";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 const emit = defineEmits(["add", "update"]);
@@ -74,10 +85,17 @@ const roleSelected = ref<Role>();
 const isSidebarOpen = ref(false);
 
 const roleStore = useRoleStore();
+const rightStore = useRightStore();
 const { toast, confirm } = useUI();
 const { t } = useI18n();
 
 const isAddAction = computed(() => roleSelected.value == null);
+
+const rights = computed(() => rightStore.getList);
+
+onMounted(() => {
+  rightStore.fetchList();
+});
 
 function handleClickAdd() {
   roleSelected.value = undefined;
