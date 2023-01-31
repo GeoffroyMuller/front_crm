@@ -91,6 +91,7 @@ function displayProductAutocomplete(_product: Product): string {
 }
 
 function handleProductChange(_product: Product) {
+  console.error({ _product });
   product.value = _product;
 }
 </script>

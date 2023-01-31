@@ -54,7 +54,9 @@ import type {
   SaleForm,
   SaleFormProductLine,
   SaleFormProductRealLine,
+  SaleProductLineReceivedByAPI,
   SaleProductLineType,
+  SaleProductRealLineReceivedByAPI,
   SaleProductRealLineType,
 } from "@/types/sale";
 import type { ID } from "@/types/utils";
@@ -100,29 +102,35 @@ function _mapSaleToDataForm(data: Sale): SaleForm {
         if (!isNil(saleProduct)) {
           accumulator.push({
             price: saleProduct.saleProductPrice,
-            product: saleProduct,
+            idProduct: (saleProduct as SaleProductLineReceivedByAPI).id,
             quantity: saleProduct.quantity,
-            form_product_real_lines: data?.product_real_lines?.reduce(
-              (
-                acc: Array<SaleFormProductRealLine>,
-                saleProductReal: SaleProductRealLineType
-              ) => {
-                if (!isNil(saleProductReal)) {
-                  acc.push({
-                    price: saleProductReal.saleProductRealPrice,
-                    product_real: saleProductReal,
-                  } as SaleFormProductRealLine);
-                }
-                return acc;
-              },
-              []
-            ),
+            form_product_real_lines: data?.product_real_lines
+              ?.filter(
+                (saleProductReal: SaleProductRealLineReceivedByAPI) =>
+                  saleProductReal.idProduct ==
+                  (saleProduct as SaleProductLineReceivedByAPI).id
+              )
+              .reduce(
+                (
+                  acc: Array<SaleFormProductRealLine>,
+                  saleProductReal: SaleProductRealLineReceivedByAPI
+                ) => {
+                  if (!isNil(saleProductReal)) {
+                    acc.push({
+                      price: saleProductReal.saleProductRealPrice,
+                      idProductReal: saleProductReal.id,
+                    } as SaleFormProductRealLine);
+                  }
+                  return acc;
+                },
+                []
+              ),
           } as SaleFormProductLine);
         }
         return accumulator;
       },
       []
-    ),
+    ) as Array<SaleFormProductLine>,
   };
 }
 function _mapDataFormToProductRealLines(
