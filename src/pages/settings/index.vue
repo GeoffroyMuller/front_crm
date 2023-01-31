@@ -18,7 +18,7 @@ import Tabs from "@/core/components/Tabs.vue";
 import { useI18n } from "vue-i18n";
 
 import Roles from "./Roles.vue";
-import Quotes from "./Quotes.vue";
+import Teams from "./Teams.vue";
 
 const { t } = useI18n();
 
@@ -30,8 +30,8 @@ const settings = [
   },
   {
     id: "quotes",
-    title: t("quotes"),
-    component: Quotes,
+    title: t("teams"),
+    component: Teams,
   },
 ];
 </script>
