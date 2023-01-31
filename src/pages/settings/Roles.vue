@@ -1,7 +1,7 @@
 <template>
   <MagicDataTable
     :store="roleStore"
-    :columns="[{ key: 'name', title: $t('settings.role.rolename') }]"
+    :columns="[{ key: 'name', title: $t('settings-page.role.rolename') }]"
     @row-click="handleRowClick"
   >
     <template #actions-title>
@@ -27,16 +27,16 @@
           <div class="title">
             {{
               isAddAction
-                ? $t("settings.role.new-role")
-                : $t("settings.role.role")
+                ? $t("settings-page.role.new-role")
+                : $t("settings-page.role.role")
             }}
           </div>
           <Grid :gap="1">
-            <TextField name="name" :label="$t('settings.role.rolename')">
+            <TextField name="name" :label="$t('settings-page.role.rolename')">
             </TextField>
             <Grid :mb="1" :mt="1">
               <div class="subtitle">
-                {{ $t("settings.role.rights") }}
+                {{ $t("settings-page.role.rights") }}
               </div>
             </Grid>
 
@@ -158,7 +158,7 @@ async function handleSubmit(data: Role) {
 }
 
 async function deleteRole(role: Role) {
-  if (await confirm("settings.role.sure_delete_role")) {
+  if (await confirm(t("settings-page.role.sure_delete_role"))) {
     try {
       await roleStore.delete(role.id);
       toast({

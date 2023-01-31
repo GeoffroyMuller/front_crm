@@ -36,8 +36,8 @@
           <div class="title">
             {{
               isAddAction
-                ? $t("settings.teams.new-user")
-                : $t("settings.role.user")
+                ? $t("settings-page.teams.new-user")
+                : $t("settings-page.teams.user")
             }}
           </div>
           <Grid :gap="1">
@@ -150,7 +150,7 @@ async function handleSubmit(data: User) {
 }
 
 async function deleteUser(user: User) {
-  if (await confirm("settings.teams.sure_delete_user")) {
+  if (await confirm(t("settings-page.teams.sure_delete_user"))) {
     try {
       await userStore.delete(user.id);
       toast({

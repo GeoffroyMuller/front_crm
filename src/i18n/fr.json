@@ -66,16 +66,18 @@
     "location": "Localisation",
     "all_day_event": "Cette evenement dure toute la journée"
   },
-  "settings": {
+  "settings-page": {
     "role": {
       "rolename": "Role",
       "new-role": "Nouveau role",
       "role": "Role",
-      "rights": "Droits"
+      "rights": "Droits",
+      "sure_delete_role": "Etes vous certain de vouloir supprimer ce role ?"
     },
     "teams": {
       "new-user": "Nouvel utilisateur",
-      "user": "Utilisateur"
+      "user": "Utilisateur",
+      "sure_delete_user": "Etes vous certain de vouloir supprimer cet utilisateur ?"
     }
   }
 }
