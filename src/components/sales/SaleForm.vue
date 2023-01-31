@@ -2,16 +2,18 @@
   <Form :model-value="saleDataForm" @submit="handleSubmit">
     <template #default="{ hasError, hasChanged }">
       <div class="form-sales">
-        <MagicAutocomplete
-          name="idCustomer"
-          :label="$t('customers')"
-          :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
-          :rules="$yup.string().required()"
-          optionKey="id"
-          :get-filters="(str) => ({ $contains: { firstname: str } })"
-          :store="clientStore"
-        />
-
+        <Grid :gap="2" :columns="2">
+          <MagicAutocomplete
+            name="idCustomer"
+            :label="$t('customers')"
+            :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
+            :rules="$yup.string().required()"
+            optionKey="id"
+            :get-filters="(str) => ({ $contains: { firstname: str } })"
+            :store="clientStore"
+          />
+          <DatePicker name="date" :label="$t('date')" />
+        </Grid>
         <Repetable
           :label="$t('pages.edit-sale.add-products')"
           name="form_product_lines"
@@ -43,8 +45,10 @@
 </template>
 <script setup lang="ts">
 import Button from "@/core/components/Button.vue";
+import DatePicker from "@/core/components/form/Datepicker/DatePicker.vue";
 import Form from "@/core/components/form/Form.vue";
 import Repetable from "@/core/components/form/repetable/Repetable.vue";
+import Grid from "@/core/components/layouts/Grid.vue";
 import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import useClientStore from "@/stores/clients";
@@ -60,6 +64,7 @@ import type {
   SaleProductRealLineType,
 } from "@/types/sale";
 import type { ID } from "@/types/utils";
+import dayjs from "dayjs";
 import { isNil } from "lodash";
 import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
@@ -86,14 +91,16 @@ const totalPrice = computed(() => 10.0); //TODO
 const saleDataForm = ref<SaleForm | null>(null);
 
 onMounted(() => {
-  if (!isNil(props.sale)) {
-    saleDataForm.value = _mapSaleToDataForm(props.sale);
-  }
+  saleDataForm.value = _mapSaleToDataForm(props.sale);
 });
 
-function _mapSaleToDataForm(data: Sale): SaleForm {
+function _mapSaleToDataForm(data: Sale | null): SaleForm {
+  if (isNil(data)) {
+    return { date: dayjs().format("YYYY-MM-DD") };
+  }
   return {
     idCustomer: data?.idCustomer,
+    date: isNil(data.date) ? data.date : dayjs().format("YYYY-MM-DD"),
     form_product_lines: data?.product_lines?.reduce(
       (
         accumulator: Array<SaleFormProductLine>,
@@ -185,6 +192,7 @@ function _mapDataFormToSale(data: SaleForm): Sale {
   );
   return {
     idCustomer: data.idCustomer,
+    date: data.date,
     ...saleLines,
   };
 }

@@ -23,7 +23,7 @@
     >
       <template #content-date="{ item }">
         <div>
-          {{ dayjs(item.date).format("DD-MM-YYYY  HH:mm") }}
+          {{ dayjs(item.date).format("DD-MM-YYYY") }}
         </div>
       </template>
       <template #actions-title>
