@@ -70,5 +70,7 @@
   "sales": "Ventes",
   "create": "Créer",
   "unit-price": "Prix unitaire",
-  "total": "Total"
+  "total": "Total",
+  "sale": "Vente",
+  "date": "Date"
 }

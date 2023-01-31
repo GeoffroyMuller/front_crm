@@ -161,6 +161,7 @@ async function handleSubmit(data: any) {
     if (!isNil(props.afterSaved)) {
       props.afterSaved();
     }
+    loading.value = false;
     toast({
       type: "success",
       message: t("saved"),
