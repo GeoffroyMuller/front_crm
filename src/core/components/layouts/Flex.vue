@@ -41,6 +41,11 @@ interface FlexProps {
   ml?: number;
   mt?: number;
   mb?: number;
+
+  mx?: number;
+  my?: number;
+  px?: number;
+  py?: number;
 }
 
 const flex = ref();
@@ -60,6 +65,11 @@ useLayoutComponent({
   ml: props.ml,
   mt: props.mt,
   mb: props.mb,
+
+  mx: props.mx,
+  my: props.my,
+  px: props.px,
+  py: props.py,
 });
 </script>
 
