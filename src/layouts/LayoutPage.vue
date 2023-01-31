@@ -2,9 +2,17 @@
   <div class="mobile-layout">
     <div class="mobile-nav">
       <IconButton name="menu" @click.stop="mobileNavOpen = true" />
-      <Avatar color="primary" size="sm">
-        {{ user.firstname?.[0] || "" }}{{ user.lastname?.[0] || "" }}
-      </Avatar>
+      <Menu>
+        <template #activator>
+          <Avatar color="primary" size="sm">
+            {{ user.firstname?.[0] || "" }}{{ user.lastname?.[0] || "" }}
+          </Avatar>
+        </template>
+        <template #content>
+          <AccountActions />
+        </template>
+      </Menu>
+
       <Sidebar v-model:open="mobileNavOpen">
         <div class="mobile-nav-items-container">
           <div class="mobile-nav-items">
@@ -75,18 +83,7 @@
         </template>
       </Tree>
 
-      <div class="footer">
-        <Button
-          v-if="!isNavMini"
-          variant="text"
-          color="black"
-          @click="disconnect"
-        >
-          {{ $t("disconnect") }}
-        </Button>
-
-        <IconButton @click="disconnect" name="door_open" v-if="isNavMini" />
-      </div>
+      <div class="footer"></div>
     </div>
     <div class="page-container">
       <slot />
@@ -107,6 +104,8 @@ import Sidebar from "@/core/components/Sidebar.vue";
 import type { IconName } from "@/core/components/types";
 import { useI18n } from "vue-i18n";
 import Tree from "@/core/components/Tree.vue";
+import AccountActions from "@/components/AccountActions.vue";
+import Menu from "@/core/components/Menu.vue";
 
 const userStore = useUserStore();
 
@@ -192,13 +191,6 @@ function iconMiniClick(event: Event, isOpen: boolean, data: any) {
     router.push(data.path);
   }
   isNavMini.value = false;
-}
-
-async function disconnect() {
-  if (await confirm(t("sure-disconnect"))) {
-    userStore.disconnect();
-    router.replace("/login");
-  }
 }
 </script>
 
