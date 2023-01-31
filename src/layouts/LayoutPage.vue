@@ -98,7 +98,7 @@
 import { computed, ref } from "vue";
 import Icon from "@/core/components/Icon.vue";
 import Button from "@/core/components/Button.vue";
-import { useUserStore } from "@/stores/user";
+import useUserStore from "@/stores/user";
 import { useRouter } from "vue-router";
 import IconButton from "@/core/components/IconButton.vue";
 import useUI from "@/core/helpers/vue/composables/ui";

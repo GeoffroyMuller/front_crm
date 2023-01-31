@@ -18,7 +18,7 @@
 import { reactive, ref } from "vue";
 import TextField from "@/core/components/form/TextField.vue";
 import Button from "@/core/components/Button.vue";
-import { useUserStore } from "@/stores/user";
+import useUserStore from "@/stores/user";
 import { useRouter } from "vue-router";
 import PasswordInput from "@/core/components/form/PasswordInput.vue";
 import useUI from "@/core/helpers/vue/composables/ui";

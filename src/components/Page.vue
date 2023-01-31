@@ -26,10 +26,7 @@
 
 <script setup lang="ts">
 import Button from "@/core/components/Button.vue";
-import IconButton from "@/core/components/IconButton.vue";
-import { useUserStore } from "@/stores/user";
-import { useRouter } from "vue-router";
-import useUI from "@/core/helpers/vue/composables/ui";
+import useUserStore from "@/stores/user";
 import { computed } from "vue";
 import Spinner from "@/core/components/Spinner.vue";
 import Menu from "@/core/components/Menu.vue";
