@@ -83,7 +83,10 @@
         </template>
       </Tree>
 
-      <div class="footer"></div>
+      <div class="settings" @click="$router.push('settings')">
+        <Icon name="settings" color="black" />
+        <div v-if="!isNavMini">{{ $t("settings") }}</div>
+      </div>
     </div>
     <div class="page-container">
       <slot />
@@ -298,14 +301,24 @@ $miniNavWidth: 60px;
   position: fixed;
   transition: width 0.3s ease;
 
-  .footer {
+  .settings {
+    $paddingX: calc(20px);
     position: absolute;
-    padding: spacing(0.5) spacing(3);
+    padding: spacing(1) $paddingX;
     bottom: 0;
     display: flex;
     width: 100%;
     align-items: center;
     gap: spacing(1.5);
+    cursor: pointer;
+    &:hover {
+      background-color: color("primary", 100);
+      color: color("primary", 700);
+
+      svg {
+        fill: color("primary", 700);
+      }
+    }
   }
   .logo-container {
     display: flex;
@@ -382,14 +395,6 @@ $miniNavWidth: 60px;
         transform: rotate(90deg * 1);
       }
     }
-  }
-}
-
-.mini-nav {
-  .footer {
-    justify-content: center;
-    padding: 0;
-    padding-bottom: spacing(0.5);
   }
 }
 </style>

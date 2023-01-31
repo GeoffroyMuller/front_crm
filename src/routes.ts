@@ -15,6 +15,15 @@ export default [
     },
   },
   {
+    path: "/settings",
+    name: "settings",
+    component: () => import("./pages/settings/index.vue"),
+    meta: {
+      middleware: [auth],
+      layout: LayoutPage,
+    },
+  },
+  {
     path: "/products",
     name: "products",
     component: () => import("./pages/products/index.vue"),
