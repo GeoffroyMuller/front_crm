@@ -39,6 +39,7 @@
                 {{ $t("settings.role.rights") }}
               </div>
             </Grid>
+            <Switch v-for="r in rights" :key="r.id" :label="r.lang.fr"></Switch>
           </Grid>
           <Flex align-items="center" justify-content="end">
             <Button
@@ -83,6 +84,10 @@ const { t } = useI18n();
 
 const isAddAction = computed(() => roleSelected.value == null);
 
+onMounted(() => {
+  roleStore.fetchRights();
+});
+const rights = computed(() => roleStore.rights);
 
 function handleClickAdd() {
   roleSelected.value = undefined;
