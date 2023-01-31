@@ -62,6 +62,9 @@ provide("notifications", createNotification);
   bottom: 0;
   right: 0;
   width: 400px;
+  @include media-down("md") {
+    width: unset;
+  }
   > * {
     margin: spacing(2);
   }

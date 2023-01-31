@@ -2,9 +2,17 @@
   <div class="mobile-layout">
     <div class="mobile-nav">
       <IconButton name="menu" @click.stop="mobileNavOpen = true" />
-      <Avatar color="primary" size="sm">
-        {{ user.firstname?.[0] || "" }}{{ user.lastname?.[0] || "" }}
-      </Avatar>
+      <Menu>
+        <template #activator>
+          <Avatar color="primary" size="sm">
+            {{ user.firstname?.[0] || "" }}{{ user.lastname?.[0] || "" }}
+          </Avatar>
+        </template>
+        <template #content>
+          <AccountActions />
+        </template>
+      </Menu>
+
       <Sidebar v-model:open="mobileNavOpen">
         <div class="mobile-nav-items-container">
           <div class="mobile-nav-items">
@@ -75,17 +83,9 @@
         </template>
       </Tree>
 
-      <div class="footer">
-        <Button
-          v-if="!isNavMini"
-          variant="text"
-          color="black"
-          @click="disconnect"
-        >
-          {{ $t("disconnect") }}
-        </Button>
-
-        <IconButton @click="disconnect" name="door_open" v-if="isNavMini" />
+      <div class="settings" @click="$router.push('settings')">
+        <Icon name="settings" color="black" />
+        <div v-if="!isNavMini">{{ $t("settings") }}</div>
       </div>
     </div>
     <div class="page-container">
@@ -98,7 +98,7 @@
 import { computed, ref } from "vue";
 import Icon from "@/core/components/Icon.vue";
 import Button from "@/core/components/Button.vue";
-import { useUserStore } from "@/stores/user";
+import useUserStore from "@/stores/user";
 import { useRouter } from "vue-router";
 import IconButton from "@/core/components/IconButton.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
@@ -107,6 +107,8 @@ import Sidebar from "@/core/components/Sidebar.vue";
 import type { IconName } from "@/core/components/types";
 import { useI18n } from "vue-i18n";
 import Tree from "@/core/components/Tree.vue";
+import AccountActions from "@/components/AccountActions.vue";
+import Menu from "@/core/components/Menu.vue";
 
 const userStore = useUserStore();
 
@@ -130,7 +132,7 @@ const menu = ref([
     icon: "calendar_month",
     path: "/events",
   },
-  {
+  /* {
     key: "billing",
     title: "menu.billing",
     icon: "description",
@@ -149,6 +151,18 @@ const menu = ref([
         icon: "request_quote",
       },
     ],
+  }, */
+  {
+    key: "quotes",
+    path: "/quotes",
+    title: "quotes",
+    icon: "description",
+  },
+  {
+    key: "invoices",
+    path: "/invoices",
+    title: "invoices",
+    icon: "request_quote",
   },
   {
     key: "products",
@@ -180,13 +194,6 @@ function iconMiniClick(event: Event, isOpen: boolean, data: any) {
     router.push(data.path);
   }
   isNavMini.value = false;
-}
-
-async function disconnect() {
-  if (await confirm(t("sure-disconnect"))) {
-    userStore.disconnect();
-    router.replace("/login");
-  }
 }
 </script>
 
@@ -294,14 +301,24 @@ $miniNavWidth: 60px;
   position: fixed;
   transition: width 0.3s ease;
 
-  .footer {
+  .settings {
+    $paddingX: calc(20px);
     position: absolute;
-    padding: spacing(0.5) spacing(3);
+    padding: spacing(1) $paddingX;
     bottom: 0;
     display: flex;
     width: 100%;
     align-items: center;
     gap: spacing(1.5);
+    cursor: pointer;
+    &:hover {
+      background-color: color("primary", 100);
+      color: color("primary", 700);
+
+      svg {
+        fill: color("primary", 700);
+      }
+    }
   }
   .logo-container {
     display: flex;
@@ -378,14 +395,6 @@ $miniNavWidth: 60px;
         transform: rotate(90deg * 1);
       }
     }
-  }
-}
-
-.mini-nav {
-  .footer {
-    justify-content: center;
-    padding: 0;
-    padding-bottom: spacing(0.5);
   }
 }
 </style>

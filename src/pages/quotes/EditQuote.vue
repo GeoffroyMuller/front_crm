@@ -10,6 +10,8 @@
           <div class="form-head">
             <TextField name="name" :label="$t('title')" />
 
+            <QuoteStatusSelect />
+
             <MagicAutocomplete
               :label="$t('customer')"
               :store="clientsStore"
@@ -102,6 +104,8 @@ import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import type Client from "@/types/client";
 import Card from "@/core/components/Card.vue";
 import { isEmpty } from "lodash";
+import Select from "@/core/components/form/Select.vue";
+import QuoteStatusSelect from "@/components/quotes/QuoteStatusSelect.vue";
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();
@@ -194,7 +198,7 @@ async function handleSubmit(data: any) {
     margin-top: spacing(1);
   }
   .form-head {
-    @include grid(2, 0, 2);
+    @include grid(3, 0, 2);
   }
   .form-table {
     .actions {

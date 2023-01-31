@@ -1,4 +1,9 @@
 {
+  "teams": "Equipes",
+  "team": "Equipe",
+  "roles": "Roles",
+  "role": "Role",
+  "settings": "Paramètres",
   "filters": "Filtres",
   "error_occured": "Une erreur est survenue",
   "delete": "Supprimer",

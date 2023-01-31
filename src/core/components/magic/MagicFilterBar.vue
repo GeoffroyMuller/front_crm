@@ -80,6 +80,7 @@ watch(
   () => filtersValues.value,
   () => {
     props.store.setFilters(mapFormFilters());
+    props.store.fetchList();
   }
 );
 </script>

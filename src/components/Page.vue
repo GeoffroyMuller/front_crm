@@ -4,9 +4,18 @@
       {{ title }}
     </div>
     <div class="buttons">
-      <Button variant="text" class="auth">
-        {{ auth.firstname }} {{ auth.lastname }}
-      </Button>
+      <Media up="md">
+        <Menu>
+          <template #activator>
+            <Button variant="text" class="auth">
+              {{ auth.firstname }} {{ auth.lastname }}
+            </Button>
+          </template>
+          <template #content>
+            <AccountActions />
+          </template>
+        </Menu>
+      </Media>
     </div>
   </div>
   <Spinner v-if="loading" class="page-spinner" />
@@ -17,12 +26,12 @@
 
 <script setup lang="ts">
 import Button from "@/core/components/Button.vue";
-import IconButton from "@/core/components/IconButton.vue";
-import { useUserStore } from "@/stores/user";
-import { useRouter } from "vue-router";
-import useUI from "@/core/helpers/vue/composables/ui";
+import useUserStore from "@/stores/user";
 import { computed } from "vue";
 import Spinner from "@/core/components/Spinner.vue";
+import Menu from "@/core/components/Menu.vue";
+import AccountActions from "./AccountActions.vue";
+import Media from "@/core/Media.vue";
 
 interface PageProps {
   title: string;

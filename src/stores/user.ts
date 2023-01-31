@@ -6,12 +6,13 @@ import { useRouter } from "vue-router";
 import { getJWT } from "@/core/helpers/utils";
 import axios from "@/core/plugins/axios";
 import mock from "@/mock.json";
+import { makeAPIStore } from "@/core/helpers/vue/store/store.factory";
 
-export const useUserStore = defineStore({
-  id: "user",
-  state: () => ({
+const useUserStore = makeAPIStore<User>({
+  id: "users",
+  state: {
     auth: {} as User,
-  }),
+  },
   getters: {
     getAuth: (state) => state.auth,
   },
@@ -30,7 +31,6 @@ export const useUserStore = defineStore({
           })
         : mock.GET["/auth/login"];
 
-
       if (response.data?.token) {
         setJWT(response.data.token);
         this.auth = response.data.user;
@@ -40,6 +40,9 @@ export const useUserStore = defineStore({
     },
   },
   persist: true,
+  filters: {
+    populate: ["role"],
+  },
 });
 
 axios.interceptors.request.use(
@@ -67,3 +70,5 @@ axios.interceptors.response.use(
     Promise.reject(error);
   }
 );
+
+export default useUserStore;
