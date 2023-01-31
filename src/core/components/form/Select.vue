@@ -170,6 +170,7 @@ const displayed = computed<string>(() => {
   display: grid;
   gap: spacing(1);
   width: 100%;
+  height: fit-content;
   input {
     cursor: pointer;
   }
