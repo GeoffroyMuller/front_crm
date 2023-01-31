@@ -40,6 +40,9 @@ const useUserStore = makeAPIStore<User>({
     },
   },
   persist: true,
+  filters: {
+    populate: ["role"],
+  },
 });
 
 axios.interceptors.request.use(

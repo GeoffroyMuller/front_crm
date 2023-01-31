@@ -6,10 +6,13 @@
       { key: 'lastname', title: t('lastname') },
       { key: 'email', title: t('email') },
       { key: 'phone', title: t('phone') },
-      { key: 'address', title: t('address') },
+      { key: 'role', title: t('role') },
     ]"
     @row-click="handleRowClick"
   >
+    <template #content-role="{ item }">
+      {{ item.role?.name || "" }}
+    </template>
     <template #actions-title>
       <Button color="success" @click.stop="handleClickAdd">
         {{ $t("add") }}
@@ -46,6 +49,13 @@
             <TextField name="email" :label="$t('settings.teams.email')" />
             <TextField name="phone" :label="$t('settings.teams.phone')" />
             <TextField name="address" :label="$t('settings.teams.address')" />
+            <MagicAutocomplete
+              name="idRole"
+              :store="roleStore"
+              :label="$t('settings.teams.role')"
+              option-key="id"
+              :get-option-label="(opt) => opt.name"
+            />
           </Grid>
           <Flex align-items="center" justify-content="end">
             <Button
@@ -69,9 +79,11 @@ import Form from "@/core/components/form/Form.vue";
 import TextField from "@/core/components/form/TextField.vue";
 import Flex from "@/core/components/layouts/Flex.vue";
 import Grid from "@/core/components/layouts/Grid.vue";
+import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import MagicDataTable from "@/core/components/magic/MagicDataTable.vue";
 import Sidebar from "@/core/components/Sidebar.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
+import useRoleStore from "@/stores/roles";
 import useUserStore from "@/stores/user";
 import type { User } from "@/types/user";
 import type { ID } from "@/types/utils";
@@ -84,6 +96,7 @@ const userSelected = ref<User>();
 const isSidebarOpen = ref(false);
 
 const userStore = useUserStore();
+const roleStore = useRoleStore();
 const { toast, confirm } = useUI();
 const { t } = useI18n();
 
