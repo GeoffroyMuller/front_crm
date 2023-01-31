@@ -39,6 +39,7 @@ export interface SaleProductRealLineType {
 /* interface for form data */
 export interface SaleForm {
   idCustomer?: ID;
+  date?: string | Dayjs;
   form_product_lines?: Array<SaleFormProductLine>;
 }
 export interface SaleFormProductLine {

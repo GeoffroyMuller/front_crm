@@ -53,6 +53,15 @@
           {{ productsStore.isNumeraryStock(item) ? item.stock : "-" }}
         </div>
       </template>
+      <template #content-stockManagement="{ item }">
+        <div>
+          {{
+            $_.isNil(item.stockManagement)
+              ? $t("none")
+              : $t(item.stockManagement)
+          }}
+        </div>
+      </template>
     </MagicDataTable>
   </Page>
 </template>
