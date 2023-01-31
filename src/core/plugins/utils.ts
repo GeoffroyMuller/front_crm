@@ -1,8 +1,8 @@
-import type dayjs from "dayjs";
+import dayjs from "dayjs";
 import type { Plugin } from "vue";
 
 export interface $utils {
-  formatPrice: (price: number, currency: "€" | "$") => string;
+  formatPrice: (price: number, currency?: "€" | "$") => string;
   formatDate: (date: string | dayjs.Dayjs | Date) => string;
 }
 
@@ -10,7 +10,8 @@ const utilsPlugin: Plugin = {
   install(app) {
     app.config.globalProperties.$utils = {
       formatDate: (date: string | dayjs.Dayjs | Date) => {
-        throw { message: "Not yet implemented" };
+        const FORMAT = "DD/MM/YYYY";
+        return dayjs(date).format(FORMAT);
       },
       formatPrice: (price: number, currency: "€" | "$" = "€") => {
         if (price == null) {
