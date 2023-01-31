@@ -130,7 +130,7 @@ const menu = ref([
     icon: "calendar_month",
     path: "/events",
   },
-  {
+  /* {
     key: "billing",
     title: "menu.billing",
     icon: "description",
@@ -149,6 +149,18 @@ const menu = ref([
         icon: "request_quote",
       },
     ],
+  }, */
+  {
+    key: "quotes",
+    path: "/quotes",
+    title: "quotes",
+    icon: "description",
+  },
+  {
+    key: "invoices",
+    path: "/invoices",
+    title: "invoices",
+    icon: "request_quote",
   },
   {
     key: "products",
