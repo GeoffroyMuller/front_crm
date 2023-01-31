@@ -238,7 +238,7 @@ export default function useMenu(props: MenuProps) {
     container.value.style.display = "none";
     _resetStyle();
   }
-  const isHidden = () => container.value.style.opacity == "0";
+  const isHidden = () => container.value?.style?.opacity == "0";
 
   function destroy() {
     unwatchActivator();
