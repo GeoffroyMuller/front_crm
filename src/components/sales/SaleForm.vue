@@ -58,9 +58,7 @@ import type {
   SaleForm,
   SaleFormProductLine,
   SaleFormProductRealLine,
-  SaleProductLineReceivedByAPI,
   SaleProductLineType,
-  SaleProductRealLineReceivedByAPI,
   SaleProductRealLineType,
 } from "@/types/sale";
 import type { ID } from "@/types/utils";
@@ -109,18 +107,17 @@ function _mapSaleToDataForm(data: Sale | null): SaleForm {
         if (!isNil(saleProduct)) {
           accumulator.push({
             price: saleProduct.saleProductPrice,
-            idProduct: (saleProduct as SaleProductLineReceivedByAPI).id,
+            idProduct: saleProduct.id,
             quantity: saleProduct.quantity,
             form_product_real_lines: data?.product_real_lines
               ?.filter(
-                (saleProductReal: SaleProductRealLineReceivedByAPI) =>
-                  saleProductReal.idProduct ==
-                  (saleProduct as SaleProductLineReceivedByAPI).id
+                (saleProductReal: SaleProductRealLineType) =>
+                  saleProductReal.idProduct == saleProduct.id
               )
               .reduce(
                 (
                   acc: Array<SaleFormProductRealLine>,
-                  saleProductReal: SaleProductRealLineReceivedByAPI
+                  saleProductReal: SaleProductRealLineType
                 ) => {
                   if (!isNil(saleProductReal)) {
                     acc.push({
@@ -156,7 +153,7 @@ function _mapDataFormToProductRealLines(
         !isNil(product_real_line?.idProductReal)
       ) {
         acc.push({
-          idProductReal: product_real_line.idProductReal,
+          id: product_real_line.idProductReal,
           saleProductRealPrice: product_real_line.price,
         });
       }
@@ -170,7 +167,7 @@ function _mapDataFormToSale(data: SaleForm): Sale {
     (accumulator: any, product_line: SaleFormProductLine) => {
       if (!isNil(product_line)) {
         accumulator.product_lines.push({
-          ...product_line,
+          id: product_line.idProduct,
           saleProductPrice: product_line.price,
           quantity: product_line.quantity,
         } as SaleProductLineType);
@@ -179,7 +176,6 @@ function _mapDataFormToSale(data: SaleForm): Sale {
           const product_real_lines = _mapDataFormToProductRealLines(
             product_line.form_product_real_lines
           );
-          console.error({ product_real_lines });
           accumulator.product_real_lines = [
             ...accumulator.product_real_lines,
             ...product_real_lines,
