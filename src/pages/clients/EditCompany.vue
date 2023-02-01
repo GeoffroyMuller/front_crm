@@ -1,5 +1,5 @@
 <template>
-  <Page :title="title" :loading="loading">
+  <Page :title="title" :loading="loading" back>
     <EditClientSidebar
       v-model:open="editClientOpen"
       @update="editClientOpen = false"
