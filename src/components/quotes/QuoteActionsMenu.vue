@@ -26,24 +26,3 @@ interface QuoteActionsMenuProps {
 }
 const props = withDefaults(defineProps<QuoteActionsMenuProps>(), {});
 </script>
-
-<style lang="scss">
-.quote-actions {
-  display: grid;
-  gap: spacing(0.5);
-  padding: spacing(1) 0;
-  .action {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: spacing(1);
-    width: 100%;
-    padding: spacing(0.25) spacing(1);
-    min-width: max-content;
-    cursor: pointer;
-    &:hover {
-      background-color: color("primary", 50);
-    }
-  }
-}
-</style>
