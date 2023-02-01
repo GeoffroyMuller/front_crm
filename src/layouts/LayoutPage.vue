@@ -45,7 +45,6 @@
         </div>
       </Sidebar>
     </div>
-    <slot />
   </div>
   <div class="desktop-layout" id="container" :class="{ 'mini-nav': isNavMini }">
     <div class="nav">
@@ -88,9 +87,9 @@
         <div v-if="!isNavMini">{{ $t("settings") }}</div>
       </div>
     </div>
-    <div class="page-container">
-      <slot />
-    </div>
+  </div>
+  <div class="page-container" :class="{ 'nav-is-mini': isNavMini }">
+    <slot />
   </div>
 </template>
 
@@ -250,10 +249,6 @@ $miniNavWidth: 60px;
   .page-menu {
     margin-left: $miniNavWidth;
   }
-  .page-container {
-    left: $miniNavWidth;
-    width: calc(100% - $miniNavWidth);
-  }
   .nav {
     width: $miniNavWidth;
   }
@@ -279,6 +274,16 @@ $miniNavWidth: 60px;
   width: calc(100% - $navWidth);
   height: 100%;
   overflow-x: auto;
+  &.nav-is-mini {
+    left: $miniNavWidth;
+    width: calc(100% - $miniNavWidth);
+  }
+  @include media-down(md) {
+    position: initial;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
 }
 .actions {
   display: flex;

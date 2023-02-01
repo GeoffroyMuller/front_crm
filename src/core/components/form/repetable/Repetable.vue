@@ -209,10 +209,8 @@ const sectionListForDnD = computed({
   },
 });
 
-function handleDragStart(e: any) {
-}
-function handleDragEnd(e: any) {
-}
+function handleDragStart(e: any) {}
+function handleDragEnd(e: any) {}
 
 const generateId = () => uniqueId();
 
@@ -243,7 +241,7 @@ function handleDeleteSection(key: string) {
 }
 
 const sectionsList = computed(() =>
-  sectionListForDnD.value.map(({ value }) => value)
+  sectionListForDnD.value.map(({ value }) => value).filter((v) => v != null)
 );
 
 const isMax = computed(() => {
