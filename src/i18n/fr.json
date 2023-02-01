@@ -27,6 +27,23 @@
       "comment": "Commentaire",
       "product": "Produit"
     },
+    "edit-invoice": {
+      "qty": "Quantitée",
+      "unit_price": "Prix unitaire (HT)",
+      "description": "Description",
+      "vat": "TVA",
+      "total": "Total TTC",
+      "total-without-taxes": "Total HT",
+      "add-line-product": "Ajouter une ligne de produit",
+      "add-line-title": "Ajouter une ligne de titre",
+      "add-line-comment": "Ajouter une ligne de commentaire",
+      "footer": "Pied de page",
+      "modalities": "Modalitées",
+      "add-customer": "Ajouter un client",
+      "title": "Titre",
+      "comment": "Commentaire",
+      "product": "Produit"
+    },
     "edit-sale": {
       "new-sale": "Nouvelle vente",
       "add-product": "Ajouter un produit",

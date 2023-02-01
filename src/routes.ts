@@ -114,6 +114,15 @@ export default [
     },
   },
   {
+    path: "/invoices/:id",
+    name: "invoices-id",
+    component: () => import("./pages/invoices/EditInvoice.vue"),
+    meta: {
+      middleware: [auth],
+      layout: LayoutPage,
+    },
+  },
+  {
     path: "/login",
     name: "login",
     component: () => import("./pages/Login.vue"),
