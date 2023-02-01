@@ -9,6 +9,7 @@
       :gap="gap"
       v-model="filtersValues"
       :fields="filters"
+      @inputChange="handleInputChange"
     >
       <template #footer></template>
     </MagicForm>
@@ -76,13 +77,11 @@ const props = withDefaults(defineProps<MagicFilterBarProps<any>>(), {
 });
 
 const filtersValues = ref<any>(mapFiltersFromStore());
-watch(
-  () => filtersValues.value,
-  () => {
-    props.store.setFilters(mapFormFilters());
-    props.store.fetchList();
-  }
-);
+
+function handleInputChange() {
+  props.store.setFilters(mapFormFilters());
+  props.store.fetchList();
+}
 </script>
 
 <style lang="scss">
