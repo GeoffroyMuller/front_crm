@@ -78,7 +78,8 @@ const props = withDefaults(defineProps<MagicFilterBarProps<any>>(), {
 
 const filtersValues = ref<any>(mapFiltersFromStore());
 
-function handleInputChange() {
+function handleInputChange({ name, value }: { name: string; value: any }) {
+  filtersValues.value[name] = value;
   props.store.setFilters(mapFormFilters());
   props.store.fetchList();
 }
