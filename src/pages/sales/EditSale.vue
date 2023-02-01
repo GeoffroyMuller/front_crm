@@ -1,5 +1,5 @@
 <template>
-  <Page :title="title" :loading="loading">
+  <Page back :title="title" :loading="loading">
     <Card>
       <SaleForm :sale="sale"></SaleForm>
     </Card>

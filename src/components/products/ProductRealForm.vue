@@ -73,13 +73,12 @@ import { useI18n } from "vue-i18n";
 interface ProductRealFormProps {
   product: Product | null;
   productReal: ProductReal | null;
-  afterSaved: () => any | null;
 }
 
 const { t } = useI18n();
 const { toast } = useUI();
 const productRealStore = useProductRealStore();
-const emit = defineEmits(["cancel", "update:product"]);
+const emit = defineEmits(["cancel", "saved", "update:product"]);
 const props = withDefaults(defineProps<ProductRealFormProps>(), {
   product: null,
   productReal: null,
@@ -141,11 +140,15 @@ function getFieldById(id: ID) {
 async function handleSubmit(data: any) {
   try {
     loading.value = true;
+    let resProductReal: ProductReal = {};
     if (isNil(props.productReal)) {
-      await productRealStore.create({ idProduct: props.product?.id, ...data });
+      resProductReal = await productRealStore.create({
+        idProduct: props.product?.id,
+        ...data,
+      });
       initProductRealInternal();
     } else if (!isNil(props.productReal.id)) {
-      await productRealStore.update(props.productReal.id, {
+      resProductReal = await productRealStore.update(props.productReal.id, {
         ...props.productReal,
         ...data,
         product_real_fields: data.product_real_fields?.map(
@@ -158,9 +161,7 @@ async function handleSubmit(data: any) {
         ),
       });
     }
-    if (!isNil(props.afterSaved)) {
-      props.afterSaved();
-    }
+    emit("saved", { data: resProductReal });
     loading.value = false;
     toast({
       type: "success",

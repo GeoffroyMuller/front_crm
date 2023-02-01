@@ -1,5 +1,6 @@
 <template>
   <Page
+    back
     :title="
       id == 'new' && product == null
         ? $t('pages.edit-product.new-product')
@@ -7,13 +8,6 @@
     "
     :loading="id !== 'new' && product == null"
   >
-    <Button
-      class="btn-back"
-      @click="goToProductsPage"
-      variant="text"
-      icon="chevron_left"
-      >{{ $t("back") }}</Button
-    >
     <div class="edit-product">
       <Tabs v-if="id != 'new'" :tabs="productTabs">
         <template #informations>
@@ -134,9 +128,6 @@ async function handleSubmit(
 }
 </script>
 <style lang="scss">
-.btn-back {
-  margin-bottom: spacing(2);
-}
 .edit-product {
   @include grid(1, 0, 0);
 }

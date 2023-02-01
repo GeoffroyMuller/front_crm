@@ -18,6 +18,11 @@
       </Media>
     </div>
   </div>
+  <div class="page-btn-back">
+    <Button v-if="back" @click="goToBack" variant="text" icon="chevron_left">{{
+      $t("back")
+    }}</Button>
+  </div>
   <Spinner v-if="loading" class="page-spinner" />
   <div v-else class="page-content" :class="$props.class">
     <slot />
@@ -37,6 +42,7 @@ interface PageProps {
   title: string;
   loading?: boolean;
   class?: any;
+  back?: boolean;
 }
 
 const props = withDefaults(defineProps<PageProps>(), {});
@@ -46,6 +52,9 @@ const userStore = useUserStore();
 const auth = computed(() => {
   return userStore.getAuth;
 });
+const goToBack = () => {
+  history.back();
+};
 </script>
 
 <style lang="scss">
@@ -76,5 +85,9 @@ const auth = computed(() => {
       margin-right: spacing(0.25);
     }
   }
+}
+.page-btn-back {
+  padding: 0 spacing(2);
+  margin-bottom: spacing(1);
 }
 </style>
