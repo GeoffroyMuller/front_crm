@@ -1,7 +1,7 @@
 import type { ID } from "./utils";
 
 export interface Product {
-  id: ID;
+  id?: ID;
   idCompany?: ID;
   idVat?: ID;
   name?: string;

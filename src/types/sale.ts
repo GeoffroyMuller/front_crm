@@ -16,23 +16,12 @@ export interface Sale {
   customer?: Client;
 }
 
-export interface SaleProductLineReceivedByAPI extends Product {
+export interface SaleProductLineType extends Product {
   saleProductPrice?: number;
   quantity?: number;
 }
 
-export interface SaleProductRealLineReceivedByAPI extends ProductReal {
-  saleProductRealPrice?: number;
-}
-
-export interface SaleProductLineType {
-  idProduct?: ID;
-  saleProductPrice?: number;
-  quantity?: number;
-}
-
-export interface SaleProductRealLineType {
-  idProductReal?: ID;
+export interface SaleProductRealLineType extends ProductReal {
   saleProductRealPrice?: number;
 }
 
