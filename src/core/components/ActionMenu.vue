@@ -1,5 +1,5 @@
 <template>
-  <Menu placement="left">
+  <Menu :placement="placement">
     <template #activator>
       <slot />
     </template>
@@ -7,9 +7,9 @@
       <div class="actions-menu">
         <div
           class="action"
-          v-for="action in props.actions"
-          :key="action.action"
-          @click.stop="$emit('action', action.action)"
+          v-for="action in actions"
+          :key="action.title"
+          @click.stop="handleAction(action)"
         >
           <Icon :name="(action.icon as IconName)"></Icon>
           {{ $t(action.title) }}
@@ -22,17 +22,28 @@
 import Menu from "@/core/components/Menu.vue";
 import Icon from "@/core/components/Icon.vue";
 import type { IconName } from "@/core/components/types";
+import type { MenuProps } from "../helpers/vue/composables/menu";
 
 interface Action {
   icon: IconName;
-  action: string;
+  action: string | (() => void);
   title: string;
   condition?: (data: any) => boolean;
 }
 interface ActionMenuProps {
   actions: Action[];
+  placement?: MenuProps["placement"];
 }
 const props = withDefaults(defineProps<ActionMenuProps>(), {});
+const emit = defineEmits(["action"]);
+
+function handleAction(a: Action) {
+  if (typeof a.action === "string") {
+    emit("action", a.action);
+  } else {
+    a.action();
+  }
+}
 </script>
 
 <style lang="scss">

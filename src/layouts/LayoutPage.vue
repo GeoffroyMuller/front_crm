@@ -2,16 +2,16 @@
   <div class="mobile-layout">
     <div class="mobile-nav">
       <IconButton name="menu" @click.stop="mobileNavOpen = true" />
-      <Menu>
-        <template #activator>
-          <Avatar color="primary" size="sm">
-            {{ user.firstname?.[0] || "" }}{{ user.lastname?.[0] || "" }}
-          </Avatar>
-        </template>
-        <template #content>
-          <AccountActions />
-        </template>
-      </Menu>
+
+      <ActionMenu
+        :actions="[
+          { icon: 'door_open', action: disconnect, title: 'disconnect' },
+        ]"
+      >
+        <Avatar color="primary" size="sm">
+          {{ user.firstname?.[0] || "" }}{{ user.lastname?.[0] || "" }}
+        </Avatar>
+      </ActionMenu>
 
       <Sidebar v-model:open="mobileNavOpen">
         <div class="mobile-nav-items-container">
@@ -119,8 +119,7 @@ import Sidebar from "@/core/components/Sidebar.vue";
 import type { IconName } from "@/core/components/types";
 import { useI18n } from "vue-i18n";
 import Tree from "@/core/components/Tree.vue";
-import AccountActions from "@/components/AccountActions.vue";
-import Menu from "@/core/components/Menu.vue";
+import ActionMenu from "@/core/components/ActionMenu.vue";
 
 const userStore = useUserStore();
 
@@ -215,6 +214,13 @@ function iconMiniClick(event: Event, isOpen: boolean, data: any) {
     router.push(data.path);
   }
   isNavMini.value = false;
+}
+
+async function disconnect() {
+  if (await confirm(t("sure-disconnect"))) {
+    userStore.disconnect();
+    router.replace("/login");
+  }
 }
 </script>
 

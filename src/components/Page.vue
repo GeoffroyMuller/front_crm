@@ -5,16 +5,15 @@
     </div>
     <div class="buttons">
       <Media up="md">
-        <Menu>
-          <template #activator>
-            <Button variant="text" class="auth">
-              {{ auth.firstname }} {{ auth.lastname }}
-            </Button>
-          </template>
-          <template #content>
-            <AccountActions />
-          </template>
-        </Menu>
+        <ActionMenu
+          :actions="[
+            { icon: 'door_open', action: disconnect, title: 'disconnect' },
+          ]"
+        >
+          <Button variant="text" class="auth">
+            {{ auth.firstname }} {{ auth.lastname }}
+          </Button>
+        </ActionMenu>
       </Media>
     </div>
   </div>
@@ -34,9 +33,11 @@ import Button from "@/core/components/Button.vue";
 import useUserStore from "@/stores/user";
 import { computed } from "vue";
 import Spinner from "@/core/components/Spinner.vue";
-import Menu from "@/core/components/Menu.vue";
-import AccountActions from "./AccountActions.vue";
 import Media from "@/core/Media.vue";
+import ActionMenu from "@/core/components/ActionMenu.vue";
+import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
+import useUI from "@/core/helpers/vue/composables/ui";
 
 interface PageProps {
   title: string;
@@ -47,7 +48,11 @@ interface PageProps {
 
 const props = withDefaults(defineProps<PageProps>(), {});
 
+const router = useRouter();
 const userStore = useUserStore();
+const { t } = useI18n();
+
+const { confirm } = useUI();
 
 const auth = computed(() => {
   return userStore.getAuth;
@@ -55,6 +60,13 @@ const auth = computed(() => {
 const goToBack = () => {
   history.back();
 };
+
+async function disconnect() {
+  if (await confirm(t("sure-disconnect"))) {
+    userStore.disconnect();
+    router.replace("/login");
+  }
+}
 </script>
 
 <style lang="scss">
