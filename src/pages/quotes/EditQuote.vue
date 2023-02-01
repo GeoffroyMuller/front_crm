@@ -189,7 +189,7 @@ async function handleSubmit(data: any) {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .quote-form-content {
   @include grid(1, 0, 2);
   .actions {
@@ -208,11 +208,5 @@ async function handleSubmit(data: any) {
       gap: spacing(1);
     }
   }
-}
-.input-and-button-container {
-  display: flex;
-  justify-content: flex-start;
-  gap: 0;
-  align-items: center;
 }
 </style>
