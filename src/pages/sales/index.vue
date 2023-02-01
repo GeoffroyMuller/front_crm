@@ -4,13 +4,13 @@
       :store="salesStore"
       :columns="[
         {
-          title: $t('id'),
-          key: 'id',
+          title: $t('pages.edit-sale.customer-name'),
+          key: 'customer-name',
           sortable: true,
         },
         {
-          title: $t('customer'),
-          key: 'customer',
+          title: $t('pages.edit-sale.customer-email'),
+          key: 'customer-email',
           sortable: true,
         },
         {
@@ -26,13 +26,13 @@
           {{ dayjs(item.date).format("DD-MM-YYYY") }}
         </div>
       </template>
-      <template #content-customer="{ item }">
-        <Grid :gap="0.5" :columns="1">
-          {{ `${item.customer.firstname} ${item.customer.lastname}` }}
-          <div class="sale-customer-email" v-if="item.customer.email">
-            {{ `${item.customer.email}` }}
-          </div>
-        </Grid>
+      <template #content-customer-name="{ item }">
+        {{ `${item.customer.firstname} ${item.customer.lastname}` }}
+      </template>
+      <template #content-customer-email="{ item }">
+        <div>
+          {{ `${item.customer.email}` }}
+        </div>
       </template>
       <template #actions-title>
         <div>
@@ -61,8 +61,3 @@ import Grid from "@/core/components/layouts/Grid.vue";
 
 const salesStore = useSaleStore();
 </script>
-<style lang="scss" scoped>
-.sale-customer-email {
-  @include typo(text2);
-}
-</style>

@@ -31,7 +31,9 @@
       "new-sale": "Nouvelle vente",
       "add-product": "Ajouter un produit",
       "add-products": "Ajouter des produits a la vente",
-      "total-price": "Prix total de la vente: {price} €"
+      "total-price": "Prix total de la vente: {price} €",
+      "customer-name": "Nom du client",
+      "customer-email": "Email du client"
     },
     "edit-product": {
       "description": "Description",
