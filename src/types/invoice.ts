@@ -6,7 +6,7 @@ import type { Vat } from "./vat";
 export default interface Invoice {
   id: ID;
   archived: boolean;
-  client: Client;
+  client?: Client;
   footer: string;
   idClient: ID;
   idCompany: ID;
@@ -31,5 +31,5 @@ export interface InvoiceLine {
   qty?: number;
   type: "title" | "product" | "comment" | "discount";
   unit_price?: number;
-  vat: Vat;
+  vat?: Vat;
 }

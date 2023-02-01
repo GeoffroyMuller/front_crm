@@ -76,6 +76,7 @@ export default function useForm(props: userFormProps) {
         instance?.emit("inputChange", {
           name: input.name,
           value: input.internalValue.value,
+          formValue: internalValue.value,
         });
       }
     );
