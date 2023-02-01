@@ -199,7 +199,10 @@ const menu = ref([
 const route = useRoute();
 
 function isItemSelected(data: any) {
-  return data.path === route.path;
+  if (data.path === "/") {
+    return route.path === "/";
+  }
+  return route.path.includes(data.path);
 }
 
 const user = computed(() => userStore.getAuth);
@@ -335,8 +338,14 @@ $miniNavWidth: 60px;
     align-items: center;
     gap: spacing(1.5);
     cursor: pointer;
-    &:hover,
     &.selected {
+      color: color("primary", 700);
+
+      svg {
+        fill: color("primary", 700);
+      }
+    }
+    &:hover {
       background-color: color("primary", 100);
       color: color("primary", 700);
 
@@ -406,8 +415,14 @@ $miniNavWidth: 60px;
     cursor: pointer;
     @include typo(text2);
     transition: all 0.3s;
-    &:hover,
     &.selected {
+      color: color("primary", 700);
+
+      svg {
+        fill: color("primary", 700);
+      }
+    }
+    &:hover {
       background-color: color("primary", 100);
       color: color("primary", 700);
 
