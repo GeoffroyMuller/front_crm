@@ -4,13 +4,13 @@
       :store="salesStore"
       :columns="[
         {
-          title: $t('id'),
-          key: 'id',
+          title: $t('pages.edit-sale.customer-name'),
+          key: 'customer-name',
           sortable: true,
         },
         {
-          title: $t('idSeller'),
-          key: 'idSeller',
+          title: $t('pages.edit-sale.customer-email'),
+          key: 'customer-email',
           sortable: true,
         },
         {
@@ -24,6 +24,14 @@
       <template #content-date="{ item }">
         <div>
           {{ dayjs(item.date).format("DD-MM-YYYY") }}
+        </div>
+      </template>
+      <template #content-customer-name="{ item }">
+        {{ `${item.customer.firstname} ${item.customer.lastname}` }}
+      </template>
+      <template #content-customer-email="{ item }">
+        <div>
+          {{ `${item.customer.email}` }}
         </div>
       </template>
       <template #actions-title>
@@ -49,6 +57,7 @@ import Page from "@/components/Page.vue";
 import useSaleStore from "@/stores/sales";
 import type { Sale } from "@/types/sale";
 import dayjs, { type Dayjs } from "dayjs";
+import Grid from "@/core/components/layouts/Grid.vue";
 
 const salesStore = useSaleStore();
 </script>
