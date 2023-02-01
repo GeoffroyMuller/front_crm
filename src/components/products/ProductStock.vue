@@ -53,7 +53,12 @@
       </div>
       <div v-else class="product-real-sidebar">
         <ProductRealForm
-          :afterSaved="() => (isSidebarOpen = false)"
+          @saved="
+            () => {
+              isSidebarOpen = false;
+              fetchProductsReal();
+            }
+          "
           :product="product"
           :productReal="currentProductReal"
         />
@@ -72,6 +77,7 @@ import { ref } from "vue";
 import Button from "@/core/components/Button.vue";
 import { isNil } from "lodash";
 import Spinner from "@/core/components/Spinner.vue";
+import useUI from "@/core/helpers/vue/composables/ui";
 
 interface ProductStockProps {
   product: Product | null;
@@ -82,8 +88,20 @@ const props = withDefaults(defineProps<ProductStockProps>(), {
 const isSidebarOpen = ref<boolean>(false);
 const productsRealStore = useProductsRealStore();
 const loadingProductReal = ref<boolean>(false);
+const { toast } = useUI();
 
 const currentProductReal = ref<ProductReal | null>(null);
+
+async function fetchProductsReal() {
+  try {
+    await productsRealStore.fetchList();
+  } catch (error: any) {
+    toast({
+      type: "danger",
+      message: error.response.data.message,
+    });
+  }
+}
 
 const openSideProductReal = async (productReal: ProductReal | null) => {
   if (!isNil(productReal) && !isNil(productReal.id)) {
