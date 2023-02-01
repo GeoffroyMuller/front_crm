@@ -77,8 +77,7 @@ export default function useForm(props: userFormProps) {
           name: input.name,
           value: input.internalValue.value,
         });
-      },
-      { immediate: true }
+      }
     );
     watch(
       () => input.internalError.value,
@@ -94,7 +93,6 @@ export default function useForm(props: userFormProps) {
   }
 
   async function validate() {
-    errors.value = {};
     return await Object.keys(inputs.value).reduce(async (prev, currentKey) => {
       const input: _CustomInput = inputs.value[currentKey];
       try {
