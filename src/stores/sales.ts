@@ -3,6 +3,9 @@ import type { Sale } from "@/types/sale";
 
 const useSaleStore = makeAPIStore<Sale>({
   id: "sales",
+  filters: {
+    populate: ["customer"],
+  },
 });
 
 export default useSaleStore;
