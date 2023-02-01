@@ -17,20 +17,11 @@
           key: 'name',
           sortable: true,
         },
-        {
-          title: $t('status'),
-          key: 'status',
-        },
       ]"
       @row-click="(i) => $router.push(`/invoices/${i.id}`)"
     >
       <template #content-client="{ item }">
         {{ item?.client?.firstname || "" }} {{ item?.client?.lastname || "" }}
-      </template>
-      <template #content-status="{ item }">
-        <Chip :color="getStatusColor(item.status)">
-          {{ $t(`data.status.${item.status}`) }}
-        </Chip>
       </template>
       <template #actions-title>
         <div>

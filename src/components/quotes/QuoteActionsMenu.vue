@@ -5,42 +5,6 @@
     </template>
     <template #content>
       <div class="quote-actions">
-        <!-- <Button
-          @click.stop="$emit('setArchived', item)"
-          color="danger"
-          icon="archive"
-          v-if="!item?.archived"
-          variant="outlined"
-        >
-          {{ $t("archive") }}
-        </Button>
-
-        <Button
-          @click.stop="$emit('preview', item)"
-          color="primary"
-          icon="preview"
-          variant="outlined"
-        >
-          {{ $t("preview") }}
-        </Button>
-
-        <Button
-          @click.stop="$emit('downloadPdf', item)"
-          color="primary"
-          icon="download"
-          variant="outlined"
-        >
-          {{ $t("download") }}
-        </Button>
-
-        <Button
-          @click.stop="$emit('sendMail', item)"
-          color="success"
-          icon="mail"
-          variant="outlined"
-        >
-          {{ $t("send_by_mail") }}
-        </Button> -->
         <div
           class="action"
           v-for="action in actions"
@@ -61,6 +25,7 @@ import IconButton from "@/core/components/IconButton.vue";
 import Menu from "@/core/components/Menu.vue";
 import Icon from "@/core/components/Icon.vue";
 import type { IconName } from "@/core/components/types";
+import OptionsList from "@/core/components/OptionsList.vue";
 
 const actions = [
   {

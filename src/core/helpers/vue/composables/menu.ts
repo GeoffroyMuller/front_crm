@@ -1,7 +1,3 @@
-import { i18n } from "@/core/plugins/i18n";
-import lodashPlugin from "@/core/plugins/lodash";
-import pinia from "@/core/plugins/pinia";
-import yupPlugin from "@/core/plugins/yup";
 import {
   createApp,
   isRef,
@@ -59,6 +55,12 @@ export default function useMenu(props: MenuProps) {
       destroy();
     });
   }
+
+  window.addEventListener("resize", () => {
+    if (!isHidden()) {
+      open.value = false;
+    }
+  });
 
   const container = props.container
     ? isRef(props.container)
@@ -236,6 +238,7 @@ export default function useMenu(props: MenuProps) {
     container.value.style.display = "none";
     _resetStyle();
   }
+  const isHidden = () => container.value?.style?.opacity == "0";
 
   function destroy() {
     unwatchActivator();

@@ -45,15 +45,7 @@
               :key="r.id"
               :label="r.lang.fr"
               :model-value="rightsSelected.find((rr: any) => rr == r.id)"
-              @update:model-value="
-                ($val) => (rightsSelected = $_.xor(rightsSelected, [r.id]))
-              "
-            />
-
-            <TextField
-              type="hidden"
-              name="rights"
-              :model-value="rightsSelected"
+              @update:model-value="($val) => toggleValue($val, r)"
             />
           </Grid>
           <Flex align-items="center" justify-content="end">
@@ -85,10 +77,19 @@ import useUI from "@/core/helpers/vue/composables/ui";
 import useRoleStore from "@/stores/roles";
 import type { Role } from "@/types/roles";
 import type { ID } from "@/types/utils";
+import { xor } from "lodash";
 import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 const emit = defineEmits(["add", "update"]);
+
+function toggleValue(val: boolean, r: any) {
+  const founded = rightsSelected.value.find((rs) => rs == r.id);
+  if ((val && founded) || (!val && !founded)) {
+    return;
+  }
+  rightsSelected.value = xor(rightsSelected.value, [r.id]);
+}
 
 const roleSelected = ref<Role>();
 const isSidebarOpen = ref(false);
@@ -118,6 +119,7 @@ function handleRowClick(data: Role) {
 }
 
 async function handleSubmit(data: Role) {
+  data.rights = rightsSelected.value;
   if (isAddAction.value) {
     try {
       const newRole = await roleStore.create(data);

@@ -83,7 +83,7 @@
         </template>
       </Tree>
 
-      <div class="settings" @click="$router.push('settings')">
+      <div class="settings" @click="$router.push('/settings')">
         <Icon name="settings" color="black" />
         <div v-if="!isNavMini">{{ $t("settings") }}</div>
       </div>

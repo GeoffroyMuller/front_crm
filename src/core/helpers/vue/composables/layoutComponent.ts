@@ -16,6 +16,11 @@ export interface LayoutComponentProps {
   ml?: number;
   mt?: number;
   mb?: number;
+
+  mx?: number;
+  my?: number;
+  px?: number;
+  py?: number;
 }
 
 export default function useLayoutComponent(props: LayoutComponentProps) {
@@ -44,12 +49,16 @@ export default function useLayoutComponent(props: LayoutComponentProps) {
     watchCssProp("--gap", "gap");
 
     watchCssProp(["--pt", "--pb", "--pr", "--pl"], "p");
+    watchCssProp(["--pt", "--pb"], "py");
+    watchCssProp(["--pr", "--pl"], "px");
     watchCssProp("--pr", "pr");
     watchCssProp("--pl", "pl");
     watchCssProp("--pt", "pt");
     watchCssProp("--pb", "pb");
 
     watchCssProp(["--mt", "--mb", "--mr", "--ml"], "m");
+    watchCssProp(["--mt", "--mb"], "my");
+    watchCssProp(["--mr", "--ml"], "mx");
     watchCssProp("--mr", "mr");
     watchCssProp("--ml", "ml");
     watchCssProp("--mt", "mt");
