@@ -57,7 +57,11 @@
       </div>
       <Tree :list="menu" class="tree-menu" :isHidden="isNavMini" default-open>
         <template #item-rollable="{ data, isOpen }">
-          <div class="tree-items" v-if="!isNavMini">
+          <div
+            class="tree-items"
+            :class="{ selected: isItemSelected(data) }"
+            v-if="!isNavMini"
+          >
             <Icon
               name="arrow_right"
               class="icons-arrow"
@@ -68,6 +72,7 @@
           </div>
           <div
             class="tree-items"
+            :class="{ selected: isItemSelected(data) }"
             v-else
             @click="($e) => iconMiniClick($e, isOpen, data)"
           >
@@ -75,14 +80,22 @@
           </div>
         </template>
         <template #item="{ data }">
-          <div class="tree-items" @click="$router.push(data.path)">
+          <div
+            class="tree-items"
+            :class="{ selected: isItemSelected(data) }"
+            @click="$router.push(data.path)"
+          >
             <Icon :name="data.icon" color="black" />
             <div v-if="!isNavMini">{{ $t(data.title) }}</div>
           </div>
         </template>
       </Tree>
 
-      <div class="settings" @click="$router.push('/settings')">
+      <div
+        class="settings"
+        :class="{ selected: isItemSelected({ path: '/settings' }) }"
+        @click="$router.push('/settings')"
+      >
         <Icon name="settings" color="black" />
         <div v-if="!isNavMini">{{ $t("settings") }}</div>
       </div>
@@ -98,7 +111,7 @@ import { computed, ref } from "vue";
 import Icon from "@/core/components/Icon.vue";
 import Button from "@/core/components/Button.vue";
 import useUserStore from "@/stores/user";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import IconButton from "@/core/components/IconButton.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import Avatar from "@/core/components/Avatar.vue";
@@ -182,6 +195,12 @@ const menu = ref([
     icon: "person",
   },
 ]);
+
+const route = useRoute();
+
+function isItemSelected(data: any) {
+  return data.path === route.path;
+}
 
 const user = computed(() => userStore.getAuth);
 
@@ -316,7 +335,8 @@ $miniNavWidth: 60px;
     align-items: center;
     gap: spacing(1.5);
     cursor: pointer;
-    &:hover {
+    &:hover,
+    &.selected {
       background-color: color("primary", 100);
       color: color("primary", 700);
 
@@ -356,7 +376,8 @@ $miniNavWidth: 60px;
       cursor: pointer;
       @include typo(text2);
       transition: all 0.3s;
-      &:hover {
+      &:hover,
+      &.selected {
         background-color: color("primary", 100);
         color: color("primary", 700);
 
@@ -385,7 +406,8 @@ $miniNavWidth: 60px;
     cursor: pointer;
     @include typo(text2);
     transition: all 0.3s;
-    &:hover {
+    &:hover,
+    &.selected {
       background-color: color("primary", 100);
       color: color("primary", 700);
 
