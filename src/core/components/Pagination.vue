@@ -35,6 +35,7 @@
             { label: '15', value: 15 },
             { label: '20', value: 20 },
           ]"
+          required
           :modelValue="itemsPerPage"
           @update:modelValue="(val) => $emit('update:itemsPerPage', val)"
         />

@@ -16,7 +16,7 @@
           :color="
             !isFocus ? 'black' : internalError || error ? 'danger' : 'primary'
           "
-          v-if="multiple || internalValue == null"
+          v-if="required || multiple || internalValue == null"
         />
         <IconButton name="close" v-else @click.stop="internalValue = null" />
       </template>
@@ -48,6 +48,8 @@ export interface SelectProps extends FormInputProps<any> {
   options: Array<any>;
 
   option?: Component;
+  
+  required?: boolean;
 
   /*
   TODO : this is a duplicate of props in FormInputProps<string | number>
