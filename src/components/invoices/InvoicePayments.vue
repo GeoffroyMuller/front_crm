@@ -28,7 +28,9 @@
         {{ invoice.client?.lastname || "" }}
       </template>
       <template #content-amount="{ item }">
-        {{ $utils.formatPrice(item.amount) }}
+        <PricePresenter positive>
+          {{ $utils.formatPrice(item.amount) }}
+        </PricePresenter>
       </template>
     </Table>
     <Flex justify-content="end">
@@ -98,6 +100,7 @@ import type { InvoicePayment } from "@/types/invoice";
 import dayjs from "dayjs";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import PricePresenter from "../PricePresenter.vue";
 
 interface InvoicePaymentsProps {
   invoice: Invoice;
