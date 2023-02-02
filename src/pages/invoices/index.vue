@@ -29,7 +29,7 @@
             color="success"
             icon="add"
             v-tooltip="{ text: $t('add'), placement: 'bottom' }"
-            @click="$router.push(`/invoices/new`)"
+            @click="$router.push(`/invoices/new/edit`)"
           >
             {{ $t("add") }}
           </Button>

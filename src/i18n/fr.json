@@ -42,7 +42,8 @@
       "add-customer": "Ajouter un client",
       "title": "Titre",
       "comment": "Commentaire",
-      "product": "Produit"
+      "product": "Produit",
+      "new-invoice": "Nouvelle Facture"
     },
     "edit-sale": {
       "new-sale": "Nouvelle vente",

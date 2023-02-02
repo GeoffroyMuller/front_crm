@@ -123,11 +123,11 @@ const loading = computed(() => {
   return isAddAction.value ? false : !invoice.value;
 });
 
-const invoice = ref<Invoice | null>(null);
+const invoice = ref<Invoice | null>(invoiceStore.getById(id as string));
 
 const title = computed(() => {
   if (isAddAction.value) {
-    return t("new-invoice");
+    return t("pages.edit-invoice.new-invoice");
   }
   return `${t("invoice")} ${invoice.value?.identifier || ""}`;
 });
