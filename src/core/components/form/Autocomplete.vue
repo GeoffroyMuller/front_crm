@@ -262,6 +262,7 @@ const { open } = useMenu({
     "get-option-label": props.getOptionLabel,
     "is-selected": isSelected,
     options: optionsFiltered,
+    multiple: props.multiple,
   },
 });
 </script>

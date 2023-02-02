@@ -20,6 +20,7 @@
         :key="getOptionValue(opt)"
         @click.stop="handleClickOption(opt)"
       >
+        <Checkbox :modelValue="isSelected(opt)" v-if="multiple" />
         {{ getOptionLabel(opt) }}
       </div>
     </template>
@@ -29,6 +30,7 @@
 <script setup lang="ts">
 import { computed, isRef, type Component, type Ref } from "vue";
 import Card from "./Card.vue";
+import Checkbox from "./form/Checkbox.vue";
 
 interface OptionsListProps {
   getOptionValue: (opt: any) => any;
@@ -37,6 +39,7 @@ interface OptionsListProps {
   isSelected: (opt: any) => boolean;
   options: Array<any> | Ref<Array<any>>;
   option?: Component;
+  multiple?: boolean;
 }
 
 const props = withDefaults(defineProps<OptionsListProps>(), {});
@@ -50,6 +53,9 @@ const _opt = isRef(props.options)
 .select-option {
   cursor: pointer;
   padding: spacing(0.75) spacing(1);
+  display: flex;
+  align-items: center;
+  gap: spacing(1);
   &.selected {
     color: color("primary", 500);
   }
