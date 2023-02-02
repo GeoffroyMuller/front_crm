@@ -13,26 +13,27 @@ const utilsPlugin: Plugin = {
         const FORMAT = "DD/MM/YYYY";
         return dayjs(date).format(FORMAT);
       },
-      formatPrice: (price: number, currency: "€" | "$" = "€") => {
+      formatPrice: (price: number | string, currency: "€" | "$" = "€") => {
         if (price == null) {
           return "";
         }
+        const priceNumber = +price;
         let formattedPrice;
         switch (currency) {
           case "€":
-            formattedPrice = price.toLocaleString("fr-FR", {
+            formattedPrice = priceNumber.toLocaleString("fr-FR", {
               style: "currency",
               currency: "EUR",
             });
             break;
           case "$":
-            formattedPrice = price.toLocaleString("en-US", {
+            formattedPrice = priceNumber.toLocaleString("en-US", {
               style: "currency",
               currency: "USD",
             });
             break;
           default:
-            return price;
+            return priceNumber;
         }
         return formattedPrice.split(".")[0];
       },
