@@ -10,6 +10,9 @@
     "quotes": {
       "sure_archive_quote": "Etes vous sur de vouloir archiver ce devis ?"
     },
+    "invoices": {
+      "sure_archive_invoice": "Etes vous sur de vouloir archiver cette facture ?"
+    },
     "edit-quote": {
       "qty": "Quantitée",
       "unit_price": "Prix unitaire (HT)",

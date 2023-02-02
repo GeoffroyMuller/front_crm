@@ -70,33 +70,24 @@ import useUI from "@/core/helpers/vue/composables/ui";
 import Page from "@/components/Page.vue";
 import { useI18n } from "vue-i18n";
 import { ref } from "vue";
-import type { Quote } from "@/types/quote";
 import { getJWT } from "@/core/helpers/utils";
 import config from "@/const";
 import useInvoicesStore from "@/stores/invoices";
+import type Invoice from "@/types/invoice";
 
 const { toast, confirm } = useUI();
 const { t } = useI18n();
 
-const selected = ref<Array<Quote>>([]);
+const selected = ref<Array<Invoice>>([]);
 
-function downloadPdf(item: Quote) {
+function downloadPdf(item: Invoice) {
   const url = `${config.API_URL}/invoices/${item.id}/pdf?token=${getJWT()}`;
   window.open(url, "_blank");
 }
 
-function getStatusColor(status: string) {
-  if (status === "refused") {
-    return "danger";
-  }
-  if (status === "validated") {
-    return "success";
-  }
-  return "white";
-}
 
 async function setArchived(item: any) {
-  const confirmed = await confirm(t("pages.quotes.sure_archive_quote"));
+  const confirmed = await confirm(t("pages.invoices.sure_archive_invoice"));
   if (confirmed) {
     try {
       await invoiceStore.update(item.id, {
