@@ -18,7 +18,7 @@
           sortable: true,
         },
       ]"
-      :items="invoice.payments"
+      :items="[...(invoice.payments || []), ...paymentsAdded]"
     >
       <template #content-created_at="{ item }">
         {{ $utils.formatDate(item.created_at) }}
@@ -41,7 +41,7 @@
       <Form :model-value="paymentEdit" @submit="handleSubmitForm">
         <Grid :gap="1">
           <MagicAutocomplete
-            :disabled="!!paymentEdit?.id"
+            disabled
             name="idClient"
             :label="$t('customers')"
             :getOptionLabel="(opt: Client) => `${opt.firstname} ${opt.lastname}`"
@@ -113,10 +113,13 @@ const { t } = useI18n();
 const sidebarOpen = ref(false);
 const paymentEdit = ref<InvoicePayment | null>();
 
-function handleSubmitForm(data: InvoicePayment) {
+const paymentsAdded = ref<InvoicePayment[]>([]);
+
+async function handleSubmitForm(data: InvoicePayment) {
   sidebarOpen.value = false;
   try {
-    invoiceStore.addPayment(props.invoice.id, data);
+    const p = await invoiceStore.addPayment(props.invoice.id, data);
+    paymentsAdded.value.push(p);
     toast({
       type: "success",
       message: t("saved"),
@@ -133,6 +136,8 @@ function handleSubmitForm(data: InvoicePayment) {
 function handleAdd() {
   paymentEdit.value = {
     created_at: dayjs().toISOString(),
+    idClient: props.invoice.idClient,
+    amount: 0,
   };
   sidebarOpen.value = true;
 }

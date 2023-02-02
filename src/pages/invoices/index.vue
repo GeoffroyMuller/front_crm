@@ -1,5 +1,6 @@
 <template>
-  <Page :title="$t('invoices')">
+  <Page :title="$t('invoices')" class="invoice-page">
+    <InvoiceFilters />
     <MagicDataTable
       :store="useInvoicesStore()"
       :columns="[
@@ -17,9 +18,17 @@
           key: 'name',
           sortable: true,
         },
+        {
+          title: $t('price_without_vat'),
+          key: 'price',
+          sortable: true,
+        },
       ]"
       @row-click="(i) => $router.push(`/invoices/${i.id}`)"
     >
+      <template #content-price="{ item }">
+        {{ $utils.formatPrice(item.price) || "-" }}
+      </template>
       <template #content-client="{ item }">
         {{ item?.client?.firstname || "" }} {{ item?.client?.lastname || "" }}
       </template>
@@ -74,6 +83,7 @@ import { getJWT } from "@/core/helpers/utils";
 import config from "@/const";
 import useInvoicesStore from "@/stores/invoices";
 import type Invoice from "@/types/invoice";
+import InvoiceFilters from "@/components/invoices/InvoiceFilters.vue";
 
 const { toast, confirm } = useUI();
 const { t } = useI18n();
@@ -84,7 +94,6 @@ function downloadPdf(item: Invoice) {
   const url = `${config.API_URL}/invoices/${item.id}/pdf?token=${getJWT()}`;
   window.open(url, "_blank");
 }
-
 
 async function setArchived(item: any) {
   const confirmed = await confirm(t("pages.invoices.sure_archive_invoice"));
@@ -110,10 +119,14 @@ async function setArchived(item: any) {
 const invoiceStore = useInvoicesStore();
 </script>
 
-<style lang="scss" scoped>
-.actions {
-  display: flex;
-  align-items: center;
-  gap: spacing(0.5);
+<style lang="scss">
+.invoice-page {
+  display: grid;
+  gap: spacing(2);
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: spacing(0.5);
+  }
 }
 </style>
