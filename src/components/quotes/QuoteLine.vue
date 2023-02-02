@@ -42,7 +42,6 @@
         :label="$t('pages.edit-quote.unit_price')"
         name="unit_price"
       />
-
       <Select
         class="input"
         :options="vats"
@@ -117,12 +116,12 @@ const internalLine = ref(props.line);
 
 function handleProductChange(product: Product) {
   if (product != null) {
-    internalLine.value = {
-      ...internalLine.value,
-      description: product.description as string,
-      unit_price: product.price,
-      idVat: product.idVat as number,
-    };
+    internalLine.value.description =
+      internalLine.value.description || (product.description as string);
+    internalLine.value.unit_price =
+      internalLine.value.unit_price || (product.price as number);
+    internalLine.value.idVat =
+      internalLine.value.idVat || (product.idVat as number);
   }
 }
 </script>
