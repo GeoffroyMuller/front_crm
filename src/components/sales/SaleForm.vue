@@ -1,6 +1,6 @@
 <template>
   <Form
-    :model-value="saleDataForm"
+    :model-value="_mapSaleToDataForm(props.sale)"
     @submit="handleSubmit"
     @inputChange="handleInputChange"
   >
@@ -97,9 +97,6 @@ const totalPrice = computed(() => {
     }, //TODO
     0
   );
-});
-onMounted(() => {
-  saleDataForm.value = _mapSaleToDataForm(props.sale);
 });
 
 function handleInputChange(data: any) {
