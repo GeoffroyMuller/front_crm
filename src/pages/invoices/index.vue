@@ -45,29 +45,24 @@
         </div>
       </template>
       <template #actions="{ item }">
-        <div class="actions">
-          <div>
-            <Button
-              @click.stop="setArchived(item)"
-              color="danger"
-              icon="archive"
-              v-tooltip="{ text: $t('archive'), placement: 'bottom' }"
-              v-if="!item.archived"
-              variant="outlined"
-            />
-          </div>
-          <div>
-            <Button
-              @click.stop="downloadPdf(item)"
-              color="primary"
-              icon="download"
-              v-tooltip="{ text: $t('download'), placement: 'bottom' }"
-              variant="outlined"
-            />
-          </div>
-        </div>
+        <InvoiceActionsMenu
+          :item="item"
+          @setArchived="setArchived"
+          @preview="preview"
+          @downloadPdf="downloadPdf"
+          @sendMail="sendMail"
+        />
       </template>
     </MagicDataTable>
+    <InvoicePreview
+      @close="() => (invoiceToPreview = null)"
+      :quote="invoiceToPreview"
+    />
+    <InvoiceSendMail
+      @clickDownloadPDF="() => downloadPdf(invoiceToSendMail)"
+      @close="invoiceToSendMail = null"
+      :quote="invoiceToSendMail"
+    />
   </Page>
 </template>
 
@@ -84,6 +79,9 @@ import config from "@/const";
 import useInvoicesStore from "@/stores/invoices";
 import type Invoice from "@/types/invoice";
 import InvoiceFilters from "@/components/invoices/InvoiceFilters.vue";
+import InvoiceActionsMenu from "@/components/invoices/InvoiceActionsMenu.vue";
+import InvoicePreview from "@/components/invoices/InvoicePreview.vue";
+import InvoiceSendMail from "@/components/invoices/InvoiceSendMail.vue";
 
 const { toast, confirm } = useUI();
 const { t } = useI18n();
@@ -95,7 +93,7 @@ function downloadPdf(item: Invoice) {
   window.open(url, "_blank");
 }
 
-async function setArchived(item: any) {
+async function setArchived(item: Invoice) {
   const confirmed = await confirm(t("pages.invoices.sure_archive_invoice"));
   if (confirmed) {
     try {
@@ -114,6 +112,15 @@ async function setArchived(item: any) {
       });
     }
   }
+}
+const invoiceToPreview = ref<Invoice | null>();
+function preview(item: Invoice) {
+  invoiceToPreview.value = item;
+}
+
+const invoiceToSendMail = ref<Invoice | null>();
+function sendMail(item: Invoice) {
+  invoiceToSendMail.value = item;
 }
 
 const invoiceStore = useInvoicesStore();
