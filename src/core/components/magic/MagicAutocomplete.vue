@@ -37,6 +37,7 @@ export interface MagicAutocompleteProps<T> /* extends AutocompleteProps */ {
 
   optionKey?: string;
   getOptionLabel?: (T: any) => string;
+  getOptionValue?: (opt: any) => any;
 
   // magic autocomplete props
   store: APIStore<T>;
@@ -76,15 +77,6 @@ const props = withDefaults(defineProps<MagicAutocompleteProps<any>>(), {
   },
   getFilters: () => ({}),
 });
-
-function _getOptionValue(opt: any) {
-  if (props.optionKey != null) {
-    if (typeof opt === "string" || typeof opt === "number") {
-      return opt;
-    }
-  }
-  return opt;
-}
 
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,

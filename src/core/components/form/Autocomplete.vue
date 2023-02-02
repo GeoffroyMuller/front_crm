@@ -49,6 +49,7 @@ export interface AutocompleteProps extends FormInputProps<any> {
 
   optionKey?: string;
   getOptionLabel?: (opt: any) => string;
+  getOptionValue?: (opt: any) => any;
 
   options: Array<any>;
 
@@ -81,10 +82,13 @@ const props = withDefaults(defineProps<AutocompleteProps>(), {
 });
 
 function _getOptionValue(opt: any) {
+  if (props.getOptionValue) {
+    return props.getOptionValue(opt);
+  }
+  if (typeof opt === "string" || typeof opt === "number") {
+    return opt;
+  }
   if (props.optionKey != null) {
-    if (typeof opt === "string" || typeof opt === "number") {
-      return opt;
-    }
     return opt[props.optionKey];
   }
   return opt;
