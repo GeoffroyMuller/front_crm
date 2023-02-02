@@ -29,6 +29,8 @@
         },
       ]"
       @row-click="(quote) => $router.push(`/quotes/${quote.id}`)"
+      selectable
+      v-model:selected="selected"
     >
       <template #content-price="{ item }">
         {{ $utils.formatPrice(item.price) || "-" }}

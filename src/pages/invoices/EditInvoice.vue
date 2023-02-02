@@ -1,84 +1,83 @@
 <template>
   <Page :title="title" :loading="loading" back>
-    <Form
-      :model-value="invoice"
-      @submit="handleSubmit"
-      class="invoice-form-content"
-    >
-      <template #default="{ hasError }">
-        <div class="form-head">
-          <TextField name="name" :label="$t('title')" />
+    <Card>
+      <Form
+        :model-value="invoice"
+        @submit="handleSubmit"
+        class="invoice-form-content"
+      >
+        <template #default="{ hasError }">
+          <div class="form-head">
+            <TextField name="name" :label="$t('title')" />
 
-          <MagicAutocomplete
-            :label="$t('customer')"
-            :store="clientsStore"
-            :get-filters="
-              (str) => ({
-                $or: {
-                  $contains: { lastname: str, firstname: str },
-                },
-              })
-            "
-            :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
-            optionKey="id"
-            name="idClient"
-            :addText="$t(`pages.edit-invoice.add-customer`)"
-            can-add
-            @add="isAddClientOpen = true"
-            v-model:options="clientOptions"
-            v-model="idClient"
+            <MagicAutocomplete
+              :label="$t('customer')"
+              :store="clientsStore"
+              :get-filters="
+                (str) => ({
+                  $or: {
+                    $contains: { lastname: str, firstname: str },
+                  },
+                })
+              "
+              :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
+              optionKey="id"
+              name="idClient"
+              :addText="$t(`pages.edit-invoice.add-customer`)"
+              can-add
+              @add="isAddClientOpen = true"
+              v-model:options="clientOptions"
+              v-model="idClient"
+            />
+          </div>
+          <div class="form-table">
+            <Repetable name="lines" :label="$t('products')" orderable>
+              <template #default="{ data }">
+                <InvoiceLineVue :line="(data as unknown as InvoiceLine)" />
+              </template>
+              <template #actions="{ addSection }">
+                <Button
+                  type="button"
+                  variant="text"
+                  @click="addSection({ type: 'product' })"
+                >
+                  {{ $t("pages.edit-invoice.add-line-product") }}
+                </Button>
+                <Button
+                  type="button"
+                  variant="text"
+                  @click="addSection({ type: 'comment' })"
+                >
+                  {{ $t("pages.edit-invoice.add-line-comment") }}
+                </Button>
+                <Button
+                  type="button"
+                  variant="text"
+                  @click="addSection({ type: 'title' })"
+                >
+                  {{ $t("pages.edit-invoice.add-line-title") }}
+                </Button>
+              </template>
+            </Repetable>
+          </div>
+          <HtmlEditor
+            id="modalities"
+            name="modalities"
+            :label="$t('pages.edit-invoice.modalities')"
           />
-        </div>
-        <div class="form-table">
-          <Repetable name="lines" :label="$t('products')" orderable>
-            <template #default="{ data }">
-              <div>
-                INVOICE LINE
-                <pre class="code">{{ data }}</pre>
-              </div>
-            </template>
-            <template #actions="{ addSection }">
-              <Button
-                type="button"
-                variant="text"
-                @click="addSection({ type: 'product' })"
-              >
-                {{ $t("pages.edit-invoice.add-line-product") }}
-              </Button>
-              <Button
-                type="button"
-                variant="text"
-                @click="addSection({ type: 'comment' })"
-              >
-                {{ $t("pages.edit-invoice.add-line-comment") }}
-              </Button>
-              <Button
-                type="button"
-                variant="text"
-                @click="addSection({ type: 'title' })"
-              >
-                {{ $t("pages.edit-invoice.add-line-title") }}
-              </Button>
-            </template>
-          </Repetable>
-        </div>
-        <HtmlEditor
-          id="modalities"
-          name="modalities"
-          :label="$t('pages.edit-invoice.modalities')"
-        />
 
-        <HtmlEditor
-          id="footer"
-          name="footer"
-          :label="$t('pages.edit-invoice.footer')"
-        />
-        <div class="actions">
-          <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
-        </div>
-      </template>
-    </Form>
-    <EditClientSidebar @add="onAddClient" v-model:open="isAddClientOpen" />
+          <HtmlEditor
+            id="footer"
+            name="footer"
+            :label="$t('pages.edit-invoice.footer')"
+          />
+          <div class="actions">
+            <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
+          </div>
+        </template>
+      </Form>
+      <EditClientSidebar @add="onAddClient" v-model:open="isAddClientOpen" />
+    </Card>
   </Page>
 </template>
 <script setup lang="ts">
@@ -100,6 +99,9 @@ import Repetable from "@/core/components/form/repetable/Repetable.vue";
 import Button from "@/core/components/Button.vue";
 import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import HtmlEditor from "@/core/components/HtmlEditor.vue";
+import InvoiceLineVue from "@/components/invoices/InvoiceLine.vue";
+import type { InvoiceLine } from "@/types/invoice";
+import Card from "@/core/components/Card.vue";
 
 const invoiceStore = useInvoicesStore();
 const clientsStore = useClientStore();
@@ -121,11 +123,11 @@ const loading = computed(() => {
   return isAddAction.value ? false : !invoice.value;
 });
 
-const invoice = ref<Invoice | null>(null);
+const invoice = ref<Invoice | null>(invoiceStore.getById(id as string));
 
 const title = computed(() => {
   if (isAddAction.value) {
-    return t("new-invoice");
+    return t("pages.edit-invoice.new-invoice");
   }
   return `${t("invoice")} ${invoice.value?.identifier || ""}`;
 });
@@ -167,7 +169,7 @@ async function handleSubmit(data: Invoice) {
       await invoiceStore.update((invoice.value as Invoice).id, data);
     } else {
       const res = await invoiceStore.create(data);
-      router.push("/quotes/" + res.id);
+      router.push("/invoices/" + res.id);
       invoice.value = res;
     }
     toast({

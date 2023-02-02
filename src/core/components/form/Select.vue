@@ -48,7 +48,7 @@ export interface SelectProps extends FormInputProps<any> {
   options: Array<any>;
 
   option?: Component;
-  
+
   required?: boolean;
 
   /*
@@ -123,6 +123,7 @@ const { open } = useMenu({
     "is-selected": isSelected,
     option: props.option,
     options: props.options,
+    multiple: props.multiple,
   },
 });
 

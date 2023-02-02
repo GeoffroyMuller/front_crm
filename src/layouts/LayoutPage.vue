@@ -419,6 +419,7 @@ $miniNavWidth: 60px;
     justify-content: flex-start;
     align-items: center;
     cursor: pointer;
+    user-select: none;
     @include typo(text2);
     transition: all 0.3s;
     &.selected {

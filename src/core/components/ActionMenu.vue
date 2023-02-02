@@ -9,7 +9,7 @@
           class="action"
           v-for="action in actions"
           :key="action.title"
-          @click.stop="handleAction(action)"
+          @click="handleAction(action)"
         >
           <Icon :name="(action.icon as IconName)"></Icon>
           {{ $t(action.title) }}

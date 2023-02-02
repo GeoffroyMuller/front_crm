@@ -194,7 +194,10 @@ export default function useMenu(props: MenuProps) {
     }
     container.value.style.opacity = "0";
     container.value.style.display = "none";
-    container.value.onclick = (e) => e.stopPropagation();
+    container.value.onclick = (e) => {
+      open.value = false;
+      e.stopPropagation();
+    };
     if (!props.container) {
       mount(
         props.component as Component,

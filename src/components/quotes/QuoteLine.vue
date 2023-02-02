@@ -42,7 +42,6 @@
         :label="$t('pages.edit-quote.unit_price')"
         name="unit_price"
       />
-
       <Select
         class="input"
         :options="vats"
@@ -82,9 +81,10 @@ import useProductStore from "@/stores/products";
 import type { Vat } from "@/types/vat";
 import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import type { Product } from "@/types/product";
+import type { InvoiceLine } from "@/types/invoice";
 
 interface QuoteLineProps {
-  line: QuoteLine;
+  line: QuoteLine | InvoiceLine;
 }
 
 const vatsStore = useVatStore();
@@ -116,12 +116,12 @@ const internalLine = ref(props.line);
 
 function handleProductChange(product: Product) {
   if (product != null) {
-    internalLine.value = {
-      ...internalLine.value,
-      description: product.description as string,
-      unit_price: product.price,
-      idVat: product.idVat as number,
-    };
+    internalLine.value.description =
+      internalLine.value.description || (product.description as string);
+    internalLine.value.unit_price =
+      internalLine.value.unit_price || (product.price as number);
+    internalLine.value.idVat =
+      internalLine.value.idVat || (product.idVat as number);
   }
 }
 </script>

@@ -1,4 +1,8 @@
 {
+  "payment": "Paiement",
+  "payments": "Paiements",
+  "amount": "Montant",
+  "edit": "Editer",
   "teams": "Equipes",
   "team": "Equipe",
   "roles": "Roles",
@@ -43,6 +47,7 @@
   "bad-email-or-password": "Mauvais email ou mot de passe",
   "welcome": "Bienvenue {name}",
   "invoices": "Factures",
+  "invoice": "Facture",
   "send_by_mail": "Envoyer par email",
   "send": "Envoyer",
   "error_while_send_mail": "Une erreur est survenue lors de l'envoie de l'email",

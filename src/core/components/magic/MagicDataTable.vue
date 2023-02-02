@@ -1,6 +1,7 @@
 <template>
   <DataTable
     @row-click="($item) => $emit('row-click', $item)"
+    @update:selected="($selected) => $emit('update:selected', $selected)"
     :columns="columns"
     :items="items"
     :currentPage="(filters.page as number)"
@@ -9,6 +10,7 @@
     @update:items-per-page="handleUpdateItemsPerPage"
     :nbPage="totalPages"
     :loading="loading"
+    :selectable="selectable"
   >
     <template v-for="(index, name) in $slots" v-slot:[name]="data">
       <slot :name="name" v-bind="data"></slot>
@@ -27,6 +29,7 @@ interface MagicDataTableProps<T> {
   store: APIStore<T>;
   hasLocalState?: boolean;
   columns?: Array<Column<T>> | null;
+  selectable?: boolean;
 }
 
 const props = withDefaults(defineProps<MagicDataTableProps<any>>(), {

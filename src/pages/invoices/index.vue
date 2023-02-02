@@ -1,5 +1,6 @@
 <template>
-  <Page :title="$t('invoices')">
+  <Page :title="$t('invoices')" class="invoice-page">
+    <InvoiceFilters />
     <MagicDataTable
       :store="useInvoicesStore()"
       :columns="[
@@ -17,9 +18,17 @@
           key: 'name',
           sortable: true,
         },
+        {
+          title: $t('price_without_vat'),
+          key: 'price',
+          sortable: true,
+        },
       ]"
       @row-click="(i) => $router.push(`/invoices/${i.id}`)"
     >
+      <template #content-price="{ item }">
+        {{ $utils.formatPrice(item.price) || "-" }}
+      </template>
       <template #content-client="{ item }">
         {{ item?.client?.firstname || "" }} {{ item?.client?.lastname || "" }}
       </template>
@@ -29,36 +38,31 @@
             color="success"
             icon="add"
             v-tooltip="{ text: $t('add'), placement: 'bottom' }"
-            @click="$router.push(`/invoices/new`)"
+            @click="$router.push(`/invoices/new/edit`)"
           >
             {{ $t("add") }}
           </Button>
         </div>
       </template>
       <template #actions="{ item }">
-        <div class="actions">
-          <div>
-            <Button
-              @click.stop="setArchived(item)"
-              color="danger"
-              icon="archive"
-              v-tooltip="{ text: $t('archive'), placement: 'bottom' }"
-              v-if="!item.archived"
-              variant="outlined"
-            />
-          </div>
-          <div>
-            <Button
-              @click.stop="downloadPdf(item)"
-              color="primary"
-              icon="download"
-              v-tooltip="{ text: $t('download'), placement: 'bottom' }"
-              variant="outlined"
-            />
-          </div>
-        </div>
+        <InvoiceActionsMenu
+          :item="item"
+          @setArchived="setArchived"
+          @preview="preview"
+          @downloadPdf="downloadPdf"
+          @sendMail="sendMail"
+        />
       </template>
     </MagicDataTable>
+    <InvoicePreview
+      @close="() => (invoiceToPreview = null)"
+      :quote="invoiceToPreview"
+    />
+    <InvoiceSendMail
+      @clickDownloadPDF="() => downloadPdf(invoiceToSendMail)"
+      @close="invoiceToSendMail = null"
+      :quote="invoiceToSendMail"
+    />
   </Page>
 </template>
 
@@ -70,33 +74,27 @@ import useUI from "@/core/helpers/vue/composables/ui";
 import Page from "@/components/Page.vue";
 import { useI18n } from "vue-i18n";
 import { ref } from "vue";
-import type { Quote } from "@/types/quote";
 import { getJWT } from "@/core/helpers/utils";
 import config from "@/const";
 import useInvoicesStore from "@/stores/invoices";
+import type Invoice from "@/types/invoice";
+import InvoiceFilters from "@/components/invoices/InvoiceFilters.vue";
+import InvoiceActionsMenu from "@/components/invoices/InvoiceActionsMenu.vue";
+import InvoicePreview from "@/components/invoices/InvoicePreview.vue";
+import InvoiceSendMail from "@/components/invoices/InvoiceSendMail.vue";
 
 const { toast, confirm } = useUI();
 const { t } = useI18n();
 
-const selected = ref<Array<Quote>>([]);
+const selected = ref<Array<Invoice>>([]);
 
-function downloadPdf(item: Quote) {
+function downloadPdf(item: Invoice) {
   const url = `${config.API_URL}/invoices/${item.id}/pdf?token=${getJWT()}`;
   window.open(url, "_blank");
 }
 
-function getStatusColor(status: string) {
-  if (status === "refused") {
-    return "danger";
-  }
-  if (status === "validated") {
-    return "success";
-  }
-  return "white";
-}
-
-async function setArchived(item: any) {
-  const confirmed = await confirm(t("pages.quotes.sure_archive_quote"));
+async function setArchived(item: Invoice) {
+  const confirmed = await confirm(t("pages.invoices.sure_archive_invoice"));
   if (confirmed) {
     try {
       await invoiceStore.update(item.id, {
@@ -115,14 +113,27 @@ async function setArchived(item: any) {
     }
   }
 }
+const invoiceToPreview = ref<Invoice | null>();
+function preview(item: Invoice) {
+  invoiceToPreview.value = item;
+}
+
+const invoiceToSendMail = ref<Invoice | null>();
+function sendMail(item: Invoice) {
+  invoiceToSendMail.value = item;
+}
 
 const invoiceStore = useInvoicesStore();
 </script>
 
-<style lang="scss" scoped>
-.actions {
-  display: flex;
-  align-items: center;
-  gap: spacing(0.5);
+<style lang="scss">
+.invoice-page {
+  display: grid;
+  gap: spacing(2);
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: spacing(0.5);
+  }
 }
 </style>

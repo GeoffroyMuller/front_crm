@@ -127,7 +127,7 @@ const loading = computed(() => {
   return isAddAction.value ? false : !quote.value;
 });
 
-const quote = ref<Quote | null>(null);
+const quote = ref<Quote | null>(quotesStore.getById(id as string));
 
 const title = computed(() => {
   if (isAddAction.value) {
