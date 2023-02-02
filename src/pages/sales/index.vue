@@ -23,7 +23,7 @@
     >
       <template #content-date="{ item }">
         <div>
-          {{ dayjs(item.date).format("DD-MM-YYYY") }}
+          {{ $_.isNil(item.date) ? "-" : $utils.formatDate(item.date) }}
         </div>
       </template>
       <template #content-customer-name="{ item }">
