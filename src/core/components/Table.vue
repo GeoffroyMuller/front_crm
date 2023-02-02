@@ -9,6 +9,12 @@
         :key="index"
         @click.stop="$emit('row-click', item)"
       >
+        <Flex :mb="1.5" v-if="selectable">
+          <Checkbox
+            :modelValue="!!isSelected(item)"
+            @click.stop="toggleSelected(item)"
+          ></Checkbox>
+        </Flex>
         <div class="table-mobile-card">
           <div
             v-for="column in internalColumns"
@@ -72,6 +78,12 @@
         >
           <thead>
             <tr>
+              <th v-if="selectable">
+                <Checkbox
+                  @click.stop="selectAll"
+                  :modelValue="!!allSelected"
+                ></Checkbox>
+              </th>
               <th v-for="column in internalColumns" :key="column.key">
                 <div
                   v-if="!$slots.title && !$slots['title-' + (column.key as string)]"
@@ -116,6 +128,12 @@
                 :key="index"
                 @click.stop="$emit('row-click', item)"
               >
+                <td v-if="selectable">
+                  <Checkbox
+                    :modelValue="!!isSelected(item)"
+                    @click.stop="toggleSelected(item)"
+                  ></Checkbox>
+                </td>
                 <td
                   v-for="column in columns"
                   :key="column.key"
@@ -166,12 +184,21 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults, defineProps, ref, watch, onMounted } from "vue";
+import {
+  withDefaults,
+  defineProps,
+  ref,
+  watch,
+  onMounted,
+  computed,
+} from "vue";
 import type { Column } from "./types";
-import { isNil } from "lodash";
+import { isEqual, isNil } from "lodash";
 import Card from "./Card.vue";
 import Spinner from "./Spinner.vue";
 import Media from "../Media.vue";
+import Checkbox from "./form/Checkbox.vue";
+import Flex from "./layouts/Flex.vue";
 
 export interface TableProps<T = any> {
   columns: Array<Column> | null;
@@ -179,6 +206,8 @@ export interface TableProps<T = any> {
   styleItem?: string;
   isCard?: boolean;
   loading?: boolean;
+  selectable?: boolean;
+  selected?: any[];
 }
 
 const props = withDefaults(defineProps<TableProps>(), {
@@ -187,10 +216,59 @@ const props = withDefaults(defineProps<TableProps>(), {
   isCard: true,
 });
 
-const emit = defineEmits(["row-click"]);
+const emit = defineEmits(["row-click", "update:selected"]);
 
 const internalColumns = ref<Array<Column> | null>(null);
 const itemsIsInit = ref<boolean>(false);
+const selected = ref<any[]>(props.selected || []);
+
+watch(
+  () => props.selected,
+  () => {
+    if (props.selected?.length) {
+      selected.value = props.selected;
+    }
+  }
+);
+
+const isSelected = (item: any) => selected.value.find((s) => isEqual(s, item));
+
+function toggleSelected(item: any) {
+  const index = selected.value.findIndex((s) => isEqual(s, item));
+  if (index === -1) {
+    selected.value.push(item);
+  } else {
+    selected.value = selected.value.filter((s, i) => i != index);
+  }
+  emit("update:selected", selected.value);
+}
+
+function selectAll() {
+  if (!allSelected.value) {
+    for (const item of props.items || []) {
+      if (!isSelected(item)) {
+        selected.value.push(item);
+      }
+    }
+  } else {
+    for (const item of props.items || []) {
+      if (isSelected(item)) {
+        toggleSelected(item);
+      }
+    }
+  }
+  emit("update:selected", selected.value);
+}
+
+const allSelected = computed(() => {
+  if (!props.items?.length) {
+    return false;
+  }
+  return (props.items || []).reduce(
+    (prev, current) => prev && isSelected(current),
+    true
+  );
+});
 
 const getColumnsByItems = () => {
   const columnsKey: string[] = [];

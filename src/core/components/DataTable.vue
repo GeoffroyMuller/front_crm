@@ -1,5 +1,9 @@
 <template>
-  <Table v-bind="$props" @row-click="($item) => $emit('row-click', $item)">
+  <Table
+    v-bind="$props"
+    @row-click="($item) => $emit('row-click', $item)"
+    @update:selected="($selected) => $emit('update:selected', $selected)"
+  >
     <template #title="{ column }">
       <div
         class="column-title"
@@ -55,6 +59,7 @@ export interface DataTableProps<T = any> {
   currentPage?: number;
   activeColumn?: Column;
   loading?: boolean;
+  selectable?: boolean;
 }
 
 const props = withDefaults(defineProps<DataTableProps>(), {
@@ -66,6 +71,7 @@ const emit = defineEmits([
   "update:activeColumn",
   "update:itemsPerPage",
   "sort",
+  "update:selected",
 ]);
 
 const sortDesc = ref<boolean | null>(null);
@@ -93,7 +99,10 @@ const handleClickTitle = (column: Column) => {
   }
 };
 
-const emitSort = (column: Column | null | undefined, _sortDesc: boolean | null) => {
+const emitSort = (
+  column: Column | null | undefined,
+  _sortDesc: boolean | null
+) => {
   emit("sort", { column, sortDesc: _sortDesc });
 };
 const isSortableColumn = (column: Column) => {
