@@ -11,11 +11,11 @@ import config from "@/const";
 import { getJWT } from "@/core/helpers/utils";
 import type Invoice from "@/types/invoice";
 
-interface QuotePreviewProps {
+interface SidebarPreviewProps {
   invoice?: Invoice | null;
 }
 
-const props = withDefaults(defineProps<QuotePreviewProps>(), {});
+const props = withDefaults(defineProps<SidebarPreviewProps>(), {});
 const emit = defineEmits(["close"]);
 
 const isOpen = ref(false);

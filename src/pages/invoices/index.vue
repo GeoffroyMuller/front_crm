@@ -68,12 +68,12 @@
     </MagicDataTable>
     <InvoicePreview
       @close="() => (invoiceToPreview = null)"
-      :quote="invoiceToPreview"
+      :invoice="invoiceToPreview"
     />
     <InvoiceSendMail
       @clickDownloadPDF="() => downloadPdf(invoiceToSendMail)"
       @close="invoiceToSendMail = null"
-      :quote="invoiceToSendMail"
+      :invoice="invoiceToSendMail"
     />
   </Page>
 </template>
