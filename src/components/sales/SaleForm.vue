@@ -1,11 +1,15 @@
 <template>
-  <Form :model-value="saleDataForm" @submit="handleSubmit">
+  <Form
+    :model-value="saleDataForm"
+    @submit="handleSubmit"
+    @inputChange="handleInputChange"
+  >
     <template #default="{ hasError, hasChanged }">
       <div class="form-sales">
         <Grid :gap="2" :columns="2">
           <MagicAutocomplete
             name="idCustomer"
-            :label="$t('customers')"
+            :label="$t('customer')"
             :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
             :rules="$yup.string().required()"
             optionKey="id"
@@ -84,14 +88,23 @@ const clientStore = useClientStore();
 
 const isNew = computed(() => props.sale == null);
 
-const totalPrice = computed(() => 10.0); //TODO
-
 const saleDataForm = ref<SaleForm | null>(null);
-
+const totalPrice = computed(() => {
+  return saleDataForm.value?.form_product_lines?.reduce(
+    (accumulator, productLine: SaleFormProductLine) => {
+      console.error({ productLine });
+      return accumulator;
+    }, //TODO
+    0
+  );
+});
 onMounted(() => {
   saleDataForm.value = _mapSaleToDataForm(props.sale);
 });
 
+function handleInputChange(data: any) {
+  saleDataForm.value = data.formValue;
+}
 function _mapSaleToDataForm(data: Sale | null): SaleForm {
   if (isNil(data)) {
     return { date: dayjs().format("YYYY-MM-DD") };
@@ -195,7 +208,6 @@ function _mapDataFormToSale(data: SaleForm): Sale {
 
 async function handleSubmit(data: any) {
   const dataMapped = _mapDataFormToSale(data);
-  console.error({ dataMapped });
   if (isNew.value) {
     try {
       const newSale = await saleStore.create(dataMapped);
