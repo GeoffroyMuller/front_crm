@@ -13,7 +13,10 @@ const utilsPlugin: Plugin = {
         const FORMAT = "DD/MM/YYYY";
         return dayjs(date).format(FORMAT);
       },
-      formatPrice: (price: number | string, currency: "€" | "$" = "€") => {
+      formatPrice: (
+        price: number | string | undefined,
+        currency: "€" | "$" = "€"
+      ) => {
         if (price == null) {
           return "";
         }
