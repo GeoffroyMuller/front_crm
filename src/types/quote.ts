@@ -22,6 +22,7 @@ export interface Quote {
   responsible: User;
   status: "draft" | "refused" | "validated";
   price?: number;
+  taxes?: number;
 }
 
 export interface QuoteLine {

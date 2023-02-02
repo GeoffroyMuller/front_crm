@@ -24,6 +24,11 @@
           sortable: true,
         },
         {
+          title: $t('price_with_vat'),
+          key: 'price2',
+          sortable: true,
+        },
+        {
           title: $t('status'),
           key: 'status',
         },
@@ -34,6 +39,13 @@
     >
       <template #content-price="{ item }">
         {{ $utils.formatPrice(item.price) || "-" }}
+      </template>
+      <template #content-price2="{ item }">
+        {{
+          !item.price || !item.taxes
+            ? "-"
+            : $utils.formatPrice(item.price + item.taxes) || "-"
+        }}
       </template>
       <template #content-client="{ item }">
         {{ item?.client?.firstname || "" }} {{ item?.client?.lastname || "" }}

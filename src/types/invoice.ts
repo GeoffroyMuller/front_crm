@@ -20,6 +20,8 @@ export default interface Invoice {
   name: string;
   responsible: User;
   status: "draft";
+  price?: number;
+  taxes?: number;
 }
 
 export interface InvoiceLine {

@@ -58,6 +58,7 @@
   "companies": "Entreprises",
   "price": "Prix",
   "price_without_vat": "Prix HT",
+  "price_with_vat": "Prix TTC",
   "reference": "Référence",
   "quantity": "Quantité",
   "none": "Aucun",
