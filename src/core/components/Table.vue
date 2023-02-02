@@ -106,18 +106,6 @@
           </thead>
           <tbody>
             <template v-if="loading">
-              <!-- <tr>
-            <td
-              :colspan="
-                internalColumns?.length +
-                ($slots['actions-title'] || $slots['actions'] ? 1 : 0)
-              "
-            >
-              <div>
-                <Spinner />
-              </div>
-            </td>
-          </tr> -->
               <div>
                 <Spinner />
               </div>
@@ -170,7 +158,8 @@
               <td
                 :colspan="
                   internalColumns?.length +
-                  ($slots['actions-title'] || $slots['actions'] ? 1 : 0)
+                  ($slots['actions-title'] || $slots['actions'] ? 1 : 0) +
+                  (selectable ? 1 : 0)
                 "
               >
                 <slot class="table-footer" name="footer"></slot>
