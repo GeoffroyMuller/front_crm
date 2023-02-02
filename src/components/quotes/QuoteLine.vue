@@ -82,9 +82,10 @@ import useProductStore from "@/stores/products";
 import type { Vat } from "@/types/vat";
 import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import type { Product } from "@/types/product";
+import type { InvoiceLine } from "@/types/invoice";
 
 interface QuoteLineProps {
-  line: QuoteLine;
+  line: QuoteLine | InvoiceLine;
 }
 
 const vatsStore = useVatStore();
