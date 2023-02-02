@@ -15,7 +15,12 @@
           class="close-button"
           size="xl"
         />
-        <slot />
+        <div class="content" :class="{ padding }">
+          <div v-if="title" class="title">
+            {{ title }}
+          </div>
+          <slot />
+        </div>
       </div>
     </div>
   </Teleport>
@@ -26,6 +31,8 @@ import IconButton from "@/core/components/IconButton.vue";
 interface SidebarProps {
   open: boolean;
   displayCloseBtn?: boolean;
+  title?: string;
+  padding?: boolean;
 }
 const props = withDefaults(defineProps<SidebarProps>(), {
   displayCloseBtn: true,
@@ -46,6 +53,15 @@ function onClickOutside(event: PointerEvent) {
 
 <style lang="scss">
 .sidebar {
+  .content {
+    &.padding {
+      padding: spacing(2);
+    }
+    .title {
+      margin-bottom: spacing(3);
+    }
+  }
+
   position: fixed;
   right: 0;
   top: 0;
@@ -79,6 +95,9 @@ function onClickOutside(event: PointerEvent) {
     .close-button {
       opacity: 1;
     }
+  }
+  .title {
+    margin-bottom: spacing(2);
   }
 }
 

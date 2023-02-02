@@ -1,4 +1,7 @@
 {
+  "payment": "Paiement",
+  "payments": "Paiements",
+  "amount": "Montant",
   "edit": "Editer",
   "teams": "Equipes",
   "team": "Equipe",

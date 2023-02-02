@@ -1,15 +1,27 @@
 <template>
-  <Page :title="`${$t('invoice')} ${invoice?.identifier || ''}`" back>
-    <pre class="code" :style="{ maxHeight: '220px' }">{{ invoice }}</pre>
-    <Button @click="$router.push(`/invoices/${id}/edit`)">
-      {{ $t("edit") }}
-    </Button>
+  <Page
+    :title="`${$t('invoice')} ${invoice?.identifier || ''}`"
+    back
+    :loading="!invoice"
+  >
+    <Grid :gap="1">
+      <pre class="code" :style="{ maxHeight: '220px' }">{{ invoice }}</pre>
+      <Flex :gap="1">
+        <Button @click="$router.push(`/invoices/${id}/edit`)">
+          {{ $t("edit") }}
+        </Button>
+      </Flex>
+      <InvoicePayments :invoice="invoice" />
+    </Grid>
   </Page>
 </template>
 
 <script setup lang="ts">
+import InvoicePayments from "@/components/invoices/InvoicePayments.vue";
 import Page from "@/components/Page.vue";
 import Button from "@/core/components/Button.vue";
+import Flex from "@/core/components/layouts/Flex.vue";
+import Grid from "@/core/components/layouts/Grid.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import useClientStore from "@/stores/clients";
 import useInvoicesStore from "@/stores/invoices";
@@ -34,7 +46,12 @@ onMounted(() => {
   vatsStore.fetchList();
   invoiceStore
     .fetchById(id as string, {
-      populate: ["client.company", "responsible.company", "lines.vat"],
+      populate: [
+        "client.company",
+        "responsible.company",
+        "lines.vat",
+        "payments",
+      ],
     })
     .catch((err) => {
       console.error(err);

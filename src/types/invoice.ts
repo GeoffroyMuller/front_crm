@@ -13,6 +13,7 @@ export default interface Invoice {
   idResponsible: ID;
   identifier: string;
   lines: Array<InvoiceLine>;
+  payments?: Array<InvoicePayment>;
   madeAt: string;
   madeOn: string;
   modalities: string;
@@ -32,4 +33,12 @@ export interface InvoiceLine {
   type: "title" | "product" | "comment" | "discount";
   unit_price?: number;
   vat?: Vat;
+}
+
+export interface InvoicePayment {
+  id?: ID;
+  idClient?: ID;
+  idInvoice?: ID;
+  amount?: number;
+  created_at?: string;
 }
