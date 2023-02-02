@@ -166,7 +166,7 @@ async function handleSubmit(data: Invoice) {
       await invoiceStore.update((invoice.value as Invoice).id, data);
     } else {
       const res = await invoiceStore.create(data);
-      router.push("/quotes/" + res.id);
+      router.push("/invoices/" + res.id);
       invoice.value = res;
     }
     toast({
