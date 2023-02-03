@@ -14,20 +14,19 @@
 
       <Card>
         <Grid :gap="2" :columns="1">
-          <div class="invoice-title">{{ invoice.name }}</div>
+          <div class="subtitle">{{ invoice.name }}</div>
           <Flex justify-content="space-between">
             <Flex
               direction="column"
               justify-content="center"
               align-items="flex-start"
-              class="invoice-user"
             >
-              <div class="user-title">{{ $t("responsible") }}:</div>
-              <div class="user-info">
+              <div class="invoice-user-title">{{ $t("responsible") }}:</div>
+              <div class="text2">
                 {{ invoice.responsible.firstname }}
                 {{ invoice.responsible.lastname }}
               </div>
-              <div class="user-info">
+              <div class="text2">
                 {{ invoice.responsible.email }}
               </div>
             </Flex>
@@ -35,14 +34,13 @@
               direction="column"
               justify-content="center"
               align-items="flex-end"
-              class="invoice-user"
             >
               <div>
-                <div class="user-title">{{ $t("customer") }}:</div>
-                <div class="user-info">
+                <div class="invoice-user-title">{{ $t("customer") }}:</div>
+                <div class="text2">
                   {{ invoice.client?.firstname }} {{ invoice.client?.lastname }}
                 </div>
-                <div class="user-info">
+                <div class="text2">
                   {{ invoice.client?.address }}
                 </div>
               </div>
@@ -54,22 +52,36 @@
               <Card>
                 <Grid :gap="1" :columns="3">
                   <Grid :gap="1" :columns="1">
-                    <div class="line-title">{{ $t("description") }}:</div>
-                    <div class="line-content" v-html="line.description"></div>
+                    <div class="text">{{ $t("description") }}:</div>
+                    <div class="text2" v-html="line.description"></div>
                   </Grid>
-                  <Grid :gap="1" :columns="1">
-                    <div class="line-title">{{ $t("unit-price") }}:</div>
-                    <div class="line-content">
+                  <Grid v-if="line.qty" :gap="1" :columns="1">
+                    <div class="text">{{ $t("quantity") }}:</div>
+                    <div class="text2">{{ line.qty }}</div>
+                  </Grid>
+                  <Grid v-if="line.unit_price" :gap="1" :columns="1">
+                    <div class="text">{{ $t("unit-price") }}:</div>
+                    <div class="text2">
                       {{ $utils.formatPrice(line.unit_price!) }}
                     </div>
                   </Grid>
-                  <Grid v-if="line.qty" :gap="1" :columns="1">
-                    <div class="line-title">{{ $t("quantity") }}:</div>
-                    <div class="line-content">{{ line.qty }}</div>
+                  <Grid v-if="line.vat" :gap="1" :columns="1">
+                    <div class="text">{{ $t("vat") }}:</div>
+                    <div class="text2">
+                      {{ line.vat }}
+                    </div>
                   </Grid>
                 </Grid>
               </Card>
             </div>
+          </Grid>
+          <Grid v-if="invoice.modalities" :gap="1" :columns="1">
+            <div class="text">{{ $t("modalities") }}:</div>
+            <div class="text2" v-html="invoice.modalities"></div>
+          </Grid>
+          <Grid v-if="invoice.footer" :gap="1" :columns="1">
+            <div class="text">{{ $t("footer") }}:</div>
+            <div class="text2" v-html="invoice.footer"></div>
           </Grid>
         </Grid>
       </Card>
@@ -123,22 +135,8 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
-.invoice-title {
-  @include typo(subtitle);
-}
-.invoice-user {
-  .user-title {
-    @include typo(text);
-    margin-bottom: spacing(1);
-  }
-  .user-info {
-    @include typo(text2);
-  }
-}
-.line-title {
-  @include typo(text2);
-}
-.line-content {
+.invoice-user-title {
   @include typo(text);
+  margin-bottom: spacing(1);
 }
 </style>
