@@ -13,7 +13,7 @@
       </Flex>
 
       <Card>
-        <Grid :gap="2" :columns="1">
+        <Grid :gap="5" :columns="1">
           <div class="subtitle">{{ invoice.name }}</div>
           <Flex justify-content="space-between">
             <Flex
@@ -50,7 +50,7 @@
           <Grid :gap="1" :columns="1">
             <div v-for="line in invoice.lines" :key="line.id">
               <Card>
-                <Grid :gap="1" :columns="3">
+                <Grid :gap="1" :columns="4">
                   <Grid :gap="1" :columns="1">
                     <div class="text">{{ $t("description") }}:</div>
                     <div class="text2" v-html="line.description"></div>
@@ -67,9 +67,7 @@
                   </Grid>
                   <Grid v-if="line.vat" :gap="1" :columns="1">
                     <div class="text">{{ $t("vat") }}:</div>
-                    <div class="text2">
-                      {{ line.vat }}
-                    </div>
+                    <div class="text2">{{ line.vat.rate }}%</div>
                   </Grid>
                 </Grid>
               </Card>
