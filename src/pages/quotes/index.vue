@@ -37,16 +37,27 @@
       selectable
       v-model:selected="selected"
     >
-      <template #grouped-actions>
-        <Button
-          icon="archive"
-          variant="text"
-          color="primary"
-          v-if="selected.length"
-          @click="setArchivedSelection"
-        >
-          {{ $t("archive") }}
-        </Button>
+      <template #head>
+        <Flex align-items="center" justify-content="space-between">
+          <div class="title">
+            {{ $t("quotes") }}
+          </div>
+          <div
+            :style="{
+              visibility: !selected.length ? 'hidden' : 'initial',
+              userSelect: !selected.length ? 'none' : 'initial',
+            }"
+          >
+            <Button
+              icon="archive"
+              variant="text"
+              color="primary"
+              @click="setArchivedSelection"
+            >
+              {{ $t("archive") }}
+            </Button>
+          </div>
+        </Flex>
       </template>
       <template #content-price="{ item }">
         {{ $utils.formatPrice(item.price) || "-" }}
@@ -127,6 +138,7 @@ import Media from "@/core/Media.vue";
 import FloatingButton from "@/core/components/FloatingButton.vue";
 import QuoteFilters from "@/components/quotes/QuoteFilters.vue";
 import QuoteActionsMenu from "@/components/quotes/QuoteActionsMenu.vue";
+import Flex from "@/core/components/layouts/Flex.vue";
 
 const { toast, confirm } = useUI();
 const { t } = useI18n();

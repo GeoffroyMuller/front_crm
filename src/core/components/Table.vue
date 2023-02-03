@@ -71,6 +71,9 @@
       class="table-container"
     >
       <div class="table-wrapper">
+        <div class="table-head" v-if="$slots['head']">
+          <slot name="head" />
+        </div>
         <table
           :class="{
             'table-loading': loading,
@@ -352,6 +355,10 @@ th {
 th {
   text-align: left;
   height: 60px;
+}
+
+.table-head {
+  padding: 16px;
 }
 table {
   width: 100%;

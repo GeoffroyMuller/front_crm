@@ -35,7 +35,31 @@
         },
       ]"
       @row-click="(i) => $router.push(`/invoices/${i.id}`)"
+      v-model:selected="selected"
+      selectable
     >
+      <template #head>
+        <Flex align-items="center" justify-content="space-between">
+          <div class="title">
+            {{ $t("invoices") }}
+          </div>
+          <div
+            :style="{
+              visibility: !selected.length ? 'hidden' : 'initial',
+              userSelect: !selected.length ? 'none' : 'initial',
+            }"
+          >
+            <Button
+              icon="archive"
+              variant="text"
+              color="primary"
+              @click="setArchivedSelection"
+            >
+              {{ $t("archive") }}
+            </Button>
+          </div>
+        </Flex>
+      </template>
       <template #content-payments="{ item }">
         <InvoicePaymentsBar :invoice="item" />
       </template>
@@ -79,7 +103,7 @@
       :invoice="invoiceToPreview"
     />
     <InvoiceSendMail
-      @clickDownloadPDF="() => downloadPdf(invoiceToSendMail)"
+      @clickDownloadPDF="() => downloadPdf(invoiceToSendMail as Invoice)"
       @close="invoiceToSendMail = null"
       :invoice="invoiceToSendMail"
     />
@@ -88,7 +112,6 @@
 
 <script lang="ts" setup>
 import MagicDataTable from "@/core/components/magic/MagicDataTable.vue";
-import Chip from "@/core/components/Chip.vue";
 import Button from "@/core/components/Button.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import Page from "@/components/Page.vue";
@@ -103,6 +126,7 @@ import InvoiceActionsMenu from "@/components/invoices/InvoiceActionsMenu.vue";
 import InvoicePreview from "@/components/invoices/InvoicePreview.vue";
 import InvoiceSendMail from "@/components/invoices/InvoiceSendMail.vue";
 import InvoicePaymentsBar from "@/components/invoices/InvoicePaymentsBar.vue";
+import Flex from "@/core/components/layouts/Flex.vue";
 
 const { toast, confirm } = useUI();
 const { t } = useI18n();
@@ -129,9 +153,35 @@ async function setArchived(item: Invoice) {
     } catch (err) {
       toast({
         type: "danger",
-        message: err.response.data.message,
+        message: (err as any).response.data.message,
       });
     }
+  }
+}
+
+async function setArchivedSelection() {
+  if (
+    selected.value.length &&
+    (await confirm(t("pages.invoices.sure_archive_selected")))
+  ) {
+    for (const q of selected.value) {
+      try {
+        await invoiceStore.update(q.id, {
+          archived: true,
+        } as Invoice);
+        toast({
+          type: "success",
+          message: t(`archived`),
+        });
+      } catch (err) {
+        toast({
+          type: "danger",
+          message: (err as any).response.data.message,
+        });
+      }
+    }
+    invoiceStore.fetchList();
+    selected.value = [];
   }
 }
 const invoiceToPreview = ref<Invoice | null>();
