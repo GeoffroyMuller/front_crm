@@ -7,7 +7,7 @@ import axios from "@/core/plugins/axios";
 const useInvoicesStore = makeAPIStore<Invoice>({
   id: "invoices",
   filters: {
-    populate: ["client"],
+    populate: ["client", "payments"],
   },
   actions: {
     async addPayment(id: ID, data: InvoicePayment) {

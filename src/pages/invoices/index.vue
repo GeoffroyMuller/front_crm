@@ -28,9 +28,17 @@
           key: 'price2',
           sortable: true,
         },
+        {
+          title: $t('payments'),
+          key: 'payments',
+          sortable: true,
+        },
       ]"
       @row-click="(i) => $router.push(`/invoices/${i.id}`)"
     >
+      <template #content-payments="{ item }">
+        <InvoicePaymentsBar :invoice="item" />
+      </template>
       <template #content-price2="{ item }">
         {{
           !item.price || !item.taxes
@@ -94,6 +102,7 @@ import InvoiceFilters from "@/components/invoices/InvoiceFilters.vue";
 import InvoiceActionsMenu from "@/components/invoices/InvoiceActionsMenu.vue";
 import InvoicePreview from "@/components/invoices/InvoicePreview.vue";
 import InvoiceSendMail from "@/components/invoices/InvoiceSendMail.vue";
+import InvoicePaymentsBar from "@/components/invoices/InvoicePaymentsBar.vue";
 
 const { toast, confirm } = useUI();
 const { t } = useI18n();
@@ -111,7 +120,7 @@ async function setArchived(item: Invoice) {
     try {
       await invoiceStore.update(item.id, {
         archived: true,
-      });
+      } as Invoice);
       toast({
         type: "success",
         message: t(`archived`),

@@ -39,8 +39,8 @@ export interface InvoiceLine {
 
 export interface InvoicePayment {
   id?: ID;
-  idClient?: ID;
-  idInvoice?: ID;
-  amount?: number;
-  created_at?: string;
+  idClient: ID;
+  idInvoice: ID;
+  amount: number;
+  created_at: string;
 }
