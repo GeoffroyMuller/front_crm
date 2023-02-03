@@ -37,6 +37,17 @@
       selectable
       v-model:selected="selected"
     >
+      <template #grouped-actions>
+        <Button
+          icon="archive"
+          variant="text"
+          color="primary"
+          v-if="selected.length"
+          @click="setArchivedSelection"
+        >
+          {{ $t("archive") }}
+        </Button>
+      </template>
       <template #content-price="{ item }">
         {{ $utils.formatPrice(item.price) || "-" }}
       </template>
@@ -147,13 +158,13 @@ function getStatusColor(status: string) {
   return "white";
 }
 
-async function setArchived(item: any) {
+async function setArchived(item: Quote) {
   const confirmed = await confirm(t("pages.quotes.sure_archive_quote"));
   if (confirmed) {
     try {
       await quotesStore.update(item.id, {
         archived: true,
-      });
+      } as Quote);
       toast({
         type: "success",
         message: t(`archived`),
@@ -165,6 +176,32 @@ async function setArchived(item: any) {
         message: err.response.data.message,
       });
     }
+  }
+}
+
+async function setArchivedSelection() {
+  if (
+    selected.value.length &&
+    (await confirm(t("pages.quotes.sure_archive_selected")))
+  ) {
+    for (const q of selected.value) {
+      try {
+        await quotesStore.update(q.id, {
+          archived: true,
+        } as Quote);
+        toast({
+          type: "success",
+          message: t(`archived`),
+        });
+      } catch (err) {
+        toast({
+          type: "danger",
+          message: err.response.data.message,
+        });
+      }
+    }
+    quotesStore.fetchList();
+    selected.value = [];
   }
 }
 

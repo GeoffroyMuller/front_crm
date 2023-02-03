@@ -30,6 +30,9 @@
     </template>
     <template #footer>
       <div class="data-table-pagination">
+        <div>
+          <slot name="grouped-actions" />
+        </div>
         <Pagination
           :current-page="currentPage"
           :itemsPerPage="itemsPerPage"
@@ -124,8 +127,15 @@ watch(
 <style lang="scss" scoped>
 .data-table-pagination {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
+  @include media-down("md") {
+    justify-content: initial;
+    align-items: initial;
+    flex-direction: column-reverse;
+    gap: spacing(0.5);
+  }
 }
 .column-title {
   display: flex;
