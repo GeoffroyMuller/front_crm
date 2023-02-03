@@ -13,7 +13,7 @@
       </Flex>
 
       <Card>
-        <Grid :gap="2" :columns="1">
+        <Grid :gap="5" :columns="1">
           <div class="subtitle">{{ invoice.name }}</div>
           <Flex justify-content="space-between">
             <Flex
