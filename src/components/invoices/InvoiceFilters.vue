@@ -27,15 +27,14 @@ const filterBarProps = computed<MagicFilterBarProps<Invoice>>(() => {
     store,
     gap: 1,
     columns: {
-      xs: 1,
-      xl: 3,
+      xs: 2,
+      xl: 4,
     },
     map: {
       name: "$contains.name",
       customer: "$eq.idClient",
       company: "$eq.client.idCompany",
       archived: "$eq.archived",
-      //test: ["$or.$contains.name", "$or.$contains.status"],
     },
     filters: [
       { type: "string", props: { name: "name", label: "title" } },
@@ -74,7 +73,6 @@ const filterBarProps = computed<MagicFilterBarProps<Invoice>>(() => {
           label: "archived",
         },
       },
-      //{ type: "string", props: { name: "test", label: "test" } },
     ],
   };
 });

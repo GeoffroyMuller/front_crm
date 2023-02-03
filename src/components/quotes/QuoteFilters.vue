@@ -26,7 +26,7 @@ const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
     gap: 1,
     columns: {
       xs: 2,
-      xl: 4,
+      xl: 5,
     },
     map: {
       name: "$contains.name",
