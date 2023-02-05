@@ -24,19 +24,17 @@ export const gridBreakpoints = {
 const current = ref<Breakpoints>("xs");
 
 const computedCurrentBreakpoint = () => {
-  {
-    const width = window.innerWidth;
-    const currentBreakpoint = Object.entries(gridBreakpoints).reduce(
-      (acc: any, [key, value]: any) => {
-        if (width >= value) {
-          return key as Breakpoints;
-        }
-        return acc;
-      },
-      "xs"
-    );
-    current.value = currentBreakpoint;
-  }
+  const width = window.innerWidth;
+  const currentBreakpoint = Object.entries(gridBreakpoints).reduce(
+    (acc: any, [key, value]: any) => {
+      if (width >= value) {
+        return key as Breakpoints;
+      }
+      return acc;
+    },
+    "xs"
+  );
+  current.value = currentBreakpoint;
 };
 
 const breakpointsPlugin: Plugin = {
