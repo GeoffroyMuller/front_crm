@@ -32,7 +32,7 @@ export interface SaleForm {
   form_product_lines?: Array<SaleFormProductLine>;
 }
 export interface SaleFormProductLine {
-  idProduct?: ID | null;
+  product?: SaleProductLineType | null;
   form_product_real_lines?: Array<SaleFormProductRealLine>;
   price?: number;
   quantity?: number;
