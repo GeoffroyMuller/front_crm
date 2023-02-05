@@ -1,7 +1,7 @@
 <template>
-  <component :is="component" class="media" v-if="displayed">
+  <template v-if="displayed">
     <slot />
-  </component>
+  </template>
 </template>
 
 <script setup lang="ts">
@@ -10,14 +10,11 @@ import type { Breakpoints } from "./components/types";
 import useBreakpoints from "./helpers/vue/composables/breakpoints";
 
 export interface MediaProps<T = any> {
-  component?: "div" | "span";
   up?: Breakpoints;
   down?: Breakpoints;
 }
 
-const props = withDefaults(defineProps<MediaProps>(), {
-  component: "div",
-});
+const props = withDefaults(defineProps<MediaProps>(), {});
 
 const b = useBreakpoints();
 
@@ -27,9 +24,3 @@ const displayed = computed(() => {
   return upOk && downOk;
 });
 </script>
-
-<style lang="scss" scoped>
-.media {
-  width: 100%;
-}
-</style>
