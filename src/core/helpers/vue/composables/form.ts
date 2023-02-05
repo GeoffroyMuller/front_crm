@@ -66,6 +66,14 @@ export default function useForm(props: userFormProps) {
     if (internalValue.value[input.name] != null) {
       input.internalValue.value = clone(internalValue.value[input.name]);
     }
+    if (input.internalValue.value != null) {
+      internalValue.value[input.name] = clone(input.internalValue.value);
+      instance?.emit("inputChange", {
+        name: input.name,
+        value: input.internalValue.value,
+        formValue: internalValue.value,
+      });
+    }
     watch(
       () => input.internalValue.value,
       () => {
