@@ -21,46 +21,61 @@ export const gridBreakpoints = {
   xl: 1200,
 };
 
+const current = ref<Breakpoints>("xs");
+
+const computedCurrentBreakpoint = () => {
+  {
+    const width = window.innerWidth;
+    const currentBreakpoint = Object.entries(gridBreakpoints).reduce(
+      (acc: any, [key, value]: any) => {
+        if (width >= value) {
+          return key as Breakpoints;
+        }
+        return acc;
+      },
+      "xs"
+    );
+    current.value = currentBreakpoint;
+  }
+};
+
 const breakpointsPlugin: Plugin = {
   install(app) {
-    const current = ref<Breakpoints>("xs");
-
-    window.addEventListener("resize", () => {
-      const width = window.innerWidth;
-      const currentBreakpoint = Object.entries(gridBreakpoints).reduce(
-        (acc: any, [key, value]: any) => {
-          if (width >= value) {
-            return key as Breakpoints;
-          }
-          return acc;
-        },
-        "xs"
-      );
-      current.value = currentBreakpoint;
-    });
+    computedCurrentBreakpoint();
+    window.addEventListener("resize", computedCurrentBreakpoint);
 
     function _getIndex(key: string) {
       return Object.keys(gridBreakpoints).indexOf(key);
     }
 
     const up = computed(() => {
-      return {
-        xs: _getIndex(current.value) >= _getIndex("xs"),
-        sm: _getIndex(current.value) >= _getIndex("sm"),
-        md: _getIndex(current.value) >= _getIndex("md"),
-        lg: _getIndex(current.value) >= _getIndex("lg"),
-        xl: _getIndex(current.value) >= _getIndex("xl"),
-      };
+      return Object.keys(gridBreakpoints).reduce(
+        (acc: UpDownBreakpoints, key: string) => {
+          return {
+            ...acc,
+            [key]: _getIndex(current.value) >= _getIndex(key),
+          };
+        },
+        {}
+      );
     });
 
     const down = computed(() => {
-      return {
-        xs: _getIndex(current.value) == _getIndex("xs"),
-        sm: _getIndex(current.value) < _getIndex("sm"),
-        md: _getIndex(current.value) < _getIndex("md"),
-        lg: _getIndex(current.value) < _getIndex("lg"),
-        xl: _getIndex(current.value) < _getIndex("xl"),
-      };
+      return Object.keys(gridBreakpoints).reduce(
+        (acc: UpDownBreakpoints, key: string, index: number) => {
+          if (index == 0) {
+            return {
+              ...acc,
+              [key]: _getIndex(current.value) == _getIndex(key),
+            };
+          }
+          return {
+            ...acc,
+            [key]: _getIndex(current.value) < _getIndex(key),
+          };
+        },
+        {}
+      );
     });
 
     const opt = {
