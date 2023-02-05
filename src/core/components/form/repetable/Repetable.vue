@@ -238,6 +238,7 @@ function handleSectionInputChange(
 
 function handleDeleteSection(key: string) {
   delete sections.value[key];
+  keyOrderForDnD.value = keyOrderForDnD.value.filter((k) => k != key);
 }
 
 const sectionsList = computed(() =>
@@ -290,10 +291,7 @@ watch(
 watch(
   () => sectionsList.value,
   () => {
-    if (
-      sectionsList.value?.length &&
-      !isEqual(sectionsList.value, internalValue.value)
-    ) {
+    if (!isEqual(sectionsList.value, internalValue.value)) {
       internalValue.value = sectionsList.value;
     }
   },
