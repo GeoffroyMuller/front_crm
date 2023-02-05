@@ -1,18 +1,13 @@
 <template>
-  <component
-    :is="component"
-    class="media"
-    :class="{
-      [`up-${up}`]: !!up,
-      [`down-${down}`]: !!down && !up,
-    }"
-  >
+  <component :is="component" class="media" v-if="displayed">
     <slot />
   </component>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import type { Breakpoints } from "./components/types";
+import useBreakpoints from "./helpers/vue/composables/breakpoints";
 
 export interface MediaProps<T = any> {
   component?: "div" | "span";
@@ -23,28 +18,18 @@ export interface MediaProps<T = any> {
 const props = withDefaults(defineProps<MediaProps>(), {
   component: "div",
 });
+
+const b = useBreakpoints();
+
+const displayed = computed(() => {
+  const upOk = props.up ? b.up.value[props.up] : true;
+  const downOk = props.down ? b.down.value[props.down] : true;
+  return upOk && downOk;
+});
 </script>
 
 <style lang="scss" scoped>
 .media {
   width: 100%;
-}
-@each $key, $value in $grid-breakpoints {
-  @include media-down($key) {
-    .up-#{$key} {
-      display: none;
-    }
-    .down-#{$key} {
-      display: initial;
-    }
-  }
-  @include media-up($key) {
-    .up-#{$key} {
-      display: initial;
-    }
-    .down-#{$key} {
-      display: none;
-    }
-  }
 }
 </style>
