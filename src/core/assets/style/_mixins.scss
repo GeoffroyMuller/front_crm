@@ -1,6 +1,6 @@
 @use "sass:list";
-@import "./functions";
-@import './_variables';
+@use "./functions";
+@use './_variables';
 
 @mixin modifiers($map, $attribute, $prefix: '', $separator: '-', $base: 'base') {
 

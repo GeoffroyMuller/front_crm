@@ -1,6 +1,8 @@
 import { computed, ref, type ComputedRef, type Plugin } from "vue";
 import type { Breakpoints } from "../components/types";
 
+//import SCSSvariables from "@/core/assets/style/_variables.scss";
+
 interface UpDownBreakpoints {
   [b: string]: boolean;
 }

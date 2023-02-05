@@ -1,4 +1,4 @@
-@import './_variables';
+@use './_variables';
 
 @function spacing($number) {
     @return $number * $spacing + px

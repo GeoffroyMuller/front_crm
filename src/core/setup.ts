@@ -1,5 +1,3 @@
-import "./assets/style/main.scss";
-
 import "./plugins/daysjs";
 import pinia from "./plugins/pinia";
 import setupRouter from "./plugins/router";

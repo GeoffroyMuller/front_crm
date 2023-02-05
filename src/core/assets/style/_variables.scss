@@ -1,5 +1,3 @@
-@use "sass:map";
-
 $spacing: 8;
 
 $rounded: (
@@ -35,10 +33,10 @@ $typos: (
 );
 
 $colors: (
-  white: white,
-  black: lighten(black, 10%),
-  grey: #383838,
-  background: #f8fafc,
+  "white": white,
+  "black": lighten(black, 10%),
+  "grey": #383838,
+  "background": #f8fafc,
   primary: (
     50: #eef2ff,
     100: #e0e7ff,
@@ -124,7 +122,5 @@ $colors: (
     900:#18181b,
   )
 );
-$colors: map.set($colors, "white", white);
-$colors: map.set($colors, "black", lighten(black, 10%));
 
 //@import "../themes/dark";
