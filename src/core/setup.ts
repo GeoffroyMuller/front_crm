@@ -17,6 +17,7 @@ import "./plugins/typescript";
 import clickOutside from "./directives/clickOutside";
 import tooltip from "./directives/tooltip";
 import utilsPlugin from "./plugins/utils";
+import breakpointsPlugin from "./plugins/breakpoints";
 
 interface SetupOptions {
   routes: Readonly<RouteRecordRaw[]>;
@@ -38,7 +39,8 @@ export default function setup(options: SetupOptions) {
     .use(i18n)
     .use(lodashPlugin)
     .use(yupPlugin)
-    .use(utilsPlugin);
+    .use(utilsPlugin)
+    .use(breakpointsPlugin);
 
   app.directive("click-outside", clickOutside);
   app.directive("tooltip", tooltip);
