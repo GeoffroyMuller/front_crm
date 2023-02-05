@@ -56,6 +56,7 @@ import Grid from "@/core/components/layouts/Grid.vue";
 import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
 import useClientStore from "@/stores/clients";
+import useProductsStore from "@/stores/products";
 import useSaleStore from "@/stores/sales";
 import type {
   Sale,
@@ -85,6 +86,7 @@ const { toast } = useUI();
 const { t } = useI18n();
 const saleStore = useSaleStore();
 const clientStore = useClientStore();
+const productStore = useProductsStore();
 
 const isNew = computed(() => props.sale == null);
 
@@ -92,9 +94,31 @@ const saleDataForm = ref<SaleForm | null>(null);
 const totalPrice = computed(() => {
   return saleDataForm.value?.form_product_lines?.reduce(
     (accumulator, productLine: SaleFormProductLine) => {
-      console.error({ productLine });
+      if (!productStore.isPhysicalStock(productLine.product)) {
+        if (productLine.price != null && productLine.quantity != null) {
+          accumulator = productLine.price * productLine.quantity + accumulator;
+        }
+      } else {
+        if (
+          productLine != null &&
+          productLine?.form_product_real_lines != null
+        ) {
+          accumulator =
+            accumulator +
+            productLine?.form_product_real_lines?.reduce(
+              (acc, productRealLine) => {
+                if (productRealLine?.price != null) {
+                  acc = productRealLine.price + acc;
+                }
+                return acc;
+              },
+              0
+            );
+        }
+      }
+
       return accumulator;
-    }, //TODO
+    },
     0
   );
 });
@@ -117,7 +141,7 @@ function _mapSaleToDataForm(data: Sale | null): SaleForm {
         if (!isNil(saleProduct)) {
           accumulator.push({
             price: saleProduct.saleProductPrice,
-            idProduct: saleProduct.id,
+            product: saleProduct,
             quantity: saleProduct.quantity,
             form_product_real_lines: data?.product_real_lines
               ?.filter(
@@ -177,7 +201,7 @@ function _mapDataFormToSale(data: SaleForm): Sale {
     (accumulator: any, product_line: SaleFormProductLine) => {
       if (!isNil(product_line)) {
         accumulator.product_lines.push({
-          id: product_line.idProduct,
+          id: product_line.product?.id,
           saleProductPrice: product_line.price,
           quantity: product_line.quantity,
         } as SaleProductLineType);

@@ -3,7 +3,8 @@
     <Grid :gap="2" :columns="1">
       <Grid :gap="2" :columns="2">
         <MagicAutocomplete
-          name="idProduct"
+          name="product"
+          :getOptionValue="(opt) => opt"
           :label="$t('product')"
           :getOptionLabel="displayProductAutocomplete"
           @update:selected="handleProductChange"
@@ -91,7 +92,6 @@ function displayProductAutocomplete(_product: Product): string {
 }
 
 function handleProductChange(_product: Product) {
-  console.error({ _product });
   product.value = _product;
 }
 </script>
