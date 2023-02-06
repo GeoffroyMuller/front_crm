@@ -84,15 +84,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted, watch } from "vue";
+import { computed, ref, onMounted } from "vue";
 import Form from "@/core/components/form/Form.vue";
 import TextField from "@/core/components/form/TextField.vue";
 import Button from "@/core/components/Button.vue";
 import Page from "@/components/Page.vue";
-import { useRoute, useRouter } from "vue-router";
 import useQuoteStore from "@/stores/quotes";
-import { useI18n } from "vue-i18n";
-import useUI from "@/core/helpers/vue/composables/ui";
 import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import useClientStore from "@/stores/clients";
 import type { Quote, QuoteLine } from "@/types/quote";
@@ -104,30 +101,16 @@ import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import type Client from "@/types/client";
 import Card from "@/core/components/Card.vue";
 import { isEmpty } from "lodash";
-import Select from "@/core/components/form/Select.vue";
 import QuoteStatusSelect from "@/components/quotes/QuoteStatusSelect.vue";
+import useEditPage from "@/components/editpage";
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();
 const vatsStore = useVatStore();
 
-const router = useRouter();
-const { id } = useRoute().params;
-const { t } = useI18n();
-const { toast } = useUI();
-
 const isAddClientOpen = ref(false);
 const idClient = ref();
 const clientOptions = ref();
-
-const isAddAction = computed(
-  () => !quote.value && (!id || Number.isNaN(Number.parseInt(id as string)))
-);
-const loading = computed(() => {
-  return isAddAction.value ? false : !quote.value;
-});
-
-const quote = ref<Quote | null>(quotesStore.getById(id as string));
 
 const title = computed(() => {
   if (isAddAction.value) {
@@ -138,24 +121,24 @@ const title = computed(() => {
 
 onMounted(() => {
   vatsStore.fetchList();
-  if (!isAddAction.value) {
-    quotesStore
-      .fetchById(id as string, {
-        populate: ["client.company", "responsible.company", "lines.vat"],
-      })
-      .then((res) => {
-        quote.value = res;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
 });
 
 function onAddClient(client: Client) {
   idClient.value = client.id;
   clientOptions.value = [client];
 }
+
+const {
+  isAddAction,
+  loading,
+  model: quote,
+  router,
+  t,
+  toast,
+} = useEditPage({
+  store: quotesStore,
+  populate: ["client.company", "responsible.company", "lines.vat"],
+});
 
 async function handleSubmit(data: any) {
   if (data.lines) {

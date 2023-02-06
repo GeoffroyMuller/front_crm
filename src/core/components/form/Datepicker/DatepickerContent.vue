@@ -83,6 +83,7 @@ function onSelectDate(day: number, month: number, year: number) {
     .hour(0)
     .minute(0)
     .second(0)
+    .millisecond(0)
     .toISOString();
   if (props.onUpdate) {
     props.onUpdate(result);

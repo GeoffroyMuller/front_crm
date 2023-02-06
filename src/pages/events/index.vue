@@ -55,6 +55,7 @@ const editOpen = ref(false);
 const eventEdited = ref<Event>();
 
 function clickOnDate(date: Dayjs) {
+  console.error(date.toISOString())
   eventEdited.value = {
     dtstart: date.toISOString(),
   };
