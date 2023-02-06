@@ -135,7 +135,7 @@ const {
   router,
   t,
   toast,
-} = useEditPage({
+} = useEditPage<Quote>({
   store: quotesStore,
   populate: ["client.company", "responsible.company", "lines.vat"],
 });
