@@ -62,11 +62,9 @@
             :label="$t('date')"
           />
 
-          <TextField
+          <PriceInput
             :label="$t('amount')"
             name="amount"
-            type="number"
-            :step="0.01"
             :disabled="!!paymentEdit?.id"
           />
 
@@ -100,6 +98,7 @@ import type { InvoicePayment } from "@/types/invoice";
 import dayjs from "dayjs";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import PriceInput from "../PriceInput.vue";
 import PricePresenter from "../PricePresenter.vue";
 
 interface InvoicePaymentsProps {
