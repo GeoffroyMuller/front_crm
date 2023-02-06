@@ -31,7 +31,11 @@
         @input="(e) => onInput(e)"
         :id="id"
       />
-      <div v-if="(icon || $slots.icon) && !multiline" class="icon-hook">
+      <div
+        v-if="(icon || $slots.icon) && !multiline"
+        :class="{ disabled }"
+        class="icon-hook"
+      >
         <Icon v-if="icon" :name="icon" />
         <slot name="icon" />
       </div>
@@ -124,7 +128,6 @@ const { internalValue, internalError, validate } = useValidatable({
   .input-wrapper {
     position: relative;
     .input-content {
-
     }
   }
   .icon-hook {
@@ -138,6 +141,10 @@ const { internalValue, internalError, validate } = useValidatable({
     place-items: center;
     padding-right: spacing(1);
     background-color: color("white");
+    &.disabled {
+      background-color: #f0f0f0;
+      cursor: not-allowed;
+    }
     .icon {
       background-color: transparent;
     }
