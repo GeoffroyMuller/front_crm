@@ -9,7 +9,7 @@
     <label v-if="label">
       {{ label }}
     </label>
-    <div class="relative">
+    <div class="input-wrapper">
       <textarea
         v-if="multiline"
         @blur="onBlur"
@@ -35,9 +35,14 @@
         <Icon v-if="icon" :name="icon" />
         <slot name="icon" />
       </div>
+      <div class="input-content" ref="inputContent">
+        <slot name="content" />
+      </div>
     </div>
     <Alert
-      v-if="(internalError || error) && typeof (internalError || error) === 'string'"
+      v-if="
+        (internalError || error) && typeof (internalError || error) === 'string'
+      "
     >
       {{ internalError || error }}
     </Alert>
@@ -116,17 +121,23 @@ const { internalValue, internalError, validate } = useValidatable({
   label {
     @include typo(text2);
   }
-  .relative {
+  .input-wrapper {
     position: relative;
+    .input-content {
+
+    }
   }
   .icon-hook {
+    border-radius: 0 map-get($rounded, "sm") map-get($rounded, "sm") 0;
     position: absolute;
     right: 0;
     top: 0;
-    height: 100%;
+    height: calc(100% - 2px);
+    margin: 1px;
     display: grid;
     place-items: center;
-    margin-right: spacing(1);
+    padding-right: spacing(1);
+    background-color: color("white");
     .icon {
       background-color: transparent;
     }

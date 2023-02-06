@@ -20,6 +20,9 @@
         />
         <IconButton name="close" v-else @click.stop="internalValue = null" />
       </template>
+      <!-- <template #content v-if="multiple">
+        {{ internalValue }}
+      </template> -->
     </TextField>
     <Alert v-if="internalError || error">
       {{ internalError || error }}
