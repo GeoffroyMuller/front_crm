@@ -13,7 +13,6 @@ export default defineConfig({
           @import "./src/core/assets/style/_mixins.scss";
           @import "./src/core/assets/style/_functions.scss";
           @import "./src/core/assets/style/_media_mixins.scss";
-          @import "./src/core/assets/style/main.scss";
         `,
       },
     },
