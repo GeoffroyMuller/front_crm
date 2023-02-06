@@ -76,7 +76,14 @@ function decrementMonth() {
 }
 
 function onSelectDate(day: number, month: number, year: number) {
-  const result = dayjs().year(year).month(month).date(day).toISOString();
+  const result = dayjs()
+    .year(year)
+    .month(month)
+    .date(day)
+    .hour(0)
+    .minute(0)
+    .second(0)
+    .toISOString();
   if (props.onUpdate) {
     props.onUpdate(result);
   }

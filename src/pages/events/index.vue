@@ -56,7 +56,7 @@ const eventEdited = ref<Event>();
 
 function clickOnDate(date: Dayjs) {
   eventEdited.value = {
-    dtstart: date.format("YYYY-MM-DD"),
+    dtstart: date.toISOString(),
   };
   editOpen.value = true;
 }

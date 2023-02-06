@@ -178,7 +178,13 @@ const datesToDisplay = computed(() => {
   return res.map((date) => ({
     ...date,
     id: `${date.day}-${date.month}-${date.year}-current-${current.value.month}`,
-    dayjs: dayjs().date(date.day).month(date.month).year(date.year),
+    dayjs: dayjs()
+      .date(date.day)
+      .month(date.month)
+      .year(date.year)
+      .hour(0)
+      .minute(0)
+      .second(0),
   }));
 });
 
