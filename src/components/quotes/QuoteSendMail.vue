@@ -27,7 +27,6 @@
             type="submit"
             color="success"
             icon="mail"
-            @click="send"
             :loading="loading"
             :disabled="hasError"
           >
@@ -91,7 +90,7 @@ async function send() {
       loading.value = false;
       toast({
         message: t("error_while_send_mail"),
-        type: "success",
+        type: "danger",
       });
       console.error(err);
     }
