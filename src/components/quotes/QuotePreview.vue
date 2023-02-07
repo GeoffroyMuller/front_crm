@@ -37,7 +37,9 @@ watch(
       isOpen.value = false;
     } else {
       isOpen.value = true;
-      iframe.value.src = `${config.API_URL}/quotes/${quote.id}/preview?token=${getJWT()}`;
+      iframe.value.src = `${config.API_URL}/quotes/${
+        quote.id
+      }/preview?token=${getJWT()}`;
     }
   },
   { immediate: true }

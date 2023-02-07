@@ -2,7 +2,7 @@
   <Page :title="$t('quotes')" class="quotes-page">
     <QuoteFilters />
     <MagicDataTable
-      :store="quotesStore"
+      :store="quotestore"
       :columns="[
         {
           title: $t('ID'),
@@ -84,7 +84,7 @@
               color="success"
               icon="add"
               v-tooltip="{ text: $t('add'), placement: 'bottom' }"
-              @click="$router.push(`/quotes/new`)"
+              @click="$router.push(`/quotes/new/edit`)"
             >
               {{ $t("add") }}
             </Button>
@@ -93,7 +93,7 @@
             <FloatingButton
               color="success"
               icon="add"
-              @click="$router.push(`/quotes/new`)"
+              @click="$router.push(`/quotes/new/edit`)"
             />
           </Media>
         </div>
@@ -114,7 +114,7 @@
       :quote="quoteToPreview"
     />
     <QuoteSendMail
-      @clickDownloadPDF="() => downloadPdf(quoteToSendMail)"
+      @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)"
       @close="quoteToSendMail = null"
       :quote="quoteToSendMail"
     />
@@ -125,47 +125,16 @@
 import MagicDataTable from "@/core/components/magic/MagicDataTable.vue";
 import Chip from "@/core/components/Chip.vue";
 import Button from "@/core/components/Button.vue";
-import useQuoteStore from "@/stores/quotes";
-import useUI from "@/core/helpers/vue/composables/ui";
 import Page from "@/components/Page.vue";
-import { useI18n } from "vue-i18n";
 import QuotePreview from "@/components/quotes/QuotePreview.vue";
-import { ref } from "vue";
-import type { Quote } from "@/types/quote";
-import { getJWT } from "@/core/helpers/utils";
-import config from "@/const";
 import QuoteSendMail from "@/components/quotes/QuoteSendMail.vue";
 import Media from "@/core/Media.vue";
 import FloatingButton from "@/core/components/FloatingButton.vue";
 import QuoteFilters from "@/components/quotes/QuoteFilters.vue";
 import QuoteActionsMenu from "@/components/quotes/QuoteActionsMenu.vue";
 import Flex from "@/core/components/layouts/Flex.vue";
-import { useRouter } from "vue-router";
-
-const { toast, confirm } = useUI();
-const { t } = useI18n();
-const router = useRouter();
-
-const selected = ref<Array<Quote>>([]);
-const quoteToPreview = ref<Quote | null>(null);
-const quoteToSendMail = ref<Quote | null>(null);
-
-function preview(item: Quote) {
-  quoteToPreview.value = item;
-}
-
-function downloadPdf(item: Quote) {
-  const url = `${config.API_URL}/quotes/${item.id}/pdf?token=${getJWT()}`;
-  window.open(url, "_blank");
-}
-
-function sendMail(item: Quote) {
-  quoteToSendMail.value = item;
-}
-
-function edit(item: Quote) {
-  router.push(`/quotes/${item.id}`);
-}
+import useQuote from "@/components/quotes/quote";
+import type { Quote } from "@/types/quote";
 
 function getStatusColor(status: string) {
   if (status === "refused") {
@@ -177,54 +146,22 @@ function getStatusColor(status: string) {
   return "white";
 }
 
-async function setArchived(item: Quote) {
-  const confirmed = await confirm(t("pages.quotes.sure_archive_quote"));
-  if (confirmed) {
-    try {
-      await quotesStore.update(item.id, {
-        archived: true,
-      } as Quote);
-      toast({
-        type: "success",
-        message: t(`archived`),
-      });
-      quotesStore.fetchList();
-    } catch (err) {
-      toast({
-        type: "danger",
-        message: err.response.data.message,
-      });
-    }
-  }
-}
-
-async function setArchivedSelection() {
-  if (
-    selected.value.length &&
-    (await confirm(t("pages.quotes.sure_archive_selected")))
-  ) {
-    for (const q of selected.value) {
-      try {
-        await quotesStore.update(q.id, {
-          archived: true,
-        } as Quote);
-        toast({
-          type: "success",
-          message: t(`archived`),
-        });
-      } catch (err) {
-        toast({
-          type: "danger",
-          message: err.response.data.message,
-        });
-      }
-    }
-    quotesStore.fetchList();
-    selected.value = [];
-  }
-}
-
-const quotesStore = useQuoteStore();
+const {
+  quotestore,
+  downloadPdf,
+  selected,
+  setArchived,
+  setArchivedSelection,
+  preview,
+  sendMail,
+  quoteToPreview,
+  quoteToSendMail,
+  edit,
+} = useQuote({
+  afterAction: () => {
+    quotestore.fetchList();
+  },
+});
 </script>
 
 <style lang="scss">

@@ -162,7 +162,7 @@ const {
     return data;
   },
   onAdd: (res) => {
-    router.push("/quotes/" + res.id);
+    router.push("/quotes/" + res.id + "/edit");
     quote.value = res;
   },
 });
