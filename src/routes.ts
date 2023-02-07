@@ -42,24 +42,6 @@ export default [
     },
   },
   {
-    path: "/sales",
-    name: "sales",
-    component: () => import("./pages/sales/index.vue"),
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
-    path: "/sales/:id",
-    name: "sales-id",
-    component: () => import("./pages/sales/EditSale.vue"),
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
     path: "/quotes",
     name: "quotes",
     component: () => import("./pages/quotes/index.vue"),

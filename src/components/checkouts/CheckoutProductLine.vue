@@ -43,7 +43,7 @@
         name="form_product_real_lines"
       >
         <template #default>
-          <SaleProductRealLine :product="product"></SaleProductRealLine>
+          <CheckoutProductRealLine :product="product"></CheckoutProductRealLine>
         </template>
       </Repetable>
     </Grid>
@@ -56,23 +56,22 @@ import Grid from "@/core/components/layouts/Grid.vue";
 import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import useProductsStore from "@/stores/products";
 import type { Product } from "@/types/product";
-import type { SaleFormProductLine } from "@/types/sale";
 import { isNil } from "lodash";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import SaleProductRealLine from "./SaleProductRealLine.vue";
+import CheckoutProductRealLine from "./CheckoutProductRealLine.vue";
 
 const { t } = useI18n();
 const productStore = useProductsStore();
 
-interface SaleProductLineProps {
-  line: SaleFormProductLine;
+interface CheckoutProductLineProps {
+  line: any;
 }
 
-const props = withDefaults(defineProps<SaleProductLineProps>(), {});
+const props = withDefaults(defineProps<CheckoutProductLineProps>(), {});
 const product = ref<Product | null>();
 
-const lineProductMerged = computed((): SaleFormProductLine => {
+const lineProductMerged = computed((): any => {
   return {
     price: !isNil(props.line.price) ? props.line.price : product.value?.price,
     quantity: !isNil(props.line.quantity)
