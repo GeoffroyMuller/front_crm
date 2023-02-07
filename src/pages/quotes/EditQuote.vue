@@ -75,7 +75,16 @@
             :label="$t('pages.edit-quote.footer')"
           />
           <div class="actions">
-            <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
+            <Button
+              :disabled="hasError"
+              type="submit"
+              v-tooltip="{
+                text: $t('keyboardshortcuts.ctrl+s'),
+                placement: 'bottom',
+              }"
+            >
+              {{ $t("save") }}
+            </Button>
           </div>
         </template>
       </Form>
