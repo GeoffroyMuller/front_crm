@@ -48,14 +48,6 @@ export default function useForm(props: userFormProps) {
       immediate: true,
     }
   );
-  watch(
-    () => internalValue.value,
-    () => {
-      if (hasChanged.value) {
-        instance?.emit("update:modelValue", internalValue.value);
-      }
-    }
-  );
 
   const hasChanged = computed(() => {
     return !isEqual(internalValue.value, props.modelValue);

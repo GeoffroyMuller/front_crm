@@ -7,7 +7,7 @@
     <MagicForm
       :columns="columns"
       :gap="gap"
-      v-model="filtersValues"
+      :model-value="filtersValues"
       :fields="filters"
       @inputChange="handleInputChange"
     >
@@ -72,9 +72,7 @@ function mapFiltersFromStore() {
   return res;
 }
 
-const props = withDefaults(defineProps<MagicFilterBarProps<any>>(), {
-  isCard: true,
-});
+const props = withDefaults(defineProps<MagicFilterBarProps<any>>(), {});
 
 const filtersValues = ref<any>(mapFiltersFromStore());
 
