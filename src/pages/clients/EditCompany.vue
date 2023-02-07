@@ -1,5 +1,5 @@
 <template>
-  <Page :title="title" :loading="loading" back>
+  <Page :title="title" :loading="loading || (!isAddAction && !company)" back>
     <EditClientSidebar
       v-model:open="editClientOpen"
       @update="editClientOpen = false"
@@ -10,14 +10,9 @@
       <MagicFormVue
         :fields="[{ type: 'string', props: { name: 'name', label: 'name' } }]"
         :model-value="company"
-        :submit-action="
-        (data) =>
-          isAddAction
-            ? companiesStore.create(data)
-            : companiesStore.update(id as string, data)
-      "
+        @submit="save"
       />
-      <Grid :gap="1">
+      <Grid :gap="1" v-if="!isAddAction">
         <div class="text2">{{ $t("customers") }}</div>
         <MagicDataTable
           :store="useClientStore()"
@@ -59,6 +54,7 @@
 </template>
 <script lang="ts" setup>
 import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
+import useEditPage from "@/components/editpage";
 import Page from "@/components/Page.vue";
 import Flex from "@/core/components/layouts/Flex.vue";
 import Grid from "@/core/components/layouts/Grid.vue";
@@ -68,31 +64,7 @@ import useClientStore from "@/stores/clients";
 import useCompaniesStore from "@/stores/companies";
 import type Client from "@/types/client";
 import type { Company } from "@/types/company";
-import { computed, onMounted, ref } from "vue";
-import { useI18n } from "vue-i18n";
-import { useRoute } from "vue-router";
-
-const { id } = useRoute().params;
-const { t } = useI18n();
-
-const company = computed<Company>(() => companiesStore.getById(id as string));
-
-onMounted(() => {
-  if (!isAddAction.value) {
-    try {
-      companiesStore.fetchById(id as string);
-    } catch (err) {
-      console.error(err);
-    }
-  }
-});
-
-const isAddAction = computed(
-  () => !company.value && (!id || Number.isNaN(Number.parseInt(id as string)))
-);
-const loading = computed(() => {
-  return isAddAction.value ? false : !company.value;
-});
+import { computed, ref } from "vue";
 
 const clientSelected = ref<Client>();
 const editClientOpen = ref<boolean>(false);
@@ -105,4 +77,20 @@ const title = computed(() => {
 });
 
 const companiesStore = useCompaniesStore();
+
+const {
+  isAddAction,
+  model: company,
+  t,
+  loading,
+  router,
+  save,
+} = useEditPage<Company>({
+  store: companiesStore,
+  onAdd: (res) => {
+    console.error("qdqsd");
+    router.push("/companies/" + res.id);
+    company.value = res;
+  },
+});
 </script>
