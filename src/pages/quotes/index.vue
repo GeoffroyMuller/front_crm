@@ -83,7 +83,10 @@
             <Button
               color="success"
               icon="add"
-              v-tooltip="{ text: $t('add'), placement: 'bottom' }"
+              v-tooltip="{
+                text: $t('keyboardshortcuts.shift+alt+n'),
+                placement: 'bottom',
+              }"
               @click="$router.push(`/quotes/new/edit`)"
             >
               {{ $t("add") }}
@@ -135,6 +138,15 @@ import QuoteActionsMenu from "@/components/quotes/QuoteActionsMenu.vue";
 import Flex from "@/core/components/layouts/Flex.vue";
 import useQuote from "@/components/quotes/quote";
 import type { Quote } from "@/types/quote";
+import useKeyboardShortcut from "@/core/helpers/vue/composables/keyboardshortcut";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+useKeyboardShortcut(["shift+alt+n"], (e) => {
+  e.preventDefault();
+  router.push(`/quotes/new/edit`);
+});
 
 function getStatusColor(status: string) {
   if (status === "refused") {

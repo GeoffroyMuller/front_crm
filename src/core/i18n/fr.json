@@ -1,8 +1,8 @@
 {
   "keyboardshortcuts": {
-    "ctrl+s": "ctrl+s",
-    "ctrl+n": "ctrl+n",
-    "ctrl+b": "ctrl+b"
+    "ctrl+s": "Ctrl+S",
+    "ctrl+b": "Ctrl+B",
+    "shift+alt+n": "Shift+Alt+N"
   },
   "payment": "Paiement",
   "payments": "Paiements",
