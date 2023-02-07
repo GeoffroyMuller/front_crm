@@ -105,6 +105,7 @@
           @preview="preview"
           @downloadPdf="downloadPdf"
           @sendMail="sendMail"
+          @edit="edit"
         />
       </template>
     </MagicDataTable>
@@ -139,9 +140,11 @@ import FloatingButton from "@/core/components/FloatingButton.vue";
 import QuoteFilters from "@/components/quotes/QuoteFilters.vue";
 import QuoteActionsMenu from "@/components/quotes/QuoteActionsMenu.vue";
 import Flex from "@/core/components/layouts/Flex.vue";
+import { useRouter } from "vue-router";
 
 const { toast, confirm } = useUI();
 const { t } = useI18n();
+const router = useRouter();
 
 const selected = ref<Array<Quote>>([]);
 const quoteToPreview = ref<Quote | null>(null);
@@ -158,6 +161,10 @@ function downloadPdf(item: Quote) {
 
 function sendMail(item: Quote) {
   quoteToSendMail.value = item;
+}
+
+function edit(item: Quote) {
+  router.push(`/quotes/${item.id}`);
 }
 
 function getStatusColor(status: string) {
