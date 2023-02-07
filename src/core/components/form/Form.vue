@@ -12,9 +12,11 @@
 import { defineEmits } from "vue";
 import type { _CustomInput } from "@/core/helpers/vue/composables/form";
 import useForm from "@/core/helpers/vue/composables/form";
+import useKeyboardShortcut from "@/core/helpers/vue/composables/keyboardshortcut";
 
 export interface FormProps {
   modelValue?: any;
+  shortcuts?: boolean;
 }
 
 const props = withDefaults(defineProps<FormProps>(), {});
@@ -29,5 +31,14 @@ async function handleSumbit(event: Event) {
   if (await validate()) {
     emit("submit", getData());
   }
+}
+
+if (props.shortcuts) {
+  useKeyboardShortcut("ctrl+s", (e) => {
+    e.preventDefault();
+    if (!hasError.value && hasChanged.value) {
+      handleSumbit(e);
+    }
+  });
 }
 </script>

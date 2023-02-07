@@ -109,6 +109,7 @@ export default function useForm(props: userFormProps) {
         const valid = await input.validate();
 
         if (!valid || typeof valid === "string") {
+          console.error(input.name)
           // @ts-ignore
           errors.value[input.name] = valid === false ? true : valid;
           return false;

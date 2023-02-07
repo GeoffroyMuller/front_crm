@@ -1,5 +1,5 @@
 <template>
-  <Form :model-value="product" @submit="handleSubmit">
+  <Form shortcuts :model-value="product" @submit="handleSubmit">
     <template #default="{ hasError, hasChanged }">
       <div class="form-product">
         <div class="form-head">

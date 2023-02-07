@@ -1,7 +1,12 @@
 <template>
   <Page :title="title" :loading="loading" back>
     <Card>
-      <Form :model-value="invoice" @submit="save" class="invoice-form-content">
+      <Form
+        shortcuts
+        :model-value="invoice"
+        @submit="save"
+        class="invoice-form-content"
+      >
         <template #default="{ hasError }">
           <div class="form-head">
             <TextField name="name" :label="$t('title')" />
