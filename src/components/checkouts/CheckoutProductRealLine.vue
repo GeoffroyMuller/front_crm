@@ -42,12 +42,12 @@ import { computed, ref } from "vue";
 
 const productRealStore = useProductsRealStore();
 
-interface SaleProductRealLineProps {
-  line?: SaleFormProductRealLine;
+interface CheckoutProductRealLineProps {
+  line?: any;
   product: Product;
 }
 
-const props = withDefaults(defineProps<SaleProductRealLineProps>(), {});
+const props = withDefaults(defineProps<CheckoutProductRealLineProps>(), {});
 const productReal = ref<ProductReal | null>();
 
 function displayProductRealAutocomplete(productReal: ProductReal) {
