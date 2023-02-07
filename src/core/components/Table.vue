@@ -113,7 +113,7 @@
                 <Spinner />
               </div>
             </template>
-            <template v-else>
+            <template v-else-if="items && items.length > 0">
               <tr
                 v-for="(item, index) in items"
                 :key="index"
@@ -153,6 +153,11 @@
                 >
                   <slot name="actions" :item="item"></slot>
                 </td>
+              </tr>
+            </template>
+            <template v-else>
+              <tr>
+                <slot name="none"></slot>
               </tr>
             </template>
           </tbody>
@@ -292,9 +297,6 @@ watch(
 <style lang="scss" scoped>
 .table-container {
   overflow-x: auto; // TODO : pourquoi il prend la taille des menu en compte pour sa taille
-}
-.table-wrapper {
-  overflow-y: auto;
 }
 .table-mobile {
   width: 100%;
