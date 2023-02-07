@@ -4,63 +4,73 @@
       <div>
         <slot name="actions-title"></slot>
       </div>
-      <Card
-        v-for="(item, index) in items"
-        :key="index"
-        @click.stop="$emit('row-click', item)"
-      >
-        <Flex :mb="1.5" v-if="selectable">
-          <Checkbox
-            :modelValue="!!isSelected(item)"
-            @click.stop="toggleSelected(item)"
-          ></Checkbox>
-        </Flex>
-        <div class="table-mobile-card">
-          <div
-            v-for="column in internalColumns"
-            :key="column.key"
-            class="table-mobile-line"
-          >
-            <div>
-              <div
-                v-if="!$slots.title && !$slots['title-' + (column.key as string)]"
-              >
-                {{ column.title }}
+      <template v-if="items && items.length > 0">
+        <Card
+          v-for="(item, index) in items"
+          :key="index"
+          @click.stop="$emit('row-click', item)"
+        >
+          <Flex :mb="1.5" v-if="selectable">
+            <Checkbox
+              :modelValue="!!isSelected(item)"
+              @click.stop="toggleSelected(item)"
+            ></Checkbox>
+          </Flex>
+          <div class="table-mobile-card">
+            <div
+              v-for="column in internalColumns"
+              :key="column.key"
+              class="table-mobile-line"
+            >
+              <div>
+                <div
+                  v-if="!$slots.title && !$slots['title-' + (column.key as string)]"
+                >
+                  {{ column.title }}
+                </div>
+                <slot
+                  v-if="!$slots.title"
+                  :name="`title-${column.key as string}`"
+                  :column="column"
+                />
+                <slot name="title" :column="column" />
               </div>
-              <slot
-                v-if="!$slots.title"
-                :name="`title-${column.key as string}`"
-                :column="column"
-              />
-              <slot name="title" :column="column" />
+              <div>
+                <div
+                  v-if="!$slots.content && !$slots[`content-${column.key as string}`]"
+                >
+                  {{
+                    (column?.data ? column?.data(item) : undefined) ||
+                    item[column.key]
+                  }}
+                </div>
+                <slot
+                  v-else-if="!$slots.content"
+                  :name="`content-${column.key as string}`"
+                  :column="column"
+                  :item="item"
+                ></slot>
+                <slot name="content" :column="column" :item="item" />
+              </div>
             </div>
-            <div>
-              <div
-                v-if="!$slots.content && !$slots[`content-${column.key as string}`]"
-              >
-                {{
-                  (column?.data ? column?.data(item) : undefined) ||
-                  item[column.key]
-                }}
-              </div>
-              <slot
-                v-else-if="!$slots.content"
-                :name="`content-${column.key as string}`"
-                :column="column"
-                :item="item"
-              ></slot>
-              <slot name="content" :column="column" :item="item" />
+            <div
+              v-if="$slots['actions-title'] || $slots['actions']"
+              :style="styleItem"
+              class="actions-block"
+            >
+              <slot name="actions" :item="item"></slot>
             </div>
           </div>
-          <div
-            v-if="$slots['actions-title'] || $slots['actions']"
-            :style="styleItem"
-            class="actions-block"
-          >
-            <slot name="actions" :item="item"></slot>
+        </Card>
+      </template>
+      <template v-else>
+        <Card>
+          <slot v-if="$slots.empty" name="empty"></slot>
+          <div v-else class="empty-block">
+            {{ $t("empty") }}
           </div>
-        </div>
-      </Card>
+        </Card>
+      </template>
       <slot name="footer"></slot>
     </div>
   </Media>
@@ -157,7 +167,18 @@
             </template>
             <template v-else>
               <tr>
-                <slot name="none"></slot>
+                <td
+                  :colspan="
+                    internalColumns?.length +
+                    ($slots['actions-title'] || $slots['actions'] ? 1 : 0) +
+                    (selectable ? 1 : 0)
+                  "
+                >
+                  <slot v-if="$slots.empty" name="empty"></slot>
+                  <div v-else class="empty-block">
+                    {{ $t("empty") }}
+                  </div>
+                </td>
               </tr>
             </template>
           </tbody>
@@ -384,7 +405,10 @@ table {
 .table-footer {
   width: 100%;
 }
-
+.empty-block {
+  @include flex(row, center, center);
+  margin: spacing(5);
+}
 .actions-block {
   display: flex;
   align-items: center;

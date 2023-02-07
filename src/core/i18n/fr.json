@@ -85,5 +85,6 @@
   "sale": "Vente",
   "date": "Date",
   "responsible": "Responsable",
-  "modalities": "Modalités"
+  "modalities": "Modalités",
+  "empty": "Vide"
 }
