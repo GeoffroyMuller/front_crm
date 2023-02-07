@@ -31,6 +31,9 @@
       ]"
       @row-click="(product: Product) => $router.push(`/products/${product.id}`)"
     >
+      <template #content-price="{ item }">
+        {{ $utils.formatPrice(item.price) }}
+      </template>
       <template #actions-title>
         <div>
           <Button
