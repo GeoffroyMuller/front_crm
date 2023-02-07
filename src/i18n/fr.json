@@ -18,7 +18,8 @@
     "sales": {
       "edit-list-products-real": "Editer la liste des produits physiques",
       "count-sentence": "Vous avez selectionné {count} produits physique",
-      "add-product-real-sentence": "Vous pouvez ajouter des produit physique"
+      "add-product-real-sentence": "Vous pouvez ajouter des produit physique",
+      "warning-sentence-qty": "Attention, le nombre de produits physique est différent de la quantité."
     },
     "edit-quote": {
       "qty": "Quantitée",
