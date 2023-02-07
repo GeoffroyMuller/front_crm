@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<AvatarProps>(), {
 .avatar {
   overflow: hidden;
   border-radius: 50%;
-  color: black;
+  color: color("black");
   background-color: gray;
   font-weight: bold;
   @include flex(row, center, center);
