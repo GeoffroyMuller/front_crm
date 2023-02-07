@@ -25,10 +25,9 @@
           :label="$t('vat')"
           name="idVat"
         />
-        <TextField
+        <HtmlEditor
           name="description"
           :label="$t('pages.edit-product.description')"
-          :multiline="true"
         />
         <div class="form-stock" v-if="product == null">
           <RadioGroup
@@ -80,6 +79,7 @@ import RadioGroup from "@/core/components/form/RadioGroup.vue";
 import useVatStore from "@/stores/vat";
 import type { Vat } from "@/types/vat";
 import Select from "@/core/components/form/Select.vue";
+import HtmlEditor from "@/core/components/HtmlEditor.vue";
 
 interface ProductFormProps {
   product: Product | null;
