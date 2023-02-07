@@ -120,6 +120,7 @@ import type { IconName } from "@/core/components/types";
 import { useI18n } from "vue-i18n";
 import Tree from "@/core/components/Tree.vue";
 import ActionMenu from "@/core/components/ActionMenu.vue";
+import useKeyboardShortcut from "@/core/helpers/vue/composables/keyboardshortcut";
 
 const userStore = useUserStore();
 
@@ -222,6 +223,10 @@ async function disconnect() {
     router.replace("/login");
   }
 }
+
+useKeyboardShortcut("mod+b", (e) => {
+  isNavMini.value = !isNavMini.value;
+});
 </script>
 
 <style lang="scss" scoped>
