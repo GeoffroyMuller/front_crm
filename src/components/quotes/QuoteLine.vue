@@ -32,14 +32,25 @@
       "
       class="products-real"
     >
-      <Button color="success" icon="add" @click.stop="openSublineForm">
-        {{ $t("edit-products-real") }}
+      <div v-if="nbProductReal" class="text">
+        {{ $t("pages.sales.count-sentence", { count: nbProductReal }) }}
+      </div>
+      <div v-else class="text">
+        {{ $t("pages.sales.add-product-real-sentence") }}
+      </div>
+      <Button
+        color="primary"
+        icon="edit"
+        variant="text"
+        @click.stop="openSublineForm"
+      >
+        {{ $t("pages.sales.edit-list-products-real") }}
       </Button>
-
       <Sidebar v-model:open="isSidebarOpen" displayCloseBtn>
         <QuoteSublineForm
           class="quote-subline-form"
           :product="internalProduct"
+          v-model:count="nbProductReal"
         ></QuoteSublineForm>
       </Sidebar>
     </div>
@@ -138,6 +149,7 @@ const props = withDefaults(defineProps<QuoteLineProps>(), {});
 const internalLine = ref(props.line);
 const internalProduct = ref<Product | null>(null);
 const isSidebarOpen = ref<boolean>(false);
+const nbProductReal = ref<number>();
 
 function openSublineForm() {
   console.error(isSidebarOpen.value);
