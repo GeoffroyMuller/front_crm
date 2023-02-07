@@ -1,5 +1,5 @@
 <template>
-  <Form :model-value="productInternal" @submit="handleSubmit">
+  <Form shortcuts :model-value="productInternal" @submit="handleSubmit">
     <template #default="{ hasError, hasChanged }">
       <div class="avanced-settings-product">
         <Repetable

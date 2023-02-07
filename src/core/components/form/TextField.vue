@@ -15,6 +15,7 @@
         @blur="onBlur"
         v-bind="$props"
         ref="internalRef"
+        class="mousetrap"
         v-model="internalValue"
         @focus="onFocus"
         :id="id"
@@ -22,7 +23,7 @@
       <input
         @blur="onBlur"
         v-bind="$props"
-        class="input-class"
+        class="input-class mousetrap"
         :class="{ 'appearance-none': appearanceNone === true }"
         ref="internalRef"
         v-model="internalValue"
