@@ -156,7 +156,16 @@ export default function useMenu(props: MenuProps) {
         }
         break;
       case "bottom":
-        coord.top = dimensions.activator.top + dimensions.activator.height;
+        if (
+          dimensions.activator.top +
+            dimensions.activator.height +
+            dimensions.container.height >=
+          pageHeight
+        ) {
+          coord.top = dimensions.activator.top - dimensions.activator.height;
+        } else {
+          coord.top = dimensions.activator.top + dimensions.activator.height;
+        }
         if (
           dimensions.container.width + dimensions.activator.left >=
           pageWidth

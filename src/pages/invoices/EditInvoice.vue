@@ -73,7 +73,16 @@
             :label="$t('pages.edit-invoice.footer')"
           />
           <div class="actions">
-            <Button :disabled="hasError" type="submit">{{ $t("save") }}</Button>
+            <Button
+              :disabled="hasError"
+              v-tooltip="{
+                text: $t('keyboardshortcuts.ctrl+s'),
+                placement: 'bottom',
+              }"
+              type="submit"
+            >
+              {{ $t("save") }}
+            </Button>
           </div>
         </template>
       </Form>

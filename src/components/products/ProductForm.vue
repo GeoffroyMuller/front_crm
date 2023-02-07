@@ -49,6 +49,10 @@
             :disabled="hasError || !hasChanged"
             :loading="loading"
             type="submit"
+            v-tooltip="{
+              text: $t('keyboardshortcuts.ctrl+s'),
+              placement: 'bottom',
+            }"
             >{{ $t("save") }}</Button
           >
         </div>

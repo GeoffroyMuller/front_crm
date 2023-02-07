@@ -1,4 +1,9 @@
 {
+  "keyboardshortcuts": {
+    "ctrl+s": "ctrl+s",
+    "ctrl+n": "ctrl+n",
+    "ctrl+b": "ctrl+b"
+  },
   "payment": "Paiement",
   "payments": "Paiements",
   "amount": "Montant",
