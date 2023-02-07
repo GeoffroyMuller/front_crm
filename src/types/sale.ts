@@ -41,3 +41,10 @@ export interface SaleFormProductRealLine {
   idProductReal?: ID | null;
   price?: number;
 }
+
+/* New systeme for line */
+export interface SaleSubline {
+  id?: ID;
+  idSaleLine?: number;
+  idProductReal?: number;
+}

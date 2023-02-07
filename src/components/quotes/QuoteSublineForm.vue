@@ -6,7 +6,7 @@
     <div class="text subline-form-subtitle">
       {{ $t("edit-products-real-product") }}
     </div>
-    <Repetable v-if="product" name="sublines">
+    <Repetable v-model="sublines" v-if="product" name="sublines">
       <template #default>
         <MagicAutocomplete
           name="idProductReal"
@@ -33,12 +33,41 @@ import Repetable from "@/core/components/form/repetable/Repetable.vue";
 import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import useProductsRealStore from "@/stores/products_real";
 import type { Product, ProductReal } from "@/types/product";
+import type { SaleSubline } from "@/types/sale";
+import { isNil } from "lodash";
+import { computed, ref, watch } from "vue";
 
 interface QuoteSublineFormProps {
   product?: Product | null;
+  count?: number;
 }
 const props = withDefaults(defineProps<QuoteSublineFormProps>(), {});
 const productRealStore = useProductsRealStore();
+
+const emit = defineEmits(["update:count"]);
+
+const sublines = ref([]);
+
+const count = computed(
+  () =>
+    sublines.value.filter((subline: SaleSubline) => {
+      if (!isNil(subline?.idProductReal)) {
+        return true;
+      } else {
+        return false;
+      }
+    }).length
+);
+
+watch(
+  () => count.value,
+  (val) => {
+    if (!isNil(val)) {
+      emit("update:count", val);
+    }
+  },
+  { immediate: false }
+);
 
 function displayProductRealAutocomplete(productReal: ProductReal) {
   return `${productReal.reference}`;

@@ -15,6 +15,11 @@
       "sure_archive_invoice": "Etes vous sur de vouloir archiver cette facture ?",
       "sure_archive_selected": "Etes vous sur de vouloir archiver la séléction ?"
     },
+    "sales": {
+      "edit-list-products-real": "Editer la liste des produits physiques",
+      "count-sentence": "Vous avez selectionné {count} produits physique",
+      "add-product-real-sentence": "Vous pouvez ajouter des produit physique"
+    },
     "edit-quote": {
       "qty": "Quantitée",
       "unit_price": "Prix unitaire (HT)",
