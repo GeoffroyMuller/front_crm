@@ -13,8 +13,8 @@ export interface UseEditPageProps<T> {
   store: APIStore<T>;
   populate?: Array<string>;
   model?: Ref<T>;
-  mapBeforeSave?: (data: any) => T;
 
+  mapBeforeSave?: (data: any) => T;
   onAdd?: (res: T) => void;
   onUpdate?: (res: T) => void;
 }

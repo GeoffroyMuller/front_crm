@@ -9,8 +9,21 @@ import { useI18n } from "vue-i18n";
 export interface UseInvoiceProps {
   invoice?: Ref<Invoice>;
 }
+/*
+to preview and send mail, add the following to the <template> :
 
-export default function useInvoice(props: UseInvoiceProps) {
+    <InvoicePreview
+        @close="() => (invoiceToPreview = null)"
+        :invoice="invoiceToPreview"
+    />
+    <InvoiceSendMail
+      @clickDownloadPDF="() => downloadPdf(invoiceToSendMail as Invoice)"
+      @close="invoiceToSendMail = null"
+      :invoice="invoiceToSendMail"
+    />
+*/
+
+export default function useInvoice(props?: UseInvoiceProps) {
   const { toast, confirm } = useUI();
   const { t } = useI18n();
 
@@ -18,8 +31,18 @@ export default function useInvoice(props: UseInvoiceProps) {
 
   const selected = ref<Array<Invoice>>([]);
 
+  const invoiceToPreview = ref<Invoice | null>();
+  function preview(item: Invoice) {
+    invoiceToPreview.value = item;
+  }
+
+  const invoiceToSendMail = ref<Invoice | null>();
+  function sendMail(item: Invoice) {
+    invoiceToSendMail.value = item;
+  }
+
   function downloadPdf(item?: Invoice) {
-    const _invoice = (props.invoice?.value || item) as Invoice;
+    const _invoice = (props?.invoice?.value || item) as Invoice;
     const url = `${config.API_URL}/invoices/${
       _invoice.id
     }/pdf?token=${getJWT()}`;
@@ -27,7 +50,7 @@ export default function useInvoice(props: UseInvoiceProps) {
   }
 
   async function setArchived(item: Invoice) {
-    const _invoice = (props.invoice?.value || item) as Invoice;
+    const _invoice = (props?.invoice?.value || item) as Invoice;
     const confirmed = await confirm(t("pages.invoices.sure_archive_invoice"));
     if (confirmed) {
       try {
@@ -80,5 +103,9 @@ export default function useInvoice(props: UseInvoiceProps) {
     setArchived,
     setArchivedSelection,
     downloadPdf,
+    preview,
+    invoiceToPreview,
+    sendMail,
+    invoiceToSendMail,
   };
 }

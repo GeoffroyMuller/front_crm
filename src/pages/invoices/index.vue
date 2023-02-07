@@ -114,7 +114,6 @@
 import MagicDataTable from "@/core/components/magic/MagicDataTable.vue";
 import Button from "@/core/components/Button.vue";
 import Page from "@/components/Page.vue";
-import { ref } from "vue";
 import type Invoice from "@/types/invoice";
 import InvoiceFilters from "@/components/invoices/InvoiceFilters.vue";
 import InvoiceActionsMenu from "@/components/invoices/InvoiceActionsMenu.vue";
@@ -122,17 +121,7 @@ import InvoicePreview from "@/components/invoices/InvoicePreview.vue";
 import InvoiceSendMail from "@/components/invoices/InvoiceSendMail.vue";
 import InvoicePaymentsBar from "@/components/invoices/InvoicePaymentsBar.vue";
 import Flex from "@/core/components/layouts/Flex.vue";
-import useInvoice from "./invoice";
-
-const invoiceToPreview = ref<Invoice | null>();
-function preview(item: Invoice) {
-  invoiceToPreview.value = item;
-}
-
-const invoiceToSendMail = ref<Invoice | null>();
-function sendMail(item: Invoice) {
-  invoiceToSendMail.value = item;
-}
+import useInvoice from "../../components/invoices/invoice";
 
 const {
   invoiceStore,
@@ -140,6 +129,10 @@ const {
   selected,
   setArchived,
   setArchivedSelection,
+  preview,
+  sendMail,
+  invoiceToPreview,
+  invoiceToSendMail,
 } = useInvoice();
 </script>
 
