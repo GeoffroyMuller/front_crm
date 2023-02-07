@@ -30,7 +30,7 @@
           :label="$t('pages.edit-product.description')"
           :multiline="true"
         />
-        <div class="form-stock">
+        <div class="form-stock" v-if="product == null">
           <RadioGroup
             name="stockManagement"
             v-model="stockManagement"
