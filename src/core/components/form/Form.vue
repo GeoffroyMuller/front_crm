@@ -34,7 +34,7 @@ async function handleSumbit(event: Event) {
 }
 
 if (props.shortcuts) {
-  useKeyboardShortcut("ctrl+s", (e) => {
+  useKeyboardShortcut(["ctrl+s", "command+s"], (e) => {
     e.preventDefault();
     if (!hasError.value && hasChanged.value) {
       handleSumbit(e);

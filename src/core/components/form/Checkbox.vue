@@ -4,7 +4,7 @@
       {{ label }}
     </label>
     <div class="checkbox">
-      <input type="checkbox" :checked="!!modelValue" />
+      <input class="mousetrap" type="checkbox" :checked="!!modelValue" />
       <span class="checkmark"></span>
     </div>
     <!-- <div
