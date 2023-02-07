@@ -34,6 +34,9 @@
       <template #content-price="{ item }">
         {{ $utils.formatPrice(item.price) }}
       </template>
+      <template #content-description="{ item }">
+        <div v-if="item.description" v-html="item.description"></div>
+      </template>
       <template #actions-title>
         <div>
           <Button
