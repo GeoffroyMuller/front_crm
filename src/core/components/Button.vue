@@ -135,6 +135,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 
       &:hover:not(:disabled) {
         color: map-deep-get($value, 700);
+        text-shadow: map-deep-get($value, 100) 1px 0 10px;
       }
 
       &:disabled {
