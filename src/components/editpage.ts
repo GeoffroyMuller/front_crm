@@ -13,6 +13,10 @@ export interface UseEditPageProps<T> {
   store: APIStore<T>;
   populate?: Array<string>;
   model?: Ref<T>;
+  mapBeforeSave?: (data: any) => T;
+
+  onAdd?: (res: T) => void;
+  onUpdate?: (res: T) => void;
 }
 
 export default function useEditPage<T extends WithID>(
@@ -58,6 +62,32 @@ export default function useEditPage<T extends WithID>(
     }
   });
 
+  async function save(data: any) {
+    const _data = props.mapBeforeSave ? props.mapBeforeSave(data) : data;
+    try {
+      if (!isAddAction.value) {
+        const res = await props.store.update((model.value as T).id, _data);
+        if (props.onUpdate) {
+          props.onUpdate(res);
+        }
+      } else {
+        const res = await props.store.create(_data);
+        if (props.onAdd) {
+          props.onAdd(res);
+        }
+      }
+      toast({
+        type: "success",
+        message: t(`saved`),
+      });
+    } catch (err) {
+      toast({
+        type: "danger",
+        message: err.response.data.message,
+      });
+    }
+  }
+
   return {
     isAddAction,
     loading,
@@ -68,5 +98,6 @@ export default function useEditPage<T extends WithID>(
     t,
     toast,
     confirm,
+    save,
   };
 }

@@ -2,7 +2,7 @@
   <Page :title="$t('invoices')" class="invoice-page">
     <InvoiceFilters />
     <MagicDataTable
-      :store="useInvoicesStore()"
+      :store="invoiceStore"
       :columns="[
         {
           title: $t('ID'),
@@ -113,13 +113,8 @@
 <script lang="ts" setup>
 import MagicDataTable from "@/core/components/magic/MagicDataTable.vue";
 import Button from "@/core/components/Button.vue";
-import useUI from "@/core/helpers/vue/composables/ui";
 import Page from "@/components/Page.vue";
-import { useI18n } from "vue-i18n";
 import { ref } from "vue";
-import { getJWT } from "@/core/helpers/utils";
-import config from "@/const";
-import useInvoicesStore from "@/stores/invoices";
 import type Invoice from "@/types/invoice";
 import InvoiceFilters from "@/components/invoices/InvoiceFilters.vue";
 import InvoiceActionsMenu from "@/components/invoices/InvoiceActionsMenu.vue";
@@ -127,63 +122,8 @@ import InvoicePreview from "@/components/invoices/InvoicePreview.vue";
 import InvoiceSendMail from "@/components/invoices/InvoiceSendMail.vue";
 import InvoicePaymentsBar from "@/components/invoices/InvoicePaymentsBar.vue";
 import Flex from "@/core/components/layouts/Flex.vue";
+import useInvoice from "./invoice";
 
-const { toast, confirm } = useUI();
-const { t } = useI18n();
-
-const selected = ref<Array<Invoice>>([]);
-
-function downloadPdf(item: Invoice) {
-  const url = `${config.API_URL}/invoices/${item.id}/pdf?token=${getJWT()}`;
-  window.open(url, "_blank");
-}
-
-async function setArchived(item: Invoice) {
-  const confirmed = await confirm(t("pages.invoices.sure_archive_invoice"));
-  if (confirmed) {
-    try {
-      await invoiceStore.update(item.id, {
-        archived: true,
-      } as Invoice);
-      toast({
-        type: "success",
-        message: t(`archived`),
-      });
-      invoiceStore.fetchList();
-    } catch (err) {
-      toast({
-        type: "danger",
-        message: (err as any).response.data.message,
-      });
-    }
-  }
-}
-
-async function setArchivedSelection() {
-  if (
-    selected.value.length &&
-    (await confirm(t("pages.invoices.sure_archive_selected")))
-  ) {
-    for (const q of selected.value) {
-      try {
-        await invoiceStore.update(q.id, {
-          archived: true,
-        } as Invoice);
-        toast({
-          type: "success",
-          message: t(`archived`),
-        });
-      } catch (err) {
-        toast({
-          type: "danger",
-          message: (err as any).response.data.message,
-        });
-      }
-    }
-    invoiceStore.fetchList();
-    selected.value = [];
-  }
-}
 const invoiceToPreview = ref<Invoice | null>();
 function preview(item: Invoice) {
   invoiceToPreview.value = item;
@@ -194,7 +134,13 @@ function sendMail(item: Invoice) {
   invoiceToSendMail.value = item;
 }
 
-const invoiceStore = useInvoicesStore();
+const {
+  invoiceStore,
+  downloadPdf,
+  selected,
+  setArchived,
+  setArchivedSelection,
+} = useInvoice();
 </script>
 
 <style lang="scss">

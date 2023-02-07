@@ -90,46 +90,21 @@
 </template>
 
 <script setup lang="ts">
+import useEditPage from "@/components/editpage";
 import InvoicePayments from "@/components/invoices/InvoicePayments.vue";
 import Page from "@/components/Page.vue";
 import Button from "@/core/components/Button.vue";
 import Card from "@/core/components/Card.vue";
 import Flex from "@/core/components/layouts/Flex.vue";
 import Grid from "@/core/components/layouts/Grid.vue";
-import useUI from "@/core/helpers/vue/composables/ui";
-import useClientStore from "@/stores/clients";
 import useInvoicesStore from "@/stores/invoices";
-import useVatStore from "@/stores/vat";
 import type Invoice from "@/types/invoice";
-import { computed, onMounted } from "vue";
-import { useI18n } from "vue-i18n";
-import { useRoute, useRouter } from "vue-router";
 
 const invoiceStore = useInvoicesStore();
-const clientsStore = useClientStore();
-const vatsStore = useVatStore();
 
-const router = useRouter();
-const { id } = useRoute().params;
-const { t } = useI18n();
-const { toast, confirm } = useUI();
-
-const invoice = computed<Invoice>(() => invoiceStore.getById(id as string));
-
-onMounted(() => {
-  vatsStore.fetchList();
-  invoiceStore
-    .fetchById(id as string, {
-      populate: [
-        "client.company",
-        "responsible.company",
-        "lines.vat",
-        "payments",
-      ],
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+const { model: invoice, id } = useEditPage<Invoice>({
+  store: invoiceStore,
+  populate: ["client.company", "responsible.company", "lines.vat", "payments"],
 });
 </script>
 <style lang="scss" scoped>
