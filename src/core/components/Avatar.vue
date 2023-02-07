@@ -43,7 +43,6 @@ const props = withDefaults(defineProps<AvatarProps>(), {
   border-radius: 50%;
   color: black;
   background-color: gray;
-  font-size: 1em;
   font-weight: bold;
   @include flex(row, center, center);
   & .txt {

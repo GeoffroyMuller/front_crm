@@ -130,7 +130,6 @@ watch(
 .column-title {
   display: flex;
   align-items: center;
-  font-size: 0.9em;
   @include unselectable;
 }
 .column-title.sortable {

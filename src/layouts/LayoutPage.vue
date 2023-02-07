@@ -394,7 +394,7 @@ $miniNavWidth: 60px;
       justify-content: flex-start;
       align-items: center;
       cursor: pointer;
-      @include typo(text2);
+      @include typo(text);
       transition: all 0.3s;
       &:hover,
       &.selected {
@@ -425,7 +425,7 @@ $miniNavWidth: 60px;
     align-items: center;
     cursor: pointer;
     user-select: none;
-    @include typo(text2);
+    @include typo(text);
     transition: all 0.3s;
     &.selected {
       color: color("primary", 700);

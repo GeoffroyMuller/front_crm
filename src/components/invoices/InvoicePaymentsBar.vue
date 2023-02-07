@@ -37,8 +37,8 @@ const props = withDefaults(defineProps<InvoicePaymentsBarProps>(), {});
 
 <style lang="scss">
 .invoice-payments-progress {
+  @include typo(text2);
   color: color("primary", 500);
-  font-size: 0.85rem;
   :first-child {
     margin-bottom: spacing(0.5);
   }
