@@ -110,7 +110,7 @@ const {
   save,
 } = useEditPage<Invoice>({
   store: invoiceStore,
-  populate: ["client.company", "responsible.company", "lines.vat"],
+  populate: ["client.company", "responsible.company", "lines.[vat, sublines]"],
   onAdd: (res) => {
     router.push("/invoices/" + res.id);
     invoice.value = res;

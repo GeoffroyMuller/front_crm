@@ -25,6 +25,25 @@
       v-model="internalLine.description"
       name="description"
     />
+    <div
+      v-if="
+        !$_.isNil(internalProduct) &&
+        productsStore.isPhysicalStock(internalProduct)
+      "
+      class="products-real"
+    >
+      <Button color="success" icon="add" @click.stop="openSublineForm">
+        {{ $t("edit-products-real") }}
+      </Button>
+
+      <Sidebar v-model:open="isSidebarOpen" displayCloseBtn>
+        <QuoteSublineForm
+          class="quote-subline-form"
+          :product="internalProduct"
+        ></QuoteSublineForm>
+      </Sidebar>
+    </div>
+
     <div class="line-product">
       <TextField
         class="input"
@@ -80,8 +99,12 @@ import useVatStore from "@/stores/vat";
 import useProductStore from "@/stores/products";
 import type { Vat } from "@/types/vat";
 import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
-import type { Product } from "@/types/product";
+import type { Product, ProductReal } from "@/types/product";
 import type { InvoiceLine } from "@/types/invoice";
+import useProductsRealStore from "@/stores/products_real";
+import QuoteSublineForm from "./QuoteSublineForm.vue";
+import Sidebar from "@/core/components/Sidebar.vue";
+import Button from "@/core/components/Button.vue";
 
 interface QuoteLineProps {
   line: QuoteLine | InvoiceLine;
@@ -113,9 +136,17 @@ const totalWithTaxes = computed(() => {
 const props = withDefaults(defineProps<QuoteLineProps>(), {});
 
 const internalLine = ref(props.line);
+const internalProduct = ref<Product | null>(null);
+const isSidebarOpen = ref<boolean>(false);
+
+function openSublineForm() {
+  console.error(isSidebarOpen.value);
+  isSidebarOpen.value = true;
+}
 
 function handleProductChange(product: Product) {
   if (product != null) {
+    internalProduct.value = product;
     internalLine.value.description =
       internalLine.value.description || (product.description as string);
     internalLine.value.unit_price =
@@ -169,5 +200,8 @@ function handleProductChange(product: Product) {
 .line-product-container {
   display: grid;
   gap: spacing(1.5);
+}
+.quote-subline-form {
+  padding: spacing(2);
 }
 </style>
