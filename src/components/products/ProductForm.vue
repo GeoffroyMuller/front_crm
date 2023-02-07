@@ -15,6 +15,16 @@
           :step="0.01"
           type="number"
         />
+        <Select
+          class="input"
+          :options="vats"
+          :get-option-label="
+            (opt: Vat) => (opt?.rate != null ? `${opt?.rate}%` : '')
+          "
+          :get-option-value="(opt: Vat) => opt.id"
+          :label="$t('vat')"
+          name="idVat"
+        />
         <TextField
           name="description"
           :label="$t('pages.edit-product.description')"
@@ -67,6 +77,9 @@ import TextField from "@/core/components/form/TextField.vue";
 import type { Product, StockManagement } from "@/types/product";
 import { computed, ref } from "vue";
 import RadioGroup from "@/core/components/form/RadioGroup.vue";
+import useVatStore from "@/stores/vat";
+import type { Vat } from "@/types/vat";
+import Select from "@/core/components/form/Select.vue";
 
 interface ProductFormProps {
   product: Product | null;
@@ -75,6 +88,11 @@ const emit = defineEmits(["saved"]);
 const props = withDefaults(defineProps<ProductFormProps>(), {
   product: null,
 });
+
+const vatStore = useVatStore();
+
+const vats = computed(() => vatStore.getList);
+
 const loading = ref<boolean>(false);
 const stockManagement = ref<StockManagement>(
   props.product?.stockManagement || null

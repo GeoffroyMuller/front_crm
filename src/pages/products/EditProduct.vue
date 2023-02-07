@@ -56,12 +56,15 @@ import ProductStock from "@/components/products/ProductStock.vue";
 import type { ID } from "@/types/utils";
 import useUI from "@/core/helpers/vue/composables/ui";
 import { isNil } from "lodash";
+import useVatStore from "@/stores/vat";
 
 const router = useRouter();
 const { id } = useRoute().params;
 const productsStore = useProductStore();
 const { t } = useI18n();
 const { toast } = useUI();
+
+const vatStore = useVatStore();
 
 const product = ref<Product | null>(null);
 
@@ -85,6 +88,7 @@ const goToProductsPage = () => {
 };
 
 onMounted(async () => {
+  vatStore.fetchList();
   try {
     if (id != "new") {
       product.value = await productsStore.fetchById(id as ID, {

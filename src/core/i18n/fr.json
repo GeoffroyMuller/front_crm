@@ -62,6 +62,7 @@
   "pdf": "PDF",
   "companies": "Entreprises",
   "price": "Prix",
+  "vat": "TVA",
   "price_without_vat": "Prix HT",
   "price_with_vat": "Prix TTC",
   "reference": "Référence",
