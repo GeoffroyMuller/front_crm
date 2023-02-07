@@ -97,6 +97,17 @@
         </div>
       </div>
     </div>
+    <div
+      v-if="
+        !$_.isNil(internalProduct) &&
+        productsStore.isPhysicalStock(internalProduct) &&
+        nbProductReal != internalLine.qty
+      "
+    >
+      <Alert color="warning">{{
+        $t("pages.sales.warning-sentence-qty")
+      }}</Alert>
+    </div>
   </div>
 </template>
 
@@ -116,6 +127,7 @@ import useProductsRealStore from "@/stores/products_real";
 import QuoteSublineForm from "./QuoteSublineForm.vue";
 import Sidebar from "@/core/components/Sidebar.vue";
 import Button from "@/core/components/Button.vue";
+import Alert from "@/core/components/Alert.vue";
 
 interface QuoteLineProps {
   line: QuoteLine | InvoiceLine;
@@ -152,7 +164,6 @@ const isSidebarOpen = ref<boolean>(false);
 const nbProductReal = ref<number>();
 
 function openSublineForm() {
-  console.error(isSidebarOpen.value);
   isSidebarOpen.value = true;
 }
 
