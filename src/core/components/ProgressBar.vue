@@ -1,6 +1,9 @@
 <template>
   <div class="progress-bar">
-    <div class="progress" :style="{ width: `${progress}%` }"></div>
+    <div
+      class="progress"
+      :style="{ width: `${progress > 100 ? 100 : progress}%` }"
+    ></div>
   </div>
 </template>
 
