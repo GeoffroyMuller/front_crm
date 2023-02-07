@@ -29,6 +29,7 @@ const actions = computed(() => {
       { icon: "download", action: "downloadPdf", title: "download" },
       { icon: "mail", action: "sendMail", title: "send_by_mail" },
       { icon: "preview", action: "preview", title: "preview" },
+      { icon: "edit", action: "edit", title: "edit" },
     ],
   ];
   return res;

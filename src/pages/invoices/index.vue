@@ -95,6 +95,7 @@
           @preview="preview"
           @downloadPdf="downloadPdf"
           @sendMail="sendMail"
+          @edit="edit"
         />
       </template>
     </MagicDataTable>
@@ -133,6 +134,7 @@ const {
   sendMail,
   invoiceToPreview,
   invoiceToSendMail,
+  edit,
 } = useInvoice({
   afterAction: () => {
     invoiceStore.fetchList();

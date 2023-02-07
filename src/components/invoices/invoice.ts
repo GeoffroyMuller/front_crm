@@ -5,6 +5,7 @@ import type Invoice from "@/types/invoice";
 import config from "@/const";
 import { ref, type Ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 
 export interface UseInvoiceProps {
   invoice?: Ref<Invoice>;
@@ -27,6 +28,7 @@ to preview and send mail, add the following to the <template> :
 export default function useInvoice(props?: UseInvoiceProps) {
   const { toast, confirm } = useUI();
   const { t } = useI18n();
+  const router = useRouter();
 
   const invoiceStore = useInvoicesStore();
 
@@ -102,12 +104,17 @@ export default function useInvoice(props?: UseInvoiceProps) {
     }
   }
 
+  function edit(item: Invoice) {
+    router.push(`/invoices/${item.id}/edit`);
+  }
+
   return {
     invoiceStore,
     selected,
     setArchived,
     setArchivedSelection,
     downloadPdf,
+    edit,
     preview,
     invoiceToPreview,
     sendMail,

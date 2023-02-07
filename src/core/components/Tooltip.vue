@@ -21,12 +21,14 @@ const tooltip = ref();
 
 <style lang="scss" scoped>
 .tooltip {
+  @include typo(text2);
   background-color: #616161e6;
-  color: white;
+  color: color("white");
   width: max-content;
   border-radius: 5px;
   padding: 8px 16px;
   z-index: 1000;
+
   & p {
     margin: 0;
   }
