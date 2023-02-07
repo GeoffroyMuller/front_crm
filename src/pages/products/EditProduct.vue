@@ -14,7 +14,7 @@
           <Card>
             <ProductForm
               :product="product"
-              @saved="handleSubmit"
+              @saved="save"
               @cancel="goToProductsPage"
             >
             </ProductForm>
@@ -25,14 +25,14 @@
         </template>
         <template #advanced_settings>
           <Card>
-            <ProductAvancedSettings :product="product" @saved="handleSubmit" />
+            <ProductAvancedSettings :product="product" @saved="save" />
           </Card>
         </template>
       </Tabs>
       <Card v-else>
         <ProductForm
           :product="product"
-          @saved="handleSubmit"
+          @saved="save"
           @cancel="goToProductsPage"
         >
         </ProductForm>
@@ -44,29 +44,31 @@
 import ProductForm from "@/components/products/ProductForm.vue";
 import Page from "@/components/Page.vue";
 import useProductStore from "@/stores/products";
-import { useRoute, useRouter } from "vue-router";
 import { computed, onMounted, ref } from "vue";
-import type { Product } from "@/types/product";
 import Card from "@/core/components/Card.vue";
-import Button from "@/core/components/Button.vue";
 import Tabs from "@/core/components/Tabs.vue";
-import { useI18n } from "vue-i18n";
 import ProductAvancedSettings from "@/components/products/ProductAvancedSettings.vue";
 import ProductStock from "@/components/products/ProductStock.vue";
-import type { ID } from "@/types/utils";
-import useUI from "@/core/helpers/vue/composables/ui";
-import { isNil } from "lodash";
 import useVatStore from "@/stores/vat";
+import useEditPage from "@/components/editpage";
+import type { Product } from "@/types/product";
 
-const router = useRouter();
-const { id } = useRoute().params;
 const productsStore = useProductStore();
-const { t } = useI18n();
-const { toast } = useUI();
-
 const vatStore = useVatStore();
 
-const product = ref<Product | null>(null);
+const {
+  router,
+  model: product,
+  id,
+  save,
+  t,
+} = useEditPage<Product>({
+  store: productsStore,
+  populate: ["products_real", "product_fields"],
+  onAdd: () => {
+    goToProductsPage();
+  },
+});
 
 const productTabs = computed(() => {
   const res = [
@@ -89,47 +91,7 @@ const goToProductsPage = () => {
 
 onMounted(async () => {
   vatStore.fetchList();
-  try {
-    if (id != "new") {
-      product.value = await productsStore.fetchById(id as ID, {
-        populate: ["products_real", "product_fields"],
-      });
-    }
-  } catch (error) {
-    console.error(error);
-  }
 });
-
-async function handleSubmit(
-  data: Product,
-  afterSaved: () => any | null,
-  afterError: () => any | null
-) {
-  try {
-    if (id != "new") {
-      product.value = await productsStore.update(id as ID, data);
-    } else {
-      product.value = await productsStore.create(data);
-      goToProductsPage();
-    }
-    if (!isNil(afterSaved)) {
-      afterSaved();
-    }
-    toast({
-      type: "success",
-      message: t("saved"),
-    });
-  } catch (error: any) {
-    console.error(error);
-    if (!isNil(afterError)) {
-      afterError();
-    }
-    toast({
-      type: "danger",
-      message: `${t("error_occured")}${": " + error?.message}`,
-    });
-  }
-}
 </script>
 <style lang="scss">
 .edit-product {
