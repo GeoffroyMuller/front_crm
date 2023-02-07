@@ -133,7 +133,11 @@ const {
   sendMail,
   invoiceToPreview,
   invoiceToSendMail,
-} = useInvoice();
+} = useInvoice({
+  afterAction: () => {
+    invoiceStore.fetchList();
+  },
+});
 </script>
 
 <style lang="scss">

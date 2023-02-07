@@ -8,6 +8,7 @@ import { useI18n } from "vue-i18n";
 
 export interface UseInvoiceProps {
   invoice?: Ref<Invoice>;
+  afterAction?: () => void;
 }
 /*
 to preview and send mail, add the following to the <template> :
@@ -30,15 +31,19 @@ export default function useInvoice(props?: UseInvoiceProps) {
   const invoiceStore = useInvoicesStore();
 
   const selected = ref<Array<Invoice>>([]);
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const _afterAction = props?.afterAction || (() => {});
 
   const invoiceToPreview = ref<Invoice | null>();
-  function preview(item: Invoice) {
-    invoiceToPreview.value = item;
+  function preview(item?: Invoice) {
+    const _invoice = (props?.invoice?.value || item) as Invoice;
+    invoiceToPreview.value = _invoice;
   }
 
   const invoiceToSendMail = ref<Invoice | null>();
-  function sendMail(item: Invoice) {
-    invoiceToSendMail.value = item;
+  function sendMail(item?: Invoice) {
+    const _invoice = (props?.invoice?.value || item) as Invoice;
+    invoiceToSendMail.value = _invoice;
   }
 
   function downloadPdf(item?: Invoice) {
@@ -61,7 +66,7 @@ export default function useInvoice(props?: UseInvoiceProps) {
           type: "success",
           message: t(`archived`),
         });
-        invoiceStore.fetchList();
+        _afterAction();
       } catch (err) {
         toast({
           type: "danger",
@@ -92,7 +97,7 @@ export default function useInvoice(props?: UseInvoiceProps) {
           });
         }
       }
-      invoiceStore.fetchList();
+      _afterAction();
       selected.value = [];
     }
   }

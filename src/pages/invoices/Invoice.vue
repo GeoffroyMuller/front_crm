@@ -7,8 +7,17 @@
     <Grid :gap="1">
       <!-- <pre class="code" :style="{ maxHeight: '220px' }">{{ invoice }}</pre> -->
       <Flex :gap="1">
-        <Button @click="$router.push(`/invoices/${id}/edit`)">
+        <Button @click="$router.push(`/invoices/${id}/edit`)" icon="edit">
           {{ $t("edit") }}
+        </Button>
+        <Button @click="setArchived" icon="archive">
+          {{ $t("archive") }}
+        </Button>
+        <Button @click="downloadPdf" icon="download">
+          {{ $t("download") }}
+        </Button>
+        <Button @click="sendMail" icon="mail">
+          {{ $t("send_by_mail") }}
         </Button>
       </Flex>
 
@@ -86,12 +95,24 @@
 
       <InvoicePayments :invoice="invoice" />
     </Grid>
+    <InvoicePreview
+      @close="() => (invoiceToPreview = null)"
+      :invoice="invoiceToPreview"
+    />
+    <InvoiceSendMail
+      @clickDownloadPDF="() => downloadPdf(invoiceToSendMail as Invoice)"
+      @close="invoiceToSendMail = null"
+      :invoice="invoiceToSendMail"
+    />
   </Page>
 </template>
 
 <script setup lang="ts">
 import useEditPage from "@/components/editpage";
+import useInvoice from "@/components/invoices/invoice";
 import InvoicePayments from "@/components/invoices/InvoicePayments.vue";
+import InvoicePreview from "@/components/invoices/InvoicePreview.vue";
+import InvoiceSendMail from "@/components/invoices/InvoiceSendMail.vue";
 import Page from "@/components/Page.vue";
 import Button from "@/core/components/Button.vue";
 import Card from "@/core/components/Card.vue";
@@ -106,6 +127,15 @@ const { model: invoice, id } = useEditPage<Invoice>({
   store: invoiceStore,
   populate: ["client.company", "responsible.company", "lines.vat", "payments"],
 });
+
+const {
+  downloadPdf,
+  setArchived,
+  invoiceToSendMail,
+  invoiceToPreview,
+  preview,
+  sendMail,
+} = useInvoice({ invoice });
 </script>
 <style lang="scss" scoped>
 .invoice-user-title {
