@@ -122,7 +122,7 @@ const { confirm, toast } = useUI();
 const { t } = useI18n();
 
 async function deleteCompany(company: Company) {
-  if (await confirm("clients.sure_delete_company")) {
+  if (await confirm(t("pages.clients.sure_delete_company"))) {
     try {
       await companiesStore.delete(company.id);
       toast({
@@ -141,7 +141,7 @@ async function deleteCompany(company: Company) {
 }
 
 async function deleteClient(client: Client) {
-  if (await confirm("clients.sure_delete_company")) {
+  if (await confirm(t("pages.clients.sure_delete_client"))) {
     try {
       await clientsStore.delete(client.id);
       toast({
