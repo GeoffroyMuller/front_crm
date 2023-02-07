@@ -316,7 +316,7 @@ watch(
       justify-content: space-between;
       align-items: center;
       gap: spacing(1);
-      :last-child {
+      > *:last-child {
         display: flex;
         justify-content: flex-end;
         text-align: end;
