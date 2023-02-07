@@ -1,11 +1,7 @@
 <template>
   <Page :title="title" :loading="loading" back>
     <Card>
-      <Form
-        :model-value="quote"
-        @submit="handleSubmit"
-        class="quote-form-content"
-      >
+      <Form :model-value="quote" @submit="save" class="quote-form-content">
         <template #default="{ hasError }">
           <div class="form-head">
             <TextField name="name" :label="$t('title')" />
@@ -134,42 +130,28 @@ const {
   model: quote,
   router,
   t,
-  toast,
+  save,
 } = useEditPage<Quote>({
   store: quotesStore,
   populate: ["client.company", "responsible.company", "lines.vat"],
-});
-
-async function handleSubmit(data: any) {
-  if (data.lines) {
-    data.lines = data.lines
-      .map((line) => {
-        const newLine = { ...line };
-        delete newLine.vat;
-        return newLine;
-      })
-      .filter((line) => !isEmpty(line));
-  }
-  delete data.client;
-  try {
-    if (!isAddAction.value) {
-      await quotesStore.update((quote.value as Quote).id, data);
-    } else {
-      const res = await quotesStore.create(data);
-      router.push("/quotes/" + res.id);
-      quote.value = res;
+  mapBeforeSave: (data) => {
+    if (data.lines) {
+      data.lines = data.lines
+        .map((line) => {
+          const newLine = { ...line };
+          delete newLine.vat;
+          return newLine;
+        })
+        .filter((line) => !isEmpty(line));
     }
-    toast({
-      type: "success",
-      message: t(`saved`),
-    });
-  } catch (err) {
-    toast({
-      type: "danger",
-      message: err.response.data.message,
-    });
-  }
-}
+    delete data.client;
+    return data;
+  },
+  onAdd: (res) => {
+    router.push("/quotes/" + res.id);
+    quote.value = res;
+  },
+});
 </script>
 
 <style scoped lang="scss">
