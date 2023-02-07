@@ -62,6 +62,10 @@ function handleAction(a: Action) {
     cursor: pointer;
     &:hover {
       background-color: color("primary", 50);
+      color: color("primary", 500);
+      svg {
+        fill: color("primary", 500);
+      }
     }
   }
 }
