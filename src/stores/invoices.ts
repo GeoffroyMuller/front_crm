@@ -13,6 +13,9 @@ const useInvoicesStore = makeAPIStore<Invoice>({
     async addPayment(id: ID, data: InvoicePayment) {
       return (await axios.post(`/invoices/${id}/payments`, data)).data;
     },
+    async sendByMail(id: ID) {
+      return await axios.post(`/invoices/${id}/send_mail`);
+    },
   },
 });
 
