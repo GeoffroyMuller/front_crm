@@ -19,6 +19,9 @@
         <Button @click="sendMail" icon="mail">
           {{ $t("send_by_mail") }}
         </Button>
+        <Button @click.stop="preview" icon="preview">
+          {{ $t("preview") }}
+        </Button>
       </Flex>
 
       <Card>
