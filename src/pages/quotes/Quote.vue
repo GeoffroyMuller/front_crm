@@ -128,7 +128,7 @@ const quoteStore = useQuoteStore();
 
 const { model: quote, id } = useEditPage<Quote>({
   store: quoteStore,
-  populate: ["client.company", "responsible.company", "lines.vat"],
+  populate: ["client.company", "responsible.company", "lines.[vat, sublines]"],
 });
 
 const {

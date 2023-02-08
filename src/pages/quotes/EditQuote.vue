@@ -147,7 +147,7 @@ const {
   save,
 } = useEditPage<Quote>({
   store: quotesStore,
-  populate: ["client.company", "responsible.company", "lines.vat"],
+  populate: ["client.company", "responsible.company", "lines.[vat, sublines]"],
   mapBeforeSave: (data) => {
     if (data.lines) {
       data.lines = data.lines

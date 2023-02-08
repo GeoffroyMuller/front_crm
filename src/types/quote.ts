@@ -25,6 +25,11 @@ export interface Quote {
   taxes?: number;
 }
 
+export interface QuoteSubLine {
+  id: ID;
+  idProductReal: ID;
+}
+
 export interface QuoteLine {
   description: string;
   discount?: number;
@@ -37,4 +42,5 @@ export interface QuoteLine {
   unit_price?: number;
   vat: Vat;
   idProduct?: number;
+  sublines?: Array<QuoteSubLine>;
 }

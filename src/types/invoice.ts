@@ -24,6 +24,11 @@ export default interface Invoice {
   taxes?: number;
 }
 
+export interface InvoiceSubLine {
+  id: ID;
+  idProductReal: ID;
+}
+
 export interface InvoiceLine {
   description: string;
   discount?: number;
@@ -35,6 +40,7 @@ export interface InvoiceLine {
   type: "title" | "product" | "comment" | "discount";
   unit_price?: number;
   vat?: Vat;
+  sublines?: Array<InvoiceSubLine>;
 }
 
 export interface InvoicePayment {
