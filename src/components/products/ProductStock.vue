@@ -100,7 +100,6 @@ async function fetchProductsReal() {
 }
 
 const openSideProductReal = async (productReal: ProductReal | null) => {
-  console.error("dqs");
   if (!isNil(productReal) && !isNil(productReal.id)) {
     try {
       loadingProductReal.value = true;
