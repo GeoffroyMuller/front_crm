@@ -102,7 +102,8 @@
     "summary": "Titre",
     "descriptions": "Description",
     "location": "Localisation",
-    "all_day_event": "Cette evenement dure toute la journée"
+    "all_day_event": "Cette evenement dure toute la journée",
+    "events": "Evenements"
   },
   "settings-page": {
     "role": {

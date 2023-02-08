@@ -11,7 +11,7 @@ import type { ID } from "@/types/utils";
 import { sleep } from "../../utils";
 import type { AxiosResponse } from "axios";
 import type { Filters, PaginateResult, PaginateResult2 } from "./types";
-import { cloneDeep, merge } from "lodash";
+import { cloneDeep, merge, uniqueId } from "lodash";
 
 export interface makeAPIStoreProps {
   id: string;
@@ -53,6 +53,8 @@ export interface APIStoreActions<T> {
   update: (id: ID, body: T) => Promise<T>;
   create: (body: T) => Promise<T>;
   delete: (id: ID) => Promise<T>;
+
+  getDerivedStore: <M>(id: ID, relation: string) => APIStoreDef<M>;
 }
 
 export interface APIStoreGetters<T> extends _GettersTree<APIStoreStateTree<T>> {
@@ -156,6 +158,7 @@ export function makeAPIStore<T>(props: makeAPIStoreProps): APIStoreDef<T> {
         pageSize: 10,
       },
       totalPages: 1,
+      derivedStores: {},
 
       ...props.state,
     }),
@@ -165,6 +168,17 @@ export function makeAPIStore<T>(props: makeAPIStoreProps): APIStoreDef<T> {
       ...props.getters,
     },
     actions: {
+      getDerivedStore<M>(id: ID, relation: string): APIStoreDef<M> {
+        if (this.derivedStores[relation]) {
+          return this.derivedStores[relation];
+        }
+        const useDerivedStore = makeAPIStore<M>({
+          id: `${props.id}-${relation}`,
+          path: `${_getPath()}/${id}/${relation}/`,
+        });
+        this.derivedStores[relation] = useDerivedStore;
+        return useDerivedStore;
+      },
       async setFilters(f: Filters) {
         this.filters = {
           ...f,

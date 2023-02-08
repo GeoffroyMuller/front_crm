@@ -19,11 +19,6 @@
           sortable: true,
         },
         {
-          title: $t('stock-management'),
-          key: 'stockManagement',
-          sortable: true,
-        },
-        {
           title: $t('quantity'),
           key: 'stock',
           sortable: true,
@@ -57,15 +52,6 @@
       <template #content-stock="{ item }">
         <div>
           {{ productsStore.isNumeraryStock(item) ? item.stock : "-" }}
-        </div>
-      </template>
-      <template #content-stockManagement="{ item }">
-        <div>
-          {{
-            $_.isNil(item.stockManagement)
-              ? $t("none")
-              : $t(item.stockManagement)
-          }}
         </div>
       </template>
     </MagicDataTable>

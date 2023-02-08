@@ -60,6 +60,7 @@ export interface DataTableProps<T = any> {
   activeColumn?: Column;
   loading?: boolean;
   selectable?: boolean;
+  label?: string;
 }
 
 const props = withDefaults(defineProps<DataTableProps>(), {

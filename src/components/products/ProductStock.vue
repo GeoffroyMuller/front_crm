@@ -3,16 +3,6 @@
     <MagicDataTable
       :columns="[
         {
-          title: $t('id'),
-          key: 'id',
-          sortable: true,
-        },
-        {
-          title: $t('id_produit'),
-          key: 'idProduct',
-          sortable: true,
-        },
-        {
           title: $t('reference'),
           key: 'reference',
           sortable: true,

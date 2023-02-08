@@ -11,6 +11,7 @@
     :nbPage="totalPages"
     :loading="loading"
     :selectable="selectable"
+    :label="label"
   >
     <template v-for="(index, name) in $slots" v-slot:[name]="data">
       <slot :name="name" v-bind="data"></slot>
@@ -30,6 +31,7 @@ interface MagicDataTableProps<T> {
   hasLocalState?: boolean;
   columns?: Array<Column<T>> | null;
   selectable?: boolean;
+  label?: string;
 }
 
 const props = withDefaults(defineProps<MagicDataTableProps<any>>(), {

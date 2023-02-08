@@ -2,6 +2,35 @@
   <Form shortcuts :model-value="product" @submit="handleSubmit">
     <template #default="{ hasError, hasChanged }">
       <div class="avanced-settings-product-event">
+        <MagicDataTable
+          :columns="[]"
+          has-local-state
+          :filters="{
+            populate: [],
+            $eq: {
+              idProduct: product?.id,
+            },
+          }"
+          :store="useEventsStore()"
+          :label="$t('events.events')"
+        >
+          <template #actions-title>
+            <div>
+              <Button
+                color="success"
+                icon="add"
+                @click="
+                  (e) => {
+                    e.stopPropagation();
+                  }
+                "
+              >
+                {{ $t("add") }}
+              </Button>
+            </div>
+          </template>
+        </MagicDataTable>
+
         <div class="avanced-settings-event-bottom">
           <Button @click="$emit('cancel')" variant="text">{{
             $t("cancel")
@@ -27,6 +56,8 @@ import Form from "@/core/components/form/Form.vue";
 import Repetable from "@/core/components/form/repetable/Repetable.vue";
 import Select from "@/core/components/form/Select.vue";
 import TextField from "@/core/components/form/TextField.vue";
+import MagicDataTable from "@/core/components/magic/MagicDataTable.vue";
+import useEventsStore from "@/stores/events";
 import useProductsStore from "@/stores/products";
 import type { Product } from "@/types/product";
 
