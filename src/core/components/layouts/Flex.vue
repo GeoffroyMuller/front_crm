@@ -10,6 +10,7 @@
       justifyContent,
       alignItems,
       flexDirection: direction,
+      flexWrap,
     }"
   >
     <slot />
@@ -17,9 +18,12 @@
 </template>
 <script setup lang="ts">
 import useLayoutComponent from "@/core/helpers/vue/composables/layoutComponent";
-import { processSlotOutlet } from "@vue/compiler-core";
-import { ref, watch, type Component } from "vue";
-import type { AlignItemsOptions, JustifyContentOptions } from "./types";
+import { ref, type Component } from "vue";
+import type {
+  AlignItemsOptions,
+  FlexWrapOptions,
+  JustifyContentOptions,
+} from "./types";
 
 interface FlexProps {
   direction?: "row" | "column";
@@ -27,6 +31,7 @@ interface FlexProps {
   justifyContent?: JustifyContentOptions;
   component?: Component;
   divided?: boolean;
+  flexWrap?: FlexWrapOptions;
 
   gap?: number;
 

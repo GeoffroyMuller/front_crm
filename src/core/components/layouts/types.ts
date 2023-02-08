@@ -28,3 +28,5 @@ export type JustifyContentOptions =
   | "start"
   | "end"
   | "stretch";
+
+export type FlexWrapOptions = "wrap" | "nowrap" | "initial";

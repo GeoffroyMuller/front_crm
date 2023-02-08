@@ -12,6 +12,20 @@
       @inputChange="handleInputChange"
     >
       <template #footer></template>
+      <template #fields>
+        <Flex
+          align-items="center"
+          flex-wrap="wrap"
+          :gap="gap"
+          :columns="columns"
+        >
+          <template v-for="field of filters" :key="field.props.name">
+            <div :style="{ flexGrow: 1 }">
+              <MagicFormField v-bind="field" />
+            </div>
+          </template>
+        </Flex>
+      </template>
     </MagicForm>
   </Card>
 </template>
@@ -25,6 +39,8 @@ import MagicForm from "./MagicForm.vue";
 import type { MagicFormFieldProps } from "@/core/components/magic/MagicFormField.vue";
 import type { GridColumnsOptions } from "../layouts/types";
 import Icon from "../Icon.vue";
+import Flex from "../layouts/Flex.vue";
+import MagicFormField from "@/core/components/magic/MagicFormField.vue";
 
 export interface MagicFilterBarProps<T> {
   store: APIStore<T>;
