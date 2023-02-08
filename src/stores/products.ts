@@ -9,6 +9,7 @@ const useProductsStore = makeAPIStore<Product>({
     isNumeraryStock: (product: Product) =>
       product?.stockManagement == "numerary",
     isNullStock: (product: Product) => product?.stockManagement == null,
+    isEventStock: (product: Product) => product?.stockManagement == "events",
   },
 });
 

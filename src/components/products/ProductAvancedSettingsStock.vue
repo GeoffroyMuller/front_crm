@@ -2,11 +2,7 @@
   <Form shortcuts :model-value="productInternal" @submit="handleSubmit">
     <template #default="{ hasError, hasChanged }">
       <div class="avanced-settings-product">
-        <Repetable
-          v-show="!isNumeraryStock"
-          name="product_fields"
-          :label="$t('fields')"
-        >
+        <Repetable name="product_fields" :label="$t('fields')">
           <template #default="{ data }">
             <div class="product_field">
               <TextField
@@ -77,9 +73,9 @@ import TextField from "@/core/components/form/TextField.vue";
 import useProductsStore from "@/stores/products";
 import type { Product, ProductField } from "@/types/product";
 import { isNil } from "lodash";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 
-interface ProductAvancedSettingsProps {
+interface ProductAvancedSettingsStockProps {
   product: Product | null;
   loading: boolean;
 }
@@ -89,13 +85,9 @@ interface IFieldOption {
 }
 const productStore = useProductsStore();
 const emit = defineEmits(["saved", "cancel"]);
-const props = withDefaults(defineProps<ProductAvancedSettingsProps>(), {
+const props = withDefaults(defineProps<ProductAvancedSettingsStockProps>(), {
   product: null,
 });
-
-const isNumeraryStock = ref<boolean>(
-  productStore.isNumeraryStock(props.product)
-);
 
 const productInternal = computed(() => {
   return {

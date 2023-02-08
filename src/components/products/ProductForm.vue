@@ -29,7 +29,14 @@
           name="description"
           :label="$t('pages.edit-product.description')"
         />
-        <Flex :gap="2">
+        <Flex
+          :gap="2"
+          v-if="
+            product == null ||
+            productsStore.isEventStock(product) ||
+            value.isEvent
+          "
+        >
           <div :style="{ width: '150px' }" v-if="product == null">
             <Switch
               :label="$t('pages.edit-product.event-product')"
@@ -38,16 +45,16 @@
           </div>
           <div :style="{ maxWidth: '500px' }">
             <TextField
-              v-if="value.isEvent || product?.stockManagement == 'events'"
+              v-if="value.isEvent || productsStore.isEventStock(product)"
               :label="$t('pages.edit-product.capacity')"
               name="capacity"
               type="number"
             />
           </div>
         </Flex>
-        <div class="form-stock" v-if="product == null">
+        <div class="form-stock">
           <RadioGroup
-            v-if="!value.isEvent"
+            v-if="product == null && !value.isEvent"
             name="stockManagement"
             v-model="stockManagement"
             :label="$t('pages.edit-product.stock-management')"
@@ -99,6 +106,7 @@ import Select from "@/core/components/form/Select.vue";
 import HtmlEditor from "@/core/components/HtmlEditor.vue";
 import Switch from "@/core/components/form/Switch.vue";
 import Flex from "@/core/components/layouts/Flex.vue";
+import useProductsStore from "@/stores/products";
 
 interface ProductFormProps {
   product: Product | null;
@@ -110,6 +118,7 @@ const props = withDefaults(defineProps<ProductFormProps>(), {
 });
 
 const vatStore = useVatStore();
+const productsStore = useProductsStore();
 
 const vats = computed(() => vatStore.getList);
 

@@ -26,7 +26,14 @@
         </template>
         <template #advanced_settings>
           <Card>
-            <ProductAvancedSettings
+            <ProductAvancedSettingsStock
+              v-if="productsStore.isPhysicalStock(product)"
+              :loading="loading"
+              :product="product"
+              @saved="save"
+            />
+            <ProductAdvancedSettingsEvents
+              v-if="productsStore.isEventStock(product)"
               :loading="loading"
               :product="product"
               @saved="save"
@@ -53,11 +60,12 @@ import useProductStore from "@/stores/products";
 import { computed, onMounted, ref } from "vue";
 import Card from "@/core/components/Card.vue";
 import Tabs from "@/core/components/Tabs.vue";
-import ProductAvancedSettings from "@/components/products/ProductAvancedSettings.vue";
+import ProductAvancedSettingsStock from "@/components/products/ProductAvancedSettingsStock.vue";
 import ProductStock from "@/components/products/ProductStock.vue";
 import useVatStore from "@/stores/vat";
 import useEditPage from "@/components/editpage";
 import type { Product } from "@/types/product";
+import ProductAdvancedSettingsEvents from "@/components/products/ProductAdvancedSettingsEvents.vue";
 
 const productsStore = useProductStore();
 const vatStore = useVatStore();
@@ -78,17 +86,18 @@ const {
 });
 
 const productTabs = computed(() => {
-  const res = [
-    { id: "informations", title: t("informations") },
-    { id: "stock", title: t("stock") },
-    { id: "advanced_settings", title: t("advanced_settings") },
-  ];
-  if (!productsStore.isPhysicalStock(product.value)) {
-    res.splice(
-      res.findIndex((elem) => elem.id === "stock"),
-      1
-    );
+  const res = [{ id: "informations", title: t("informations") }];
+
+  if (
+    productsStore.isPhysicalStock(product.value) ||
+    productsStore.isEventStock(product.value)
+  ) {
+    if (productsStore.isPhysicalStock(product.value)) {
+      res.push({ id: "stock", title: t("stock") });
+    }
+    res.push({ id: "advanced_settings", title: t("advanced_settings") });
   }
+
   return res;
 });
 
