@@ -1,3 +1,4 @@
+import { sleep } from "@/core/helpers/utils";
 import useUI from "@/core/helpers/vue/composables/ui";
 import type { APIStore } from "@/core/helpers/vue/store/store.factory";
 import type { ID } from "@/types/utils";
@@ -64,27 +65,32 @@ export default function useEditPage<T extends WithID>(
 
   async function save(data: any) {
     const _data = props.mapBeforeSave ? props.mapBeforeSave(data) : data;
+    loading.value = true;
     try {
       if (!isAddAction.value) {
         const res = await props.store.update((model.value as T).id, _data);
         if (props.onUpdate) {
           props.onUpdate(res);
         }
+        loading.value = false;
       } else {
         const res = await props.store.create(_data);
         if (props.onAdd) {
           props.onAdd(res);
         }
+        loading.value = false;
       }
       toast({
         type: "success",
         message: t(`saved`),
       });
+      return;
     } catch (err) {
       toast({
         type: "danger",
         message: err.response.data.message,
       });
+      return;
     }
   }
 

@@ -27,7 +27,7 @@
                 name="type"
               />
               <Repetable
-                v-show="data.type == 'select'"
+                v-if="data.type == 'select'"
                 :rules="$yup.array().min(1)"
                 :label="$t('pages.edit-product.add-selectable-options')"
                 name="props"
@@ -81,6 +81,7 @@ import { computed, ref } from "vue";
 
 interface ProductAvancedSettingsProps {
   product: Product | null;
+  loading: boolean;
 }
 interface IFieldOption {
   label: string;
@@ -92,7 +93,6 @@ const props = withDefaults(defineProps<ProductAvancedSettingsProps>(), {
   product: null,
 });
 
-const loading = ref<boolean>(false);
 const isNumeraryStock = ref<boolean>(
   productStore.isNumeraryStock(props.product)
 );
@@ -146,21 +146,11 @@ function _mapProductFields(formDataProductFields: any): Array<ProductField> {
 }
 
 function handleSubmit(data: any) {
-  loading.value = true;
   const productRes = {
     ...props.product,
     product_fields: _mapProductFields(data.product_fields),
   };
-  emit(
-    "saved",
-    productRes,
-    () => {
-      loading.value = false;
-    },
-    () => {
-      loading.value = false;
-    }
-  );
+  emit("saved", productRes);
 }
 </script>
 <style lang="scss">

@@ -83,6 +83,7 @@ import HtmlEditor from "@/core/components/HtmlEditor.vue";
 
 interface ProductFormProps {
   product: Product | null;
+  loading: boolean;
 }
 const emit = defineEmits(["saved"]);
 const props = withDefaults(defineProps<ProductFormProps>(), {
@@ -93,7 +94,6 @@ const vatStore = useVatStore();
 
 const vats = computed(() => vatStore.getList);
 
-const loading = ref<boolean>(false);
 const stockManagement = ref<StockManagement>(
   props.product?.stockManagement || null
 );
@@ -102,18 +102,8 @@ const isNumeraryStock = computed(() => {
   return stockManagement.value == "numerary";
 });
 
-function handleSubmit(data: any) {
-  loading.value = true;
-  emit(
-    "saved",
-    data,
-    () => {
-      loading.value = false;
-    },
-    () => {
-      loading.value = false;
-    }
-  );
+async function handleSubmit(data: any) {
+  emit("saved", data);
 }
 </script>
 <style lang="scss">

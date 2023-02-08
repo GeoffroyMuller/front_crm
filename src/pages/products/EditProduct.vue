@@ -16,6 +16,7 @@
               :product="product"
               @saved="save"
               @cancel="goToProductsPage"
+              :loading="loading"
             >
             </ProductForm>
           </Card>
@@ -25,7 +26,11 @@
         </template>
         <template #advanced_settings>
           <Card>
-            <ProductAvancedSettings :product="product" @saved="save" />
+            <ProductAvancedSettings
+              :loading="loading"
+              :product="product"
+              @saved="save"
+            />
           </Card>
         </template>
       </Tabs>
@@ -34,6 +39,7 @@
           :product="product"
           @saved="save"
           @cancel="goToProductsPage"
+          :loading="loading"
         >
         </ProductForm>
       </Card>
@@ -62,6 +68,7 @@ const {
   id,
   save,
   t,
+  loading,
 } = useEditPage<Product>({
   store: productsStore,
   populate: ["products_real", "product_fields"],
