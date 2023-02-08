@@ -1,5 +1,5 @@
 <template>
-  <Page :title="title" :loading="!quote" back>
+  <Page :title="title" :loading="isAddAction ? false : !quote" back>
     <Card>
       <Form
         shortcuts

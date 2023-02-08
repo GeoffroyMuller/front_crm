@@ -1,5 +1,5 @@
 <template>
-  <Page :title="title" :loading="!invoice" back>
+  <Page :title="title" :loading="isAddAction ? false : !invoice" back>
     <Card>
       <Form
         shortcuts
@@ -114,6 +114,13 @@ import useEditPage from "@/components/editpage";
 const invoiceStore = useInvoicesStore();
 const clientsStore = useClientStore();
 const vatsStore = useVatStore();
+
+onMounted(() => {
+  if (isAddAction.value && invoiceStore.invoiceToCreate != null) {
+    invoice.value = invoiceStore.invoiceToCreate;
+    invoiceStore.deleteInvoiceToCreate();
+  }
+});
 
 const {
   model: invoice,

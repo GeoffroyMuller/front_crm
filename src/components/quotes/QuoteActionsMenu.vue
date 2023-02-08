@@ -30,6 +30,11 @@ const actions = computed(() => {
       { icon: "mail", action: "sendMail", title: "send_by_mail" },
       { icon: "preview", action: "preview", title: "preview" },
       { icon: "edit", action: "edit", title: "edit" },
+      {
+        icon: "request_quote",
+        action: "invoice",
+        title: "pages.quotes.create_invoice",
+      },
     ],
   ];
   return res;

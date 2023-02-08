@@ -21,6 +21,9 @@ const useInvoicesStore = makeAPIStore<Invoice>({
     async sendByMail(id: ID) {
       return await axios.post(`/invoices/${id}/send_mail`);
     },
+    async deleteInvoiceToCreate() {
+      this.invoiceToCreate = null;
+    },
     async invoiceToCreateFromQuote(id: ID): Promise<void> {
       const quoteStore = useQuoteStore(pinia);
       const quote = await quoteStore.fetchById(id, {

@@ -109,6 +109,7 @@
           @downloadPdf="downloadPdf"
           @sendMail="sendMail"
           @edit="edit"
+          @invoice="createInvoiceFromQuote"
         />
       </template>
     </MagicDataTable>
@@ -169,6 +170,7 @@ const {
   quoteToPreview,
   quoteToSendMail,
   edit,
+  createInvoiceFromQuote,
 } = useQuote({
   afterAction: () => {
     quotestore.fetchList();

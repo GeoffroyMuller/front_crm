@@ -13,7 +13,8 @@
     },
     "quotes": {
       "sure_archive_quote": "Etes vous sur de vouloir archiver ce devis ?",
-      "sure_archive_selected": "Etes vous sur de vouloir archiver la séléction ?"
+      "sure_archive_selected": "Etes vous sur de vouloir archiver la séléction ?",
+      "create_invoice": "Creer une facture"
     },
     "invoices": {
       "sure_archive_invoice": "Etes vous sur de vouloir archiver cette facture ?",

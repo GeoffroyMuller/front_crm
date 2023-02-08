@@ -36,7 +36,7 @@ export default function useEditPage<T extends WithID>(
     if (props.model) {
       return props.model.value?.id == null;
     }
-    return !model.value && (!id || id === "new");
+    return !id || id === "new";
   });
 
   const loading = ref(false);

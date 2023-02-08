@@ -6,6 +6,7 @@ import config from "@/const";
 import { ref, type Ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import useInvoicesStore from "@/stores/invoices";
 
 export interface UseQuoteProps {
   quote?: Ref<Quote>;
@@ -31,6 +32,7 @@ export default function useQuote(props?: UseQuoteProps) {
   const router = useRouter();
 
   const quotestore = useQuotesStore();
+  const invoiceStore = useInvoicesStore();
 
   const selected = ref<Array<Quote>>([]);
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -52,6 +54,20 @@ export default function useQuote(props?: UseQuoteProps) {
     const _quote = (props?.quote?.value || item) as Quote;
     const url = `${config.API_URL}/quotes/${_quote.id}/pdf?token=${getJWT()}`;
     window.open(url, "_blank");
+  }
+
+  async function createInvoiceFromQuote(item?: Quote) {
+    try {
+      const _quote = (props?.quote?.value || item) as Quote;
+      await invoiceStore.invoiceToCreateFromQuote(_quote.id);
+      router.push("/invoices/new/edit");
+    } catch (err) {
+      console.error(err);
+      toast({
+        type: "danger",
+        message: (err as any).response.data.message,
+      });
+    }
   }
 
   async function setArchived(item: Quote) {
@@ -117,5 +133,7 @@ export default function useQuote(props?: UseQuoteProps) {
     quoteToPreview,
     sendMail,
     quoteToSendMail,
+
+    createInvoiceFromQuote,
   };
 }
