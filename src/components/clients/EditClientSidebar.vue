@@ -27,7 +27,7 @@
           :label="$t('email')"
         />
         <MagicAutocomplete
-          name="idCompany"
+          name="idClientCompany"
           :label="$t('company')"
           :getOptionLabel="(opt) => opt.name"
           :rules="$yup.string().required()"
