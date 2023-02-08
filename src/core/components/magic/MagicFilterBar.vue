@@ -13,12 +13,7 @@
     >
       <template #footer></template>
       <template #fields>
-        <Flex
-          align-items="center"
-          flex-wrap="wrap"
-          :gap="gap"
-          :columns="columns"
-        >
+        <Flex align-items="center" flex-wrap="wrap" :gap="gap">
           <template v-for="field of filters" :key="field.props.name">
             <div :style="{ flexGrow: 1 }">
               <MagicFormField v-bind="field" />
