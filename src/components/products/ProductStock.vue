@@ -52,9 +52,7 @@
 <script setup lang="ts">
 import MagicDataTable from "@/core/components/magic/MagicDataTable.vue";
 import type { Product, ProductReal } from "@/types/product";
-import useProductsRealStore from "@/stores/products_real";
 import ProductRealForm from "./ProductRealForm.vue";
-
 import Sidebar from "@/core/components/Sidebar.vue";
 import { ref } from "vue";
 import Button from "@/core/components/Button.vue";
@@ -70,7 +68,6 @@ const props = withDefaults(defineProps<ProductStockProps>(), {
   product: null,
 });
 const isSidebarOpen = ref<boolean>(false);
-const productsRealStore = useProductsRealStore();
 const productsStore = useProductsStore();
 
 const store = productsStore.getDerivedStore<ProductReal>(
