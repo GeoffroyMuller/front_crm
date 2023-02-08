@@ -40,6 +40,7 @@ export interface InvoiceLine {
   type: "title" | "product" | "comment" | "discount";
   unit_price?: number;
   vat?: Vat;
+  idProduct?: number;
   sublines?: Array<InvoiceSubLine>;
 }
 
