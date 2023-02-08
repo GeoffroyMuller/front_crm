@@ -29,23 +29,23 @@
           name="description"
           :label="$t('pages.edit-product.description')"
         />
+        <Flex :gap="2">
+          <div :style="{ width: '150px' }" v-if="product == null">
+            <Switch
+              :label="$t('pages.edit-product.event-product')"
+              name="isEvent"
+            />
+          </div>
+          <div :style="{ maxWidth: '500px' }">
+            <TextField
+              v-if="value.isEvent || product?.stockManagement == 'events'"
+              :label="$t('pages.edit-product.capacity')"
+              name="capacity"
+              type="number"
+            />
+          </div>
+        </Flex>
         <div class="form-stock" v-if="product == null">
-          <Flex :gap="2">
-            <div :style="{ width: '150px' }">
-              <Switch
-                :label="$t('pages.edit-product.event-product')"
-                name="isEvent"
-              />
-            </div>
-            <div :style="{ maxWidth: '500px' }">
-              <TextField
-                v-if="value.isEvent"
-                :label="$t('pages.edit-product.capacity')"
-                name="capacity"
-                type="number"
-              />
-            </div>
-          </Flex>
           <RadioGroup
             v-if="!value.isEvent"
             name="stockManagement"
