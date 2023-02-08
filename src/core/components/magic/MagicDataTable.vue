@@ -1,6 +1,5 @@
 <template>
   <DataTable
-    @row-click="($item) => $emit('row-click', $item)"
     @update:selected="($selected) => $emit('update:selected', $selected)"
     :columns="columns"
     :items="items"

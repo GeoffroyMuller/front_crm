@@ -73,6 +73,7 @@ const emit = defineEmits([
   "update:itemsPerPage",
   "sort",
   "update:selected",
+  "row-click",
 ]);
 
 const sortDesc = ref<boolean | null>(null);

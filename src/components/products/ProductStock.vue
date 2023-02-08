@@ -9,16 +9,7 @@
         },
       ]"
       isCard
-      :store="
-        productsStore.getDerivedStore(product?.id as string, 'real', {
-          path: 'products_real',
-          filters: {
-            $eq: {
-              idProduct: product?.id,
-            },
-          },
-        })
-      "
+      :store="store"
       @row-click="openSideProductReal"
     >
       <template #actions-title>
@@ -81,6 +72,20 @@ const props = withDefaults(defineProps<ProductStockProps>(), {
 const isSidebarOpen = ref<boolean>(false);
 const productsRealStore = useProductsRealStore();
 const productsStore = useProductsStore();
+
+const store = productsStore.getDerivedStore<ProductReal>(
+  props.product?.id as string,
+  "real",
+  {
+    path: "products_real",
+    filters: {
+      $eq: {
+        idProduct: props.product?.id,
+      },
+    },
+  }
+);
+
 const loadingProductReal = ref<boolean>(false);
 const { toast } = useUI();
 
@@ -88,7 +93,7 @@ const currentProductReal = ref<ProductReal | null>(null);
 
 async function fetchProductsReal() {
   try {
-    await productsRealStore.fetchList();
+    await store.fetchList();
   } catch (error: any) {
     toast({
       type: "danger",
@@ -98,16 +103,14 @@ async function fetchProductsReal() {
 }
 
 const openSideProductReal = async (productReal: ProductReal | null) => {
+  console.error("dqs");
   if (!isNil(productReal) && !isNil(productReal.id)) {
     try {
       loadingProductReal.value = true;
 
-      currentProductReal.value = await productsRealStore.fetchById(
-        productReal?.id,
-        {
-          populate: ["product_real_fields"],
-        }
-      );
+      currentProductReal.value = await store.fetchById(productReal?.id, {
+        populate: ["product_real_fields"],
+      });
       isSidebarOpen.value = true;
       loadingProductReal.value = false;
     } catch (error) {
