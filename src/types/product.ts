@@ -15,7 +15,12 @@ export interface Product {
   product_fields?: Array<ProductField>;
 }
 
-export type StockManagement = "none" | "numerary" | "physical" | null;
+export type StockManagement =
+  | "none"
+  | "numerary"
+  | "physical"
+  | null
+  | "events";
 
 export interface ProductReal {
   id?: ID;

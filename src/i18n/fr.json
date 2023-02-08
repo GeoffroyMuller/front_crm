@@ -76,7 +76,9 @@
       "new-product": "Nouveau produit",
       "creat-product-real": "Creer un produit physique",
       "edit-product-real": "Modifier le produit",
-      "add-selectable-options": "Ajouter des options de selection"
+      "add-selectable-options": "Ajouter des options de selection",
+      "event-product": "Ce produit est un produit evenementiel",
+      "capacity": "Capacité des évenements"
     }
   },
   "new-quote": "Nouveau devis",

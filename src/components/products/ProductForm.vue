@@ -1,6 +1,6 @@
 <template>
   <Form shortcuts :model-value="product" @submit="handleSubmit">
-    <template #default="{ hasError, hasChanged }">
+    <template #default="{ hasError, hasChanged, value }">
       <div class="form-product">
         <div class="form-head">
           <TextField
@@ -30,7 +30,24 @@
           :label="$t('pages.edit-product.description')"
         />
         <div class="form-stock" v-if="product == null">
+          <Flex :gap="2">
+            <div :style="{ width: '150px' }">
+              <Switch
+                :label="$t('pages.edit-product.event-product')"
+                name="isEvent"
+              />
+            </div>
+            <div :style="{ maxWidth: '500px' }">
+              <TextField
+                v-if="value.isEvent"
+                :label="$t('pages.edit-product.capacity')"
+                name="capacity"
+                type="number"
+              />
+            </div>
+          </Flex>
           <RadioGroup
+            v-if="!value.isEvent"
             name="stockManagement"
             v-model="stockManagement"
             :label="$t('pages.edit-product.stock-management')"
@@ -80,6 +97,8 @@ import useVatStore from "@/stores/vat";
 import type { Vat } from "@/types/vat";
 import Select from "@/core/components/form/Select.vue";
 import HtmlEditor from "@/core/components/HtmlEditor.vue";
+import Switch from "@/core/components/form/Switch.vue";
+import Flex from "@/core/components/layouts/Flex.vue";
 
 interface ProductFormProps {
   product: Product | null;
@@ -103,6 +122,10 @@ const isNumeraryStock = computed(() => {
 });
 
 async function handleSubmit(data: any) {
+  if (data.isEvent) {
+    data.stockManagement = "events";
+  }
+  delete data.isEvent;
   emit("saved", data);
 }
 </script>
