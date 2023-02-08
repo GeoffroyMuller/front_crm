@@ -9,6 +9,7 @@
       :options="options"
       :autoFilter="false"
       :error="!!internalError"
+      :debounce="debounce"
     />
     <div class="footer" :class="{ alert: internalError || error }">
       <Alert v-if="internalError || error">
@@ -45,6 +46,7 @@ export interface MagicAutocompleteProps<T> /* extends AutocompleteProps */ {
   canAdd?: boolean;
   options?: Array<T>;
   getFilters?: (str: string) => Filters;
+  debounce?: number;
 
   /*
     TODO : this is a duplicate of props in FormInputProps<string | number>
@@ -76,6 +78,7 @@ const props = withDefaults(defineProps<MagicAutocompleteProps<any>>(), {
     return opt?.label;
   },
   getFilters: () => ({}),
+  debounce: 500,
 });
 
 const { internalValue, internalError, validate } = useValidatable({

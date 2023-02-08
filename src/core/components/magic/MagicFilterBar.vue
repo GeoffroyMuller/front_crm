@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import type { APIStore } from "@/core/helpers/vue/store/store.factory";
-import { get, set } from "lodash";
+import { debounce, get, set } from "lodash";
 import { ref, watch } from "vue";
 import Card from "../Card.vue";
 import MagicForm from "./MagicForm.vue";
@@ -76,10 +76,17 @@ const props = withDefaults(defineProps<MagicFilterBarProps<any>>(), {});
 
 const filtersValues = ref<any>(mapFiltersFromStore());
 
+watch(
+  () => filtersValues.value,
+  debounce(() => {
+    props.store.setFilters(mapFormFilters());
+    props.store.fetchList();
+  }, 500)
+);
+
 function handleInputChange({ name, value }: { name: string; value: any }) {
-  filtersValues.value[name] = value;
-  props.store.setFilters(mapFormFilters());
-  props.store.fetchList();
+  //filtersValues.value[name] = value;
+  filtersValues.value = { ...filtersValues.value, [name]: value };
 }
 </script>
 

@@ -36,7 +36,7 @@ import useValidatable from "@/core/helpers/vue/composables/validatable";
 import { computed } from "vue";
 import type { FormInputProps } from "../types";
 import TextField from "./TextField.vue";
-import { isEqual } from "lodash";
+import { debounce, isEqual } from "lodash";
 import Alert from "../Alert.vue";
 import OptionsList from "../OptionsList.vue";
 import Icon from "../Icon.vue";
@@ -54,6 +54,7 @@ export interface AutocompleteProps extends FormInputProps<any> {
   options: Array<any>;
 
   autoFilter?: boolean;
+  debounce?: number;
 
   /*
   TODO : this is a duplicate of props in FormInputProps<string | number>
@@ -79,6 +80,7 @@ const props = withDefaults(defineProps<AutocompleteProps>(), {
     }
     return opt?.label;
   },
+  debounce: 500,
 });
 
 function _getOptionValue(opt: any) {
@@ -203,16 +205,16 @@ function clickTextField() {
 
 watch(
   () => search.value,
-  (searchValue) => {
-    if (searchValue !== displayed.value) {
-      emit("search", searchValue);
+  debounce(() => {
+    if (search.value !== displayed.value) {
+      emit("search", search.value);
       if (optionsFiltered.value?.length) {
         open.value = true;
       } else {
         open.value = false;
       }
     }
-  }
+  }, props.debounce)
 );
 
 // here to store the option that correspond to the current value
