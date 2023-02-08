@@ -1,5 +1,5 @@
 <template>
-  <Page :title="title" :loading="loading" back>
+  <Page :title="title" :loading="!invoice" back>
     <Card>
       <Form
         shortcuts
