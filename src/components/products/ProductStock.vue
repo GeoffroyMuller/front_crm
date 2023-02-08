@@ -8,15 +8,17 @@
           sortable: true,
         },
       ]"
-      has-local-state
-      :filters="{
-        populate: ['product', 'product_real_fields'],
-        $eq: {
-          idProduct: product?.id,
-        },
-      }"
       isCard
-      :store="productsRealStore"
+      :store="
+        productsStore.getDerivedStore(product?.id as string, 'real', {
+          path: 'products_real',
+          filters: {
+            $eq: {
+              idProduct: product?.id,
+            },
+          },
+        })
+      "
       @row-click="openSideProductReal"
     >
       <template #actions-title>
@@ -68,6 +70,7 @@ import Button from "@/core/components/Button.vue";
 import { isNil } from "lodash";
 import Spinner from "@/core/components/Spinner.vue";
 import useUI from "@/core/helpers/vue/composables/ui";
+import useProductsStore from "@/stores/products";
 
 interface ProductStockProps {
   product: Product | null;
@@ -77,6 +80,7 @@ const props = withDefaults(defineProps<ProductStockProps>(), {
 });
 const isSidebarOpen = ref<boolean>(false);
 const productsRealStore = useProductsRealStore();
+const productsStore = useProductsStore();
 const loadingProductReal = ref<boolean>(false);
 const { toast } = useUI();
 

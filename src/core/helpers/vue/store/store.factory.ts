@@ -14,7 +14,7 @@ import type { Filters, PaginateResult, PaginateResult2 } from "./types";
 import { cloneDeep, merge, uniqueId } from "lodash";
 
 export interface makeAPIStoreProps {
-  id: string;
+  id?: string;
   // if path is different of the id
   path?: string;
 
@@ -54,7 +54,11 @@ export interface APIStoreActions<T> {
   create: (body: T) => Promise<T>;
   delete: (id: ID) => Promise<T>;
 
-  getDerivedStore: <M>(id: ID, relation: string) => APIStoreDef<M>;
+  getDerivedStore: <M>(
+    id: ID,
+    relation: string,
+    p?: makeAPIStoreProps
+  ) => APIStore<M>;
 }
 
 export interface APIStoreGetters<T> extends _GettersTree<APIStoreStateTree<T>> {
@@ -76,7 +80,9 @@ export type APIStore<T> = Store<
   APIStoreActions<T>
 >;
 
-export function makeAPIStore<T>(props: makeAPIStoreProps): APIStoreDef<T> {
+export function makeAPIStore<T>(
+  props: makeAPIStoreProps & { id: string }
+): APIStoreDef<T> {
   const _primaryKey = props.primaryKey || "id";
 
   function _getPath({
@@ -168,16 +174,24 @@ export function makeAPIStore<T>(props: makeAPIStoreProps): APIStoreDef<T> {
       ...props.getters,
     },
     actions: {
-      getDerivedStore<M>(id: ID, relation: string): APIStoreDef<M> {
-        if (this.derivedStores[relation]) {
-          return this.derivedStores[relation];
+      getDerivedStore<M>(
+        id: ID,
+        relation: string,
+        p?: makeAPIStoreProps
+      ): APIStore<M> {
+        if (this.derivedStores[id] && this.derivedStores[id][relation]) {
+          return this.derivedStores[id][relation];
         }
         const useDerivedStore = makeAPIStore<M>({
-          id: `${props.id}-${relation}`,
+          id: `${props.id}-${id}-${relation}`,
           path: `${_getPath()}/${id}/${relation}/`,
+          ...(p || {}),
         });
-        this.derivedStores[relation] = useDerivedStore;
-        return useDerivedStore;
+        if (this.derivedStores[id] == null) {
+          this.derivedStores[id] = {};
+        }
+        this.derivedStores[id][relation] = useDerivedStore();
+        return this.derivedStores[id][relation];
       },
       async setFilters(f: Filters) {
         this.filters = {
