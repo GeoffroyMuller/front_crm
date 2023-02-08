@@ -1,5 +1,5 @@
 <template>
-  <Page :title="$t('invoices')" class="invoice-page">
+  <Page :title="$t('invoices')">
     <InvoiceFilters />
     <MagicDataTable
       :store="invoiceStore"
@@ -141,15 +141,3 @@ const {
   },
 });
 </script>
-
-<style lang="scss">
-.invoice-page {
-  display: grid;
-  gap: spacing(2);
-  .actions {
-    display: flex;
-    align-items: center;
-    gap: spacing(0.5);
-  }
-}
-</style>

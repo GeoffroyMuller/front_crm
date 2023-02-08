@@ -175,15 +175,3 @@ const {
   },
 });
 </script>
-
-<style lang="scss">
-.quotes-page {
-  display: grid;
-  gap: spacing(2);
-}
-.actions {
-  display: flex;
-  align-items: center;
-  gap: spacing(0.5);
-}
-</style>

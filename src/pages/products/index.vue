@@ -1,5 +1,10 @@
 <template>
   <Page :title="$t('products')">
+    <MagicFilterBar
+      :map="{ name: '$contains.name' }"
+      :filters="[{ type: 'string', props: { label: 'name', name: 'name' } }]"
+      :store="productsStore"
+    />
     <MagicDataTable
       :store="productsStore"
       :columns="[
@@ -73,6 +78,7 @@ import Button from "@/core/components/Button.vue";
 import Page from "@/components/Page.vue";
 import useProductStore from "@/stores/products";
 import type { Product } from "@/types/product";
+import MagicFilterBar from "@/core/components/magic/MagicFilterBar.vue";
 
 const productsStore = useProductStore();
 </script>

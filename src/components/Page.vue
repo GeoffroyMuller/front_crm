@@ -79,6 +79,8 @@ async function disconnect() {
 .page-content {
   padding: 0 spacing(2);
   padding-bottom: spacing(2);
+  display: grid;
+  gap: spacing(1);
 }
 .page-menu {
   display: flex;
