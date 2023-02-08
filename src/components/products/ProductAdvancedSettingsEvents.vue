@@ -1,69 +1,47 @@
 <template>
-  <Form shortcuts :model-value="product" @submit="handleSubmit">
-    <template #default="{ hasError, hasChanged }">
-      <div class="avanced-settings-product-event">
-        <MagicDataTable
-          :columns="[]"
-          has-local-state
-          :filters="{
-            populate: [],
-            $eq: {
-              idProduct: product?.id,
-            },
-          }"
-          :store="useEventsStore()"
-          :label="$t('events.events')"
-        >
-          <template #actions-title>
-            <div>
-              <Button
-                color="success"
-                icon="add"
-                @click="
-                  (e) => {
-                    e.stopPropagation();
-                  }
-                "
-              >
-                {{ $t("add") }}
-              </Button>
-            </div>
-          </template>
-        </MagicDataTable>
-
-        <div class="avanced-settings-event-bottom">
-          <Button @click="$emit('cancel')" variant="text">{{
-            $t("cancel")
-          }}</Button>
-          <Button
-            :disabled="hasError || !hasChanged"
-            :loading="loading"
-            type="submit"
-            v-tooltip="{
-              text: $t('keyboardshortcuts.ctrl+s'),
-              placement: 'bottom',
-            }"
-            >{{ $t("save") }}</Button
-          >
-        </div>
+  <MagicDataTable
+    :columns="[
+      { key: 'dtstart', title: $t('events.start') },
+      { key: 'dtend', title: $t('events.end') },
+    ]"
+    :store="eventStore"
+    :label="$t('events.events')"
+    @row-click="onClickEvent"
+  >
+    <template #content-dtstart="{ item }">
+      {{ $utils.formatDate(item.dtstart) }}
+    </template>
+    <template #content-dtend="{ item }">
+      {{ $utils.formatDate(item.dtend) }}
+    </template>
+    <template #actions-title>
+      <div>
+        <Button color="success" icon="add" @click.stop="onAddEvent">
+          {{ $t("add") }}
+        </Button>
       </div>
     </template>
-  </Form>
+  </MagicDataTable>
+
+  <EditEventSidebar
+    hide-description
+    @add="eventStore.fetchList()"
+    @update="eventStore.fetchList()"
+    :event="event"
+    v-model:open="eventSidebarOpen"
+  />
 </template>
 <script setup lang="ts">
 import Button from "@/core/components/Button.vue";
-import Form from "@/core/components/form/Form.vue";
-import Repetable from "@/core/components/form/repetable/Repetable.vue";
-import Select from "@/core/components/form/Select.vue";
-import TextField from "@/core/components/form/TextField.vue";
 import MagicDataTable from "@/core/components/magic/MagicDataTable.vue";
-import useEventsStore from "@/stores/events";
 import useProductsStore from "@/stores/products";
+import type { Event } from "@/types/events";
 import type { Product } from "@/types/product";
+import { ref } from "vue";
+import EditEventSidebar from "../events/EditEventSidebar.vue";
 
 interface ProductAvancedSettingsEventProps {
   product: Product | null;
-  loading: boolean;
 }
 
 const productStore = useProductsStore();
@@ -72,19 +50,29 @@ const props = withDefaults(defineProps<ProductAvancedSettingsEventProps>(), {
   product: null,
 });
 
-function handleSubmit(data: any) {
-  emit("saved", data);
+const eventStore = productStore.getDerivedStore<Event>(
+  props.product?.id as string,
+  "events",
+  {
+    path: "events",
+    filters: {
+      $eq: {
+        idProduct: props.product?.id,
+      },
+    },
+  }
+);
+
+const eventSidebarOpen = ref(false);
+const event = ref<Event>();
+
+function onAddEvent() {
+  event.value = { idProduct: props.product?.id };
+  eventSidebarOpen.value = true;
+}
+
+function onClickEvent(e: Event) {
+  event.value = e;
+  eventSidebarOpen.value = true;
 }
 </script>
-
-<style lang="scss">
-.avanced-settings-product-event {
-  @include grid(1, 0, 2);
-  .product_field {
-    @include grid(2, 0, 2);
-  }
-  .avanced-settings-event-bottom {
-    @include flex(row, flex-end, center, 2);
-  }
-}
-</style>

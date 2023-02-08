@@ -9,8 +9,13 @@
         <div class="title">
           {{ isAddAction ? $t("events.new-event") : $t("events.event") }}
         </div>
-        <TextField name="summary" :label="$t('events.summary')" />
         <TextField
+          v-if="!hideDescription"
+          name="summary"
+          :label="$t('events.summary')"
+        />
+        <TextField
+          v-if="!hideDescription"
           name="description"
           multiline
           :label="$t('events.descriptions')"
@@ -54,6 +59,7 @@ import { useI18n } from "vue-i18n";
 interface EditEventSidebarProps {
   open: boolean;
   event?: Event;
+  hideDescription?: boolean;
 }
 
 const emit = defineEmits(["update:open", "add", "update"]);
@@ -70,6 +76,7 @@ async function handleSubmit(data: any) {
     data.dtend = null;
   }
   delete data.all_day_event;
+  data.idProduct = props.event?.idProduct;
   if (isAddAction.value) {
     try {
       const newEvent = await eventStore.create(data);

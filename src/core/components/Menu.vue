@@ -3,6 +3,7 @@
     ref="activator"
     @click.stop="open = !open"
     v-click-outside="() => (open = false)"
+    :class="$props.class"
   >
     <slot name="activator" />
   </div>
@@ -23,6 +24,7 @@ import Card from "./Card.vue";
 interface MenuProps {
   placement?: "top" | "bottom" | "left" | "right";
   gap?: number;
+  class?: any;
 }
 const props = withDefaults(defineProps<MenuProps>(), {});
 

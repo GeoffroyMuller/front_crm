@@ -34,9 +34,7 @@
             />
             <ProductAdvancedSettingsEvents
               v-if="productsStore.isEventStock(product)"
-              :loading="loading"
               :product="product"
-              @saved="save"
             />
           </Card>
         </template>

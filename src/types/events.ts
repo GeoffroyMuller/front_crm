@@ -1,5 +1,6 @@
 import type { Dayjs } from "dayjs";
 import type { Company } from "./company";
+import type { ID } from "./utils";
 
 export interface Event {
   id?: number;
@@ -16,4 +17,6 @@ export interface Event {
 
   idCompany?: number;
   company?: Company;
+
+  idProduct?: ID;
 }
