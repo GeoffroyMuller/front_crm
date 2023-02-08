@@ -53,6 +53,10 @@
         <IconButton
           @click="isNavMini = !isNavMini"
           :name="!isNavMini ? 'chevron_left' : 'menu'"
+          v-tooltip="{
+            text: $t('keyboardshortcuts.ctrl+b'),
+            placement: 'right',
+          }"
         />
       </div>
       <Tree :list="menu" class="tree-menu" :isHidden="isNavMini" default-open>

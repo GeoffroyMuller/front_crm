@@ -137,6 +137,10 @@ export default function useMenu(props: MenuProps) {
     const coord = { left: 0, top: 0 };
 
     switch (placement) {
+      case "right":
+        coord.top = dimensions.activator.top;
+        coord.left = dimensions.activator.left + dimensions.activator.width;
+        break;
       case "left":
         coord.top = dimensions.activator.top;
         coord.left = dimensions.activator.left - dimensions.container.width;
