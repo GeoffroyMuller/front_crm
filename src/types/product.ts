@@ -10,6 +10,7 @@ export interface Product {
   stockManagement?: StockManagement;
   isNumeraryStock?: boolean;
   stock?: number;
+  stock_physical?: number;
 
   products_real?: Array<ProductReal>;
   product_fields?: Array<ProductField>;
