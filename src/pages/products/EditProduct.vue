@@ -26,7 +26,7 @@
         </template>
         <template #advanced_settings>
           <Card>
-            <ProductAvancedSettingsStock
+            <ProductAvancedSettingsPhysical
               v-if="productsStore.isPhysicalStock(product)"
               :loading="loading"
               :product="product"
@@ -58,7 +58,7 @@ import useProductStore from "@/stores/products";
 import { computed, onMounted, ref } from "vue";
 import Card from "@/core/components/Card.vue";
 import Tabs from "@/core/components/Tabs.vue";
-import ProductAvancedSettingsStock from "@/components/products/ProductAvancedSettingsStock.vue";
+import ProductAvancedSettingsPhysical from "@/components/products/ProductAvancedSettingsPhysical.vue";
 import ProductStock from "@/components/products/ProductStock.vue";
 import useVatStore from "@/stores/vat";
 import useEditPage from "@/components/editpage";
