@@ -64,4 +64,19 @@ describe("Form", () => {
     expect(wrapper.vm.hasError).toBe(true);
     wrapper.unmount();
   });
+
+  it("sould update errors when an input update error", async () => {
+    const wrapper = mount(Form, {
+      slots: {
+        default: [h(TextField, { name: "test" }, [])],
+      },
+    });
+    const input = wrapper.findComponent(TextField);
+    // @ts-ignore
+    input.vm.internalError = "test";
+    await input.vm.$nextTick();
+    // @ts-ignore
+    expect(wrapper.vm.hasError).toBe(true);
+    wrapper.unmount();
+  });
 });
