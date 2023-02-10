@@ -34,9 +34,6 @@ describe("Form", () => {
       template: `
         <Form>
           <TextField name="test" />
-          <button type="submit">
-            SUBMIT
-          </button>
         </Form>
         `,
       components: {
@@ -54,6 +51,17 @@ describe("Form", () => {
     expect(form.emitted("submit")).toBeTruthy();
     // @ts-ignore
     expect(form.emitted("submit")?.[0]?.[0]?.test).toBe("test");
+    wrapper.unmount();
+  });
+
+  it("sould have errors when an input is invalid at init", async () => {
+    const wrapper = mount(Form, {
+      slots: {
+        default: [h(TextField, { name: "test", error: "test" }, [])],
+      },
+    });
+    // @ts-ignore
+    expect(wrapper.vm.hasError).toBe(true);
     wrapper.unmount();
   });
 });
