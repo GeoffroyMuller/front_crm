@@ -56,7 +56,7 @@
 
 <script lang="ts" setup>
 import useValidatable from "../../helpers/vue/composables/validatable";
-import { defineEmits, defineProps, withDefaults, watch } from "vue";
+import { withDefaults, watch } from "vue";
 import type { FormInputProps, IconName } from "../types";
 import Icon from "../Icon.vue";
 import Alert from "../Alert.vue";
