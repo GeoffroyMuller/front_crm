@@ -79,4 +79,81 @@ describe("Form", () => {
     expect(wrapper.vm.hasError).toBe(true);
     wrapper.unmount();
   });
+
+  it("should delete corresponding data when unregister an input", async () => {
+    const wrapper = mount(Form, {
+      slots: {
+        default: [
+          h("div", { name: "test" }, [h(TextField, { name: "test" }, [])]),
+        ],
+      },
+    });
+    const input = wrapper.findComponent(TextField);
+    // @ts-ignore
+    input.vm.internalValue = "test";
+    await input.vm.$nextTick();
+    // @ts-ignore
+    wrapper.vm.unregister("test");
+
+    // @ts-ignore
+    expect(wrapper.vm.internalValue?.test).toBe(undefined);
+    wrapper.unmount();
+  });
+
+  it("should update:modelValue on input change", async () => {
+    let data: any = {};
+    const wrapper = mount(Form, {
+      props: {
+        "onUpdate:modelValue": (val: any) => (data = val),
+      },
+      slots: {
+        default: [h(TextField, { name: "test" }, [])],
+      },
+    });
+    const input = wrapper.find('input[name="test"]');
+    await input.setValue("test");
+    await wrapper.vm.$nextTick();
+    // @ts-ignore
+    expect(data.test).toBe("test");
+    wrapper.unmount();
+  });
+
+  it("should update:modelValue on input unregister", async () => {
+    let data: any = { test: "test" };
+    const wrapper = mount(Form, {
+      props: {
+        "onUpdate:modelValue": (val: any) => (data = val),
+        modelValue: {},
+      },
+      slots: {
+        default: [h(TextField, { name: "test" }, [])],
+      },
+    });
+    expect(data.test).toBe("test");
+    // @ts-ignore
+    wrapper.vm.unregister("test");
+    await wrapper.vm.$nextTick();
+    expect(data.test).toBe(undefined);
+    wrapper.unmount();
+  });
+
+  it("should update:modelValue on input register", async () => {
+    let data: any = {};
+    const wrapper = mount(Form, {
+      props: {
+        "onUpdate:modelValue": (val: any) => (data = val),
+      },
+    });
+
+    // @ts-ignore
+    wrapper.vm.register({
+      name: "test",
+      internalValue: ref("test"),
+      internalError: ref(""),
+      validate: () => true,
+    });
+    await wrapper.vm.$nextTick();
+    expect(data.test).toBe("test");
+    wrapper.unmount();
+  });
 });

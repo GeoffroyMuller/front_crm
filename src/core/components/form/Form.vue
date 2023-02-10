@@ -23,8 +23,18 @@ const props = withDefaults(defineProps<FormProps>(), {});
 
 const emit = defineEmits(["update:modelValue", "submit", "inputChange"]);
 
-const { hasError, validate, getData, hasChanged, internalValue } =
-  useForm(props);
+const {
+  hasError,
+  validate,
+  getData,
+  hasChanged,
+  internalValue,
+  /* need to stay here for test purpose
+    (see form.test.ts -> should delete corresponding data when unregister an input)
+ */
+  register,
+  unregister,
+} = useForm(props);
 
 async function handleSumbit(event: Event) {
   event.preventDefault();
