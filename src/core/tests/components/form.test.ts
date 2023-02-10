@@ -1,8 +1,8 @@
 import { mount } from "@vue/test-utils";
-import Form from "../components/form/Form.vue";
+import Form from "../../components/form/Form.vue";
 import { describe, it, expect } from "vitest";
 import { h, ref } from "vue";
-import TextField from "../components/form/TextField.vue";
+import TextField from "../../components/form/TextField.vue";
 
 describe("Form", () => {
   it("should contains what slot.default contain", () => {
