@@ -32,7 +32,14 @@
         <Switch name="all_day_event" :label="$t('events.all_day_event')" />
 
         <TextField name="location" :label="$t('events.location')" />
-
+        <Select
+          :get-option-label="
+            (opt) => $t(`events.recurrenceopts.${opt || 'none'}`)
+          "
+          :label="$t('events.recurrence')"
+          :options="recurrenceOptions"
+          name="recurrence_freq"
+        />
         <div class="actions">
           <Button type="submit" color="success" icon="add" :disabled="hasError">
             {{ isAddAction ? $t("add") : $t("save") }}
@@ -46,6 +53,7 @@
 import Button from "@/core/components/Button.vue";
 import DatePicker from "@/core/components/form/Datepicker/DatePicker.vue";
 import Form from "@/core/components/form/Form.vue";
+import Select from "@/core/components/form/Select.vue";
 import Switch from "@/core/components/form/Switch.vue";
 import TextField from "@/core/components/form/TextField.vue";
 import Flex from "@/core/components/layouts/Flex.vue";
@@ -71,6 +79,15 @@ const eventStore = useEventsStore();
 
 const isAddAction = computed(() => props.event?.id == null);
 
+const recurrenceOptions: Event["recurrence_freq"][] = [
+  null,
+  "DAILY",
+  "WEEKLY",
+  "MONTHLY",
+  "YEARLY",
+];
+
+// rrule documentation: https://www.kanzaki.com/docs/ical/rrule.html
 async function handleSubmit(data: any) {
   if (data.all_day_event) {
     data.dtend = null;
