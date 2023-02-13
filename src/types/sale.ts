@@ -1,3 +1,4 @@
+import { Product } from './product';
 import type { ID } from "./utils";
 import type { Vat } from "./vat";
 
@@ -17,5 +18,6 @@ export interface SaleLine {
   unit_price?: number;
   vat: Vat;
   idProduct?: number;
+  product?: Product;
   sublines?: Array<SaleSubline>;
 }

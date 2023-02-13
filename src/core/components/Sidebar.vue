@@ -7,7 +7,7 @@
       }"
       v-click-outside="onClickOutside"
     >
-      <div>
+      <div class="sidebar-wrapper">
         <IconButton
           @click="onClickOutside"
           v-if="displayCloseBtn && open"
@@ -53,15 +53,17 @@ function onClickOutside(event: PointerEvent) {
 
 <style lang="scss">
 .sidebar {
-  .content {
-    &.padding {
-      padding: spacing(2);
-    }
-    .title {
-      margin-bottom: spacing(3);
+  .sidebar-wrapper {
+    overflow-y: auto;
+    .content {
+      &.padding {
+        padding: spacing(2);
+      }
+      .title {
+        margin-bottom: spacing(3);
+      }
     }
   }
-
   position: fixed;
   right: 0;
   top: 0;
