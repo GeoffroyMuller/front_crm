@@ -3,11 +3,11 @@
 </template>
 
 <script setup lang="ts">
-import type { InvoiceLine } from "@/types/invoice";
+import type { SaleLine } from "@/types/sale";
 import QuoteLine from "../quotes/QuoteLine.vue";
 
 interface InvoiceLineProps {
-  line: InvoiceLine;
+  line: SaleLine;
 }
 
 const props = withDefaults(defineProps<InvoiceLineProps>(), {});

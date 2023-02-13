@@ -34,7 +34,7 @@
           <div class="form-table">
             <Repetable name="lines" :label="$t('products')" orderable>
               <template #default="{ data }">
-                <InvoiceLineVue :line="(data as unknown as InvoiceLine)" />
+                <InvoiceLineVue :line="(data as unknown as SaleLine)" />
               </template>
               <template #actions="{ addSection }">
                 <Button
@@ -107,9 +107,9 @@ import Button from "@/core/components/Button.vue";
 import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import HtmlEditor from "@/core/components/HtmlEditor.vue";
 import InvoiceLineVue from "@/components/invoices/InvoiceLine.vue";
-import type { InvoiceLine } from "@/types/invoice";
 import Card from "@/core/components/Card.vue";
 import useEditPage from "@/components/editpage";
+import type { SaleLine } from "@/types/sale";
 
 const invoiceStore = useInvoicesStore();
 const clientsStore = useClientStore();
@@ -139,12 +139,12 @@ const {
   mapBeforeSave: (data) => {
     if (data.lines) {
       data.lines = data.lines
-        .map((line: InvoiceLine) => {
+        .map((line: SaleLine) => {
           const newLine = { ...line };
           delete newLine.vat;
           return newLine;
         })
-        .filter((line: InvoiceLine) => !isEmpty(line));
+        .filter((line: SaleLine) => !isEmpty(line));
     }
     delete data.client;
     return data;

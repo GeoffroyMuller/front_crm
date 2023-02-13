@@ -112,7 +112,6 @@
 </template>
 
 <script setup lang="ts">
-import type { QuoteLine } from "@/types/quote";
 import { computed, ref, toRef } from "vue";
 import TextField from "@/core/components/form/TextField.vue";
 import Select from "@/core/components/form/Select.vue";
@@ -122,15 +121,15 @@ import useProductStore from "@/stores/products";
 import type { Vat } from "@/types/vat";
 import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import type { Product, ProductReal } from "@/types/product";
-import type { InvoiceLine } from "@/types/invoice";
 import useProductsRealStore from "@/stores/products_real";
 import QuoteSublineForm from "./QuoteSublineForm.vue";
 import Sidebar from "@/core/components/Sidebar.vue";
 import Button from "@/core/components/Button.vue";
 import Alert from "@/core/components/Alert.vue";
+import type { SaleLine } from "@/types/sale";
 
 interface QuoteLineProps {
-  line: QuoteLine | InvoiceLine;
+  line: SaleLine;
 }
 
 const vatsStore = useVatStore();
