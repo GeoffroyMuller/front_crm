@@ -31,6 +31,15 @@
       ]"
       @row-click="(product: Product) => $router.push(`/products/${product.id}`)"
     >
+      <template #content-stock="{ item }">
+        {{
+          productsStore.isPhysicalStock(item)
+            ? item.stock_physical
+            : productsStore.isNumeraryStock(item)
+            ? item.stock
+            : "-"
+        }}
+      </template>
       <template #content-price="{ item }">
         {{ $utils.formatPrice(item.price) }}
       </template>
@@ -47,11 +56,6 @@
           >
             {{ $t("add") }}
           </Button>
-        </div>
-      </template>
-      <template #content-stock="{ item }">
-        <div>
-          {{ productsStore.isNumeraryStock(item) ? item.stock : "-" }}
         </div>
       </template>
     </MagicDataTable>

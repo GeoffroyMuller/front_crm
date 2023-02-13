@@ -149,7 +149,7 @@ function handleSubmit(data: any) {
 .avanced-settings-product {
   @include grid(1, 0, 2);
   .product_field {
-    @include grid(2, 0, 2);
+    @include grid(2, 0, 1);
   }
   .avanced-settings-bottom {
     @include flex(row, flex-end, center, 2);

@@ -70,13 +70,13 @@ export interface SelectProps extends FormInputProps<any> {
 const props = withDefaults(defineProps<SelectProps>(), {
   multiple: false,
   getOptionLabel: (opt: any) => {
-    if (typeof opt === "string" || typeof opt === "number") {
+    if (typeof opt === "string" || typeof opt === "number" || opt === null) {
       return opt;
     }
     return opt?.label;
   },
   getOptionValue: (opt: any) => {
-    if (typeof opt === "string" || typeof opt === "number") {
+    if (typeof opt === "string" || typeof opt === "number" || opt === null) {
       return opt;
     }
     return opt?.value;
@@ -166,6 +166,12 @@ const selected = computed(() => {
 const displayed = computed<string>(() => {
   if (props.multiple) {
     return selected.value.map((v: any) => props.getOptionLabel(v)).join(", ");
+  }
+  if (
+    selected.value === null &&
+    props.options.find((opt) => opt == null) !== undefined
+  ) {
+    return props.getOptionLabel(selected.value);
   }
   return selected.value != null ? props.getOptionLabel(selected.value) : "";
 });

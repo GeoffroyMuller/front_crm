@@ -10,7 +10,7 @@ export interface Event {
   summary?: string;
   description?: string;
   location?: string;
-  recurrence_freq?: "DAILY" | "WEEKLY" | "MONTHLY" | "YEARLY";
+  recurrence_freq?: null | "DAILY" | "WEEKLY" | "MONTHLY" | "YEARLY";
   recurrence_interval?: number;
   recurrence_count?: number;
   recurrence_until?: string;

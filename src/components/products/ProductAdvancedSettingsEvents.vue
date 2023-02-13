@@ -67,7 +67,7 @@ const eventSidebarOpen = ref(false);
 const event = ref<Event>();
 
 function onAddEvent() {
-  event.value = { idProduct: props.product?.id };
+  event.value = { idProduct: props.product?.id, recurrence_freq: null };
   eventSidebarOpen.value = true;
 }
 

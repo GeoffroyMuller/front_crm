@@ -60,11 +60,15 @@ export default function useForm(props: userFormProps) {
     }
     if (input.internalValue.value != null) {
       internalValue.value[input.name] = clone(input.internalValue.value);
+      instance?.emit("update:modelValue", internalValue.value);
       instance?.emit("inputChange", {
         name: input.name,
         value: input.internalValue.value,
         formValue: internalValue.value,
       });
+    }
+    if (input.internalError.value != null) {
+      errors.value[input.name] = clone(input.internalError.value);
     }
     watch(
       () => input.internalValue.value,
@@ -73,6 +77,7 @@ export default function useForm(props: userFormProps) {
           ...internalValue.value,
           [input.name]: input.internalValue.value,
         };
+        instance?.emit("update:modelValue", internalValue.value);
         instance?.emit("inputChange", {
           name: input.name,
           value: input.internalValue.value,
@@ -91,6 +96,7 @@ export default function useForm(props: userFormProps) {
   function unregister(name: string) {
     delete inputs.value[name];
     delete internalValue.value[name];
+    instance?.emit("update:modelValue", internalValue.value);
   }
 
   async function validate() {
@@ -101,7 +107,7 @@ export default function useForm(props: userFormProps) {
         const valid = await input.validate();
 
         if (!valid || typeof valid === "string") {
-          console.error(input.name)
+          console.error(input.name);
           // @ts-ignore
           errors.value[input.name] = valid === false ? true : valid;
           return false;
@@ -155,5 +161,7 @@ export default function useForm(props: userFormProps) {
     validate,
     hasError,
     hasChanged,
+    register,
+    unregister,
   };
 }
