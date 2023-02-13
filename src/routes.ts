@@ -42,6 +42,15 @@ export default [
     },
   },
   {
+    path: "/reservations",
+    name: "reservations",
+    component: () => import("./pages/reservations/index.vue"),
+    meta: {
+      middleware: [auth],
+      layout: LayoutPage,
+    },
+  },
+  {
     path: "/quotes",
     name: "quotes",
     component: () => import("./pages/quotes/index.vue"),
