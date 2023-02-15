@@ -34,6 +34,15 @@
       <template #content-client="{ item }: { item: Reservation }">
         <div>{{ item.client?.firstname }} {{ item.client?.lastname }}</div>
       </template>
+      <template #content-dtstart="{ item }: { item: Reservation }">
+        {{ item.dtstart ? $utils.formatDate(item.dtstart) : "-" }}
+      </template>
+      <template #content-dtend="{ item }: { item: Reservation }">
+        {{ item.dtend ? $utils.formatDate(item.dtend) : "-" }}
+      </template>
+      <template #content-created_at="{ item }: { item: Reservation }">
+        {{ item.created_at ? $utils.formatDate(item.created_at) : "-" }}
+      </template>
       <template #actions-title>
         <div>
           <Button
