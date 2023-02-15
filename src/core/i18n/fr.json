@@ -88,5 +88,9 @@
   "responsible": "Responsable",
   "modalities": "Modalités",
   "empty": "Vide",
-  "reservations": "Reservations"
+  "reservations": "Reservations",
+  "dtstart": "Date de debut",
+  "dtend": "Date de fin",
+  "created_at": "Créer le",
+  "description": "Description"
 }
