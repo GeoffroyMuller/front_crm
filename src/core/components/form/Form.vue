@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmits } from "vue";
+import { defineEmits, toRef } from "vue";
 import type { _CustomInput } from "@/core/helpers/vue/composables/form";
 import useForm from "@/core/helpers/vue/composables/form";
 import useKeyboardShortcut from "@/core/helpers/vue/composables/keyboardshortcut";
@@ -35,7 +35,7 @@ const {
   register,
   unregister,
 } = useForm({
-  modelValue: props.modelValue,
+  value: toRef(props, "modelValue"),
   onUpdateValue(value) {
     emit("update:modelValue", value);
   },

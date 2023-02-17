@@ -1,5 +1,12 @@
 import { clone, isEmpty, omitBy, isNil, isEqual, get, set } from "lodash";
-import { computed, getCurrentInstance, provide, ref, watch } from "vue";
+import {
+  computed,
+  getCurrentInstance,
+  provide,
+  ref,
+  watch,
+  type Ref,
+} from "vue";
 
 export interface _CustomInput {
   name: string;
@@ -8,20 +15,18 @@ export interface _CustomInput {
   validate: () => boolean | string;
 }
 export interface userFormProps {
-  modelValue?: any;
+  value: Ref<any>;
   onUpdateValue?: (value: any) => void;
   onInputChange?: (val: { name: string; value: any; formValue: any }) => void;
 }
 
 export default function useForm(props: userFormProps) {
-  const instance = getCurrentInstance();
-
   const inputs = ref<{ [key: string]: _CustomInput }>({});
   const errors = ref<{ [key: string]: string | boolean | undefined }>({});
-  const internalValue = ref<any>(props.modelValue);
+  const internalValue = ref<any>(props.value.value);
 
   function _setInternalValue(name: string, value: any) {
-    set(internalValue.value, name, value);
+    internalValue.value = set(internalValue.value, name, value);
     if (props.onUpdateValue) {
       props.onUpdateValue(internalValue.value);
     }
@@ -39,9 +44,9 @@ export default function useForm(props: userFormProps) {
   }
 
   watch(
-    () => props.modelValue,
+    () => props.value.value,
     () => {
-      internalValue.value = clone(props.modelValue || {});
+      internalValue.value = clone(props.value.value || {});
       if (!isEmpty(internalValue.value)) {
         Object.keys(inputs.value).forEach((key) => {
           if (_getInternalValue(key) !== undefined) {
@@ -66,7 +71,7 @@ export default function useForm(props: userFormProps) {
   );
 
   const hasChanged = computed(() => {
-    return !isEqual(internalValue.value, props.modelValue);
+    return !isEqual(internalValue.value, props.value.value);
   });
 
   function register(input: _CustomInput) {
@@ -107,7 +112,6 @@ export default function useForm(props: userFormProps) {
         const valid = await input.validate();
 
         if (!valid || typeof valid === "string") {
-          console.error(input.name);
           // @ts-ignore
           errors.value[input.name] = valid === false ? true : valid;
           return false;
