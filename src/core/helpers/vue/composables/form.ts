@@ -1,4 +1,4 @@
-import { clone, isEmpty, omitBy, isNil, isEqual } from "lodash";
+import { clone, isEmpty, omitBy, isNil, isEqual, get, set } from "lodash";
 import { computed, getCurrentInstance, provide, ref, watch } from "vue";
 
 export interface _CustomInput {
@@ -18,29 +18,41 @@ export default function useForm(props: userFormProps) {
   const errors = ref<{ [key: string]: string | boolean | undefined }>({});
   const internalValue = ref<any>(props.modelValue);
 
+  function _setInternalValue(name: string, value: any, emit = true) {
+    set(internalValue.value, name, value);
+    if (emit) {
+      instance?.emit("update:modelValue", internalValue.value);
+      instance?.emit("inputChange", {
+        name,
+        value,
+        formValue: internalValue.value,
+      });
+    }
+  }
+
+  function _getInternalValue(name: string) {
+    return get(internalValue.value, name);
+  }
+
   watch(
     () => props.modelValue,
     () => {
       internalValue.value = clone(props.modelValue || {});
       if (!isEmpty(internalValue.value)) {
         Object.keys(inputs.value).forEach((key) => {
-          if (internalValue.value[key] !== undefined) {
-            inputs.value[key].internalValue = internalValue.value[key];
+          if (_getInternalValue(key) !== undefined) {
+            inputs.value[key].internalValue = _getInternalValue(key);
           } else {
             inputs.value[key].internalValue = undefined;
-            setTimeout(() => {
-              inputs.value[key].internalError = undefined;
-              errors.value[key] = undefined;
-            }, 0);
+            inputs.value[key].internalError = undefined;
+            errors.value[key] = undefined;
           }
         });
       } else {
         Object.keys(inputs.value).forEach((key) => {
           inputs.value[key].internalValue = undefined;
-          setTimeout(() => {
-            inputs.value[key].internalError = undefined;
-            errors.value[key] = undefined;
-          }, 0);
+          inputs.value[key].internalError = undefined;
+          errors.value[key] = undefined;
         });
       }
     },
@@ -55,34 +67,19 @@ export default function useForm(props: userFormProps) {
 
   function register(input: _CustomInput) {
     inputs.value[input.name] = input;
-    if (internalValue.value[input.name] != null) {
-      input.internalValue.value = clone(internalValue.value[input.name]);
+    if (_getInternalValue(input.name) !== undefined) {
+      input.internalValue.value = clone(_getInternalValue(input.name));
     }
-    if (input.internalValue.value != null) {
-      internalValue.value[input.name] = clone(input.internalValue.value);
-      instance?.emit("update:modelValue", internalValue.value);
-      instance?.emit("inputChange", {
-        name: input.name,
-        value: input.internalValue.value,
-        formValue: internalValue.value,
-      });
+    if (input.internalValue.value !== undefined) {
+      _setInternalValue(input.name, clone(input.internalValue.value), true);
     }
-    if (input.internalError.value != null) {
+    if (input.internalError.value !== undefined) {
       errors.value[input.name] = clone(input.internalError.value);
     }
     watch(
       () => input.internalValue.value,
       () => {
-        internalValue.value = {
-          ...internalValue.value,
-          [input.name]: input.internalValue.value,
-        };
-        instance?.emit("update:modelValue", internalValue.value);
-        instance?.emit("inputChange", {
-          name: input.name,
-          value: input.internalValue.value,
-          formValue: internalValue.value,
-        });
+        _setInternalValue(input.name, clone(input.internalValue.value), true);
       }
     );
     watch(
@@ -95,8 +92,7 @@ export default function useForm(props: userFormProps) {
 
   function unregister(name: string) {
     delete inputs.value[name];
-    delete internalValue.value[name];
-    instance?.emit("update:modelValue", internalValue.value);
+    _setInternalValue(name, undefined, true);
   }
 
   async function validate() {
