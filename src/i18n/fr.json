@@ -79,6 +79,12 @@
       "add-selectable-options": "Ajouter des options de selection",
       "event-product": "Ce produit est un produit evenementiel",
       "capacity": "Capacité des évenements"
+    },
+    "edit-reservation": {
+      "new-reservation": "Nouvelle réservation",
+      "add-product": "Ajouter un produit",
+      "add-product-real": "Ajouter un produit physique",
+      "add-products": "Ajouter des produits a la reservation"
     }
   },
   "new-quote": "Nouveau devis",

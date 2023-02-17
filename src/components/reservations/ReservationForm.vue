@@ -44,7 +44,10 @@
             <DatePicker name="dtend" :label="$t('dtend')" />
           </Grid>
           <TextField multiline name="description" :label="$t('description')" />
-          <Repetable name="lines" :label="$t('products')">
+          <Repetable
+            name="lines"
+            :label="$t('pages.edit-reservation.add-products')"
+          >
             <template #default="{ data }">
               <ReservationProductLine :line="(data as SaleLine)" />
             </template>
