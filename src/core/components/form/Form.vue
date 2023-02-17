@@ -34,7 +34,15 @@ const {
  */
   register,
   unregister,
-} = useForm(props);
+} = useForm({
+  modelValue: props.modelValue,
+  onUpdateValue(value) {
+    emit("update:modelValue", value);
+  },
+  onInputChange(val) {
+    emit("inputChange", val);
+  },
+});
 
 async function handleSumbit(event: Event) {
   event.preventDefault();

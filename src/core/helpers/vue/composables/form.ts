@@ -9,6 +9,8 @@ export interface _CustomInput {
 }
 export interface userFormProps {
   modelValue?: any;
+  onUpdateValue?: (value: any) => void;
+  onInputChange?: (val: { name: string; value: any; formValue: any }) => void;
 }
 
 export default function useForm(props: userFormProps) {
@@ -18,11 +20,13 @@ export default function useForm(props: userFormProps) {
   const errors = ref<{ [key: string]: string | boolean | undefined }>({});
   const internalValue = ref<any>(props.modelValue);
 
-  function _setInternalValue(name: string, value: any, emit = true) {
+  function _setInternalValue(name: string, value: any) {
     set(internalValue.value, name, value);
-    if (emit) {
-      instance?.emit("update:modelValue", internalValue.value);
-      instance?.emit("inputChange", {
+    if (props.onUpdateValue) {
+      props.onUpdateValue(internalValue.value);
+    }
+    if (props.onInputChange) {
+      props.onInputChange({
         name,
         value,
         formValue: internalValue.value,
@@ -71,7 +75,7 @@ export default function useForm(props: userFormProps) {
       input.internalValue.value = clone(_getInternalValue(input.name));
     }
     if (input.internalValue.value !== undefined) {
-      _setInternalValue(input.name, clone(input.internalValue.value), true);
+      _setInternalValue(input.name, clone(input.internalValue.value));
     }
     if (input.internalError.value !== undefined) {
       errors.value[input.name] = clone(input.internalError.value);
@@ -79,7 +83,7 @@ export default function useForm(props: userFormProps) {
     watch(
       () => input.internalValue.value,
       () => {
-        _setInternalValue(input.name, clone(input.internalValue.value), true);
+        _setInternalValue(input.name, clone(input.internalValue.value));
       }
     );
     watch(
@@ -92,7 +96,7 @@ export default function useForm(props: userFormProps) {
 
   function unregister(name: string) {
     delete inputs.value[name];
-    _setInternalValue(name, undefined, true);
+    _setInternalValue(name, undefined);
   }
 
   async function validate() {
