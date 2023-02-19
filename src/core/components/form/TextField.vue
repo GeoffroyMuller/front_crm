@@ -62,10 +62,10 @@ import type { IconName } from "../types";
 import Icon from "../Icon.vue";
 import Alert from "../Alert.vue";
 import type { AnySchema } from "yup";
-import { vMaska } from "maska";
+import { type MaskOptions, vMaska } from "maska";
 
 export interface InputProps {
-  mask?: string;
+  mask?: string | MaskOptions;
   icon?: IconName;
   multiline?: boolean;
   label?: string;
@@ -81,6 +81,7 @@ export interface InputProps {
   max?: number | undefined | null;
 
   id?: string;
+  placeholder?: string;
   //hide arrows input number
   appearanceNone?: boolean | null;
 }
@@ -115,10 +116,18 @@ const { internalValue, internalError, validate } = useValidatable({
   rules: props.rules,
 });
 
-const maskOptions = computed(() => ({
-  mask: props.mask,
-  eager: true,
-}));
+const maskOptions = computed<MaskOptions | null>(() => {
+  if (props.mask) {
+    if (typeof props.mask === "string") {
+      return {
+        mask: props.mask,
+        eager: true,
+      };
+    }
+    return props.mask;
+  }
+  return null;
+});
 </script>
 
 <style lang="scss">
