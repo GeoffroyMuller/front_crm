@@ -36,21 +36,41 @@ export default function useCalendar(props: useCalendarProps) {
   });
 
   function increment() {
+    if (weekMode.value) {
+      if (current.value.week < 5) {
+        current.value.week = current.value.week + 1;
+        current.value = { ...current.value };
+        return;
+      } else {
+        current.value.week = 0;
+      }
+    }
     if (current.value.month < 11) {
       current.value.month = current.value.month + 1;
     } else {
       current.value.month = 0;
       current.value.year = current.value.year + 1;
     }
+    current.value = { ...current.value };
   }
 
   function decrement() {
+    if (weekMode.value) {
+      if (current.value.week > 0) {
+        current.value.week = current.value.week - 1;
+        current.value = { ...current.value };
+        return;
+      } else {
+        current.value.week = 5;
+      }
+    }
     if (current.value.month === 0) {
       current.value.month = 11;
       current.value.year = current.value.year - 1;
     } else {
       current.value.month = current.value.month - 1;
     }
+    current.value = { ...current.value };
   }
   const weekDaysLabels = computed(() => {
     const firstDay =
@@ -107,7 +127,7 @@ export default function useCalendar(props: useCalendarProps) {
     return true;
   }
 
-  const daysToDisplay = computed(() => {
+  const daysToDisplayMounth = computed(() => {
     const daysInCurrentMonth = dayjs().month(current.value.month).daysInMonth();
     const res = [];
     if (props.firstDayDisplayIndex !== undefined) {
@@ -178,6 +198,16 @@ export default function useCalendar(props: useCalendarProps) {
         .second(0)
         .millisecond(0),
     }));
+  });
+
+  const daysToDisplay = computed(() => {
+    if (weekMode.value) {
+      return daysToDisplayMounth.value.slice(
+        7 * current.value.week,
+        7 * current.value.week + 7
+      );
+    }
+    return daysToDisplayMounth.value;
   });
 
   return {

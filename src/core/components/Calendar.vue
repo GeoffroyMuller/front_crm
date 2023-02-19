@@ -11,21 +11,21 @@
       <div class="modes">
         <div
           class="mode"
-          :class="{ selected: displayMonth }"
-          @click="displayMonth = true"
+          :class="{ selected: !displayWeek }"
+          @click="displayWeek = false"
         >
           month
         </div>
         <div
           class="mode"
-          :class="{ selected: !displayMonth }"
-          @click="displayMonth = false"
+          :class="{ selected: displayWeek }"
+          @click="displayWeek = true"
         >
           week
         </div>
       </div>
     </div>
-    <div class="calendar-content-week" v-if="!displayMonth">
+    <div class="calendar-content-week" v-if="displayWeek">
       <div class="weekdays">
         <div
           v-for="(day, index) of weekDaysLabels"
@@ -36,12 +36,12 @@
         </div>
       </div>
       <div class="days">
-        <div class="day" v-for="day of datesToDisplayWeek" :key="day.id">
+        <div class="day" v-for="day of datesToDisplay" :key="day.id">
           {{ $utils.formatDate(day.dayjs) }}
         </div>
       </div>
     </div>
-    <div class="calendar-content" ref="calendarContent" v-if="displayMonth">
+    <div class="calendar-content" ref="calendarContent" v-if="!displayWeek">
       <div class="weekdays">
         <div
           v-for="(day, index) of weekDaysLabels"
@@ -76,7 +76,7 @@
   </component>
 </template>
 <script setup lang="ts">
-import dayjs, { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
 import { computed, ref } from "vue";
 import IconButton from "./IconButton.vue";
 import Card from "./Card.vue";
@@ -103,7 +103,7 @@ const emit = defineEmits(["click"]);
 
 const calendarContent = ref();
 
-const displayMonth = ref(true);
+const displayWeek = ref(false);
 
 const {
   current,
@@ -113,17 +113,9 @@ const {
   decrement,
   daysToDisplay: datesToDisplay,
 } = useCalendar({
-  weekMode: displayMonth,
+  weekMode: displayWeek,
   equalColumnsForEachLines: true,
   firstDayDisplayIndex: props.firstDayDisplayIndex,
-});
-
-const datesToDisplayWeek = computed(() => {
-  const indexMin = current.value.week * 7;
-  const indexMax = indexMin + 6;
-  return datesToDisplay.value.filter(
-    (d, index) => index >= indexMin && index <= indexMax
-  );
 });
 
 function clickOnDay(day: Day) {
@@ -171,6 +163,12 @@ $borderRadius: map-deep-get($rounded, "md");
       border: 1px solid $borderColor;
       border-radius: $borderRadius $borderRadius 0 0;
       background-color: #fafafa;
+      .weekday {
+        padding: spacing(1);
+        &:not(:last-child) {
+          border-right: 1px solid $borderColor;
+        }
+      }
     }
     .days {
       @include grid(7, 0, 0);
