@@ -2,7 +2,7 @@
   <div
     ref="activator"
     @click.stop="handleClickActivator"
-    v-click-outside="() => (open = false)"
+    v-click-outside="handleClickOutside"
     :class="$props.class"
   >
     <slot name="activator" />
@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, Teleport, watch } from "vue";
 import useMenu from "../helpers/vue/composables/menu";
 import Card from "./Card.vue";
 
@@ -26,8 +26,10 @@ interface MenuProps {
   gap?: number;
   class?: any;
   disabled?: boolean;
+  open?: boolean;
 }
 const props = withDefaults(defineProps<MenuProps>(), {});
+const emit = defineEmits(["update:open"]);
 
 const activator = ref();
 const content = ref();
@@ -40,8 +42,21 @@ const { open } = useMenu({
   gap: props.gap || 0,
 });
 
+watch(
+  () => props.open,
+  (value) => {
+    open.value = value;
+  }
+);
+
 function handleClickActivator() {
   if (props.disabled) return;
   open.value = !open.value;
+  emit("update:open", open.value);
+}
+
+function handleClickOutside() {
+  open.value = false;
+  emit("update:open", open.value);
 }
 </script>
