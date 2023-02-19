@@ -58,6 +58,6 @@ function handleClickActivator() {
 
 function handleClickOutside() {
   open.value = false;
-  emit("update:open", open.value);
+  emit("update:open", false);
 }
 </script>
