@@ -1,7 +1,11 @@
 <template>
-  <Menu :disabled="disabled" class="datepicker-input">
+  <Menu
+    stop-open-on-click-activator
+    v-model:open="open"
+    class="datepicker-input"
+  >
     <template #activator>
-      <div ref="datepicker">
+      <div>
         <TextField
           :label="label"
           :model-value="displayed"
@@ -12,8 +16,10 @@
           @blur="isFocus = false"
         >
           <template #icon>
-            <Icon
+            <IconButton
               name="calendar_month"
+              @click.stop="handleClickIcon"
+              :disabled="disabled"
               :color="
                 !isFocus
                   ? 'black'
@@ -92,10 +98,10 @@ import dayjs from "dayjs";
 import { computed, ref } from "vue";
 import TextField from "../TextField.vue";
 import Alert from "../../Alert.vue";
-import Icon from "../../Icon.vue";
 import type { AnySchema } from "yup";
 import Menu from "../../Menu.vue";
 import useCalendar from "@/core/helpers/vue/composables/calendar";
+import IconButton from "../../IconButton.vue";
 
 export interface DatePickerProps {
   // 0 for sunday, 6 for saturday
@@ -113,8 +119,9 @@ export interface DatePickerProps {
   time?: boolean;
 }
 
+const open = ref(false);
+
 const isFocus = ref(false);
-const datepicker = ref();
 
 const props = withDefaults(defineProps<DatePickerProps>(), {
   firstDayDisplayIndex: 1,
@@ -157,6 +164,11 @@ const {
   max: props.max,
   firstDayDisplayIndex: props.firstDayDisplayIndex,
 });
+
+function handleClickIcon() {
+  console.error("HEY");
+  open.value = true;
+}
 </script>
 
 <style lang="scss">
