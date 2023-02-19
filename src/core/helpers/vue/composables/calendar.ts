@@ -1,12 +1,15 @@
 import dayjs, { type Dayjs } from "dayjs";
-import { computed, ref } from "vue";
+import { computed, ref, type Ref } from "vue";
 
 export interface useCalendarProps {
   min?: string | Dayjs;
   max?: string | Dayjs;
+  // 0 for sunday, 6 for saturday
+  firstDayDisplayIndex?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  value?: Ref;
 }
 
-export default function useCalendar(props?: useCalendarProps) {
+export default function useCalendar(props: useCalendarProps) {
   const monthNames = dayjs()
     .localeData()
     .months()
@@ -14,112 +17,154 @@ export default function useCalendar(props?: useCalendarProps) {
 
   const weekdaysName = dayjs().localeData().weekdays();
 
-  const currentMonth = ref(dayjs().month());
-  const currentYear = ref(dayjs().year());
-
-  const daysInCurrentMonth = computed(() => {
-    return dayjs().month(currentMonth.value).daysInMonth();
+  const current = ref<{
+    month: number;
+    year: number;
+    hour: number | null;
+    minute: number | null;
+  }>({
+    month: dayjs().month(),
+    year: dayjs().year(),
+    hour: null,
+    minute: null,
   });
 
   function incrementMonth() {
-    if (currentMonth.value < 11) {
-      currentMonth.value = currentMonth.value + 1;
+    if (current.value.month < 11) {
+      current.value.month = current.value.month + 1;
     } else {
-      currentMonth.value = 0;
-      currentYear.value = currentYear.value + 1;
+      current.value.month = 0;
+      current.value.year = current.value.year + 1;
     }
   }
 
   function decrementMonth() {
-    if (currentMonth.value === 0) {
-      currentMonth.value = 11;
-      currentYear.value = currentYear.value - 1;
+    if (current.value.month === 0) {
+      current.value.month = 11;
+      current.value.year = current.value.year - 1;
     } else {
-      currentMonth.value = currentMonth.value - 1;
+      current.value.month = current.value.month - 1;
     }
   }
-
   const weekDaysLabels = computed(() => {
-    const firstDay = dayjs()
-      .year(currentYear.value)
-      .month(currentMonth.value)
-      .date(0)
-      .day();
+    const firstDay =
+      typeof props.firstDayDisplayIndex !== "undefined"
+        ? props.firstDayDisplayIndex
+        : dayjs()
+            .year(current.value.year)
+            .month(current.value.month)
+            .date(0)
+            .day() + 1;
+    const list = [
+      ...weekdaysName.filter((d: string, index: number) => index >= firstDay),
+      ...weekdaysName.filter((d: string, index: number) => index < firstDay),
+    ];
 
-    let list = weekdaysName as string[];
-    if (firstDay !== 0) {
-      list = [
-        ...weekdaysName.filter((d: string, index: number) => index > firstDay),
-        ...weekdaysName.filter((d: string, index: number) => index <= firstDay),
-      ];
-    }
     return list.map((d: string) => d[0].toUpperCase());
   });
 
-  const minMaxAsDaysJs = computed(() => {
-    return {
-      min: (typeof props?.min === "string"
-        ? dayjs(props?.min)
-        : (props?.min as Dayjs)
-      )
-        ?.hour(0)
-        ?.minute(0)
-        ?.second(0),
-      max: (typeof props?.max === "string"
-        ? dayjs(props?.max)
-        : (props?.max as Dayjs)
-      )
-        ?.hour(0)
-        ?.minute(0)
-        ?.second(0),
-    };
-  });
+  function isDateSelected(day: number, month: number, year: number) {
+    if (props.value?.value == null) {
+      return false;
+    }
+    const value = dayjs(props.value.value);
+    return (
+      value?.date() == day && value?.month() == month && value?.year() == year
+    );
+  }
 
   function dateCanBeSelected(
     date: number,
     month: number,
     year: number
   ): boolean {
-    if (minMaxAsDaysJs.value) {
-      if (minMaxAsDaysJs.value.min) {
-        if (
-          year < minMaxAsDaysJs.value.min.year() ||
-          (year == minMaxAsDaysJs.value.min.year() &&
-            month < minMaxAsDaysJs.value.min.month()) ||
-          (year == minMaxAsDaysJs.value.min.year() &&
-            month == minMaxAsDaysJs.value.min.month() &&
-            date < minMaxAsDaysJs.value.min.date())
-        ) {
-          return false;
-        }
-      }
-      if (minMaxAsDaysJs.value.max) {
-        if (
-          year > minMaxAsDaysJs.value.max.year() ||
-          (year == minMaxAsDaysJs.value.max.year() &&
-            month > minMaxAsDaysJs.value.max.month()) ||
-          (year == minMaxAsDaysJs.value.max.year() &&
-            month == minMaxAsDaysJs.value.max.month() &&
-            date > minMaxAsDaysJs.value.max.date())
-        ) {
-          return false;
-        }
+    if (props.min) {
+      const min = dayjs(props.min);
+      if (
+        year < min.year() ||
+        (year == min.year() && month < min.month()) ||
+        (year == min.year() && month == min.month() && date < min.date())
+      ) {
+        return false;
       }
     }
-
+    if (props.max) {
+      const max = dayjs(props.max);
+      if (
+        year > max.year() ||
+        (year == max.year() && month > max.month()) ||
+        (year == max.year() && month == max.month() && date > max.date())
+      ) {
+        return false;
+      }
+    }
     return true;
   }
 
+  const daysToDisplay = computed(() => {
+    const daysInCurrentMonth = dayjs().month(current.value.month).daysInMonth();
+    const res = [];
+    if (props.firstDayDisplayIndex !== undefined) {
+      const firstDayCurrentMonth = dayjs()
+        .year(current.value.year)
+        .month(current.value.month)
+        .date(0)
+        .day();
+      const beforeMonth =
+        current.value.month === 0 ? 11 : current.value.month - 1;
+      const beforeMonthYear =
+        current.value.month === 0 ? current.value.year - 1 : current.value.year;
+      const daysInBeforeMonth = dayjs()
+        .month(current.value.month)
+        .subtract(1, "month")
+        .daysInMonth();
+      for (
+        let day = daysInBeforeMonth;
+        day > daysInBeforeMonth - firstDayCurrentMonth;
+        day--
+      ) {
+        res.unshift({
+          day,
+          month: beforeMonth,
+          year: beforeMonthYear,
+        });
+      }
+    }
+    for (let day = 1; day <= daysInCurrentMonth; day++) {
+      res.push({
+        day,
+        month: current.value.month,
+        year: current.value.year,
+      });
+    }
+    return res.map((date) => ({
+      ...date,
+      id:
+        date.day +
+        "-" +
+        date.month +
+        "-" +
+        date.year +
+        `current-${current.value.month}`,
+      dayjs: dayjs()
+        .date(date.day)
+        .month(date.month)
+        .year(date.year)
+        .hour(0)
+        .minute(0)
+        .second(0)
+        .millisecond(0),
+    }));
+  });
+
   return {
-    daysInCurrentMonth,
     incrementMonth,
     decrementMonth,
     weekDaysLabels,
-    dateCanBeSelected,
-    minMaxAsDaysJs,
-    currentMonth,
-    currentYear,
     monthNames,
-    weekdaysName,
+    isDateSelected,
+    dateCanBeSelected,
+    daysToDisplay,
+    current,
   };
 }
