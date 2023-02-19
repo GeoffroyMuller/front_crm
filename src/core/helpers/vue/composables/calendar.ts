@@ -150,7 +150,6 @@ export default function useCalendar(props: useCalendarProps) {
         .month(res[res.length - 1].month)
         .date(res[res.length - 1].day)
         .add(1, "day");
-      console.error(res.length);
       while (res.length < 42) {
         res.push({
           day: date.date(),
