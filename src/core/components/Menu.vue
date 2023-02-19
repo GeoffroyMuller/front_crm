@@ -1,7 +1,7 @@
 <template>
   <div
     ref="activator"
-    @click.stop="open = !open"
+    @click.stop="handleClickActivator"
     v-click-outside="() => (open = false)"
     :class="$props.class"
   >
@@ -25,6 +25,7 @@ interface MenuProps {
   placement?: "top" | "bottom" | "left" | "right";
   gap?: number;
   class?: any;
+  disabled?: boolean;
 }
 const props = withDefaults(defineProps<MenuProps>(), {});
 
@@ -38,4 +39,9 @@ const { open } = useMenu({
   placement: props.placement || "bottom",
   gap: props.gap || 0,
 });
+
+function handleClickActivator() {
+  if (props.disabled) return;
+  open.value = !open.value;
+}
 </script>
