@@ -22,8 +22,9 @@
         />
 
         <Flex align-items="center" :gap="1">
-          <DatePicker name="dtstart" :label="$t('events.dtstart')" />
+          <DatePicker time name="dtstart" :label="$t('events.dtstart')" />
           <DatePicker
+            time
             name="dtend"
             :label="$t('events.dtend')"
             :disabled="value.all_day_event"
