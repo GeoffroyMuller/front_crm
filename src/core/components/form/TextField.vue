@@ -121,7 +121,6 @@ const maskOptions = computed<MaskOptions | null>(() => {
     if (typeof props.mask === "string") {
       return {
         mask: props.mask,
-        eager: true,
       };
     }
     return props.mask;
