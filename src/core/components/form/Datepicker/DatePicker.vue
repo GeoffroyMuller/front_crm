@@ -1,9 +1,5 @@
 <template>
-  <Menu
-    stop-open-on-click-activator
-    v-model:open="open"
-    class="datepicker-input"
-  >
+  <Menu v-model:open="open" class="datepicker-input">
     <template #activator>
       <div>
         <TextField
@@ -14,13 +10,13 @@
           @focus="isFocus = true"
           @blur="isFocus = false"
           :mask="mask"
+          @update:model-value="handleInputChange"
         >
           <template #icon>
-            <IconButton
+            <Icon
               name="calendar_month"
-              @click.stop="handleClickIcon"
               :disabled="disabled"
-              color="primary"
+              :color="!isFocus ? 'black' : 'primary'"
             />
           </template>
         </TextField>
@@ -97,6 +93,7 @@ import Menu from "../../Menu.vue";
 import useCalendar from "@/core/helpers/vue/composables/calendar";
 import IconButton from "../../IconButton.vue";
 import { Mask } from "maska";
+import Icon from "../../Icon.vue";
 
 export interface DatePickerProps {
   // 0 for sunday, 6 for saturday
@@ -146,6 +143,17 @@ const mask = computed(() => {
   return format.value.replaceAll(/[a-zA-Z]/g, "#");
 });
 
+function handleInputChange(value: string) {
+  const date = dayjs(value, format.value);
+  if (date.isValid()) {
+    internalValue.value = date.toISOString();
+    current.value.hour = date.hour();
+    current.value.minute = date.minute();
+    validate();
+    open.value = false;
+  }
+}
+
 function onSelectDate(date: Dayjs) {
   internalValue.value = date
     .hour(current.value.hour || 0)
@@ -170,10 +178,6 @@ const {
   max: props.max,
   firstDayDisplayIndex: props.firstDayDisplayIndex,
 });
-
-function handleClickIcon() {
-  open.value = true;
-}
 </script>
 
 <style lang="scss">
