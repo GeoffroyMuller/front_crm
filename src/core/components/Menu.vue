@@ -27,6 +27,7 @@ interface MenuProps {
   class?: any;
   disabled?: boolean;
   open?: boolean;
+  stopOpenOnClickActivator?: boolean;
 }
 const props = withDefaults(defineProps<MenuProps>(), {});
 const emit = defineEmits(["update:open"]);
@@ -50,7 +51,7 @@ watch(
 );
 
 function handleClickActivator() {
-  if (props.disabled) return;
+  if (props.disabled || props.stopOpenOnClickActivator) return;
   open.value = !open.value;
   emit("update:open", open.value);
 }
