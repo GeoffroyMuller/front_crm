@@ -24,16 +24,12 @@
 </template>
 <script setup lang="ts">
 import useValidatable from "@/core/helpers/vue/composables/validatable";
-import type { FormInputProps, IconName } from "../types";
+import type { IconName } from "../types";
 import Alert from "../Alert.vue";
 import type { AnySchema } from "yup";
 
-export interface CheckboxProps extends FormInputProps<string | number> {
+export interface CheckboxProps {
   icon?: IconName;
-  /*
-    TODO : this is a duplicate of props in FormInputProps<string | number>
-          need to found why extends do not work proprely
-    */
   label?: string;
   modelValue?: any;
   readonly?: boolean;

@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import { computed, ref, type Component } from "vue";
-import type { FormInputProps } from "../types";
+
 import TextField from "./TextField.vue";
 import { isEqual } from "lodash";
 import Alert from "../Alert.vue";
@@ -42,7 +42,7 @@ import type { AnySchema } from "yup";
 import useMenu from "@/core/helpers/vue/composables/menu";
 import IconButton from "../IconButton.vue";
 
-export interface SelectProps extends FormInputProps<any> {
+export interface SelectProps  {
   multiple?: boolean;
 
   getOptionValue?: (opt: any) => any;
@@ -54,10 +54,7 @@ export interface SelectProps extends FormInputProps<any> {
 
   required?: boolean;
 
-  /*
-  TODO : this is a duplicate of props in FormInputProps<string | number>
-        need to found why extends do not work proprely
-  */
+  
   label?: string;
   modelValue?: any;
   readonly?: boolean;

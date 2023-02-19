@@ -31,6 +31,8 @@
         @focus="onFocus"
         @input="(e) => onInput(e)"
         :id="id"
+        v-maska
+        :data-mask="mask"
       />
       <div
         v-if="(icon || $slots.icon) && !multiline"
@@ -56,19 +58,17 @@
 
 <script lang="ts" setup>
 import useValidatable from "../../helpers/vue/composables/validatable";
-import { withDefaults, watch } from "vue";
-import type { FormInputProps, IconName } from "../types";
+import { reactive, withDefaults } from "vue";
+import type { IconName } from "../types";
 import Icon from "../Icon.vue";
 import Alert from "../Alert.vue";
 import type { AnySchema } from "yup";
+import { vMaska } from "maska";
 
-export interface InputProps extends FormInputProps<string | number> {
+export interface InputProps {
   icon?: IconName;
   multiline?: boolean;
-  /*
-  TODO : this is a duplicate of props in FormInputProps<string | number>
-        need to found why extends do not work proprely
-  */
+  mask?: string;
   label?: string;
   modelValue?: any;
   type?: string;

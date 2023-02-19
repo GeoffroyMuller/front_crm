@@ -34,7 +34,7 @@
 import { ref, watch } from "vue";
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import { computed } from "vue";
-import type { FormInputProps } from "../types";
+
 import TextField from "./TextField.vue";
 import { debounce, isEqual } from "lodash";
 import Alert from "../Alert.vue";
@@ -44,7 +44,7 @@ import type { AnySchema } from "yup";
 import useMenu from "@/core/helpers/vue/composables/menu";
 import IconButton from "../IconButton.vue";
 
-export interface AutocompleteProps extends FormInputProps<any> {
+export interface AutocompleteProps  {
   multiple?: boolean;
 
   optionKey?: string;
@@ -56,10 +56,7 @@ export interface AutocompleteProps extends FormInputProps<any> {
   autoFilter?: boolean;
   debounce?: number;
 
-  /*
-  TODO : this is a duplicate of props in FormInputProps<string | number>
-        need to found why extends do not work proprely
-  */
+  
   label?: string;
   modelValue?: any;
   readonly?: boolean;

@@ -17,6 +17,7 @@
     "dayjs": "^1.11.4",
     "dotenv": "^16.0.2",
     "lodash": "^4.17.21",
+    "maska": "^2.1.7",
     "mousetrap": "^1.6.5",
     "pinia": "^2.0.16",
     "pinia-plugin-persistedstate": "^1.6.3",

@@ -166,7 +166,6 @@ const {
 });
 
 function handleClickIcon() {
-  console.error("HEY");
   open.value = true;
 }
 </script>

@@ -47,11 +47,6 @@ export interface MagicAutocompleteProps<T> /* extends AutocompleteProps */ {
   options?: Array<T>;
   getFilters?: (str: string) => Filters;
   debounce?: number;
-
-  /*
-    TODO : this is a duplicate of props in FormInputProps<string | number>
-          need to found why extends do not work proprely
-    */
   label?: string;
   modelValue?: any;
   readonly?: boolean;

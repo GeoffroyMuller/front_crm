@@ -41,12 +41,12 @@
 <script setup lang="ts">
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import { ref } from "vue";
-import type { FormInputProps } from "../types";
+
 import { isEqual } from "lodash";
 import Alert from "../Alert.vue";
 import type { AnySchema } from "yup";
 
-export interface RadioGroupProps extends FormInputProps<any> {
+export interface RadioGroupProps  {
   multiple?: boolean;
 
   getOptionValue?: (opt: any) => any;
@@ -56,10 +56,7 @@ export interface RadioGroupProps extends FormInputProps<any> {
 
   autoFilter?: boolean;
 
-  /*
-  TODO : this is a duplicate of props in FormInputProps<string | number>
-        need to found why extends do not work proprely
-  */
+  
   label?: string;
   modelValue?: any;
   readonly?: boolean;

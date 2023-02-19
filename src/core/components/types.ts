@@ -1,15 +1,5 @@
 import type { AnySchema } from "yup";
 
-export interface FormInputProps<T> {
-  label?: string;
-  modelValue?: T;
-  readonly?: boolean;
-  name?: string;
-  error?: string | boolean;
-  disabled?: boolean;
-  rules?: AnySchema;
-}
-
 export interface Notification {
   id?: string;
   type?: Color;
