@@ -7,33 +7,27 @@
     <template #activator>
       <div>
         <TextField
-          :label="label"
           :model-value="displayed"
+          :label="label"
           :error="internalError || error ? true : false"
-          readonly
           :disabled="disabled"
           @focus="isFocus = true"
           @blur="isFocus = false"
+          :mask="mask"
         >
           <template #icon>
             <IconButton
               name="calendar_month"
               @click.stop="handleClickIcon"
               :disabled="disabled"
-              :color="
-                !isFocus
-                  ? 'black'
-                  : internalError || error
-                  ? 'danger'
-                  : 'primary'
-              "
+              color="primary"
             />
           </template>
         </TextField>
       </div>
     </template>
     <template #content>
-      <div class="datetimepicker" :class="{ time }">
+      <div class="datetimepicker" @click.stop :class="{ time }">
         <div class="datepicker">
           <div class="datepicker-header">
             <div>{{ monthNames[current.month] }} {{ current.year }}</div>
@@ -102,6 +96,7 @@ import type { AnySchema } from "yup";
 import Menu from "../../Menu.vue";
 import useCalendar from "@/core/helpers/vue/composables/calendar";
 import IconButton from "../../IconButton.vue";
+import { Mask } from "maska";
 
 export interface DatePickerProps {
   // 0 for sunday, 6 for saturday
@@ -133,12 +128,22 @@ const { internalValue, internalError, validate } = useValidatable({
   rules: props.rules,
 });
 
+const format = computed(() => {
+  return props.time ? "DD/MM/YYYY HH:mm" : "DD/MM/YYYY";
+});
+
 const displayed = computed(() => {
   if (!internalValue?.value?.length) {
     return "";
   }
-  const FORMAT = props.time ? "DD/MM/YYYY HH:mm" : "DD/MM/YYYY";
-  return dayjs(internalValue.value).format(FORMAT);
+  return new Mask({ mask: mask.value }).unmasked(
+    dayjs(internalValue.value).format(format.value)
+  );
+});
+
+const mask = computed(() => {
+  // @ts-ignore
+  return format.value.replaceAll(/[a-zA-Z]/g, "#");
 });
 
 function onSelectDate(date: Dayjs) {
@@ -147,6 +152,7 @@ function onSelectDate(date: Dayjs) {
     .minute(current.value.minute || 0)
     .toISOString();
   validate();
+  open.value = false;
 }
 
 const {
