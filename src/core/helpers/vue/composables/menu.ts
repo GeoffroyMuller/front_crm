@@ -19,7 +19,6 @@ export interface MenuProps {
   placement?: "top" | "bottom" | "left" | "right";
   gap?: number;
   openOnHover?: boolean;
-  disabled?: Ref;
 }
 
 const mount = (component: Component, props: any, element: HTMLElement) => {
@@ -220,22 +219,10 @@ export default function useMenu(props: MenuProps) {
     }
   }
 
-  const unwatchDisabled = watch(
-    () => props.disabled?.value,
-    () => {
-      if (props.disabled?.value) {
-        hide();
-      } else {
-        if (open.value) {
-          display();
-        }
-      }
-    }
-  );
   const unwatchOpen = watch(
     () => open.value,
     () => {
-      if (open.value && !props.disabled?.value) {
+      if (open.value) {
         display();
       } else {
         hide();
@@ -258,7 +245,6 @@ export default function useMenu(props: MenuProps) {
 
   function destroy() {
     unwatchActivator();
-    unwatchDisabled();
     unwatchOpen();
     unwatchContainer();
     if (!props.container) {
