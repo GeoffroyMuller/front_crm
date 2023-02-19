@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 //v-if="isActiveColumn(column) && isSortableColumn(column)"
-import { withDefaults, defineProps, ref, watch, onBeforeMount } from "vue";
+import { withDefaults, ref, watch, onBeforeMount } from "vue";
 import Table from "./Table.vue";
 import type { Column } from "./types";
 import Pagination from "./Pagination.vue";

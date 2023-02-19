@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults, defineProps } from "vue";
+import { withDefaults } from "vue";
 import Spinner from "./Spinner.vue";
 import type { Color, IconName } from "./types";
 import Icon from "./Icon.vue";

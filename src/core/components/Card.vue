@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, withDefaults } from "vue";
+import { withDefaults } from "vue";
 import type { Size } from "./types";
 
 export interface CardProps {

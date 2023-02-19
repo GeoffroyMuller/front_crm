@@ -12,7 +12,6 @@
   </button>
 </template>
 <script setup lang="ts">
-import { withDefaults, defineProps } from "vue";
 import type { Color, IconName } from "./types";
 import Icon from "./Icon.vue";
 

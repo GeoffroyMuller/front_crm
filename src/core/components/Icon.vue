@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { withDefaults, defineProps, computed } from "vue";
+import { withDefaults, computed } from "vue";
 import type { Color, IconName, Size } from "./types";
 
 interface IconProps {

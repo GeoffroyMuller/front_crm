@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, toRef } from "vue";
+import { toRef } from "vue";
 import type { _CustomInput } from "@/core/helpers/vue/composables/form";
 import useForm from "@/core/helpers/vue/composables/form";
 import useKeyboardShortcut from "@/core/helpers/vue/composables/keyboardshortcut";

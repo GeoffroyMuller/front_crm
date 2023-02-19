@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults, defineProps, ref, onMounted } from "vue";
+import { withDefaults, ref, onMounted } from "vue";
 import Tree from "./Tree.vue";
 
 interface TreeProps {

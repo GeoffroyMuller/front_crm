@@ -207,14 +207,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  withDefaults,
-  defineProps,
-  ref,
-  watch,
-  onMounted,
-  computed,
-} from "vue";
+import { withDefaults, ref, watch, onMounted, computed } from "vue";
 import type { Column } from "./types";
 import { isEqual, isNil } from "lodash";
 import Card from "./Card.vue";

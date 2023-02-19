@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import { withDefaults, defineProps, computed } from "vue";
+import { withDefaults, computed } from "vue";
 import type { Color } from "./types";
 
 interface SpinnerProps {
