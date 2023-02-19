@@ -130,7 +130,8 @@ const displayed = computed(() => {
   if (!internalValue?.value?.length) {
     return "";
   }
-  return dayjs(internalValue.value).format("DD/MM/YYYY");
+  const FORMAT = props.time ? "DD/MM/YYYY HH:mm" : "DD/MM/YYYY";
+  return dayjs(internalValue.value).format(FORMAT);
 });
 
 function onSelectDate(date: Dayjs) {
