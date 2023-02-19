@@ -5,8 +5,10 @@ export interface useCalendarProps {
   min?: string | Dayjs;
   max?: string | Dayjs;
   // 0 for sunday, 6 for saturday
-  firstDayDisplayIndex?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  firstDayDisplayIndex: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   value?: Ref;
+  weekMode?: Ref<boolean>;
+  equalColumnsForEachLines?: boolean;
 }
 
 export default function useCalendar(props: useCalendarProps) {
@@ -17,19 +19,23 @@ export default function useCalendar(props: useCalendarProps) {
 
   const weekdaysName = dayjs().localeData().weekdays();
 
+  const weekMode = props.weekMode ? props.weekMode : ref(false);
+
   const current = ref<{
     month: number;
     year: number;
     hour: number | null;
     minute: number | null;
+    week: number;
   }>({
     month: dayjs().month(),
     year: dayjs().year(),
     hour: null,
     minute: null,
+    week: 0,
   });
 
-  function incrementMonth() {
+  function increment() {
     if (current.value.month < 11) {
       current.value.month = current.value.month + 1;
     } else {
@@ -38,7 +44,7 @@ export default function useCalendar(props: useCalendarProps) {
     }
   }
 
-  function decrementMonth() {
+  function decrement() {
     if (current.value.month === 0) {
       current.value.month = 11;
       current.value.year = current.value.year - 1;
@@ -137,6 +143,24 @@ export default function useCalendar(props: useCalendarProps) {
         year: current.value.year,
       });
     }
+
+    if (props.equalColumnsForEachLines) {
+      let date = dayjs()
+        .year(res[res.length - 1].year)
+        .month(res[res.length - 1].month)
+        .date(res[res.length - 1].day)
+        .add(1, "day");
+      console.error(res.length);
+      while (res.length < 42) {
+        res.push({
+          day: date.date(),
+          month: date.month(),
+          year: date.year(),
+        });
+        date = date.add(1, "day");
+      }
+    }
+
     return res.map((date) => ({
       ...date,
       id:
@@ -158,8 +182,8 @@ export default function useCalendar(props: useCalendarProps) {
   });
 
   return {
-    incrementMonth,
-    decrementMonth,
+    increment,
+    decrement,
     weekDaysLabels,
     monthNames,
     isDateSelected,

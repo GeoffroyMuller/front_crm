@@ -33,7 +33,11 @@
             </div>
           </div>
           <div class="datepicker-content">
-            <div v-for="day of weekDaysLabels" :key="day" class="weekday">
+            <div
+              v-for="(day, index) of weekDaysLabels"
+              :key="index"
+              class="weekday"
+            >
               {{ day }}
             </div>
             <div
@@ -166,8 +170,8 @@ function onSelectDate(date: Dayjs) {
 const {
   dateCanBeSelected,
   daysToDisplay,
-  decrementMonth,
-  incrementMonth,
+  decrement: decrementMonth,
+  increment: incrementMonth,
   isDateSelected,
   current,
   monthNames,
