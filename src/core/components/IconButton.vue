@@ -1,5 +1,10 @@
 <template>
-  <button class="icon-button" :class="`icon-button-${color}`" type="button">
+  <button
+    :disabled="disabled"
+    class="icon-button"
+    :class="`icon-button-${color}`"
+    type="button"
+  >
     <Icon v-bind="iconProps" />
   </button>
 </template>
@@ -12,6 +17,7 @@ interface IconButtonProps {
   color?: Color;
   sharp?: boolean;
   size?: Size;
+  disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<IconButtonProps>(), {});
@@ -34,7 +40,10 @@ const iconProps = computed(() => {
   padding: 0;
   line-height: 0;
   color: color("black");
-  &:hover {
+  &:disabled {
+    cursor: not-allowed;
+  }
+  &:hover:not(:disabled) {
     color: color("primary", 500);
   }
 }
