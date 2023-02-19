@@ -31,8 +31,7 @@
         @focus="onFocus"
         @input="(e) => onInput(e)"
         :id="id"
-        v-maska
-        :data-mask="mask"
+        v-maska:[maskOptions]
       />
       <div
         v-if="(icon || $slots.icon) && !multiline"
@@ -58,7 +57,7 @@
 
 <script lang="ts" setup>
 import useValidatable from "../../helpers/vue/composables/validatable";
-import { reactive, withDefaults } from "vue";
+import { computed, withDefaults } from "vue";
 import type { IconName } from "../types";
 import Icon from "../Icon.vue";
 import Alert from "../Alert.vue";
@@ -66,9 +65,9 @@ import type { AnySchema } from "yup";
 import { vMaska } from "maska";
 
 export interface InputProps {
+  mask?: string;
   icon?: IconName;
   multiline?: boolean;
-  mask?: string;
   label?: string;
   modelValue?: any;
   type?: string;
@@ -115,6 +114,11 @@ const { internalValue, internalError, validate } = useValidatable({
   error: props.error,
   rules: props.rules,
 });
+
+const maskOptions = computed(() => ({
+  mask: props.mask,
+  eager: true,
+}));
 </script>
 
 <style lang="scss">
