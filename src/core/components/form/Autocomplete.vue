@@ -1,33 +1,58 @@
 <template>
-  <div
-    class="autocomplete"
-    ref="autocomplete"
-    v-click-outside="() => handleClose()"
-  >
-    <TextField
-      v-model="search"
-      :disabled="disabled"
-      :label="label"
-      :error="internalError || error ? true : false"
-      @focus="isFocus = true"
-      @blur="handleBlur"
-      @click="clickTextField"
-    >
-      <template #icon>
-        <Icon
-          name="search"
-          :color="
-            !isFocus ? 'black' : internalError || error ? 'danger' : 'primary'
-          "
-          v-if="multiple || internalValue == null"
-        />
-        <IconButton name="close" v-else @click.stop="internalValue = null" />
-      </template>
-    </TextField>
-    <Alert v-if="typeof (internalError || error) === 'string'">
-      {{ internalError || error }}
-    </Alert>
-  </div>
+  <Menu class="autocomplete">
+    <template #activator>
+      <TextField
+        v-model="search"
+        :disabled="disabled"
+        :label="label"
+        :error="internalError || error ? true : false"
+        @focus="isFocus = true"
+        @blur="handleBlur"
+        @click="clickTextField"
+      >
+        <template #icon>
+          <Icon
+            name="search"
+            :color="
+              !isFocus ? 'black' : internalError || error ? 'danger' : 'primary'
+            "
+            v-if="multiple || internalValue == null"
+          />
+          <IconButton name="close" v-else @click.stop="internalValue = null" />
+        </template>
+      </TextField>
+    </template>
+    <template #content>
+      <SelectOptions
+        :is-selected="isSelected"
+        :get-option-value="_getOptionValue"
+        :get-option-label="props.getOptionLabel"
+        :options="optionsFiltered"
+        :multiple="props.multiple"
+        @select="handleClickOption"
+      >
+        <template
+          v-if="$slots.options"
+          #default="{
+            isSelected: _isSelected,
+            select: _select,
+            options: _options,
+          }"
+        >
+          <slot
+            name="options"
+            :options="_options"
+            :isSelected="_isSelected"
+            :select="_select"
+          />
+        </template>
+      </SelectOptions>
+    </template>
+  </Menu>
+
+  <Alert v-if="typeof (internalError || error) === 'string'">
+    {{ internalError || error }}
+  </Alert>
 </template>
 
 <script setup lang="ts">
@@ -38,13 +63,13 @@ import { computed } from "vue";
 import TextField from "./TextField.vue";
 import { debounce, isEqual } from "lodash";
 import Alert from "../Alert.vue";
-import OptionsList from "../OptionsList.vue";
 import Icon from "../Icon.vue";
 import type { AnySchema } from "yup";
-import useMenu from "@/core/helpers/vue/composables/menu";
 import IconButton from "../IconButton.vue";
+import Menu from "../Menu.vue";
+import SelectOptions from "../SelectOptions.vue";
 
-export interface AutocompleteProps  {
+export interface AutocompleteProps {
   multiple?: boolean;
 
   optionKey?: string;
@@ -55,8 +80,6 @@ export interface AutocompleteProps  {
 
   autoFilter?: boolean;
   debounce?: number;
-
-  
   label?: string;
   modelValue?: any;
   readonly?: boolean;
@@ -95,17 +118,13 @@ function _getOptionValue(opt: any) {
 
 const search = ref("");
 const isFocus = ref();
-const autocomplete = ref();
+const open = ref(false);
 
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
   error: props.error,
   rules: props.rules,
 });
-
-const menuDisabled = computed(
-  () => props.disabled || !props.options?.length || !search.value?.length
-);
 
 function handleClose() {
   open.value = false;
@@ -233,7 +252,6 @@ watch(
   () => optionsFiltered.value,
   () => {
     if (optionsFiltered.value?.length) {
-      /* if (autocomplete.value.contains(document.activeElement)) { */
       if (isFocus.value) {
         open.value = true;
       } else {
@@ -250,7 +268,7 @@ function handleBlur() {
   search.value = displayed.value;
 }
 
-const { open } = useMenu({
+/* const { open } = useMenu({
   activator: autocomplete,
   component: OptionsList,
   openOnHover: false,
@@ -263,7 +281,7 @@ const { open } = useMenu({
     options: optionsFiltered,
     multiple: props.multiple,
   },
-});
+}); */
 </script>
 
 <style lang="scss">

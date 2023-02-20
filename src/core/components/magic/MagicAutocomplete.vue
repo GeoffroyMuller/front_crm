@@ -10,7 +10,11 @@
       :autoFilter="false"
       :error="!!internalError"
       :debounce="debounce"
-    />
+    >
+      <template v-for="(index, name) in $slots" v-slot:[name]="data">
+        <slot :name="name" v-bind="data"></slot>
+      </template>
+    </Autocomplete>
     <div class="footer" :class="{ alert: internalError || error }">
       <Alert v-if="internalError || error">
         {{ internalError || error }}
