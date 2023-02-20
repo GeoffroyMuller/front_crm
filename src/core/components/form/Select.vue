@@ -58,15 +58,15 @@
 </template>
 <script setup lang="ts">
 import useValidatable from "@/core/helpers/vue/composables/validatable";
-import { computed, ref, type Component } from "vue";
+import { ref, toRef, type Component } from "vue";
 import TextField from "./TextField.vue";
-import { isEqual } from "lodash";
 import Alert from "../Alert.vue";
 import Icon from "../Icon.vue";
 import type { AnySchema } from "yup";
 import IconButton from "../IconButton.vue";
 import Menu from "../Menu.vue";
 import SelectOptions from "../SelectOptions.vue";
+import useSelect from "@/core/helpers/vue/composables/select";
 
 export interface SelectProps {
   multiple?: boolean;
@@ -122,97 +122,22 @@ const { internalValue, internalError, validate } = useValidatable({
   rules: props.rules,
 });
 
-function isSelected(opt: any) {
-  if (props.multiple) {
-    if (!internalValue.value?.length) return false;
-    return (
-      internalValue.value.find((v: any) =>
-        isEqual(props.getOptionValue(opt), v)
-      ) != null
-    );
-  }
-  return isEqual(props.getOptionValue(opt), internalValue.value);
-}
-
-function handleClickClose() {
-  internalValue.value = undefined;
-  open.value = false;
-  validate();
-}
-
-function handleClickOption(opt: any) {
-  if (props.multiple) {
-    if (isSelected(opt)) {
-      internalValue.value = internalValue.value.filter((v: any) => {
-        return !isEqual(props.getOptionValue(opt), v);
-      });
-    } else {
-      if (!internalValue.value) internalValue.value = [];
-      internalValue.value = [...internalValue.value, props.getOptionValue(opt)];
-    }
-  } else {
-    if (isSelected(opt)) {
-      internalValue.value = undefined;
-    } else {
-      internalValue.value = props.getOptionValue(opt);
-    }
-    open.value = false;
-  }
-  validate();
-}
-
-const selected = computed(() => {
-  if (props.multiple) {
-    if (!internalValue.value?.length) return [];
-    return internalValue.value.map((v: any) =>
-      props.options.find((o) => isEqual(props.getOptionValue(o), v))
-    );
-  }
-  return props.options.find((o) =>
-    isEqual(props.getOptionValue(o), internalValue.value)
-  );
+const {
+  isActive,
+  handleKeydown,
+  isSelected,
+  displayed,
+  handleClickOption,
+  handleClickClose,
+} = useSelect({
+  value: internalValue,
+  getOptionLabel: props.getOptionLabel,
+  getOptionValue: props.getOptionValue,
+  options: toRef(props, "options"),
+  multiple: props.multiple,
+  open,
+  validate,
 });
-
-const displayed = computed<string>(() => {
-  if (props.multiple) {
-    return selected.value.map((v: any) => props.getOptionLabel(v)).join(", ");
-  }
-  if (
-    selected.value === null &&
-    props.options.find((opt) => opt == null) !== undefined
-  ) {
-    return props.getOptionLabel(selected.value);
-  }
-  return selected.value != null ? props.getOptionLabel(selected.value) : "";
-});
-
-const activeOption = ref<number | null>(null);
-function isActive(index: number) {
-  return index == activeOption.value;
-}
-function handleKeydown(event: KeyboardEvent) {
-  console.error("OK");
-  if (props.options.length === 0) return;
-  if (event.key === "ArrowDown") {
-    if (
-      activeOption.value == null ||
-      activeOption.value === props.options.length - 1
-    ) {
-      activeOption.value = 0;
-    } else {
-      activeOption.value = activeOption.value + 1;
-    }
-  } else if (event.key === "ArrowUp") {
-    if (activeOption.value == null || activeOption.value === 0) {
-      activeOption.value = props.options.length - 1;
-    } else {
-      activeOption.value = activeOption.value - 1;
-    }
-  } else if (event.key === "Enter" && typeof activeOption.value === "number") {
-    handleClickOption(props.options[activeOption.value]);
-    activeOption.value = null;
-  }
-}
 </script>
 
 <style lang="scss">

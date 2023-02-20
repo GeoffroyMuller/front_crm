@@ -10,6 +10,7 @@
           @focus="isFocus = true"
           @blur="handleBlur"
           @click="clickTextField"
+          @keydown="handleKeydown"
         >
           <template #icon>
             <Icon
@@ -23,11 +24,7 @@
               "
               v-if="multiple || internalValue == null"
             />
-            <IconButton
-              name="close"
-              v-else
-              @click.stop="internalValue = null"
-            />
+            <IconButton name="close" v-else @click.stop="handleClickClose" />
           </template>
         </TextField>
       </template>
@@ -39,7 +36,7 @@
           :options="optionsFiltered"
           :multiple="props.multiple"
           @select="handleClickOption"
-          :is-active="(index: number) => true"
+          :is-active="isActive"
         >
           <template v-if="$slots.options" #default="_data">
             <slot name="options" v-bind="_data" />
@@ -61,7 +58,6 @@
 import { ref, watch } from "vue";
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import { computed } from "vue";
-
 import TextField from "./TextField.vue";
 import { debounce, isEqual } from "lodash";
 import Alert from "../Alert.vue";
@@ -70,6 +66,7 @@ import type { AnySchema } from "yup";
 import IconButton from "../IconButton.vue";
 import Menu from "../Menu.vue";
 import SelectOptions from "../SelectOptions.vue";
+import useSelect from "@/core/helpers/vue/composables/select";
 
 export interface AutocompleteProps {
   multiple?: boolean;
@@ -128,67 +125,6 @@ const { internalValue, internalError, validate } = useValidatable({
   rules: props.rules,
 });
 
-function handleClose() {
-  open.value = false;
-  validate();
-  search.value = displayed.value;
-}
-
-function isSelected(opt: any) {
-  if (props.multiple) {
-    if (!internalValue.value?.length) return false;
-    return (
-      internalValue.value.find((v: any) => isEqual(_getOptionValue(opt), v)) !=
-      null
-    );
-  }
-  return isEqual(_getOptionValue(opt), internalValue.value);
-}
-
-function handleClickOption(opt: any) {
-  if (props.multiple) {
-    if (isSelected(opt)) {
-      internalValue.value = internalValue.value.filter((v: any) => {
-        return !isEqual(_getOptionValue(opt), v);
-      });
-    } else {
-      if (!internalValue.value) internalValue.value = [];
-      internalValue.value = [...internalValue.value, _getOptionValue(opt)];
-    }
-  } else {
-    if (isSelected(opt)) {
-      internalValue.value = undefined;
-    } else {
-      internalValue.value = _getOptionValue(opt);
-    }
-    handleClose();
-  }
-  validate();
-}
-
-const selected = computed(() => {
-  if (props.multiple) {
-    if (!internalValue.value?.length) return [];
-    return internalValue.value.map((v: any) =>
-      props.options.find((o) => isEqual(_getOptionValue(o), v))
-    );
-  }
-  return props.options.find((o) =>
-    isEqual(_getOptionValue(o), internalValue.value)
-  );
-});
-
-const displayed = computed<string>(() => {
-  if (selected.value == null) {
-    return "";
-  }
-
-  if (props.multiple) {
-    return selected.value.map((v: any) => props.getOptionLabel(v)).join(", ");
-  }
-  return props.getOptionLabel(selected.value);
-});
-
 const optionsFiltered = computed(() => {
   let res: any[] = [];
   if (props.autoFilter) {
@@ -213,6 +149,24 @@ const optionsFiltered = computed(() => {
   }
 
   return res;
+});
+
+const {
+  isActive,
+  handleKeydown,
+  isSelected,
+  displayed,
+  handleClickOption,
+  handleClickClose,
+  selected,
+} = useSelect({
+  value: internalValue,
+  getOptionLabel: props.getOptionLabel,
+  getOptionValue: _getOptionValue,
+  options: optionsFiltered,
+  multiple: props.multiple,
+  open,
+  validate,
 });
 
 function clickTextField() {
