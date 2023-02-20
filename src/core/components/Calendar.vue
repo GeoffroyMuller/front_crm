@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <div class="calendar-content" ref="calendarContent" v-if="!displayWeek">
+    <div class="calendar-content" v-if="!displayWeek">
       <div class="weekdays">
         <div
           v-for="(day, index) of weekDaysLabels"
@@ -76,19 +76,11 @@
   </component>
 </template>
 <script setup lang="ts">
-import type { Dayjs } from "dayjs";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import IconButton from "./IconButton.vue";
 import Card from "./Card.vue";
-import useCalendar from "../helpers/vue/composables/calendar";
+import useCalendar, { type Day } from "../helpers/vue/composables/calendar";
 
-export type Day = {
-  day: number;
-  year: number;
-  month: number;
-  id?: string;
-  dayjs?: Dayjs;
-};
 interface CalendarProps {
   // 0 for sunday, 6 for saturday
   firstDayDisplayIndex?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -100,8 +92,6 @@ const props = withDefaults(defineProps<CalendarProps>(), {
 });
 
 const emit = defineEmits(["click"]);
-
-const calendarContent = ref();
 
 const displayWeek = ref(false);
 

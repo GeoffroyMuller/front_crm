@@ -1,6 +1,14 @@
 import dayjs, { type Dayjs } from "dayjs";
 import { computed, ref, type Ref } from "vue";
 
+export type Day = {
+  day: number;
+  year: number;
+  month: number;
+  id: string;
+  dayjs: Dayjs;
+};
+
 export interface useCalendarProps {
   min?: string | Dayjs;
   max?: string | Dayjs;
@@ -127,7 +135,7 @@ export default function useCalendar(props: useCalendarProps) {
     return true;
   }
 
-  const daysToDisplayMounth = computed(() => {
+  const daysToDisplayMounth = computed<Day[]>(() => {
     const daysInCurrentMonth = dayjs().month(current.value.month).daysInMonth();
     const res = [];
     if (props.firstDayDisplayIndex !== undefined) {
@@ -200,7 +208,7 @@ export default function useCalendar(props: useCalendarProps) {
     }));
   });
 
-  const daysToDisplay = computed(() => {
+  const daysToDisplay = computed<Day[]>(() => {
     if (weekMode.value) {
       return daysToDisplayMounth.value.slice(
         7 * current.value.week,
