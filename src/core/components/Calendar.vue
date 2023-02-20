@@ -37,7 +37,14 @@
       </div>
       <div class="days">
         <div class="day" v-for="day of datesToDisplay" :key="day.id">
-          {{ $utils.formatDate(day.dayjs) }}
+          <span v-if="!$slots['mounth-day']">
+            {{ $utils.formatDate(day.dayjs) }}
+          </span>
+          <slot
+            name="mounth-day"
+            :day="day"
+            :events="getEventsForDtstart(day.dayjs)"
+          />
         </div>
       </div>
     </div>
