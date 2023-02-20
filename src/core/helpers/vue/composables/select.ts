@@ -93,6 +93,12 @@ export default function useSelect(props: UseSelectProps) {
       return;
     }
     if (props.options.value.length === 0) return;
+    if (props.options.value.length === 1) {
+      if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+        activeOption.value = activeOption.value === 0 ? null : 0;
+        return;
+      }
+    }
     if (event.key === "ArrowDown") {
       if (
         activeOption.value == null ||
@@ -108,14 +114,16 @@ export default function useSelect(props: UseSelectProps) {
       } else {
         activeOption.value = activeOption.value - 1;
       }
-    } else if (
-      event.key === "Enter" &&
-      typeof activeOption.value === "number"
-    ) {
+    } else if (event.key === "Enter") {
       event.stopPropagation();
       event.preventDefault();
-      handleClickOption(props.options.value[activeOption.value]);
-      if (!props.multiple) {
+      if (typeof activeOption.value === "number") {
+        handleClickOption(props.options.value[activeOption.value]);
+        if (!props.multiple) {
+          activeOption.value = null;
+        }
+      } else {
+        props.open.value = false;
         activeOption.value = null;
       }
     }
