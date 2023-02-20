@@ -114,7 +114,7 @@ async function onSearch(q: string) {
 
 watch(
   () => internalValue.value,
-  async () => {
+  async (value, oldValue) => {
     if (internalValue.value != null) {
       if (!options.value?.length) {
         let filters: any = {};
@@ -133,7 +133,7 @@ watch(
         }
       }
     }
-    validate();
+    if (!isEqual(value, oldValue)) validate();
   },
   { immediate: true }
 );
