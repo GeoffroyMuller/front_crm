@@ -194,7 +194,9 @@ const {
   .timepicker {
     display: none;
   }
+  min-width: 280px;
   &.time {
+    min-width: 380px;
     .datepicker {
       border-right: solid 1px #d3d3d3;
     }
