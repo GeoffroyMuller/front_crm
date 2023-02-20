@@ -1,6 +1,6 @@
 <template>
   <div class="autocomplete">
-    <Menu>
+    <Menu stop-open-on-click-activator v-model:open="open">
       <template #activator>
         <TextField
           v-model="search"
@@ -224,7 +224,7 @@ const optionsFiltered = computed(() => {
 });
 
 function clickTextField() {
-  if (optionsFiltered.value?.length) {
+  if (optionsFiltered.value?.length && search.value?.length) {
     open.value = true;
   }
 }
@@ -239,6 +239,9 @@ watch(
       } else {
         open.value = false;
       }
+    }
+    if (!search.value.length) {
+      open.value = false;
     }
   }, props.debounce)
 );
@@ -261,7 +264,7 @@ watch(
 watch(
   () => optionsFiltered.value,
   () => {
-    if (optionsFiltered.value?.length) {
+    if (optionsFiltered.value?.length && search.value?.length) {
       if (isFocus.value) {
         open.value = true;
       } else {
