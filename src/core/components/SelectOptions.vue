@@ -7,16 +7,19 @@
   />
   <div
     v-else
-    class="select-option"
     :class="{
-      selected: isSelected(opt),
+      selected: isSelected(opt) && !$slots.option,
+      'select-option': !$slots.option,
     }"
     v-for="opt of options"
     :key="getOptionValue(opt)"
     @click.stop="$emit('select', opt)"
   >
-    <Checkbox :modelValue="isSelected(opt)" v-if="multiple" />
-    {{ getOptionLabel(opt) }}
+    <template v-if="!$slots.option">
+      <Checkbox :modelValue="isSelected(opt)" v-if="multiple" />
+      {{ getOptionLabel(opt) }}
+    </template>
+    <slot v-else name="option" :option="opt" :selected="isSelected(opt)" />
   </div>
 </template>
 
@@ -35,7 +38,7 @@ interface SelectOptionsProps {
 const props = withDefaults(defineProps<SelectOptionsProps>(), {});
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .select-option {
   cursor: pointer;
   padding: spacing(0.75) spacing(1);

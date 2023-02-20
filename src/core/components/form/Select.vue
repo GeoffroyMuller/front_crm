@@ -55,6 +55,9 @@
               :select="_select"
             />
           </template>
+          <template v-if="$slots.option" #option="_data">
+            <slot name="option" v-bind="_data" />
+          </template>
         </SelectOptions>
       </template>
     </Menu>
