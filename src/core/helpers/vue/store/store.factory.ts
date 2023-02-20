@@ -47,7 +47,8 @@ export interface APIStoreActions<T> {
   fetchById: (id: ID, filters?: Filters, applyState?: boolean) => Promise<T>;
   fetchList: (
     filters?: Filters,
-    applyState?: boolean
+    applyState?: boolean,
+    signal?: AbortSignal
   ) => Promise<PaginateResult2<T>>;
   search: (filters?: Filters, signal?: AbortSignal) => Promise<Array<T>>;
   update: (id: ID, body: T) => Promise<T>;
@@ -229,7 +230,8 @@ export function makeAPIStore<T>(
       },
       async fetchList(
         f?: Filters,
-        applyState = true
+        applyState = true,
+        signal?: AbortSignal
       ): Promise<PaginateResult2<T>> {
         if (config.IS_MOCK) {
           await sleep(config.MOCK_DURATION);
@@ -244,7 +246,7 @@ export function makeAPIStore<T>(
         const response = _formatResponse<Array<T> | PaginateResult<T>>(
           config.IS_MOCK
             ? mock.getAll(_getPath({ filters: _filters }))
-            : await axios.get(_getPath({ filters: _filters }))
+            : await axios.get(_getPath({ filters: _filters }), { signal })
         );
 
         const res: PaginateResult2<T> = {

@@ -87,11 +87,14 @@ const props = withDefaults(defineProps<MagicFilterBarProps<any>>(), {});
 
 const filtersValues = ref<any>(mapFiltersFromStore());
 
+let controller = new AbortController();
 watch(
   () => filtersValues.value,
   debounce(() => {
+    controller.abort();
+    controller = new AbortController();
     props.store.setFilters(mapFormFilters());
-    props.store.fetchList();
+    props.store.fetchList(undefined, true, controller.signal);
   }, 500)
 );
 
