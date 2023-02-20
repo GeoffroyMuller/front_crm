@@ -37,6 +37,7 @@ export interface SwitchProps {
 }
 
 const props = withDefaults(defineProps<SwitchProps>(), {});
+const emit = defineEmits(["switch"]);
 
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
@@ -47,6 +48,7 @@ const { internalValue, internalError, validate } = useValidatable({
 function handleSwitch() {
   if (!props.disabled) {
     internalValue.value = !internalValue.value;
+    emit("switch", internalValue.value);
   }
 }
 </script>
