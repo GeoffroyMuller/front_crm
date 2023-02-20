@@ -1,14 +1,9 @@
 <template>
   <Page :title="$t('menu.events')">
-    <Calendar is-card @click="($d) => clickOnDate($d.dayjs)">
-      <template #mounth-day="{ day }">
-        <BlockCalendarEvents @edit="edit" :events="events" :date="day.dayjs" />
+    <Calendar is-card @click="($d) => clickOnDate($d.dayjs)" :events="events">
+      <template #mounth-day="{ events: _events, day }">
+        <BlockCalendarEvents @edit="edit" :date="day.dayjs" :events="_events" />
       </template>
-      <!--   <template #hover-footer>
-        <Flex align-items="center" justify-content="center">
-          <Button type="button" variant="text">{{ $t("add") }}</Button>
-        </Flex>
-      </template> -->
     </Calendar>
     <FloatingButton @click.stop="editOpen = true">
       <Icon name="add" />

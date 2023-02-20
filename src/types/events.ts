@@ -1,20 +1,8 @@
-import type { Dayjs } from "dayjs";
 import type { Company } from "./company";
 import type { ID } from "./utils";
+import type { CalendarEvent } from "@/core/components/Calendar.vue";
 
-export interface Event {
-  id?: number;
-  dtstamp?: string | Dayjs;
-  dtstart?: string | Dayjs;
-  dtend?: string | Dayjs;
-  summary?: string;
-  description?: string;
-  location?: string;
-  recurrence_freq?: null | "DAILY" | "WEEKLY" | "MONTHLY" | "YEARLY";
-  recurrence_interval?: number;
-  recurrence_count?: number;
-  recurrence_until?: string;
-
+export interface Event extends CalendarEvent {
   idCompany?: number;
   company?: Company;
 

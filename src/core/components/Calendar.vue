@@ -66,7 +66,11 @@
             {{ day.day }}
           </span>
 
-          <slot name="mounth-day" :day="day" />
+          <slot
+            name="mounth-day"
+            :day="day"
+            :events="getEventsForDtstart(day.dayjs)"
+          />
           <div class="hover-footer" v-if="$slots['hover-footer']">
             <slot name="hover-footer" :day="day" />
           </div>
@@ -80,11 +84,28 @@ import { ref } from "vue";
 import IconButton from "./IconButton.vue";
 import Card from "./Card.vue";
 import useCalendar, { type Day } from "../helpers/vue/composables/calendar";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
+
+export interface CalendarEvent {
+  id?: number;
+  dtstamp?: string | Dayjs;
+  dtstart?: string | Dayjs;
+  dtend?: string | Dayjs;
+  summary?: string;
+  description?: string;
+  location?: string;
+  recurrence_freq?: null | "DAILY" | "WEEKLY" | "MONTHLY" | "YEARLY";
+  recurrence_interval?: number;
+  recurrence_count?: number;
+  recurrence_until?: string;
+}
 
 interface CalendarProps {
   // 0 for sunday, 6 for saturday
   firstDayDisplayIndex?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   isCard?: boolean;
+  events?: Array<CalendarEvent>;
 }
 
 const props = withDefaults(defineProps<CalendarProps>(), {
@@ -107,6 +128,72 @@ const {
   equalColumnsForEachLines: true,
   firstDayDisplayIndex: props.firstDayDisplayIndex,
 });
+
+function getDayjsManipulateTypeFromRecurrenceFreq(
+  recurrenceFreq: CalendarEvent["recurrence_freq"]
+) {
+  switch (recurrenceFreq) {
+    case "DAILY":
+      return "day";
+    case "WEEKLY":
+      return "week";
+    case "MONTHLY":
+      return "month";
+    case "YEARLY":
+      return "year";
+    default:
+      return "day";
+  }
+}
+
+/* 
+  @TODO : prendre en compte les frequence du type
+  "every 2 days" ou "every 3 weeks" et "every first monday of the month"
+*/
+function getEventsForDtstart(dtstart: Dayjs) {
+  if (!props.events?.length) return [];
+  return (
+    props.events.filter((e) => {
+      if (
+        dayjs(e.dtstart as string).format("YYYY-MM-DD") ===
+        dayjs(dtstart).format("YYYY-MM-DD")
+      ) {
+        return true;
+      }
+      if (e.recurrence_freq && e.recurrence_interval) {
+        const recurrenceUntil = e.recurrence_until
+          ? dayjs(e.recurrence_until)
+          : null;
+        const recurrenceInterval = e.recurrence_interval;
+        const recurrenceFreq = e.recurrence_freq;
+        const recurrenceDtstart = dayjs(e.dtstart as string);
+        let recurrenceDtstartTemp = recurrenceDtstart;
+        let recurrenceCountTemp = 0;
+        while (
+          (!recurrenceUntil ||
+            recurrenceDtstartTemp.isBefore(recurrenceUntil)) &&
+          (!e.recurrence_count || recurrenceCountTemp < +e.recurrence_count) &&
+          recurrenceDtstartTemp.isBefore(dtstart.add(1, "day"))
+        ) {
+          if (
+            recurrenceDtstartTemp.format("YYYY-MM-DD") ===
+            dayjs(dtstart).format("YYYY-MM-DD")
+          ) {
+            return true;
+          }
+          recurrenceDtstartTemp = recurrenceDtstartTemp.add(
+            recurrenceInterval,
+            getDayjsManipulateTypeFromRecurrenceFreq(recurrenceFreq)
+          );
+          if (recurrenceCountTemp != null) {
+            recurrenceCountTemp++;
+          }
+        }
+      }
+      return false;
+    }) || []
+  );
+}
 
 function clickOnDay(day: Day) {
   emit("click", day);

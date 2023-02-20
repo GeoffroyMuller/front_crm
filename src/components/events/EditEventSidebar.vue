@@ -1,7 +1,11 @@
 <template>
   <Sidebar :open="open" @update:open="($event) => $emit('update:open', $event)">
     <Form
-      :model-value="{ ...event, all_day_event: event?.dtend == null }"
+      :model-value="{
+        recurrence_freq: recurrenceOptions[0],
+        ...event,
+        all_day_event: event?.dtend == event?.dtstart,
+      }"
       class="edit-event-form"
       @submit="handleSubmit"
     >
@@ -31,8 +35,6 @@
           />
         </Flex>
         <Switch name="all_day_event" :label="$t('events.all_day_event')" />
-
-        <TextField name="location" :label="$t('events.location')" />
         <Select
           :get-option-label="
             (opt) => $t(`events.recurrenceopts.${opt || 'none'}`)
@@ -40,7 +42,31 @@
           :label="$t('events.recurrence')"
           :options="recurrenceOptions"
           name="recurrence_freq"
+          :rules="$yup.string().nullable().defined()"
+          required
         />
+        <Flex v-if="value.recurrence_freq != recurrenceOptions[0]" :gap="1">
+          <!-- <TextField
+            name="recurrence_interval"
+            :label="$t('events.recurrence_interval')"
+            type="number"
+            :step="1"
+            :min="1"
+            :model-value="1"
+            :rules="$yup.string().required()"
+          /> -->
+          <TextField
+            name="recurrence_count"
+            :label="$t('events.recurrence_count')"
+            type="number"
+            :step="1"
+          />
+          <DatePicker
+            name="recurrence_until"
+            :label="$t('events.recurrence_until')"
+          />
+        </Flex>
+
         <div class="actions">
           <Button type="submit" color="success" icon="add" :disabled="hasError">
             {{ isAddAction ? $t("add") : $t("save") }}
@@ -91,7 +117,15 @@ const recurrenceOptions: Event["recurrence_freq"][] = [
 // rrule documentation: https://www.kanzaki.com/docs/ical/rrule.html
 async function handleSubmit(data: any) {
   if (data.all_day_event) {
-    data.dtend = null;
+    data.dtend = data.dtstart;
+  }
+  if (data.recurrence_freq == recurrenceOptions[0]) {
+    delete data.recurrence_freq;
+    delete data.recurrence_interval;
+    delete data.recurrence_count;
+    delete data.recurrence_until;
+  } else {
+    data.recurrence_interval = 1;
   }
   delete data.all_day_event;
   data.idProduct = props.event?.idProduct;
@@ -112,7 +146,7 @@ async function handleSubmit(data: any) {
     }
   } else {
     try {
-      const id = (props.event as Event).id;
+      const id = (props.event as Event).id as number;
       const e = await eventStore.update(id, data);
       emit("update", {
         data: e,
