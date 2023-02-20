@@ -1,58 +1,68 @@
 <template>
-  <Menu class="autocomplete">
-    <template #activator>
-      <TextField
-        v-model="search"
-        :disabled="disabled"
-        :label="label"
-        :error="internalError || error ? true : false"
-        @focus="isFocus = true"
-        @blur="handleBlur"
-        @click="clickTextField"
-      >
-        <template #icon>
-          <Icon
-            name="search"
-            :color="
-              !isFocus ? 'black' : internalError || error ? 'danger' : 'primary'
-            "
-            v-if="multiple || internalValue == null"
-          />
-          <IconButton name="close" v-else @click.stop="internalValue = null" />
-        </template>
-      </TextField>
-    </template>
-    <template #content>
-      <SelectOptions
-        :is-selected="isSelected"
-        :get-option-value="_getOptionValue"
-        :get-option-label="props.getOptionLabel"
-        :options="optionsFiltered"
-        :multiple="props.multiple"
-        @select="handleClickOption"
-      >
-        <template
-          v-if="$slots.options"
-          #default="{
-            isSelected: _isSelected,
-            select: _select,
-            options: _options,
-          }"
+  <div class="autocomplete">
+    <Menu>
+      <template #activator>
+        <TextField
+          v-model="search"
+          :disabled="disabled"
+          :label="label"
+          :error="internalError || error ? true : false"
+          @focus="isFocus = true"
+          @blur="handleBlur"
+          @click="clickTextField"
         >
-          <slot
-            name="options"
-            :options="_options"
-            :isSelected="_isSelected"
-            :select="_select"
-          />
-        </template>
-      </SelectOptions>
-    </template>
-  </Menu>
+          <template #icon>
+            <Icon
+              name="search"
+              :color="
+                !isFocus
+                  ? 'black'
+                  : internalError || error
+                  ? 'danger'
+                  : 'primary'
+              "
+              v-if="multiple || internalValue == null"
+            />
+            <IconButton
+              name="close"
+              v-else
+              @click.stop="internalValue = null"
+            />
+          </template>
+        </TextField>
+      </template>
+      <template #content>
+        <SelectOptions
+          :is-selected="isSelected"
+          :get-option-value="_getOptionValue"
+          :get-option-label="props.getOptionLabel"
+          :options="optionsFiltered"
+          :multiple="props.multiple"
+          @select="handleClickOption"
+        >
+          <template
+            v-if="$slots.options"
+            #default="{
+              isSelected: _isSelected,
+              select: _select,
+              options: _options,
+            }"
+          >
+            <slot
+              name="options"
+              :options="_options"
+              :isSelected="_isSelected"
+              :select="_select"
+            />
+          </template>
+        </SelectOptions>
+      </template>
+    </Menu>
 
-  <Alert v-if="typeof (internalError || error) === 'string'">
-    {{ internalError || error }}
-  </Alert>
+    <Alert v-if="typeof (internalError || error) === 'string'">
+      {{ internalError || error }}
+    </Alert>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -267,21 +277,6 @@ function handleBlur() {
   isFocus.value = false;
   search.value = displayed.value;
 }
-
-/* const { open } = useMenu({
-  activator: autocomplete,
-  component: OptionsList,
-  openOnHover: false,
-  fullActivatorWidth: true,
-  componentProps: {
-    "handle-click-option": handleClickOption,
-    "get-option-value": _getOptionValue,
-    "get-option-label": props.getOptionLabel,
-    "is-selected": isSelected,
-    options: optionsFiltered,
-    multiple: props.multiple,
-  },
-}); */
 </script>
 
 <style lang="scss">

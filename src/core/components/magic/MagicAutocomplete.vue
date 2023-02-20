@@ -133,6 +133,7 @@ watch(
         }
       }
     }
+    validate();
   },
   { immediate: true }
 );
@@ -145,6 +146,7 @@ watch(
     justify-content: flex-end;
     width: 100%;
     align-items: center;
+    margin-top: spacing(1);
     &.alert {
       justify-content: space-between;
     }
