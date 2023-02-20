@@ -113,6 +113,8 @@
     "start": "Début",
     "end": "Fin",
     "recurrence": "Récurrence",
+    "recurrence_until": "Jusqu'au",
+    "recurrence_count": "Nombre de récurrence",
     "recurrenceopts": {
       "none": "Une seule fois",
       "DAILY": "Tous les jours",
