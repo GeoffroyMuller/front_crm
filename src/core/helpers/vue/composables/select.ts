@@ -53,6 +53,7 @@ export default function useSelect(props: UseSelectProps) {
         props.value.value = props.getOptionValue(opt);
       }
       props.open.value = false;
+      activeOption.value = null;
     }
     props.validate();
   }
@@ -73,6 +74,7 @@ export default function useSelect(props: UseSelectProps) {
   function handleClickClose() {
     props.value.value = undefined;
     props.open.value = false;
+    activeOption.value = null;
     props.validate();
   }
 
@@ -86,6 +88,7 @@ export default function useSelect(props: UseSelectProps) {
         event.stopPropagation();
         event.preventDefault();
         props.open.value = true;
+        activeOption.value = null;
       }
       return;
     }
