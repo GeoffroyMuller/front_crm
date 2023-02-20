@@ -50,7 +50,7 @@ watch(
   margin-bottom: spacing(2);
   .tab {
     border-radius: map-deep-get($rounded, "sm");
-    padding: spacing(1) 0;
+    padding-bottom: spacing(1);
     text-align: center;
     position: relative;
     cursor: pointer;

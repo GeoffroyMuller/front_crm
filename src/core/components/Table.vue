@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="table">
     <label v-if="label?.length" class="table-label">
       {{ label }}
     </label>
@@ -315,6 +315,9 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+.table {
+  overflow-x: auto;
+}
 .table-container {
   overflow-x: auto; // TODO : pourquoi il prend la taille des menu en compte pour sa taille
 }

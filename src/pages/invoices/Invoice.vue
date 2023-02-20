@@ -149,6 +149,7 @@ const {
 .invoice-actions {
   padding: spacing(0.5) spacing(2);
   background-color: color("primary", 50);
+  min-height: 37px;
 }
 .invoice-content {
   padding: spacing(2);

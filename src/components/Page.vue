@@ -17,8 +17,8 @@
       </Media>
     </div>
   </div>
-  <div class="page-btn-back">
-    <Button v-if="back" @click="goToBack" variant="text" icon="chevron_left">{{
+  <div class="page-btn-back" v-if="back">
+    <Button @click="goToBack" variant="text" icon="chevron_left">{{
       $t("back")
     }}</Button>
   </div>
@@ -87,7 +87,8 @@ async function disconnect() {
   justify-content: space-between;
   align-items: center;
   padding: 0 spacing(2);
-  height: spacing(10);
+  padding-top: spacing(4);
+  padding-bottom: spacing(2.5);
   .buttons {
     display: flex;
     justify-content: flex-end;
@@ -102,6 +103,6 @@ async function disconnect() {
 }
 .page-btn-back {
   padding: 0 spacing(2);
-  margin-bottom: spacing(1);
+  margin-bottom: spacing(2);
 }
 </style>

@@ -376,7 +376,8 @@ $miniNavWidth: 60px;
     width: 100%;
     padding-left: 20px;
     padding-right: 20px;
-    height: spacing(10);
+    padding-top: spacing(4);
+    padding-bottom: spacing(2.5);
     & span {
       font-weight: 600;
       color: color("primary", 700);

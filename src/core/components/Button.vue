@@ -120,6 +120,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   color: color("black");
   position: relative;
   padding: 0;
+  min-height: 0;
   &:hover {
     color: color("black");
   }
