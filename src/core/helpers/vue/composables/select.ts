@@ -81,6 +81,14 @@ export default function useSelect(props: UseSelectProps) {
     return index == activeOption.value;
   }
   function handleKeydown(event: KeyboardEvent) {
+    event.stopPropagation();
+    event.preventDefault();
+    if (!props.open.value) {
+      if (event.key === "Enter") {
+        props.open.value = true;
+      }
+      return;
+    }
     if (props.options.value.length === 0) return;
     if (event.key === "ArrowDown") {
       if (
