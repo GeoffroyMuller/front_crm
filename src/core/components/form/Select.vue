@@ -11,6 +11,7 @@
           @focus="isFocus = true"
           @blur="isFocus = false"
           @click="open = !open"
+          @keydown="handleKeydown"
         >
           <template #icon>
             <Icon
@@ -34,6 +35,7 @@
       <template #content>
         <SelectOptions
           :is-selected="isSelected"
+          :is-active="isActive"
           :get-option-value="getOptionValue"
           :get-option-label="getOptionLabel"
           :options="options"
@@ -183,6 +185,34 @@ const displayed = computed<string>(() => {
   }
   return selected.value != null ? props.getOptionLabel(selected.value) : "";
 });
+
+const activeOption = ref<number | null>(null);
+function isActive(index: number) {
+  return index == activeOption.value;
+}
+function handleKeydown(event: KeyboardEvent) {
+  console.error("OK");
+  if (props.options.length === 0) return;
+  if (event.key === "ArrowDown") {
+    if (
+      activeOption.value == null ||
+      activeOption.value === props.options.length - 1
+    ) {
+      activeOption.value = 0;
+    } else {
+      activeOption.value = activeOption.value + 1;
+    }
+  } else if (event.key === "ArrowUp") {
+    if (activeOption.value == null || activeOption.value === 0) {
+      activeOption.value = props.options.length - 1;
+    } else {
+      activeOption.value = activeOption.value - 1;
+    }
+  } else if (event.key === "Enter" && typeof activeOption.value === "number") {
+    handleClickOption(props.options[activeOption.value]);
+    activeOption.value = null;
+  }
+}
 </script>
 
 <style lang="scss">

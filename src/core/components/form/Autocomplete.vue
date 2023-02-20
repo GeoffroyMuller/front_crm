@@ -39,6 +39,7 @@
           :options="optionsFiltered"
           :multiple="props.multiple"
           @select="handleClickOption"
+          :is-active="(index: number) => true"
         >
           <template v-if="$slots.options" #default="_data">
             <slot name="options" v-bind="_data" />

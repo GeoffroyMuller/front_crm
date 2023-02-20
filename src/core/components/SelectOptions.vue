@@ -3,15 +3,17 @@
     v-if="$slots.default"
     :isSelected="isSelected"
     :select="(opt: any) => $emit('select', opt)"
+    :isActive="isActive"
     :options="options"
   />
   <div
     v-else
     :class="{
       selected: isSelected(opt) && !$slots.option,
+      active: isActive(index) && !$slots.option,
       'select-option': !$slots.option,
     }"
-    v-for="opt of options"
+    v-for="(opt, index) of options"
     :key="getOptionValue(opt)"
     @click.stop="$emit('select', opt)"
   >
@@ -19,20 +21,26 @@
       <Checkbox :modelValue="isSelected(opt)" v-if="multiple" />
       {{ getOptionLabel(opt) }}
     </template>
-    <slot v-else name="option" :option="opt" :selected="isSelected(opt)" />
+    <slot
+      v-else
+      name="option"
+      :option="opt"
+      :active="isActive(index)"
+      :selected="isSelected(opt)"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { Ref } from "vue";
 import Checkbox from "./form/Checkbox.vue";
 
 interface SelectOptionsProps {
   getOptionValue: (opt: any) => any;
   getOptionLabel: (opt: any) => string;
   isSelected: (opt: any) => boolean;
-  options: Array<any> | Ref<Array<any>>;
+  options: Array<any>;
   multiple?: boolean;
+  isActive: (index: number) => boolean;
 }
 
 const props = withDefaults(defineProps<SelectOptionsProps>(), {});
@@ -48,7 +56,8 @@ const props = withDefaults(defineProps<SelectOptionsProps>(), {});
   &.selected {
     color: color("primary", 500);
   }
-  &:hover {
+  &:hover,
+  &.active {
     background-color: color("primary", 50);
     color: color("primary", 500);
   }
