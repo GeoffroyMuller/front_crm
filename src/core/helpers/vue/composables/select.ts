@@ -81,10 +81,10 @@ export default function useSelect(props: UseSelectProps) {
     return index == activeOption.value;
   }
   function handleKeydown(event: KeyboardEvent) {
-    event.stopPropagation();
-    event.preventDefault();
     if (!props.open.value) {
       if (event.key === "Enter") {
+        event.stopPropagation();
+        event.preventDefault();
         props.open.value = true;
       }
       return;
@@ -109,6 +109,8 @@ export default function useSelect(props: UseSelectProps) {
       event.key === "Enter" &&
       typeof activeOption.value === "number"
     ) {
+      event.stopPropagation();
+      event.preventDefault();
       handleClickOption(props.options.value[activeOption.value]);
       if (!props.multiple) {
         activeOption.value = null;
