@@ -1,6 +1,6 @@
 <template>
   <div class="autocomplete">
-    <Menu stop-open-on-click-activator v-model:open="open">
+    <Menu full-activator-width stop-open-on-click-activator v-model:open="open">
       <template #activator>
         <TextField
           v-model="search"

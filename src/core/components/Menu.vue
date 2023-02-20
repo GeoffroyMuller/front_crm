@@ -28,6 +28,7 @@ interface MenuProps {
   disabled?: boolean;
   open?: boolean;
   stopOpenOnClickActivator?: boolean;
+  fullActivatorWidth?: boolean;
 }
 const props = withDefaults(defineProps<MenuProps>(), {});
 const emit = defineEmits(["update:open"]);
@@ -41,6 +42,7 @@ const { open } = useMenu({
   openOnHover: false,
   placement: props.placement || "bottom",
   gap: props.gap || 0,
+  fullActivatorWidth: props.fullActivatorWidth,
 });
 
 watch(
