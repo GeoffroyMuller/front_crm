@@ -129,6 +129,9 @@ async function handleSubmit(data: any) {
   }
   delete data.all_day_event;
   data.idProduct = props.event?.idProduct;
+  if (!data.recurrence_until) {
+    data.recurrence_until = null;
+  }
   if (isAddAction.value) {
     try {
       const newEvent = await eventStore.create(data);

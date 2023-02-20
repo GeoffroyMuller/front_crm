@@ -57,7 +57,6 @@ function clickOnDate(date: Dayjs) {
 }
 
 function edit(e: Event) {
-  console.error({ e });
   eventEdited.value = e;
   editOpen.value = true;
 }

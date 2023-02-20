@@ -148,6 +148,11 @@ const mask = computed(() => {
 });
 
 function handleInputChange(value: string) {
+  if (!value.length) {
+    internalValue.value = undefined;
+    validate();
+    return;
+  }
   const date = dayjs(value, format.value);
   if (date.isValid()) {
     internalValue.value = date.toISOString();
@@ -159,10 +164,16 @@ function handleInputChange(value: string) {
 }
 
 function onSelectDate(date: Dayjs) {
-  internalValue.value = date
+  const newValue = date
     .hour(current.value.hour || 0)
     .minute(current.value.minute || 0)
     .toISOString();
+  if (newValue === internalValue.value) {
+    internalValue.value = undefined;
+  } else {
+    internalValue.value = newValue;
+  }
+
   validate();
   open.value = false;
 }
