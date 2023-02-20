@@ -15,7 +15,11 @@
         <slot :name="name" v-bind="data"></slot>
       </template>
     </Autocomplete>
-    <div class="footer" :class="{ alert: internalError || error }">
+    <div
+      class="footer"
+      v-if="canAdd || internalError || error"
+      :class="{ alert: internalError || error }"
+    >
       <Alert v-if="internalError || error">
         {{ internalError || error }}
       </Alert>
@@ -146,12 +150,13 @@ watch(
 
 <style lang="scss">
 .magicAutocomplete {
+  display: grid;
+  gap: spacing(1);
   .footer {
     display: flex;
     justify-content: flex-end;
     width: 100%;
     align-items: center;
-    margin-top: spacing(1);
     &.alert {
       justify-content: space-between;
     }
