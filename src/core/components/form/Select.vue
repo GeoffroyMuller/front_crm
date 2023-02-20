@@ -1,29 +1,63 @@
 <template>
-  <div class="select" ref="selectRef" v-click-outside="() => (open = false)">
-    <TextField
-      :model-value="displayed"
-      readonly
-      :disabled="disabled"
-      :label="label"
-      :error="internalError || error ? true : false"
-      @focus="isFocus = true"
-      @blur="isFocus = false"
-      @click="open = !open"
-    >
-      <template #icon>
-        <Icon
-          :name="!open ? 'expand_more' : 'expand_less'"
-          :color="
-            !isFocus ? 'black' : internalError || error ? 'danger' : 'primary'
-          "
-          v-if="required || multiple || internalValue == null"
-        />
-        <IconButton name="close" v-else @click.stop="internalValue = null" />
-      </template>
-      <!-- <template #content v-if="multiple">
+  <div class="select">
+    <Menu stop-open-on-click-activator v-model:open="open">
+      <template #activator>
+        <TextField
+          :model-value="displayed"
+          readonly
+          :disabled="disabled"
+          :label="label"
+          :error="internalError || error ? true : false"
+          @focus="isFocus = true"
+          @blur="isFocus = false"
+          @click="open = !open"
+        >
+          <template #icon>
+            <Icon
+              :name="!open ? 'expand_more' : 'expand_less'"
+              :color="
+                !isFocus
+                  ? 'black'
+                  : internalError || error
+                  ? 'danger'
+                  : 'primary'
+              "
+              v-if="required || multiple || internalValue == null"
+            />
+            <IconButton name="close" v-else @click.stop="handleClickClose" />
+          </template>
+          <!-- <template #content v-if="multiple">
         {{ internalValue }}
       </template> -->
-    </TextField>
+        </TextField>
+      </template>
+      <template #content>
+        <SelectOptions
+          :is-selected="isSelected"
+          :get-option-value="getOptionValue"
+          :get-option-label="getOptionLabel"
+          :options="options"
+          :multiple="multiple"
+          @select="handleClickOption"
+        >
+          <template
+            v-if="$slots.options"
+            #default="{
+              isSelected: _isSelected,
+              select: _select,
+              options: _options,
+            }"
+          >
+            <slot
+              name="options"
+              :options="_options"
+              :isSelected="_isSelected"
+              :select="_select"
+            />
+          </template>
+        </SelectOptions>
+      </template>
+    </Menu>
     <Alert v-if="internalError || error">
       {{ internalError || error }}
     </Alert>
@@ -32,17 +66,16 @@
 <script setup lang="ts">
 import useValidatable from "@/core/helpers/vue/composables/validatable";
 import { computed, ref, type Component } from "vue";
-
 import TextField from "./TextField.vue";
 import { isEqual } from "lodash";
 import Alert from "../Alert.vue";
-import OptionsList from "../OptionsList.vue";
 import Icon from "../Icon.vue";
 import type { AnySchema } from "yup";
-import useMenu from "@/core/helpers/vue/composables/menu";
 import IconButton from "../IconButton.vue";
+import Menu from "../Menu.vue";
+import SelectOptions from "../SelectOptions.vue";
 
-export interface SelectProps  {
+export interface SelectProps {
   multiple?: boolean;
 
   getOptionValue?: (opt: any) => any;
@@ -54,7 +87,6 @@ export interface SelectProps  {
 
   required?: boolean;
 
-  
   label?: string;
   modelValue?: any;
   readonly?: boolean;
@@ -88,16 +120,14 @@ const emit = defineEmits([
   "change",
 ]);
 
+const open = ref(false);
 const isFocus = ref(false);
-const selectRef = ref();
 
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
   error: props.error,
   rules: props.rules,
 });
-
-const menuDisabled = computed(() => props.disabled || !props.options?.length);
 
 function isSelected(opt: any) {
   if (props.multiple) {
@@ -111,21 +141,11 @@ function isSelected(opt: any) {
   return isEqual(props.getOptionValue(opt), internalValue.value);
 }
 
-const { open } = useMenu({
-  activator: selectRef,
-  component: OptionsList,
-  openOnHover: false,
-  fullActivatorWidth: true,
-  componentProps: {
-    "handle-click-option": handleClickOption,
-    "get-option-value": props.getOptionValue,
-    "get-option-label": props.getOptionLabel,
-    "is-selected": isSelected,
-    option: props.option,
-    options: props.options,
-    multiple: props.multiple,
-  },
-});
+function handleClickClose() {
+  internalValue.value = undefined;
+  open.value = false;
+  validate();
+}
 
 function handleClickOption(opt: any) {
   if (props.multiple) {

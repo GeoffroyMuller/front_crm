@@ -264,9 +264,9 @@ watch(
 watch(
   () => optionsFiltered.value,
   () => {
-    if (optionsFiltered.value?.length && search.value?.length) {
+    if (optionsFiltered.value?.length) {
       if (isFocus.value) {
-        open.value = true;
+        if (search.value?.length) open.value = true;
       } else {
         if (internalValue.value != null) {
           search.value = displayed.value;
