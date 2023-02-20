@@ -49,7 +49,7 @@ export interface APIStoreActions<T> {
     filters?: Filters,
     applyState?: boolean
   ) => Promise<PaginateResult2<T>>;
-  search: (filters?: Filters) => Promise<Array<T>>;
+  search: (filters?: Filters, signal?: AbortSignal) => Promise<Array<T>>;
   update: (id: ID, body: T) => Promise<T>;
   create: (body: T) => Promise<T>;
   delete: (id: ID) => Promise<T>;
@@ -265,7 +265,7 @@ export function makeAPIStore<T>(
         }
         return res;
       },
-      async search(filters?: Filters): Promise<Array<T>> {
+      async search(filters?: Filters, signal?: AbortSignal): Promise<Array<T>> {
         if (config.IS_MOCK) {
           await sleep(config.MOCK_DURATION);
         }
@@ -273,7 +273,7 @@ export function makeAPIStore<T>(
         const response = _formatResponse<Array<T> | PaginateResult<T>>(
           config.IS_MOCK
             ? mock.getAll(_getPath({ filters }))
-            : await axios.get(_getPath({ filters }))
+            : await axios.get(_getPath({ filters }), { signal })
         );
         if (Array.isArray((response.data as PaginateResult<T>)?.results)) {
           return (response.data as PaginateResult<T>).results;

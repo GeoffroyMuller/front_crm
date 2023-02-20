@@ -77,7 +77,6 @@ const props = withDefaults(defineProps<MagicAutocompleteProps<any>>(), {
     return opt?.label;
   },
   getFilters: () => ({}),
-  debounce: 500,
 });
 
 const { internalValue, internalError, validate } = useValidatable({
@@ -107,8 +106,14 @@ const autocompleteProps = computed(() => {
   return result;
 });
 
+let controller = new AbortController();
 async function onSearch(q: string) {
-  const response = await props.store.search(props.getFilters(q));
+  controller.abort();
+  controller = new AbortController();
+  const response = await props.store.search(
+    props.getFilters(q),
+    controller.signal
+  );
   options.value = response;
 }
 
