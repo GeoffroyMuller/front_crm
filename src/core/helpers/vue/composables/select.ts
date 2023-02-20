@@ -102,7 +102,9 @@ export default function useSelect(props: UseSelectProps) {
       typeof activeOption.value === "number"
     ) {
       handleClickOption(props.options.value[activeOption.value]);
-      activeOption.value = null;
+      if (!props.multiple) {
+        activeOption.value = null;
+      }
     }
   }
 
