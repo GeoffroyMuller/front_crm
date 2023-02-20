@@ -23,7 +23,7 @@
                   ? 'danger'
                   : 'primary'
               "
-              v-if="required || multiple || internalValue == null"
+              v-if="required || multiple || internalValue === undefined"
             />
             <IconButton name="close" v-else @click.stop="handleClickClose" />
           </template>
