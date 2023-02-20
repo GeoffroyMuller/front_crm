@@ -40,20 +40,11 @@
           :multiple="props.multiple"
           @select="handleClickOption"
         >
-          <template
-            v-if="$slots.options"
-            #default="{
-              isSelected: _isSelected,
-              select: _select,
-              options: _options,
-            }"
-          >
-            <slot
-              name="options"
-              :options="_options"
-              :isSelected="_isSelected"
-              :select="_select"
-            />
+          <template v-if="$slots.options" #default="_data">
+            <slot name="options" v-bind="_data" />
+          </template>
+          <template v-if="$slots.option" #option="_data">
+            <slot name="option" v-bind="_data" />
           </template>
         </SelectOptions>
       </template>
