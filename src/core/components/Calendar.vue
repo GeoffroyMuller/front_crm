@@ -295,6 +295,7 @@ $borderRadius: map-deep-get($rounded, "md");
       border-bottom: none;
       overflow: hidden;
       overflow-y: auto;
+      position: relative;
       &:hover {
         .hover-footer {
           display: block;
@@ -303,6 +304,11 @@ $borderRadius: map-deep-get($rounded, "md");
       .hover-footer {
         display: none;
         text-align: center;
+        position: absolute;
+        bottom: spacing(0.5);
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 4;
       }
       &:hover {
         background-color: lighten(color("primary", 50), 1.5%);

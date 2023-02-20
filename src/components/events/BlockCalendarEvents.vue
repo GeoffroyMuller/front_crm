@@ -2,7 +2,7 @@
   <Grid :gap="0.5" :columns="1">
     {{ date.date() }}
     <div v-for="e of events" :key="e.id" @click.stop="$emit('edit', e)">
-      <Card :with-padding="false">
+      <Card :with-padding="false" class="event-block">
         <Flex align-items="center" :gap="0.5" :p="0.5">
           <div class="text">{{ dayjs(e.dtstart).format("H") }}h</div>
           <div class="text">-</div>
@@ -30,3 +30,9 @@ interface BlockCalendarEventsProps {
 const emit = defineEmits([]);
 const props = withDefaults(defineProps<BlockCalendarEventsProps>(), {});
 </script>
+
+<style lang="scss" scoped>
+.event-block {
+  background-color: color("primary", 50);
+}
+</style>

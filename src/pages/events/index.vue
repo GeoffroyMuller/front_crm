@@ -4,6 +4,11 @@
       <template #mounth-day="{ events: _events, day }">
         <BlockCalendarEvents @edit="edit" :date="day.dayjs" :events="_events" />
       </template>
+      <template #hover-footer>
+        <Flex align-items="center" justify-content="center">
+          <Button type="button" variant="text">{{ $t("add") }}</Button>
+        </Flex>
+      </template>
     </Calendar>
     <FloatingButton @click.stop="editOpen = true">
       <Icon name="add" />
@@ -22,9 +27,11 @@
 import BlockCalendarEvents from "@/components/events/BlockCalendarEvents.vue";
 import EditEventSidebar from "@/components/events/EditEventSidebar.vue";
 import Page from "@/components/Page.vue";
+import Button from "@/core/components/Button.vue";
 import Calendar from "@/core/components/Calendar.vue";
 import FloatingButton from "@/core/components/FloatingButton.vue";
 import Icon from "@/core/components/Icon.vue";
+import Flex from "@/core/components/layouts/Flex.vue";
 import useEventsStore from "@/stores/events";
 import type { Event } from "@/types/events";
 import type { Dayjs } from "dayjs";
@@ -57,6 +64,7 @@ function clickOnDate(date: Dayjs) {
 }
 
 function edit(e: Event) {
+  console.error({ e });
   eventEdited.value = e;
   editOpen.value = true;
 }
