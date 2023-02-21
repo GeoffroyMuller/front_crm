@@ -34,10 +34,10 @@ const settings = [
     title: t("teams"),
     component: Teams,
   },
-  {
+  /* {
     id: "comm_fee",
     title: t("settings-page.commission-fee.title"),
     component: ComissionFee,
-  },
+  }, */
 ];
 </script>

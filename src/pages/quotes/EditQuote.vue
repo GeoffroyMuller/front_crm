@@ -7,7 +7,7 @@
         @submit="save"
         class="quote-form-content"
       >
-        <template #default="{ hasError }">
+        <template #default="{ hasError, hasChanged }">
           <div class="form-head">
             <TextField name="name" :label="$t('title')" />
 
@@ -36,7 +36,7 @@
           <div class="form-table">
             <Repetable name="lines" :label="$t('products')" orderable>
               <template #default="{ data }">
-                <QuoteLineVue :line="(data as unknown as QuoteLine)" />
+                <QuoteLineVue :line="(data as unknown as SaleLine)" />
               </template>
               <template #actions="{ addSection }">
                 <Button
@@ -76,7 +76,7 @@
           />
           <div class="actions">
             <Button
-              :disabled="hasError"
+              :disabled="hasError || !hasChanged"
               type="submit"
               v-tooltip="{
                 text: $t('keyboardshortcuts.ctrl+s'),
@@ -102,7 +102,7 @@ import Page from "@/components/Page.vue";
 import useQuoteStore from "@/stores/quotes";
 import MagicAutocomplete from "@/core/components/magic/MagicAutocomplete.vue";
 import useClientStore from "@/stores/clients";
-import type { Quote, QuoteLine } from "@/types/quote";
+import type { Quote } from "@/types/quote";
 import QuoteLineVue from "@/components/quotes/QuoteLine.vue";
 import HtmlEditor from "@/core/components/HtmlEditor.vue";
 import useVatStore from "@/stores/vat";
@@ -113,6 +113,7 @@ import Card from "@/core/components/Card.vue";
 import { isEmpty } from "lodash";
 import QuoteStatusSelect from "@/components/quotes/QuoteStatusSelect.vue";
 import useEditPage from "@/components/editpage";
+import type { SaleLine } from "@/types/sale";
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();
@@ -151,12 +152,12 @@ const {
   mapBeforeSave: (data) => {
     if (data.lines) {
       data.lines = data.lines
-        .map((line) => {
+        .map((line: any) => {
           const newLine = { ...line };
           delete newLine.vat;
           return newLine;
         })
-        .filter((line) => !isEmpty(line));
+        .filter((line: any) => !isEmpty(line));
     }
     delete data.client;
     return data;

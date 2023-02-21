@@ -7,7 +7,7 @@
         @submit="save"
         class="invoice-form-content"
       >
-        <template #default="{ hasError }">
+        <template #default="{ hasError, hasChanged }">
           <div class="form-head">
             <TextField name="name" :label="$t('title')" />
 
@@ -74,7 +74,7 @@
           />
           <div class="actions">
             <Button
-              :disabled="hasError"
+              :disabled="hasError || !hasChanged"
               v-tooltip="{
                 text: $t('keyboardshortcuts.ctrl+s'),
                 placement: 'bottom',
@@ -141,6 +141,7 @@ const {
       data.lines = data.lines
         .map((line: SaleLine) => {
           const newLine = { ...line };
+          // @ts-ignore
           delete newLine.vat;
           return newLine;
         })
