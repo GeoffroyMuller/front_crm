@@ -22,7 +22,7 @@
 </template>
 <script lang="ts" setup>
 import { withDefaults } from "vue";
-import Media from "../Media.vue";
+import Media from "./Media.vue";
 import Card from "./Card.vue";
 import IconButton from "./IconButton.vue";
 

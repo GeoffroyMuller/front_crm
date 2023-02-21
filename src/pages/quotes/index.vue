@@ -132,7 +132,7 @@ import Button from "@/core/components/Button.vue";
 import Page from "@/components/Page.vue";
 import QuotePreview from "@/components/quotes/QuotePreview.vue";
 import QuoteSendMail from "@/components/quotes/QuoteSendMail.vue";
-import Media from "@/core/Media.vue";
+import Media from "@/core/components/Media.vue";
 import FloatingButton from "@/core/components/FloatingButton.vue";
 import QuoteFilters from "@/components/quotes/QuoteFilters.vue";
 import QuoteActionsMenu from "@/components/quotes/QuoteActionsMenu.vue";

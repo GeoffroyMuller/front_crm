@@ -212,7 +212,7 @@ import type { Column } from "./types";
 import { isEqual, isNil } from "lodash";
 import Card from "./Card.vue";
 import Spinner from "./Spinner.vue";
-import Media from "../Media.vue";
+import Media from "./Media.vue";
 import Checkbox from "./form/Checkbox.vue";
 import Flex from "./layouts/Flex.vue";
 import type { ID } from "@/types/utils";

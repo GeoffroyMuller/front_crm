@@ -6,8 +6,8 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import type { Breakpoints } from "./components/types";
-import useBreakpoints from "./helpers/vue/composables/breakpoints";
+import type { Breakpoints } from "./types";
+import useBreakpoints from "../helpers/vue/composables/breakpoints";
 
 export interface MediaProps<T = any> {
   up?: Breakpoints;

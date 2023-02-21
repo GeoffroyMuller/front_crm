@@ -33,7 +33,7 @@ import Button from "@/core/components/Button.vue";
 import useUserStore from "@/stores/user";
 import { computed } from "vue";
 import Spinner from "@/core/components/Spinner.vue";
-import Media from "@/core/Media.vue";
+import Media from "@/core/components/Media.vue";
 import ActionMenu from "@/core/components/ActionMenu.vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";

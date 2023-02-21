@@ -69,7 +69,7 @@ import { isNil } from "lodash";
 import TextField from "./form/TextField.vue";
 import IconButton from "./IconButton.vue";
 import Select from "@/core/components/form/Select.vue";
-import Media from "../Media.vue";
+import Media from "./Media.vue";
 
 interface PaginationProps {
   currentPage: number;
