@@ -44,6 +44,7 @@ interface SelectOptionsProps {
 }
 
 const props = withDefaults(defineProps<SelectOptionsProps>(), {});
+const emit = defineEmits(["select"]);
 </script>
 
 <style lang="scss">
