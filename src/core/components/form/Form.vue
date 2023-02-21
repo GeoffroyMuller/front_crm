@@ -20,7 +20,9 @@ export interface FormProps {
   initialValue?: any;
 }
 
-const props = withDefaults(defineProps<FormProps>(), {});
+const props = withDefaults(defineProps<FormProps>(), {
+  initialValue: {},
+});
 
 const emit = defineEmits(["update:modelValue", "submit", "inputChange"]);
 
