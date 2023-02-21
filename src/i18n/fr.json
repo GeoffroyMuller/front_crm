@@ -124,6 +124,13 @@
     }
   },
   "settings-page": {
+    "commission-fee": {
+      "title": "Commissions",
+      "fee": "Commissions (en %)",
+      "with-fee": "Avec commissions",
+      "roles": "Roles",
+      "users": "Utilisateurs"
+    },
     "role": {
       "rolename": "Role",
       "new-role": "Nouveau role",
