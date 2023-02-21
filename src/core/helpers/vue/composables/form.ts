@@ -1,12 +1,5 @@
 import { clone, isEmpty, omitBy, isNil, isEqual, get, set } from "lodash";
-import {
-  computed,
-  getCurrentInstance,
-  provide,
-  ref,
-  watch,
-  type Ref,
-} from "vue";
+import { computed, provide, ref, watch, type Ref } from "vue";
 
 export interface _CustomInput {
   name: string;
@@ -46,6 +39,9 @@ export default function useForm(props: userFormProps) {
   watch(
     () => props.value.value,
     () => {
+      if (isEqual(internalValue.value, props.value.value)) {
+        return;
+      }
       internalValue.value = clone(props.value.value || {});
       if (!isEmpty(internalValue.value)) {
         Object.keys(inputs.value).forEach((key) => {
