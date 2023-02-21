@@ -15,16 +15,10 @@
       <Grid :gap="1" v-if="!isAddAction">
         <div class="text2">{{ $t("customers") }}</div>
         <MagicDataTable
-          :store="useClientStore()"
+          :store="clientStore"
           @row-click="
             ($item) => ((clientSelected = $item), (editClientOpen = true))
           "
-          has-local-state
-          :filters="{
-            $eq: {
-              idCompany: company.id,
-            },
-          }"
           :columns="[
             {
               title: $t('name'),
@@ -85,12 +79,22 @@ const {
   loading,
   router,
   save,
+  id,
 } = useEditPage<Company>({
   store: companiesStore,
   onAdd: (res) => {
     console.error("qdqsd");
     router.push("/companies/" + res.id);
     company.value = res;
+  },
+});
+
+const clientStore = companiesStore.getDerivedStore(id as string, "clients", {
+  path: "clients",
+  filters: {
+    $eq: {
+      idClientCompany: id,
+    },
   },
 });
 </script>
