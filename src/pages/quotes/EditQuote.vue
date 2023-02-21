@@ -3,7 +3,7 @@
     <Card>
       <Form
         shortcuts
-        :model-value="quote"
+        :initial-value="quote"
         @submit="save"
         class="quote-form-content"
       >

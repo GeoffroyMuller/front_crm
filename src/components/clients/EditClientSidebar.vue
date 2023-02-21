@@ -1,6 +1,10 @@
 <template>
   <Sidebar :open="open" @update:open="($event) => $emit('update:open', $event)">
-    <Form :model-value="client" class="edit-client-form" @submit="handleSubmit">
+    <Form
+      :initial-value="client"
+      class="edit-client-form"
+      @submit="handleSubmit"
+    >
       <template #default="{ hasError }">
         <div class="title">
           {{ isAddAction ? $t("new-customer") : $t("customer") }}

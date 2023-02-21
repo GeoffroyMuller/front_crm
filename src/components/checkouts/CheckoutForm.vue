@@ -1,6 +1,6 @@
 <template>
   <Form
-    :model-value="{}"
+    :initial-value="{}"
     @submit="handleSubmit"
     @inputChange="handleInputChange"
   >

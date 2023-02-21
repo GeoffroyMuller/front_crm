@@ -7,7 +7,7 @@
     <MagicForm
       :columns="columns"
       :gap="gap"
-      :model-value="filtersValues"
+      :initial-value="filtersValues"
       :fields="filters"
       @inputChange="handleInputChange"
     >

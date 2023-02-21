@@ -30,7 +30,7 @@
   </MagicDataTable>
 
   <Sidebar v-model:open="isSidebarOpen">
-    <Form :model-value="userSelected" @submit="handleSubmit">
+    <Form :initial-value="userSelected" @submit="handleSubmit">
       <template #default="{ hasError }">
         <Grid :p="2" :gap="3">
           <div class="title">

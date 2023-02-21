@@ -1,6 +1,10 @@
 <template>
   <Modal v-model:open="isOpen">
-    <Form class="quote_send_mail" @submit="send" :model-value="formInitialData">
+    <Form
+      class="quote_send_mail"
+      @submit="send"
+      :initial-value="formInitialData"
+    >
       <template #default="{ hasError }">
         <div class="title">
           {{ $t("send_by_mail") }}

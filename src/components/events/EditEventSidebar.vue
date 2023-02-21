@@ -1,7 +1,7 @@
 <template>
   <Sidebar :open="open" @update:open="($event) => $emit('update:open', $event)">
     <Form
-      :model-value="{
+      :initial-value="{
         recurrence_freq: recurrenceOptions[0],
         ...event,
         all_day_event: event?.dtend == event?.dtstart,

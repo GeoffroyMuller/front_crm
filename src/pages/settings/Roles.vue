@@ -21,7 +21,7 @@
   </MagicDataTable>
 
   <Sidebar v-model:open="isSidebarOpen">
-    <Form :model-value="roleSelected" @submit="handleSubmit">
+    <Form :initial-value="roleSelected" @submit="handleSubmit">
       <template #default="{ hasError, value }">
         <Grid :p="2" :gap="3">
           <div class="title">

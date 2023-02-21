@@ -40,7 +40,7 @@
     </Flex>
 
     <Sidebar v-model:open="sidebarOpen" :title="$t('payment')" padding>
-      <Form :model-value="paymentEdit" @submit="handleSubmitForm">
+      <Form :initial-value="paymentEdit" @submit="handleSubmitForm">
         <Grid :gap="1">
           <MagicAutocomplete
             disabled

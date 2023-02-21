@@ -1,5 +1,6 @@
 <template>
   <Form
+    :initial-value="initialValue"
     :model-value="modelValue"
     @update:model-value="($val) => $emit('update:modelValue', $val)"
     @submit="handleSubmit"
@@ -45,6 +46,7 @@ export interface MagicFormProps {
   fields: Array<MagicFormFieldProps>;
   modelValue?: any;
   btnSaveText?: string;
+  initialValue?: any;
 
   columns?: GridColumnsOptions;
   gap?: number;

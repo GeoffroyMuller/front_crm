@@ -3,7 +3,7 @@
     <Card>
       <Form
         shortcuts
-        :model-value="invoice"
+        :initial-value="invoice"
         @submit="save"
         class="invoice-form-content"
       >

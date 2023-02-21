@@ -39,12 +39,6 @@ export default function useForm(props: userFormProps) {
   watch(
     () => props.value.value,
     () => {
-      if (
-        isEqual(internalValue.value, props.value.value) &&
-        props.value.value != undefined
-      ) {
-        return;
-      }
       internalValue.value = clone(props.value.value || {});
       if (!isEmpty(internalValue.value)) {
         Object.keys(inputs.value).forEach((key) => {

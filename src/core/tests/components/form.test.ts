@@ -156,4 +156,18 @@ describe("Form", () => {
     expect(data.test).toBe("test");
     wrapper.unmount();
   });
+
+  it("should hasChanged on input change", async () => {
+    const wrapper = mount(Form, {
+      slots: {
+        default: [h(TextField, { name: "test" }, [])],
+      },
+    });
+    const input = wrapper.find('input[name="test"]');
+    await input.setValue("test");
+    await wrapper.vm.$nextTick();
+    // @ts-ignore
+    expect(wrapper.vm.hasChanged).toBe(true);
+    wrapper.unmount();
+  });
 });

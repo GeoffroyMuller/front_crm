@@ -3,7 +3,7 @@
     <div class="title">
       {{ $t("pages.edit-reservation.new-reservation") }}
     </div>
-    <Form shortcuts :model-value="reservation" @submit="handleSubmit">
+    <Form shortcuts :initial-value="reservation" @submit="handleSubmit">
       <template #default="{ hasError, hasChanged }">
         <Grid :pb="14" :gap="1" :columns="1">
           <MagicAutocomplete

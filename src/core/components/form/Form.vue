@@ -17,6 +17,7 @@ import useKeyboardShortcut from "@/core/helpers/vue/composables/keyboardshortcut
 export interface FormProps {
   modelValue?: any;
   shortcuts?: boolean;
+  initialValue?: any;
 }
 
 const props = withDefaults(defineProps<FormProps>(), {});
@@ -35,7 +36,7 @@ const {
   register,
   unregister,
 } = useForm({
-  value: toRef(props, "modelValue"),
+  value: toRef(props, "initialValue"),
   onUpdateValue(value) {
     emit("update:modelValue", value);
   },

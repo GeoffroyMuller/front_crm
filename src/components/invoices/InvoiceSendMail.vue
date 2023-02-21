@@ -3,7 +3,7 @@
     <Form
       class="invoice_send_mail"
       @submit="send"
-      :model-value="formInitialData"
+      :initial-value="formInitialData"
     >
       <template #default="{ hasError }">
         <div class="title">

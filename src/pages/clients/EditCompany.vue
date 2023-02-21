@@ -9,7 +9,7 @@
     <Flex align-items="start" direction="column" :gap="2">
       <MagicFormVue
         :fields="[{ type: 'string', props: { name: 'name', label: 'name' } }]"
-        :model-value="company"
+        :initial-value="company"
         @submit="save"
       />
       <Grid :gap="1" v-if="!isAddAction">

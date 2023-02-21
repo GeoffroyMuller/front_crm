@@ -1,5 +1,5 @@
 <template>
-  <Form shortcuts :model-value="productInternal" @submit="handleSubmit">
+  <Form shortcuts :initial-value="productInternal" @submit="handleSubmit">
     <template #default="{ hasError, hasChanged }">
       <div class="avanced-settings-product">
         <Repetable name="product_fields" :label="$t('fields')">
