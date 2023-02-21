@@ -48,7 +48,7 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
   }
 
   if (
-    !isNil(form) &&
+    !isNil(form?.register) &&
     !isNil(instance) &&
     (instance?.props.name as unknown as string)?.length
   ) {
