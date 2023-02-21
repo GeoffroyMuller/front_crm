@@ -83,10 +83,16 @@ export default function useSelect(props: UseSelectProps) {
     return index == activeOption.value;
   }
   function handleKeydown(event: KeyboardEvent) {
+    if (
+      event.key === "ArrowUp" ||
+      event.key === "ArrowDown" ||
+      event.key === "Enter"
+    ) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
     if (!props.open.value) {
       if (event.key === "Enter") {
-        event.stopPropagation();
-        event.preventDefault();
         props.open.value = true;
         activeOption.value = null;
       }
@@ -115,8 +121,6 @@ export default function useSelect(props: UseSelectProps) {
         activeOption.value = activeOption.value - 1;
       }
     } else if (event.key === "Enter") {
-      event.stopPropagation();
-      event.preventDefault();
       if (typeof activeOption.value === "number") {
         handleClickOption(props.options.value[activeOption.value]);
         if (!props.multiple) {
