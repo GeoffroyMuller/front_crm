@@ -39,7 +39,11 @@ export default function useForm(props: userFormProps) {
   watch(
     () => props.value.value,
     () => {
-      if (isEqual(internalValue.value, props.value.value)) {
+      if (
+        isEqual(internalValue.value, props.value.value) &&
+        props.value.value != undefined
+      ) {
+        console.error(internalValue.value, props.value.value);
         return;
       }
       internalValue.value = clone(props.value.value || {});
