@@ -229,6 +229,9 @@ function handleSectionInputChange(
   inputName: string,
   inputValue: any
 ) {
+  if (isEqual(sections.value[key][inputName], inputValue)) {
+    return;
+  }
   sections.value[key] = {
     ...sections.value[key],
     [inputName]: inputValue,
