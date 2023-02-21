@@ -188,24 +188,26 @@ export default function useCalendar(props: useCalendarProps) {
       }
     }
 
-    return res.map((date) => ({
-      ...date,
-      id:
-        date.day +
-        "-" +
-        date.month +
-        "-" +
-        date.year +
-        `current-${current.value.month}`,
-      dayjs: dayjs()
-        .date(date.day)
-        .month(date.month)
-        .year(date.year)
-        .hour(0)
-        .minute(0)
-        .second(0)
-        .millisecond(0),
-    }));
+    return res.map((date) => {
+      return {
+        ...date,
+        id:
+          date.day +
+          "-" +
+          date.month +
+          "-" +
+          date.year +
+          `current-${current.value.month}`,
+        dayjs: dayjs()
+          .month(date.month)
+          .year(date.year)
+          .date(date.day)
+          .hour(0)
+          .minute(0)
+          .second(0)
+          .millisecond(0),
+      };
+    });
   });
 
   const daysToDisplay = computed<Day[]>(() => {
