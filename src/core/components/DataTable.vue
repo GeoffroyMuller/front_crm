@@ -50,11 +50,13 @@ import type { Column } from "./types";
 import Pagination from "./Pagination.vue";
 import Icon from "./Icon.vue";
 import { isNil } from "lodash";
+import type { ID } from "@/types/utils";
 
 export interface DataTableProps<T = any> {
   columns: Array<Column<T>> | null;
   items: Array<T> | null;
   itemsPerPage?: number;
+  itemsKey?: ID;
   nbPage?: number;
   currentPage?: number;
   activeColumn?: Column;

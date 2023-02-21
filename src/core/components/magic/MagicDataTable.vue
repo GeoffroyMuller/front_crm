@@ -23,6 +23,7 @@ import DataTable from "@/core/components/DataTable.vue";
 import type { Column } from "../types";
 import type { Filters } from "@/core/helpers/vue/store/types";
 import type { APIStore } from "@/core/helpers/vue/store/store.factory";
+import type { ID } from "@/types/utils";
 
 interface MagicDataTableProps<T> {
   filters?: Filters;
@@ -31,6 +32,7 @@ interface MagicDataTableProps<T> {
   columns?: Array<Column<T>> | null;
   selectable?: boolean;
   label?: string;
+  itemsKey?: ID;
 }
 
 const props = withDefaults(defineProps<MagicDataTableProps<any>>(), {
