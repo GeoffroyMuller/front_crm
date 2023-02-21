@@ -20,10 +20,21 @@ interface RepetableSectionProps {
 }
 
 const props = withDefaults(defineProps<RepetableSectionProps>(), {});
-const emit = defineEmits(["inputChange", "register", "unregister"]);
+const emit = defineEmits([
+  "inputChange",
+  "register",
+  "unregister",
+  "update:modelValue",
+]);
 
 const { validate, errors } = useForm({
   value: toRef(props, "value"),
+  onInputChange(val) {
+    emit("inputChange", val);
+  },
+  onUpdateValue(value) {
+    emit("update:modelValue", value);
+  },
 });
 
 onMounted(() => {
