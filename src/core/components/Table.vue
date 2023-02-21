@@ -10,8 +10,8 @@
         </div>
         <template v-if="items && items.length > 0">
           <Card
-            v-for="(item, index) in items"
-            :key="index"
+            v-for="item in items"
+            :key="item[itemsKey]"
             @click.stop="$emit('row-click', item)"
           >
             <Flex :mb="1.5" v-if="selectable">
@@ -129,8 +129,8 @@
               </template>
               <template v-else-if="items && items.length > 0">
                 <tr
-                  v-for="(item, index) in items"
-                  :key="index"
+                  v-for="item in items"
+                  :key="item[itemsKey]"
                   @click.stop="$emit('row-click', item)"
                 >
                   <td v-if="selectable">
@@ -215,6 +215,7 @@ import Spinner from "./Spinner.vue";
 import Media from "../Media.vue";
 import Checkbox from "./form/Checkbox.vue";
 import Flex from "./layouts/Flex.vue";
+import type { ID } from "@/types/utils";
 
 export interface TableProps<T = any> {
   columns: Array<Column> | null;
@@ -225,12 +226,14 @@ export interface TableProps<T = any> {
   selectable?: boolean;
   selected?: any[];
   label?: string;
+  itemsKey?: ID;
 }
 
 const props = withDefaults(defineProps<TableProps>(), {
   columns: null,
   items: null,
   isCard: true,
+  itemsKey: "id",
 });
 
 const emit = defineEmits(["row-click", "update:selected"]);
