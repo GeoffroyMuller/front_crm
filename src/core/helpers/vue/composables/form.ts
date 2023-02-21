@@ -17,6 +17,7 @@ export default function useForm(props: userFormProps) {
   const inputs = ref<{ [key: string]: _CustomInput }>({});
   const errors = ref<{ [key: string]: string | boolean | undefined }>({});
   const internalValue = ref<any>(props.value.value);
+  const internalInitialValue = ref<any>(props.value.value);
 
   function _setInternalValue(name: string, value: any) {
     internalValue.value = set(internalValue.value, name, value);
@@ -40,6 +41,7 @@ export default function useForm(props: userFormProps) {
     () => props.value.value,
     () => {
       internalValue.value = clone(props.value.value || {});
+      internalInitialValue.value = clone(props.value.value || {});
       if (!isEmpty(internalValue.value)) {
         Object.keys(inputs.value).forEach((key) => {
           if (_getInternalValue(key) !== undefined) {
@@ -64,7 +66,7 @@ export default function useForm(props: userFormProps) {
   );
 
   const hasChanged = computed(() => {
-    return !isEqual(internalValue.value, props.value.value);
+    return !isEqual(internalValue.value, internalInitialValue.value);
   });
 
   function register(input: _CustomInput) {
@@ -144,6 +146,10 @@ export default function useForm(props: userFormProps) {
     });
   }
 
+  function resetHasChanged() {
+    internalInitialValue.value = clone(internalValue.value);
+  }
+
   provide("form", {
     register,
     unregister,
@@ -155,6 +161,7 @@ export default function useForm(props: userFormProps) {
     errors,
     inputs,
     reset,
+    resetHasChanged,
     validate,
     hasError,
     hasChanged,

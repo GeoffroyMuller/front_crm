@@ -157,6 +157,20 @@ describe("Form", () => {
     wrapper.unmount();
   });
 
+  it("should !hasChanged on start", async () => {
+    const wrapper = mount(Form, {
+      slots: {
+        default: [h(TextField, { name: "test" }, [])],
+      },
+    });
+
+    const form = wrapper.findComponent(Form);
+    await form.vm.$nextTick();
+    // @ts-ignore
+    expect(wrapper.vm.hasChanged).toBe(false);
+    wrapper.unmount();
+  });
+
   it("should hasChanged on input change", async () => {
     const wrapper = mount(Form, {
       slots: {
@@ -166,8 +180,31 @@ describe("Form", () => {
     const input = wrapper.find('input[name="test"]');
     await input.setValue("test");
     await wrapper.vm.$nextTick();
+
     // @ts-ignore
     expect(wrapper.vm.hasChanged).toBe(true);
+    wrapper.unmount();
+  });
+
+  it("should !hasChanged when resetHasChanged", async () => {
+    const wrapper = mount(Form, {
+      slots: {
+        default: [h(TextField, { name: "test" }, [])],
+      },
+    });
+    const form = wrapper.findComponent(Form);
+    const input = form.find('input[name="test"]');
+    await input.setValue("test");
+    await form.vm.$nextTick();
+    await wrapper.vm.$nextTick();
+    // @ts-ignore
+    expect(form.vm.hasChanged).toBe(true);
+    // @ts-ignore
+    form.vm.resetHasChanged();
+    await form.vm.$nextTick();
+    await wrapper.vm.$nextTick();
+    // @ts-ignore
+    expect(form.vm.hasChanged).toBe(false);
     wrapper.unmount();
   });
 });

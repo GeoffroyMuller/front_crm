@@ -32,6 +32,7 @@ const {
   getData,
   hasChanged,
   internalValue,
+  resetHasChanged,
   /* need to stay here for test purpose
     (see form.test.ts -> should delete corresponding data when unregister an input)
  */
@@ -51,6 +52,7 @@ async function handleSumbit(event: Event) {
   event.preventDefault();
   if (await validate()) {
     emit("submit", getData());
+    resetHasChanged();
   }
 }
 
