@@ -5,7 +5,7 @@ import pinia from "./plugins/pinia";
 import setupRouter from "./plugins/router";
 import lodashPlugin from "./plugins/lodash";
 import yupPlugin from "./plugins/yup";
-import { i18n } from "./plugins/i18n";
+import setupI18n from "./plugins/i18n";
 
 import { createApp } from "vue";
 import { createWebHashHistory, type RouteRecordRaw } from "vue-router";
@@ -21,6 +21,10 @@ import breakpointsPlugin from "./plugins/breakpoints";
 
 interface SetupOptions {
   routes: Readonly<RouteRecordRaw[]>;
+  i18n: {
+    messages: any;
+    locale: string;
+  };
 }
 
 export default function setup(options: SetupOptions) {
@@ -32,6 +36,8 @@ export default function setup(options: SetupOptions) {
     history: createWebHashHistory(import.meta.env.BASE_URL),
     routes,
   });
+
+  const i18n = setupI18n(options.i18n.messages, options.i18n.locale);
 
   app
     .use(pinia)
@@ -47,6 +53,7 @@ export default function setup(options: SetupOptions) {
 
   return {
     router,
+    i18n,
     app,
   };
 }

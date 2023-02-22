@@ -1,5 +1,5 @@
 import { Product } from './product';
-import type { ID } from "./utils";
+import type { ID } from "core/src/types";
 import type { Vat } from "./vat";
 
 export interface SaleSubline {

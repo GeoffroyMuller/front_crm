@@ -2,7 +2,7 @@ import type Client from "./client";
 import type Invoice from "./invoice";
 import type { SaleLine } from "./sale";
 import type { User } from "./user";
-import type { ID } from "./utils";
+import type { ID } from "core/src/types";
 
 export interface Quote {
   archived: boolean;

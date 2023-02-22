@@ -57,7 +57,7 @@ import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
 import useUI from "core/src/helpers/vue/composables/ui";
 import useClientStore from "@/stores/clients";
 import useSaleStore from "@/stores/quotes";
-import type { ID } from "@/types/utils";
+import type { ID } from "core/src/types";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import CheckoutProductLine from "./CheckoutProductLine.vue";

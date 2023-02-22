@@ -1,7 +1,7 @@
 import type Client from "./client";
 import type { SaleLine } from "./sale";
 import type { User } from "./user";
-import type { ID } from "./utils";
+import type { ID } from "core/src/types";
 
 export default interface Invoice {
   id: ID;

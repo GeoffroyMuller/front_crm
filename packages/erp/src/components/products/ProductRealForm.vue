@@ -69,7 +69,7 @@ import type {
 import { isNil } from "lodash";
 import Repetable from "core/src/components/form/repetable/Repetable.vue";
 import { ref, watch } from "vue";
-import type { ID } from "@/types/utils";
+import type { ID } from "core/src/types";
 import MagicFormField from "core/src/components/magic/MagicFormField.vue";
 import useUI from "core/src/helpers/vue/composables/ui";
 import { useI18n } from "vue-i18n";

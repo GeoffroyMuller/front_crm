@@ -1,4 +1,4 @@
-import type { ID } from "./utils";
+import type { ID } from "core/src/types";
 
 export interface Product {
   id: ID;

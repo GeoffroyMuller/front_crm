@@ -76,7 +76,7 @@ import Sidebar from "core/src/components/Sidebar.vue";
 import useUI from "core/src/helpers/vue/composables/ui";
 import useRoleStore from "@/stores/roles";
 import type { Role } from "@/types/roles";
-import type { ID } from "@/types/utils";
+import type { ID } from "core/src/types";
 import { xor } from "lodash";
 import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";

@@ -67,7 +67,7 @@ import useRoleStore from "@/stores/roles";
 import useUserStore from "@/stores/user";
 import { useI18n } from "vue-i18n";
 import MagicDataTable from "core/src/components/magic/MagicDataTable.vue";
-import type { ID } from "@/types/utils";
+import type { ID } from "core/src/types";
 import TextField from "core/src/components/form/TextField.vue";
 
 const { t } = useI18n();

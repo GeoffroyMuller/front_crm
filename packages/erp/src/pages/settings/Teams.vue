@@ -83,7 +83,7 @@ import useUI from "core/src/helpers/vue/composables/ui";
 import useRoleStore from "@/stores/roles";
 import useUserStore from "@/stores/user";
 import type { User } from "@/types/user";
-import type { ID } from "@/types/utils";
+import type { ID } from "core/src/types";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 

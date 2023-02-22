@@ -1,7 +1,7 @@
 import type { Dayjs } from "dayjs";
 import type Client from "./client";
 import type { SaleLine } from "./sale";
-import type { ID } from "./utils";
+import type { ID } from "core/src/types";
 import type { Vat } from "./vat";
 
 export interface Reservation {

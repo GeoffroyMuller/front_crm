@@ -1,28 +1,18 @@
 import { createI18n } from "vue-i18n";
-const i18nLocale = "fr";
+import { merge } from "lodash";
+
 //Core translation file
-import enCore from "../i18n/en.json";
-import frCore from "../i18n/fr.json";
+import en from "../i18n/en.json";
+import fr from "../i18n/fr.json";
 
-//Feature translation file
-import enFeature from "@/i18n/en.json";
-import frFeature from "@/i18n/fr.json";
+export const corei18nMessages = { en, fr };
 
-const fr = {
-  ...frCore,
-  ...frFeature,
-};
-const en = {
-  ...enCore,
-  ...enFeature,
-};
-
-export const i18n = createI18n({
-  locale: i18nLocale ? i18nLocale : "fr",
-  globalInjection: true,
-  legacy: false,
-  messages: {
-    en,
-    fr,
-  },
-});
+export default function setupI18n(lang: any, locale = "fr") {
+  return createI18n({
+    locale,
+    fallbackLocale: "en",
+    globalInjection: true,
+    legacy: false,
+    messages: merge(lang, corei18nMessages),
+  });
+}

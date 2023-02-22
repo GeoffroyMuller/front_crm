@@ -1,7 +1,7 @@
 import { sleep } from "core/src/helpers/utils";
 import useUI from "core/src/helpers/vue/composables/ui";
 import type { APIStore } from "core/src/helpers/vue/store/store.factory";
-import type { ID } from "@/types/utils";
+import type { ID } from "core/src/types";
 import { ref, computed, onMounted, type Ref, isRef } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter, useRoute } from "vue-router";
