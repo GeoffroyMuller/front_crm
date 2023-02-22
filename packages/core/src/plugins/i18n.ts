@@ -1,8 +1,8 @@
 import { createI18n } from "vue-i18n";
 const i18nLocale = "fr";
 //Core translation file
-import enCore from "core/src/i18n/en.json";
-import frCore from "core/src/i18n/fr.json";
+import enCore from "../i18n/en.json";
+import frCore from "../i18n/fr.json";
 
 //Feature translation file
 import enFeature from "@/i18n/en.json";

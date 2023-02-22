@@ -23,7 +23,7 @@ import DataTable from "core/src/components/DataTable.vue";
 import type { Column } from "../types";
 import type { Filters } from "core/src/helpers/vue/store/types";
 import type { APIStore } from "core/src/helpers/vue/store/store.factory";
-import type { ID } from "@/types/utils";
+import type { ID } from "../../types";
 
 interface MagicDataTableProps<T> {
   filters?: Filters;

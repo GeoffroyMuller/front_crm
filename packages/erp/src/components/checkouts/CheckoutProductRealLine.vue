@@ -36,7 +36,7 @@ import Grid from "core/src/components/layouts/Grid.vue";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
 import useProductsRealStore from "@/stores/products_real";
 import type { Product, ProductReal } from "@/types/product";
-import type { SaleFormProductRealLine } from "@/types/sale";
+import type { SaleLine as SaleFormProductRealLine } from "@/types/sale";
 import { isNil } from "lodash";
 import { computed, ref } from "vue";
 

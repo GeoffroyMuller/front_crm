@@ -50,7 +50,7 @@ import type { Column } from "./types";
 import Pagination from "./Pagination.vue";
 import Icon from "./Icon.vue";
 import { isNil } from "lodash";
-import type { ID } from "@/types/utils";
+import type { ID } from "../types";
 
 export interface DataTableProps<T = any> {
   columns: Array<Column<T>> | null;

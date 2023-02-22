@@ -4,11 +4,8 @@ import {
   type StoreDefinition,
   type _GettersTree,
 } from "pinia";
-import mock from "../../mock";
 import axios from "core/src/plugins/axios";
-import config from "@/const";
-import type { ID } from "@/types/utils";
-import { sleep } from "../../utils";
+import type { ID } from "../../../types";
 import type { AxiosResponse } from "axios";
 import type { Filters, PaginateResult, PaginateResult2 } from "./types";
 import { cloneDeep, merge, uniqueId } from "lodash";
@@ -140,13 +137,7 @@ export function makeAPIStore<T>(
   function _formatResponse<FORMAT_TYPE>(
     response: any
   ): AxiosResponse<FORMAT_TYPE> {
-    if (config.IS_MOCK) {
-      return {
-        data: response,
-      } as AxiosResponse<FORMAT_TYPE>;
-    } else {
-      return response as AxiosResponse<FORMAT_TYPE>;
-    }
+    return response as AxiosResponse<FORMAT_TYPE>;
   }
 
   return defineStore<
@@ -214,14 +205,9 @@ export function makeAPIStore<T>(
         filters?: Filters,
         applyState = true
       ): Promise<T> {
-        if (config.IS_MOCK) {
-          await sleep(config.MOCK_DURATION);
-        }
         // @ts-ignore
         const response = _formatResponse<T>(
-          config.IS_MOCK
-            ? mock.getById(_getPath(), id)
-            : await axios.get(_getPath({ id, filters: filters || {} }))
+          await axios.get(_getPath({ id, filters: filters || {} }))
         );
         if (applyState) {
           this.byId[id] = response.data;
@@ -233,10 +219,6 @@ export function makeAPIStore<T>(
         applyState = true,
         signal?: AbortSignal
       ): Promise<PaginateResult2<T>> {
-        if (config.IS_MOCK) {
-          await sleep(config.MOCK_DURATION);
-        }
-
         const _filters = merge(
           cloneDeep(this.filters),
           merge(cloneDeep(f), cloneDeep(props.filters))
@@ -244,9 +226,7 @@ export function makeAPIStore<T>(
 
         // @ts-ignore
         const response = _formatResponse<Array<T> | PaginateResult<T>>(
-          config.IS_MOCK
-            ? mock.getAll(_getPath({ filters: _filters }))
-            : await axios.get(_getPath({ filters: _filters }), { signal })
+          await axios.get(_getPath({ filters: _filters }), { signal })
         );
 
         const res: PaginateResult2<T> = {
@@ -268,14 +248,9 @@ export function makeAPIStore<T>(
         return res;
       },
       async search(filters?: Filters, signal?: AbortSignal): Promise<Array<T>> {
-        if (config.IS_MOCK) {
-          await sleep(config.MOCK_DURATION);
-        }
         // @ts-ignore
         const response = _formatResponse<Array<T> | PaginateResult<T>>(
-          config.IS_MOCK
-            ? mock.getAll(_getPath({ filters }))
-            : await axios.get(_getPath({ filters }), { signal })
+          await axios.get(_getPath({ filters }), { signal })
         );
         if (Array.isArray((response.data as PaginateResult<T>)?.results)) {
           return (response.data as PaginateResult<T>).results;
@@ -283,38 +258,19 @@ export function makeAPIStore<T>(
         return response.data as Array<T>;
       },
       async update(id: ID, body: T) {
-        if (config.IS_MOCK) {
-          await sleep(config.MOCK_DURATION);
-        }
         // @ts-ignore
         const response = _formatResponse<T>(
-          config.IS_MOCK
-            ? mock.update(_getPath(), id, body)
-            : await axios.put(_getPath({ id }), body)
+          await axios.put(_getPath({ id }), body)
         );
         return response.data;
       },
       async create(body: T): Promise<T> {
-        if (config.IS_MOCK) {
-          await sleep(config.MOCK_DURATION);
-        }
-
-        const response = _formatResponse<T>(
-          config.IS_MOCK
-            ? mock.add(_getPath(), body)
-            : await axios.post(_getPath(), body)
-        );
+        const response = _formatResponse<T>(await axios.post(_getPath(), body));
         return response.data;
       },
       async delete(id: ID): Promise<T> {
-        if (config.IS_MOCK) {
-          await sleep(config.MOCK_DURATION);
-        }
-
         const response = _formatResponse<T>(
-          config.IS_MOCK
-            ? mock.deleteData(_getPath(), id)
-            : await axios.delete(_getPath({ id }))
+          await axios.delete(_getPath({ id }))
         );
         return response.data;
       },

@@ -215,7 +215,7 @@ import Spinner from "./Spinner.vue";
 import Media from "./Media.vue";
 import Checkbox from "./form/Checkbox.vue";
 import Flex from "./layouts/Flex.vue";
-import type { ID } from "@/types/utils";
+import type { ID } from "../types";
 
 export interface TableProps<T = any> {
   columns: Array<Column> | null;
