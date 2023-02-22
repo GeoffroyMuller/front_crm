@@ -27,7 +27,7 @@ interface SetupOptions {
     messages: any;
     locale: string;
   };
-  axios: AxiosDefaults;
+  axios: Partial<AxiosDefaults>;
 }
 
 export default function setup(options: SetupOptions) {
