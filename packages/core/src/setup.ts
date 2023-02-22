@@ -6,6 +6,8 @@ import setupRouter from "./plugins/router";
 import lodashPlugin from "./plugins/lodash";
 import yupPlugin from "./plugins/yup";
 import setupI18n from "./plugins/i18n";
+import { setupAxios } from "./plugins/axios";
+import type { AxiosDefaults } from "axios";
 
 import { createApp } from "vue";
 import { createWebHashHistory, type RouteRecordRaw } from "vue-router";
@@ -25,6 +27,7 @@ interface SetupOptions {
     messages: any;
     locale: string;
   };
+  axios: AxiosDefaults;
 }
 
 export default function setup(options: SetupOptions) {
@@ -38,6 +41,8 @@ export default function setup(options: SetupOptions) {
   });
 
   const i18n = setupI18n(options.i18n.messages, options.i18n.locale);
+
+  setupAxios(options.axios);
 
   app
     .use(pinia)

@@ -4,9 +4,8 @@ import {
   type StoreDefinition,
   type _GettersTree,
 } from "pinia";
-import axios from "core/src/plugins/axios";
 import type { ID } from "../../../types";
-import type { AxiosResponse } from "axios";
+import axios, { type AxiosResponse } from "axios";
 import type { Filters, PaginateResult, PaginateResult2 } from "./types";
 import { cloneDeep, merge, uniqueId } from "lodash";
 

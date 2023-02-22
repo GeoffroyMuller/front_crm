@@ -1,9 +1,9 @@
-import config from "@/const";
-import axios from "axios";
+import axios, { type AxiosDefaults } from "axios";
 
-const instance = axios.create({
-  // todo: get baseURL from .env
-  baseURL: config.API_URL,
-});
-
-export default instance;
+export function setupAxios(config: AxiosDefaults) {
+  for (const key of Object.keys(config)) {
+    // @ts-ignore
+    axios.defaults[key] = config[key];
+  }
+  return axios;
+}

@@ -15,14 +15,13 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import TextField from "core/src/components/form/TextField.vue";
 import Button from "core/src/components/Button.vue";
 import useUserStore from "@/stores/user";
 import { useRouter } from "vue-router";
 import PasswordInput from "core/src/components/form/PasswordInput.vue";
 import useUI from "core/src/helpers/vue/composables/ui";
-import type { AxiosError } from "axios";
 import Form from "core/src/components/form/Form.vue";
 import { useI18n } from "vue-i18n";
 

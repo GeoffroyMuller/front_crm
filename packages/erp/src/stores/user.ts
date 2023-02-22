@@ -4,7 +4,7 @@ import { defineStore } from "pinia";
 import config from "@/const";
 import { useRouter } from "vue-router";
 import { getJWT } from "core/src/helpers/utils";
-import axios from "core/src/plugins/axios";
+import axios from "axios";
 import mock from "@/mock.json";
 import { makeAPIStore } from "core/src/helpers/vue/store/store.factory";
 

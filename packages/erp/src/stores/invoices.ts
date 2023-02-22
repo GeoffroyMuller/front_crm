@@ -2,7 +2,7 @@ import { makeAPIStore } from "core/src/helpers/vue/store/store.factory";
 import type { InvoicePayment } from "@/types/invoice";
 import type Invoice from "@/types/invoice";
 import type { ID } from "core/src/types";
-import axios from "core/src/plugins/axios";
+import axios from "axios";
 import useQuoteStore from "./quotes";
 import pinia from "core/src/plugins/pinia";
 

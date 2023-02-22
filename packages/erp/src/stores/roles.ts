@@ -1,6 +1,6 @@
 import { makeAPIStore } from "core/src/helpers/vue/store/store.factory";
 import type { Role } from "@/types/roles";
-import axios from "core/src/plugins/axios";
+import axios from "axios";
 
 const useRoleStore = makeAPIStore<Role>({
   id: "roles",
