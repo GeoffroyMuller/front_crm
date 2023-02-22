@@ -89,7 +89,7 @@ import Grid from "core/src/components/layouts/Grid.vue";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
 import Sidebar from "core/src/components/Sidebar.vue";
 import Table from "core/src/components/Table.vue";
-import useUI from "core/src/helpers/vue/composables/ui";
+import useUI from "core/src/composables/ui";
 import useClientStore from "@/stores/clients";
 import useInvoicesStore from "@/stores/invoices";
 import type Client from "@/types/client";

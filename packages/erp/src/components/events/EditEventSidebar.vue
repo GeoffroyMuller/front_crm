@@ -85,7 +85,7 @@ import Switch from "core/src/components/form/Switch.vue";
 import TextField from "core/src/components/form/TextField.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import Sidebar from "core/src/components/Sidebar.vue";
-import useUI from "core/src/helpers/vue/composables/ui";
+import useUI from "core/src/composables/ui";
 import useEventsStore from "@/stores/events";
 import type { Event } from "@/types/events";
 import { computed } from "vue";

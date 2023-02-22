@@ -22,7 +22,7 @@
 import Menu from "core/src/components/Menu.vue";
 import Icon from "core/src/components/Icon.vue";
 import type { IconName } from "core/src/components/types";
-import type { MenuProps } from "../helpers/vue/composables/menu";
+import type { MenuProps } from "../composables/menu";
 
 interface Action {
   icon: IconName;

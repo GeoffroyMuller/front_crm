@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import useValidatable from "../helpers/vue/composables/validatable";
+import useValidatable from "../composables/validatable";
 import { QuillEditor } from "@vueup/vue-quill";
 import { ref, watch } from "vue";
 import "../assets/style/vuequill.steelsheet.scss";

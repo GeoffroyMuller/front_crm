@@ -84,7 +84,7 @@ import Form from "core/src/components/form/Form.vue";
 import TextField from "core/src/components/form/TextField.vue";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
 import Sidebar from "core/src/components/Sidebar.vue";
-import useUI from "core/src/helpers/vue/composables/ui";
+import useUI from "core/src/composables/ui";
 import useClientStore from "@/stores/clients";
 import useCompaniesStore from "@/stores/companies";
 import type Client from "@/types/client";

@@ -110,7 +110,7 @@ import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import type Client from "@/types/client";
 import Tabs from "core/src/components/Tabs.vue";
 import useCompaniesStore from "@/stores/companies";
-import useUI from "core/src/helpers/vue/composables/ui";
+import useUI from "core/src/composables/ui";
 import type { Company } from "@/types/company";
 import { useI18n } from "vue-i18n";
 

@@ -90,7 +90,7 @@
 import { ref } from "vue";
 import IconButton from "./IconButton.vue";
 import Card from "./Card.vue";
-import useCalendar, { type Day } from "../helpers/vue/composables/calendar";
+import useCalendar, { type Day } from "../composables/calendar";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 

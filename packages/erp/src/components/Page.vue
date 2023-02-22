@@ -37,7 +37,7 @@ import Media from "core/src/components/Media.vue";
 import ActionMenu from "core/src/components/ActionMenu.vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import useUI from "core/src/helpers/vue/composables/ui";
+import useUI from "core/src/composables/ui";
 
 interface PageProps {
   title: string;

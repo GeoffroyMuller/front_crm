@@ -117,14 +117,14 @@ import Button from "core/src/components/Button.vue";
 import useUserStore from "@/stores/user";
 import { useRoute, useRouter } from "vue-router";
 import IconButton from "core/src/components/IconButton.vue";
-import useUI from "core/src/helpers/vue/composables/ui";
+import useUI from "core/src/composables/ui";
 import Avatar from "core/src/components/Avatar.vue";
 import Sidebar from "core/src/components/Sidebar.vue";
 import type { IconName } from "core/src/components/types";
 import { useI18n } from "vue-i18n";
 import Tree from "core/src/components/Tree.vue";
 import ActionMenu from "core/src/components/ActionMenu.vue";
-import useKeyboardShortcut from "core/src/helpers/vue/composables/keyboardshortcut";
+import useKeyboardShortcut from "core/src/composables/keyboardshortcut";
 
 const userStore = useUserStore();
 

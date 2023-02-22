@@ -54,7 +54,7 @@ import Form from "core/src/components/form/Form.vue";
 import Repetable from "core/src/components/form/repetable/Repetable.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
-import useUI from "core/src/helpers/vue/composables/ui";
+import useUI from "core/src/composables/ui";
 import useClientStore from "@/stores/clients";
 import useSaleStore from "@/stores/quotes";
 import type { ID } from "core/src/types";

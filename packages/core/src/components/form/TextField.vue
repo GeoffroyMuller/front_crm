@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts" setup>
-import useValidatable from "../../helpers/vue/composables/validatable";
+import useValidatable from "../../composables/validatable";
 import { computed, withDefaults } from "vue";
 import type { IconName } from "../types";
 import Icon from "../Icon.vue";

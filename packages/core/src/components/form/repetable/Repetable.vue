@@ -84,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-import useValidatable from "../../../helpers/vue/composables/validatable";
+import useValidatable from "../../../composables/validatable";
 import { ValidationError, type AnySchema } from "yup";
 import { computed, ref, watch } from "vue";
 import { isEqual, isNil, uniqueId } from "lodash";

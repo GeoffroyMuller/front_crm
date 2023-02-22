@@ -1,6 +1,6 @@
 import { sleep } from "core/src/helpers/utils";
-import useUI from "core/src/helpers/vue/composables/ui";
-import type { APIStore } from "core/src/helpers/vue/store/store.factory";
+import useUI from "core/src/composables/ui";
+import type { APIStore } from "core/src/factories/store.factory";
 import type { ID } from "core/src/types";
 import { ref, computed, onMounted, type Ref, isRef } from "vue";
 import { useI18n } from "vue-i18n";

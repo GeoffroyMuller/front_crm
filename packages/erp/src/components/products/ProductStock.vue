@@ -58,7 +58,7 @@ import { ref } from "vue";
 import Button from "core/src/components/Button.vue";
 import { isNil } from "lodash";
 import Spinner from "core/src/components/Spinner.vue";
-import useUI from "core/src/helpers/vue/composables/ui";
+import useUI from "core/src/composables/ui";
 import useProductsStore from "@/stores/products";
 
 interface ProductStockProps {

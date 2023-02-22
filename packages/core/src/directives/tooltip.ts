@@ -1,7 +1,7 @@
 import type { Directive } from "vue";
 
 import Tooltip from "core/src/components/Tooltip.vue";
-import useMenu from "../helpers/vue/composables/menu";
+import useMenu from "../composables/menu";
 
 const tooltip: Directive = {
   mounted(target, binding, vnode) {

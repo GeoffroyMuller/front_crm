@@ -139,7 +139,7 @@ import QuoteActionsMenu from "@/components/quotes/QuoteActionsMenu.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import useQuote from "@/components/quotes/quote";
 import type { Quote } from "@/types/quote";
-import useKeyboardShortcut from "core/src/helpers/vue/composables/keyboardshortcut";
+import useKeyboardShortcut from "core/src/composables/keyboardshortcut";
 import { useRouter } from "vue-router";
 
 const router = useRouter();

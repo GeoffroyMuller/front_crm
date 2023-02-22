@@ -79,7 +79,7 @@ import Grid from "core/src/components/layouts/Grid.vue";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
 import MagicDataTable from "core/src/components/magic/MagicDataTable.vue";
 import Sidebar from "core/src/components/Sidebar.vue";
-import useUI from "core/src/helpers/vue/composables/ui";
+import useUI from "core/src/composables/ui";
 import useRoleStore from "@/stores/roles";
 import useUserStore from "@/stores/user";
 import type { User } from "@/types/user";

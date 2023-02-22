@@ -1,5 +1,5 @@
 import { getJWT } from "core/src/helpers/utils";
-import useUI from "core/src/helpers/vue/composables/ui";
+import useUI from "core/src/composables/ui";
 import useQuotesStore from "@/stores/quotes";
 import type { Quote } from "@/types/quote";
 import config from "@/const";

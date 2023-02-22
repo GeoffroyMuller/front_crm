@@ -21,7 +21,7 @@ import Button from "core/src/components/Button.vue";
 import useUserStore from "@/stores/user";
 import { useRouter } from "vue-router";
 import PasswordInput from "core/src/components/form/PasswordInput.vue";
-import useUI from "core/src/helpers/vue/composables/ui";
+import useUI from "core/src/composables/ui";
 import Form from "core/src/components/form/Form.vue";
 import { useI18n } from "vue-i18n";
 

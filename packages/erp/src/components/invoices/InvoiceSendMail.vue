@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import useUI from "core/src/helpers/vue/composables/ui";
+import useUI from "core/src/composables/ui";
 import type Invoice from "@/types/invoice";
 import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";

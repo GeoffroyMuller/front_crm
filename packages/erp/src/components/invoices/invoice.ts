@@ -1,5 +1,5 @@
 import { getJWT } from "core/src/helpers/utils";
-import useUI from "core/src/helpers/vue/composables/ui";
+import useUI from "core/src/composables/ui";
 import useInvoicesStore from "@/stores/invoices";
 import type Invoice from "@/types/invoice";
 import config from "@/const";

@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import { ref, Teleport, watch } from "vue";
-import useMenu from "../helpers/vue/composables/menu";
+import useMenu from "../composables/menu";
 import Card from "./Card.vue";
 
 interface MenuProps {
