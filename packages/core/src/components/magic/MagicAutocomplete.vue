@@ -37,7 +37,7 @@ import type { AnySchema } from "yup";
 import useValidatable from "core/src/helpers/vue/composables/validatable";
 import Button from "../Button.vue";
 import { isEqual } from "lodash";
-import type { Filters } from "core/src/helpers/vue/store/types";
+import type { Filters } from "core/src/types";
 import type { APIStore } from "core/src/factories/store.factory";
 import Alert from "../Alert.vue";
 

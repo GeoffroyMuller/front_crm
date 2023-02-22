@@ -6,7 +6,7 @@ import {
 } from "pinia";
 import type { ID } from "../types";
 import axios, { type AxiosResponse } from "axios";
-import type { Filters, PaginateResult, PaginateResult2 } from "../helpers/vue/store/types";
+import type { Filters, PaginateResult, PaginateResult2 } from "../types";
 import { cloneDeep, merge, uniqueId } from "lodash";
 
 export interface makeAPIStoreProps {
