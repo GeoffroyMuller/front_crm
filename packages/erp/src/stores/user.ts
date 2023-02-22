@@ -6,7 +6,7 @@ import { useRouter } from "vue-router";
 import { getJWT } from "core/src/helpers/utils";
 import axios from "axios";
 import mock from "@/mock.json";
-import { makeAPIStore } from "core/src/helpers/vue/store/store.factory";
+import { makeAPIStore } from "core/src/factories/store.factory";
 
 const useUserStore = makeAPIStore<User>({
   id: "users",

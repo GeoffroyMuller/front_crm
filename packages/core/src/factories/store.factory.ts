@@ -4,9 +4,9 @@ import {
   type StoreDefinition,
   type _GettersTree,
 } from "pinia";
-import type { ID } from "../../../types";
+import type { ID } from "../types";
 import axios, { type AxiosResponse } from "axios";
-import type { Filters, PaginateResult, PaginateResult2 } from "./types";
+import type { Filters, PaginateResult, PaginateResult2 } from "../helpers/vue/store/types";
 import { cloneDeep, merge, uniqueId } from "lodash";
 
 export interface makeAPIStoreProps {

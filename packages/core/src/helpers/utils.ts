@@ -12,7 +12,3 @@ export function setJWT(jwt: string | null): void {
     localStorage.setItem("jwt", jwt);
   }
 }
-
-export function formatPrice() {
-  
-}

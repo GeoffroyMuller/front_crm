@@ -1,4 +1,4 @@
-import { makeAPIStore } from "core/src/helpers/vue/store/store.factory";
+import { makeAPIStore } from "core/src/factories/store.factory";
 import type { Reservation } from "@/types/reservation";
 
 const useReservationStore = makeAPIStore<Reservation>({

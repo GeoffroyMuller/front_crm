@@ -1,4 +1,4 @@
-import { makeAPIStore } from "core/src/helpers/vue/store/store.factory";
+import { makeAPIStore } from "core/src/factories/store.factory";
 import type { InvoicePayment } from "@/types/invoice";
 import type Invoice from "@/types/invoice";
 import type { ID } from "core/src/types";

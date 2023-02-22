@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import type { APIStore } from "core/src/helpers/vue/store/store.factory";
+import type { APIStore } from "core/src/factories/store.factory";
 import { debounce, get, set } from "lodash";
 import { ref, watch } from "vue";
 import Card from "../Card.vue";
