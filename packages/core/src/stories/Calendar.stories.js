@@ -1,39 +1,30 @@
+import "../plugins/daysjs";
 import "../assets/style/main.scss";
-import Button from "../components/Button.vue";
+import Calendar from "../components/Calendar.vue";
 import argTypes from "./argstypes";
 // More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
 export default {
-  title: "Example/Button",
-  component: Button,
+  title: "Example/Calendar",
+  component: Calendar,
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   argTypes: {
-    ...argTypes("color", "icon"),
-    variant: {
-      control: { type: "select" },
-      options: ["base", "text", "outlined"],
-    },
-    type: {
-      control: { type: "select" },
-      options: ["button", "submit", "reset"],
-    },
-    align: {
-      control: { type: "select" },
-      options: ["center", "end", "start"],
-    },
+    ...argTypes(),
   },
-  args: {},
+  args: {
+    isCard: true,
+  },
 };
 
 // More on component templates: https://storybook.js.org/docs/vue/writing-stories/introduction#using-args
 const Template = (args) => ({
   // Components used in your story `template` are defined in the `components` object
-  components: { Button },
+  components: { Calendar },
   // The story's `args` need to be mapped into the template through the `setup()` method
   setup() {
     return { args };
   },
   // And then the `args` are bound to your component with `v-bind="args"`
-  template: '<Button v-bind="args">Button</Button>',
+  template: '<Calendar v-bind="args"></Calendar>',
 });
 
 export const Primary = Template.bind({});

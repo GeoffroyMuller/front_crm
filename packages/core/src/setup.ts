@@ -9,7 +9,7 @@ import setupI18n from "./plugins/i18n";
 import { setupAxios } from "./plugins/axios";
 import type { AxiosDefaults } from "axios";
 
-import { createApp } from "vue";
+import { createApp, type App as VueApp } from "vue";
 import { createWebHashHistory, type RouteRecordRaw } from "vue-router";
 
 import App from "./components/App.vue";
@@ -23,15 +23,16 @@ import breakpointsPlugin from "./plugins/breakpoints";
 
 interface SetupOptions {
   routes: Readonly<RouteRecordRaw[]>;
-  i18n: {
+  i18n?: {
     messages: any;
     locale: string;
   };
-  axios: Partial<AxiosDefaults>;
+  axios?: Partial<AxiosDefaults>;
+  app?: VueApp;
 }
 
 export default function setup(options: SetupOptions) {
-  const app = createApp(App);
+  const app = options.app || createApp(App);
 
   const { routes } = options;
 
@@ -40,9 +41,11 @@ export default function setup(options: SetupOptions) {
     routes,
   });
 
-  const i18n = setupI18n(options.i18n.messages, options.i18n.locale);
+  const i18n = setupI18n(options.i18n?.messages || {}, options.i18n?.locale);
 
-  setupAxios(options.axios);
+  if (options.axios) {
+    setupAxios(options.axios);
+  }
 
   app
     .use(pinia)

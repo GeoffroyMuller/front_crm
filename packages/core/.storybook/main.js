@@ -18,7 +18,6 @@ module.exports = {
     "storyStoreV7": true
   },
   async viteFinal(config) {
-    console.error(config.css)
     return mergeConfig(config, {
       css: {
         preprocessorOptions: {
