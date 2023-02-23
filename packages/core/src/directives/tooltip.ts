@@ -1,6 +1,6 @@
 import type { Directive } from "vue";
 
-import Tooltip from "core/src/components/Tooltip.vue";
+import Tooltip from "../components/Tooltip.vue";
 import useMenu from "../composables/menu";
 
 const tooltip: Directive = {

@@ -17,7 +17,7 @@
   </component>
 </template>
 <script setup lang="ts">
-import useLayoutComponent from "core/src/helpers/vue/composables/layoutComponent";
+import useLayoutComponent from "../../composables/layoutComponent";
 import { ref, type Component } from "vue";
 import type {
   AlignItemsOptions,

@@ -3,7 +3,7 @@ import type {
   Notification,
   ToastFunc,
   ConfirmFunc,
-} from "core/src/components/types";
+} from "../components/types";
 import { inject } from "vue";
 
 export default function useUI() {

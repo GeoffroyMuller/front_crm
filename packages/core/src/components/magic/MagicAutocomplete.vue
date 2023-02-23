@@ -34,11 +34,11 @@
 import { computed, ref, watch } from "vue";
 import Autocomplete from "../form/Autocomplete.vue";
 import type { AnySchema } from "yup";
-import useValidatable from "core/src/helpers/vue/composables/validatable";
+import useValidatable from "../../composables/validatable";
 import Button from "../Button.vue";
 import { isEqual } from "lodash";
-import type { Filters } from "core/src/types";
-import type { APIStore } from "core/src/factories/store.factory";
+import type { Filters } from "../../types";
+import type { APIStore } from "../../factories/store.factory";
 import Alert from "../Alert.vue";
 
 export interface MagicAutocompleteProps<T> /* extends AutocompleteProps */ {

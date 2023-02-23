@@ -10,9 +10,9 @@
 
 <script lang="ts" setup>
 import { toRef } from "vue";
-import type { _CustomInput } from "core/src/helpers/vue/composables/form";
-import useForm from "core/src/helpers/vue/composables/form";
-import useKeyboardShortcut from "core/src/helpers/vue/composables/keyboardshortcut";
+import type { _CustomInput } from "../../composables/form";
+import useForm from "../../composables/form";
+import useKeyboardShortcut from "../../composables/keyboardshortcut";
 
 export interface FormProps {
   modelValue?: any;

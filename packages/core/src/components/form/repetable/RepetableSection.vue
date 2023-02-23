@@ -8,9 +8,9 @@
 </template>
 
 <script setup lang="ts">
-import type { _CustomInput } from "core/src/helpers/vue/composables/form";
+import type { _CustomInput } from "../../../composables/form";
 import type { ISection } from "./Repetable.vue";
-import useForm from "core/src/helpers/vue/composables/form";
+import useForm from "../../../composables/form";
 import Icon from "../../Icon.vue";
 import { onMounted, onUnmounted, toRef } from "vue";
 

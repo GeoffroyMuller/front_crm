@@ -1,4 +1,4 @@
-import "core/src/assets/style/main.scss";
+import "./assets/style/main.scss";
 
 import "./plugins/daysjs";
 import pinia from "./plugins/pinia";

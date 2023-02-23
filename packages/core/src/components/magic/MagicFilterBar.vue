@@ -26,16 +26,16 @@
 </template>
 
 <script setup lang="ts">
-import type { APIStore } from "core/src/factories/store.factory";
+import type { APIStore } from "../../factories/store.factory";
 import { debounce, get, set } from "lodash";
 import { ref, watch } from "vue";
 import Card from "../Card.vue";
 import MagicForm from "./MagicForm.vue";
-import type { MagicFormFieldProps } from "core/src/components/magic/MagicFormField.vue";
+import type { MagicFormFieldProps } from "./MagicFormField.vue";
 import type { GridColumnsOptions } from "../layouts/types";
 import Icon from "../Icon.vue";
 import Flex from "../layouts/Flex.vue";
-import MagicFormField from "core/src/components/magic/MagicFormField.vue";
+import MagicFormField from "./MagicFormField.vue";
 
 export interface MagicFilterBarProps<T> {
   store: APIStore<T>;

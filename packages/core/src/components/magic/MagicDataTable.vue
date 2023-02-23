@@ -19,10 +19,10 @@
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
-import DataTable from "core/src/components/DataTable.vue";
+import DataTable from "../DataTable.vue";
 import type { Column } from "../types";
-import type { Filters } from "core/src/types";
-import type { APIStore } from "core/src/factories/store.factory";
+import type { Filters } from "../../types";
+import type { APIStore } from "../../factories/store.factory";
 import type { ID } from "../../types";
 
 interface MagicDataTableProps<T> {

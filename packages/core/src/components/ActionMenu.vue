@@ -19,9 +19,9 @@
   </Menu>
 </template>
 <script setup lang="ts">
-import Menu from "core/src/components/Menu.vue";
-import Icon from "core/src/components/Icon.vue";
-import type { IconName } from "core/src/components/types";
+import Menu from "./Menu.vue";
+import Icon from "./Icon.vue";
+import type { IconName } from "./types";
 import type { MenuProps } from "../composables/menu";
 
 interface Action {

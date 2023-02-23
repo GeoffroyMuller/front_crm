@@ -56,7 +56,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import useValidatable from "core/src/helpers/vue/composables/validatable";
+import useValidatable from "../../composables/validatable";
 import { computed } from "vue";
 import TextField from "./TextField.vue";
 import { debounce, isEqual } from "lodash";
@@ -66,7 +66,7 @@ import type { AnySchema } from "yup";
 import IconButton from "../IconButton.vue";
 import Menu from "../Menu.vue";
 import SelectOptions from "../SelectOptions.vue";
-import useSelect from "core/src/helpers/vue/composables/select";
+import useSelect from "../../composables/select";
 
 export interface AutocompleteProps {
   multiple?: boolean;

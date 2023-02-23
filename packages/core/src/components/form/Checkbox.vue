@@ -23,7 +23,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import useValidatable from "core/src/helpers/vue/composables/validatable";
+import useValidatable from "../../composables/validatable";
 import type { IconName } from "../types";
 import Alert from "../Alert.vue";
 import type { AnySchema } from "yup";

@@ -57,7 +57,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import useValidatable from "core/src/helpers/vue/composables/validatable";
+import useValidatable from "../../composables/validatable";
 import { ref, toRef, type Component } from "vue";
 import TextField from "./TextField.vue";
 import Alert from "../Alert.vue";
@@ -66,7 +66,7 @@ import type { AnySchema } from "yup";
 import IconButton from "../IconButton.vue";
 import Menu from "../Menu.vue";
 import SelectOptions from "../SelectOptions.vue";
-import useSelect from "core/src/helpers/vue/composables/select";
+import useSelect from "../../composables/select";
 
 export interface SelectProps {
   multiple?: boolean;

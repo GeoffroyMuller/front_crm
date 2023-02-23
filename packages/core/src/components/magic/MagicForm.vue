@@ -34,7 +34,7 @@
 import Button from "../Button.vue";
 import Form from "../form/Form.vue";
 import { useI18n } from "vue-i18n";
-import useUI from "core/src/helpers/vue/composables/ui";
+import useUI from "../../composables/ui";
 import type { Notification } from "../types";
 import { ref } from "vue";
 import type { MagicFormFieldProps } from "./MagicFormField.vue";

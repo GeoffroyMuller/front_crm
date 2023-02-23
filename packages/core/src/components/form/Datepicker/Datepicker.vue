@@ -86,7 +86,7 @@
   </Alert>
 </template>
 <script setup lang="ts">
-import useValidatable from "core/src/helpers/vue/composables/validatable";
+import useValidatable from "../../../composables/validatable";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { computed, ref } from "vue";
@@ -94,7 +94,7 @@ import TextField from "../TextField.vue";
 import Alert from "../../Alert.vue";
 import type { AnySchema } from "yup";
 import Menu from "../../Menu.vue";
-import useCalendar from "core/src/helpers/vue/composables/calendar";
+import useCalendar from "../../../composables/calendar";
 import IconButton from "../../IconButton.vue";
 import { Mask } from "maska";
 import Icon from "../../Icon.vue";

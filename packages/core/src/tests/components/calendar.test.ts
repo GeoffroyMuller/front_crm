@@ -1,5 +1,5 @@
-import "core/src/plugins/daysjs";
-import useCalendar from "core/src/helpers/vue/composables/calendar";
+import "../../plugins/daysjs";
+import useCalendar from "../../composables/calendar";
 import { describe, expect, it } from "vitest";
 
 describe("useCalendar", () => {

@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import useValidatable from "core/src/helpers/vue/composables/validatable";
+import useValidatable from "../../composables/validatable";
 import Menu from "../Menu.vue";
 import Card from "../Card.vue";
 import { onMounted } from "vue";

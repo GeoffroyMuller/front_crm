@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import useValidatable from "core/src/helpers/vue/composables/validatable";
+import useValidatable from "../../composables/validatable";
 import { ref } from "vue";
 
 import { isEqual } from "lodash";

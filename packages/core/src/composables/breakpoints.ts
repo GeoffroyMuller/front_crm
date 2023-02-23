@@ -1,4 +1,4 @@
-import type { $breakpoints } from "core/src/plugins/breakpoints";
+import type { $breakpoints } from "../plugins/breakpoints";
 import { inject } from "vue";
 
 export default function useBreakpoints() {

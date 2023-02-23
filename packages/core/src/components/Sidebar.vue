@@ -26,7 +26,7 @@
   </Teleport>
 </template>
 <script setup lang="ts">
-import IconButton from "core/src/components/IconButton.vue";
+import IconButton from "./IconButton.vue";
 
 interface SidebarProps {
   open: boolean;
