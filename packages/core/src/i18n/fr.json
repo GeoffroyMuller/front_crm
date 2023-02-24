@@ -89,8 +89,10 @@
   "modalities": "Modalités",
   "empty": "Vide",
   "reservations": "Reservations",
+  "reservation": "Reservation",
   "dtstart": "Date de debut",
   "dtend": "Date de fin",
   "created_at": "Créer le",
-  "description": "Description"
+  "description": "Description",
+  "dates": "Dates"
 }

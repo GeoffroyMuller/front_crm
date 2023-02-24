@@ -82,9 +82,10 @@
     },
     "edit-reservation": {
       "new-reservation": "Nouvelle réservation",
+      "edit-reservation": "Modifier la réservation",
       "add-product": "Ajouter un produit",
       "add-product-real": "Ajouter un produit physique",
-      "add-products": "Ajouter des produits a la reservation"
+      "add-products": "Ajouter des produits a la réservation"
     }
   },
   "new-quote": "Nouveau devis",

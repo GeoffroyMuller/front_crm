@@ -40,6 +40,12 @@ export default function useEditPage<T extends WithID>(
   });
 
   const loading = ref(false);
+  const loadingPage = computed(() => {
+    if (isAddAction.value) {
+      return false;
+    }
+    return model.value == null;
+  });
 
   const populate = props.populate || [];
 
@@ -105,5 +111,6 @@ export default function useEditPage<T extends WithID>(
     toast,
     confirm,
     save,
+    loadingPage,
   };
 }

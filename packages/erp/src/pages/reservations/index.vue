@@ -62,8 +62,22 @@
       </template>
     </MagicDataTable>
     <Sidebar v-model:open="isSidebarOpen">
-      <ReservationForm :reservation="reservationSelected"></ReservationForm>
-    </Sidebar>
+      <ReservationForm
+        v-if="!reservationSelected || isEdit"
+        :reservation="reservationSelected"
+        @back="backToView"
+      ></ReservationForm>
+      <ReservationView
+        v-else
+        @click-edit="
+          (res) => {
+            reservationSelected = res;
+            isEdit = true;
+          }
+        "
+        :reservation="reservationSelected"
+      ></ReservationView
+    ></Sidebar>
   </Page>
 </template>
 
@@ -73,18 +87,53 @@ import Page from "@/components/Page.vue";
 import useReservationStore from "@/stores/reservations";
 import type { Reservation } from "@/types/reservation";
 import Sidebar from "core/src/components/Sidebar.vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import ReservationForm from "@/components/reservations/ReservationForm.vue";
 import Button from "core/src/components/Button.vue";
+import ReservationView from "@/components/reservations/ReservationView.vue";
+import useUI from "core/src/composables/ui";
+
+const { toast, confirm } = useUI();
 
 const reservationStore = useReservationStore();
 
 const isSidebarOpen = ref(false);
 const reservationSelected = ref<Reservation | null>(null);
+const isEdit = ref<boolean>(false);
 
-function clickEdit(item?: Reservation) {
+watch(
+  () => isSidebarOpen.value,
+  (open) => {
+    if (open) {
+      isEdit.value = false;
+    }
+  }
+);
+
+async function fetchReservastionById(item?: Reservation) {
   if (item != null) {
-    reservationSelected.value = item;
+    try {
+      reservationSelected.value = await reservationStore.fetchById(item?.id, {
+        populate: ["client"],
+      });
+    } catch (error: any) {
+      toast({
+        type: "danger",
+        message: error.response.data.message,
+      });
+    }
+  }
+}
+
+async function backToView(item?: Reservation) {
+  console.error({ item });
+  fetchReservastionById(item);
+  isEdit.value = false;
+}
+
+async function clickEdit(item?: Reservation) {
+  if (item != null) {
+    fetchReservastionById(item);
     isSidebarOpen.value = true;
   } else {
     reservationSelected.value = null;

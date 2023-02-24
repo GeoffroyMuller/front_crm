@@ -1,5 +1,5 @@
 <template>
-  <Page :title="title" :loading="loading || (!isAddAction && !company)" back>
+  <Page :title="title" :loading="loadingPage" back>
     <EditClientSidebar
       v-model:open="editClientOpen"
       @update="editClientOpen = false"
@@ -76,6 +76,7 @@ const {
   isAddAction,
   model: company,
   t,
+  loadingPage,
   loading,
   router,
   save,

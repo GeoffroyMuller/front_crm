@@ -1,5 +1,5 @@
 <template>
-  <Page :title="title" :loading="isAddAction ? false : !quote" back>
+  <Page :title="title" :loading="loadingPage" back>
     <Card>
       <Form
         shortcuts
@@ -77,6 +77,7 @@
           <div class="actions">
             <Button
               :disabled="hasError || !hasChanged"
+              :loading="loading"
               type="submit"
               v-tooltip="{
                 text: $t('keyboardshortcuts.ctrl+s'),
@@ -142,6 +143,7 @@ function onAddClient(client: Client) {
 const {
   isAddAction,
   loading,
+  loadingPage,
   model: quote,
   router,
   t,

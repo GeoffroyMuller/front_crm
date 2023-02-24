@@ -1,13 +1,32 @@
 <template>
   <div class="reservation-form">
     <div class="title">
-      {{ $t("pages.edit-reservation.new-reservation") }}
+      {{
+        reservation
+          ? $t("pages.edit-reservation.edit-reservation")
+          : $t("pages.edit-reservation.new-reservation")
+      }}
     </div>
-    <Form shortcuts :initial-value="reservation" @submit="handleSubmit">
+    <div class="reservation-btn-back">
+      <Button
+        v-if="reservation"
+        @click.stop="$emit('back', reservation)"
+        variant="text"
+        icon="chevron_left"
+      >
+        {{ $t("back") }}
+      </Button>
+    </div>
+    <Form
+      class="reservation-form-content"
+      shortcuts
+      :initial-value="reservation"
+      @submit="handleSubmit"
+    >
       <template #default="{ hasError, hasChanged }">
         <Grid :pb="14" :gap="1" :columns="1">
           <MagicAutocomplete
-            name="client"
+            name="idClient"
             :label="$t('customer')"
             :getOptionLabel="
               (opt) =>
@@ -97,8 +116,14 @@ function handleSubmit(data: any) {
 <style lang="scss">
 .reservation-form {
   padding: spacing(2);
+  .reservation-btn-back {
+    padding: 0;
+  }
   .title {
-    margin-bottom: spacing(2);
+    margin-bottom: spacing(1) !important;
+  }
+  .reservation-form-content {
+    margin-top: spacing(2);
   }
 }
 .actions {
