@@ -2,14 +2,14 @@
   <div class="reservation-form">
     <div class="title">
       {{
-        reservation
-          ? $t("pages.edit-reservation.edit-reservation")
-          : $t("pages.edit-reservation.new-reservation")
+        isNewReseravation
+          ? $t("pages.edit-reservation.new-reservation")
+          : $t("pages.edit-reservation.edit-reservation")
       }}
     </div>
     <div class="reservation-btn-back">
       <Button
-        v-if="reservation"
+        v-if="!isNewReseravation"
         @click.stop="$emit('back', reservation)"
         variant="text"
         icon="chevron_left"
@@ -30,11 +30,13 @@
             :label="$t('customer')"
             :getOptionLabel="
               (opt) =>
-                `${opt.firstname} ${opt.lastname} ${
-                  opt.email ? '|' + opt.email : ''
-                } ${opt.phone ? '|' + opt.phone : ''}`
+                `${opt.firstname ? opt.firstname : ''} ${
+                  opt.lastname ? opt.lastname : ''
+                } ${opt.email ? '|' + opt.email : ''} ${
+                  opt.phone ? '|' + opt.phone : ''
+                }`
             "
-            :getOptionValue="(val) => val"
+            :getOptionValue="(val) => val.id"
             optionKey="id"
             :get-filters="
               (str) => ({
@@ -51,12 +53,12 @@
             :store="clientStore"
           />
           <Grid :gap="2" :columns="2">
-            <TextField name="client.firstname" :label="$t('firstname')" />
-            <TextField name="client.lastname" :label="$t('lastname')" />
+            <TextField name="clientresa.firstname" :label="$t('firstname')" />
+            <TextField name="clientresa.lastname" :label="$t('lastname')" />
           </Grid>
-          <TextField name="client.address" :label="$t('address')" />
-          <TextField name="client.phone" :label="$t('phone')" />
-          <TextField name="client.email" :label="$t('email')" />
+          <TextField name="clientresa.address" :label="$t('address')" />
+          <TextField name="clientresa.phone" :label="$t('phone')" />
+          <TextField name="clientresa.email" :label="$t('email')" />
 
           <Grid :gap="2" :columns="2">
             <DatePicker name="dtstart" :label="$t('dtstart')" />
@@ -98,19 +100,101 @@ import useClientStore from "@/stores/clients";
 import type { Reservation } from "@/types/reservation";
 import type { SaleLine } from "@/types/sale";
 import ReservationProductLine from "./ReservationProductLine.vue";
+import useReservationStore from "@/stores/reservations";
+import { isNil } from "lodash";
+import useUI from "core/src/composables/ui";
+import { useI18n } from "vue-i18n";
+import { computed } from "vue";
+import type Client from "@/types/client";
 
 interface ReservationFormProps {
   reservation: Reservation | null;
 }
 
+const { t } = useI18n();
+const { toast } = useUI();
 const clientStore = useClientStore();
+const reservationStore = useReservationStore();
 const emit = defineEmits(["saved"]);
 const props = withDefaults(defineProps<ReservationFormProps>(), {
   reservation: null,
 });
 
-function handleSubmit(data: any) {
-  console.error({ data }); //TODO
+const isNewReseravation = computed(() => {
+  return isNil(props.reservation);
+});
+
+function mapResa(data: any): {
+  reservation: Reservation;
+  client: any;
+} {
+  const clientresaKeys = Object.keys(data);
+  const client = clientresaKeys.reduce((accumulator, elem) => {
+    if (elem.includes("clientresa")) {
+      if (data[elem]) {
+        accumulator = {
+          ...accumulator,
+          [elem.replace("clientresa.", "")]: data[elem],
+        };
+      }
+      delete data[elem];
+    }
+    return accumulator;
+  }, {});
+  if (Object.keys(client).length === 0) {
+    return { reservation: data, client: null };
+  } else {
+    return { reservation: data, client };
+  }
+}
+async function handleSubmit(data: any) {
+  if (isNewReseravation.value) {
+    try {
+      const { reservation, client } = mapResa(data);
+      if (!reservation.idClient && client) {
+        const clientRes = await clientStore.create(client);
+        await reservationStore.create({
+          ...reservation,
+          idClient: clientRes.id,
+        });
+      } else {
+        await reservationStore.create(reservation);
+      }
+
+      toast({
+        type: "success",
+        message: t("saved"),
+      });
+    } catch (error: any) {
+      toast({
+        type: "danger",
+        message: error.response.data.message,
+      });
+    }
+  } else if (props.reservation != null) {
+    try {
+      const { reservation, client } = mapResa(data);
+      if (!reservation.idClient && client) {
+        const clientRes = await clientStore.create(client);
+        await reservationStore.update(props.reservation.id, {
+          ...reservation,
+          idClient: clientRes.id,
+        });
+      } else {
+        await reservationStore.update(props.reservation.id, reservation);
+      }
+
+      toast({
+        type: "success",
+        message: t("saved"),
+      });
+    } catch (error: any) {
+      toast({
+        type: "danger",
+        message: error.response.data.message,
+      });
+    }
+  }
 }
 </script>
 <style lang="scss">
