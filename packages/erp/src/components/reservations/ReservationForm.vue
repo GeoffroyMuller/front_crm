@@ -25,41 +25,74 @@
     >
       <template #default="{ hasError, hasChanged }">
         <Grid :pb="14" :gap="1" :columns="1">
-          <MagicAutocomplete
-            name="idClient"
-            :label="$t('customer')"
-            :getOptionLabel="
-              (opt) =>
-                `${opt.firstname ? opt.firstname : ''} ${
-                  opt.lastname ? opt.lastname : ''
-                } ${opt.email ? '|' + opt.email : ''} ${
-                  opt.phone ? '|' + opt.phone : ''
-                }`
-            "
-            :getOptionValue="(val) => val.id"
-            optionKey="id"
-            :get-filters="
-              (str) => ({
-                $or: {
-                  $contains: {
-                    firstname: str,
-                    lastname: str,
-                    email: str,
-                    phone: str,
+          <Card>
+            <Grid class="text" :pb="2">
+              {{
+                isSelectExistingClient
+                  ? $t("pages.edit-reservation.select-existing-client")
+                  : $t("pages.edit-reservation.client-not-exist")
+              }}
+            </Grid>
+            <MagicAutocomplete
+              v-if="isSelectExistingClient"
+              name="idClient"
+              :getOptionLabel="
+                (opt) =>
+                  `${opt.firstname ? opt.firstname : ''} ${
+                    opt.lastname ? opt.lastname : ''
+                  } ${opt.email ? '|' + opt.email : ''} ${
+                    opt.phone ? '|' + opt.phone : ''
+                  }`
+              "
+              :getOptionValue="(val) => val.id"
+              optionKey="id"
+              :get-filters="
+                (str) => ({
+                  $or: {
+                    $contains: {
+                      firstname: str,
+                      lastname: str,
+                      email: str,
+                      phone: str,
+                    },
                   },
-                },
-              })
-            "
-            :store="clientStore"
-          />
-          <Grid :gap="2" :columns="2">
-            <TextField name="clientresa.firstname" :label="$t('firstname')" />
-            <TextField name="clientresa.lastname" :label="$t('lastname')" />
-          </Grid>
-          <TextField name="clientresa.address" :label="$t('address')" />
-          <TextField name="clientresa.phone" :label="$t('phone')" />
-          <TextField name="clientresa.email" :label="$t('email')" />
-
+                })
+              "
+              :store="clientStore"
+            />
+            <Grid v-if="!isSelectExistingClient" :gap="1" :columns="1">
+              <Grid :gap="2" :columns="2">
+                <TextField
+                  name="clientresa.firstname"
+                  :label="$t('firstname')"
+                />
+                <TextField name="clientresa.lastname" :label="$t('lastname')" />
+              </Grid>
+              <TextField name="clientresa.address" :label="$t('address')" />
+              <TextField name="clientresa.phone" :label="$t('phone')" />
+              <TextField name="clientresa.email" :label="$t('email')" />
+            </Grid>
+            <Flex :pt="2" :gap="1">
+              {{
+                isSelectExistingClient
+                  ? $t("pages.edit-reservation.action-client-not-exist")
+                  : $t("pages.edit-reservation.action-select-existing-client")
+              }}
+              <Button
+                @click.stop="
+                  () => (isSelectExistingClient = !isSelectExistingClient)
+                "
+                color="primary"
+                variant="text"
+              >
+                {{
+                  isSelectExistingClient
+                    ? $t("pages.edit-reservation.client-not-exist")
+                    : $t("pages.edit-reservation.select-existing-client")
+                }}
+              </Button>
+            </Flex>
+          </Card>
           <Grid :gap="2" :columns="2">
             <DatePicker name="dtstart" :label="$t('dtstart')" />
             <DatePicker name="dtend" :label="$t('dtend')" />
@@ -104,8 +137,11 @@ import useReservationStore from "@/stores/reservations";
 import { isNil } from "lodash";
 import useUI from "core/src/composables/ui";
 import { useI18n } from "vue-i18n";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import type Client from "@/types/client";
+import Card from "core/src/components/Card.vue";
+import { boolean } from "yup";
+import Flex from "core/src/components/layouts/Flex.vue";
 
 interface ReservationFormProps {
   reservation: Reservation | null;
@@ -119,6 +155,8 @@ const emit = defineEmits(["saved"]);
 const props = withDefaults(defineProps<ReservationFormProps>(), {
   reservation: null,
 });
+
+const isSelectExistingClient = ref<boolean>(true);
 
 const isNewReseravation = computed(() => {
   return isNil(props.reservation);
