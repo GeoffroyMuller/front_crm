@@ -25,7 +25,7 @@
     >
       <template #default="{ hasError, hasChanged }">
         <Grid :pb="14" :gap="1" :columns="1">
-          <Card>
+          <Card class="reservation-form-client">
             <Grid class="text" :pb="2">
               {{
                 isSelectExistingClient
@@ -246,6 +246,9 @@ async function handleSubmit(data: any) {
   }
   .reservation-form-content {
     margin-top: spacing(2);
+    .reservation-form-client {
+      margin-bottom: spacing(1);
+    }
   }
 }
 .actions {
