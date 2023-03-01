@@ -7,7 +7,6 @@
         :label="$t('product')"
         :getOptionLabel="displayProductAutocomplete"
         @update:selected="handleProductChange"
-        option-key="id"
         :get-filters="
           (str) => ({ $or: { $contains: { name: str, price: str } } })
         "

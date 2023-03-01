@@ -6,7 +6,6 @@
         :label="$t('reference')"
         :getOptionLabel="displayProductRealAutocomplete"
         @update:selected="handleProductRealChange"
-        option-key="id"
         :get-filters="
           (str) => ({
             $contains: {

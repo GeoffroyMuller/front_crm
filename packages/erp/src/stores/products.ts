@@ -3,6 +3,9 @@ import type { Product } from "@/types/product";
 
 const useProductsStore = makeAPIStore<Product>({
   id: "products",
+  filters: {
+    populate: ["stock_physical"],
+  },
   actions: {
     isPhysicalStock: (product: Product) =>
       product?.stockManagement == "physical",

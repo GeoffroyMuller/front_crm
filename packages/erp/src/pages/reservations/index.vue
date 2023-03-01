@@ -114,7 +114,7 @@ async function fetchReservastionById(item?: Reservation) {
   if (item != null) {
     try {
       reservationSelected.value = await reservationStore.fetchById(item?.id, {
-        populate: ["client"],
+        populate: ["client", "lines", "lines.product", "lines.sublines"],
       });
     } catch (error: any) {
       toast({
