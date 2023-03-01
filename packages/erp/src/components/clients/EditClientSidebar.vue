@@ -9,32 +9,15 @@
         <div class="title">
           {{ isAddAction ? $t("new-customer") : $t("customer") }}
         </div>
-        <TextField
-          :rules="$yup.string().required()"
-          name="firstname"
-          :label="$t('firstname')"
-        />
-        <TextField
-          :rules="$yup.string().required()"
-          name="lastname"
-          :label="$t('lastname')"
-        />
-        <TextField
-          :rules="$yup.string().required()"
-          name="address"
-          :label="$t('address')"
-        />
+        <TextField name="firstname" :label="$t('firstname')" />
+        <TextField name="lastname" :label="$t('lastname')" />
+        <TextField name="address" :label="$t('address')" />
         <TextField name="phone" :label="$t('phone')" />
-        <TextField
-          :rules="$yup.string().required()"
-          name="email"
-          :label="$t('email')"
-        />
+        <TextField name="email" :label="$t('email')" />
         <MagicAutocomplete
           name="idClientCompany"
           :label="$t('company')"
           :getOptionLabel="(opt) => opt.name"
-          :rules="$yup.string().required()"
           optionKey="id"
           :get-option-value="(opt) => opt.id"
           :get-filters="(str) => ({ $contains: { name: str } })"
@@ -177,6 +160,8 @@ async function handleSubmit(data: any) {
   display: flex;
   flex-direction: column;
   gap: spacing(1);
+
+  max-width: 500px;
   .title {
     margin-bottom: spacing(2);
   }

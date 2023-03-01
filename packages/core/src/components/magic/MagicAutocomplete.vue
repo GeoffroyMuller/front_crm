@@ -160,6 +160,7 @@ watch(
 .magicAutocomplete {
   display: grid;
   gap: spacing(1);
+  max-width: 100%;
   .footer {
     display: flex;
     justify-content: flex-end;
