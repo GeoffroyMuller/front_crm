@@ -5,7 +5,7 @@ import type { ID } from "core/src/types";
 import type { Vat } from "./vat";
 
 export interface Reservation {
-  id?: ID;
+  id: ID;
   idCompany?: ID;
   idClient?: ID;
   description?: string;

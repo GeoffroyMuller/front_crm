@@ -82,9 +82,14 @@
     },
     "edit-reservation": {
       "new-reservation": "Nouvelle réservation",
+      "edit-reservation": "Modifier la réservation",
       "add-product": "Ajouter un produit",
       "add-product-real": "Ajouter un produit physique",
-      "add-products": "Ajouter des produits a la reservation"
+      "add-products": "Ajouter des produits a la réservation",
+      "select-existing-client": "Chercher un client",
+      "client-not-exist": "Créer un client",
+      "action-select-existing-client": "Votre client existe déjà ?",
+      "action-client-not-exist": "Votre client n'existe pas ?"
     }
   },
   "new-quote": "Nouveau devis",

@@ -1,5 +1,5 @@
 <template>
-  <Page :title="title" :loading="isAddAction ? false : !invoice" back>
+  <Page :title="title" :loading="loadingPage" back>
     <Card>
       <Form
         shortcuts
@@ -75,6 +75,7 @@
           <div class="actions">
             <Button
               :disabled="hasError || !hasChanged"
+              :loading="loading"
               v-tooltip="{
                 text: $t('keyboardshortcuts.ctrl+s'),
                 placement: 'bottom',
@@ -124,6 +125,7 @@ onMounted(() => {
 
 const {
   model: invoice,
+  loadingPage,
   loading,
   router,
   isAddAction,

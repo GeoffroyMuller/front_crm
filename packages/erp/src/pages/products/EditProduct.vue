@@ -6,7 +6,7 @@
         ? $t('pages.edit-product.new-product')
         : product?.name || ''
     "
-    :loading="id !== 'new' && product == null"
+    :loading="loadingPage"
   >
     <div class="edit-product">
       <Tabs v-if="id != 'new'" :tabs="productTabs">
@@ -75,6 +75,7 @@ const {
   save,
   t,
   loading,
+  loadingPage,
 } = useEditPage<Product>({
   store: productsStore,
   populate: ["products_real", "product_fields"],
