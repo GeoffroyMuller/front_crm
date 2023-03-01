@@ -133,7 +133,13 @@ const invoiceStore = useInvoicesStore();
 
 const { model: invoice, id } = useEditPage<Invoice>({
   store: invoiceStore,
-  populate: ["client.company", "responsible.company", "lines.vat", "payments"],
+  populate: [
+    "client.company",
+    "responsible.company",
+    "lines.vat",
+    "payments",
+    "total",
+  ],
 });
 
 const {

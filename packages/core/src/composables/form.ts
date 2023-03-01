@@ -7,17 +7,20 @@ export interface _CustomInput {
   internalError: any;
   validate: () => boolean | string;
 }
-export interface userFormProps {
-  value: Ref<any>;
+export interface useFormProps {
+  value?: Ref<any>;
+  initialValue: Ref<any>;
   onUpdateValue?: (value: any) => void;
   onInputChange?: (val: { name: string; value: any; formValue: any }) => void;
 }
 
-export default function useForm(props: userFormProps) {
+export default function useForm(props: useFormProps) {
   const inputs = ref<{ [key: string]: _CustomInput }>({});
   const errors = ref<{ [key: string]: string | boolean | undefined }>({});
-  const internalValue = ref<any>(props.value.value);
-  const internalInitialValue = ref<any>(props.value.value);
+  const internalValue = ref<any>(
+    clone(props.value?.value || props.initialValue.value || {})
+  );
+  const internalInitialValue = ref<any>(clone(props.initialValue.value || {}));
 
   function _setInternalValue(name: string, value: any) {
     internalValue.value = set(internalValue.value, name, value);
@@ -37,31 +40,44 @@ export default function useForm(props: userFormProps) {
     return get(internalValue.value, name);
   }
 
-  watch(
-    () => props.value.value,
-    () => {
-      internalValue.value = clone(props.value.value || {});
-      internalInitialValue.value = clone(props.value.value || {});
-      if (!isEmpty(internalValue.value)) {
-        Object.keys(inputs.value).forEach((key) => {
-          if (_getInternalValue(key) !== undefined) {
-            inputs.value[key].internalValue = _getInternalValue(key);
-          } else {
-            inputs.value[key].internalValue = undefined;
-            inputs.value[key].internalError = undefined;
-            errors.value[key] = undefined;
-          }
-        });
-      } else {
-        Object.keys(inputs.value).forEach((key) => {
+  function _setInternalValueObject(value: any) {
+    internalValue.value = clone(value || {});
+    if (!isEmpty(internalValue.value)) {
+      Object.keys(inputs.value).forEach((key) => {
+        const inputVal = _getInternalValue(key);
+        if (inputVal !== undefined) {
+          inputs.value[key].internalValue = inputVal;
+        } else {
           inputs.value[key].internalValue = undefined;
           inputs.value[key].internalError = undefined;
           errors.value[key] = undefined;
-        });
+        }
+      });
+    } else {
+      Object.keys(inputs.value).forEach((key) => {
+        inputs.value[key].internalValue = undefined;
+        inputs.value[key].internalError = undefined;
+        errors.value[key] = undefined;
+      });
+    }
+  }
+
+  if (props.value !== undefined) {
+    watch(
+      // @ts-ignore
+      () => props.value.value,
+      () => {
+        // @ts-ignore
+        _setInternalValueObject(props.value.value || {});
       }
-    },
-    {
-      immediate: true,
+    );
+  }
+
+  watch(
+    () => props.initialValue.value,
+    () => {
+      _setInternalValueObject(props.initialValue.value || {});
+      internalInitialValue.value = clone(props.initialValue.value || {});
     }
   );
 

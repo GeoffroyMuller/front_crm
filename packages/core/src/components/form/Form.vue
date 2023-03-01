@@ -1,11 +1,11 @@
 <template>
-  <form @submit="handleSumbit">
+  <component :is="component" @submit="handleSumbit">
     <slot
       :hasError="hasError"
       :hasChanged="hasChanged"
       :value="internalValue"
     />
-  </form>
+  </component>
 </template>
 
 <script lang="ts" setup>
@@ -18,10 +18,12 @@ export interface FormProps {
   modelValue?: any;
   shortcuts?: boolean;
   initialValue?: any;
+  component?: any;
 }
 
 const props = withDefaults(defineProps<FormProps>(), {
   initialValue: {},
+  component: "form",
 });
 
 const emit = defineEmits(["update:modelValue", "submit", "inputChange"]);
@@ -39,7 +41,8 @@ const {
   register,
   unregister,
 } = useForm({
-  value: toRef(props, "initialValue"),
+  value: toRef(props, "modelValue"),
+  initialValue: toRef(props, "initialValue"),
   onUpdateValue(value) {
     emit("update:modelValue", value);
   },

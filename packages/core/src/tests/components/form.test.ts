@@ -182,6 +182,9 @@ describe("Form", () => {
     await wrapper.vm.$nextTick();
 
     // @ts-ignore
+    console.error("yes...", wrapper.vm.internalValue, wrapper.vm.initialValue);
+
+    // @ts-ignore
     expect(wrapper.vm.hasChanged).toBe(true);
     wrapper.unmount();
   });
@@ -206,5 +209,43 @@ describe("Form", () => {
     // @ts-ignore
     expect(form.vm.hasChanged).toBe(false);
     wrapper.unmount();
+  });
+
+  it("should change when initialValue change", async () => {
+    const initVal = ref({ test: 1 });
+    const wrapper = mount(Form, {
+      props: {
+        initialValue: initVal,
+      },
+      slots: {
+        default: [h(TextField, { name: "test" }, [])],
+      },
+    });
+    await wrapper.vm.$nextTick();
+    // @ts-ignore
+    expect(wrapper.vm.internalValue.test).toBe(1);
+    initVal.value = { test: 12 };
+    await wrapper.vm.$nextTick();
+    // @ts-ignore
+    expect(wrapper.vm.internalValue.test).toBe(12);
+  });
+
+  it("should change when modelValue change", async () => {
+    const modelVal = ref({ test: 1 });
+    const wrapper = mount(Form, {
+      props: {
+        modelValue: modelVal,
+      },
+      slots: {
+        default: [h(TextField, { name: "test" }, [])],
+      },
+    });
+    await wrapper.vm.$nextTick();
+    // @ts-ignore
+    expect(wrapper.vm.internalValue.test).toBe(1);
+    modelVal.value = { test: 12 };
+    await wrapper.vm.$nextTick();
+    // @ts-ignore
+    expect(wrapper.vm.internalValue.test).toBe(12);
   });
 });

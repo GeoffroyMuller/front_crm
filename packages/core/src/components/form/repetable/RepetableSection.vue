@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<RepetableSectionProps>(), {});
 const emit = defineEmits(["inputChange", "register", "unregister"]);
 
 const { validate, errors } = useForm({
-  value: toRef(props, "value"),
+  initialValue: toRef(props, "value"),
   onInputChange(val) {
     emit("inputChange", val);
   },
