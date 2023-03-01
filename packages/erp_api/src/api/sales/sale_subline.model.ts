@@ -1,5 +1,5 @@
 import { Model } from "objection";
-import { ID } from "../../core/types";
+import { ID } from "core_api/types";
 import ProductReal from "../products_real/product_real.model";
 
 export default class SaleSubline extends Model {

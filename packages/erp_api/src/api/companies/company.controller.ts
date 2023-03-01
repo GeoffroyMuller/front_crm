@@ -1,4 +1,4 @@
-import controllerFactory from "../../core/controller";
+import controllerFactory from "core_api/controller";
 import CompanyService from "./company.service";
 
 const companyController = controllerFactory(CompanyService);

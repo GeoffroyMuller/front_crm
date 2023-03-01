@@ -1,5 +1,5 @@
 import { raw } from "objection";
-import serviceFactory from "../../core/service";
+import serviceFactory from "core_api/service";
 import ProductReal from "../products_real/product_real.model";
 import User from "../users/user.model";
 import Product from "./product.model";

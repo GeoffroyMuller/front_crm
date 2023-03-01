@@ -1,11 +1,11 @@
 import { Stream } from "stream";
 import Quote from "./quote.model";
 import User from "../users/user.model";
-import PdfService from "../../core/services/pdf.service";
-import mailService from "../../core/services/mail.service";
-import serviceFactory from "../../core/service";
+import PdfService from "core_api/services/pdf.service";
+import mailService from "core_api/services/mail.service";
+import serviceFactory from "core_api/service";
 import { merge } from "lodash";
-import { Service } from "../../core/types";
+import { Service } from "core_api/types";
 import { raw } from "objection";
 import QuoteLine from "./quote_line.model";
 const fs = require("fs");

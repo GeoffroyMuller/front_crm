@@ -1,4 +1,4 @@
-import serviceFactory from "../../core/service"
+import serviceFactory from "core_api/service"
 import User from "../users/user.model";
 import Client from "./client.model"
 

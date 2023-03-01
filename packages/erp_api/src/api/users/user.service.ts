@@ -1,7 +1,7 @@
 import User from "./user.model"
 import bcrypt from 'bcrypt'
-import serviceFactory from "../../core/service"
-import { ID, Service } from "../../core/types";
+import serviceFactory from "core_api/service"
+import { ID, Service } from "core_api/types";
 import Company from "../companies/company.model";
 
 interface UserService extends Service<User, User> {

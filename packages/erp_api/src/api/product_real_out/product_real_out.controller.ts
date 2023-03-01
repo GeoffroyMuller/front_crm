@@ -1,5 +1,5 @@
 
-import controllerFactory from "../../core/controller";
+import controllerFactory from "core_api/controller";
 import product_real_outService from "./product_real_out.service";
 
 const product_real_outController = controllerFactory(product_real_outService);

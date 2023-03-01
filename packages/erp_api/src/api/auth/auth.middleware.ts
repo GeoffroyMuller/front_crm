@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { IAuthRequest } from '../../core/types';
+import { IAuthRequest } from 'core_api/types';
 import User from '../users/user.model';
 import AuthService from './auth.service';
 

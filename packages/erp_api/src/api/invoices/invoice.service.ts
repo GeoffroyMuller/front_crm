@@ -1,11 +1,11 @@
 import { Stream } from "stream";
-import serviceFactory from "../../core/service";
-import { Service } from "../../core/types";
+import serviceFactory from "core_api/service";
+import { Service } from "core_api/types";
 import User from "../users/user.model";
 import Invoice from "./invoice.model";
 import { filter, merge } from "lodash";
-import PdfService from "../../core/services/pdf.service";
-import mailService from "../../core/services/mail.service";
+import PdfService from "core_api/services/pdf.service";
+import mailService from "core_api/services/mail.service";
 import { QueryBuilder, raw } from "objection";
 import InvoicePayment from "./invoicepayment.model";
 import InvoiceLine from "./invoice_line.model";

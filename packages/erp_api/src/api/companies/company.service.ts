@@ -1,6 +1,6 @@
 import Company from "./company.model"
 import User from "../users/user.model"
-import serviceFactory from "../../core/service"
+import serviceFactory from "core_api/service"
 
 const companyService = serviceFactory<Company, User>(Company, {
     async onBeforeFetchList({query, auth, filters, data}) {

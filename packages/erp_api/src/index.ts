@@ -7,7 +7,7 @@ let cookieParser = require('cookie-parser');
 let morgan = require('morgan');
 import * as fs from "fs";
 import * as path from "path"; 
-import Routes from './core/routes';
+import Routes from 'core_api/routes';
 
 const app: Application = express()
 

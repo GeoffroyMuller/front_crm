@@ -1,5 +1,5 @@
 import { Stream } from "stream";
-import controllerFactory from "../../core/controller";
+import controllerFactory from "core_api/controller";
 import invoiceService from "./invoice.service";
 
 
