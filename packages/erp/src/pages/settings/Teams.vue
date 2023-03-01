@@ -52,6 +52,7 @@
               :label="$t('role')"
               option-key="id"
               :get-option-label="(opt) => opt.name"
+              :get-option-value="(opt) => opt.id"
             />
           </Grid>
           <Flex align-items="center" justify-content="end">

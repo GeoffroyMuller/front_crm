@@ -3,6 +3,8 @@
     <Grid :gap="2" :columns="1">
       <MagicAutocomplete
         name="idProductReal"
+        :get-option-value="(opt) => opt.id"
+        optionKey="id"
         :label="$t('reference')"
         :getOptionLabel="displayProductRealAutocomplete"
         @update:selected="handleProductRealChange"

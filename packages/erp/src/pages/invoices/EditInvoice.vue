@@ -14,6 +14,7 @@
             <MagicAutocomplete
               :label="$t('customer')"
               :store="clientsStore"
+              :get-option-value="(opt) => opt.id"
               :get-filters="
                 (str) => ({
                   $or: {

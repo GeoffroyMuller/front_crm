@@ -24,6 +24,7 @@
                 })
               "
               :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
+              :get-option-value="(opt) => opt.id"
               optionKey="id"
               name="idClient"
               :addText="$t(`pages.edit-quote.add-customer`)"

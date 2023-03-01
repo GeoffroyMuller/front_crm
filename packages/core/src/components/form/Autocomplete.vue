@@ -71,7 +71,6 @@ import useSelect from "../../composables/select";
 export interface AutocompleteProps {
   multiple?: boolean;
 
-  optionKey?: string;
   getOptionLabel?: (opt: any) => string;
   getOptionValue?: (opt: any) => any;
 
@@ -108,9 +107,6 @@ function _getOptionValue(opt: any) {
   }
   if (typeof opt === "string" || typeof opt === "number") {
     return opt;
-  }
-  if (props.optionKey != null) {
-    return opt[props.optionKey];
   }
   return opt;
 }

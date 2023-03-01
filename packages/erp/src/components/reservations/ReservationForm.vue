@@ -36,6 +36,7 @@
             <MagicAutocomplete
               v-if="isSelectExistingClient"
               name="idClient"
+              :get-option-value="(opt) => opt.id"
               :getOptionLabel="
                 (opt) =>
                   `${opt.firstname ? opt.firstname : ''} ${
@@ -44,7 +45,6 @@
                     opt.phone ? '|' + opt.phone : ''
                   }`
               "
-              :getOptionValue="(val) => val.id"
               optionKey="id"
               :get-filters="
                 (str) => ({

@@ -45,6 +45,7 @@
           <MagicAutocomplete
             disabled
             name="idClient"
+            :get-option-value="(opt) => opt.id"
             :label="$t('customers')"
             :getOptionLabel="(opt: Client) => `${opt.firstname} ${opt.lastname}`"
             :rules="$yup.string().required()"

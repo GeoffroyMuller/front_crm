@@ -7,6 +7,7 @@
         :getOptionLabel="displayProductRealAutocomplete"
         @update:selected="handleProductRealChange"
         option-key="id"
+        :get-option-value="(opt) => opt.id"
         :get-filters="
           (str) => ({
             $contains: {

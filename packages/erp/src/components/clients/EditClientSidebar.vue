@@ -36,6 +36,7 @@
           :getOptionLabel="(opt) => opt.name"
           :rules="$yup.string().required()"
           optionKey="id"
+          :get-option-value="(opt) => opt.id"
           :get-filters="(str) => ({ $contains: { name: str } })"
           :store="companiesStore"
           can-add

@@ -11,6 +11,7 @@
             name="idCustomer"
             :label="$t('customer')"
             :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
+            :get-option-value="(opt) => opt.id"
             :rules="$yup.string().required()"
             optionKey="id"
             :get-filters="(str) => ({ $contains: { firstname: str } })"

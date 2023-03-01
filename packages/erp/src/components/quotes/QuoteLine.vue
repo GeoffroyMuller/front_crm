@@ -12,6 +12,7 @@
   <div v-if="line.type === 'product'" class="line-product-container">
     <MagicAutocomplete
       class="input"
+      :get-option-value="(opt) => opt.id"
       :label="$t('pages.edit-quote.product')"
       :store="productsStore"
       :get-option-label="(opt) => opt?.name"

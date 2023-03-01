@@ -81,6 +81,7 @@ const props = withDefaults(defineProps<MagicAutocompleteProps<any>>(), {
     return opt?.label;
   },
   getFilters: () => ({}),
+  optionKey: "id",
 });
 
 const { internalValue, internalError, validate } = useValidatable({
@@ -128,12 +129,19 @@ watch(
       if (!options.value?.length) {
         let filters: any = {};
         if (props.multiple) {
-          filters = { $in: { [props.optionKey || "id"]: internalValue.value } };
+          filters = {
+            $in: {
+              [props.optionKey]:
+                internalValue.value[props.optionKey] || internalValue.value,
+            },
+          };
         } else {
-          filters =
-            props.optionKey == null
-              ? { $eq: { id: internalValue.value.id } }
-              : { $eq: { [props.optionKey]: internalValue.value } };
+          filters = {
+            $eq: {
+              [props.optionKey]:
+                internalValue.value[props.optionKey] || internalValue.value,
+            },
+          };
         }
         const response = await props.store.search(filters);
         options.value = response;
