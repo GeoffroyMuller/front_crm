@@ -1,8 +1,7 @@
 <template>
-  <Form
-    :component="component"
-    @update:model-value="($val) => (internalValue = $val)"
-  ></Form>
+  <Form :component="component" v-model="internalValue">
+    <slot :value="internalValue" :error="internalError" :validate="validate" />
+  </Form>
 </template>
 
 <script setup lang="ts">
@@ -15,6 +14,7 @@ export interface SubFormProps {
   error?: string;
   rules?: AnySchema;
   component?: any;
+  name?: string;
 }
 
 const props = withDefaults(defineProps<SubFormProps>(), {
