@@ -180,10 +180,6 @@ describe("Form", () => {
     const input = wrapper.find('input[name="test"]');
     await input.setValue("test");
     await wrapper.vm.$nextTick();
-
-    // @ts-ignore
-    console.error("yes...", wrapper.vm.internalValue, wrapper.vm.initialValue);
-
     // @ts-ignore
     expect(wrapper.vm.hasChanged).toBe(true);
     wrapper.unmount();

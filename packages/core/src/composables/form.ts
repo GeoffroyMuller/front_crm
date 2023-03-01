@@ -23,9 +23,10 @@ export default function useForm(props: useFormProps) {
   const internalInitialValue = ref<any>(clone(props.initialValue.value || {}));
 
   function _setInternalValue(name: string, value: any) {
-    internalValue.value = set(internalValue.value, name, value);
+    const newVal = set(clone(internalValue.value), name, value);
+    internalValue.value = newVal;
     if (props.onUpdateValue) {
-      props.onUpdateValue(internalValue.value);
+      props.onUpdateValue(newVal);
     }
     if (props.onInputChange) {
       props.onInputChange({
@@ -67,8 +68,10 @@ export default function useForm(props: useFormProps) {
       // @ts-ignore
       () => props.value.value,
       () => {
-        // @ts-ignore
-        _setInternalValueObject(props.value.value || {});
+        if (!isEqual(props.value?.value, internalValue.value)) {
+          // @ts-ignore
+          _setInternalValueObject(props.value.value || {});
+        }
       }
     );
   }
