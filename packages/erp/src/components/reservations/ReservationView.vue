@@ -61,6 +61,11 @@
           </Grid>
         </div>
       </Card>
+      <div v-for="line in reservation.lines" :key="line.id">
+        <Card>
+          {{ line.product }}
+        </Card>
+      </div>
     </Grid>
   </div>
 </template>

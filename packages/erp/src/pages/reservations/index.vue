@@ -64,9 +64,13 @@
 
     <Sidebar v-model:open="isSidebarOpen">
       <div class="sidebar-reservation-form">
+        <ReservationPrepareProductsReal
+          v-model:reservation="formDataReservation"
+        />
         <ReservationForm
           v-if="!reservationSelected || isEdit"
-          :reservation="reservationSelected"
+          :initialReservation="reservationSelected"
+          v-model:reservation="formDataReservation"
           @back="backToView"
         ></ReservationForm>
         <ReservationView
@@ -94,6 +98,10 @@ import ReservationForm from "@/components/reservations/ReservationForm.vue";
 import Button from "core/src/components/Button.vue";
 import ReservationView from "@/components/reservations/ReservationView.vue";
 import useUI from "core/src/composables/ui";
+import ReservationProductRealLine from "@/components/reservations/ReservationProductRealLine.vue";
+import ReservationPrepareProductsReal from "@/components/reservations/ReservationPrepareProductsReal.vue";
+
+import { isNil } from "lodash";
 
 const { toast, confirm } = useUI();
 
@@ -101,6 +109,7 @@ const reservationStore = useReservationStore();
 
 const isSidebarOpen = ref(false);
 const reservationSelected = ref<Reservation | null>(null);
+const formDataReservation = ref<Reservation | null>(null);
 const isEdit = ref<boolean>(false);
 
 watch(
@@ -109,6 +118,14 @@ watch(
     if (open) {
       isEdit.value = false;
     }
+  }
+);
+
+watch(
+  () => reservationSelected.value,
+  (val) => {
+    if (isNil(val)) return;
+    formDataReservation.value = val;
   }
 );
 
@@ -128,7 +145,6 @@ async function fetchReservastionById(item?: Reservation) {
 }
 
 async function backToView(item?: Reservation) {
-  console.error({ item });
   fetchReservastionById(item);
   isEdit.value = false;
 }

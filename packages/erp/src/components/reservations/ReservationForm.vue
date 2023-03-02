@@ -10,17 +10,19 @@
     <div class="reservation-btn-back">
       <Button
         v-if="!isNewReseravation"
-        @click.stop="$emit('back', reservation)"
+        @click.stop="$emit('back', initialReservation)"
         variant="text"
         icon="chevron_left"
       >
         {{ $t("back") }}
       </Button>
     </div>
+    {{ internalReservation }}
     <Form
       class="reservation-form-content"
       shortcuts
-      :initial-value="reservation"
+      :initial-value="initialReservation"
+      v-model="internalReservation"
       @submit="handleSubmit"
     >
       <template #default="{ hasError, hasChanged }">
@@ -111,6 +113,7 @@
               </Button>
             </template>
           </Repetable>
+
           <div class="actions">
             <Button :disabled="hasError || !hasChanged" type="submit">
               {{ $t("save") }}
@@ -137,13 +140,14 @@ import useReservationStore from "@/stores/reservations";
 import { isNil } from "lodash";
 import useUI from "core/src/composables/ui";
 import { useI18n } from "vue-i18n";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import type Client from "@/types/client";
 import Card from "core/src/components/Card.vue";
 import { boolean } from "yup";
 import Flex from "core/src/components/layouts/Flex.vue";
 
 interface ReservationFormProps {
+  initialReservation: Reservation | null;
   reservation: Reservation | null;
 }
 
@@ -151,16 +155,27 @@ const { t } = useI18n();
 const { toast } = useUI();
 const clientStore = useClientStore();
 const reservationStore = useReservationStore();
-const emit = defineEmits(["saved"]);
+const emit = defineEmits(["saved", "update:reservation"]);
 const props = withDefaults(defineProps<ReservationFormProps>(), {
+  initialReservation: null,
   reservation: null,
 });
+
+const internalReservation = ref<Reservation | null>(props.reservation);
 
 const isSelectExistingClient = ref<boolean>(true);
 
 const isNewReseravation = computed(() => {
-  return isNil(props.reservation);
+  return isNil(props.initialReservation);
 });
+
+watch(
+  () => internalReservation.value,
+  (val) => {
+    if (isNil(val)) return;
+    emit("update:reservation", internalReservation.value);
+  }
+);
 
 function mapResa(data: any): {
   reservation: Reservation;
@@ -209,17 +224,17 @@ async function handleSubmit(data: any) {
         message: error.response.data.message,
       });
     }
-  } else if (props.reservation != null) {
+  } else if (props.initialReservation != null) {
     try {
       const { reservation, client } = mapResa(data);
       if (!reservation.idClient && client) {
         const clientRes = await clientStore.create(client);
-        await reservationStore.update(props.reservation.id, {
+        await reservationStore.update(props.initialReservation.id, {
           ...reservation,
           idClient: clientRes.id,
         });
       } else {
-        await reservationStore.update(props.reservation.id, reservation);
+        await reservationStore.update(props.initialReservation.id, reservation);
       }
 
       toast({

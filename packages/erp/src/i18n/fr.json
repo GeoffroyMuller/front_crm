@@ -89,7 +89,8 @@
       "select-existing-client": "Chercher un client",
       "client-not-exist": "Créer un client",
       "action-select-existing-client": "Votre client existe déjà ?",
-      "action-client-not-exist": "Votre client n'existe pas ?"
+      "action-client-not-exist": "Votre client n'existe pas ?",
+      "prepare-the-products": "Préparer les produits"
     }
   },
   "new-quote": "Nouveau devis",
