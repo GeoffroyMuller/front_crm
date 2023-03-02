@@ -9,6 +9,7 @@ app.use(cors());
 
 const SERVICES = {
   auth: process.env.AUTH_SERVICE_URL,
+  erp: process.env.ERP_SERVICE_URL
 } as { [key: string]: string };
 
 const PROXY_OPTIONS: proxy.ProxyOptions = {
@@ -29,6 +30,9 @@ Object.keys(PROXIES).forEach((p) => {
   app.use(`/${p}/*`, PROXIES[p]);
   app.use(`/${p}`, PROXIES[p]);
 });
+
+
+app.use(proxy(SERVICES.erp, PROXY_OPTIONS));
 
 app.listen(3005, () => {
   console.log("The application is listening on port 3005!");
