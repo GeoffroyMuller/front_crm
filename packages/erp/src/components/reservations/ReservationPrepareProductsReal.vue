@@ -67,6 +67,7 @@ import TextField from "core/src/components/form/TextField.vue";
 import Card from "core/src/components/Card.vue";
 import type { Reservation } from "@/types/reservation";
 import SubForm from "core/src/components/form/subform.vue";
+import { isEqual } from "lodash";
 
 const { t } = useI18n();
 const productStore = useProductsStore();
@@ -90,15 +91,24 @@ const internalReservation = computed({
     };
   },
   set(val) {
-    emit("update:reservation", {
-      ...props.reservation,
-      lines: [
-        ...(props.reservation?.lines || []).filter(
-          (l) => !productStore.isPhysicalStock(l.product)
-        ),
-        ...(internalReservation.value.lines || []),
-      ],
-    });
+    if (
+      !isEqual(
+        val.lines,
+        props.reservation?.lines?.filter((l) =>
+          productStore.isPhysicalStock(l.product)
+        )
+      )
+    ) {
+      emit("update:reservation", {
+        ...props.reservation,
+        lines: [
+          ...(props.reservation?.lines || []).filter(
+            (l) => !productStore.isPhysicalStock(l.product)
+          ),
+          ...(internalReservation.value.lines || []),
+        ],
+      });
+    }
   },
 });
 </script>
