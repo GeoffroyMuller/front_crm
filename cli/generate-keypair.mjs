@@ -12,16 +12,16 @@ let keypair = {
 console.log(keypair);
 
 fs.writeFileSync(
-  path.join("packages", "auth_service", "private.pem"),
+  path.join("packages", "auth_service", "private.key"),
   keypair.private
 );
 
 fs.writeFileSync(
-  path.join("packages", "auth_service", "public.pem"),
+  path.join("packages", "auth_service", "public.key.pub"),
   keypair.public
 );
 
 fs.writeFileSync(
-  path.join("packages", "core_api", "public.pem"),
+  path.join("packages", "core_api", "public.key.pub"),
   keypair.public
 );

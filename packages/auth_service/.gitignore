@@ -6,5 +6,5 @@ build/
 
 logs/*
 
-
-*.pem
+*.key
+*.key.*

@@ -5,8 +5,8 @@ import Company from "../companies/company.model";
 import * as fs from "fs";
 import path from "path";
 
-const PRIVATE_KEY = fs.readFileSync(path.join(__dirname, "../../../private.pem"), 'utf8')
-const PUBLIC_KEY = fs.readFileSync(path.join(__dirname, "../../../public.pem"), 'utf8')
+const PRIVATE_KEY = fs.readFileSync(path.join(__dirname, "../../../private.key"), 'utf8')
+const PUBLIC_KEY = fs.readFileSync(path.join(__dirname, "../../../public.key.pub"), 'utf8')
 
 const JWT_EXPIRY_SECONDS = process.env.JWT_EXPIRY_SECONDS;
 
