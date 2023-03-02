@@ -53,6 +53,7 @@ const serviceFactory = <
   const onBeforeRemove = opts?.onBeforeRemove || (async (params) => params);
 
   const onAfterCreate = opts?.onAfterCreate || (async (params) => params);
+  const onAfterGetById = opts?.onAfterGetById || (async (params) => params);
 
   async function checkAuthorization(model: T, auth: any) {
     if (!(await isAuthorized(model, auth))) {
@@ -74,9 +75,15 @@ const serviceFactory = <
       auth,
     });
     handleFilters(q, f);
-    const result = await q.findById(id).execute();
+    let result = await q.findById(id).execute();
     await checkAuthorization(result as T, auth);
-    return result as T;
+    const {data: res} = await onAfterGetById({
+      query,
+      filters,
+      auth,
+      data: result
+    });
+    return res as T;
   };
 
   return {

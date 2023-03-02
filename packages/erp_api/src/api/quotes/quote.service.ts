@@ -1,6 +1,6 @@
 import { Stream } from "stream";
 import Quote from "./quote.model";
-import type { User } from "core_api/types";;
+import type { User } from "core_api/types";
 import PdfService from "core_api/services/pdf.service";
 import mailService from "core_api/services/mail.service";
 import serviceFactory from "core_api/service";
@@ -8,6 +8,8 @@ import { merge } from "lodash";
 import { Service } from "core_api/types";
 import { raw } from "objection";
 import QuoteLine from "./quote_line.model";
+import axios from "axios";
+import { isPopulateNeeded } from "core_api/services/filters.service";
 const fs = require("fs");
 let ejs = require("ejs");
 
@@ -15,6 +17,19 @@ export interface IQuoteService extends Service<Quote, User> {
   preview: (q: Quote) => Promise<string>;
   sendByMail: (q: Quote) => Promise<any>;
   getPdf: (q: Quote) => Promise<Stream>;
+}
+
+async function getResponsible(quote: Quote, populateCompany?: boolean) {
+  const response = await axios.get(
+    `${process.env.AUTH_SERVICE_URL}/users/${quote.idResponsible}${
+      populateCompany ? "?populate[0]=company" : ""
+    }`, {
+      headers: {
+        Authorization: ''
+      }
+    }
+  );
+  return response.data;
 }
 
 async function getNextIdentifier(auth: User) {
@@ -53,6 +68,17 @@ const quoteService = serviceFactory<Quote, User>(Quote, {
         WHERE ${QuoteLine.tableName}.idQuote = quotes.id
       )`).as("taxes")
     );
+    return { query, auth, filters, data };
+  },
+  async onAfterGetById({ query, auth, filters, data }) {
+    if (isPopulateNeeded(filters, "responsible")) {
+      const responsible = await getResponsible(data);
+      data.responsible = responsible.data;
+    }
+    if (isPopulateNeeded(filters, "responsible.company")) {
+      const responsible = await getResponsible(data, true);
+      data.responsible = responsible.data;
+    }
     return { query, auth, filters, data };
   },
   async onBeforeUpdate({ query, auth, filters, data }) {

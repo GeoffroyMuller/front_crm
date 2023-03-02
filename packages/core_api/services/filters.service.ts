@@ -145,6 +145,11 @@ const handleFilters: HandleFiltersFunction = (query, filters, or) => {
   return query;
 };
 
+export function isPopulateNeeded(filters: any, populate: string) {
+  const populateIndex = ((filters?.populate || []) as string[]).findIndex(p => p === populate);
+  return populateIndex !== -1;
+}
+
 export default {
   handleFilters,
   handleFiltersOr,

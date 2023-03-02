@@ -84,6 +84,7 @@ export type ServiceFactoryOptions<
   onBeforeUpdate?: ServiceLifeCycleAction<T, AuthModel>;
   onBeforeRemove?: ServiceLifeCycleAction<T, AuthModel>;
   onAfterCreate?: ServiceLifeCycleAction<T, AuthModel>;
+  onAfterGetById?: ServiceLifeCycleAction<T, AuthModel>;
 };
 
 export interface IAuthRequest<T> extends Request {
