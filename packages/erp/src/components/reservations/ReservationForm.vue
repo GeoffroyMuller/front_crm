@@ -17,7 +17,6 @@
         {{ $t("back") }}
       </Button>
     </div>
-    {{ internalReservation }}
     <Form
       class="reservation-form-content"
       shortcuts
@@ -113,6 +112,15 @@
               </Button>
             </template>
           </Repetable>
+          <Flex justify-content="flex-start">
+            <Button
+              type="button"
+              variant="text"
+              @click.stop="$emit('prepare-products-real')"
+            >
+              {{ $t("pages.edit-reservation.prepare-the-products") }}
+            </Button>
+          </Flex>
 
           <div class="actions">
             <Button :disabled="hasError || !hasChanged" type="submit">
@@ -141,9 +149,7 @@ import { isNil } from "lodash";
 import useUI from "core/src/composables/ui";
 import { useI18n } from "vue-i18n";
 import { computed, ref, watch } from "vue";
-import type Client from "@/types/client";
 import Card from "core/src/components/Card.vue";
-import { boolean } from "yup";
 import Flex from "core/src/components/layouts/Flex.vue";
 
 interface ReservationFormProps {
@@ -155,7 +161,11 @@ const { t } = useI18n();
 const { toast } = useUI();
 const clientStore = useClientStore();
 const reservationStore = useReservationStore();
-const emit = defineEmits(["saved", "update:reservation"]);
+const emit = defineEmits([
+  "saved",
+  "update:reservation",
+  "prepare-products-real",
+]);
 const props = withDefaults(defineProps<ReservationFormProps>(), {
   initialReservation: null,
   reservation: null,

@@ -65,20 +65,36 @@
     <Sidebar v-model:open="isSidebarOpen">
       <div class="sidebar-reservation-form">
         <ReservationPrepareProductsReal
+          v-if="isPrepareProductsReal"
           v-model:reservation="formDataReservation"
+          @saved="
+            () => {
+              isPrepareProductsReal = false;
+            }
+          "
         />
         <ReservationForm
-          v-if="!reservationSelected || isEdit"
+          v-if="(!reservationSelected || isEdit) && !isPrepareProductsReal"
           :initialReservation="reservationSelected"
           v-model:reservation="formDataReservation"
           @back="backToView"
+          @prepare-products-real="
+            () => {
+              isPrepareProductsReal = true;
+            }
+          "
         ></ReservationForm>
         <ReservationView
-          v-else
+          v-else-if="!isPrepareProductsReal && reservationSelected"
           @click-edit="
             (res) => {
               reservationSelected = res;
               isEdit = true;
+            }
+          "
+          @prepare-products-real="
+            () => {
+              isPrepareProductsReal = true;
             }
           "
           :reservation="reservationSelected"
@@ -111,12 +127,14 @@ const isSidebarOpen = ref(false);
 const reservationSelected = ref<Reservation | null>(null);
 const formDataReservation = ref<Reservation | null>(null);
 const isEdit = ref<boolean>(false);
+const isPrepareProductsReal = ref<boolean>(false);
 
 watch(
   () => isSidebarOpen.value,
   (open) => {
     if (open) {
       isEdit.value = false;
+      isPrepareProductsReal.value = false;
     }
   }
 );

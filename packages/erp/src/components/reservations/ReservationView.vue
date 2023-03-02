@@ -16,7 +16,7 @@
         </Flex>
         <div class="reservation-content">
           <Grid :gap="5" :columns="{ xs: 1, sm: 2 }">
-            <Grid :gap="1" :columns="1">
+            <Grid v-if="reservation?.client != null" :gap="1" :columns="1">
               <div class="text2">
                 {{ $t("firstname") }}: {{ reservation.client?.firstname }}
               </div>
@@ -61,11 +61,18 @@
           </Grid>
         </div>
       </Card>
-      <div v-for="line in reservation.lines" :key="line.id">
+      <Button
+        type="button"
+        variant="text"
+        @click.stop="$emit('prepare-products-real')"
+      >
+        {{ $t("pages.edit-reservation.prepare-the-products") }}
+      </Button>
+      <!--       <div v-for="line in reservation.lines" :key="line.id">
         <Card>
           {{ line.product }}
         </Card>
-      </div>
+      </div> -->
     </Grid>
   </div>
 </template>
@@ -77,6 +84,7 @@ import Flex from "core/src/components/layouts/Flex.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import type { Reservation } from "@/types/reservation";
 
+const emit = defineEmits(["prepare-products-real"]);
 interface ReservationViewProps {
   reservation: Reservation;
 }

@@ -22,22 +22,6 @@
           name="qty"
         />
       </Grid>
-
-      <!-- <Repetable
-        v-if="productStore.isPhysicalStock(product) && product"
-        name="sublines"
-      >
-        <template #default>
-          <ReservationProductRealLine
-            :product="line?.product"
-          ></ReservationProductRealLine>
-        </template>
-        <template #actions="{ addSection }">
-          <Button type="button" variant="text" @click="addSection()">
-            {{ $t("pages.edit-reservation.add-product-real") }}
-          </Button>
-        </template>
-      </Repetable> -->
     </Grid>
   </div>
 </template>
