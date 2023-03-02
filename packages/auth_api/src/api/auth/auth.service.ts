@@ -14,10 +14,11 @@ export default {
   async login(email: string, password: string) {
     const user = await User.query()
       .where("email", email)
-      .withGraphFetched("company.clientCompanies")
+      .withGraphFetched("company")
       .withGraphFetched("role")
       .first();
 
+      console.log({user, email})
     if (user && (await bcrypt.compare(password, user.password || ""))) {
       const token = await jwt.sign(user.toJSON(), PRIVATE_KEY || "", {
         algorithm: "RS256",
