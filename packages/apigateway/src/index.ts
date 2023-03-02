@@ -1,8 +1,7 @@
 require("dotenv").config();
 const cors = require("cors");
-import express, { Application } from "express";
+import express, { Application, RequestHandler } from "express";
 import proxy from "express-http-proxy";
-
 
 const app: Application = express();
 
@@ -18,13 +17,18 @@ const PROXY_OPTIONS: proxy.ProxyOptions = {
   },
 };
 
-app.use('/auth/*', proxy(SERVICES.auth, PROXY_OPTIONS));
-app.use('/companies/*', proxy(SERVICES.auth, PROXY_OPTIONS));
-app.use('/users/*', proxy(SERVICES.auth, PROXY_OPTIONS));
-app.use('/users', proxy(SERVICES.auth, PROXY_OPTIONS));
-app.use('/roles/*', proxy(SERVICES.auth, PROXY_OPTIONS));
-app.use('/rights/*', proxy(SERVICES.auth, PROXY_OPTIONS));
+const PROXIES = {
+  auth: proxy(SERVICES.auth, PROXY_OPTIONS),
+  companies: proxy(SERVICES.auth, PROXY_OPTIONS),
+  users: proxy(SERVICES.auth, PROXY_OPTIONS),
+  roles: proxy(SERVICES.auth, PROXY_OPTIONS),
+  rights: proxy(SERVICES.auth, PROXY_OPTIONS),
+} as { [key: string]: RequestHandler };
 
+Object.keys(PROXIES).forEach((p) => {
+  app.use(`/${p}/*`, PROXIES[p]);
+  app.use(`/${p}`, PROXIES[p]);
+});
 
 app.listen(3005, () => {
   console.log("The application is listening on port 3005!");
