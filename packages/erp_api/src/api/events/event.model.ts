@@ -1,5 +1,4 @@
 import { Model, Pojo } from "objection";
-import Company from "../companies/company.model";
 
 
 export default class Event extends Model {
@@ -16,7 +15,6 @@ export default class Event extends Model {
   recurrence_until?: string;
 
   idCompany?: number;
-  company?: Company;
 
   idProduct?: number;
 
@@ -31,13 +29,6 @@ export default class Event extends Model {
   }
 
   static relationMappings = {
-    company: {
-      relation: Model.BelongsToOneRelation,
-      modelClass: Company,
-      join: {
-        from: "clients.idCompany",
-        to: "companies.id",
-      },
-    },
+   
   };
 }

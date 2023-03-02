@@ -1,6 +1,6 @@
 import { Stream } from "stream";
 import controllerFactory from "core_api/controller";
-import User from "../users/user.model";
+import type { User } from "core_api/types";;
 import Quote from "./quote.model";
 import QuoteService from "./quote.service"; 
 

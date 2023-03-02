@@ -2,7 +2,7 @@ import { Model, Pojo } from "objection"
 import Client from "../clients/client.model";
 import Invoice from "../invoices/invoice.model";
 import QuoteLine from "./quote_line.model";
-import User from "../users/user.model";
+import type { User } from "core_api/types";;
 import { orderBy } from "lodash";
 
 
@@ -51,14 +51,6 @@ export default class Quote extends Model {
             join: {
                 from: 'quotes.id',
                 to: 'invoices.idQuote'
-            }
-        },
-        responsible: {
-            relation: Model.BelongsToOneRelation,
-            modelClass: User,
-            join: {
-                from: 'quotes.idResponsible',
-                to: 'users.id'
             }
         },
         client: {

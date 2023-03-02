@@ -1,6 +1,6 @@
 import { Stream } from "stream";
 import Quote from "./quote.model";
-import User from "../users/user.model";
+import type { User } from "core_api/types";;
 import PdfService from "core_api/services/pdf.service";
 import mailService from "core_api/services/mail.service";
 import serviceFactory from "core_api/service";

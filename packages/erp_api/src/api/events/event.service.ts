@@ -1,5 +1,5 @@
 import serviceFactory from "core_api/service"
-import User from "../users/user.model";
+import type { User } from "core_api/types";;
 import Event from "./event.model";
 
 const eventService = serviceFactory<Event, User>(Event, {

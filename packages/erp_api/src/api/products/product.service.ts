@@ -1,7 +1,7 @@
 import { raw } from "objection";
 import serviceFactory from "core_api/service";
 import ProductReal from "../products_real/product_real.model";
-import User from "../users/user.model";
+import type { User } from "core_api/types";;
 import Product from "./product.model";
 
 const productService = serviceFactory<Product, User>(Product, {

@@ -6,10 +6,9 @@ export default class Company extends Model {
     id?: number;
     name?: string;
     idCompany?: number;
-    clientCompanies?: Array<Company>;
 
     static get tableName() {
-        return 'companies'
+        return 'clients_companies'
     }
 
     static relationMappings = {
@@ -19,14 +18,6 @@ export default class Company extends Model {
             join: {
                 from: 'companies.id',
                 to: 'vat.idCompany'
-            }
-        },
-        clientCompanies: {
-            relation: Model.HasManyRelation,
-            modelClass: Company,
-            join: {
-                from: 'companies.id',
-                to: 'companies.idCompany'
             }
         },
     };

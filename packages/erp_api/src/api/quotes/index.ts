@@ -1,7 +1,7 @@
 const express = require('express')
 import QuoteController from "./quote.controller";
-import authMiddleware from "../auth/auth.middleware";
-import { accessMiddlewareFactory } from "../roles/access.middleware";
+import authMiddleware from "core_api/middlewares/auth.middleware";
+import { accessMiddlewareFactory } from "core_api/middlewares/access.middleware";
 
 const router = express.Router()
 

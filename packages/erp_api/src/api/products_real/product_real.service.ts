@@ -1,5 +1,5 @@
 import serviceFactory from "core_api/service";
-import User from "../users/user.model";
+import type { User } from "core_api/types";;
 import ProductReal from "./product_real.model";
 
 const productRealService = serviceFactory<ProductReal, User>(ProductReal);

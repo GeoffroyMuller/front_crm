@@ -24,7 +24,7 @@ export default class Client extends Model {
             modelClass: Company,
             join: {
                 from: 'clients.idClientCompany',
-                to: 'companies.id'
+                to: 'clients_companies.id'
             }
         },
         

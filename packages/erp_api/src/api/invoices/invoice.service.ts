@@ -1,7 +1,7 @@
 import { Stream } from "stream";
 import serviceFactory from "core_api/service";
 import { Service } from "core_api/types";
-import User from "../users/user.model";
+import type { User } from "core_api/types";;
 import Invoice from "./invoice.model";
 import { filter, merge } from "lodash";
 import PdfService from "core_api/services/pdf.service";

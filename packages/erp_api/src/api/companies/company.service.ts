@@ -1,12 +1,12 @@
 import Company from "./company.model"
-import User from "../users/user.model"
+import type { User } from "core_api/types";
 import serviceFactory from "core_api/service"
 
 const companyService = serviceFactory<Company, User>(Company, {
     async onBeforeFetchList({query, auth, filters, data}) {
         if (auth != null) {
             if (auth.idCompany) {
-                query.where('companies.idCompany', auth.idCompany);
+                query.where(Company.tableName + '.idCompany', auth.idCompany);
             }
         }
         return {query, auth, filters, data};

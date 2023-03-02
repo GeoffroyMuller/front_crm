@@ -1,6 +1,6 @@
 import { isNil } from "lodash";
 import serviceFactory from "core_api/service";
-import User from "../users/user.model";
+import type { User } from "core_api/types";;
 import Reservation from "./reservation.model";
 
 const reservationService = serviceFactory<Reservation, User>(Reservation, {

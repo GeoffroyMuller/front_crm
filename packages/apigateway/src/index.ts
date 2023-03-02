@@ -20,7 +20,6 @@ const PROXY_OPTIONS: proxy.ProxyOptions = {
 
 const PROXIES = {
   auth: proxy(SERVICES.auth, PROXY_OPTIONS),
-  companies: proxy(SERVICES.auth, PROXY_OPTIONS),
   users: proxy(SERVICES.auth, PROXY_OPTIONS),
   roles: proxy(SERVICES.auth, PROXY_OPTIONS),
   rights: proxy(SERVICES.auth, PROXY_OPTIONS),

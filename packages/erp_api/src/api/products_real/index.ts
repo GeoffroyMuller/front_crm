@@ -1,5 +1,5 @@
 const express = require('express')
-import authMiddleware from "../auth/auth.middleware";
+import authMiddleware from "core_api/middlewares/auth.middleware";
 import ProductRealController from "./product_real.controller";
 
 const router = express.Router()

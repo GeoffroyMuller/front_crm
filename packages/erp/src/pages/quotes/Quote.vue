@@ -37,11 +37,11 @@
             >
               <div class="quote-user-title">{{ $t("responsible") }}:</div>
               <div class="text2">
-                {{ quote.responsible.firstname }}
-                {{ quote.responsible.lastname }}
+                {{ quote.responsible?.firstname || "" }}
+                {{ quote.responsible?.lastname || "" }}
               </div>
               <div class="text2">
-                {{ quote.responsible.email }}
+                {{ quote.responsible?.email || "" }}
               </div>
             </Flex>
             <Flex

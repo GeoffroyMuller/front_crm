@@ -38,11 +38,11 @@
               >
                 <div class="invoice-user-title">{{ $t("responsible") }}:</div>
                 <div class="text2">
-                  {{ invoice.responsible.firstname }}
-                  {{ invoice.responsible.lastname }}
+                  {{ invoice.responsible?.firstname || "" }}
+                  {{ invoice.responsible?.lastname || "" }}
                 </div>
                 <div class="text2">
-                  {{ invoice.responsible.email }}
+                  {{ invoice.responsible?.email || "" }}
                 </div>
               </Flex>
               <Flex
