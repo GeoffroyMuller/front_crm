@@ -81,7 +81,7 @@ function onClickOutside(event: PointerEvent) {
   > * {
     height: 100%;
     height: 100vh;
-    min-width: 500px;
+    min-width: $sidebar-width;
     position: relative;
   }
   .close-button {

@@ -178,6 +178,6 @@ async function clickEdit(item?: Reservation) {
 </script>
 <style lang="scss">
 .sidebar-reservation-form {
-  max-width: 500px;
+  max-width: $sidebar-width;
 }
 </style>

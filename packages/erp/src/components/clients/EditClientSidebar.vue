@@ -161,7 +161,7 @@ async function handleSubmit(data: any) {
   flex-direction: column;
   gap: spacing(1);
 
-  max-width: 500px;
+  max-width: $sidebar-width;
   .title {
     margin-bottom: spacing(2);
   }
