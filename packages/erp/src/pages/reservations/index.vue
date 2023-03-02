@@ -61,22 +61,24 @@
         </div>
       </template>
     </MagicDataTable>
+
     <Sidebar v-model:open="isSidebarOpen">
-      <ReservationForm
-        v-if="!reservationSelected || isEdit"
-        :reservation="reservationSelected"
-        @back="backToView"
-      ></ReservationForm>
-      <ReservationView
-        v-else
-        @click-edit="
-          (res) => {
-            reservationSelected = res;
-            isEdit = true;
-          }
-        "
-        :reservation="reservationSelected"
-      ></ReservationView
+      <div class="sidebar-reservation-form">
+        <ReservationForm
+          v-if="!reservationSelected || isEdit"
+          :reservation="reservationSelected"
+          @back="backToView"
+        ></ReservationForm>
+        <ReservationView
+          v-else
+          @click-edit="
+            (res) => {
+              reservationSelected = res;
+              isEdit = true;
+            }
+          "
+          :reservation="reservationSelected"
+        ></ReservationView></div
     ></Sidebar>
   </Page>
 </template>
@@ -141,3 +143,8 @@ async function clickEdit(item?: Reservation) {
   }
 }
 </script>
+<style lang="scss">
+.sidebar-reservation-form {
+  max-width: 500px;
+}
+</style>
