@@ -1,5 +1,5 @@
 import { Response, NextFunction } from "express";
-import { AuthRequest } from "../auth/auth.middleware";
+import { AuthRequest } from "./auth.middleware";
 
 export function accessMiddlewareFactory(rights: string | Array<string>) {
   const rightsArray = Array.isArray(rights) ? rights : [rights];

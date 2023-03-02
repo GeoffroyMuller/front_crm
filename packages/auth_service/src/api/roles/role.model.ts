@@ -1,9 +1,10 @@
 import { Model, Pojo } from "objection";
+import type { ID, Role as RoleType } from "core_api/types";
 
-export default class Role extends Model {
-  id?: number;
+export default class Role extends Model implements RoleType {
+  id?: ID;
   name?: string;
-  idCompany?: number;
+  idCompany?: ID;
   rights?: string;
 
   static get tableName() {

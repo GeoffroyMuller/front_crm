@@ -1,6 +1,6 @@
 const express = require("express");
-import authMiddleware from "../auth/auth.middleware";
-import { accessMiddlewareFactory } from "./access.middleware";
+import authMiddleware from "core_api/middlewares/auth.middleware";
+import { accessMiddlewareFactory } from "core_api/middlewares/access.middleware";
 import RIGHTS from "./rights";
 import controller from "./role.controller";
 

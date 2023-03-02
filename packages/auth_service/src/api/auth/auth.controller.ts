@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { AuthRequest } from "./auth.middleware";
+import { AuthRequest } from "core_api/middlewares/auth.middleware";
 import AuthService from "./auth.service";
 
 async function login(req: Request, res: Response) {

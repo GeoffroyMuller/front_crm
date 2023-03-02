@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { IAuthRequest } from "core_api/types";
-import User from "../users/user.model";
-import AuthService from "./auth.service";
+import { IAuthRequest, User } from "../types";
 import jwt from "jsonwebtoken";
 
 const PUBLIC_KEY = '-----BEGIN PUBLIC KEY-----\n' +

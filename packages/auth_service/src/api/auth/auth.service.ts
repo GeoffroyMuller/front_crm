@@ -2,6 +2,10 @@ import User from "../users/user.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Company from "../companies/company.model";
+import * as fs from "fs";
+import path from "path";
+
+console.error(fs.readFileSync(path.join(__dirname, "../../private.pem"), 'utf8'));
 
 
 
@@ -32,6 +36,7 @@ const PRIVATE_KEY = '-----BEGIN RSA PRIVATE KEY-----\n' +
 '2+fq2vx7sZKqJ+boNz5TcUPjqPMiwVfd398Ik8sku445TtzDG5F0v0DYBngZ/PcD\n' +
 'U50gavuoJrCJn4FOPkVDY0Ij6Ar6iU3VC/+ju400HrP8+Zpzn4OORQ==\n' +
 '-----END RSA PRIVATE KEY-----';
+
 const PUBLIC_KEY = '-----BEGIN PUBLIC KEY-----\n' +
 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhsQqeMlUI+SYWF88ERBS\n' +
 'QT+h/Xj3Tmjc5mdR8n+ww83/MNMtXUbCJ3BHkwx9/DDpKmhjLz9cfmoc6xjckhbG\n' +
@@ -41,6 +46,8 @@ const PUBLIC_KEY = '-----BEGIN PUBLIC KEY-----\n' +
 '3R8y326zIFIvifXo7CIIPS5WQkp4Sw3fWsF/vwi1PUFPv4oOBeSv0SuOrwMu/ebx\n' +
 '+QIDAQAB\n' +
 '-----END PUBLIC KEY-----';
+
+console.error( PUBLIC_KEY)
 
 const JWT_EXPIRY_SECONDS = process.env.JWT_EXPIRY_SECONDS;
 
