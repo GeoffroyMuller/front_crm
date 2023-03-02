@@ -3,6 +3,20 @@ import { Model, QueryBuilderType, RelationExpression } from "objection";
 
 export type ID = string | number;
 
+export interface Role {
+  id?: ID;
+  name?: string;
+  idCompany?: ID;
+  rights?: string;
+}
+
+export interface User {
+  id?: ID;
+  email?: string;
+  role?: Role;
+  idCompany?: ID;
+}
+
 export type ServiceLifeCycleActionParams<
   T extends Model,
   AuthModel extends Model | unknown = unknown

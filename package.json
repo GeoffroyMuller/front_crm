@@ -5,5 +5,12 @@
   "private": true,
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "node-rsa": "^1.1.1"
+  },
+  "scripts": {
+    "generate:keypair": "node ./cli/generate-keypair.mjs"
+  }
 }
