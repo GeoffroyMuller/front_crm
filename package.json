@@ -5,5 +5,11 @@
   "private": true,
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "node-rsa": "^1.1.1"
+  },
+  "scripts": {
+    "generate:keypair": "node ./cli/generate-keypair.mjs"
+  }
 }
