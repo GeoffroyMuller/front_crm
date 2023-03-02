@@ -27,11 +27,7 @@ const useInvoicesStore = makeAPIStore<Invoice>({
     async invoiceToCreateFromQuote(id: ID): Promise<void> {
       const quoteStore = useQuoteStore(pinia);
       const quote = await quoteStore.fetchById(id, {
-        populate: [
-          "client.company",
-          "responsible.company",
-          "lines.[vat, sublines]",
-        ],
+        populate: ["client.company", "lines.[vat, sublines]"],
       });
       this.invoiceToCreate = {
         archived: quote.archived,

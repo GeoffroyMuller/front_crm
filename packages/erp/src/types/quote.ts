@@ -19,7 +19,6 @@ export interface Quote {
   madeOn: string;
   modalities: string;
   name: string;
-  responsible: User;
   status: "draft" | "refused" | "validated";
   price?: number;
   taxes?: number;

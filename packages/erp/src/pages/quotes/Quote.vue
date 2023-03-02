@@ -37,11 +37,11 @@
             >
               <div class="quote-user-title">{{ $t("responsible") }}:</div>
               <div class="text2">
-                {{ quote.responsible?.firstname || "" }}
-                {{ quote.responsible?.lastname || "" }}
+                {{ responsible?.firstname || "" }}
+                {{ responsible?.lastname || "" }}
               </div>
               <div class="text2">
-                {{ quote.responsible?.email || "" }}
+                {{ responsible?.email || "" }}
               </div>
             </Flex>
             <Flex
@@ -123,13 +123,34 @@ import Flex from "core/src/components/layouts/Flex.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import useQuoteStore from "@/stores/quotes";
 import type { Quote } from "@/types/quote";
+import useUserStore from "@/stores/user";
+import { computed, watch } from "vue";
 
 const quoteStore = useQuoteStore();
 
 const { model: quote, id } = useEditPage<Quote>({
   store: quoteStore,
-  populate: ["client.company", "responsible.company", "lines.[vat, sublines]"],
+  populate: ["client.company", "lines.[vat, sublines]"],
 });
+
+const userStore = useUserStore();
+const responsible = computed(() =>
+  userStore.getById(quote.value.idResponsible)
+);
+watch(
+  () => quote.value,
+  () => {
+    if (quote.value.idResponsible) {
+      try {
+        userStore.fetchById(quote.value.idResponsible, {
+          populate: ["company"],
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }
+);
 
 const {
   downloadPdf,

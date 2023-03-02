@@ -38,11 +38,11 @@
               >
                 <div class="invoice-user-title">{{ $t("responsible") }}:</div>
                 <div class="text2">
-                  {{ invoice.responsible?.firstname || "" }}
-                  {{ invoice.responsible?.lastname || "" }}
+                  {{ responsible?.firstname || "" }}
+                  {{ responsible?.lastname || "" }}
                 </div>
                 <div class="text2">
-                  {{ invoice.responsible?.email || "" }}
+                  {{ responsible?.email || "" }}
                 </div>
               </Flex>
               <Flex
@@ -128,19 +128,34 @@ import Flex from "core/src/components/layouts/Flex.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import useInvoicesStore from "@/stores/invoices";
 import type Invoice from "@/types/invoice";
+import useUserStore from "@/stores/user";
+import { computed, watch } from "vue";
 
 const invoiceStore = useInvoicesStore();
 
 const { model: invoice, id } = useEditPage<Invoice>({
   store: invoiceStore,
-  populate: [
-    "client.company",
-    "responsible.company",
-    "lines.vat",
-    "payments",
-    "total",
-  ],
+  populate: ["client.company", "lines.vat", "payments", "total"],
 });
+
+const userStore = useUserStore();
+const responsible = computed(() =>
+  userStore.getById(invoice.value.idResponsible)
+);
+watch(
+  () => invoice.value,
+  () => {
+    if (invoice.value.idResponsible) {
+      try {
+        userStore.fetchById(invoice.value.idResponsible, {
+          populate: ["company"],
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }
+);
 
 const {
   downloadPdf,

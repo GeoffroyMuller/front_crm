@@ -18,7 +18,6 @@ export default interface Invoice {
   madeOn: string;
   modalities: string;
   name: string;
-  responsible: User;
   status: "draft";
   price?: number;
   taxes?: number;
