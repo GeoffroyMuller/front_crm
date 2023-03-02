@@ -94,7 +94,7 @@
               </Button>
             </Flex>
           </Card>
-          <Grid :gap="2" :columns="2">
+          <Grid :gap="1" :columns="2">
             <DatePicker name="dtstart" :label="$t('dtstart')" />
             <DatePicker name="dtend" :label="$t('dtend')" />
           </Grid>
