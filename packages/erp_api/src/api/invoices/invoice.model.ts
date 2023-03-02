@@ -14,7 +14,6 @@ export default class Invoice extends Model {
     identifier?: string;
     name?: string;
     client?: Client;
-    responsible?: User;
     jsonCopy?: string;
     lines?: Array<InvoiceLine>;
 

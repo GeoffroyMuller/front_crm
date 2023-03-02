@@ -16,7 +16,6 @@ export default class Quote extends Model {
     name?: string;
     lines?: Array<QuoteLine>;
     client?: Client;
-    responsible?: User;
 
     footer?: string;
     modalities?: string;
