@@ -1,6 +1,7 @@
 import User from "../users/user.model";
 import bcrypt from "bcrypt";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import Company from "../companies/company.model";
 
 const JWT_KEY = process.env.JWT_KEY;
 const JWT_EXPIRY_SECONDS = process.env.JWT_EXPIRY_SECONDS;
@@ -41,5 +42,23 @@ export default  {
     } catch (e) {
       return undefined;
     }
+  },
+  async register(data: any) {
+    const {email, password} = data;
+    if (!email || !password) {
+      throw "Email and password are required";
+    }
+    const user = await User.query().where("email", email).first();
+    if (user) {
+      throw "User already exists";
+    }
+    const company = await Company.query().insert({});
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await User.query().insert({
+      ...data,
+      idCompany: company.id,
+      password: hashedPassword,
+    });
+    return newUser;
   }
 }
