@@ -11,12 +11,12 @@ let keypair = {
 };
 
 fs.writeFileSync(
-  path.join("packages", "auth_service", "private.key"),
+  path.join("packages", "auth_api", "private.key"),
   keypair.private
 );
 
 fs.writeFileSync(
-  path.join("packages", "auth_service", "public.key.pub"),
+  path.join("packages", "auth_api", "public.key.pub"),
   keypair.public
 );
 
