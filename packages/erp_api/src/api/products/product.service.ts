@@ -3,6 +3,7 @@ import serviceFactory from "core_api/service";
 import ProductReal from "../products_real/product_real.model";
 import type { User } from "core_api/types";;
 import Product from "./product.model";
+import { isPopulateNeeded } from "core_api/services/filters.service";
 
 const productService = serviceFactory<Product, User>(Product, {
   isAuthorized: async (model: Product | Object, user: User) => {
@@ -15,10 +16,7 @@ const productService = serviceFactory<Product, User>(Product, {
       }
     }
     query.select(`${Product.tableName}.*`);
-    const populateStockIndex = (
-      (filters?.populate || []) as string[]
-    ).findIndex((p) => p === "stock_physical");
-    if (populateStockIndex !== -1) {
+    if (isPopulateNeeded(filters, "stock_physical")) {
       query.select(
         raw(`(
         SELECT COUNT(*)

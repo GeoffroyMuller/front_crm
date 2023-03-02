@@ -19,19 +19,6 @@ export interface IQuoteService extends Service<Quote, User> {
   getPdf: (q: Quote) => Promise<Stream>;
 }
 
-async function getResponsible(quote: Quote, populateCompany?: boolean) {
-  const response = await axios.get(
-    `${process.env.AUTH_SERVICE_URL}/users/${quote.idResponsible}${
-      populateCompany ? "?populate[0]=company" : ""
-    }`, {
-      headers: {
-        Authorization: ''
-      }
-    }
-  );
-  return response.data;
-}
-
 async function getNextIdentifier(auth: User) {
   const last = await Quote.query()
     .where("idCompany", auth.idCompany as number)
@@ -68,17 +55,6 @@ const quoteService = serviceFactory<Quote, User>(Quote, {
         WHERE ${QuoteLine.tableName}.idQuote = quotes.id
       )`).as("taxes")
     );
-    return { query, auth, filters, data };
-  },
-  async onAfterGetById({ query, auth, filters, data }) {
-    if (isPopulateNeeded(filters, "responsible")) {
-      const responsible = await getResponsible(data);
-      data.responsible = responsible.data;
-    }
-    if (isPopulateNeeded(filters, "responsible.company")) {
-      const responsible = await getResponsible(data, true);
-      data.responsible = responsible.data;
-    }
     return { query, auth, filters, data };
   },
   async onBeforeUpdate({ query, auth, filters, data }) {

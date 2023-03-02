@@ -9,6 +9,7 @@ import mailService from "core_api/services/mail.service";
 import { QueryBuilder, raw } from "objection";
 import InvoicePayment from "./invoicepayment.model";
 import InvoiceLine from "./invoice_line.model";
+import { isPopulateNeeded } from "core_api/services/filters.service";
 const fs = require("fs");
 let ejs = require("ejs");
 
@@ -70,8 +71,7 @@ const invoiceService = serviceFactory(Invoice, {
   async onBeforeGetById({ query, auth, filters, data }) {
     query.select("invoices.*");
 
-    const populateTotalIndex = ((filters?.populate || []) as string[]).findIndex(p => p === 'total');
-    if (populateTotalIndex !== -1) {
+    if (isPopulateNeeded(filters, "total")) {
       query = withPrice(query);
       query = withTaxes(query);
     }
