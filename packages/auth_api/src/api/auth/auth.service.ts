@@ -17,8 +17,6 @@ export default {
       .withGraphFetched("company")
       .withGraphFetched("role")
       .first();
-
-      console.log({user, email})
     if (user && (await bcrypt.compare(password, user.password || ""))) {
       const token = await jwt.sign(user.toJSON(), PRIVATE_KEY || "", {
         algorithm: "RS256",
