@@ -142,7 +142,6 @@ watch(
 watch(
   () => reservationSelected.value,
   (val) => {
-    if (isNil(val)) return;
     formDataReservation.value = val;
   }
 );
