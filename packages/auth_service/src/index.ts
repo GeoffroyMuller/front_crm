@@ -20,7 +20,6 @@ app.use(cookieParser({
 
 app.use(cors());
 
-
 Routes(app, path.join(__dirname, "api"));
 
 app.listen(3003, () => {
