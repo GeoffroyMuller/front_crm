@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { AuthRequest } from "./auth.middleware";
 import AuthService from "./auth.service";
 
 async function login(req: Request, res: Response) {
@@ -9,6 +10,7 @@ async function login(req: Request, res: Response) {
             res.status(400).json({message: 'email or password not send'})
         }
     } catch(err) {
+        console.error(err)
         res.status(500).json({ message: err })
     }
 
@@ -26,14 +28,8 @@ async function register(req: Request, res: Response) {
     }
 }
 
-async function verify(req: Request, res: Response) {
-    const token = req.headers.authorization || req.cookies.token || req.query.token as string;
-    const user = await AuthService.verify(token);
-    if (user) {
-        res.status(200).json(user);
-    } else {
-        res.status(401).end();
-    }
+async function verify(req: AuthRequest, res: Response) {
+    res.json(req['auth']);
 }
 
 
