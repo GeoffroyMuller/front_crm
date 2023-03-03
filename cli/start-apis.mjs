@@ -3,9 +3,12 @@ import { exec, spawn } from "child_process";
 import * as fs from "fs";
 import path from "path";
 
+
+const folderColored = folder => chalk.bgGrey(`[${folder}]`) + ':'
+
 const print = console.log;
-const stdout = (data, folder) => print(`[${folder}]:${data}`);
-const stderr = (data, folder) => print(chalk.red(`[${folder}]: ${data}`));
+const stdout = (data, folder) => print(`${folderColored(folder)}${data}`);
+const stderr = (data, folder) => print(`${folderColored(folder)}${data}`);
 const error = (data) => print(chalk.red(`error: ${data.message}`));
 const close = (code) =>
   print(chalk.yellow(`child process exited with code ${code}`));
