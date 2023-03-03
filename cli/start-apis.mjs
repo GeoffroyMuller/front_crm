@@ -5,7 +5,7 @@ import path from "path";
 
 const print = console.log;
 const stdout = (data, folder) => print(`[${folder}]:${data}`);
-const stderr = (data, folder) => print(chalk.red(`[${folder}]:stderr: ${data}`));
+const stderr = (data, folder) => print(chalk.red(`[${folder}]: ${data}`));
 const error = (data) => print(chalk.red(`error: ${data.message}`));
 const close = (code) =>
   print(chalk.yellow(`child process exited with code ${code}`));

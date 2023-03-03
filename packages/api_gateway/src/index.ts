@@ -23,6 +23,7 @@ const PROXIES = {
   users: proxy(SERVICES.auth, PROXY_OPTIONS),
   roles: proxy(SERVICES.auth, PROXY_OPTIONS),
   rights: proxy(SERVICES.auth, PROXY_OPTIONS),
+  google: proxy(SERVICES.auth, PROXY_OPTIONS),
 } as { [key: string]: RequestHandler };
 
 Object.keys(PROXIES).forEach((p) => {
