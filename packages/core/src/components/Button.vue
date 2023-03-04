@@ -1,6 +1,7 @@
 <template>
   <!-- :class="variant === 'text' ? `button-text button-text-${color}` : `button-${color}`" -->
-  <button
+  <component
+    :is="component"
     class="button"
     :class="{
       [`button-text button-text-${color}`]: variant === 'text',
@@ -9,8 +10,8 @@
       'align-end': align === 'end',
       'align-start': align === 'start',
     }"
-    :type="type"
     :disabled="disabled || loading"
+    v-bind="buttonAdditionnalProps"
   >
     <div class="content">
       <Icon :name="icon" v-if="icon" />
@@ -22,11 +23,11 @@
       v-if="loading"
       :color="variant === 'text' || variant === 'outlined' ? color : 'white'"
     />
-  </button>
+  </component>
 </template>
 
 <script setup lang="ts">
-import { withDefaults } from "vue";
+import { computed, withDefaults } from "vue";
 import Spinner from "./Spinner.vue";
 import type { Color, IconName } from "./types";
 import Icon from "./Icon.vue";
@@ -39,6 +40,8 @@ interface ButtonProps {
 
   align?: "center" | "end" | "start";
   icon?: IconName;
+  component?: "button" | "a";
+  href?: string;
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -46,6 +49,20 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   variant: "base",
   type: "button",
   align: "center",
+  component: "button",
+});
+
+const buttonAdditionnalProps = computed(() => {
+  if (props.component === "a") {
+    return {
+      href: props.href,
+    };
+  } else if (props.component === "button") {
+    return {
+      type: props.type,
+    };
+  }
+  return {};
 });
 </script>
 
@@ -61,6 +78,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   align-items: center;
   transition: background-color 0.15s ease, color 0.05s linear;
   user-select: none;
+  text-decoration: none;
   @include typo(text);
   .content {
     display: flex;
@@ -164,7 +182,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
       border: solid 1px map-deep-get($value, 500);
 
       &:hover:not(:disabled) {
-        color: transparent;
+        color: color("white");
         background-color: map-deep-get($value, 500);
       }
 

@@ -5,9 +5,16 @@
         <TextField :label="$t('email')" name="email" />
         <PasswordInput :label="$t('password')" name="password" />
         <div id="login-actions">
-          <Button :disabled="hasError" :loading="loading" type="submit">
+          <Button
+            variant="outlined"
+            :disabled="hasError"
+            :loading="loading"
+            type="submit"
+          >
             {{ $t("login") }}
           </Button>
+          <span>- {{ $t("or") }} -</span>
+          <GoogleLoginBtn />
         </div>
       </template>
     </Form>
@@ -24,6 +31,7 @@ import PasswordInput from "core/src/components/form/PasswordInput.vue";
 import useUI from "core/src/composables/ui";
 import Form from "core/src/components/form/Form.vue";
 import { useI18n } from "vue-i18n";
+import GoogleLoginBtn from "@/components/GoogleLoginBtn.vue";
 
 const userStore = useUserStore();
 
@@ -78,5 +86,10 @@ async function login(data: { email: string; password: string }) {
 }
 
 #login-actions {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: spacing(1);
+  align-items: center;
 }
 </style>
