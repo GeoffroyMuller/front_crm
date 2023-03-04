@@ -1,11 +1,8 @@
 import { setJWT } from "core/src/helpers/utils";
 import type { User } from "@/types/user";
-import { defineStore } from "pinia";
-import config from "@/const";
 import { useRouter } from "vue-router";
 import { getJWT } from "core/src/helpers/utils";
 import axios from "axios";
-import mock from "@/mock.json";
 import { makeAPIStore } from "core/src/factories/store.factory";
 
 const useUserStore = makeAPIStore<User>({
@@ -24,12 +21,10 @@ const useUserStore = makeAPIStore<User>({
       router.push("/login");
     },
     async login(email: string, password: string) {
-      const response = !config.IS_MOCK
-        ? await axios.post("/auth/login", {
-            email,
-            password,
-          })
-        : mock.GET["/auth/login"];
+      const response = await axios.post("/auth/login", {
+        email,
+        password,
+      });
 
       if (response.data?.token) {
         setJWT(response.data.token);

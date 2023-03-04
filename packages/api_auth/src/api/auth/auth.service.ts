@@ -10,7 +10,15 @@ const PUBLIC_KEY = fs.readFileSync(path.join(__dirname, "../../../public.key.pub
 
 const JWT_EXPIRY_SECONDS = process.env.JWT_EXPIRY_SECONDS;
 
+async function getToken(user: User) {
+  return await jwt.sign(user.toJSON(), PRIVATE_KEY || "", {
+    algorithm: "RS256",
+    expiresIn: JWT_EXPIRY_SECONDS,
+  });
+}
+
 export default {
+  getToken,
   async login(email: string, password: string) {
     const user = await User.query()
       .where("email", email)
@@ -18,10 +26,7 @@ export default {
       .withGraphFetched("role")
       .first();
     if (user && (await bcrypt.compare(password, user.password || ""))) {
-      const token = await jwt.sign(user.toJSON(), PRIVATE_KEY || "", {
-        algorithm: "RS256",
-        expiresIn: JWT_EXPIRY_SECONDS,
-      });
+      const token = await getToken(user);
       return { user, token };
     }
     throw "Invalid password or email";

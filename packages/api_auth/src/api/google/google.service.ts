@@ -1,6 +1,18 @@
 import axios from "axios";
+import authService from "../auth/auth.service";
+import User from "../users/user.model";
 
 export default {
+  async getUserFromGoogleCode(code: string, redirectURL: string) {
+    const token = await this.getAccessTokenFromCode(code, redirectURL);
+    const userInfo = await this.getGoogleUserInfo(token);
+    const user = await User.query().where("email", userInfo.email).first();
+    if (user) {
+      const token = await authService.getToken(user);
+      return { user, token };
+    }
+    return undefined;
+  },
   async getGoogleUserInfo(access_token: string) {
     const response = await axios({
       url: "https://www.googleapis.com/oauth2/v2/userinfo",

@@ -1,4 +1,5 @@
 import express from "express";
+import userService from "../users/user.service";
 import GoogleService from "./google.service";
 
 const router = express.Router();
@@ -13,12 +14,11 @@ router.get("/auth/url", (req, res) => {
 
 router.get(callbackURL, async (req, res) => {
   try {
-    const token = await GoogleService.getAccessTokenFromCode(
-      req.query.code as string,
-      redirectURL
-    );
-    const userInfo = await GoogleService.getGoogleUserInfo(token);
-    res.json(userInfo);
+    const data = await GoogleService.getUserFromGoogleCode(req.query.code as string, redirectURL);
+    if (data != null) {
+      res.redirect('http://127.0.0.1:5173/#/');
+    }
+    res.status(401).end();
   } catch (err) {
     console.error(err);
     res.status(500).json();
