@@ -43,24 +43,6 @@ export default {
     return response.data.access_token;
   },
   getGoogleAuthURL(redirectURL: string): string {
-    const params = [
-      ["client_id", process.env.GOOGLE_CLIENT_ID],
-      ["redirect_uri", redirectURL],
-      [
-        "scope",
-        [
-          "https://www.googleapis.com/auth/userinfo.email",
-          "https://www.googleapis.com/auth/userinfo.profile",
-        ].join(" "),
-      ],
-      ["response_type", "code"],
-      ["access_type", "offline"],
-      ["prompt", "consent"],
-    ];
-    const stringifiedParams = `?${params.map((p) => p.join("=")).join("&")}`;
-    const url = new URL(
-      `https://accounts.google.com/o/oauth2/v2/auth${stringifiedParams}`
-    );
-    return url.toString();
+    return process.env.GOOGLE_AUTH_URL as string;
   },
 };

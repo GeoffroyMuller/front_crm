@@ -39,14 +39,7 @@ const props = defineProps<{
   disabled?: boolean;
 }>();
 
-const url =
-  "https://accounts.google.com/o/oauth2/v2/auth" +
-  "?client_id=468572197466-l2n79f5imnsb1738b3jem3cbivf7n9qq.apps.googleusercontent.com" +
-  "&redirect_uri=http://localhost:3005/google/auth/callback" +
-  "&scope=https://www.googleapis.com/auth/userinfo.email" +
-  "%20" +
-  "https://www.googleapis.com/auth/userinfo.profile" +
-  "&response_type=code&access_type=offline&prompt=consent";
+const url = import.meta.env.VITE_GOOGLE_AUTH_URL;
 </script>
 
 <style lang="scss">
