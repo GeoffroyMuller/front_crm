@@ -167,6 +167,7 @@ async function backToView(item?: Reservation) {
 }
 
 async function clickEdit(item?: Reservation) {
+  isPrepareProductsReal.value = false;
   if (item != null) {
     await fetchReservastionById(item);
     isSidebarOpen.value = true;

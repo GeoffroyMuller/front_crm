@@ -61,18 +61,23 @@
           </Grid>
         </div>
       </Card>
-      <Button
-        type="button"
-        variant="text"
-        @click.stop="$emit('prepare-products-real')"
-      >
-        {{ $t("pages.edit-reservation.prepare-the-products") }}
-      </Button>
-      <!--       <div v-for="line in reservation.lines" :key="line.id">
-        <Card>
-          {{ line.product }}
-        </Card>
-      </div> -->
+      <template v-if="reservation.lines">
+        <div v-for="line in reservation.lines" :key="line.id">
+          <Card>
+            {{ line.product }}
+          </Card>
+        </div>
+      </template>
+      <Flex justify-content="flex-start">
+        <Button
+          type="button"
+          variant="text"
+          :disabled="!isPreparable"
+          @click.stop="$emit('prepare-products-real')"
+        >
+          {{ $t("pages.edit-reservation.prepare-the-products") }}
+        </Button>
+      </Flex>
     </Grid>
   </div>
 </template>
@@ -83,12 +88,32 @@ import Card from "core/src/components/Card.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import type { Reservation } from "@/types/reservation";
+import type { SaleLine } from "@/types/sale";
+import useProductsStore from "@/stores/products";
+import { isNil } from "lodash";
+import { computed } from "vue";
 
 const emit = defineEmits(["prepare-products-real"]);
+const productsStore = useProductsStore();
+
 interface ReservationViewProps {
   reservation: Reservation;
 }
 const props = withDefaults(defineProps<ReservationViewProps>(), {});
+
+const isPreparable = computed(() => {
+  if (props.reservation?.lines) {
+    const res = props.reservation?.lines?.find((line: SaleLine) =>
+      productsStore.isPhysicalStock(line.product)
+    );
+    if (isNil(res)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  return false;
+});
 </script>
 <style lang="scss" scoped>
 .reservation-view {
