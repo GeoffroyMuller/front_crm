@@ -16,13 +16,14 @@ async function login(req: Request, res: Response) {
     if (
       (typeof req.body.email === "string" &&
       typeof req.body.password === "string") ||
-      typeof req.body.code === "string"
+      typeof req.body.code === "string" || typeof req.body.refresh_token === "string"
     ) {
       res.json(
         await AuthService.login({
           email: req.body.email,
           password: req.body.password,
           code: req.body.code,
+          refreshToken: req.body.refresh_token,
         })
       );
     } else {

@@ -5,6 +5,17 @@ import { getJWT } from "core/src/helpers/utils";
 import axios from "axios";
 import { makeAPIStore } from "core/src/factories/store.factory";
 
+function setRefreshToken(token: string | null) {
+  if (!token) {
+    localStorage.removeItem("refreshToken");
+    return;
+  }
+  localStorage.setItem("refreshToken", token);
+}
+function getRefreshToken() {
+  return localStorage.getItem("refreshToken");
+}
+
 const useUserStore = makeAPIStore<User>({
   id: "users",
   state: {
@@ -26,19 +37,31 @@ const useUserStore = makeAPIStore<User>({
       });
       if (response.data?.token) {
         setJWT(response.data.token);
+        setRefreshToken(response.data.refreshToken);
         this.auth = response.data.user;
       }
 
       return response.data.user;
     },
-    async login(email: string, password: string) {
-      const response = await axios.post("/auth/login", {
-        email,
-        password,
-      });
+    async login(props: {
+      email?: string;
+      password?: string;
+      code?: string;
+      refresh_token?: string;
+    }) {
+      let params = {};
+      if (props.code) {
+        params = { code: props.code };
+      } else if (props.email && props.password) {
+        params = { email: props.email, password: props.password };
+      } else if (props.refresh_token) {
+        params = { refresh_token: props.refresh_token };
+      }
+      const response = await axios.post("/auth/login", params);
 
       if (response.data?.token) {
         setJWT(response.data.token);
+        setRefreshToken(response.data.refreshToken);
         this.auth = response.data.user;
       }
 
@@ -67,11 +90,21 @@ axios.interceptors.response.use(
   async (config) => {
     return config;
   },
-  (error) => {
+  async (error) => {
     const userStore = useUserStore();
     if (error.response.status == 401) {
-      /** Token no more valid */
-      userStore.disconnect();
+      const refresh_token = getRefreshToken();
+      if (refresh_token) {
+        try {
+          await userStore.login({ refresh_token });
+          const response = await axios(error.config);
+          return response;
+        } catch (err) {
+          userStore.disconnect();
+        }
+      } else {
+        userStore.disconnect();
+      }
     }
     Promise.reject(error);
   }

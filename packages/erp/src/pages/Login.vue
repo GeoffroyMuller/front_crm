@@ -42,7 +42,10 @@ const loading = ref(false);
 async function login(data: { email: string; password: string }) {
   loading.value = true;
   try {
-    const user = await userStore.login(data.email, data.password);
+    const user = await userStore.login({
+      email: data.email,
+      password: data.password,
+    });
     router.push({ name: "home" });
     toast({
       type: "success",
@@ -61,7 +64,7 @@ async function login(data: { email: string; password: string }) {
 async function loginWithCode(code: string) {
   loading.value = true;
   try {
-    const user = await userStore.loginCode(code);
+    const user = await userStore.login({ code });
     window.history.replaceState({}, document.title, "/");
     router.push({ name: "home" });
     toast({
@@ -101,6 +104,7 @@ onMounted(() => {
   gap: spacing(1);
   width: 440px;
 }
+
 @include media-down(sm) {
   #login-card {
     width: fit-content;

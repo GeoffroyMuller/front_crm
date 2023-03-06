@@ -1,7 +1,7 @@
 import { Model, Pojo } from "objection";
 import Company from "../companies/company.model";
 import Role from "../roles/role.model";
-import type { ID,  User as UserType } from "core_api/types";
+import type { ID, User as UserType } from "core_api/types";
 
 export default class User extends Model implements UserType {
   id?: ID;
@@ -16,11 +16,13 @@ export default class User extends Model implements UserType {
   company?: Company;
   role?: Role;
   accessTokenCode?: string | null;
+  refreshToken?: string | null;
 
   $formatJson(json: Pojo): Pojo {
     json = super.$formatJson(json);
     delete json.password;
     delete json.accessTokenCode;
+    delete json.refreshToken;
     return json;
   }
 
