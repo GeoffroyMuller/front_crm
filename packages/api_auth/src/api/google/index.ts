@@ -14,9 +14,12 @@ router.get("/auth/url", (req, res) => {
 
 router.get(callbackURL, async (req, res) => {
   try {
-    const data = await GoogleService.getUserFromGoogleCode(req.query.code as string, redirectURL);
-    if (data != null) {
-      res.redirect('http://127.0.0.1:5173/#/');
+    const code = await GoogleService.getAccessTokenCodeFromGoogleCode(
+      req.query.code as string,
+      redirectURL
+    );
+    if (code != null) {
+      res.redirect(`http://127.0.0.1:5173?access_code=${code}`);
     }
     res.status(401).end();
   } catch (err) {

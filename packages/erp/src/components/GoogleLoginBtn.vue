@@ -1,5 +1,11 @@
 <template>
-  <Button class="google-login-btn" variant="outlined" component="a" :href="url">
+  <Button
+    :disabled="disabled"
+    class="google-login-btn"
+    variant="outlined"
+    component="a"
+    :href="url"
+  >
     <div class="google-login-btn-content">
       <svg
         fill="white"
@@ -20,6 +26,10 @@
 
 <script setup lang="ts">
 import Button from "core/src/components/Button.vue";
+
+const props = defineProps<{
+  disabled?: boolean;
+}>();
 
 const url =
   "https://accounts.google.com/o/oauth2/v2/auth" +

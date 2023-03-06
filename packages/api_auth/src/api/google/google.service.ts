@@ -3,13 +3,15 @@ import authService from "../auth/auth.service";
 import User from "../users/user.model";
 
 export default {
-  async getUserFromGoogleCode(code: string, redirectURL: string) {
+  async getAccessTokenCodeFromGoogleCode(
+    code: string,
+    redirectURL: string
+  ): Promise<string | undefined> {
     const token = await this.getAccessTokenFromCode(code, redirectURL);
     const userInfo = await this.getGoogleUserInfo(token);
     const user = await User.query().where("email", userInfo.email).first();
     if (user) {
-      const token = await authService.getToken(user);
-      return { user, token };
+      return await authService.generateAccessTokenCode(user);
     }
     return undefined;
   },

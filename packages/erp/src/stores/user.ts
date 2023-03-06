@@ -20,6 +20,17 @@ const useUserStore = makeAPIStore<User>({
       const router = useRouter();
       router.push("/login");
     },
+    async loginCode(code: string) {
+      const response = await axios.post("/auth/login", {
+        code,
+      });
+      if (response.data?.token) {
+        setJWT(response.data.token);
+        this.auth = response.data.user;
+      }
+
+      return response.data.user;
+    },
     async login(email: string, password: string) {
       const response = await axios.post("/auth/login", {
         email,

@@ -14,7 +14,7 @@
             {{ $t("login") }}
           </Button>
           <span>- {{ $t("or") }} -</span>
-          <GoogleLoginBtn />
+          <GoogleLoginBtn :disabled="loading" />
         </div>
       </template>
     </Form>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import TextField from "core/src/components/form/TextField.vue";
 import Button from "core/src/components/Button.vue";
 import useUserStore from "@/stores/user";
@@ -59,6 +59,30 @@ async function login(data: { email: string; password: string }) {
     loading.value = false;
   }
 }
+
+async function loginWithCode(code: string) {
+  loading.value = true;
+  try {
+    const user = await userStore.loginCode(code);
+    window.history.replaceState({}, document.title, "/");
+    router.push({ name: "home" });
+    toast({
+      type: "success",
+      message: t("welcome", { name: user.firstname }),
+    });
+    loading.value = false;
+  } catch (err) {
+    loading.value = false;
+  }
+}
+
+onMounted(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get("access_code");
+  if (code) {
+    loginWithCode(code);
+  }
+});
 </script>
 
 <style lang="scss" scoped>

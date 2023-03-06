@@ -15,10 +15,12 @@ export default class User extends Model implements UserType {
   idRole?: number;
   company?: Company;
   role?: Role;
+  accessTokenCode?: string | null;
 
   $formatJson(json: Pojo): Pojo {
     json = super.$formatJson(json);
     delete json.password;
+    delete json.accessTokenCode;
     return json;
   }
 
