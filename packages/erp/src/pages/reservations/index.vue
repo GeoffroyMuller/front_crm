@@ -67,7 +67,7 @@
         <ReservationPrepareProductsReal
           v-if="isPrepareProductsReal"
           v-model:reservation="formDataReservation"
-          @saved="
+          @back="
             () => {
               isPrepareProductsReal = false;
             }
