@@ -16,9 +16,11 @@
         />
         <TextField
           class="input"
+          :model-value="1"
           type="number"
           :label="$t('pages.edit-quote.qty')"
           :step="1"
+          :min="1"
           name="qty"
         />
       </Grid>
@@ -37,6 +39,7 @@ import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import ReservationProductRealLine from "./ReservationProductRealLine.vue";
 import TextField from "core/src/components/form/TextField.vue";
+import type { multiply } from "lodash";
 
 const { t } = useI18n();
 const productStore = useProductsStore();
