@@ -116,6 +116,7 @@
             <Button
               type="button"
               variant="text"
+              :disabled="!isPreparable"
               @click.stop="$emit('prepare-products-real')"
             >
               {{ $t("pages.edit-reservation.prepare-the-products") }}
@@ -151,6 +152,7 @@ import { useI18n } from "vue-i18n";
 import { computed, ref, watch } from "vue";
 import Card from "core/src/components/Card.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
+import useProductsStore from "@/stores/products";
 
 interface ReservationFormProps {
   initialReservation: Reservation | null;
@@ -161,6 +163,7 @@ const { t } = useI18n();
 const { toast } = useUI();
 const clientStore = useClientStore();
 const reservationStore = useReservationStore();
+const productsStore = useProductsStore();
 const emit = defineEmits([
   "saved",
   "update:reservation",
@@ -177,6 +180,20 @@ const isSelectExistingClient = ref<boolean>(true);
 
 const isNewReseravation = computed(() => {
   return isNil(props.initialReservation);
+});
+
+const isPreparable = computed(() => {
+  if (internalReservation.value?.lines) {
+    const res = internalReservation.value?.lines?.find((line: SaleLine) =>
+      productsStore.isPhysicalStock(line.product)
+    );
+    if (isNil(res)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  return false;
 });
 
 watch(
