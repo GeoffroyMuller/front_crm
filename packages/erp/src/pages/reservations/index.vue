@@ -162,13 +162,13 @@ async function fetchReservastionById(item?: Reservation) {
 }
 
 async function backToView(item?: Reservation) {
-  fetchReservastionById(item);
+  await fetchReservastionById(item);
   isEdit.value = false;
 }
 
 async function clickEdit(item?: Reservation) {
   if (item != null) {
-    fetchReservastionById(item);
+    await fetchReservastionById(item);
     isSidebarOpen.value = true;
   } else {
     reservationSelected.value = null;
