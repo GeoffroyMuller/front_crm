@@ -1,12 +1,13 @@
 <template>
   <Sidebar v-model:open="isOpen" class="sidebar-quote-preview">
-    <iframe ref="iframe" class="quote-iframe" />
+    <Iframe class="quote-iframe" v-bind="{ ...iframeprops }" />
   </Sidebar>
 </template>
 
 <script setup lang="ts">
 import type { Quote } from "@/types/quote";
 import Sidebar from "core/src/components/Sidebar.vue";
+import Iframe from "core/src/components/Iframe.vue";
 import { ref, watch } from "vue";
 import config from "@/const";
 import { getJWT } from "core/src/helpers/utils";
@@ -19,7 +20,7 @@ const props = withDefaults(defineProps<QuotePreviewProps>(), {});
 const emit = defineEmits(["close"]);
 
 const isOpen = ref(false);
-const iframe = ref();
+const iframeprops = ref();
 
 watch(
   () => isOpen.value,
@@ -37,9 +38,14 @@ watch(
       isOpen.value = false;
     } else {
       isOpen.value = true;
-      iframe.value.src = `${config.API_URL}/quotes/${
-        quote.id
-      }/preview?token=${getJWT()}`;
+      iframeprops.value = {
+        src: `${config.API_URL}/quotes/${quote.id}/preview`,
+        config: {
+          headers: {
+            Authorization: getJWT(),
+          },
+        },
+      };
     }
   },
   { immediate: true }
