@@ -7,11 +7,7 @@
     "test": "jest",
     "build": "npx tsc --project ./",
     "start": "node ./build/index.js",
-    "dev": "nodemon ./src/index.ts",
-    "knex": "cd ./node_modules/.bin/ | knex --knexfile src/config/database.ts",
-    "migrate:make": "npm run knex migrate:make -- ",
-    "migrate": "npm run knex migrate:latest",
-    "migrate:rollback": "npm run knex migrate:rollback"
+    "dev": "nodemon ./src/index.ts"
   },
   "author": "",
   "license": "ISC",
