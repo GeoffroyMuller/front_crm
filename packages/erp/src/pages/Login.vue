@@ -1,23 +1,20 @@
 <template>
   <div id="login-container">
-    <Form id="login-card" @submit="login">
-      <template #default="{ hasError }">
-        <TextField :label="$t('email')" name="email" />
-        <PasswordInput :label="$t('password')" name="password" />
-        <div id="login-actions">
-          <Button
-            variant="outlined"
-            :disabled="hasError"
-            :loading="loading"
-            type="submit"
-          >
-            {{ $t("login") }}
-          </Button>
-          <span>- {{ $t("or") }} -</span>
+    <Card :title="$t('connection')">
+      <Form id="login-card" @submit="login">
+        <template #default="{ hasError }">
           <GoogleLoginBtn :disabled="loading" />
-        </div>
-      </template>
-    </Form>
+          <span id="or-txt">- {{ $t("or") }} -</span>
+          <TextField :label="$t('email')" name="email" />
+          <PasswordInput :label="$t('password')" name="password" />
+          <div id="login-actions">
+            <Button :disabled="hasError" :loading="loading" type="submit">
+              {{ $t("login") }}
+            </Button>
+          </div>
+        </template>
+      </Form>
+    </Card>
   </div>
 </template>
 
@@ -32,6 +29,7 @@ import useUI from "core/src/composables/ui";
 import Form from "core/src/components/form/Form.vue";
 import { useI18n } from "vue-i18n";
 import GoogleLoginBtn from "@/components/GoogleLoginBtn.vue";
+import Card from "core/src/components/Card.vue";
 
 const userStore = useUserStore();
 
@@ -99,21 +97,23 @@ onMounted(() => {
 }
 
 #login-card {
-  background-color: color("white");
-  padding: 16px 24px;
-  min-width: 350px;
-  width: fit-content;
   display: grid;
-  gap: spacing(1.5);
-  border-radius: map-deep-get($rounded, "md");
-  box-shadow: 10px 10px 5px 0px color("zinc", 100);
+  gap: spacing(1);
+  width: 440px;
+}
+@include media-down(sm) {
+  #login-card {
+    width: fit-content;
+  }
 }
 
 #login-actions {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  gap: spacing(1);
-  align-items: center;
+  display: grid;
+  margin-top: spacing(1);
+}
+
+#or-txt {
+  text-align: center;
+  margin: spacing(2) 0;
 }
 </style>
