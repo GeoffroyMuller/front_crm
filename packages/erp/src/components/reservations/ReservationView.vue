@@ -142,7 +142,7 @@ import { isNil } from "lodash";
 import { computed } from "vue";
 import Table from "core/src/components/Table.vue";
 
-const emit = defineEmits(["prepare-products-real"]);
+const emit = defineEmits(["prepare-products-real", "click-edit"]);
 const productsStore = useProductsStore();
 
 interface ReservationViewProps {
