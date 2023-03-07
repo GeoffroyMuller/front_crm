@@ -109,13 +109,6 @@
                       <div>{{ $t("quantity") }}</div>
                       <div>{{ line.qty || "-" }}</div>
                     </Flex>
-                    <template
-                      v-if="line.sublines?.length && line.sublines?.length > 0"
-                    >
-                      <div v-for="subline in line.sublines" :key="subline.id">
-                        {{ subline }}
-                      </div>
-                    </template>
                   </Grid>
                 </Card>
               </div>
@@ -124,7 +117,7 @@
               <Button
                 type="button"
                 variant="text"
-                :disabled="!isPreparable"
+                v-if="isPreparable"
                 @click.stop="$emit('prepare-products-real')"
               >
                 {{ $t("pages.edit-reservation.prepare-the-products") }}
