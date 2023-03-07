@@ -56,7 +56,7 @@ reservationService.update = async (body: any, auth) => {
       id: data.id,
       ...data,
     },
-    { relate: true }
+    { relate: true, unrelate: true }
   )) as unknown as Reservation;
 };
 

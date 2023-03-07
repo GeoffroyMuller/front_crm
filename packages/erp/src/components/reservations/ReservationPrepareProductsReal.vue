@@ -3,6 +3,11 @@
     <div class="title">
       {{ $t("pages.edit-reservation.prepare-the-products") }}
     </div>
+    <div class="reservation-btn-back">
+      <Button @click.stop="$emit('back')" variant="text" icon="chevron_left">
+        {{ $t("back") }}
+      </Button>
+    </div>
     <Grid :gap="2" :columns="1">
       <SubForm v-model="internalReservation">
         <Repetable
@@ -95,6 +100,9 @@ const internalReservation = computed({
 .reservation-prepare-products-real {
   padding: spacing(2);
   .title {
+    margin-bottom: spacing(1) !important;
+  }
+  .reservation-btn-back {
     margin-bottom: spacing(2);
   }
 }

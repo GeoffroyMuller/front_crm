@@ -116,7 +116,7 @@
             <Button
               type="button"
               variant="text"
-              :disabled="!isPreparable"
+              v-if="isPreparable"
               @click.stop="$emit('prepare-products-real')"
             >
               {{ $t("pages.edit-reservation.prepare-the-products") }}

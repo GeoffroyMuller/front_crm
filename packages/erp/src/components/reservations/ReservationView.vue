@@ -59,25 +59,73 @@
               </Flex>
             </div>
           </Grid>
+
+          <Grid class="reservation-products" :gap="2" v-if="reservation.lines">
+            <Grid :gap="1">
+              <div class="text2">
+                {{ `${$t("products")} :` }}
+              </div>
+              <!-- <Table
+                :columns="[
+                  {
+                    title: $t('name'),
+                    key: 'name',
+                  },
+                  {
+                    title: $t('description'),
+                    key: 'description',
+                    sortable: true,
+                  },
+                  {
+                    title: $t('quantity'),
+                    key: 'quantity',
+                    sortable: true,
+                  },
+                ]"
+                :items="[...(reservation.lines || [])]"
+              >
+                <template #content-name="{ item }">
+                  {{ item.product.name }}
+                </template>
+                <template #content-description="{ item }">
+                  {{ item.product.description || "-" }}
+                </template>
+                <template #content-quantity="{ item }">
+                  {{ item.qty || "-" }}
+                </template>
+              </Table> -->
+              <div v-for="line in reservation.lines" :key="line.id">
+                <Card>
+                  <Grid :gap="1">
+                    <Flex justify-content="space-between" class="text2">
+                      <div>{{ $t("name") }}</div>
+                      <div>{{ line.product?.name }}</div>
+                    </Flex>
+                    <Flex justify-content="space-between" class="text2">
+                      <div>{{ $t("description") }}</div>
+                      <div>{{ line.product?.description || "-" }}</div>
+                    </Flex>
+                    <Flex justify-content="space-between" class="text2">
+                      <div>{{ $t("quantity") }}</div>
+                      <div>{{ line.qty || "-" }}</div>
+                    </Flex>
+                  </Grid>
+                </Card>
+              </div>
+            </Grid>
+            <Flex justify-content="flex-start">
+              <Button
+                type="button"
+                variant="text"
+                v-if="isPreparable"
+                @click.stop="$emit('prepare-products-real')"
+              >
+                {{ $t("pages.edit-reservation.prepare-the-products") }}
+              </Button>
+            </Flex>
+          </Grid>
         </div>
       </Card>
-      <template v-if="reservation.lines">
-        <div v-for="line in reservation.lines" :key="line.id">
-          <Card>
-            {{ line.product }}
-          </Card>
-        </div>
-      </template>
-      <Flex justify-content="flex-start">
-        <Button
-          type="button"
-          variant="text"
-          :disabled="!isPreparable"
-          @click.stop="$emit('prepare-products-real')"
-        >
-          {{ $t("pages.edit-reservation.prepare-the-products") }}
-        </Button>
-      </Flex>
     </Grid>
   </div>
 </template>
@@ -92,6 +140,7 @@ import type { SaleLine } from "@/types/sale";
 import useProductsStore from "@/stores/products";
 import { isNil } from "lodash";
 import { computed } from "vue";
+import Table from "core/src/components/Table.vue";
 
 const emit = defineEmits(["prepare-products-real"]);
 const productsStore = useProductsStore();
@@ -128,8 +177,8 @@ const isPreparable = computed(() => {
 }
 .reservation-content {
   padding: spacing(2);
-  .text {
-    color: color("primary", 500);
+  .reservation-products {
+    margin-top: spacing(5);
   }
 }
 </style>
