@@ -66,7 +66,12 @@
       <div class="sidebar-reservation-form">
         <ReservationPrepareProductsReal
           v-if="isPrepareProductsReal"
-          v-model:reservation="formDataReservation"
+          :reservation="formDataReservation"
+          @saved="
+            (res: Reservation) => {
+              formDataReservation = res;
+            }
+          "
           @back="
             () => {
               isPrepareProductsReal = false;
