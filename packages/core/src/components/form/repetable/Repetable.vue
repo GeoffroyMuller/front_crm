@@ -6,7 +6,7 @@
     <Card :withPadding="false" class="repetable">
       <draggable
         v-if="orderable"
-        v-model="sectionListForDnD"
+        v-model="sections"
         group="section"
         @start="handleDragStart"
         @end="handleDragEnd"
@@ -18,45 +18,42 @@
         direction="vertical"
       >
         <template #item="{ element }">
-          <template v-if="element.value">
-            <RepetableSection
-              orderable
-              class="repetable-section"
-              :value="element.value"
-              @inputChange="
-                ({ name, value }) =>
-                  handleSectionInputChange(element.key, name, value)
-              "
-              @register="($v) => registerValidator(element.key, $v)"
-              @unregister="() => unregisterValidator(element.key)"
-            >
-              <div class="icon-delete" v-if="!isMin">
-                <div>
-                  <IconButton
-                    class=""
-                    name="close"
-                    color="danger"
-                    v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
-                    @click.stop="handleDeleteSection(element.key)"
-                  />
-                </div>
+          <RepetableSection
+            orderable
+            class="repetable-section"
+            :value="element.value"
+            @inputChange="
+              ({ name, value }) =>
+                handleSectionInputChange(element.key, name, value)
+            "
+            @register="($v) => registerSection(element.key, $v)"
+          >
+            <div class="icon-delete" v-if="!isMin">
+              <div>
+                <IconButton
+                  class=""
+                  name="close"
+                  color="danger"
+                  v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
+                  @click.stop="unregisterSection(element.key)"
+                />
               </div>
-              <slot :data="element.value" />
-            </RepetableSection>
-          </template>
+            </div>
+            <slot :data="element.value" />
+          </RepetableSection>
         </template>
       </draggable>
       <template v-if="!orderable">
         <RepetableSection
           class="repetable-section"
-          v-for="(section, key) in sections"
-          :key="key"
+          v-for="section of sections"
+          :key="section.key"
           :value="section"
           @inputChange="
-            ({ name, value }) => handleSectionInputChange(key, name, value)
+            ({ name, value }) =>
+              handleSectionInputChange(section.key, name, value)
           "
-          @register="($v) => registerValidator(key, $v)"
-          @unregister="() => unregisterValidator(key)"
+          @register="($v) => registerSection(section.key, $v)"
         >
           <div class="icon-delete" v-if="!isMin">
             <div>
@@ -65,7 +62,7 @@
                 name="close"
                 color="danger"
                 v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
-                @click.stop="handleDeleteSection(key)"
+                @click.stop="unregisterSection(section.key)"
               />
             </div>
           </div>
@@ -84,19 +81,15 @@
 </template>
 
 <script setup lang="ts">
-import useValidatable from "../../../composables/validatable";
-import { ValidationError, type AnySchema } from "yup";
-import { computed, ref, watch } from "vue";
 import { isEqual, isNil, uniqueId } from "lodash";
+import useValidatable from "../../../composables/validatable";
+import { computed, ref, watch } from "vue";
+import { ValidationError, type AnySchema } from "yup";
 import RepetableSection from "./RepetableSection.vue";
 import Button from "../../Button.vue";
 import Card from "../../Card.vue";
 import IconButton from "../../IconButton.vue";
 import draggable from "vuedraggable";
-
-export interface ISection {
-  [name: string]: any;
-}
 
 interface RepetableProps {
   label?: string;
@@ -115,38 +108,12 @@ interface RepetableProps {
 }
 
 const props = withDefaults(defineProps<RepetableProps>(), {});
-const emit = defineEmits([
-  "update:modelValue",
-  "update:error",
-  "sectionChange",
-]);
-
-const sections = ref<{ [key: string]: ISection }>({});
-const sectionsValidators = ref<{
-  [key: string]: {
-    validate: () => Promise<boolean | string>;
-    errors: any;
-  };
-}>({});
-
-function registerValidator(
-  key: string,
-  obj: {
-    validate: () => Promise<boolean | string>;
-    errors: any;
-  }
-) {
-  sectionsValidators.value[key] = obj;
-}
-
-function unregisterValidator(key: string) {
-  delete sectionsValidators.value[key];
-}
+const emit = defineEmits(["update:modelValue", "update:error"]);
 
 async function validate() {
   let valid = true;
-  for (const v of Object.values(sectionsValidators.value)) {
-    valid = valid && (await v.validate());
+  for (const section of Object.values(sections.value)) {
+    valid = valid && (await section.validate());
   }
   if (!valid) {
     internalError.value = true;
@@ -178,75 +145,54 @@ const { internalValue, internalError } = useValidatable({
   validate,
 });
 
-const keyOrderForDnD = ref<string[]>([]);
-const sectionListForDnD = computed({
-  get: () => {
-    const res: { key: string; value: any }[] = [];
-    for (const key of keyOrderForDnD.value) {
-      const value = sections.value[key];
-      res.push({ key, value });
-    }
+const sections = ref<
+  {
+    key: string;
+    value: any;
+    validate: () => Promise<boolean>;
+    errors: any;
+  }[]
+>([]);
 
-    return [
-      ...res,
-      ...Object.keys(sections.value)
-        .filter((k) => !keyOrderForDnD.value.find((key) => k == key))
-        .map((key) => ({
-          key,
-          value: sections.value[key],
-        })),
-    ];
-  },
-  set: (val) => {
-    const obj: { [key: string]: ISection } = {};
-    const order: string[] = [];
-    for (const kv of val) {
-      obj[kv.key] = kv.value;
-      order.push(kv.key);
-    }
-    keyOrderForDnD.value = order;
-    sections.value = obj;
-  },
-});
-
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 function handleDragStart(e: any) {}
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 function handleDragEnd(e: any) {}
 
-const generateId = () => uniqueId();
+const generateId = () => uniqueId("section_");
 
-function addSection(data?: any) {
-  const key = generateId();
-  keyOrderForDnD.value.push(key);
-
-  sections.value = {
-    ...sections.value,
-    [key]: data || {},
+function createSection(data?: any) {
+  return {
+    key: generateId(),
+    value: data || {},
+    validate: () => Promise.resolve(true),
+    errors: null,
   };
 }
 
-function handleSectionInputChange(
+const addSection = (data?: any) => {
+  sections.value.push(createSection(data));
+  internalValue.value = sections.value.map((v) => v.value);
+};
+
+const registerSection = (
   key: string,
-  inputName: string,
-  inputValue: any
-) {
-  if (isEqual(sections.value[key]?.[inputName], inputValue)) {
-    return;
+  data: {
+    validate: () => Promise<boolean>;
+    errors: any;
   }
-  sections.value[key] = {
-    ...sections.value[key],
-    [inputName]: inputValue,
+) => {
+  const sectionIndex = sections.value.findIndex((s) => s.key === key);
+  if (sectionIndex === -1) return;
+  sections.value[sectionIndex] = {
+    ...sections.value[sectionIndex],
+    ...data,
   };
-  emit("sectionChange", sections.value[key]);
-}
-
-function handleDeleteSection(key: string) {
-  delete sections.value[key];
-  keyOrderForDnD.value = keyOrderForDnD.value.filter((k) => k != key);
-}
-
-const sectionsList = computed(() =>
-  sectionListForDnD.value.map(({ value }) => value).filter((v) => v != null)
-);
+};
+const unregisterSection = (key: string) => {
+  sections.value = sections.value.filter((s) => s.key !== key);
+  internalValue.value = sections.value.map((v) => v.value);
+};
 
 const isMax = computed(() => {
   if (!isNil(props.max) && props.max <= Object.keys(sections.value).length) {
@@ -261,44 +207,31 @@ const isMin = computed(() => {
   return false;
 });
 
+function handleSectionInputChange(key: string, name: string, value: any) {
+  const sectionIndex = sections.value.findIndex((s) => s.key === key);
+  if (sectionIndex === -1) return;
+  sections.value[sectionIndex].value[name] = value;
+  internalValue.value = sections.value.map((v) => v.value);
+}
+
 watch(
   () => internalValue.value,
-  () => {
-    if (internalValue.value == null) {
+  (newValue) => {
+    if (newValue == null) {
+      sections.value = [];
       return;
     }
-    if (internalValue.value?.length > 0 && sectionsList.value.length === 0) {
-      sections.value = internalValue.value.reduce(
-        (prev: { [key: string]: ISection }, section: ISection) => {
-          const key = generateId();
-          keyOrderForDnD.value.push(key);
-          return { ...prev, [key]: section };
-        },
-        {}
-      );
-    } else {
-      if (!isEqual(sectionsList.value, internalValue.value)) {
-        sections.value = internalValue.value.reduce(
-          (prev: { [key: string]: ISection }, section: ISection) => {
-            const key = generateId();
-            keyOrderForDnD.value.push(key);
-            return { ...prev, [key]: section };
-          },
-          {}
-        );
-      }
+    if (
+      isEqual(
+        newValue,
+        sections.value.map((v) => v.value)
+      )
+    ) {
+      return;
     }
+    sections.value = newValue.map((v: any) => createSection(v));
   },
-  { immediate: true }
-);
-watch(
-  () => sectionsList.value,
-  () => {
-    if (!isEqual(sectionsList.value, internalValue.value)) {
-      internalValue.value = sectionsList.value;
-    }
-  },
-  { immediate: true }
+  { deep: true, immediate: true }
 );
 </script>
 
