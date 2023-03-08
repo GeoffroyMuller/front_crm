@@ -45,12 +45,13 @@ onUnmounted(() => {
   background-color: color("zinc", 50);
   display: flex;
   align-items: center;
-  gap: spacing(2);
+  gap: spacing(1);
   > *:last-child {
     flex-grow: 1;
   }
   .drag_handle {
     cursor: grab;
+    margin-left: spacing(-1);
   }
 }
 .repetable-section-ghost {
