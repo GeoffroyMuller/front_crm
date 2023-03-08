@@ -48,7 +48,7 @@
           class="repetable-section"
           v-for="section of sections"
           :key="section.key"
-          :value="section"
+          :value="section.value"
           @inputChange="
             ({ name, value }) =>
               handleSectionInputChange(section.key, name, value)

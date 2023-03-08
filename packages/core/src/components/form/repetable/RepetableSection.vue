@@ -9,13 +9,12 @@
 
 <script setup lang="ts">
 import type { _CustomInput } from "../../../composables/form";
-import type { ISection } from "./Repetable.vue";
 import useForm from "../../../composables/form";
 import Icon from "../../Icon.vue";
 import { onMounted, onUnmounted, toRef } from "vue";
 
 interface RepetableSectionProps {
-  value: ISection;
+  value: any;
   orderable?: boolean;
 }
 
