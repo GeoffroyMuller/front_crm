@@ -4,6 +4,9 @@
       {{ label }}
     </label>
     <Media down="md">
+      <div v-if="$slots['head']">
+        <slot name="head" />
+      </div>
       <div class="table-mobile">
         <div>
           <slot name="actions-title"></slot>

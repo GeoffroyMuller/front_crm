@@ -39,9 +39,14 @@
     >
       <template #head>
         <Flex align-items="center" justify-content="space-between">
-          <div class="title">
-            {{ $t("quotes") }}
-          </div>
+          <Media up="md">
+            <div class="title">
+              {{ $t("quotes") }}
+            </div>
+          </Media>
+          <Media down="md">
+            {{ `${selected.length || 0} ${$t("selected")}` }}
+          </Media>
           <div
             :style="{
               visibility: !selected.length ? 'hidden' : 'initial',

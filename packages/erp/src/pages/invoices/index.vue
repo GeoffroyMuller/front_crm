@@ -40,9 +40,14 @@
     >
       <template #head>
         <Flex align-items="center" justify-content="space-between">
-          <div class="title">
-            {{ $t("invoices") }}
-          </div>
+          <Media up="md">
+            <div class="title">
+              {{ $t("invoices") }}
+            </div>
+          </Media>
+          <Media down="md">
+            {{ `${selected.length || 0} ${$t("selected")}` }}
+          </Media>
           <div
             :style="{
               visibility: !selected.length ? 'hidden' : 'initial',
@@ -123,6 +128,7 @@ import InvoiceSendMail from "@/components/invoices/InvoiceSendMail.vue";
 import InvoicePaymentsBar from "@/components/invoices/InvoicePaymentsBar.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import useInvoice from "../../components/invoices/invoice";
+import Media from "core/src/components/Media.vue";
 
 const {
   invoiceStore,
