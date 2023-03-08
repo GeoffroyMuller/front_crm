@@ -68,7 +68,7 @@ const buttonAdditionnalProps = computed(() => {
 
 <style lang="scss" scoped>
 .button {
-  padding: spacing(0.5) spacing(1);
+  padding: spacing(0.5) spacing(1.5);
   border: none;
   border-radius: map-deep-get($rounded, "sm");
   min-height: 33px;
@@ -80,6 +80,13 @@ const buttonAdditionnalProps = computed(() => {
   user-select: none;
   text-decoration: none;
   @include typo(text);
+  &:not(.button-text):not(.button-outlined):not(:disabled) {
+    box-shadow: 0px 0.3px 0.9px rgba(0, 0, 0, 0.32),
+      0px 1.6px 3.6px rgba(0, 0, 0, 0.28);
+  }
+  &:not(.button-text) .icon {
+    margin-left: spacing(-0.75);
+  }
   .content {
     display: flex;
     align-items: center;
