@@ -1,9 +1,10 @@
 {
   "keyboardshortcuts": {
     "ctrl+s": "Ctrl+S",
-    "ctrl+b": "Ctrl+B",
-    "shift+alt+n": "Shift+Alt+N"
+    "ctrl+b": "Ctrl+B"
   },
+  "advanced_filters": "Filtres avancés",
+  "search": "Rechercher",
   "selected": "Selectionné",
   "or": "Ou",
   "payment": "Paiement",

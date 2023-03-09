@@ -89,7 +89,7 @@
               color="success"
               icon="add"
               v-tooltip="{
-                text: $t('keyboardshortcuts.shift+alt+n'),
+                text: $t('add'),
                 placement: 'bottom',
               }"
               @click="$router.push(`/quotes/new/edit`)"
@@ -144,15 +144,9 @@ import QuoteActionsMenu from "@/components/quotes/QuoteActionsMenu.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import useQuote from "@/components/quotes/quote";
 import type { Quote } from "@/types/quote";
-import useKeyboardShortcut from "core/src/composables/keyboardshortcut";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
-useKeyboardShortcut(["shift+alt+n"], (e) => {
-  e.preventDefault();
-  router.push(`/quotes/new/edit`);
-});
 
 function getStatusColor(status: string) {
   if (status === "refused") {

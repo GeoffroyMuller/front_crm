@@ -4,6 +4,7 @@
     class="text-field"
     :class="{
       error: internalError || error,
+      [`rounded-${rounded}`]: true,
     }"
   >
     <label v-if="label">
@@ -58,7 +59,7 @@
 <script lang="ts" setup>
 import useValidatable from "../../composables/validatable";
 import { computed, withDefaults } from "vue";
-import type { IconName } from "../types";
+import type { IconName, Size } from "../types";
 import Icon from "../Icon.vue";
 import Alert from "../Alert.vue";
 import type { AnySchema } from "yup";
@@ -84,10 +85,12 @@ export interface InputProps {
   placeholder?: string;
   //hide arrows input number
   appearanceNone?: boolean | null;
+  rounded?: Size;
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
   type: "text",
+  rounded: "sm",
 });
 const emit = defineEmits([
   "update:modelValue",
@@ -162,11 +165,25 @@ const maskOptions = computed<MaskOptions | null>(() => {
       background-color: transparent;
     }
   }
+  @each $key, $value in $rounded {
+    &.card-rd-#{$key} {
+      border-radius: map-get($rounded, $key);
+    }
+    &.rounded-#{$key} {
+      input,
+      textarea {
+        border-radius: map-get($rounded, $key);
+      }
+      .icon-hook {
+        border-radius: map-get($rounded, $key);
+      }
+    }
+  }
+
   input,
   textarea {
-    min-height: 33px;
+    min-height: $input-min-height;
     background-color: color("white");
-    border-radius: map-get($rounded, "sm");
     display: block;
     padding: 4px 8px;
     border: 1px solid #d1d5db;
