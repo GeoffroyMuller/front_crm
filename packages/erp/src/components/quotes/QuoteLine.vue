@@ -33,10 +33,10 @@
       "
       class="products-real"
     >
-      <div v-if="nbProductReal" class="text">
+      <div v-if="nbProductReal" class="typo-text">
         {{ $t("pages.sales.count-sentence", { count: nbProductReal }) }}
       </div>
-      <div v-else class="text">
+      <div v-else class="typo-text">
         {{ $t("pages.sales.add-product-real-sentence") }}
       </div>
       <Button

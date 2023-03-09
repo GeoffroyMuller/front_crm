@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="title">
+    <div class="typo-title">
       {{ $t("edit-products-real") }}
     </div>
-    <div class="text subline-form-subtitle">
+    <div class="typo-text subline-form-subtitle">
       {{ $t("edit-products-real-product") }}
     </div>
     <Repetable v-model="sublines" v-if="product" name="sublines">

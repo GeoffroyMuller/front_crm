@@ -28,7 +28,7 @@
       </Flex>
       <div class="quote-content">
         <Grid :gap="5" :columns="1">
-          <div class="subtitle">{{ quote.name }}</div>
+          <div class="typo-subtitle">{{ quote.name }}</div>
           <Flex justify-content="space-between">
             <Flex
               direction="column"
@@ -36,11 +36,11 @@
               align-items="flex-start"
             >
               <div class="quote-user-title">{{ $t("responsible") }}:</div>
-              <div class="text2">
+              <div class="typo-text2">
                 {{ responsible?.firstname || "" }}
                 {{ responsible?.lastname || "" }}
               </div>
-              <div class="text2">
+              <div class="typo-text2">
                 {{ responsible?.email || "" }}
               </div>
             </Flex>
@@ -51,11 +51,11 @@
             >
               <div>
                 <div class="quote-user-title">{{ $t("customer") }}:</div>
-                <div class="text2">
+                <div class="typo-text2">
                   {{ quote.client?.firstname }}
                   {{ quote.client?.lastname }}
                 </div>
-                <div class="text2">
+                <div class="typo-text2">
                   {{ quote.client?.address }}
                 </div>
               </div>
@@ -67,34 +67,34 @@
               <Card>
                 <Grid :gap="1" :columns="4">
                   <Grid :gap="1" :columns="1">
-                    <div class="text">{{ $t("description") }}:</div>
-                    <div class="text2" v-html="line.description"></div>
+                    <div class="typo-text">{{ $t("description") }}:</div>
+                    <div class="typo-text2" v-html="line.description"></div>
                   </Grid>
                   <Grid v-if="line.qty" :gap="1" :columns="1">
-                    <div class="text">{{ $t("quantity") }}:</div>
-                    <div class="text2">{{ line.qty }}</div>
+                    <div class="typo-text">{{ $t("quantity") }}:</div>
+                    <div class="typo-text2">{{ line.qty }}</div>
                   </Grid>
                   <Grid v-if="line.unit_price" :gap="1" :columns="1">
-                    <div class="text">{{ $t("unit-price") }}:</div>
-                    <div class="text2">
+                    <div class="typo-text">{{ $t("unit-price") }}:</div>
+                    <div class="typo-text2">
                       {{ $utils.formatPrice(line.unit_price!) }}
                     </div>
                   </Grid>
                   <Grid v-if="line.vat" :gap="1" :columns="1">
-                    <div class="text">{{ $t("vat") }}:</div>
-                    <div class="text2">{{ line.vat.rate }}%</div>
+                    <div class="typo-text">{{ $t("vat") }}:</div>
+                    <div class="typo-text2">{{ line.vat.rate }}%</div>
                   </Grid>
                 </Grid>
               </Card>
             </div>
           </Grid>
           <Grid v-if="quote.modalities" :gap="1" :columns="1">
-            <div class="text">{{ $t("modalities") }}:</div>
-            <div class="text2" v-html="quote.modalities"></div>
+            <div class="typo-text">{{ $t("modalities") }}:</div>
+            <div class="typo-text2" v-html="quote.modalities"></div>
           </Grid>
           <Grid v-if="quote.footer" :gap="1" :columns="1">
-            <div class="text">{{ $t("footer") }}:</div>
-            <div class="text2" v-html="quote.footer"></div>
+            <div class="typo-text">{{ $t("footer") }}:</div>
+            <div class="typo-text2" v-html="quote.footer"></div>
           </Grid>
         </Grid>
       </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="reservation-form">
-    <div class="title">
+    <div class="typo-title">
       {{
         isNewReseravation
           ? $t("pages.edit-reservation.new-reservation")
@@ -27,7 +27,7 @@
       <template #default="{ hasError, hasChanged }">
         <Grid :pb="14" :gap="1" :columns="1">
           <Card class="reservation-form-client">
-            <Grid class="text" :pb="2">
+            <Grid class="typo-text" :pb="2">
               {{
                 isSelectExistingClient
                   ? $t("pages.edit-reservation.select-existing-client")
@@ -283,7 +283,7 @@ async function handleSubmit(data: any) {
   .reservation-btn-back {
     padding: 0;
   }
-  .title {
+  .typo-title {
     margin-bottom: spacing(1) !important;
   }
   .reservation-form-content {

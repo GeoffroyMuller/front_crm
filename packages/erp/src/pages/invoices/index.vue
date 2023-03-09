@@ -41,7 +41,7 @@
       <template #head>
         <Flex align-items="center" justify-content="space-between">
           <Media up="md">
-            <div class="title">
+            <div class="typo-title">
               {{ $t("invoices") }}
             </div>
           </Media>

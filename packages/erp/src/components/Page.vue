@@ -1,6 +1,6 @@
 <template>
   <div class="page-menu">
-    <div class="title">
+    <div class="typo-title">
       {{ title }}
     </div>
     <div class="buttons">

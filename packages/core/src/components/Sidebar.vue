@@ -16,7 +16,7 @@
           size="xl"
         />
         <div class="content" :class="{ padding }">
-          <div v-if="title" class="title">
+          <div v-if="title" class="typo-title">
             {{ title }}
           </div>
           <slot />
@@ -59,7 +59,7 @@ function onClickOutside(event: PointerEvent) {
       &.padding {
         padding: spacing(2);
       }
-      .title {
+      .typo-title {
         margin-bottom: spacing(3);
       }
     }
@@ -98,7 +98,7 @@ function onClickOutside(event: PointerEvent) {
       opacity: 1;
     }
   }
-  .title {
+  .typo-title {
     margin-bottom: spacing(2);
   }
 }

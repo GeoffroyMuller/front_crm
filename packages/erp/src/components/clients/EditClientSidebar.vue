@@ -6,7 +6,7 @@
       @submit="handleSubmit"
     >
       <template #default="{ hasError }">
-        <div class="title">
+        <div class="typo-title">
           {{ isAddAction ? $t("new-customer") : $t("customer") }}
         </div>
         <TextField name="firstname" :label="$t('firstname')" />
@@ -29,7 +29,7 @@
         />
         <Card v-if="isAddCompanyOpen">
           <div class="add-company-card">
-            <div class="subtitle">{{ $t("new-company") }}</div>
+            <div class="typo-subtitle">{{ $t("new-company") }}</div>
             <TextField :label="$t('new-company-name')" v-model="companyName" />
             <div class="add-company-card-actions">
               <Button
@@ -162,7 +162,7 @@ async function handleSubmit(data: any) {
   gap: spacing(1);
 
   max-width: $sidebar-width;
-  .title {
+  .typo-title {
     margin-bottom: spacing(2);
   }
   .add-company-card {

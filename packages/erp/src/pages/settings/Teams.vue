@@ -33,7 +33,7 @@
     <Form :initial-value="userSelected" @submit="handleSubmit">
       <template #default="{ hasError }">
         <Grid :p="2" :gap="3">
-          <div class="title">
+          <div class="typo-title">
             {{
               isAddAction
                 ? $t("settings-page.teams.new-user")

@@ -13,7 +13,7 @@
         @submit="save"
       />
       <Grid :gap="1" v-if="!isAddAction">
-        <div class="text2">{{ $t("customers") }}</div>
+        <div class="typo-text2">{{ $t("customers") }}</div>
         <MagicDataTable
           :store="clientStore"
           @row-click="

@@ -9,11 +9,11 @@
         title?.length || subtitle?.length || $slots.title || $slots.subtitle
       "
     >
-      <div v-if="title?.length || $slots.title" class="title">
+      <div v-if="title?.length || $slots.title" class="typo-title">
         {{ title }}
         <slot name="title" />
       </div>
-      <div v-if="subtitle?.length || $slots.subtitle" class="subtitle">
+      <div v-if="subtitle?.length || $slots.subtitle" class="typo-subtitle">
         {{ subtitle }}
         <slot name="subtitle" />
       </div>

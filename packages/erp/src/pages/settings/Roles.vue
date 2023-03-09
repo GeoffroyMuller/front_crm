@@ -24,7 +24,7 @@
     <Form :initial-value="roleSelected" @submit="handleSubmit">
       <template #default="{ hasError, value }">
         <Grid :p="2" :gap="3">
-          <div class="title">
+          <div class="typo-title">
             {{
               isAddAction
                 ? $t("settings-page.role.new-role")
@@ -35,7 +35,7 @@
             <TextField name="name" :label="$t('settings-page.role.rolename')">
             </TextField>
             <Grid :mb="1" :mt="1">
-              <div class="subtitle">
+              <div class="typo-subtitle">
                 {{ $t("settings-page.role.rights") }}
               </div>
             </Grid>

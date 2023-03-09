@@ -10,7 +10,7 @@
       @submit="handleSubmit"
     >
       <template #default="{ hasError, value }">
-        <div class="title">
+        <div class="typo-title">
           {{ isAddAction ? $t("events.new-event") : $t("events.event") }}
         </div>
         <TextField
@@ -176,7 +176,7 @@ async function handleSubmit(data: any) {
   display: flex;
   flex-direction: column;
   gap: spacing(1);
-  .title {
+  .typo-title {
     margin-bottom: spacing(2);
   }
   .actions {

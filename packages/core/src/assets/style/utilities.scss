@@ -2,7 +2,7 @@
 @use "./_mixins.scss";
 
 @each $key, $value in $typos {
-    .#{$key} {
+    .typo-#{$key} {
         @include typo($key);
     } 
 }

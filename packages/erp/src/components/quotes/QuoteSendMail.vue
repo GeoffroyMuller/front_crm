@@ -6,7 +6,7 @@
       :initial-value="formInitialData"
     >
       <template #default="{ hasError }">
-        <div class="title">
+        <div class="typo-title">
           {{ $t("send_by_mail") }}
         </div>
         <div class="quote_send_mail_content">

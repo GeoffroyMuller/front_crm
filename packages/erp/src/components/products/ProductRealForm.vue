@@ -1,7 +1,7 @@
 <template>
   <Form shortcuts :initial-value="productRealInternal" @submit="handleSubmit">
     <template #default="{ hasError, hasChanged }">
-      <div class="title">
+      <div class="typo-title">
         {{
           productRealInternal?.id
             ? $t("pages.edit-product.edit-product-real")
@@ -187,7 +187,7 @@ async function handleSubmit(data: any) {
   display: flex;
   flex-direction: column;
   gap: spacing(1);
-  .title {
+  .typo-title {
     margin-bottom: spacing(2);
   }
   .real-fields {

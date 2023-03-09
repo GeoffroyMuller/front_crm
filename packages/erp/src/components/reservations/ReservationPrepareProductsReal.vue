@@ -1,6 +1,6 @@
 <template>
   <div class="reservation-prepare-products-real">
-    <div class="title">
+    <div class="typo-title">
       {{ $t("pages.edit-reservation.prepare-the-products") }}
     </div>
     <div class="reservation-btn-back">
@@ -125,7 +125,7 @@ function handleSubmit(data: any) {
 <style lang="scss">
 .reservation-prepare-products-real {
   padding: spacing(2);
-  .title {
+  .typo-title {
     margin-bottom: spacing(1) !important;
   }
   .reservation-btn-back {
