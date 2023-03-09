@@ -18,7 +18,7 @@
           <div class="mobile-nav-items">
             <Tree :list="menu" class="tree-menu" default-open>
               <template #item-rollable="{ data, isOpen }">
-                <div class="tree-items">
+                <div class="tree-items" tabindex="0">
                   <Icon
                     name="arrow_right"
                     class="icons-arrow"
@@ -31,6 +31,8 @@
               <template #item="{ data }">
                 <div
                   class="tree-items"
+                  tabindex="0"
+                  @keyup.enter="$router.push(data.path)"
                   @click="
                     mobileNavOpen = false;
                     $router.push(data.path);
@@ -63,6 +65,7 @@
         <template #item-rollable="{ data, isOpen }">
           <div
             class="tree-items"
+            tabindex="0"
             :class="{ selected: isItemSelected(data) }"
             v-if="!isNavMini"
           >
@@ -76,6 +79,7 @@
           </div>
           <div
             class="tree-items"
+            tabindex="0"
             :class="{ selected: isItemSelected(data) }"
             v-else
             @click="($e) => iconMiniClick($e, isOpen, data)"
@@ -86,6 +90,8 @@
         <template #item="{ data }">
           <div
             class="tree-items"
+            tabindex="0"
+            @keyup.enter="$router.push(data.path)"
             :class="{ selected: isItemSelected(data) }"
             @click="$router.push(data.path)"
           >
@@ -99,6 +105,8 @@
         class="settings"
         :class="{ selected: isItemSelected({ path: '/settings' }) }"
         @click="$router.push('/settings')"
+        tabindex="0"
+        @keyup.enter="$router.push('/settings')"
       >
         <Icon name="settings" color="black" />
         <div v-if="!isNavMini">{{ $t("settings") }}</div>

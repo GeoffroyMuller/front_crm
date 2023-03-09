@@ -2,6 +2,8 @@
   <div class="tabs" ref="tabRef">
     <div
       v-for="tab of tabs"
+      tabindex="0"
+      @keyup.enter="handleClickTab(tab)"
       :key="tab.id"
       class="tab"
       :class="{ selected: tab.id == currentTab }"

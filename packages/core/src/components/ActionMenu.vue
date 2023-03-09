@@ -10,6 +10,8 @@
           v-for="action in actions"
           :key="action.title"
           @click="handleAction(action)"
+          tabindex="0"
+          @keyup.enter="handleAction(action)"
         >
           <Icon :name="(action.icon as IconName)"></Icon>
           {{ $t(action.title) }}

@@ -3,8 +3,13 @@
     <label>
       {{ label }}
     </label>
-    <div class="checkbox">
-      <input class="mousetrap" type="checkbox" :checked="!!modelValue" />
+    <div class="checkbox" tabindex="0" @keyup.enter="handleSwitch">
+      <input
+        class="mousetrap"
+        tabindex="-1"
+        type="checkbox"
+        :checked="!!internalValue"
+      />
       <span class="checkmark"></span>
     </div>
     <!-- <div
@@ -70,8 +75,6 @@ function handleSwitch() {
       position: absolute;
       opacity: 0;
       cursor: pointer;
-      height: 0;
-      width: 0;
     }
     .checkmark {
       border-radius: map-deep-get($rounded, "sm");
