@@ -168,7 +168,7 @@ const maskOptions = computed<MaskOptions | null>(() => {
     margin: 1px;
     display: grid;
     place-items: center;
-    padding-right: spacing(1);
+    margin-right: spacing(1);
     background-color: color("white");
     &.disabled {
       background-color: #f0f0f0;
