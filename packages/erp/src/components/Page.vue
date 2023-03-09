@@ -79,6 +79,7 @@ async function disconnect() {
 .page-content {
   padding: 0 spacing(2);
   padding-bottom: spacing(2);
+  margin-top: spacing(2);
   display: grid;
   gap: spacing(1);
 }
@@ -86,9 +87,12 @@ async function disconnect() {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 spacing(2);
-  padding-top: spacing(4);
-  padding-bottom: spacing(2.5);
+  padding: spacing(3.5) spacing(2);
+  background-color: color("primary", 400);
+
+  .typo-title {
+    color: white;
+  }
   .buttons {
     display: flex;
     justify-content: flex-end;
@@ -96,13 +100,25 @@ async function disconnect() {
     gap: spacing(1.5);
     .auth {
       font-weight: 600;
-      color: color("primary", 500);
+      color: white;
       margin-right: spacing(0.25);
+      &:hover {
+        text-shadow: unset;
+        color: color("primary", 100);
+      }
+    }
+  }
+}
+@include media-down(md) {
+  .page-menu {
+    background-color: unset;
+    .typo-title {
+      color: unset;
     }
   }
 }
 .page-btn-back {
   padding: 0 spacing(2);
-  margin-bottom: spacing(2);
+  margin-top: spacing(2);
 }
 </style>

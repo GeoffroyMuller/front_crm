@@ -374,13 +374,11 @@ $miniNavWidth: 60px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: spacing(4);
-    padding-bottom: spacing(2.5);
+    padding: spacing(3.5) 20px;
+    font-size: 1.3rem;
     & span {
       font-weight: 600;
-      color: color("primary", 700);
+      color: color("primary", 400);
     }
   }
   .nav-items {

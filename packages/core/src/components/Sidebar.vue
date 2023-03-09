@@ -74,8 +74,6 @@ function onClickOutside(event: PointerEvent) {
   transition: max-width 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   z-index: 5;
   width: fit-content;
-  box-shadow: 0 20px 25px -5px color("zinc", 100),
-    0 8px 10px -6px color("zinc", 100);
   border: color("zinc", 100) 1px solid;
   background-color: color("white");
   > * {
