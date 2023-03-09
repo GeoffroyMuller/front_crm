@@ -264,7 +264,7 @@ useKeyboardShortcut("mod+b", (e) => {
 .mobile-nav-items-container {
   display: grid;
   place-items: center;
-  height: 100%;
+  height: 100vh;
   .mobile-nav-items {
     display: flex;
     flex-direction: column;
