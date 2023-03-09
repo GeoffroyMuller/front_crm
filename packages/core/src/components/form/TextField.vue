@@ -195,6 +195,7 @@ const maskOptions = computed<MaskOptions | null>(() => {
       input,
       textarea {
         border-radius: 9999px;
+        padding: 4px 12px;
       }
       .icon-hook {
         border-radius: 9999px;
