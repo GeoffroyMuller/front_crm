@@ -85,17 +85,27 @@ function handleSwitch() {
       }
     }
     &.selected:not(.disabled) {
-      background-color: color("primary", 50);
+      background: color("primary", 50);
       .switch-inner {
         margin-left: calc($width - $dotSize - 2 * $dotMargin);
-        background-color: color("primary", 500);
+        background: color("primary", 500);
+        background: linear-gradient(
+          245deg,
+          color("primary", 500) 0%,
+          color("primary", 400) 100%
+        );
       }
     }
     &.error:not(.disabled) {
       border: solid 1px color("danger", 500);
-      background-color: color("danger", 50);
+      background: color("danger", 50);
       .switch-inner {
-        background-color: color("danger", 500);
+        background: color("danger", 500);
+        background: linear-gradient(
+          245deg,
+          color("danger", 500) 0%,
+          color("danger", 400) 100%
+        );
       }
     }
     .switch-inner {
