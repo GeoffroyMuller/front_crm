@@ -57,7 +57,15 @@ const props = withDefaults(defineProps<IconProps>(), {
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .icon-#{$key} {
-      color: map-deep-get($value, 500);
+      //color: map-deep-get($value, 500);
+      background: linear-gradient(
+        245deg,
+        map-deep-get($value, 500) 0%,
+        map-deep-get($value, 400) 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
   }
 }
