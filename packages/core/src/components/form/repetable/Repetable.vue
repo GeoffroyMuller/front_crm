@@ -66,7 +66,7 @@
               />
             </div>
           </div>
-          <slot :data="section" />
+          <slot :data="section.value" />
         </RepetableSection>
       </template>
 

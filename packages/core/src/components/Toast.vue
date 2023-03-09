@@ -56,7 +56,12 @@ const props = withDefaults(defineProps<ToastProps>(), {});
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .toast-#{$key} {
-      background-color: map-deep-get($value, 50);
+      background: map-deep-get($value, 50);
+      background: linear-gradient(
+        245deg,
+        map-deep-get($value, 50) 0%,
+        darken(map-deep-get($value, 50), 1%) 100%
+      );
       color: map-deep-get($value, 500);
       border: 0.1px solid map-deep-get($value, 400);
     }
