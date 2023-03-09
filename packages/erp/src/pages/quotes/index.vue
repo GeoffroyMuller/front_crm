@@ -78,7 +78,7 @@
         {{ item?.client?.firstname || "" }} {{ item?.client?.lastname || "" }}
       </template>
       <template #content-status="{ item }">
-        <Chip :color="getStatusColor(item.status)">
+        <Chip isOutline :color="getStatusColor(item.status)">
           {{ $t(`data.status.${item.status}`) }}
         </Chip>
       </template>
