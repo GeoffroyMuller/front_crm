@@ -117,6 +117,7 @@ async function disconnect() {
 @include media-down(md) {
   .page-menu {
     background-color: unset;
+    background: unset;
     .typo-title {
       color: unset;
     }
