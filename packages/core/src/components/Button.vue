@@ -186,17 +186,17 @@ const buttonAdditionnalProps = computed(() => {
   @if type-of($value) == "map" {
     .button-outlined-#{$key} {
       color: map-deep-get($value, 500);
-      background-color: transparent;
+      background: transparent;
       border: solid 1px map-deep-get($value, 500);
 
       &:hover:not(:disabled) {
         color: color("white");
-        background-color: map-deep-get($value, 500);
+        background: map-deep-get($value, 500);
       }
 
       &:disabled {
         color: map-deep-get($value, 300);
-        background-color: transparent;
+        background: transparent;
         border: solid 1px map-deep-get($value, 300);
       }
     }
