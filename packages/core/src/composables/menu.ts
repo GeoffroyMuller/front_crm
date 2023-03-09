@@ -124,6 +124,32 @@ export default function useMenu(props: MenuProps) {
     };
   }
 
+  function _setStyleProperties({
+    p,
+    pt,
+    pb,
+    pl,
+    pr,
+    m,
+    mt,
+    mb,
+    ml,
+    mr,
+  }: {
+    [key: string]: number | undefined;
+  }) {
+    container.value.style.setProperty("--mt", `${mt || m || 0}`);
+    container.value.style.setProperty("--mb", `${mb || m || 0}`);
+    container.value.style.setProperty("--ml", `${ml || m || 0}`);
+    container.value.style.setProperty("--mr", `${mr || m || 0}`);
+    container.value.style.setProperty("--pt", `${pt || p || 0}`);
+    container.value.style.setProperty("--pb", `${pb || p || 0}`);
+    container.value.style.setProperty("--pl", `${pl || p || 0}`);
+    container.value.style.setProperty("--pr", `${pr || p || 0}`);
+    container.value.style.setProperty("--p", `${p || 0}`);
+    container.value.style.setProperty("--m", `${m || 0}`);
+  }
+
   function _setStyle() {
     const dimensions = {
       container: _getDimensions(container.value as HTMLElement),
@@ -165,8 +191,10 @@ export default function useMenu(props: MenuProps) {
             dimensions.container.height >=
           pageHeight
         ) {
+          _setStyleProperties({ mb: props.gap });
           coord.top = dimensions.activator.top - dimensions.activator.height;
         } else {
+          _setStyleProperties({ mt: props.gap });
           coord.top = dimensions.activator.top + dimensions.activator.height;
         }
         if (
@@ -185,6 +213,7 @@ export default function useMenu(props: MenuProps) {
       default:
         break;
     }
+
     Object.assign(container.value.style, {
       top: coord.top + "px",
       left: coord.left + "px",
@@ -199,6 +228,7 @@ export default function useMenu(props: MenuProps) {
   }
 
   function init() {
+    container.value.classList.add("layout-component");
     container.value.style.position = "absolute";
     container.value.style.zIndex = "6";
     if (!props.container) {
