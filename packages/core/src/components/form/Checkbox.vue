@@ -80,12 +80,17 @@ function handleSwitch() {
       left: 0;
       height: $size;
       width: $size;
-      background-color: color("white");
+      background: color("white");
       border: 1px solid #d1d5db;
     }
     /* When the checkbox is checked, add a blue background */
     input:checked ~ .checkmark {
-      background-color: color("primary", 500);
+      background: color("primary", 500);
+      background: linear-gradient(
+        245deg,
+        color("primary", 500) 0%,
+        color("primary", 400) 100%
+      );
     }
 
     /* Create the checkmark/indicator (hidden when not checked) */
