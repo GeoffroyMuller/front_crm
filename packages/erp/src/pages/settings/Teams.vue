@@ -19,10 +19,11 @@
       </Button>
     </template>
     <template #actions="{ item }">
-      <Button
+      <IconButton
         @click.stop="deleteUser(item)"
         color="danger"
-        icon="delete"
+        name="delete"
+        default-colored
         v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
         variant="outlined"
       />
@@ -73,6 +74,7 @@
 
 <script setup lang="ts">
 import Button from "core/src/components/Button.vue";
+import IconButton from "core/src/components/IconButton.vue";
 import Form from "core/src/components/form/Form.vue";
 import TextField from "core/src/components/form/TextField.vue";
 import Flex from "core/src/components/layouts/Flex.vue";

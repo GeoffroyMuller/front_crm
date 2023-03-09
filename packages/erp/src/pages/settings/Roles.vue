@@ -10,12 +10,12 @@
       </Button>
     </template>
     <template #actions="{ item }">
-      <Button
+      <IconButton
         @click.stop="deleteRole(item)"
         color="danger"
-        icon="delete"
+        default-colored
+        name="delete"
         v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
-        variant="outlined"
       />
     </template>
   </MagicDataTable>
@@ -80,6 +80,7 @@ import type { ID } from "core/src/types";
 import { xor } from "lodash";
 import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import IconButton from "core/src/components/IconButton.vue";
 
 const emit = defineEmits(["add", "update"]);
 

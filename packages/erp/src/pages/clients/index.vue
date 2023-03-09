@@ -19,10 +19,11 @@
           ]"
         >
           <template #actions="{ item }">
-            <Button
+            <IconButton
               @click.stop="deleteCompany(item)"
               color="danger"
-              icon="delete"
+              default-colored
+              name="delete"
               v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
               variant="outlined"
             />
@@ -78,10 +79,11 @@
             </div>
           </template>
           <template #actions="{ item }">
-            <Button
+            <IconButton
               @click.stop="deleteClient(item)"
               color="danger"
-              icon="delete"
+              default-colored
+              name="delete"
               v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
               variant="outlined"
             />
@@ -113,6 +115,7 @@ import useCompaniesStore from "@/stores/companies";
 import useUI from "core/src/composables/ui";
 import type { Company } from "@/types/company";
 import { useI18n } from "vue-i18n";
+import IconButton from "core/src/components/IconButton.vue";
 
 const selected = ref<Array<Client>>([]);
 const isSidebarOpen = ref(false);
