@@ -30,6 +30,7 @@ const filterBarProps = computed<MagicFilterBarProps<Invoice>>(() => {
       xs: 2,
       xl: 4,
     },
+    mapSearch: "$contains.name",
     map: {
       name: "$contains.name",
       customer: "$eq.idClient",

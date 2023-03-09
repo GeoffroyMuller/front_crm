@@ -1,8 +1,9 @@
 <template>
   <Page :title="$t('products')">
     <MagicFilterBar
-      :map="{ name: '$contains.name' }"
-      :filters="[{ type: 'string', props: { label: 'name', name: 'name' } }]"
+      mapSearch="$contains.name"
+      :filters="[]"
+      :map="{}"
       :store="productsStore"
     />
     <MagicDataTable
