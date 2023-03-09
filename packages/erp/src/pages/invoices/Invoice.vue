@@ -6,49 +6,43 @@
   >
     <Grid :gap="1">
       <Card :withPadding="false" action-on-top>
-        <template #actions>
-          <div class="quote-actions">
-            <Button
-              variant="text"
-              @click="$router.push(`/invoices/${id}/edit`)"
-              icon="edit"
-            >
-              {{ $t("edit") }}
-            </Button>
-            <Button
-              variant="text"
-              @click="setArchived"
-              icon="archive"
-              color="danger"
-            >
-              {{ $t("archive") }}
-            </Button>
-            <Button
-              variant="text"
-              @click="downloadPdf"
-              icon="download"
-              color="black"
-            >
-              {{ $t("download") }}
-            </Button>
-            <Button
-              variant="text"
-              @click="sendMail"
-              icon="mail"
-              color="success"
-            >
-              {{ $t("send_by_mail") }}
-            </Button>
-            <Button
-              variant="text"
-              @click.stop="preview"
-              icon="preview"
-              color="black"
-            >
-              {{ $t("preview") }}
-            </Button>
-          </div>
-        </template>
+        <div class="quote-actions">
+          <Button
+            variant="text"
+            @click="$router.push(`/invoices/${id}/edit`)"
+            icon="edit"
+          >
+            {{ $t("edit") }}
+          </Button>
+          <Button
+            variant="text"
+            @click="setArchived"
+            icon="archive"
+            color="danger"
+          >
+            {{ $t("archive") }}
+          </Button>
+          <Button
+            variant="text"
+            @click="downloadPdf"
+            icon="download"
+            color="black"
+          >
+            {{ $t("download") }}
+          </Button>
+          <Button variant="text" @click="sendMail" icon="mail" color="success">
+            {{ $t("send_by_mail") }}
+          </Button>
+          <Button
+            variant="text"
+            @click.stop="preview"
+            icon="preview"
+            color="black"
+          >
+            {{ $t("preview") }}
+          </Button>
+        </div>
+
         <div class="invoice-content">
           <Grid :gap="5" :columns="1">
             <div class="typo-subtitle">{{ invoice.name }}</div>
@@ -194,6 +188,7 @@ const {
   display: flex;
   align-items: center;
   gap: spacing(1);
+  border-bottom: 1px solid color("zinc", 200);
 }
 .invoice-content {
   padding: spacing(1.5);
