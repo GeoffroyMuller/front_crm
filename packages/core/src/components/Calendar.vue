@@ -227,7 +227,12 @@ $borderRadius: map-deep-get($rounded, "md");
       border-radius: map-deep-get($rounded, "sm");
 
       &.selected {
-        background-color: color("primary", 500);
+        background: color("primary", 500);
+        background: linear-gradient(
+          245deg,
+          color("primary", 500) 0%,
+          color("primary", 400) 100%
+        );
         color: white;
       }
     }

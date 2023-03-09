@@ -155,6 +155,9 @@ const buttonAdditionnalProps = computed(() => {
   &:hover {
     color: color("black");
   }
+  span {
+    width: max-content;
+  }
   gap: spacing(0.5);
 }
 

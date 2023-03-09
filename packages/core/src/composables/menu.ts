@@ -165,10 +165,12 @@ export default function useMenu(props: MenuProps) {
       case "right":
         coord.top = dimensions.activator.top;
         coord.left = dimensions.activator.left + dimensions.activator.width;
+        _setStyleProperties({ ml: props.gap });
         break;
       case "left":
         coord.top = dimensions.activator.top;
         coord.left = dimensions.activator.left - dimensions.container.width;
+        _setStyleProperties({ mr: props.gap });
         break;
       case "top":
         coord.top = dimensions.activator.top - dimensions.activator.height;

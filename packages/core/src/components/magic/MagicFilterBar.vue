@@ -1,8 +1,30 @@
 <template>
-  <Card :withPadding="false" class="magic-filter-bar">
+  <Flex v-if="!isAdvancedFiltersDisplayed" :gap="1" align-items="end">
+    <SearchBar />
+    <Button
+      v-if="hasAdvancedFilters"
+      variant="text"
+      icon="filter_alt"
+      @click="isAdvancedFiltersDisplayed = true"
+      class="advanced-filters-button"
+    >
+      {{ $t("advanced_filters") }}
+    </Button>
+  </Flex>
+  <Card :withPadding="false" class="magic-filter-bar" v-else>
     <template #title>
-      <Icon name="filter_alt" />
-      {{ $t("filters") }}
+      <Flex justify-content="space-between" align-items="center">
+        <div>
+          <Icon name="filter_alt" />
+          {{ $t("filters") }}
+        </div>
+        <IconButton
+          @click="isAdvancedFiltersDisplayed = false"
+          name="close"
+          class="close-button"
+          size="xl"
+        />
+      </Flex>
     </template>
     <MagicForm
       :columns="columns"
@@ -28,7 +50,7 @@
 <script setup lang="ts">
 import type { APIStore } from "../../factories/store.factory";
 import { debounce, get, set } from "lodash";
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import Card from "../Card.vue";
 import MagicForm from "./MagicForm.vue";
 import type { MagicFormFieldProps } from "./MagicFormField.vue";
@@ -36,6 +58,9 @@ import type { GridColumnsOptions } from "../layouts/types";
 import Icon from "../Icon.vue";
 import Flex from "../layouts/Flex.vue";
 import MagicFormField from "./MagicFormField.vue";
+import SearchBar from "../form/SearchBar.vue";
+import Button from "../Button.vue";
+import IconButton from "../IconButton.vue";
 
 export interface MagicFilterBarProps<T> {
   store: APIStore<T>;
@@ -44,6 +69,12 @@ export interface MagicFilterBarProps<T> {
   gap?: number;
   map: { [key: string]: string | Array<string> };
 }
+
+const isAdvancedFiltersDisplayed = ref(false);
+
+const hasAdvancedFilters = computed(() => {
+  return props.filters.length > 0;
+});
 
 function mapFormFilters() {
   const res = {};
@@ -107,5 +138,8 @@ function handleInputChange({ name, value }: { name: string; value: any }) {
 <style lang="scss">
 .magic-filter-bar {
   padding: spacing(2);
+}
+.advanced-filters-button {
+  margin-bottom: calc($input-min-height / 4);
 }
 </style>
