@@ -71,7 +71,7 @@ watch(
   align-items: center;
   gap: spacing(2);
   user-select: none;
-  margin-bottom: spacing(2);
+  margin-bottom: spacing(1);
   position: relative;
   width: fit-content;
   &::before {
