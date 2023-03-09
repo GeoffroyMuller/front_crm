@@ -85,7 +85,7 @@ export interface InputProps {
   placeholder?: string;
   //hide arrows input number
   appearanceNone?: boolean | null;
-  rounded?: Size;
+  rounded?: Size | "full";
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
@@ -176,6 +176,15 @@ const maskOptions = computed<MaskOptions | null>(() => {
       }
       .icon-hook {
         border-radius: map-get($rounded, $key);
+      }
+    }
+    &.rounded-full {
+      input,
+      textarea {
+        border-radius: 9999px;
+      }
+      .icon-hook {
+        border-radius: 9999px;
       }
     }
   }

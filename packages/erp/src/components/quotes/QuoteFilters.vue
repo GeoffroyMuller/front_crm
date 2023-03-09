@@ -28,6 +28,7 @@ const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
       xs: 2,
       xl: 5,
     },
+    mapSearch: "$contains.name",
     map: {
       name: "$contains.name",
       status: "$in.status",

@@ -1,5 +1,9 @@
 <template>
-  <TextField rounded="lg" v-bind="$props" :label="$props.label || $t('search')">
+  <TextField
+    rounded="full"
+    v-bind="$attrs"
+    :label="$props.label || $t('search')"
+  >
     <template #icon>
       <Icon name="search" color="primary" />
     </template>

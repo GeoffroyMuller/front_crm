@@ -1,6 +1,6 @@
 <template>
   <Flex v-if="!isAdvancedFiltersDisplayed" :gap="1" align-items="end">
-    <SearchBar />
+    <SearchBar v-model="search" class="magic-filters-bar-search" />
     <Button
       v-if="hasAdvancedFilters"
       variant="text"
@@ -68,8 +68,10 @@ export interface MagicFilterBarProps<T> {
   columns?: GridColumnsOptions;
   gap?: number;
   map: { [key: string]: string | Array<string> };
+  mapSearch?: string | Array<string>;
 }
 
+const search = ref("");
 const isAdvancedFiltersDisplayed = ref(false);
 
 const hasAdvancedFilters = computed(() => {
@@ -92,6 +94,17 @@ function mapFormFilters() {
         // @ts-ignore
         set(res, storeKeys, value);
       }
+    }
+  }
+  if (props.mapSearch != null) {
+    const searchValue = search.value;
+    if (!search.value.length) return;
+    if (Array.isArray(props.mapSearch)) {
+      props.mapSearch.forEach((sk) => {
+        set(res, sk, searchValue);
+      });
+    } else {
+      set(res, props.mapSearch, searchValue);
     }
   }
   return res;
@@ -120,7 +133,7 @@ const filtersValues = ref<any>(mapFiltersFromStore());
 
 let controller = new AbortController();
 watch(
-  () => filtersValues.value,
+  () => (filtersValues.value, search.value),
   debounce(() => {
     controller.abort();
     controller = new AbortController();
@@ -141,5 +154,8 @@ function handleInputChange({ name, value }: { name: string; value: any }) {
 }
 .advanced-filters-button {
   margin-bottom: calc($input-min-height / 4);
+}
+.magic-filters-bar-search {
+  max-width: 800px;
 }
 </style>
