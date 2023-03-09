@@ -1,11 +1,11 @@
 <template>
-  <div class="tabs">
+  <div class="tabs" ref="tabRef">
     <div
       v-for="tab of tabs"
       :key="tab.id"
       class="tab"
       :class="{ selected: tab.id == currentTab }"
-      @click="currentTab = tab.id"
+      @click="handleClickTab(tab)"
     >
       {{ tab.title }}
     </div>
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { nextTick, ref, watch } from "vue";
 import { isEqual } from "lodash";
 
 export interface Tab {
@@ -29,15 +29,39 @@ interface TabsProps {
 
 const props = withDefaults(defineProps<TabsProps>(), {});
 
-const currentTab = ref(props.tabs?.[0]?.id);
+const tabRef = ref<HTMLElement>();
+const currentTab = ref();
+
+function handleClickTab(tab: Tab) {
+  currentTab.value = tab.id;
+  nextTick(() => {
+    if (!tabRef.value) return;
+    const selected = tabRef.value.querySelector(".selected");
+    if (!selected) return;
+    const selectedBounds = selected.getBoundingClientRect();
+    const selectedLeft = selectedBounds.left;
+    const tabsLeft = tabRef.value.getBoundingClientRect().left;
+    if (tabsLeft && selectedLeft) {
+      tabRef.value.style.setProperty(
+        "--tab-indicator-left",
+        `${selectedLeft - tabsLeft}px`
+      );
+      tabRef.value.style.setProperty(
+        "--tab-indicator-width",
+        `${selectedBounds.width}px`
+      );
+    }
+  });
+}
 
 watch(
   () => props.tabs,
   (val, oldVal) => {
     if (!isEqual(val, oldVal)) {
-      currentTab.value = val?.[0]?.id;
+      handleClickTab(val?.[0]);
     }
-  }
+  },
+  { immediate: true }
 );
 </script>
 
@@ -48,30 +72,33 @@ watch(
   gap: spacing(2);
   user-select: none;
   margin-bottom: spacing(2);
+  position: relative;
+  width: fit-content;
+  &::before {
+    content: " ";
+    width: var(--tab-indicator-width, 0);
+    transform: scale(1);
+    height: 1.5px;
+    position: absolute;
+    bottom: 0;
+    background-color: color("primary", 500);
+    left: var(--tab-indicator-left, 0);
+    transition: width 0.25s ease-in-out, left 0.25s ease-in-out;
+    border-radius: 1px;
+  }
   .tab {
+    @include typo(text);
+    font-weight: bold;
     border-radius: map-deep-get($rounded, "sm");
     padding-bottom: spacing(1);
     text-align: center;
     position: relative;
     cursor: pointer;
-    &::before {
-      content: " ";
-      width: 100%;
-      transform: scale(0);
-      height: 1px;
-      position: absolute;
-      bottom: 0;
-      background-color: color("primary", 400);
-      box-shadow: 0 0 5pt 0.1pt color("primary", 200);
-      left: 0;
-      transition: transform 0.25s ease-in-out;
-      border-radius: 1px;
+    &:hover:not(.selected) {
+      opacity: 0.8;
     }
-    &.selected,
-    &:hover {
-      &::before {
-        transform: scale(1);
-      }
+    &.selected {
+      color: color("primary", 500);
     }
   }
 }
