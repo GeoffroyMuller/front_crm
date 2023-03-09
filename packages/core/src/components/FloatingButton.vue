@@ -58,11 +58,21 @@ const props = withDefaults(defineProps<FloatingButtonProps>(), {
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .float-button-#{$key} {
-      background-color: color($key, 500);
+      background: color($key, 500);
+      background: linear-gradient(
+        245deg,
+        map-deep-get($value, 500) 0%,
+        map-deep-get($value, 400) 100%
+      );
       color: white;
 
       &:hover:not(:disabled) {
         background-color: map-deep-get($value, 600);
+        background: linear-gradient(
+          245deg,
+          map-deep-get($value, 600) 0%,
+          map-deep-get($value, 500) 100%
+        );
       }
 
       &:disabled {
