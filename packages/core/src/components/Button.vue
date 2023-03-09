@@ -122,15 +122,25 @@ const buttonAdditionnalProps = computed(() => {
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .button-#{$key} {
-      background-color: map-deep-get($value, 500);
+      background: map-deep-get($value, 500);
+      background: linear-gradient(
+        245deg,
+        map-deep-get($value, 500) 0%,
+        map-deep-get($value, 400) 100%
+      );
       color: white;
 
       &:hover:not(:disabled) {
-        background-color: map-deep-get($value, 600);
+        background: map-deep-get($value, 600);
+        background: linear-gradient(
+          245deg,
+          map-deep-get($value, 600) 0%,
+          map-deep-get($value, 500) 100%
+        );
       }
 
       &:disabled {
-        background-color: map-deep-get($value, 200);
+        background: map-deep-get($value, 200);
       }
     }
   }
@@ -176,17 +186,17 @@ const buttonAdditionnalProps = computed(() => {
   @if type-of($value) == "map" {
     .button-outlined-#{$key} {
       color: map-deep-get($value, 500);
-      background-color: transparent;
+      background: transparent;
       border: solid 1px map-deep-get($value, 500);
 
       &:hover:not(:disabled) {
         color: color("white");
-        background-color: map-deep-get($value, 500);
+        background: map-deep-get($value, 500);
       }
 
       &:disabled {
         color: map-deep-get($value, 300);
-        background-color: transparent;
+        background: transparent;
         border: solid 1px map-deep-get($value, 300);
       }
     }

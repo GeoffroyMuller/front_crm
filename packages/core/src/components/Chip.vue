@@ -53,8 +53,13 @@ const props = withDefaults(defineProps<ChipProps>(), {
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .chip-#{$key} {
-      background-color: color($key, 500);
-      color: white;
+      background: color($key, 500);
+      color: color("white");
+      background: linear-gradient(
+        245deg,
+        color($key, 500) 0%,
+        color($key, 400) 100%
+      );
     }
     .chip-outline-#{$key} {
       border: 1px solid color($key, 500);
@@ -63,8 +68,8 @@ const props = withDefaults(defineProps<ChipProps>(), {
     }
   } @else {
     .chip-#{$key} {
-      background-color: rgba(0, 0, 0, 0.08);
-      color: white;
+      background-color: rgba(0, 0, 0, 0.25);
+      color: color("white");
     }
     .chip-outline-#{$key} {
       border: 1px solid rgba(0, 0, 0, 0.25);

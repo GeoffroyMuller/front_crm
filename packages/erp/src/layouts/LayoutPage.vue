@@ -264,7 +264,7 @@ useKeyboardShortcut("mod+b", (e) => {
 .mobile-nav-items-container {
   display: grid;
   place-items: center;
-  height: 100%;
+  height: 100vh;
   .mobile-nav-items {
     display: flex;
     flex-direction: column;
@@ -431,19 +431,11 @@ $miniNavWidth: 60px;
     @include typo(text);
     transition: all 0.3s;
     &.selected {
-      color: color("primary", 700);
-
-      svg {
-        fill: color("primary", 700);
-      }
+      color: color("primary", 500);
     }
     &:hover {
-      background-color: color("primary", 100);
-      color: color("primary", 700);
-
-      svg {
-        fill: color("primary", 700);
-      }
+      background-color: color("primary", 50);
+      color: color("primary", 500);
     }
     .icons-arrow {
       transition: all 0.2s;
