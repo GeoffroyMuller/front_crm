@@ -48,12 +48,14 @@ $google-btn-bg-hover: #f9f8f8;
 $google-btn-color: #636363;
 $google-btn-border-color: #cfcbcb;
 $google-btn-height: 40px;
+$google-btn-box-shadow:none;
 
 .google-login-btn {
   background-color: $google-btn-bg !important;
   border: solid 1px $google-btn-border-color !important;
   color: $google-btn-color !important;
   min-height: $google-btn-height !important;
+  box-shadow: $google-btn-box-shadow !important;
   width: 100%;
   svg {
     width: 20px;

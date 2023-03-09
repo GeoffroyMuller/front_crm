@@ -13,10 +13,12 @@
     :disabled="disabled || loading"
     v-bind="buttonAdditionnalProps"
   >
-    <div class="content">
-      <Icon :name="icon" v-if="icon" />
-      <span v-if="$slots.default"> <slot /></span>
-    </div>
+    <Icon
+      :name="icon"
+      v-if="icon"
+      :class="{ 'content-icon': !!$slots.default }"
+    />
+    <span v-if="$slots.default"> <slot /></span>
 
     <Spinner
       size="sm"
@@ -84,24 +86,18 @@ const buttonAdditionnalProps = computed(() => {
     box-shadow: 0px 0.3px 0.9px rgba(0, 0, 0, 0.32),
       0px 1.6px 3.6px rgba(0, 0, 0, 0.28);
   }
-  &:not(.button-text) .icon {
+  &:not(.button-text) .content-icon {
     margin-left: spacing(-0.75);
   }
-  .content {
-    display: flex;
-    align-items: center;
-    gap: spacing(1);
-  }
+  display: flex;
+  align-items: center;
+  gap: spacing(1);
   &.align-end {
-    .content {
-      align-items: flex-end;
-    }
+    align-items: flex-end;
   }
 
   &.align-start {
-    .content {
-      align-items: flex-start;
-    }
+    align-items: flex-start;
   }
 
   gap: spacing(1);
@@ -149,9 +145,7 @@ const buttonAdditionnalProps = computed(() => {
   &:hover {
     color: color("black");
   }
-  .content {
-    gap: spacing(0.5);
-  }
+  gap: spacing(0.5);
 }
 
 @each $key, $value in $colors {
@@ -176,9 +170,6 @@ const buttonAdditionnalProps = computed(() => {
   position: relative;
   color: #6b7280;
   border: solid 1px #6b7280;
-  .content {
-    gap: spacing(0.5);
-  }
 }
 
 @each $key, $value in $colors {

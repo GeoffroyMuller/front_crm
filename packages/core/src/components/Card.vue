@@ -47,7 +47,7 @@ const props = withDefaults(defineProps<CardProps>(), {
   overflow: hidden;
   background-color: color("white");
   color: color("black");
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.07);
   .card-head {
     margin-bottom: spacing(3.5);
   }
