@@ -337,7 +337,7 @@ $miniNavWidth: 60px;
   align-items: center;
   background-color: color("white");
   color: color("black");
-  box-shadow: 2px 2px 0px 0px color("zinc", 100);
+  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15);
   width: $navWidth;
   height: 100vh;
   position: fixed;
