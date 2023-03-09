@@ -48,7 +48,7 @@ $google-btn-bg-hover: #f9f8f8;
 $google-btn-color: #636363;
 $google-btn-border-color: #cfcbcb;
 $google-btn-height: 40px;
-$google-btn-box-shadow:none;
+$google-btn-box-shadow: none;
 
 .google-login-btn {
   background: $google-btn-bg !important;
