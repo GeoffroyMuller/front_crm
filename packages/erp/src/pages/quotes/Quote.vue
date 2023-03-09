@@ -4,28 +4,45 @@
     back
     :loading="!quote"
   >
-    <Card :withPadding="false">
-      <Flex class="quote-actions" :gap="1">
-        <Button
-          variant="text"
-          @click="$router.push(`/quotes/${id}/edit`)"
-          icon="edit"
-        >
-          {{ $t("edit") }}
-        </Button>
-        <Button variant="text" @click="setArchived" icon="archive">
-          {{ $t("archive") }}
-        </Button>
-        <Button variant="text" @click="downloadPdf" icon="download">
-          {{ $t("download") }}
-        </Button>
-        <Button variant="text" @click="sendMail" icon="mail">
-          {{ $t("send_by_mail") }}
-        </Button>
-        <Button variant="text" @click.stop="preview" icon="preview">
-          {{ $t("preview") }}
-        </Button>
-      </Flex>
+    <Card :withPadding="false" action-on-top>
+      <template #actions>
+        <div class="quote-actions">
+          <Button
+            variant="text"
+            @click="$router.push(`/quotes/${id}/edit`)"
+            icon="edit"
+          >
+            {{ $t("edit") }}
+          </Button>
+          <Button
+            variant="text"
+            @click="setArchived"
+            icon="archive"
+            color="danger"
+          >
+            {{ $t("archive") }}
+          </Button>
+          <Button
+            variant="text"
+            @click="downloadPdf"
+            icon="download"
+            color="black"
+          >
+            {{ $t("download") }}
+          </Button>
+          <Button variant="text" @click="sendMail" icon="mail" color="success">
+            {{ $t("send_by_mail") }}
+          </Button>
+          <Button
+            variant="text"
+            @click.stop="preview"
+            icon="preview"
+            color="black"
+          >
+            {{ $t("preview") }}
+          </Button>
+        </div>
+      </template>
       <div class="quote-content">
         <Grid :gap="5" :columns="1">
           <div class="typo-subtitle">{{ quote.name }}</div>
@@ -164,12 +181,13 @@ const {
 
 <style lang="scss" scoped>
 .quote-actions {
-  padding: spacing(0.5) spacing(2);
-  background-color: color("primary", 50);
-  min-height: 37px;
+  padding: spacing(1) spacing(1.5);
+  display: flex;
+  align-items: center;
+  gap: spacing(1);
 }
 .quote-content {
-  padding: spacing(2);
+  padding: spacing(1.5);
   .quote-user-title {
     @include typo(text);
     margin-bottom: spacing(1);

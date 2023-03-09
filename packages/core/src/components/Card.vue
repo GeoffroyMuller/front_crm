@@ -1,14 +1,11 @@
 <template>
-  <div
-    class="card"
-    :class="[`card-rd-${rounded}`, { padding: withPadding }, $props.class]"
-  >
-    <div
-      class="card-head"
-      v-if="
-        title?.length || subtitle?.length || $slots.title || $slots.subtitle
-      "
-    >
+  <div class="card" :class="[`card-rd-${rounded}`, { padding: withPadding }, $props.class]">
+    <div class="actions-top" v-if="$slots.actions && actionOnTop">
+      <slot name="actions" />
+    </div>
+    <div class="card-head" v-if="
+      title?.length || subtitle?.length || $slots.title || $slots.subtitle
+    ">
       <div v-if="title?.length || $slots.title" class="typo-title">
         {{ title }}
         <slot name="title" />
@@ -19,7 +16,13 @@
       </div>
     </div>
     <div class="card-content">
+
+
       <slot />
+
+    </div>
+    <div class="actions-bottom" v-if="$slots.actions && !actionOnTop">
+      <slot name="actions" />
     </div>
   </div>
 </template>
@@ -34,6 +37,7 @@ export interface CardProps {
   subtitle?: string;
   withPadding?: boolean;
   class?: string;
+  actionOnTop?: boolean;
 }
 
 const props = withDefaults(defineProps<CardProps>(), {
@@ -48,17 +52,30 @@ const props = withDefaults(defineProps<CardProps>(), {
   background-color: color("white");
   color: color("black");
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.07);
+
   .card-head {
     margin-bottom: spacing(3.5);
   }
+
+
+  .actions-top {
+    border-bottom: 1px solid color("zinc", 200);
+  }
+
+  .actions-bottom {
+    border-top: 1px solid color("zinc", 200);
+  }
 }
+
 .padding {
   padding-left: spacing(2);
   padding-right: spacing(2);
   padding-top: spacing(1.5);
   padding-bottom: spacing(1.5);
 }
-@each $key, $value in $rounded {
+
+@each $key,
+$value in $rounded {
   .card-rd-#{$key} {
     border-radius: map-get($rounded, $key);
   }
