@@ -33,7 +33,7 @@
         </PricePresenter>
       </template>
     </Table>
-    <Flex justify-content="end">
+    <Flex justify-content="end" :mt="1">
       <Button @click.stop="handleAdd" variant="text" color="success">
         {{ $t("add") }}
       </Button>
