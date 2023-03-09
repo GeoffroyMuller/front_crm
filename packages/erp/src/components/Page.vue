@@ -89,6 +89,11 @@ async function disconnect() {
   align-items: center;
   padding: spacing(3.5) spacing(2);
   background-color: color("primary", 400);
+  background: linear-gradient(
+    95deg,
+    darken(color("primary", 400), 1%) 0%,
+    color("primary", 400) 100%
+  );
 
   .typo-title {
     color: white;
