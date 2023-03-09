@@ -74,7 +74,7 @@ function onClickOutside(event: PointerEvent) {
   transition: max-width 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   z-index: 5;
   width: fit-content;
-  border: color("zinc", 100) 1px solid;
+  border: color("zinc", 100) 0px solid;
   background-color: color("white");
   > * {
     height: 100%;
@@ -91,6 +91,7 @@ function onClickOutside(event: PointerEvent) {
     transition: opacity 0.4s linear;
   }
   &.sidebar-open {
+    border-width: 1px;
     max-width: 100%;
     .close-button {
       opacity: 1;
