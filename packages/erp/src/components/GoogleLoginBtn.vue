@@ -51,7 +51,7 @@ $google-btn-height: 40px;
 $google-btn-box-shadow:none;
 
 .google-login-btn {
-  background-color: $google-btn-bg !important;
+  background: $google-btn-bg !important;
   border: solid 1px $google-btn-border-color !important;
   color: $google-btn-color !important;
   min-height: $google-btn-height !important;
@@ -62,7 +62,7 @@ $google-btn-box-shadow:none;
     height: 20px;
   }
   &:hover {
-    background-color: $google-btn-bg-hover !important;
+    background: $google-btn-bg-hover !important;
     color: $google-btn-color !important;
   }
 
