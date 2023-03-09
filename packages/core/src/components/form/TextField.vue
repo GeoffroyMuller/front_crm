@@ -13,22 +13,31 @@
     <div class="input-wrapper">
       <textarea
         v-if="multiline"
+        :placeholder="placeholder"
         @blur="onBlur"
         v-bind="$props"
         ref="internalRef"
         class="mousetrap"
+        :class="{
+          'appearance-none': appearanceNone === true,
+          [inputClass]: true,
+        }"
         v-model="internalValue"
         @focus="onFocus"
         :id="id"
       />
       <input
+        v-if="!multiline"
+        :placeholder="placeholder"
         @blur="onBlur"
         v-bind="$props"
         class="input-class mousetrap"
-        :class="{ 'appearance-none': appearanceNone === true }"
+        :class="{
+          'appearance-none': appearanceNone === true,
+          [inputClass]: true,
+        }"
         ref="internalRef"
         v-model="internalValue"
-        v-if="!multiline"
         @focus="onFocus"
         @input="(e) => onInput(e)"
         :id="id"
@@ -86,11 +95,15 @@ export interface InputProps {
   //hide arrows input number
   appearanceNone?: boolean | null;
   rounded?: Size | "full";
+
+  inputClass?: string;
 }
 
 const props = withDefaults(defineProps<InputProps>(), {
   type: "text",
   rounded: "sm",
+  inputClass: "",
+  placeholder: "",
 });
 const emit = defineEmits([
   "update:modelValue",
@@ -191,6 +204,9 @@ const maskOptions = computed<MaskOptions | null>(() => {
 
   input,
   textarea {
+    &::placeholder {
+      color: lighten(color("slate", 400), 18%);
+    }
     min-height: $input-min-height;
     background-color: color("white");
     display: block;

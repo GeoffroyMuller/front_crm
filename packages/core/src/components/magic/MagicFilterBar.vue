@@ -1,6 +1,10 @@
 <template>
   <Flex v-if="!isAdvancedFiltersDisplayed" :gap="1" align-items="end">
-    <SearchBar v-model="search" class="magic-filters-bar-search" />
+    <SearchBar
+      :placeholder="searchBarPlaceholder"
+      v-model="search"
+      class="magic-filters-bar-search"
+    />
     <Button
       v-if="hasAdvancedFilters"
       variant="text"
@@ -69,6 +73,7 @@ export interface MagicFilterBarProps<T> {
   gap?: number;
   map: { [key: string]: string | Array<string> };
   mapSearch?: string | Array<string>;
+  searchBarPlaceholder?: string;
 }
 
 const search = ref("");
@@ -98,7 +103,7 @@ function mapFormFilters() {
   }
   if (props.mapSearch != null) {
     const searchValue = search.value;
-    if (!search.value.length) return;
+    if (!search.value.length) return res;
     if (Array.isArray(props.mapSearch)) {
       props.mapSearch.forEach((sk) => {
         set(res, sk, searchValue);
@@ -127,7 +132,9 @@ function mapFiltersFromStore() {
   return res;
 }
 
-const props = withDefaults(defineProps<MagicFilterBarProps<any>>(), {});
+const props = withDefaults(defineProps<MagicFilterBarProps<any>>(), {
+  searchBarPlaceholder: "",
+});
 
 const filtersValues = ref<any>(mapFiltersFromStore());
 

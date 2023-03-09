@@ -3,6 +3,8 @@
     rounded="full"
     v-bind="$attrs"
     :label="$props.label || $t('search')"
+    input-class="input-style-card"
+    :placeholder="$props.placeholder || ''"
   >
     <template #icon>
       <Icon name="search" color="primary" />
@@ -41,3 +43,12 @@ export interface SearchBarProps {
 
 const props = defineProps<SearchBarProps>();
 </script>
+
+<style lang="scss">
+.input-style-card {
+  &:not(:focus) {
+    border-color: transparent !important;
+  }
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.07);
+}
+</style>
