@@ -4,7 +4,7 @@
       :store="reservationStore"
       :columns="[
         {
-          title: $t('client'),
+          title: $t('customer'),
           key: 'client',
           sortable: true,
         },
