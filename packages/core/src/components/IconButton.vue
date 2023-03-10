@@ -2,7 +2,7 @@
   <button
     :disabled="disabled"
     class="icon-button"
-    :class="`icon-button-${color}`"
+    :class="`icon-button-${color} ${defaultColored ? 'default-colored' : ''}`"
     type="button"
   >
     <Icon v-bind="iconProps" />
@@ -18,6 +18,7 @@ interface IconButtonProps {
   sharp?: boolean;
   size?: Size;
   disabled?: boolean;
+  defaultColored?: boolean;
 }
 
 const props = withDefaults(defineProps<IconButtonProps>(), {});
@@ -50,8 +51,11 @@ const iconProps = computed(() => {
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .icon-button-#{$key} {
-      &:hover {
+      &.default-colored {
         color: color($key, 500);
+      }
+      &:hover:not(:disabled) {
+        color: color($key, 600);
       }
     }
   } @else {

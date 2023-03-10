@@ -4,8 +4,8 @@
       <div class="typo-title">
         {{ $t("reservation") }}
       </div>
-      <Card :withPadding="false">
-        <Flex class="reservation-actions" :gap="1">
+      <Card :withPadding="false" action-on-top>
+        <div class="reservation-actions" :gap="1">
           <Button
             variant="text"
             @click.stop="$emit('click-edit', reservation)"
@@ -13,7 +13,8 @@
           >
             {{ $t("edit") }}
           </Button>
-        </Flex>
+        </div>
+
         <div class="reservation-content">
           <Grid :gap="5" :columns="{ xs: 1, sm: 2 }">
             <Grid v-if="reservation?.client != null" :gap="1" :columns="1">
@@ -173,6 +174,9 @@ const isPreparable = computed(() => {
 }
 .reservation-actions {
   padding: spacing(0.5) spacing(2);
+  display: flex;
+  align-items: center;
+  gap: spacing(1);
   background-color: color("primary", 50);
 }
 .reservation-content {

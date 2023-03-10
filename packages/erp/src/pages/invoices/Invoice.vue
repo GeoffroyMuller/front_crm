@@ -5,8 +5,8 @@
     :loading="!invoice"
   >
     <Grid :gap="1">
-      <Card :withPadding="false">
-        <Flex class="invoice-actions" :gap="1">
+      <Card :withPadding="false" action-on-top>
+        <div class="quote-actions">
           <Button
             variant="text"
             @click="$router.push(`/invoices/${id}/edit`)"
@@ -14,19 +14,35 @@
           >
             {{ $t("edit") }}
           </Button>
-          <Button variant="text" @click="setArchived" icon="archive">
+          <Button
+            variant="text"
+            @click="setArchived"
+            icon="archive"
+            color="danger"
+          >
             {{ $t("archive") }}
           </Button>
-          <Button variant="text" @click="downloadPdf" icon="download">
+          <Button
+            variant="text"
+            @click="downloadPdf"
+            icon="download"
+            color="black"
+          >
             {{ $t("download") }}
           </Button>
-          <Button variant="text" @click="sendMail" icon="mail">
+          <Button variant="text" @click="sendMail" icon="mail" color="success">
             {{ $t("send_by_mail") }}
           </Button>
-          <Button variant="text" @click.stop="preview" icon="preview">
+          <Button
+            variant="text"
+            @click.stop="preview"
+            icon="preview"
+            color="black"
+          >
             {{ $t("preview") }}
           </Button>
-        </Flex>
+        </div>
+
         <div class="invoice-content">
           <Grid :gap="5" :columns="1">
             <div class="typo-subtitle">{{ invoice.name }}</div>
@@ -167,13 +183,16 @@ const {
 } = useInvoice({ invoice });
 </script>
 <style lang="scss" scoped>
-.invoice-actions {
-  padding: spacing(0.5) spacing(2);
-  background-color: color("primary", 50);
-  min-height: 37px;
+.quote-actions {
+  padding: spacing(1) spacing(1.5);
+  display: flex;
+  align-items: center;
+  gap: spacing(1);
+  border-bottom: 1px solid color("zinc", 200);
 }
 .invoice-content {
-  padding: spacing(2);
+  padding: spacing(1.5);
+
   .invoice-user-title {
     @include typo(text);
     margin-bottom: spacing(1);

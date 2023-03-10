@@ -183,6 +183,11 @@ const buttonAdditionnalProps = computed(() => {
   position: relative;
   color: #6b7280;
   border: solid 1px #6b7280;
+
+  &:hover:not(:disabled) {
+    color: color("white");
+    background: #6b7280;
+  }
 }
 
 @each $key, $value in $colors {

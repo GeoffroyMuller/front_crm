@@ -75,6 +75,9 @@ function handleSwitch() {
     height: $height;
     position: relative;
 
+    box-shadow: inset 0px 0px 0.9px rgba(0, 0, 0, 0.12),
+      inset 0px 0px 2px rgba(0, 0, 0, 0.18);
+
     &.disabled {
       background-color: #d1d5db;
       cursor: not-allowed;
@@ -116,6 +119,8 @@ function handleSwitch() {
       margin-left: $dotMargin;
       border-radius: 50%;
       background-color: rgb(168, 168, 168);
+      box-shadow: 0px 0px 0.9px rgba(0, 0, 0, 0.32),
+        0px 0px 2px rgba(0, 0, 0, 0.28);
       width: $dotSize;
       height: $dotSize;
     }
