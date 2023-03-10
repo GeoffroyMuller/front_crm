@@ -114,7 +114,7 @@
           </Repetable>
           <Flex justify-content="flex-start">
             <Button
-              type="button"
+              type="submit"
               variant="text"
               v-if="isPreparable"
               @click.stop="$emit('prepare-products-real')"
@@ -227,20 +227,24 @@ function mapResa(data: any): {
     return { reservation: data, client };
   }
 }
-async function handleSubmit(data: any) {
+async function handleSubmit(
+  data: any,
+  { hasChanged }: { hasChanged: boolean }
+) {
   if (isNewReseravation.value) {
     try {
       const { reservation, client } = mapResa(data);
+      let response;
       if (!reservation.idClient && client) {
         const clientRes = await clientStore.create(client);
-        await reservationStore.create({
+        response = await reservationStore.create({
           ...reservation,
           idClient: clientRes.id,
         });
       } else {
-        await reservationStore.create(reservation);
+        response = await reservationStore.create(reservation);
       }
-
+      emit("saved", response);
       toast({
         type: "success",
         message: t("saved"),
@@ -251,19 +255,23 @@ async function handleSubmit(data: any) {
         message: error.response.data.message,
       });
     }
-  } else if (props.initialReservation != null) {
+  } else if (props.initialReservation != null && hasChanged) {
     try {
       const { reservation, client } = mapResa(data);
+      let response;
       if (!reservation.idClient && client) {
         const clientRes = await clientStore.create(client);
-        await reservationStore.update(props.initialReservation.id, {
+        response = await reservationStore.update(props.initialReservation.id, {
           ...reservation,
           idClient: clientRes.id,
         });
       } else {
-        await reservationStore.update(props.initialReservation.id, reservation);
+        response = await reservationStore.update(
+          props.initialReservation.id,
+          reservation
+        );
       }
-
+      emit("saved", response);
       toast({
         type: "success",
         message: t("saved"),

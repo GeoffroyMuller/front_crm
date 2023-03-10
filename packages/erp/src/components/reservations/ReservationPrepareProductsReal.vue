@@ -10,35 +10,41 @@
     </div>
     <Grid :gap="2" :columns="1">
       <Form v-model="internalReservation" @submit="handleSubmit">
-        <Repetable
-          name="lines"
-          :min="internalReservation?.lines?.length"
-          :max="internalReservation?.lines?.length"
-        >
-          <template #default="{ data: line }">
-            <Repetable
-              v-model="line.sublines"
-              :label="`${line.product?.name}`"
-              name="sublines"
-            >
-              <template #default>
-                <ReservationProductRealLine
-                  :product="line?.product"
-                ></ReservationProductRealLine>
-              </template>
-              <template #actions="{ addSection }">
-                <Button type="button" variant="text" @click.stop="addSection()">
-                  {{ $t("pages.edit-reservation.add-product-real") }}
-                </Button>
-              </template>
-            </Repetable>
-          </template>
-        </Repetable>
-        <Flex :mt="2" justify-content="flex-end">
-          <Button type="submit">
-            {{ $t("save") }}
-          </Button>
-        </Flex>
+        <template #default="{ hasError, hasChanged }">
+          <Repetable
+            name="lines"
+            :min="internalReservation?.lines?.length"
+            :max="internalReservation?.lines?.length"
+          >
+            <template #default="{ data: line }">
+              <Repetable
+                v-model="line.sublines"
+                :label="`${line.product?.name}`"
+                name="sublines"
+              >
+                <template #default>
+                  <ReservationProductRealLine
+                    :product="line?.product"
+                  ></ReservationProductRealLine>
+                </template>
+                <template #actions="{ addSection }">
+                  <Button
+                    type="button"
+                    variant="text"
+                    @click.stop="addSection()"
+                  >
+                    {{ $t("pages.edit-reservation.add-product-real") }}
+                  </Button>
+                </template>
+              </Repetable>
+            </template>
+          </Repetable>
+          <Flex :mt="2" justify-content="flex-end">
+            <Button type="submit" :disabled="hasError || !hasChanged">
+              {{ $t("save") }}
+            </Button>
+          </Flex>
+        </template>
       </Form>
     </Grid>
   </div>
@@ -57,11 +63,15 @@ import { isEqual, isNil } from "lodash";
 import Flex from "core/src/components/layouts/Flex.vue";
 import Form from "core/src/components/form/Form.vue";
 import type { SaleLine, SaleSubline } from "@/types/sale";
+import useReservationStore from "@/stores/reservations";
+import useUI from "core/src/composables/ui";
 
 const { t } = useI18n();
+const { toast } = useUI();
 const productStore = useProductsStore();
+const reservationStore = useReservationStore();
 
-const emit = defineEmits(["update:reservation", "saved"]);
+const emit = defineEmits(["saved"]);
 
 interface ReservationPrepareProductsRealProps {
   reservation: Reservation | null;
@@ -100,7 +110,10 @@ function mapLines(lines: any): Array<SaleLine> {
   });
 }
 
-function handleSubmit(data: any) {
+async function handleSubmit(
+  data: any,
+  { hasChanged }: { hasChanged: boolean }
+) {
   if (
     !isEqual(
       data.lines,
@@ -117,8 +130,26 @@ function handleSubmit(data: any) {
         ),
         ...(mapLines(internalReservation.value?.lines) || []),
       ],
-    };
-    emit("saved", res);
+    } as Reservation;
+    if (props.reservation != null && hasChanged) {
+      try {
+        const response = await reservationStore.update(
+          props.reservation.id,
+          res
+        );
+
+        emit("saved", response);
+        toast({
+          type: "success",
+          message: t("saved"),
+        });
+      } catch (error: any) {
+        toast({
+          type: "danger",
+          message: error.response.data.message,
+        });
+      }
+    }
   }
 }
 </script>
