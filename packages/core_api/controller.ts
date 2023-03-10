@@ -1,12 +1,16 @@
 import { Request, Response } from "express";
 import { ValidationError } from "objection";
 import { AuthError } from "./service";
-import { ControllerFactory, ControllerHandleError, IAuthRequest } from "./types";
-
+import {
+  ControllerFactory,
+  ControllerHandleError,
+  IAuthRequest,
+} from "./types";
 
 const controllerFactory: ControllerFactory = (service, opts = undefined) => {
-  const handleError: ControllerHandleError<any, any> = opts?.handleError || (
-    async (req: IAuthRequest<any>, res: Response, err: any) => {
+  const handleError: ControllerHandleError<any, any> =
+    opts?.handleError ||
+    (async (req: IAuthRequest<any>, res: Response, err: any) => {
       if (err instanceof AuthError) {
         return res.status(401).end();
       }
@@ -16,8 +20,7 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
       }
       console.error(err);
       return res.status(500).end();
-    }
-  );
+    });
 
   function _getRelationArray(req: Request): string[] {
     if (Array.isArray(req.query.populate)) {
@@ -29,13 +32,24 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
     return [];
   }
 
+  function _getToken(req: Request): string | undefined {
+    return (
+      req.headers.authorization ||
+      req.cookies.token ||
+      (req.query.token as string)
+    );
+  }
 
   return {
     handleError,
     paginate: async (req: IAuthRequest<any>, res: Response) => {
       try {
         const filters = req.query;
-        const items = await service.paginate(_getRelationArray(req), filters, req.auth);
+        const items = await service.paginate(
+          _getRelationArray(req),
+          filters,
+          req.auth
+        );
         return res.status(200).json(items);
       } catch (err) {
         return handleError(req, res, err);
@@ -44,7 +58,11 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
     getAll: async (req: IAuthRequest<any>, res: Response) => {
       try {
         const filters = req.query;
-        const items = await service.getAll(_getRelationArray(req), filters, req.auth);
+        const items = await service.getAll(
+          _getRelationArray(req),
+          filters,
+          req.auth,
+        );
         return res.status(200).json(items);
       } catch (err) {
         return handleError(req, res, err);
@@ -53,7 +71,12 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
     getById: async (req: IAuthRequest<any>, res: Response) => {
       try {
         const id = req.params.id;
-        const item = await service.getById(id, req.auth, _getRelationArray(req), req.query);
+        const item = await service.getById(
+          id,
+          req.auth,
+          _getRelationArray(req),
+          req.query,
+        );
         if (!item) {
           return res.status(404).json({
             success: 0,
@@ -76,7 +99,7 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
     },
     update: async (req: IAuthRequest<any>, res: Response) => {
       try {
-        const item = {...req.body, id: req.params.id};
+        const item = { ...req.body, id: req.params.id };
         const updatedItem = await service.update(item, req.auth);
         if (!updatedItem) {
           return res.status(500).end();
