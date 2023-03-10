@@ -23,3 +23,17 @@ export const folderColored = (folder) => chalk.bgGrey(`[${folder}]`) + ":";
 export const stdout = (data, folder) => print(`${folderColored(folder)}${data}`);
 export const stderr = (data, folder) => print(`${folderColored(folder)}${data}`);
 export const error = (data) => print(chalk.red(`error: ${data.message}`));
+
+export function runCommand(command, folder) {
+    const child = exec(command, { cwd: path.join("packages", folder) });
+    child.stdout.on("data", (data) => stdout(data, folder));
+    child.stderr.on("data", (data) => stderr(data, folder));
+    child.on("error", (data) => error(data));
+    return child;
+}
+
+export function copyFile(source, target) {
+    if (!fs.existsSync(source)) return;
+    fs.copyFileSync(source, target);
+    print(chalk.blue(`Copied ${source} to ${target}`));
+}
