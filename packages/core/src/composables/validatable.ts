@@ -9,6 +9,7 @@ import {
 
 import { isNil } from "lodash";
 import { ValidationError, type AnySchema } from "yup";
+import { useI18n } from "vue-i18n";
 
 interface ValidatableProps<T> {
   value?: T;
@@ -21,6 +22,8 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
   const instance = getCurrentInstance();
   const form = inject<any>("form", () => null);
 
+  const { t } = useI18n();
+
   const internalValue = ref<T | undefined>(props.value);
   const internalError = ref<string | boolean | undefined>(props.error);
 
@@ -30,7 +33,9 @@ export default function useValidatable<T>(props: ValidatableProps<T>) {
     }
     if (props.rules != null) {
       try {
-        await props.rules.validate(internalValue.value);
+        await props.rules
+          .label(t("validation.path"))
+          .validate(internalValue.value);
         internalError.value = undefined;
         return true;
       } catch (err) {
