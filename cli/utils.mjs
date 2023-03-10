@@ -37,3 +37,15 @@ export function copyFile(source, target) {
     fs.copyFileSync(source, target);
     print(chalk.blue(`Copied ${source} to ${target}`));
 }
+
+export const args = process.argv.slice(2);
+export function getArg(name) {
+    for (const arg of args) {
+        if (arg.startsWith(name)) {
+            const value = arg.split("=")?.[1];
+            if (value != null) return value;
+            return true;
+        }
+    }
+    return null;
+}

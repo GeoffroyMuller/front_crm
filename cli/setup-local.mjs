@@ -5,7 +5,8 @@ import {
   print,
   getPackageJson,
   runCommand,
-  copyFile
+  copyFile,
+  getArg
 } from "./utils.mjs";
 
 const packages = listPackages();
@@ -30,5 +31,17 @@ async function migrate() {
   }
 }
 
-copyEnvSampleInEnv();
-migrate();
+const migrateNeeded = getArg("--migrate");
+const envNeeded = getArg("--env");
+
+if (envNeeded) {
+  copyEnvSampleInEnv();
+}
+if (migrateNeeded) {
+  migrate();
+}
+if (!migrateNeeded && !envNeeded) {
+  print(chalk.yellow("no argument provided"));
+}
+
+
