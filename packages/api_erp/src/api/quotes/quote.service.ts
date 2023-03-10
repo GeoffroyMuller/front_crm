@@ -14,9 +14,9 @@ const fs = require("fs");
 let ejs = require("ejs");
 
 export interface IQuoteService extends Service<Quote, User> {
-  preview: (q: Quote) => Promise<string>;
-  sendByMail: (q: Quote) => Promise<any>;
-  getPdf: (q: Quote) => Promise<Stream>;
+  preview: (q: Quote, token: string) => Promise<string>;
+  sendByMail: (q: Quote, token: string) => Promise<any>;
+  getPdf: (q: Quote, token: string) => Promise<Stream>;
 }
 
 async function getNextIdentifier(auth: User) {
@@ -148,31 +148,86 @@ function _mapQuoteDataToDisplay(quote: Quote) {
   );
 }
 
-quoteService.preview = async (quote: Quote) => {
+quoteService.preview = async (quote: Quote, token: string) => {
   const html = fs.readFileSync(
     __dirname + "/../../templates/quote.ejs",
     "utf8"
   );
-  const htmlReplaced: string = ejs.render(html, _mapQuoteDataToDisplay(quote));
+  let responsible = {};
+  try {
+    responsible = (
+      await axios.get(
+        process.env.GATEWAY_URL + "/users/" + quote.idResponsible,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+    ).data;
+  } catch (err) {
+    console.log(err);
+  }
+
+  const htmlReplaced: string = ejs.render(html, {
+    ..._mapQuoteDataToDisplay(quote),
+    responsible,
+  });
   return htmlReplaced;
 };
 
-quoteService.getPdf = async (quote: Quote) => {
+quoteService.getPdf = async (quote: Quote, token: string) => {
   let quoteToPrint = quote;
+  let responsible = {};
+  try {
+    responsible = (
+      await axios.get(
+        process.env.GATEWAY_URL + "/users/" + quote.idResponsible,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+    ).data;
+  } catch (err) {
+    console.log(err);
+  }
   const pdf = await PdfService.printPDF({
-    data: _mapQuoteDataToDisplay(quoteToPrint),
+    data: {
+      ..._mapQuoteDataToDisplay(quote),
+      responsible,
+    },
     inputPath: __dirname + "/../../templates/quote.ejs",
     returnType: "stream",
   });
   return pdf as Stream;
 };
 
-quoteService.sendByMail = async (quote: Quote) => {
+quoteService.sendByMail = async (quote: Quote, token: string) => {
   try {
+    let responsible = {};
+    try {
+      responsible = (
+        await axios.get(
+          process.env.GATEWAY_URL + "/users/" + quote.idResponsible,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        )
+      ).data;
+    } catch (err) {
+      console.log(err);
+    }
     const res = await mailService.sendMail({
       html: ejs.render(
         fs.readFileSync(__dirname + "/../../templates/quote.ejs", "utf8"),
-        _mapQuoteDataToDisplay(quote)
+        {
+          ..._mapQuoteDataToDisplay(quote),
+          responsible,
+        }
       ),
       text: "",
       subject: "Devis",

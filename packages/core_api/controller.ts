@@ -7,6 +7,14 @@ import {
   IAuthRequest,
 } from "./types";
 
+export function getToken(req: Request): string | undefined {
+  return (
+    req.headers.authorization ||
+    req.cookies.token ||
+    (req.query.token as string)
+  );
+}
+
 const controllerFactory: ControllerFactory = (service, opts = undefined) => {
   const handleError: ControllerHandleError<any, any> =
     opts?.handleError ||
@@ -32,13 +40,6 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
     return [];
   }
 
-  function _getToken(req: Request): string | undefined {
-    return (
-      req.headers.authorization ||
-      req.cookies.token ||
-      (req.query.token as string)
-    );
-  }
 
   return {
     handleError,
