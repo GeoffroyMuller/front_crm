@@ -31,7 +31,6 @@
       "min": "${path} champ doit être postérieur à ${min}",
       "max": "${path} champ doit être antérieur à ${max}"
     },
-    "boolean": {},
     "array": {
       "min": "${path} champ doit avoir au moins ${min} éléments",
       "max": "${path} champ doit avoir au plus ${max} éléments"

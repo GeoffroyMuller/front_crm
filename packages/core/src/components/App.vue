@@ -26,8 +26,8 @@ watch(
   () => {
     const messages = getLocaleMessage(locale.value).validation;
     // @ts-ignore
-    const { string, number, date, boolean, mixed, array } = messages;
-    yup.setLocale({ string, number, date, boolean, mixed, array });
+    const { string, number, date, mixed, array } = messages;
+    yup.setLocale({ string, number, date, mixed, array });
   },
   {
     immediate: true,
