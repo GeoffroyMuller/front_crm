@@ -139,15 +139,14 @@ const props = withDefaults(defineProps<MagicFilterBarProps<any>>(), {
 const filtersValues = ref<any>(mapFiltersFromStore());
 
 let controller = new AbortController();
-watch(
-  () => (filtersValues.value, search.value),
-  debounce(() => {
-    controller.abort();
-    controller = new AbortController();
-    props.store.setFilters(mapFormFilters());
-    props.store.fetchList(undefined, true, controller.signal);
-  }, 500)
-);
+const debounceFetch = debounce(() => {
+  controller.abort();
+  controller = new AbortController();
+  props.store.setFilters(mapFormFilters());
+  props.store.fetchList(undefined, true, controller.signal);
+}, 500);
+watch(() => search.value, debounceFetch);
+watch(() => filtersValues.value, debounceFetch);
 
 function handleInputChange({ name, value }: { name: string; value: any }) {
   //filtersValues.value[name] = value;
