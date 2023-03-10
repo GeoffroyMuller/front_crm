@@ -21,11 +21,11 @@ app.use(cookieParser({
 
 app.use(cors());
 
-
+/* 
 app.use(morgan('combined', {
   stream: fs.createWriteStream(path.join(__dirname, '../logs/access.log'), { flags: 'a' }) 
 }))
-
+ */
 Routes(app, path.join(__dirname, "api"));
 
 app.listen(3002, () => {
