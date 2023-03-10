@@ -9,7 +9,8 @@ app.use(cors());
 
 const SERVICES = {
   auth: process.env.AUTH_SERVICE_URL,
-  erp: process.env.ERP_SERVICE_URL
+  erp: process.env.ERP_SERVICE_URL,
+  calendar: process.env.CALENDAR_SERVICE_URL,
 } as { [key: string]: string };
 
 const PROXY_OPTIONS: proxy.ProxyOptions = {
@@ -24,6 +25,7 @@ const PROXIES = {
   roles: proxy(SERVICES.auth, PROXY_OPTIONS),
   rights: proxy(SERVICES.auth, PROXY_OPTIONS),
   google: proxy(SERVICES.auth, PROXY_OPTIONS),
+  events: proxy(SERVICES.calendar, PROXY_OPTIONS),
 } as { [key: string]: RequestHandler };
 
 Object.keys(PROXIES).forEach((p) => {
