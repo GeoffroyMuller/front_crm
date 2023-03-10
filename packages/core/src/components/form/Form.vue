@@ -54,7 +54,16 @@ const {
 async function handleSumbit(event: Event) {
   event.preventDefault();
   if (await validate()) {
-    emit("submit", getData());
+    emit(
+      "submit",
+      ...[
+        getData(),
+        {
+          hasChanged: hasChanged.value,
+          hasError: hasError.value,
+        },
+      ]
+    );
     resetHasChanged();
   }
 }
