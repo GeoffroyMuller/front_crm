@@ -17,21 +17,46 @@
 
         <div class="reservation-content">
           <Grid :gap="5" :columns="{ xs: 1, sm: 2 }">
-            <Grid v-if="reservation?.client != null" :gap="1" :columns="1">
+            <Grid :gap="1" :columns="1">
               <div class="typo-text2">
-                {{ $t("firstname") }}: {{ reservation.client?.firstname }}
+                {{ $t("firstname") }}:
+                {{
+                  reservation?.client != null && reservation.client?.firstname
+                    ? reservation.client?.firstname
+                    : "-"
+                }}
               </div>
               <div class="typo-text2">
-                {{ $t("lastname") }}: {{ reservation.client?.lastname }}
+                {{ $t("lastname") }}:
+                {{
+                  reservation?.client != null && reservation.client?.lastname
+                    ? reservation.client?.lastname
+                    : "-"
+                }}
               </div>
               <div class="typo-text2">
-                {{ $t("email") }}: {{ reservation.client?.email }}
+                {{ $t("email") }}:
+                {{
+                  reservation?.client != null && reservation.client?.email
+                    ? reservation.client?.email
+                    : "-"
+                }}
               </div>
               <div class="typo-text2">
-                {{ $t("phone") }}: {{ reservation.client?.phone }}
+                {{ $t("phone") }}:
+                {{
+                  reservation?.client != null && reservation.client?.phone
+                    ? reservation.client?.phone
+                    : "-"
+                }}
               </div>
               <div class="typo-text2">
-                {{ $t("address") }}: {{ reservation.client?.address }}
+                {{ $t("address") }}:
+                {{
+                  reservation?.client != null && reservation.client?.address
+                    ? reservation.client?.address
+                    : "-"
+                }}
               </div>
             </Grid>
             <div>
@@ -60,13 +85,24 @@
               </Flex>
             </div>
           </Grid>
-
-          <Grid class="reservation-products" :gap="2" v-if="reservation.lines">
+          <div class="reservation-description typo-text2">
+            {{ $t("description") }}: {{ reservation?.description ? "" : "-" }}
+            <div
+              class="reservation-description-text"
+              v-if="reservation?.description"
+            >
+              {{ reservation?.description }}
+            </div>
+          </div>
+          <Grid class="reservation-products" :gap="2">
             <Grid :gap="1">
-              <div class="typo-text2">
-                {{ `${$t("products")} :` }}
-              </div>
-              <!-- <Table
+              <template
+                v-if="reservation.lines && reservation.lines.length > 0"
+              >
+                <div class="typo-text2">
+                  {{ `${$t("products")} :` }}
+                </div>
+                <!-- <Table
                 :columns="[
                   {
                     title: $t('name'),
@@ -95,23 +131,27 @@
                   {{ item.qty || "-" }}
                 </template>
               </Table> -->
-              <div v-for="line in reservation.lines" :key="line.id">
-                <Card>
-                  <Grid :gap="1">
-                    <Flex justify-content="space-between" class="typo-text2">
-                      <div>{{ $t("name") }}</div>
-                      <div>{{ line.product?.name }}</div>
-                    </Flex>
-                    <Flex justify-content="space-between" class="typo-text2">
-                      <div>{{ $t("description") }}</div>
-                      <div>{{ line.product?.description || "-" }}</div>
-                    </Flex>
-                    <Flex justify-content="space-between" class="typo-text2">
-                      <div>{{ $t("quantity") }}</div>
-                      <div>{{ line.qty || "-" }}</div>
-                    </Flex>
-                  </Grid>
-                </Card>
+                <div v-for="line in reservation.lines" :key="line.id">
+                  <Card>
+                    <Grid :gap="1">
+                      <Flex justify-content="space-between" class="typo-text2">
+                        <div>{{ $t("name") }}</div>
+                        <div>{{ line.product?.name }}</div>
+                      </Flex>
+                      <Flex justify-content="space-between" class="typo-text2">
+                        <div>{{ $t("description") }}</div>
+                        <div>{{ line.product?.description || "-" }}</div>
+                      </Flex>
+                      <Flex justify-content="space-between" class="typo-text2">
+                        <div>{{ $t("quantity") }}</div>
+                        <div>{{ line.qty || "-" }}</div>
+                      </Flex>
+                    </Grid>
+                  </Card>
+                </div>
+              </template>
+              <div v-else class="typo-text2">
+                {{ `${$t("products")} : -` }}
               </div>
             </Grid>
             <Flex justify-content="flex-start">
@@ -181,8 +221,16 @@ const isPreparable = computed(() => {
 }
 .reservation-content {
   padding: spacing(2);
+  .reservation-description {
+    margin-top: spacing(2);
+    .reservation-description-text {
+      margin-top: spacing(0.5);
+      margin-left: spacing(1);
+      line-height: 1rem;
+    }
+  }
   .reservation-products {
-    margin-top: spacing(5);
+    margin-top: spacing(3);
   }
 }
 </style>
