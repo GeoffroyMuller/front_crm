@@ -86,6 +86,7 @@ axios.interceptors.request.use(
   }
 );
 
+let refreshTokenRequest: null | Promise<any> = null;
 axios.interceptors.response.use(
   async (config) => {
     return config;
@@ -94,9 +95,15 @@ axios.interceptors.response.use(
     const userStore = useUserStore();
     if (error.response.status == 401) {
       const refresh_token = getRefreshToken();
+      if (refreshTokenRequest == null) {
+        refreshTokenRequest = userStore.login({ refresh_token });
+        await refreshTokenRequest;
+        refreshTokenRequest = null;
+      } else {
+        await refreshTokenRequest;
+      }
       if (refresh_token) {
         try {
-          await userStore.login({ refresh_token });
           const response = await axios(error.config);
           return response;
         } catch (err) {
