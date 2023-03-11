@@ -28,10 +28,6 @@
           key: 'price2',
           sortable: true,
         },
-        {
-          title: $t('status'),
-          key: 'status',
-        },
       ]"
       @row-click="(quote) => $router.push(`/quotes/${quote.id}`)"
       selectable
@@ -76,11 +72,6 @@
       </template>
       <template #content-client="{ item }">
         {{ item?.client?.firstname || "" }} {{ item?.client?.lastname || "" }}
-      </template>
-      <template #content-status="{ item }">
-        <Chip :color="getStatusColor(item.status)">
-          {{ $t(`data.status.${item.status}`) }}
-        </Chip>
       </template>
       <template #actions-title>
         <div>
@@ -148,15 +139,6 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-function getStatusColor(status: string) {
-  if (status === "refused") {
-    return "danger";
-  }
-  if (status === "validated") {
-    return "success";
-  }
-  return "white";
-}
 
 const {
   quotestore,

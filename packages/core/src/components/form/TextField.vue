@@ -179,9 +179,6 @@ const maskOptions = computed<MaskOptions | null>(() => {
     }
   }
   @each $key, $value in $rounded {
-    &.card-rd-#{$key} {
-      border-radius: map-get($rounded, $key);
-    }
     &.rounded-#{$key} {
       input,
       textarea {
