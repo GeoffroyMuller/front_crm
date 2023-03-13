@@ -65,7 +65,7 @@ window.execCommand = execCommand;
     color: color("black");
     background-color: color("white");
     transition: border-color 0.5s, box-shadow 0.5s;
-
+    min-height: spacing(12);
     &:disabled {
       background-color: #f0f0f0;
       cursor: not-allowed;

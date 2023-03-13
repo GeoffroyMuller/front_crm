@@ -12,6 +12,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "calculator": "1.0.0",
     "core": "1.0.0",
     "@vueup/vue-quill": "^1.0.1",
     "axios": "^0.27.2",
