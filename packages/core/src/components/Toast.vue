@@ -6,7 +6,12 @@
         <span v-html="message" />
       </div>
 
-      <Icon @click="$emit('close')" name="close" :color="type" class="icon" />
+      <Icon
+        @click.stop="$emit('close')"
+        name="close"
+        :color="type"
+        class="icon"
+      />
     </div>
   </Card>
 </template>

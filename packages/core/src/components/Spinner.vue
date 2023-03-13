@@ -30,7 +30,7 @@ import type { Color } from "./types";
 
 interface SpinnerProps {
   color?: Color;
-  size?: "sm" | "md" | "lg";
+  size?: "1rem" | "sm" | "md" | "lg";
 }
 
 const props = withDefaults(defineProps<SpinnerProps>(), {
@@ -40,6 +40,8 @@ const props = withDefaults(defineProps<SpinnerProps>(), {
 
 const width = computed(() => {
   switch (props.size) {
+    case "1rem":
+      return "1rem";
     case "sm":
       return 16;
     case "md":

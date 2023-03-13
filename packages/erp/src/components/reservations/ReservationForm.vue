@@ -116,6 +116,7 @@
             <Button
               type="submit"
               variant="text"
+              :loading="loading"
               v-if="isPreparable"
               @click.stop="$emit('prepare-products-real')"
             >
@@ -124,7 +125,11 @@
           </Flex>
 
           <div class="actions">
-            <Button :disabled="hasError || !hasChanged" type="submit">
+            <Button
+              :disabled="hasError || !hasChanged"
+              :loading="loading"
+              type="submit"
+            >
               {{ $t("save") }}
             </Button>
           </div>
@@ -178,6 +183,8 @@ const internalReservation = ref<Reservation | null>(props.reservation);
 
 const isSelectExistingClient = ref<boolean>(true);
 
+const loading = ref<boolean>(false);
+
 const isNewReseravation = computed(() => {
   return isNil(props.initialReservation);
 });
@@ -229,12 +236,13 @@ function mapResa(data: any): {
 }
 async function handleSubmit(
   data: any,
-  { hasChanged }: { hasChanged: boolean }
+  { hasChanged, hasError }: { hasChanged: boolean; hasError: boolean }
 ) {
   if (isNewReseravation.value) {
     try {
       const { reservation, client } = mapResa(data);
       let response;
+      loading.value = true;
       if (!reservation.idClient && client) {
         const clientRes = await clientStore.create(client);
         response = await reservationStore.create({
@@ -244,21 +252,24 @@ async function handleSubmit(
       } else {
         response = await reservationStore.create(reservation);
       }
+      loading.value = false;
       emit("saved", response);
       toast({
         type: "success",
         message: t("saved"),
       });
     } catch (error: any) {
+      loading.value = false;
       toast({
         type: "danger",
         message: error.response.data.message,
       });
     }
-  } else if (props.initialReservation != null && hasChanged) {
+  } else if (props.initialReservation != null && hasChanged && !hasError) {
     try {
       const { reservation, client } = mapResa(data);
       let response;
+      loading.value = true;
       if (!reservation.idClient && client) {
         const clientRes = await clientStore.create(client);
         response = await reservationStore.update(props.initialReservation.id, {
@@ -271,12 +282,14 @@ async function handleSubmit(
           reservation
         );
       }
+      loading.value = false;
       emit("saved", response);
       toast({
         type: "success",
         message: t("saved"),
       });
     } catch (error: any) {
+      loading.value = false;
       toast({
         type: "danger",
         message: error.response.data.message,

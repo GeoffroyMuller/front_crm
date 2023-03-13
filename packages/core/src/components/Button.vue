@@ -21,7 +21,7 @@
     <span v-if="$slots.default"> <slot /></span>
 
     <Spinner
-      size="sm"
+      size="1rem"
       v-if="loading"
       :color="variant === 'text' || variant === 'outlined' ? color : 'white'"
     />

@@ -4,7 +4,12 @@
       {{ $t("pages.edit-reservation.prepare-the-products") }}
     </div>
     <div class="reservation-btn-back">
-      <Button @click.stop="$emit('back')" variant="text" icon="chevron_left">
+      <Button
+        @click.stop="$emit('back')"
+        :disabled="loading"
+        variant="text"
+        icon="chevron_left"
+      >
         {{ $t("back") }}
       </Button>
     </div>
@@ -40,7 +45,11 @@
             </template>
           </Repetable>
           <Flex :mt="2" justify-content="flex-end">
-            <Button type="submit" :disabled="hasError || !hasChanged">
+            <Button
+              type="submit"
+              :disabled="hasError || !hasChanged"
+              :loading="loading"
+            >
               {{ $t("save") }}
             </Button>
           </Flex>
@@ -81,6 +90,7 @@ const props = withDefaults(
   {}
 );
 const internalReservation = ref<Reservation | null>(null);
+const loading = ref<boolean>(false);
 watch(
   () => props.reservation,
   (val) => {
@@ -133,17 +143,19 @@ async function handleSubmit(
     } as Reservation;
     if (props.reservation != null && hasChanged) {
       try {
+        loading.value = true;
         const response = await reservationStore.update(
           props.reservation.id,
           res
         );
-
+        loading.value = false;
         emit("saved", response);
         toast({
           type: "success",
           message: t("saved"),
         });
       } catch (error: any) {
+        loading.value = false;
         toast({
           type: "danger",
           message: error.response.data.message,
