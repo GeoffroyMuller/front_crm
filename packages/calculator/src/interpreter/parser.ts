@@ -29,8 +29,6 @@ class CalculatorPure extends CstParser {
       });
     });
 
-    EndLine;
-
     $.RULE("statement", () => {
       $.CONSUME(EndLine);
       $.SUBRULE($.expression);
@@ -45,19 +43,22 @@ class CalculatorPure extends CstParser {
     // The binary expression appears.
     $.RULE("additionExpression", () => {
       // using labels can make the CST processing easier
-      $.SUBRULE($.multiplicationExpression, { LABEL: "lhs" });
+      $.SUBRULE($.conversionExpression, { LABEL: "lhs" });
       $.MANY(() => {
         // consuming 'AdditionOperator' will consume either Plus or Minus as they are subclasses of AdditionOperator
         $.CONSUME(AdditionOperator);
         //  the index "2" in SUBRULE2 is needed to identify the unique position in the grammar during runtime
-        $.SUBRULE2($.multiplicationExpression, { LABEL: "rhs" });
+        $.SUBRULE2($.conversionExpression, { LABEL: "rhs" });
       });
     });
 
-    $.RULE("multiplicationExpression", () => {
+    $.RULE("conversionExpression", () => {
       $.SUBRULE($.atomicExpression, { LABEL: "lhs" });
       $.MANY(() => {
-        $.CONSUME(MultiplicationOperator);
+        $.OR([
+          { ALT: () => $.CONSUME(MultiplicationOperator) },
+          { ALT: () => $.CONSUME(Func) },
+        ]);
         //  the index "2" in SUBRULE2 is needed to identify the unique position in the grammar during runtime
         $.SUBRULE2($.atomicExpression, { LABEL: "rhs" });
       });

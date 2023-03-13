@@ -51,6 +51,38 @@ class CalculatorInterpreter extends BaseCstVisitor {
     return result;
   }
 
+  conversionExpression(ctx) {
+    let result = this.visit(ctx.lhs);
+
+    // "rhs" key may be undefined as the grammar defines it as optional (MANY === zero or more).
+    if (ctx.rhs) {
+      ctx.rhs.forEach((rhsOperand, idx) => {
+        // there will be one operator for each rhs operand
+        const rhsValue = this.visit(rhsOperand);
+
+        const funcName = ctx.Func?.[idx];
+        if (funcName != null) {
+          const func = standardFunctions[funcName.image];
+          if (func == null) return;
+          if (func) {
+            result = func([result, rhsValue]);
+            console.error(result);
+          }
+        } else {
+          const operator = ctx.MultiplicationOperator?.[idx];
+          if (tokenMatcher(operator, Multi)) {
+            result *= rhsValue;
+          } else {
+            // Division
+            result /= rhsValue;
+          }
+        }
+      });
+    }
+
+    return result;
+  }
+
   multiplicationExpression(ctx) {
     let result = this.visit(ctx.lhs);
 

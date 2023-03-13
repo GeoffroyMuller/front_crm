@@ -15,5 +15,6 @@ const calculatorValue = `
 12 / 2
 pow(4, 3)
 root(4)
+2 pow 4
 `.trim();
 </script>
