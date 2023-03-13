@@ -54,6 +54,7 @@ onMounted(() => {
 $paddingY: 4px;
 $paddingLineX: 4px;
 .calculator {
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: 1fr 1fr;
   overflow-y: auto;
