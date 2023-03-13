@@ -8,7 +8,7 @@ import {
   RParen,
   Func,
   Comma,
-  StartLine,
+  EndLine,
 } from "./lexer";
 
 // Not any actions (semantics) to perform during parsing.
@@ -25,8 +25,15 @@ class CalculatorPure extends CstParser {
 
     $.RULE("code", () => {
       $.MANY(() => {
-        $.SUBRULE($.expression);
+        $.SUBRULE($.statement);
       });
+    });
+
+    EndLine;
+
+    $.RULE("statement", () => {
+      $.CONSUME(EndLine);
+      $.SUBRULE($.expression);
     });
 
     $.RULE("expression", () => {

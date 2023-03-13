@@ -12,8 +12,8 @@ function createToken(params: ITokenConfig): TokenType {
   return token;
 }
 
-export const StartLine = createToken({
-  name: "StartLine",
+export const EndLine = createToken({
+  name: "EndLine",
   pattern: /\n/,
 });
 

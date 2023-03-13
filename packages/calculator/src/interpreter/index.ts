@@ -4,7 +4,7 @@ import interpreter from "./visitor";
 
 export default function (text: string) {
   if (typeof text !== "string") return;
-  const inputText = text;
+  const inputText = "\n" + text;
   // 1. Tokenize the input.
   const lexResult = CalculatorLexer.tokenize(inputText);
 

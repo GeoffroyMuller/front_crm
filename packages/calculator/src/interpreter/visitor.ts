@@ -14,11 +14,14 @@ class CalculatorInterpreter extends BaseCstVisitor {
   }
 
   code(ctx) {
-    console.error(ctx.expression)
-    if (Array.isArray(ctx.expression)) {
-      return ctx.expression.map((l) => this.visit(l)).join(" ");
+    if (Array.isArray(ctx.statement)) {
+      return ctx.statement.map((l) => this.visit(l)).join("\n");
     }
     return "";
+  }
+
+  statement(ctx) {
+    return this.visit(ctx.expression);
   }
 
   expression(ctx) {
