@@ -1,4 +1,5 @@
 import { tokenMatcher } from "chevrotain";
+import standardFunctions from "./functions";
 import { Plus, Multi } from "./lexer";
 import parser from "./parser";
 
@@ -12,8 +13,15 @@ class CalculatorInterpreter extends BaseCstVisitor {
     this.validateVisitor();
   }
 
+  code(ctx) {
+    console.error(ctx.expression)
+    if (Array.isArray(ctx.expression)) {
+      return ctx.expression.map((l) => this.visit(l)).join(" ");
+    }
+    return "";
+  }
+
   expression(ctx) {
-    // visiting an array is equivalent to visiting its first element.
     return this.visit(ctx.additionExpression);
   }
 
@@ -67,8 +75,8 @@ class CalculatorInterpreter extends BaseCstVisitor {
       return this.visit(ctx.parenthesisExpression);
     } else if (ctx.NumberLiteral) {
       return parseInt(ctx.NumberLiteral[0].image, 10);
-    } else if (ctx.powerFunction) {
-      return this.visit(ctx.powerFunction);
+    } else if (ctx.func) {
+      return this.visit(ctx.func);
     }
   }
 
@@ -78,10 +86,15 @@ class CalculatorInterpreter extends BaseCstVisitor {
     return this.visit(ctx.expression);
   }
 
-  powerFunction(ctx) {
-    const base = this.visit(ctx.base);
-    const exponent = this.visit(ctx.exponent);
-    return Math.pow(base, exponent);
+  func(ctx) {
+    const func = standardFunctions[ctx.Func[0].image];
+    if (func == null) return;
+    const args = this.visit(ctx.args[0]);
+    return func(args);
+  }
+
+  args(ctx) {
+    return ctx.expression.map((e) => this.visit(e));
   }
 }
 

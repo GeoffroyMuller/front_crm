@@ -6,8 +6,9 @@ import {
   NumberLiteral,
   LParen,
   RParen,
-  PowerFunc,
+  Func,
   Comma,
+  StartLine,
 } from "./lexer";
 
 // Not any actions (semantics) to perform during parsing.
@@ -19,62 +20,78 @@ class CalculatorPure extends CstParser {
   constructor() {
     super(allTokens);
 
-    this.RULE("expression", () => {
-      this.SUBRULE(this.additionExpression);
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const $ = this;
+
+    $.RULE("code", () => {
+      $.MANY(() => {
+        $.SUBRULE($.expression);
+      });
+    });
+
+    $.RULE("expression", () => {
+      $.SUBRULE($.additionExpression);
     });
 
     // Lowest precedence thus it is first in the rule chain
     // The precedence of binary expressions is determined by how far down the Parse Tree
     // The binary expression appears.
-    this.RULE("additionExpression", () => {
+    $.RULE("additionExpression", () => {
       // using labels can make the CST processing easier
-      this.SUBRULE(this.multiplicationExpression, { LABEL: "lhs" });
-      this.MANY(() => {
+      $.SUBRULE($.multiplicationExpression, { LABEL: "lhs" });
+      $.MANY(() => {
         // consuming 'AdditionOperator' will consume either Plus or Minus as they are subclasses of AdditionOperator
-        this.CONSUME(AdditionOperator);
+        $.CONSUME(AdditionOperator);
         //  the index "2" in SUBRULE2 is needed to identify the unique position in the grammar during runtime
-        this.SUBRULE2(this.multiplicationExpression, { LABEL: "rhs" });
+        $.SUBRULE2($.multiplicationExpression, { LABEL: "rhs" });
       });
     });
 
-    this.RULE("multiplicationExpression", () => {
-      this.SUBRULE(this.atomicExpression, { LABEL: "lhs" });
-      this.MANY(() => {
-        this.CONSUME(MultiplicationOperator);
+    $.RULE("multiplicationExpression", () => {
+      $.SUBRULE($.atomicExpression, { LABEL: "lhs" });
+      $.MANY(() => {
+        $.CONSUME(MultiplicationOperator);
         //  the index "2" in SUBRULE2 is needed to identify the unique position in the grammar during runtime
-        this.SUBRULE2(this.atomicExpression, { LABEL: "rhs" });
+        $.SUBRULE2($.atomicExpression, { LABEL: "rhs" });
       });
     });
 
-    this.RULE("atomicExpression", () => {
-      this.OR([
+    $.RULE("atomicExpression", () => {
+      $.OR([
         // parenthesisExpression has the highest precedence and thus it appears
         // in the "lowest" leaf in the expression ParseTree.
-        { ALT: () => this.SUBRULE(this.parenthesisExpression) },
-        { ALT: () => this.CONSUME(NumberLiteral) },
-        { ALT: () => this.SUBRULE(this.powerFunction) },
+        { ALT: () => $.SUBRULE($.parenthesisExpression) },
+        { ALT: () => $.CONSUME(NumberLiteral) },
+        { ALT: () => $.SUBRULE($.func) },
       ]);
     });
 
-    this.RULE("parenthesisExpression", () => {
-      this.CONSUME(LParen);
-      this.SUBRULE(this.expression);
-      this.CONSUME(RParen);
+    $.RULE("parenthesisExpression", () => {
+      $.CONSUME(LParen);
+      $.SUBRULE($.expression);
+      $.CONSUME(RParen);
     });
 
-    this.RULE("powerFunction", () => {
-      this.CONSUME(PowerFunc);
-      this.CONSUME(LParen);
-      this.SUBRULE(this.expression, { LABEL: "base" });
-      this.CONSUME(Comma);
-      this.SUBRULE2(this.expression, { LABEL: "exponent" });
-      this.CONSUME(RParen);
+    $.RULE("func", () => {
+      $.CONSUME(Func);
+      $.CONSUME(LParen);
+      $.SUBRULE($.args);
+      $.CONSUME(RParen);
     });
 
-    // very important to call this after all the rules have been defined.
+    $.RULE("args", () => {
+      $.MANY_SEP({
+        SEP: Comma,
+        DEF: () => {
+          $.SUBRULE($.expression);
+        },
+      });
+    });
+
+    // very important to call $ after all the rules have been defined.
     // otherwise the parser may not work correctly as it will lack information
     // derived during the self analysis phase.
-    this.performSelfAnalysis();
+    $.performSelfAnalysis();
   }
 }
 

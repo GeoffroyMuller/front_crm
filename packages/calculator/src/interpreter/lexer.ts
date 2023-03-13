@@ -1,4 +1,21 @@
-import { createToken, tokenMatcher, Lexer, CstParser } from "chevrotain";
+import {
+  createToken as chevrotainCreateToken,
+  Lexer,
+  type ITokenConfig,
+  type TokenType,
+} from "chevrotain";
+
+export const allTokens: TokenType[] = [];
+function createToken(params: ITokenConfig): TokenType {
+  const token = chevrotainCreateToken(params);
+  allTokens.push(token);
+  return token;
+}
+
+export const StartLine = createToken({
+  name: "StartLine",
+  pattern: /\n/,
+});
 
 export const AdditionOperator = createToken({
   name: "AdditionOperator",
@@ -37,7 +54,10 @@ export const NumberLiteral = createToken({
   pattern: /[1-9]\d*/,
 });
 
-export const PowerFunc = createToken({ name: "PowerFunc", pattern: /power/ });
+export const Func = createToken({
+  name: "Func",
+  pattern: /[a-zA-Z]+/,
+});
 export const Comma = createToken({ name: "Comma", pattern: /,/ });
 
 // marking WhiteSpace as 'SKIPPED' makes the lexer skip it.
@@ -47,20 +67,6 @@ export const WhiteSpace = createToken({
   group: Lexer.SKIPPED,
 });
 
-export const allTokens = [
-  WhiteSpace, // whitespace is normally very common so it should be placed first to speed up the lexer's performance
-  Plus,
-  Minus,
-  Multi,
-  Div,
-  LParen,
-  RParen,
-  NumberLiteral,
-  AdditionOperator,
-  MultiplicationOperator,
-  PowerFunc,
-  Comma,
-];
 const CalculatorLexer = new Lexer(allTokens);
 
 export default CalculatorLexer;

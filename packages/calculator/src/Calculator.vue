@@ -31,13 +31,7 @@ const state = EditorState.create({
 });
 
 function computeResult(value: string) {
-  results.value = value
-    .split("\n")
-    .map((line) => {
-      const result = interpreter(line);
-      return result.parseErrors.length > 0 ? "" : result.value;
-    })
-    .join("\n");
+  results.value = interpreter(value);
 }
 
 onMounted(() => {
@@ -53,34 +47,46 @@ onMounted(() => {
 <style lang="scss">
 $paddingY: 4px;
 $paddingLineX: 4px;
+
 .calculator {
   box-sizing: border-box;
   display: grid;
   grid-template-columns: 1fr 1fr;
   overflow-y: auto;
+  border-radius: 8px;
+
   .code,
   .results {
     margin: 0;
     background: #282828;
     color: #7f9338;
   }
+
   .results {
     padding-top: $paddingY;
     padding-bottom: $paddingY;
     padding-left: $paddingLineX;
     padding-right: $paddingLineX;
   }
+
   .code {
     border-right: 1px solid rgb(200, 200, 200);
-    .cm-gutters {
-      display: none;
-    }
-    .cm-content {
-      padding-top: paddingY;
-      padding-bottom: paddingY;
-      .cm-line {
-        padding-left: $paddingLineX;
-        padding-right: $paddingLineX;
+
+    .cm-editor {
+      outline: none !important;
+
+      .cm-gutters {
+        display: none;
+      }
+
+      .cm-content {
+        padding-top: paddingY;
+        padding-bottom: paddingY;
+
+        .cm-line {
+          padding-left: $paddingLineX;
+          padding-right: $paddingLineX;
+        }
       }
     }
   }
