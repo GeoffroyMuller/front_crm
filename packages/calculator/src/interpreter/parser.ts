@@ -9,6 +9,7 @@ import {
   Func,
   Comma,
   EndLine,
+  Currency,
 } from "./lexer";
 
 // Not any actions (semantics) to perform during parsing.
@@ -38,27 +39,34 @@ class CalculatorPure extends CstParser {
       $.SUBRULE($.additionExpression);
     });
 
+    $.RULE("conversionExpression", () => {
+      $.SUBRULE($.additionExpression, { LABEL: "lhs" });
+      $.OR([
+        { ALT: () => $.CONSUME(Currency) },
+        { ALT: () => $.CONSUME(Func) },
+      ]);
+      //  the index "2" in SUBRULE2 is needed to identify the unique position in the grammar during runtime
+      $.SUBRULE2($.conversionExpression, { LABEL: "rhs" });
+    });
+
     // Lowest precedence thus it is first in the rule chain
     // The precedence of binary expressions is determined by how far down the Parse Tree
     // The binary expression appears.
     $.RULE("additionExpression", () => {
       // using labels can make the CST processing easier
-      $.SUBRULE($.conversionExpression, { LABEL: "lhs" });
+      $.SUBRULE($.multiplicationExpression, { LABEL: "lhs" });
       $.MANY(() => {
         // consuming 'AdditionOperator' will consume either Plus or Minus as they are subclasses of AdditionOperator
         $.CONSUME(AdditionOperator);
         //  the index "2" in SUBRULE2 is needed to identify the unique position in the grammar during runtime
-        $.SUBRULE2($.conversionExpression, { LABEL: "rhs" });
+        $.SUBRULE2($.multiplicationExpression, { LABEL: "rhs" });
       });
     });
 
-    $.RULE("conversionExpression", () => {
+    $.RULE("multiplicationExpression", () => {
       $.SUBRULE($.atomicExpression, { LABEL: "lhs" });
       $.MANY(() => {
-        $.OR([
-          { ALT: () => $.CONSUME(MultiplicationOperator) },
-          { ALT: () => $.CONSUME(Func) },
-        ]);
+        $.CONSUME(MultiplicationOperator);
         //  the index "2" in SUBRULE2 is needed to identify the unique position in the grammar during runtime
         $.SUBRULE2($.atomicExpression, { LABEL: "rhs" });
       });

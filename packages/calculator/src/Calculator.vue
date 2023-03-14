@@ -13,6 +13,7 @@ import { gruvboxDark } from "./theme";
 import type { ViewUpdate } from "@codemirror/view";
 import { EditorState } from "@codemirror/state";
 import interpreter from "./interpreter";
+import { fetchCurrenciesRates } from "./api";
 
 const props = defineProps<{ value?: string }>();
 
@@ -31,16 +32,26 @@ const state = EditorState.create({
 });
 
 function computeResult(value: string) {
-  results.value = interpreter(value);
+  results.value = interpreter.interpret(value);
 }
 
-onMounted(() => {
+async function init() {
+  try {
+    const rates = await fetchCurrenciesRates();
+    interpreter.setCurrenciesRates(rates);
+  } catch (e) {
+    console.error(e);
+  }
+
   if (code.value != null) {
     new EditorView({
       state,
       parent: code.value,
     });
   }
+}
+onMounted(() => {
+  init();
 });
 </script>
 

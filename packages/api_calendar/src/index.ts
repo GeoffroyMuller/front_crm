@@ -14,10 +14,6 @@ const app: Application = express()
 // parse application/json
 app.use(bodyParser.json())
 
-app.use(cookieParser({
-  maxAge: 60 * 60 * 24 * 7 // 1 week
-}));
-
 app.use(cors());
 
 Routes(app, path.join(__dirname, "api"));

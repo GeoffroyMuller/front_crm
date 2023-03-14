@@ -54,6 +54,11 @@ export const NumberLiteral = createToken({
   pattern: /[1-9]\d*/,
 });
 
+export const Currency = createToken({
+  name: "Currency",
+  pattern: /USD|EUR|GBP|\$|€|£/,
+});
+
 export const Func = createToken({
   name: "Func",
   pattern: /[a-zA-Z]+/,

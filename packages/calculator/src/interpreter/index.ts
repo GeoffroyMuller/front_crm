@@ -2,20 +2,32 @@ import CalculatorLexer from "./lexer";
 import parser from "./parser";
 import interpreter from "./visitor";
 
-export default function (text: string) {
-  if (typeof text !== "string") return;
-  const inputText = "\n" + text;
-  // 1. Tokenize the input.
-  const lexResult = CalculatorLexer.tokenize(inputText);
+type Rates = { [key: string]: { [key: string]: number } };
 
-  // 2. Parse the Tokens vector.
-  parser.input = lexResult.tokens;
+let rates: Rates = {};
 
-  const cst = parser.code();
+export default {
+  setCurrenciesRates: function (r: Rates) {
+    rates = r;
+  },
+  getCurrenciesRates: function () {
+    return rates;
+  },
+  interpret: function (text: string) {
+    if (typeof text !== "string") return;
+    const inputText = "\n" + text;
+    // 1. Tokenize the input.
+    const lexResult = CalculatorLexer.tokenize(inputText);
 
-  // 3. Perform semantics using a CstVisitor.
-  // Note that separation of concerns between the syntactic analysis (parsing) and the semantics.
-  const value = interpreter.visit(cst);
+    // 2. Parse the Tokens vector.
+    parser.input = lexResult.tokens;
 
-  return value;
-}
+    const cst = parser.code();
+
+    // 3. Perform semantics using a CstVisitor.
+    // Note that separation of concerns between the syntactic analysis (parsing) and the semantics.
+    const value = interpreter.visit(cst);
+
+    return value;
+  },
+};
