@@ -36,16 +36,18 @@ class CalculatorPure extends CstParser {
     });
 
     $.RULE("expression", () => {
-      $.SUBRULE($.additionExpression);
+      $.SUBRULE($.conversionExpression);
     });
 
     $.RULE("conversionExpression", () => {
-      $.SUBRULE($.expression, { LABEL: "lhs" });
+      $.SUBRULE($.additionExpression, { LABEL: "lhs" });
       $.MANY(() => {
         $.CONSUME(Func);
-        $.SUBRULE2($.expression, { LABEL: "rhs" });
+        //  the index "2" in SUBRULE2 is needed to identify the unique position in the grammar during runtime
+        $.SUBRULE2($.additionExpression, { LABEL: "rhs" });
       });
     });
+
 
     // Lowest precedence thus it is first in the rule chain
     // The precedence of binary expressions is determined by how far down the Parse Tree

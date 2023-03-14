@@ -25,6 +25,9 @@ class CalculatorInterpreter extends BaseCstVisitor {
   }
 
   expression(ctx) {
+    if (ctx.conversionExpression != null) {
+      return this.visit(ctx.conversionExpression);
+    }
     return this.visit(ctx.additionExpression);
   }
 
@@ -53,18 +56,15 @@ class CalculatorInterpreter extends BaseCstVisitor {
 
   conversionExpression(ctx) {
     let result = this.visit(ctx.lhs);
-    console.error(ctx);
     if (ctx.rhs) {
       ctx.rhs.forEach((rhsOperand, idx) => {
         const rhsValue = this.visit(rhsOperand);
-
         const funcName = ctx.Func?.[idx];
         if (funcName != null) {
           const func = standardFunctions[funcName.image];
           if (func == null) return;
           if (func) {
             result = func([result, rhsValue]);
-            console.error(result);
           }
         }
       });
