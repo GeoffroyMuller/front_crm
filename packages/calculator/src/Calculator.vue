@@ -32,7 +32,11 @@ const state = EditorState.create({
 });
 
 function computeResult(value: string) {
-  results.value = interpreter.interpret(value);
+  try {
+    results.value = interpreter.interpret(value);
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 async function init() {
