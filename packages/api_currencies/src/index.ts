@@ -16,9 +16,9 @@ app.get("/currencies/rates", (req, res) => {
 });
 
 /* app.get("/currencies/fetch", async (req, res) => {
-  const rates = await FixerService.getRates("USD", ["EUR", "GBP"]);
+  const rates = await FixerService.getRates("USD");
   res.json(rates);
-}); */
+});  */
 
 app.listen(3006, () => {
   console.log("The application is listening on port 3006!");

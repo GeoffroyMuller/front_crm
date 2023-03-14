@@ -2,10 +2,10 @@
 
 import axios from "axios";
 
-async function getRates(base: string, symbols: Array<string>) {
+async function getRates(base: string) {
   const url = `${
     process.env.FIXER_API_URL
-  }/latest?base=${base}&symbols=${symbols.join(",")}`;
+  }/latest?base=${base}`;
 
   const result = await axios.get(url, {
     headers: {
