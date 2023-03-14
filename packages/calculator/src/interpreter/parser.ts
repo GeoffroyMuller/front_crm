@@ -40,13 +40,11 @@ class CalculatorPure extends CstParser {
     });
 
     $.RULE("conversionExpression", () => {
-      $.SUBRULE($.additionExpression, { LABEL: "lhs" });
-      $.OR([
-        { ALT: () => $.CONSUME(Currency) },
-        { ALT: () => $.CONSUME(Func) },
-      ]);
-      //  the index "2" in SUBRULE2 is needed to identify the unique position in the grammar during runtime
-      $.SUBRULE2($.conversionExpression, { LABEL: "rhs" });
+      $.SUBRULE($.expression, { LABEL: "lhs" });
+      $.MANY(() => {
+        $.CONSUME(Func);
+        $.SUBRULE2($.expression, { LABEL: "rhs" });
+      });
     });
 
     // Lowest precedence thus it is first in the rule chain

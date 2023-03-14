@@ -24,6 +24,8 @@ export default {
 
     const cst = parser.code();
 
+    console.error(parser.errors);
+
     // 3. Perform semantics using a CstVisitor.
     // Note that separation of concerns between the syntactic analysis (parsing) and the semantics.
     const value = interpreter.visit(cst);
