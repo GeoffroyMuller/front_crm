@@ -40,6 +40,15 @@ class CalculatorPure extends CstParser {
     });
 
     $.RULE("conversionExpression", () => {
+      $.SUBRULE($.mathExpression);
+      $.OPTION(() => {
+        $.CONSUME(Currency);
+        $.CONSUME2(Func);
+        $.CONSUME3(Currency);
+      });
+    });
+
+    $.RULE("mathExpression", () => {
       $.SUBRULE($.additionExpression, { LABEL: "lhs" });
       $.MANY(() => {
         $.CONSUME(Func);
@@ -47,7 +56,6 @@ class CalculatorPure extends CstParser {
         $.SUBRULE2($.additionExpression, { LABEL: "rhs" });
       });
     });
-
 
     // Lowest precedence thus it is first in the rule chain
     // The precedence of binary expressions is determined by how far down the Parse Tree
@@ -77,8 +85,8 @@ class CalculatorPure extends CstParser {
         // parenthesisExpression has the highest precedence and thus it appears
         // in the "lowest" leaf in the expression ParseTree.
         { ALT: () => $.SUBRULE($.parenthesisExpression) },
-        { ALT: () => $.CONSUME(NumberLiteral) },
         { ALT: () => $.SUBRULE($.func) },
+        { ALT: () => $.CONSUME(NumberLiteral) },
       ]);
     });
 

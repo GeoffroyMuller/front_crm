@@ -47,11 +47,12 @@ export const Div = createToken({
   categories: MultiplicationOperator,
 });
 
+
 export const LParen = createToken({ name: "LParen", pattern: /\(/ });
 export const RParen = createToken({ name: "RParen", pattern: /\)/ });
 export const NumberLiteral = createToken({
   name: "NumberLiteral",
-  pattern: /[1-9]\d*/,
+  pattern: /[+-]?([0-9]*[.])?[0-9]+/,
 });
 
 export const Currency = createToken({

@@ -1,18 +1,10 @@
+import { setCurrenciesRates } from "./currencies";
 import CalculatorLexer from "./lexer";
 import parser from "./parser";
 import interpreter from "./visitor";
 
-type Rates = { [key: string]: { [key: string]: number } };
-
-let rates: Rates = {};
-
 export default {
-  setCurrenciesRates: function (r: Rates) {
-    rates = r;
-  },
-  getCurrenciesRates: function () {
-    return rates;
-  },
+  setCurrenciesRates,
   interpret: function (text: string) {
     if (typeof text !== "string") return;
     const inputText = "\n" + text;

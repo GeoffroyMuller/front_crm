@@ -1,4 +1,5 @@
 import { tokenMatcher } from "chevrotain";
+import { convertCurrency } from "./currencies";
 import standardFunctions from "./functions";
 import { Plus, Multi } from "./lexer";
 import parser from "./parser";
@@ -25,10 +26,17 @@ class CalculatorInterpreter extends BaseCstVisitor {
   }
 
   expression(ctx) {
-    if (ctx.conversionExpression != null) {
-      return this.visit(ctx.conversionExpression);
+    return this.visit(ctx.conversionExpression);
+  }
+
+  conversionExpression(ctx) {
+    const mathRes = this.visit(ctx.mathExpression);
+    if (ctx.Currency) {
+      const c1 = ctx.Currency[0].image;
+      const c2 = ctx.Currency[1].image;
+      return convertCurrency(mathRes, c1, c2);
     }
-    return this.visit(ctx.additionExpression);
+    return mathRes;
   }
 
   // Note the usage if the "rhs" and "lhs" labels to increase the readability.
@@ -54,7 +62,7 @@ class CalculatorInterpreter extends BaseCstVisitor {
     return result;
   }
 
-  conversionExpression(ctx) {
+  mathExpression(ctx) {
     let result = this.visit(ctx.lhs);
     if (ctx.rhs) {
       ctx.rhs.forEach((rhsOperand, idx) => {
@@ -99,6 +107,9 @@ class CalculatorInterpreter extends BaseCstVisitor {
     if (ctx.parenthesisExpression) {
       return this.visit(ctx.parenthesisExpression);
     } else if (ctx.NumberLiteral) {
+      if (ctx.NumberLiteral[0].image.includes(".")) {
+        return parseFloat(ctx.NumberLiteral[0].image);
+      }
       return parseInt(ctx.NumberLiteral[0].image, 10);
     } else if (ctx.func) {
       return this.visit(ctx.func);
