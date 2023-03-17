@@ -23,7 +23,8 @@ export function convertCurrency(
 
   const rate = rates?.[cInputName]?.[cOutputName];
   if (rate) {
-    return amount * rate;
+    const result = amount * rate;
+    return `${Math.round(result * 100) / 100} ${cOutput}`;
   }
   return "";
 }

@@ -4,6 +4,8 @@ import standardFunctions from "./functions";
 import { Plus, Multi } from "./lexer";
 import parser from "./parser";
 
+const variables: { [key: string]: number } = {};
+
 const BaseCstVisitor = parser.getBaseCstVisitorConstructor();
 
 // All our semantics go into the visitor, completly separated from the grammar.
@@ -26,6 +28,9 @@ class CalculatorInterpreter extends BaseCstVisitor {
   }
 
   expression(ctx) {
+    if (ctx.affectationExpression) {
+      return this.visit(ctx.affectationExpression);
+    }
     return this.visit(ctx.conversionExpression);
   }
 
@@ -103,6 +108,12 @@ class CalculatorInterpreter extends BaseCstVisitor {
     return result;
   }
 
+  affectationExpression(ctx) {
+    const value = this.visit(ctx.mathExpression);
+    variables[ctx.Func[0].image] = value;
+    return value;
+  }
+
   atomicExpression(ctx) {
     if (ctx.parenthesisExpression) {
       return this.visit(ctx.parenthesisExpression);
@@ -124,9 +135,13 @@ class CalculatorInterpreter extends BaseCstVisitor {
 
   func(ctx) {
     const func = standardFunctions[ctx.Func[0].image];
-    if (func == null) return;
-    const args = this.visit(ctx.args[0]);
-    return func(args);
+    if (ctx.args) {
+      if (func == null) return;
+      const args = this.visit(ctx.args[0]);
+      return func(args);
+    } else {
+      return variables[ctx.Func[0].image];
+    }
   }
 
   args(ctx) {

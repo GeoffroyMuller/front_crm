@@ -10,6 +10,7 @@ import {
   Comma,
   EndLine,
   Currency,
+  Equal,
 } from "./lexer";
 
 // Not any actions (semantics) to perform during parsing.
@@ -36,7 +37,16 @@ class CalculatorPure extends CstParser {
     });
 
     $.RULE("expression", () => {
-      $.SUBRULE($.conversionExpression);
+      $.OR([
+        { ALT: () => $.SUBRULE($.affectationExpression) },
+        { ALT: () => $.SUBRULE($.conversionExpression) },
+      ]);
+    });
+
+    $.RULE("affectationExpression", () => {
+      $.CONSUME(Func);
+      $.CONSUME(Equal);
+      $.SUBRULE($.mathExpression);
     });
 
     $.RULE("conversionExpression", () => {
@@ -98,9 +108,11 @@ class CalculatorPure extends CstParser {
 
     $.RULE("func", () => {
       $.CONSUME(Func);
-      $.CONSUME(LParen);
-      $.SUBRULE($.args);
-      $.CONSUME(RParen);
+      $.OPTION(() => {
+        $.CONSUME(LParen);
+        $.SUBRULE($.args);
+        $.CONSUME(RParen);
+      });
     });
 
     $.RULE("args", () => {

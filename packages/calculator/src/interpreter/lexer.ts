@@ -47,6 +47,10 @@ export const Div = createToken({
   categories: MultiplicationOperator,
 });
 
+export const Equal = createToken({
+  name: "Equal",
+  pattern: /=/,
+});
 
 export const LParen = createToken({ name: "LParen", pattern: /\(/ });
 export const RParen = createToken({ name: "RParen", pattern: /\)/ });
