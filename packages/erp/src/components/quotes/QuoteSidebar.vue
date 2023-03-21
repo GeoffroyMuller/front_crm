@@ -35,7 +35,7 @@
       </Button>
     </div>
     <template #no-padding>
-      <Iframe v-bind="iframeprops" />
+      <Iframe class="quote-iframe" v-bind="iframeprops" />
     </template>
   </Sidebar>
 </template>
@@ -121,5 +121,8 @@ function handleUpdateOpenSidebar(open: boolean) {
     @include typo(text);
     margin-bottom: spacing(1);
   }
+}
+.quote-iframe {
+  border-top: 1px solid color("zinc", 200);
 }
 </style>

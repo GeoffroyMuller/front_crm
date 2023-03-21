@@ -29,7 +29,7 @@ function resizeIframeWithContentSize() {
     iframeHtml.scrollHeight,
     iframeHtml.offsetHeight
   );
-  iframe.style.height = height + "px";
+  iframe.style.height = height + 1 + "px";
 }
 
 async function fetchIframe() {
