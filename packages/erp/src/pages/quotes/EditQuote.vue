@@ -9,7 +9,16 @@
       <template #default="{ hasError, hasChanged }">
         <div class="form-head">
           <Card>
-            <TextField name="name" :label="$t('title')" />
+            <Grid :gap="1">
+              <TextField name="name" :label="$t('title')" />
+              <div v-if="auth.company?.name">{{ auth.company.name }}</div>
+              <div v-if="auth.company?.address">{{ auth.company.address }}</div>
+              <div v-if="auth.company?.city">
+                {{ auth.company.city }} {{ auth.company.zip_code }}
+              </div>
+              <div v-if="auth.company?.country">{{ auth.company.country }}</div>
+              <div v-if="auth.company?.phone">{{ auth.company.phone }}</div>
+            </Grid>
           </Card>
 
           <Card>
@@ -120,10 +129,15 @@ import Card from "core/src/components/Card.vue";
 import { isEmpty } from "lodash";
 import useEditPage from "@/components/editpage";
 import type { SaleLine } from "@/types/sale";
+import useUserStore from "@/stores/user";
+import Grid from "core/src/components/layouts/Grid.vue";
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();
 const vatsStore = useVatStore();
+const userStore = useUserStore();
+
+const auth = computed(() => userStore.auth);
 
 const isAddClientOpen = ref(false);
 const idClient = ref();

@@ -89,7 +89,7 @@ function onClickOutside(event: PointerEvent) {
     position: absolute;
     top: 0;
     right: 0;
-    padding: spacing(0.5);
+    padding: spacing(2);
     opacity: 0;
     transition: opacity 0.4s linear;
   }
