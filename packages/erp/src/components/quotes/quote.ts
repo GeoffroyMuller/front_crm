@@ -13,12 +13,7 @@ export interface UseQuoteProps {
   afterAction?: () => void;
 }
 /*
-to preview and send mail, add the following to the <template> :
-
-    <QuotePreview
-        @close="() => (quoteToPreview = null)"
-        :quote="quoteToPreview"
-    />
+to send mail, add the following to the <template> :
     <QuoteSendMail
       @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)"
       @close="quoteToSendMail = null"
@@ -37,12 +32,6 @@ export default function useQuote(props?: UseQuoteProps) {
   const selected = ref<Array<Quote>>([]);
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const _afterAction = props?.afterAction || (() => {});
-
-  const quoteToPreview = ref<Quote | null>();
-  function preview(item?: Quote) {
-    const _quote = (props?.quote?.value || item) as Quote;
-    quoteToPreview.value = _quote;
-  }
 
   const quoteToSendMail = ref<Quote | null>();
   function sendMail(item?: Quote) {
@@ -119,7 +108,7 @@ export default function useQuote(props?: UseQuoteProps) {
   }
 
   function edit(item: Quote) {
-    router.push(`/quotes/${item.id}/edit`);
+    router.push(`/quotes/${item.id}`);
   }
 
   return {
@@ -129,8 +118,6 @@ export default function useQuote(props?: UseQuoteProps) {
     setArchivedSelection,
     downloadPdf,
     edit,
-    preview,
-    quoteToPreview,
     sendMail,
     quoteToSendMail,
 

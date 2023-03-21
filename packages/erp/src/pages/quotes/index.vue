@@ -29,7 +29,7 @@
           sortable: true,
         },
       ]"
-      @row-click="(quote) => $router.push(`/quotes/${quote.id}`)"
+      @row-click="(quote) => (quoteToEdit = quote)"
       selectable
       v-model:selected="selected"
     >
@@ -83,7 +83,7 @@
                 text: $t('add'),
                 placement: 'bottom',
               }"
-              @click="$router.push(`/quotes/new/edit`)"
+              @click="$router.push(`/quotes/new`)"
             >
               {{ $t("add") }}
             </Button>
@@ -92,7 +92,7 @@
             <FloatingButton
               color="success"
               icon="add"
-              @click="$router.push(`/quotes/new/edit`)"
+              @click="$router.push(`/quotes/new`)"
             />
           </Media>
         </div>
@@ -101,7 +101,6 @@
         <QuoteActionsMenu
           :item="item"
           @setArchived="setArchived"
-          @preview="preview"
           @downloadPdf="downloadPdf"
           @sendMail="sendMail"
           @edit="edit"
@@ -109,24 +108,26 @@
         />
       </template>
     </MagicDataTable>
-    <QuotePreview
-      @close="() => (quoteToPreview = null)"
-      :quote="quoteToPreview"
-    />
     <QuoteSendMail
       @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)"
       @close="quoteToSendMail = null"
       :quote="quoteToSendMail"
+    />
+    <QuoteSidebar
+      :set-archived="setArchived"
+      :download-pdf="downloadPdf"
+      :send-mail="sendMail"
+      :edit="edit"
+      :id="quoteToEdit?.id"
+      @close="quoteToEdit = undefined"
     />
   </Page>
 </template>
 
 <script lang="ts" setup>
 import MagicDataTable from "core/src/components/magic/MagicDataTable.vue";
-import Chip from "core/src/components/Chip.vue";
 import Button from "core/src/components/Button.vue";
 import Page from "@/components/Page.vue";
-import QuotePreview from "@/components/quotes/QuotePreview.vue";
 import QuoteSendMail from "@/components/quotes/QuoteSendMail.vue";
 import Media from "core/src/components/Media.vue";
 import FloatingButton from "core/src/components/FloatingButton.vue";
@@ -136,9 +137,12 @@ import Flex from "core/src/components/layouts/Flex.vue";
 import useQuote from "@/components/quotes/quote";
 import type { Quote } from "@/types/quote";
 import { useRouter } from "vue-router";
+import QuoteSidebar from "@/components/quotes/QuoteSidebar.vue";
+import { ref } from "vue";
 
 const router = useRouter();
 
+const quoteToEdit = ref<Quote>();
 
 const {
   quotestore,
@@ -146,9 +150,7 @@ const {
   selected,
   setArchived,
   setArchivedSelection,
-  preview,
   sendMail,
-  quoteToPreview,
   quoteToSendMail,
   edit,
   createInvoiceFromQuote,

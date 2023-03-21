@@ -60,18 +60,9 @@ export default [
     },
   },
   {
-    path: "/quotes/:id/edit",
+    path: "/quotes/:id",
     name: "quotes-id-edit",
     component: () => import("./pages/quotes/EditQuote.vue"),
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
-    path: "/quotes/:id",
-    name: "quotes-id",
-    component: () => import("./pages/quotes/Quote.vue"),
     meta: {
       middleware: [auth],
       layout: LayoutPage,
