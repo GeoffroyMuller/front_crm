@@ -35,7 +35,9 @@
           {{ $t("send_by_mail") }}
         </Button>
       </div>
-      <Iframe class="quote-iframe" v-bind="iframeprops" />
+      <HtmlPdfPresenter>
+        <Iframe class="quote-iframe" v-bind="iframeprops" />
+      </HtmlPdfPresenter>
     </Card>
     <template #no-padding> </template>
   </Sidebar>
@@ -51,6 +53,7 @@ import Iframe from "core/src/components/Iframe.vue";
 import config from "@/const";
 import { getJWT } from "core/src/helpers/utils";
 import Card from "core/src/components/Card.vue";
+import HtmlPdfPresenter from "@/components/HtmlPdfPresenter.vue";
 
 interface QuoteSidebarProps {
   id?: ID;
@@ -113,15 +116,5 @@ function handleUpdateOpenSidebar(open: boolean) {
   display: flex;
   align-items: center;
   gap: spacing(1);
-  background-color: color("primary", 10);
-}
-
-.quote-content {
-  padding: spacing(1.5);
-
-  .quote-user-title {
-    @include typo(text);
-    margin-bottom: spacing(1);
-  }
 }
 </style>

@@ -29,7 +29,15 @@ function resizeIframeWithContentSize() {
     iframeHtml.scrollHeight,
     iframeHtml.offsetHeight
   );
+  const width = Math.max(
+    iframeBody.scrollWidth,
+    iframeBody.offsetWidth,
+    iframeHtml.clientWidth,
+    iframeHtml.scrollWidth,
+    iframeHtml.offsetWidth
+  );
   iframe.style.height = height + 1 + "px";
+  iframe.style.width = width + 1 + "px";
 }
 
 async function fetchIframe() {

@@ -35,7 +35,7 @@
           </Button>
         </div>
 
-        <div class="invoice-content">
+        <HtmlPdfPresenter>
           <Iframe
             :src="`${config.API_URL}/invoices/${id}/preview`"
             :config="{
@@ -44,7 +44,7 @@
               },
             }"
           />
-        </div>
+        </HtmlPdfPresenter>
       </Card>
 
       <InvoicePayments :invoice="invoice" />
@@ -74,6 +74,7 @@ import { computed, watch } from "vue";
 import Iframe from "core/src/components/Iframe.vue";
 import config from "@/const";
 import { getJWT } from "core/src/helpers/utils";
+import HtmlPdfPresenter from "@/components/HtmlPdfPresenter.vue";
 
 const invoiceStore = useInvoicesStore();
 
@@ -112,6 +113,5 @@ const { downloadPdf, setArchived, invoiceToSendMail, sendMail } = useInvoice({
   display: flex;
   align-items: center;
   gap: spacing(1);
-  background-color: color("primary", 10);
 }
 </style>
