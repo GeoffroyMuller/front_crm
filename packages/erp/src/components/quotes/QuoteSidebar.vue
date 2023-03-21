@@ -5,38 +5,39 @@
     padding
     :title="`${$t('quote')} ${quote?.identifier || ''}`"
   >
-    <div class="quote-actions">
-      <Button variant="text" @click="edit(quote)" icon="edit">
-        {{ $t("edit") }}
-      </Button>
-      <Button
-        variant="text"
-        @click="setArchived(quote)"
-        icon="archive"
-        color="danger"
-      >
-        {{ $t("archive") }}
-      </Button>
-      <Button
-        variant="text"
-        @click="downloadPdf(quote)"
-        icon="download"
-        color="black"
-      >
-        {{ $t("download") }}
-      </Button>
-      <Button
-        variant="text"
-        @click="sendMail(quote)"
-        icon="mail"
-        color="success"
-      >
-        {{ $t("send_by_mail") }}
-      </Button>
-    </div>
-    <template #no-padding>
+    <Card :with-padding="false">
+      <div class="quote-actions">
+        <Button variant="text" @click="edit(quote)" icon="edit">
+          {{ $t("edit") }}
+        </Button>
+        <Button
+          variant="text"
+          @click="setArchived(quote)"
+          icon="archive"
+          color="danger"
+        >
+          {{ $t("archive") }}
+        </Button>
+        <Button
+          variant="text"
+          @click="downloadPdf(quote)"
+          icon="download"
+          color="black"
+        >
+          {{ $t("download") }}
+        </Button>
+        <Button
+          variant="text"
+          @click="sendMail(quote)"
+          icon="mail"
+          color="success"
+        >
+          {{ $t("send_by_mail") }}
+        </Button>
+      </div>
       <Iframe class="quote-iframe" v-bind="iframeprops" />
-    </template>
+    </Card>
+    <template #no-padding> </template>
   </Sidebar>
 </template>
 <script setup lang="ts">
@@ -49,6 +50,7 @@ import type { ID } from "core/src/types";
 import Iframe from "core/src/components/Iframe.vue";
 import config from "@/const";
 import { getJWT } from "core/src/helpers/utils";
+import Card from "core/src/components/Card.vue";
 
 interface QuoteSidebarProps {
   id?: ID;
@@ -111,7 +113,7 @@ function handleUpdateOpenSidebar(open: boolean) {
   display: flex;
   align-items: center;
   gap: spacing(1);
-  justify-content: end;
+  background-color: color("primary", 10);
 }
 
 .quote-content {
@@ -121,8 +123,5 @@ function handleUpdateOpenSidebar(open: boolean) {
     @include typo(text);
     margin-bottom: spacing(1);
   }
-}
-.quote-iframe {
-  border-top: 1px solid color("zinc", 200);
 }
 </style>

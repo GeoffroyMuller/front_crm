@@ -112,6 +112,6 @@ const { downloadPdf, setArchived, invoiceToSendMail, sendMail } = useInvoice({
   display: flex;
   align-items: center;
   gap: spacing(1);
-  border-bottom: 1px solid color("zinc", 200);
+  background-color: color("primary", 10);
 }
 </style>
