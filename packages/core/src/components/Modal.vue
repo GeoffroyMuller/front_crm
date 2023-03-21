@@ -3,7 +3,7 @@
     <div
       class="modal-background"
       :class="{ 'no-padding': !withPadding, open }"
-      @click="$emit('update:open', false)"
+      @click.stop="$emit('update:open', false)"
     ></div>
     <Card class="modal" :class="{ open }">
       <div class="modal-content">
@@ -11,7 +11,7 @@
       </div>
       <div>
         <IconButton
-          @click="$emit('update:open', false)"
+          @click.stop="$emit('update:open', false)"
           name="close"
           class="close-button"
           size="xl"
