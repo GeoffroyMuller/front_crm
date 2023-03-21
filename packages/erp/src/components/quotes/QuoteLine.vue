@@ -47,9 +47,8 @@
       >
         {{ $t("pages.sales.edit-list-products-real") }}
       </Button>
-      <Sidebar v-model:open="isSidebarOpen" displayCloseBtn>
+      <Sidebar v-model:open="isSidebarOpen" displayCloseBtn padding>
         <QuoteSublineForm
-          class="quote-subline-form"
           :product="internalProduct"
           v-model:count="nbProductReal"
         ></QuoteSublineForm>
@@ -224,7 +223,5 @@ function handleProductChange(product: Product) {
   display: grid;
   gap: spacing(1.5);
 }
-.quote-subline-form {
-  padding: spacing(2);
-}
+
 </style>

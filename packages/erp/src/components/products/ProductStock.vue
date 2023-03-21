@@ -30,7 +30,7 @@
       </template>
     </MagicDataTable>
 
-    <Sidebar v-model:open="isSidebarOpen">
+    <Sidebar v-model:open="isSidebarOpen" padding>
       <div class="loading-spinner" v-if="loadingProductReal">
         <Spinner size="md" />
       </div>
@@ -130,7 +130,6 @@ const openSideProductReal = async (productReal: ProductReal | null) => {
   @include flex(col, center, center);
 }
 .product-real-sidebar {
-  padding: spacing(2);
   width: 100%;
   height: 100%;
 }

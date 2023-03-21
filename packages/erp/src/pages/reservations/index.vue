@@ -62,7 +62,7 @@
       </template>
     </MagicDataTable>
 
-    <Sidebar v-model:open="isSidebarOpen">
+    <Sidebar v-model:open="isSidebarOpen" padding>
       <div class="sidebar-reservation-form">
         <ReservationPrepareProductsReal
           v-show="isPrepareProductsReal"

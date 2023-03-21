@@ -300,12 +300,8 @@ async function handleSubmit(
 </script>
 <style lang="scss">
 .reservation-form {
-  padding: spacing(2);
   .reservation-btn-back {
     padding: 0;
-  }
-  .typo-title {
-    margin-bottom: spacing(1) !important;
   }
   .reservation-form-content {
     margin-top: spacing(2);

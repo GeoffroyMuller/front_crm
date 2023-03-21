@@ -30,17 +30,17 @@
     </template>
   </MagicDataTable>
 
-  <Sidebar v-model:open="isSidebarOpen">
+  <Sidebar v-model:open="isSidebarOpen" padding>
     <Form :initial-value="userSelected" @submit="handleSubmit">
       <template #default="{ hasError }">
-        <Grid :p="2" :gap="3">
-          <div class="typo-title">
-            {{
-              isAddAction
-                ? $t("settings-page.teams.new-user")
-                : $t("settings-page.teams.user")
-            }}
-          </div>
+        <div class="typo-title">
+          {{
+            isAddAction
+              ? $t("settings-page.teams.new-user")
+              : $t("settings-page.teams.user")
+          }}
+        </div>
+        <Grid :gap="3">
           <Grid :gap="1">
             <TextField name="firstname" :label="$t('firstname')" />
             <TextField name="lastname" :label="$t('lastname')" />

@@ -1,14 +1,16 @@
 <template>
-  <Sidebar :open="open" @update:open="($event) => $emit('update:open', $event)">
+  <Sidebar
+    :open="open"
+    @update:open="($event) => $emit('update:open', $event)"
+    :title="isAddAction ? $t('new-customer') : $t('customer')"
+    padding
+  >
     <Form
       :initial-value="client"
       class="edit-client-form"
       @submit="handleSubmit"
     >
       <template #default="{ hasError }">
-        <div class="typo-title">
-          {{ isAddAction ? $t("new-customer") : $t("customer") }}
-        </div>
         <TextField name="firstname" :label="$t('firstname')" />
         <TextField name="lastname" :label="$t('lastname')" />
         <TextField name="address" :label="$t('address')" />
@@ -156,15 +158,11 @@ async function handleSubmit(data: any) {
 
 <style lang="scss" scoped>
 .edit-client-form {
-  padding: spacing(2);
   display: flex;
   flex-direction: column;
   gap: spacing(1);
 
   max-width: $sidebar-width;
-  .typo-title {
-    margin-bottom: spacing(2);
-  }
   .add-company-card {
     display: flex;
     width: 100%;

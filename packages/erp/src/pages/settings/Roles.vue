@@ -20,17 +20,17 @@
     </template>
   </MagicDataTable>
 
-  <Sidebar v-model:open="isSidebarOpen">
+  <Sidebar v-model:open="isSidebarOpen" padding>
     <Form :initial-value="roleSelected" @submit="handleSubmit">
       <template #default="{ hasError, value }">
-        <Grid :p="2" :gap="3">
-          <div class="typo-title">
-            {{
-              isAddAction
-                ? $t("settings-page.role.new-role")
-                : $t("settings-page.role.role")
-            }}
-          </div>
+        <div class="typo-title">
+          {{
+            isAddAction
+              ? $t("settings-page.role.new-role")
+              : $t("settings-page.role.role")
+          }}
+        </div>
+        <Grid :gap="3">
           <Grid :gap="1">
             <TextField name="name" :label="$t('settings-page.role.rolename')">
             </TextField>

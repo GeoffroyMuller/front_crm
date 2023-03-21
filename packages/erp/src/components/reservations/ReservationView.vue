@@ -206,12 +206,6 @@ const isPreparable = computed(() => {
 });
 </script>
 <style lang="scss" scoped>
-.reservation-view {
-  padding: spacing(2);
-  .typo-title {
-    margin-bottom: spacing(2);
-  }
-}
 .reservation-actions {
   padding: spacing(0.5) spacing(2);
   display: flex;

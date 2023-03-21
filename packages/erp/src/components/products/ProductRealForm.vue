@@ -183,13 +183,9 @@ async function handleSubmit(data: any) {
 </script>
 <style lang="scss">
 .form-product-real {
-  padding: spacing(2);
   display: flex;
   flex-direction: column;
   gap: spacing(1);
-  .typo-title {
-    margin-bottom: spacing(2);
-  }
   .real-fields {
     @include grid(1, 0, 2);
   }
