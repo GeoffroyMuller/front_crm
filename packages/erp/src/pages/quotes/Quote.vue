@@ -1,9 +1,8 @@
 <template>
-  <Sidebar
-    :open="sidebarOpen"
-    @update:open="handleUpdateOpenSidebar"
-    padding
+  <Page
     :title="`${$t('quote')} ${quote?.identifier || ''}`"
+    back
+    :loading="!quote"
   >
     <Card :with-padding="false">
       <div class="quote-actions">
@@ -39,49 +38,52 @@
         <Iframe class="quote-iframe" v-bind="iframeprops" />
       </HtmlPdfPresenter>
     </Card>
-    <template #no-padding> </template>
-  </Sidebar>
+    <QuoteSendMail
+      @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)"
+      @close="quoteToSendMail = null"
+      :quote="quoteToSendMail"
+    />
+  </Page>
 </template>
 <script setup lang="ts">
-import Sidebar from "core/src/components/Sidebar.vue";
 import Button from "core/src/components/Button.vue";
-import useQuoteStore from "@/stores/quotes";
 import type { Quote } from "@/types/quote";
-import { computed, ref, watch } from "vue";
-import type { ID } from "core/src/types";
+import { computed } from "vue";
 import Iframe from "core/src/components/Iframe.vue";
 import config from "@/const";
 import { getJWT } from "core/src/helpers/utils";
 import Card from "core/src/components/Card.vue";
 import HtmlPdfPresenter from "@/components/HtmlPdfPresenter.vue";
+import Page from "@/components/Page.vue";
+import useQuote from "@/components/quotes/quote";
+import useEditPage from "@/components/editpage";
 
-interface QuoteSidebarProps {
-  id?: ID;
-  setArchived: (item: Quote) => void;
-  downloadPdf: (item: Quote) => void;
-  sendMail: (item: Quote) => void;
-  edit: (item: Quote) => void;
-}
+const {
+  quotestore,
+  downloadPdf,
+  setArchived,
+  sendMail,
+  quoteToSendMail,
+  edit,
+} = useQuote({
+  afterAction: () => {
+    fetchData();
+  },
+});
 
-const props = defineProps<QuoteSidebarProps>();
-const emit = defineEmits(["close"]);
-
-const sidebarOpen = ref(false);
-const quote = ref<Quote>();
-
-const quoteStore = useQuoteStore();
-async function fetchQuote() {
-  if (props.id != null) {
-    quote.value = await quoteStore.fetchById(props.id, {
-      populate: ["client.company", "lines.[vat, sublines]"],
-    });
-  }
-}
+const {
+  model: quote,
+  id,
+  fetchData,
+} = useEditPage<Quote>({
+  store: quotestore,
+  populate: ["client.company", "lines.[vat, sublines]"],
+});
 
 const iframeprops = computed(() => {
-  if (quote.value?.id != null || props.id != null) {
+  if (quote.value?.id != null || id != null) {
     return {
-      src: `${config.API_URL}/quotes/${quote.value?.id || props.id}/preview`,
+      src: `${config.API_URL}/quotes/${quote.value?.id || id}/preview`,
       config: {
         headers: {
           Authorization: getJWT(),
@@ -91,23 +93,6 @@ const iframeprops = computed(() => {
   }
   return null;
 });
-
-watch(
-  () => props.id,
-  () => {
-    if (props.id == null) return;
-    fetchQuote();
-    sidebarOpen.value = true;
-  },
-  { immediate: true }
-);
-
-function handleUpdateOpenSidebar(open: boolean) {
-  if (!open) {
-    emit("close");
-    sidebarOpen.value = false;
-  }
-}
 </script>
 
 <style lang="scss" scoped>

@@ -151,14 +151,6 @@ invoiceService.update = async (body: any, auth) => {
 function _mapDataToDisplay(invoice: Invoice) {
   return merge(
     {
-      ...invoice,
-      lines:
-        invoice?.lines?.map((line) => ({
-          ...line,
-          vatRate: line?.vat?.rate ? `${line?.vat?.rate}%` : "-",
-        })) || [],
-    },
-    {
       client: {
         firstname: "",
         lastname: "",
@@ -171,6 +163,14 @@ function _mapDataToDisplay(invoice: Invoice) {
       },
       modalities: "",
       footer: "",
+    },
+    {
+      ...invoice,
+      lines:
+        invoice?.lines?.map((line) => ({
+          ...line,
+          vatRate: line?.vat?.rate ? `${line?.vat?.rate}%` : "-",
+        })) || [],
     }
   );
 }

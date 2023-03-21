@@ -1,9 +1,6 @@
 <template>
-  <Page :title="$t('home')">
-    <WysiwygEditor label="Test" />
-  </Page>
+  <Page :title="$t('home')"> </Page>
 </template>
 <script setup lang="ts">
 import Page from "@/components/Page.vue";
-import WysiwygEditor from "core/src/components/form/WysiwygEditor.vue";
 </script>

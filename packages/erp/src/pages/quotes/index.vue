@@ -29,7 +29,7 @@
           sortable: true,
         },
       ]"
-      @row-click="(quote) => (quoteToEdit = quote)"
+      @row-click="(item) => $router.push(`/quotes/${item.id}`)"
       selectable
       v-model:selected="selected"
     >
@@ -83,7 +83,7 @@
                 text: $t('add'),
                 placement: 'bottom',
               }"
-              @click="$router.push(`/quotes/new`)"
+              @click="$router.push(`/quotes/new/edit`)"
             >
               {{ $t("add") }}
             </Button>
@@ -92,7 +92,7 @@
             <FloatingButton
               color="success"
               icon="add"
-              @click="$router.push(`/quotes/new`)"
+              @click="$router.push(`/quotes/new/edit`)"
             />
           </Media>
         </div>
@@ -113,14 +113,6 @@
       @close="quoteToSendMail = null"
       :quote="quoteToSendMail"
     />
-    <QuoteSidebar
-      :set-archived="setArchived"
-      :download-pdf="downloadPdf"
-      :send-mail="sendMail"
-      :edit="edit"
-      :id="quoteToEdit?.id"
-      @close="quoteToEdit = undefined"
-    />
   </Page>
 </template>
 
@@ -137,7 +129,6 @@ import Flex from "core/src/components/layouts/Flex.vue";
 import useQuote from "@/components/quotes/quote";
 import type { Quote } from "@/types/quote";
 import { useRouter } from "vue-router";
-import QuoteSidebar from "@/components/quotes/QuoteSidebar.vue";
 import { ref } from "vue";
 
 const router = useRouter();

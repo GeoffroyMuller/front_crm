@@ -124,14 +124,6 @@ quoteService.update = async (body: any, auth) => {
 function _mapQuoteDataToDisplay(quote: Quote) {
   return merge(
     {
-      ...quote,
-      lines:
-        quote?.lines?.map((line) => ({
-          ...line,
-          vatRate: line?.vat?.rate ? `${line?.vat?.rate}%` : "-",
-        })) || [],
-    },
-    {
       client: {
         firstname: "",
         lastname: "",
@@ -144,6 +136,14 @@ function _mapQuoteDataToDisplay(quote: Quote) {
       },
       modalities: "",
       footer: "",
+    },
+    {
+      ...quote,
+      lines:
+        quote?.lines?.map((line) => ({
+          ...line,
+          vatRate: line?.vat?.rate ? `${line?.vat?.rate}%` : "-",
+        })) || [],
     }
   );
 }
@@ -168,7 +168,6 @@ quoteService.preview = async (quote: Quote, token: string) => {
   } catch (err) {
     console.log(err);
   }
-
   const htmlReplaced: string = ejs.render(html, {
     ..._mapQuoteDataToDisplay(quote),
     responsible,

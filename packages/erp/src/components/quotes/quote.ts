@@ -108,7 +108,7 @@ export default function useQuote(props?: UseQuoteProps) {
   }
 
   function edit(item: Quote) {
-    router.push(`/quotes/${item.id}`);
+    router.push(`/quotes/${item.id}/edit`);
   }
 
   return {
