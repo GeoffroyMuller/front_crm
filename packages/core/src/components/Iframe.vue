@@ -8,7 +8,7 @@ import { ref, watch } from "vue";
 
 interface IframeProps {
   src?: string;
-  config?: AxiosRequestConfig;
+  config?: AxiosRequestConfig | any;
 }
 
 const props = withDefaults(defineProps<IframeProps>(), {});

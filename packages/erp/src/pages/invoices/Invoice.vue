@@ -44,76 +44,14 @@
         </div>
 
         <div class="invoice-content">
-          <Grid :gap="5" :columns="1">
-            <div class="typo-subtitle">{{ invoice.name }}</div>
-            <Flex justify-content="space-between">
-              <Flex
-                direction="column"
-                justify-content="center"
-                align-items="flex-start"
-              >
-                <div class="invoice-user-title">{{ $t("responsible") }}:</div>
-                <div class="typo-text2">
-                  {{ responsible?.firstname || "" }}
-                  {{ responsible?.lastname || "" }}
-                </div>
-                <div class="typo-text2">
-                  {{ responsible?.email || "" }}
-                </div>
-              </Flex>
-              <Flex
-                direction="column"
-                justify-content="center"
-                align-items="flex-end"
-              >
-                <div>
-                  <div class="invoice-user-title">{{ $t("customer") }}:</div>
-                  <div class="typo-text2">
-                    {{ invoice.client?.firstname }}
-                    {{ invoice.client?.lastname }}
-                  </div>
-                  <div class="typo-text2">
-                    {{ invoice.client?.address }}
-                  </div>
-                </div>
-              </Flex>
-            </Flex>
-
-            <Grid :gap="1" :columns="1">
-              <div v-for="line in invoice.lines" :key="line.id">
-                <Card>
-                  <Grid :gap="1" :columns="4">
-                    <Grid :gap="1" :columns="1">
-                      <div class="typo-text">{{ $t("description") }}:</div>
-                      <div class="typo-text2" v-html="line.description"></div>
-                    </Grid>
-                    <Grid v-if="line.qty" :gap="1" :columns="1">
-                      <div class="typo-text">{{ $t("quantity") }}:</div>
-                      <div class="typo-text2">{{ line.qty }}</div>
-                    </Grid>
-                    <Grid v-if="line.unit_price" :gap="1" :columns="1">
-                      <div class="typo-text">{{ $t("unit-price") }}:</div>
-                      <div class="typo-text2">
-                        {{ $utils.formatPrice(line.unit_price!) }}
-                      </div>
-                    </Grid>
-                    <Grid v-if="line.vat" :gap="1" :columns="1">
-                      <div class="typo-text">{{ $t("vat") }}:</div>
-                      <div class="typo-text2">{{ line.vat.rate }}%</div>
-                    </Grid>
-                  </Grid>
-                </Card>
-              </div>
-            </Grid>
-            <Grid v-if="invoice.modalities" :gap="1" :columns="1">
-              <div class="typo-text">{{ $t("modalities") }}:</div>
-              <div class="typo-text2" v-html="invoice.modalities"></div>
-            </Grid>
-            <Grid v-if="invoice.footer" :gap="1" :columns="1">
-              <div class="typo-text">{{ $t("footer") }}:</div>
-              <div class="typo-text2" v-html="invoice.footer"></div>
-            </Grid>
-          </Grid>
+          <Iframe
+            :src="`${config.API_URL}/invoices/${id}/preview`"
+            :config="{
+              headers: {
+                Authorization: getJWT(),
+              },
+            }"
+          />
         </div>
       </Card>
 
@@ -146,6 +84,9 @@ import useInvoicesStore from "@/stores/invoices";
 import type Invoice from "@/types/invoice";
 import useUserStore from "@/stores/user";
 import { computed, watch } from "vue";
+import Iframe from "core/src/components/Iframe.vue";
+import config from "@/const";
+import { getJWT } from "core/src/helpers/utils";
 
 const invoiceStore = useInvoicesStore();
 
@@ -158,6 +99,7 @@ const userStore = useUserStore();
 const responsible = computed(() =>
   userStore.getById(invoice.value.idResponsible)
 );
+
 watch(
   () => invoice.value,
   () => {

@@ -1,5 +1,9 @@
 <template>
-  <Sidebar :open="open" @update:open="($event) => $emit('update:open', $event)">
+  <Sidebar
+    :open="open"
+    @update:open="($event) => $emit('update:open', $event)"
+    padding
+  >
     <Form
       :initial-value="{
         recurrence_freq: recurrenceOptions[0],
@@ -172,7 +176,6 @@ async function handleSubmit(data: any) {
 
 <style lang="scss" scoped>
 .edit-event-form {
-  padding: spacing(2);
   display: flex;
   flex-direction: column;
   gap: spacing(1);
