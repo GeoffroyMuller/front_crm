@@ -60,7 +60,7 @@ function onClickOutside(event: PointerEvent) {
     overflow-y: auto;
     .content {
       .padding {
-        padding: spacing(2);
+        padding: spacing(3.5) spacing(2);
       }
       .typo-title {
         margin-bottom: spacing(3);
