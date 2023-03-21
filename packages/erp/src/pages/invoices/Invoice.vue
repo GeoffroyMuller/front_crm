@@ -35,16 +35,11 @@
           </Button>
         </div>
 
-        <HtmlPdfPresenter>
-          <Iframe
-            :src="`${config.API_URL}/invoices/${id}/preview`"
-            :config="{
-              headers: {
-                Authorization: getJWT(),
-              },
-            }"
-          />
-        </HtmlPdfPresenter>
+        <PdfViewer
+          :src="`${config.API_URL}/invoices/${
+            invoice?.id || id
+          }/pdf?token=${getJWT()}`"
+        />
       </Card>
 
       <InvoicePayments :invoice="invoice" />
@@ -65,16 +60,14 @@ import InvoiceSendMail from "@/components/invoices/InvoiceSendMail.vue";
 import Page from "@/components/Page.vue";
 import Button from "core/src/components/Button.vue";
 import Card from "core/src/components/Card.vue";
-import Flex from "core/src/components/layouts/Flex.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import useInvoicesStore from "@/stores/invoices";
 import type Invoice from "@/types/invoice";
 import useUserStore from "@/stores/user";
 import { computed, watch } from "vue";
-import Iframe from "core/src/components/Iframe.vue";
 import config from "@/const";
 import { getJWT } from "core/src/helpers/utils";
-import HtmlPdfPresenter from "@/components/HtmlPdfPresenter.vue";
+import PdfViewer from "core/src/components/PdfViewer.vue";
 
 const invoiceStore = useInvoicesStore();
 

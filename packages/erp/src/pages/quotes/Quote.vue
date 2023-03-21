@@ -34,9 +34,11 @@
           {{ $t("send_by_mail") }}
         </Button>
       </div>
-      <HtmlPdfPresenter>
-        <Iframe class="quote-iframe" v-bind="iframeprops" />
-      </HtmlPdfPresenter>
+      <PdfViewer
+        :src="`${config.API_URL}/quotes/${
+          quote?.id || id
+        }/pdf?token=${getJWT()}`"
+      />
     </Card>
     <QuoteSendMail
       @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)"
@@ -48,15 +50,13 @@
 <script setup lang="ts">
 import Button from "core/src/components/Button.vue";
 import type { Quote } from "@/types/quote";
-import { computed } from "vue";
-import Iframe from "core/src/components/Iframe.vue";
 import config from "@/const";
 import { getJWT } from "core/src/helpers/utils";
 import Card from "core/src/components/Card.vue";
-import HtmlPdfPresenter from "@/components/HtmlPdfPresenter.vue";
 import Page from "@/components/Page.vue";
 import useQuote from "@/components/quotes/quote";
 import useEditPage from "@/components/editpage";
+import PdfViewer from "core/src/components/PdfViewer.vue";
 
 const {
   quotestore,
@@ -78,20 +78,6 @@ const {
 } = useEditPage<Quote>({
   store: quotestore,
   populate: ["client.company", "lines.[vat, sublines]"],
-});
-
-const iframeprops = computed(() => {
-  if (quote.value?.id != null || id != null) {
-    return {
-      src: `${config.API_URL}/quotes/${quote.value?.id || id}/preview`,
-      config: {
-        headers: {
-          Authorization: getJWT(),
-        },
-      },
-    };
-  }
-  return null;
 });
 </script>
 
