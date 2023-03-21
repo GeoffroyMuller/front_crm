@@ -1,18 +1,18 @@
 <template>
-  <Page :title="title" :loading="loadingPage" back>
-    <Card>
-      <Form
-        shortcuts
-        :initial-value="quote"
-        @submit="save"
-        class="quote-form-content"
-      >
-        <template #default="{ hasError, hasChanged }">
-          <div class="form-head">
+  <Page :title="title" :loading="loadingPage" back padding="large">
+    <Form
+      shortcuts
+      :initial-value="quote"
+      @submit="save"
+      class="quote-form-content"
+    >
+      <template #default="{ hasError, hasChanged }">
+        <div class="form-head">
+          <Card>
             <TextField name="name" :label="$t('title')" />
+          </Card>
 
-            <QuoteStatusSelect />
-
+          <Card>
             <MagicAutocomplete
               :label="$t('customer')"
               :store="clientsStore"
@@ -33,64 +33,69 @@
               v-model:options="clientOptions"
               v-model="idClient"
             />
-          </div>
-          <div class="form-table">
-            <Repetable name="lines" :label="$t('products')" orderable>
-              <template #default="{ data }">
-                <QuoteLineVue :line="(data as unknown as SaleLine)" />
-              </template>
-              <template #actions="{ addSection }">
-                <Button
-                  type="button"
-                  variant="text"
-                  @click="addSection({ type: 'product' })"
-                >
-                  {{ $t("pages.edit-quote.add-line-product") }}
-                </Button>
-                <Button
-                  type="button"
-                  variant="text"
-                  @click="addSection({ type: 'comment' })"
-                >
-                  {{ $t("pages.edit-quote.add-line-comment") }}
-                </Button>
-                <Button
-                  type="button"
-                  variant="text"
-                  @click="addSection({ type: 'title' })"
-                >
-                  {{ $t("pages.edit-quote.add-line-title") }}
-                </Button>
-              </template>
-            </Repetable>
-          </div>
+          </Card>
+        </div>
+        <Card class="form-table">
+          <Repetable name="lines" :label="$t('products')" orderable>
+            <template #default="{ data }">
+              <QuoteLineVue :line="(data as unknown as SaleLine)" />
+            </template>
+            <template #actions="{ addSection }">
+              <Button
+                type="button"
+                variant="text"
+                @click="addSection({ type: 'product' })"
+              >
+                {{ $t("pages.edit-quote.add-line-product") }}
+              </Button>
+              <Button
+                type="button"
+                variant="text"
+                @click="addSection({ type: 'comment' })"
+              >
+                {{ $t("pages.edit-quote.add-line-comment") }}
+              </Button>
+              <Button
+                type="button"
+                variant="text"
+                @click="addSection({ type: 'title' })"
+              >
+                {{ $t("pages.edit-quote.add-line-title") }}
+              </Button>
+            </template>
+          </Repetable>
+        </Card>
+
+        <Card>
           <HtmlEditor
             id="modalities"
             name="modalities"
             :label="$t('pages.edit-quote.modalities')"
           />
+        </Card>
 
+        <Card>
           <HtmlEditor
             id="footer"
             name="footer"
             :label="$t('pages.edit-quote.footer')"
           />
-          <div class="actions">
-            <Button
-              :disabled="hasError || !hasChanged"
-              :loading="loading"
-              type="submit"
-              v-tooltip="{
-                text: $t('keyboardshortcuts.ctrl+s'),
-                placement: 'bottom',
-              }"
-            >
-              {{ $t("save") }}
-            </Button>
-          </div>
-        </template>
-      </Form>
-    </Card>
+        </Card>
+        <div class="actions">
+          <Button
+            :disabled="hasError || !hasChanged"
+            :loading="loading"
+            type="submit"
+            v-tooltip="{
+              text: $t('keyboardshortcuts.ctrl+s'),
+              placement: 'bottom',
+            }"
+          >
+            {{ $t("save") }}
+          </Button>
+        </div>
+      </template>
+    </Form>
   </Page>
   <EditClientSidebar @add="onAddClient" v-model:open="isAddClientOpen" />
 </template>
@@ -113,7 +118,6 @@ import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import type Client from "@/types/client";
 import Card from "core/src/components/Card.vue";
 import { isEmpty } from "lodash";
-import QuoteStatusSelect from "@/components/quotes/QuoteStatusSelect.vue";
 import useEditPage from "@/components/editpage";
 import type { SaleLine } from "@/types/sale";
 
@@ -181,7 +185,7 @@ const {
     margin-top: spacing(1);
   }
   .form-head {
-    @include grid(3, 0, 2);
+    @include grid(2, 0, 2);
   }
   .form-table {
     .actions {

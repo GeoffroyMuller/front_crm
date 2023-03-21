@@ -1,5 +1,5 @@
 <template>
-  <Page :title="title" :loading="loadingPage" back>
+  <Page :title="title" :loading="loadingPage" back padding="large">
     <Card>
       <Form
         shortcuts

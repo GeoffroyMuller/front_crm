@@ -23,7 +23,17 @@
     }}</Button>
   </div>
   <Spinner v-if="loading" class="page-spinner" />
-  <div v-else class="page-content" :class="$props.class">
+  <div
+    v-else
+    class="page-content"
+    :class="[
+      $props.class,
+      {
+        'padding-light': padding === 'light',
+        'padding-large': padding === 'large',
+      },
+    ]"
+  >
     <slot />
   </div>
 </template>
@@ -44,9 +54,12 @@ interface PageProps {
   loading?: boolean;
   class?: any;
   back?: boolean;
+  padding?: null | "light" | "large";
 }
 
-const props = withDefaults(defineProps<PageProps>(), {});
+const props = withDefaults(defineProps<PageProps>(), {
+  padding: "light",
+});
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -77,9 +90,14 @@ async function disconnect() {
   transform: translate(-100%, -100%);
 }
 .page-content {
-  padding: 0 spacing(2);
-  padding-bottom: spacing(2);
-  margin-top: spacing(2);
+  &.padding-light {
+    padding: spacing(2);
+  }
+  &.padding-large {
+    padding: spacing(2);
+    max-width: 1200px;
+    margin: auto;
+  }
   display: grid;
   gap: spacing(1);
 }
