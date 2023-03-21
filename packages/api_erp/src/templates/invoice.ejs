@@ -1,139 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Facture</title>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <style>
         body {
-            font-size: 28px;
-            width: 95%;
-            margin: auto;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            background-color: #f8fafc;
-            font-family: "Montserrat", sans-serif;
-            font-weight: 400;
-            font-size: 1em;
-            color: #636363;
+          font-size: 28px;
+          padding: 16px;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 400;
+          font-size: 1em;
+          color: #636363;
+          margin: 0;
         }
-
+  
+        h1 {
+          font-size: 2em;
+          font-weight: 600;
+          margin-top: 0;
+          margin-left: 0;
+          margin-right: 0;
+          margin-bottom: 24px;
+        }
+  
         table {
-            width:100%;
-            max-width: 100%;
+          width: 100%;
+          max-width: 100%;
         }
-
+  
         .content {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
+          display: flex;
+          flex-direction: column;
+          gap: 30px;
         }
         .content .head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
         }
         .content .table {
-            display: grid;
-            grid-template-columns: 30% repeat(4, minmax(0, 1fr));
-            gap: 4px;
-            background-color: white;
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px -1px rgb(0 0 0 / 10%);
-            border-radius: 0.4rem;
-            padding: 8px;
+          display: grid;
+          grid-template-columns: 30% repeat(4, minmax(0, 1fr));
+          gap: 4px;
+          background-color: white;
+          box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%),
+            0 1px 2px -1px rgb(0 0 0 / 10%);
+          border-radius: 0.4rem;
+          padding: 8px;
         }
         .content .table .footer {
-            grid-column: 5;
-
+          grid-column: 5;
         }
         .content .modalities {
-
         }
-
+  
         .page-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            display: flex;
-            width: 100%;
-            justify-content: center;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          display: flex;
+          width: 100%;
+          justify-content: center;
         }
-    </style>
+      </style>
 
-    <h1 style="text-align: left">
-        Facture #<%= identifier %>
-    </h1>
+    <h1 style="text-align: left">Facture #<%= identifier %></h1>
 
     <div class="content">
-        <div class="head">
-            <div>
-                <%= responsible.firstname %>
-                        <%= responsible.lastname %> <br />
-                            <%= responsible?.company?.name %>
-            </div>
-            <div> 
-                <%= client.firstname %>
-                        <%= client.lastname %> <br />
-                            <%= client.company.name %>
-            </div>
+      <div class="head">
+        <div>
+          <%= responsible.firstname %> <%= responsible.lastname %> <br />
+          <%= responsible?.company?.name %>
         </div>
-        <div class="table">
-            
-                <div style="margin-bottom: 15px;">
-                    DESCRIPTION
-                </div>
-                <div style="justify-self: center;">
-                    QUANTITÉ
-                </div>
-                <div style="justify-self: center;">
-                    PRIX UNITAIRE
-                </div>
-                <div style="justify-self: center;">
-                    TVA
-                </div>
-                <div style="justify-self: center;">
-                    TOTAL
-                </div>
-           
-            <% lines.forEach(function(line){ %>
-                
-                    <div>
-                        <%- line.description %>
-                    </div>
-                    <div style="align-self: center; justify-self: center;">
-                        <%= line.qty %>
-                    </div>
-                    <div style="align-self: center; justify-self: center;">
-                        <%= line.unit_price %>
-                    </div>
-                    <div style="align-self: center; justify-self: center;">
-                        <%= line.vatRate %>
-                    </div>
-                    <div style="align-self: center; justify-self: center;">
-                        <%= line.unit_price * line.qty %>
-                    </div>
-            
-            <% }); %>
-            <div class="footer">
+        <div>
+          <%= client.firstname %> <%= client.lastname %> <br />
+          <%= client.company.name %>
+        </div>
+      </div>
+      <div class="table">
+        <div style="margin-bottom: 15px">DESCRIPTION</div>
+        <div style="justify-self: center">QUANTITÉ</div>
+        <div style="justify-self: center">PRIX UNITAIRE</div>
+        <div style="justify-self: center">TVA</div>
+        <div style="justify-self: center">TOTAL</div>
 
-            </div>
+        <% lines.forEach(function(line){ %>
+
+        <div><%- line.description %></div>
+        <div style="align-self: center; justify-self: center">
+          <%= line.qty %>
         </div>
-        <div class="modalities">
-            <%- modalities %>
+        <div style="align-self: center; justify-self: center">
+          <%= line.unit_price %>
         </div>
+        <div style="align-self: center; justify-self: center">
+          <%= line.vatRate %>
+        </div>
+        <div style="align-self: center; justify-self: center">
+          <%= line.unit_price * line.qty %>
+        </div>
+
+        <% }); %>
+        <div class="footer"></div>
+      </div>
+      <div class="modalities"><%- modalities %></div>
     </div>
 
-    <div class="page-footer">
-        <%- footer %>
-    </div>
-
-
-</body>
-
+    <div class="page-footer"><%- footer %></div>
+  </body>
 </html>

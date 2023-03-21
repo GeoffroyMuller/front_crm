@@ -12,12 +12,8 @@ export interface UseInvoiceProps {
   afterAction?: () => void;
 }
 /*
-to preview and send mail, add the following to the <template> :
+to send mail, add the following to the <template> :
 
-    <InvoicePreview
-        @close="() => (invoiceToPreview = null)"
-        :invoice="invoiceToPreview"
-    />
     <InvoiceSendMail
       @clickDownloadPDF="() => downloadPdf(invoiceToSendMail as Invoice)"
       @close="invoiceToSendMail = null"
@@ -35,12 +31,6 @@ export default function useInvoice(props?: UseInvoiceProps) {
   const selected = ref<Array<Invoice>>([]);
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const _afterAction = props?.afterAction || (() => {});
-
-  const invoiceToPreview = ref<Invoice | null>();
-  function preview(item?: Invoice) {
-    const _invoice = (props?.invoice?.value || item) as Invoice;
-    invoiceToPreview.value = _invoice;
-  }
 
   const invoiceToSendMail = ref<Invoice | null>();
   function sendMail(item?: Invoice) {
@@ -115,8 +105,6 @@ export default function useInvoice(props?: UseInvoiceProps) {
     setArchivedSelection,
     downloadPdf,
     edit,
-    preview,
-    invoiceToPreview,
     sendMail,
     invoiceToSendMail,
   };

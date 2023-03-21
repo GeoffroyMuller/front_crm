@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import axios, { type AxiosRequestConfig } from "axios";
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 interface IframeProps {
   src?: string;
@@ -47,6 +47,10 @@ watch(
   },
   { immediate: true }
 );
+
+onMounted(() => {
+  fetchIframe();
+});
 </script>
 
 <style lang="scss">

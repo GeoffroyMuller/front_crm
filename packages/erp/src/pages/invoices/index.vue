@@ -97,17 +97,12 @@
         <InvoiceActionsMenu
           :item="item"
           @setArchived="setArchived"
-          @preview="preview"
           @downloadPdf="downloadPdf"
           @sendMail="sendMail"
           @edit="edit"
         />
       </template>
     </MagicDataTable>
-    <InvoicePreview
-      @close="() => (invoiceToPreview = null)"
-      :invoice="invoiceToPreview"
-    />
     <InvoiceSendMail
       @clickDownloadPDF="() => downloadPdf(invoiceToSendMail as Invoice)"
       @close="invoiceToSendMail = null"
@@ -123,7 +118,6 @@ import Page from "@/components/Page.vue";
 import type Invoice from "@/types/invoice";
 import InvoiceFilters from "@/components/invoices/InvoiceFilters.vue";
 import InvoiceActionsMenu from "@/components/invoices/InvoiceActionsMenu.vue";
-import InvoicePreview from "@/components/invoices/InvoicePreview.vue";
 import InvoiceSendMail from "@/components/invoices/InvoiceSendMail.vue";
 import InvoicePaymentsBar from "@/components/invoices/InvoicePaymentsBar.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
@@ -136,9 +130,7 @@ const {
   selected,
   setArchived,
   setArchivedSelection,
-  preview,
   sendMail,
-  invoiceToPreview,
   invoiceToSendMail,
   edit,
 } = useInvoice({

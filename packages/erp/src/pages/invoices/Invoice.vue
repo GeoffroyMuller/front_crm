@@ -33,14 +33,6 @@
           <Button variant="text" @click="sendMail" icon="mail" color="success">
             {{ $t("send_by_mail") }}
           </Button>
-          <Button
-            variant="text"
-            @click.stop="preview"
-            icon="preview"
-            color="black"
-          >
-            {{ $t("preview") }}
-          </Button>
         </div>
 
         <div class="invoice-content">
@@ -57,10 +49,6 @@
 
       <InvoicePayments :invoice="invoice" />
     </Grid>
-    <InvoicePreview
-      @close="() => (invoiceToPreview = null)"
-      :invoice="invoiceToPreview"
-    />
     <InvoiceSendMail
       @clickDownloadPDF="() => downloadPdf(invoiceToSendMail as Invoice)"
       @close="invoiceToSendMail = null"
@@ -73,7 +61,6 @@
 import useEditPage from "@/components/editpage";
 import useInvoice from "@/components/invoices/invoice";
 import InvoicePayments from "@/components/invoices/InvoicePayments.vue";
-import InvoicePreview from "@/components/invoices/InvoicePreview.vue";
 import InvoiceSendMail from "@/components/invoices/InvoiceSendMail.vue";
 import Page from "@/components/Page.vue";
 import Button from "core/src/components/Button.vue";
@@ -115,14 +102,9 @@ watch(
   }
 );
 
-const {
-  downloadPdf,
-  setArchived,
-  invoiceToSendMail,
-  invoiceToPreview,
-  preview,
-  sendMail,
-} = useInvoice({ invoice });
+const { downloadPdf, setArchived, invoiceToSendMail, sendMail } = useInvoice({
+  invoice,
+});
 </script>
 <style lang="scss" scoped>
 .quote-actions {
@@ -131,13 +113,5 @@ const {
   align-items: center;
   gap: spacing(1);
   border-bottom: 1px solid color("zinc", 200);
-}
-.invoice-content {
-  padding: spacing(1.5);
-
-  .invoice-user-title {
-    @include typo(text);
-    margin-bottom: spacing(1);
-  }
 }
 </style>
