@@ -14,6 +14,7 @@
   .content {
     background-color: white;
     border-radius: map-deep-get($rounded, "sm");
+    margin: auto;
   }
 }
 </style>
