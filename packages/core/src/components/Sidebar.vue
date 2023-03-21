@@ -15,11 +15,14 @@
           class="close-button"
           size="xl"
         />
-        <div class="content" :class="{ padding }">
-          <div v-if="title" class="typo-title">
-            {{ title }}
+        <div class="content">
+          <div :class="{ padding }">
+            <div v-if="title" class="typo-title">
+              {{ title }}
+            </div>
+            <slot />
           </div>
-          <slot />
+          <slot name="no-padding" />
         </div>
       </div>
     </div>
@@ -56,7 +59,7 @@ function onClickOutside(event: PointerEvent) {
   .sidebar-wrapper {
     overflow-y: auto;
     .content {
-      &.padding {
+      .padding {
         padding: spacing(2);
       }
       .typo-title {

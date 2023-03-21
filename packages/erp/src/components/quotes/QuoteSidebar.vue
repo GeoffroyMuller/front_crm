@@ -1,5 +1,10 @@
 <template>
-  <Sidebar :open="sidebarOpen" @update:open="handleUpdateOpenSidebar">
+  <Sidebar
+    :open="sidebarOpen"
+    @update:open="handleUpdateOpenSidebar"
+    padding
+    :title="`${$t('quote')} ${quote?.identifier || ''}`"
+  >
     <div class="quote-actions">
       <Button variant="text" @click="edit(quote)" icon="edit">
         {{ $t("edit") }}
@@ -29,7 +34,9 @@
         {{ $t("send_by_mail") }}
       </Button>
     </div>
-    <Iframe v-bind="iframeprops" />
+    <template #no-padding>
+      <Iframe v-bind="iframeprops" />
+    </template>
   </Sidebar>
 </template>
 <script setup lang="ts">
@@ -104,10 +111,12 @@ function handleUpdateOpenSidebar(open: boolean) {
   display: flex;
   align-items: center;
   gap: spacing(1);
-  border-bottom: 1px solid color("zinc", 200);
+  justify-content: end;
 }
+
 .quote-content {
   padding: spacing(1.5);
+
   .quote-user-title {
     @include typo(text);
     margin-bottom: spacing(1);
