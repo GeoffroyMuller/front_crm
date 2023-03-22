@@ -132,7 +132,8 @@ async function displayPdf() {
     justify-content: center;
     gap: spacing(1);
     background-color: color("zinc", 300);
-    border-radius: 0 0 map-deep-get($rounded, "sm") map-deep-get($rounded, "sm");
+    border-radius: 0 0 map-deep-get($rounded, "xl") map-deep-get($rounded, "xl");
+    padding: 0 spacing(1);
     .total {
       margin-left: spacing(0.5);
     }
