@@ -148,6 +148,7 @@ async function displayPdf() {
     margin: auto;
     max-width: 1200px;
     display: block;
+    border: color("zinc", 300) 1px solid;
   }
 }
 </style>
