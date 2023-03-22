@@ -57,6 +57,7 @@ import Page from "@/components/Page.vue";
 import useQuote from "@/components/quotes/quote";
 import useEditPage from "@/components/editpage";
 import PdfViewer from "core/src/components/PdfViewer.vue";
+import QuoteSendMail from "@/components/quotes/QuoteSendMail.vue";
 
 const {
   quotestore,
