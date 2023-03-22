@@ -1,25 +1,33 @@
 <template>
   <div class="pdf-viewer" v-if="src">
-    <div class="pdf-viewer-actions">
-      <div>
-        <div>
-          <TextField
-            class="input-number-page"
-            type="number"
-            :appearance-none="true"
-            :min="1"
-            :max="totalPages"
-            v-model="currentPage"
-          />
-        </div>
-        <span v-if="!$_.isNil(totalPages)">{{ `/ ${totalPages}` }}</span>
-
+    <div class="pdf-viewer-actions-wrapper">
+      <div class="pdf-viewer-actions">
         <div>
           <IconButton name="chevron_left" @click.stop="substractOne()" />
           <IconButton name="chevron_right" @click.stop="addOne()" />
         </div>
+        <div>
+          <div>
+            <TextField
+              class="input-number-page"
+              type="number"
+              :appearance-none="true"
+              :min="1"
+              :max="totalPages"
+              v-model="currentPage"
+            />
+          </div>
+          <span v-if="!$_.isNil(totalPages)" class="total">
+            {{ `/ ${totalPages}` }}
+          </span>
+        </div>
+        <div>
+          <IconButton name="add" @click.stop="zoomIn()" />
+          <IconButton name="remove" @click.stop="zoomOut()" />
+        </div>
       </div>
     </div>
+
     <canvas ref="canvasRef" />
   </div>
 </template>
@@ -42,10 +50,16 @@ pdfjs.GlobalWorkerOptions.workerSrc =
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const currentPage = ref(1);
 const totalPages = ref(1);
+const zoom = ref(1);
+let pdf: any = null;
 
-onMounted(() => {
+async function fetchPdf() {
+  if (!props.src) return;
+  pdf = await pdfjs.getDocument(props.src).promise;
   displayPdf();
-});
+}
+
+onMounted(fetchPdf);
 
 watch(
   () => currentPage.value,
@@ -54,12 +68,7 @@ watch(
   }
 );
 
-watch(
-  () => props.src,
-  () => {
-    displayPdf();
-  }
-);
+watch(() => props.src, fetchPdf);
 
 function substractOne() {
   if (currentPage.value - 1 >= 1) {
@@ -73,16 +82,24 @@ function addOne() {
   }
 }
 
+function zoomIn() {
+  zoom.value += 0.1;
+  displayPdf();
+}
+
+function zoomOut() {
+  zoom.value -= 0.1;
+  displayPdf();
+}
+
 async function displayPdf() {
   const canvas = canvasRef.value;
-  if (!canvas) return;
-
-  const pdf = await pdfjs.getDocument(props.src).promise;
+  if (!canvas || !pdf) return;
 
   totalPages.value = pdf.numPages;
 
   const page = await pdf.getPage(currentPage.value);
-  const viewport = page.getViewport({ scale: 1.0 });
+  const viewport = page.getViewport({ scale: zoom.value });
   const context = canvas.getContext("2d");
   canvas.height = viewport.height;
   canvas.width = viewport.width;
@@ -98,13 +115,31 @@ async function displayPdf() {
 .pdf-viewer {
   padding: spacing(2) spacing(8);
   background-color: color("zinc", 200);
+  overflow: auto;
+  position: relative;
+  padding-top: spacing(7);
+  .pdf-viewer-actions-wrapper {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
   .pdf-viewer-actions {
+    height: spacing(6);
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    gap: spacing(1);
+    background-color: color("zinc", 300);
+    border-radius: 0 0 map-deep-get($rounded, "sm") map-deep-get($rounded, "sm");
+    .total {
+      margin-left: spacing(0.5);
+    }
     > * {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: spacing(1);
-      margin-bottom: spacing(1);
     }
   }
   canvas {
