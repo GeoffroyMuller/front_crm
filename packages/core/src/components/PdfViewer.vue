@@ -29,6 +29,7 @@
     </div>
 
     <canvas ref="canvasRef" />
+    <div ref="textRef" class="text-layer"></div>
   </div>
 </template>
 
@@ -48,6 +49,7 @@ pdfjs.GlobalWorkerOptions.workerSrc =
   "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js";
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
+const textRef = ref<HTMLDivElement | null>(null);
 const currentPage = ref(1);
 const totalPages = ref(1);
 const zoom = ref(1);
@@ -94,7 +96,7 @@ function zoomOut() {
 
 async function displayPdf() {
   const canvas = canvasRef.value;
-  if (!canvas || !pdf) return;
+  if (!canvas || !pdf || !textRef.value) return;
 
   totalPages.value = pdf.numPages;
 
@@ -104,9 +106,16 @@ async function displayPdf() {
   canvas.height = viewport.height;
   canvas.width = viewport.width;
 
-  page.render({
+  await page.render({
     canvasContext: context,
-    viewport: viewport,
+    viewport,
+  }).promise;
+  const textContent = await page.getTextContent();
+  pdfjs.renderTextLayer({
+    textContent: textContent,
+    container: textRef.value,
+    viewport,
+    textDivs: [],
   });
 }
 </script>
@@ -150,6 +159,17 @@ async function displayPdf() {
     max-width: 1200px;
     display: block;
     border: color("zinc", 300) 1px solid;
+  }
+  .text-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: hidden;
+    z-index: -1;
   }
 }
 </style>

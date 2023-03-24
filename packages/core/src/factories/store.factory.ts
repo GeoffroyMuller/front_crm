@@ -109,7 +109,7 @@ export function makeAPIStore<T>(
     return resPath;
   }
 
-  function _getQueryString(q: any, base?: string): string {
+  function _getQueryString(q?: Filters, base?: string): string {
     if (!q || typeof q !== "object") {
       return "";
     }
