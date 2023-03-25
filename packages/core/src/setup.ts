@@ -31,9 +31,7 @@ interface SetupOptions {
   app?: VueApp;
 }
 
-export default function setup(options: SetupOptions) {
-  const app = options.app || createApp(App);
-
+export function setupPlugins(options: SetupOptions) {
   const { routes } = options;
 
   const router = setupRouter({
@@ -47,10 +45,38 @@ export default function setup(options: SetupOptions) {
     setupAxios(options.axios);
   }
 
+  return {
+    router,
+    i18n,
+    pinia,
+    lodashPlugin,
+    yupPlugin,
+    utilsPlugin,
+    breakpointsPlugin,
+  };
+}
+
+export function setupPluginsArray(options: SetupOptions) {
+  return Object.values(setupPlugins(options));
+}
+
+export default function setup(options: SetupOptions) {
+  const app = options.app || createApp(App);
+
+  const {
+    router,
+    i18n,
+    pinia,
+    lodashPlugin,
+    yupPlugin,
+    utilsPlugin,
+    breakpointsPlugin,
+  } = setupPlugins(options);
+
   app
-    .use(pinia)
     .use(router)
     .use(i18n)
+    .use(pinia)
     .use(lodashPlugin)
     .use(yupPlugin)
     .use(utilsPlugin)

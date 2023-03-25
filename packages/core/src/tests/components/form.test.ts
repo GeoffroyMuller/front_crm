@@ -3,6 +3,7 @@ import Form from "../../components/form/Form.vue";
 import { describe, it, expect } from "vitest";
 import { h, ref } from "vue";
 import TextField from "../../components/form/TextField.vue";
+import { setupPluginsArray } from "src/setup";
 
 describe("Form", () => {
   it("should contains what slot.default contain", () => {
@@ -20,6 +21,9 @@ describe("Form", () => {
     const wrapper = mount(Form, {
       slots: {
         default: [h(TextField, { name: "test" }, [])],
+      },
+      global: {
+        plugins: setupPluginsArray({ routes: [] }),
       },
     });
     const input = wrapper.find('input[name="test"]');
@@ -41,7 +45,11 @@ describe("Form", () => {
         TextField,
       },
     };
-    const wrapper = mount(WrapperComp);
+    const wrapper = mount(WrapperComp, {
+      global: {
+        plugins: setupPluginsArray({ routes: [] }),
+      },
+    });
     const form = wrapper.findComponent(Form);
     const input = form.find('input[name="test"]');
     await input.setValue("test");
@@ -59,6 +67,9 @@ describe("Form", () => {
       slots: {
         default: [h(TextField, { name: "test", error: "test" }, [])],
       },
+      global: {
+        plugins: setupPluginsArray({ routes: [] }),
+      },
     });
     // @ts-ignore
     expect(wrapper.vm.hasError).toBe(true);
@@ -69,6 +80,9 @@ describe("Form", () => {
     const wrapper = mount(Form, {
       slots: {
         default: [h(TextField, { name: "test" }, [])],
+      },
+      global: {
+        plugins: setupPluginsArray({ routes: [] }),
       },
     });
     const input = wrapper.findComponent(TextField);
@@ -86,6 +100,9 @@ describe("Form", () => {
         default: [
           h("div", { name: "test" }, [h(TextField, { name: "test" }, [])]),
         ],
+      },
+      global: {
+        plugins: setupPluginsArray({ routes: [] }),
       },
     });
     const input = wrapper.findComponent(TextField);
@@ -109,6 +126,9 @@ describe("Form", () => {
       slots: {
         default: [h(TextField, { name: "test" }, [])],
       },
+      global: {
+        plugins: setupPluginsArray({ routes: [] }),
+      },
     });
     const input = wrapper.find('input[name="test"]');
     await input.setValue("test");
@@ -128,6 +148,9 @@ describe("Form", () => {
       slots: {
         default: [h(TextField, { name: "test" }, [])],
       },
+      global: {
+        plugins: setupPluginsArray({ routes: [] }),
+      },
     });
     expect(data.test).toBe("test");
     // @ts-ignore
@@ -142,6 +165,9 @@ describe("Form", () => {
     const wrapper = mount(Form, {
       props: {
         "onUpdate:modelValue": (val: any) => (data = val),
+      },
+      global: {
+        plugins: setupPluginsArray({ routes: [] }),
       },
     });
 
@@ -162,6 +188,9 @@ describe("Form", () => {
       slots: {
         default: [h(TextField, { name: "test" }, [])],
       },
+      global: {
+        plugins: setupPluginsArray({ routes: [] }),
+      },
     });
 
     const form = wrapper.findComponent(Form);
@@ -176,6 +205,9 @@ describe("Form", () => {
       slots: {
         default: [h(TextField, { name: "test" }, [])],
       },
+      global: {
+        plugins: setupPluginsArray({ routes: [] }),
+      },
     });
     const input = wrapper.find('input[name="test"]');
     await input.setValue("test");
@@ -189,6 +221,9 @@ describe("Form", () => {
     const wrapper = mount(Form, {
       slots: {
         default: [h(TextField, { name: "test" }, [])],
+      },
+      global: {
+        plugins: setupPluginsArray({ routes: [] }),
       },
     });
     const form = wrapper.findComponent(Form);
@@ -216,6 +251,9 @@ describe("Form", () => {
       slots: {
         default: [h(TextField, { name: "test" }, [])],
       },
+      global: {
+        plugins: setupPluginsArray({ routes: [] }),
+      },
     });
     await wrapper.vm.$nextTick();
     // @ts-ignore
@@ -234,6 +272,9 @@ describe("Form", () => {
       },
       slots: {
         default: [h(TextField, { name: "test" }, [])],
+      },
+      global: {
+        plugins: setupPluginsArray({ routes: [] }),
       },
     });
     await wrapper.vm.$nextTick();
