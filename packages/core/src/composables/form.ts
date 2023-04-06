@@ -1,4 +1,4 @@
-import { clone, isEmpty, omitBy, isNil, isEqual, get, set } from "lodash";
+import { clone, isEmpty, omitBy, isNil, isEqual, get, set, cloneDeep } from "lodash";
 import { computed, provide, ref, watch, type Ref } from "vue";
 
 export interface _CustomInput {
@@ -18,12 +18,12 @@ export default function useForm(props: useFormProps) {
   const inputs = ref<{ [key: string]: _CustomInput }>({});
   const errors = ref<{ [key: string]: string | boolean | undefined }>({});
   const internalValue = ref<any>(
-    clone(props.value?.value || props.initialValue.value || {})
+    cloneDeep(props.value?.value || props.initialValue.value || {})
   );
-  const internalInitialValue = ref<any>(clone(props.initialValue.value || {}));
+  const internalInitialValue = ref<any>(cloneDeep(props.initialValue.value || {}));
 
   function _setInternalValue(name: string, value: any) {
-    const newVal = set(clone(internalValue.value), name, value);
+    const newVal = set(cloneDeep(internalValue.value), name, value);
     internalValue.value = newVal;
     if (props.onUpdateValue) {
       props.onUpdateValue(newVal);
@@ -42,7 +42,7 @@ export default function useForm(props: useFormProps) {
   }
 
   function _setInternalValueObject(value: any) {
-    internalValue.value = clone(value || {});
+    internalValue.value = cloneDeep(value || {});
     if (!isEmpty(internalValue.value)) {
       Object.keys(inputs.value).forEach((key) => {
         const inputVal = _getInternalValue(key);
@@ -80,7 +80,7 @@ export default function useForm(props: useFormProps) {
     () => props.initialValue.value,
     () => {
       _setInternalValueObject(props.initialValue.value || {});
-      internalInitialValue.value = clone(props.initialValue.value || {});
+      internalInitialValue.value = cloneDeep(props.initialValue.value || {});
     }
   );
 
@@ -91,18 +91,18 @@ export default function useForm(props: useFormProps) {
   function register(input: _CustomInput) {
     inputs.value[input.name] = input;
     if (_getInternalValue(input.name) !== undefined) {
-      input.internalValue.value = clone(_getInternalValue(input.name));
+      input.internalValue.value = cloneDeep(_getInternalValue(input.name));
     }
     if (input.internalValue.value !== undefined) {
-      _setInternalValue(input.name, clone(input.internalValue.value));
+      _setInternalValue(input.name, cloneDeep(input.internalValue.value));
     }
     if (input.internalError.value !== undefined) {
-      errors.value[input.name] = clone(input.internalError.value);
+      errors.value[input.name] = cloneDeep(input.internalError.value);
     }
     watch(
       () => input.internalValue.value,
       () => {
-        _setInternalValue(input.name, clone(input.internalValue.value));
+        _setInternalValue(input.name, cloneDeep(input.internalValue.value));
       }
     );
     watch(
@@ -166,7 +166,7 @@ export default function useForm(props: useFormProps) {
   }
 
   function resetHasChanged() {
-    internalInitialValue.value = clone(internalValue.value);
+    internalInitialValue.value = cloneDeep(internalValue.value);
   }
 
   provide("form", {
