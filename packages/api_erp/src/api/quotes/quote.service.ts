@@ -157,7 +157,7 @@ quoteService.preview = async (quote: Quote, token: string) => {
   try {
     responsible = (
       await axios.get(
-        process.env.GATEWAY_URL + "/users/" + quote.idResponsible,
+        process.env.AUTH_SERVICE_URL + "/users/" + quote.idResponsible,
         {
           headers: {
             Authorization: token,
@@ -181,7 +181,7 @@ quoteService.getPdf = async (quote: Quote, token: string) => {
   try {
     responsible = (
       await axios.get(
-        process.env.GATEWAY_URL + "/users/" + quote.idResponsible,
+        process.env.AUTH_SERVICE_URL + "/users/" + quote.idResponsible,
         {
           headers: {
             Authorization: token,
@@ -209,7 +209,7 @@ quoteService.sendByMail = async (quote: Quote, token: string) => {
     try {
       responsible = (
         await axios.get(
-          process.env.GATEWAY_URL + "/users/" + quote.idResponsible,
+          process.env.AUTH_SERVICE_URL + "/users/" + quote.idResponsible,
           {
             headers: {
               Authorization: token,
