@@ -1,6 +1,5 @@
 import { Model } from "objection";
 import SaleLine from "../sales/sale_line.model";
-import Product from "../products/product.model";
 import Vat from "../vats/vat.model";
 import InvoiceSubline from "./invoice_subline.model";
 
@@ -28,14 +27,6 @@ export default class InvoiceLine extends SaleLine<InvoiceSubline> {
         join: {
           from: InvoiceLine.tableName + ".idVat",
           to: "vat.id",
-        },
-      },
-      product: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Product,
-        join: {
-          from: InvoiceLine.tableName +".idProduct",
-          to: "products.id",
         },
       },
     };

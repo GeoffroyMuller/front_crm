@@ -32,6 +32,7 @@ const PROXIES = {
   products: proxy(SERVICES.products, PROXY_OPTIONS),
   products_real: proxy(SERVICES.products, PROXY_OPTIONS),
   product_real_out: proxy(SERVICES.products, PROXY_OPTIONS),
+  reservations: proxy(SERVICES.calendar, PROXY_OPTIONS),
 } as { [key: string]: RequestHandler };
 
 Object.keys(PROXIES).forEach((p) => {

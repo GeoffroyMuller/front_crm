@@ -1,5 +1,5 @@
 import { Model } from "objection";
-import SaleSubline from "../sales/sale_subline.model";
+import SaleSubline from "./sale_subline.model";
 
 export default class ReservationSubline extends SaleSubline {
 
