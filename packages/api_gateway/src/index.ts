@@ -11,7 +11,6 @@ const SERVICES = {
   auth: process.env.AUTH_SERVICE_URL,
   erp: process.env.ERP_SERVICE_URL,
   calendar: process.env.CALENDAR_SERVICE_URL,
-  currencies: process.env.CURRENCIES_SERVICE_URL,
   products: process.env.PRODUCTS_SERVICE_URL,
 } as { [key: string]: string };
 
@@ -28,7 +27,6 @@ const PROXIES = {
   rights: proxy(SERVICES.auth, PROXY_OPTIONS),
   google: proxy(SERVICES.auth, PROXY_OPTIONS),
   events: proxy(SERVICES.calendar, PROXY_OPTIONS),
-  currencies: proxy(SERVICES.currencies, PROXY_OPTIONS),
   products: proxy(SERVICES.products, PROXY_OPTIONS),
   products_real: proxy(SERVICES.products, PROXY_OPTIONS),
   product_real_out: proxy(SERVICES.products, PROXY_OPTIONS),
