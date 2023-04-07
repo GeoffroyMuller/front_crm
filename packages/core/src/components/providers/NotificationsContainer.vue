@@ -4,7 +4,9 @@
       <Toast
         v-for="notification of notifications"
         :key="notification.id"
-        v-bind="notification"
+        :title="notification.title"
+        :type="notification.type"
+        :message="notification.message"
         @close="deleteNotification(notification.id as string)"
       />
     </TransitionGroup>
