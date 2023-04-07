@@ -108,6 +108,13 @@ export default function useMenu(props: MenuProps) {
             },
             false
           );
+          elem.addEventListener(
+            "click",
+            () => {
+              open.value = false;
+            },
+            false
+          );
         }
       }
     },
