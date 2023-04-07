@@ -9,7 +9,6 @@ import { Service } from "core_api/types";
 import { raw } from "objection";
 import QuoteLine from "./quote_line.model";
 import axios from "axios";
-import { isPopulateNeeded } from "core_api/services/filters.service";
 const fs = require("fs");
 let ejs = require("ejs");
 
