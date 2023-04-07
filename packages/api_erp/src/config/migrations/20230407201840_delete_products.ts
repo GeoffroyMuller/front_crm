@@ -1,6 +1,15 @@
 import { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
+  await knex.schema.dropTable("products");
+  await knex.schema.dropTable("products_real");
+  await knex.schema.dropTable("product_fields");
+  await knex.schema.dropTable("product_real_fields");
+  await knex.schema.dropTable("product_real_out");
+  return;
+}
+
+export async function down(knex: Knex): Promise<void> {
   await knex.schema.createTable("products", function (table) {
     table.increments("id");
     table.integer("idCompany");
@@ -10,7 +19,6 @@ export async function up(knex: Knex): Promise<void> {
     table.float("stock");
     table.string("stockManagement");
     table.integer("capacity");
-    table.integer("idVat");
   });
   await knex.schema.createTable("products_real", function (table) {
     table.increments("id");
@@ -40,14 +48,5 @@ export async function up(knex: Knex): Promise<void> {
     table.datetime("dtstart");
     table.datetime("dtend");
   });
-  return;
-}
-
-export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTable("products");
-  await knex.schema.dropTable("products_real");
-  await knex.schema.dropTable("product_fields");
-  await knex.schema.dropTable("product_real_fields");
-  await knex.schema.dropTable("product_real_out");
   return;
 }
