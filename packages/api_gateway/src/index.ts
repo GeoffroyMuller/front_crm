@@ -2,6 +2,7 @@ require("dotenv").config();
 const cors = require("cors");
 import express, { Application, RequestHandler } from "express";
 import proxy from "express-http-proxy";
+import xAuthMiddleware from "core_api/middlewares/xauth.middleware";
 
 const app: Application = express();
 
@@ -32,6 +33,8 @@ const PROXIES = {
   product_real_out: proxy(SERVICES.products, PROXY_OPTIONS),
   reservations: proxy(SERVICES.calendar, PROXY_OPTIONS),
 } as { [key: string]: RequestHandler };
+
+app.use(xAuthMiddleware);
 
 Object.keys(PROXIES).forEach((p) => {
   app.use(`/${p}/*`, PROXIES[p]);
