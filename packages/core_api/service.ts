@@ -16,20 +16,34 @@ export class AuthError extends Error {
   }
 }
 
+function isRelationExists<T extends Model>(
+  model: ModelClass<T>,
+  relation: string
+): boolean {
+  // TODO: check existence of relation of this type too
+  if (relation.includes("[")) return true;
+  const split = relation.split(".");
+  // @ts-ignore
+  if (model.relationMappings[split[0]] == null || split.length > 4) return false;
+  if (split.length === 1) {
+    return true;
+  }
+  return isRelationExists(
+     // @ts-ignore
+    model.relationMappings[split[0]].modelClass,
+    split.slice(1).join(".")
+  );
+}
+
 function applyRelations<T extends Model>(
   query: QueryBuilderType<T>,
   model: ModelClass<T>,
   relations: any
 ): QueryBuilderType<T> {
-  if (Array.isArray(relations)) {
-    for (const relation of relations) {
-      const relationLevel1 = (relation as string).split('.')[0];
-      // @ts-ignore
-      // TODO: check deep relation existence too
-      if (model.relationMappings[relationLevel1] != null) {
-        query.withGraphFetched(relation);
-      }
-      
+  if (!Array.isArray(relations)) return query;
+  for (const relation of relations) {
+    if (isRelationExists(model, relation)) {
+      query.withGraphFetched(relation);
     }
   }
   return query;
@@ -77,11 +91,11 @@ const serviceFactory = <
     handleFilters(q, f);
     let result = await q.findById(id).execute();
     await checkAuthorization(result as T, auth);
-    const {data: res} = await onAfterGetById({
+    const { data: res } = await onAfterGetById({
       query,
       filters,
       auth,
-      data: result
+      data: result,
     });
     return res as T;
   };
