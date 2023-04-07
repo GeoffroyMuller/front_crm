@@ -20,11 +20,7 @@ import { computed } from "vue";
 import Card from "./Card.vue";
 import Icon from "./Icon.vue";
 import type { Notification } from "./types";
-interface ToastProps {
-  type: Notification["type"];
-  message: Notification["message"];
-  title: Notification["title"];
-}
+type ToastProps = Notification;
 
 const icon = computed(() => {
   switch (props.type) {
