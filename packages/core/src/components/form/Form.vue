@@ -41,7 +41,7 @@ const {
   register,
   unregister,
 } = useForm({
-  value: toRef(props, "modelValue"),
+  value: props.modelValue ? toRef(props, "modelValue") : undefined,
   initialValue: toRef(props, "initialValue"),
   onUpdateValue(value) {
     emit("update:modelValue", value);

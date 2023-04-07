@@ -1,4 +1,13 @@
-import { clone, isEmpty, omitBy, isNil, isEqual, get, set, cloneDeep } from "lodash";
+import {
+  clone,
+  isEmpty,
+  omitBy,
+  isNil,
+  isEqual,
+  get,
+  set,
+  cloneDeep,
+} from "lodash";
 import { computed, provide, ref, watch, type Ref } from "vue";
 
 export interface _CustomInput {
@@ -17,15 +26,27 @@ export interface useFormProps {
 export default function useForm(props: useFormProps) {
   const inputs = ref<{ [key: string]: _CustomInput }>({});
   const errors = ref<{ [key: string]: string | boolean | undefined }>({});
-  const internalValue = ref<any>(
-    cloneDeep(props.value?.value || props.initialValue.value || {})
+  const internalValue =
+    props.value != null
+      ? computed({
+          get() {
+            return props.value?.value;
+          },
+          set(val) {
+            if (props.onUpdateValue) {
+              props.onUpdateValue(val);
+            }
+          },
+        })
+      : ref<any>(cloneDeep(props.initialValue.value || {}));
+  const internalInitialValue = ref<any>(
+    cloneDeep(props.initialValue.value || {})
   );
-  const internalInitialValue = ref<any>(cloneDeep(props.initialValue.value || {}));
 
   function _setInternalValue(name: string, value: any) {
     const newVal = set(cloneDeep(internalValue.value), name, value);
     internalValue.value = newVal;
-    if (props.onUpdateValue) {
+    if (props.value == null && props.onUpdateValue) {
       props.onUpdateValue(newVal);
     }
     if (props.onInputChange) {
@@ -61,19 +82,6 @@ export default function useForm(props: useFormProps) {
         errors.value[key] = undefined;
       });
     }
-  }
-
-  if (props.value !== undefined) {
-    watch(
-      // @ts-ignore
-      () => props.value.value,
-      () => {
-        if (!isEqual(props.value?.value, internalValue.value)) {
-          // @ts-ignore
-          _setInternalValueObject(props.value.value || {});
-        }
-      }
-    );
   }
 
   watch(
