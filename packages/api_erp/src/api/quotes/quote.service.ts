@@ -8,7 +8,6 @@ import { merge } from "lodash";
 import { Service } from "core_api/types";
 import { raw } from "objection";
 import QuoteLine from "./quote_line.model";
-import axios from "axios";
 const fs = require("fs");
 let ejs = require("ejs");
 
@@ -152,50 +151,13 @@ quoteService.preview = async (quote: Quote, token: string) => {
     __dirname + "/../../templates/quote.ejs",
     "utf8"
   );
-  let responsible = {};
-  try {
-    responsible = (
-      await axios.get(
-        process.env.AUTH_SERVICE_URL + "/users/" + quote.idResponsible,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      )
-    ).data;
-  } catch (err) {
-    console.log(err);
-  }
-  const htmlReplaced: string = ejs.render(html, {
-    ..._mapQuoteDataToDisplay(quote),
-    responsible,
-  });
+  const htmlReplaced: string = ejs.render(html, _mapQuoteDataToDisplay(quote));
   return htmlReplaced;
 };
 
 quoteService.getPdf = async (quote: Quote, token: string) => {
-  let quoteToPrint = quote;
-  let responsible = {};
-  try {
-    responsible = (
-      await axios.get(
-        process.env.AUTH_SERVICE_URL + "/users/" + quote.idResponsible,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      )
-    ).data;
-  } catch (err) {
-    console.log(err);
-  }
   const pdf = await PdfService.printPDF({
-    data: {
-      ..._mapQuoteDataToDisplay(quote),
-      responsible,
-    },
+    data: _mapQuoteDataToDisplay(quote),
     inputPath: __dirname + "/../../templates/quote.ejs",
     returnType: "stream",
   });
@@ -204,28 +166,10 @@ quoteService.getPdf = async (quote: Quote, token: string) => {
 
 quoteService.sendByMail = async (quote: Quote, token: string) => {
   try {
-    let responsible = {};
-    try {
-      responsible = (
-        await axios.get(
-          process.env.AUTH_SERVICE_URL + "/users/" + quote.idResponsible,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        )
-      ).data;
-    } catch (err) {
-      console.log(err);
-    }
     const res = await mailService.sendMail({
       html: ejs.render(
         fs.readFileSync(__dirname + "/../../templates/quote.ejs", "utf8"),
-        {
-          ..._mapQuoteDataToDisplay(quote),
-          responsible,
-        }
+        _mapQuoteDataToDisplay(quote)
       ),
       text: "",
       subject: "Devis",
