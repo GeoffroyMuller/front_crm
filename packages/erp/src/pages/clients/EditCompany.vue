@@ -84,7 +84,6 @@ const {
 } = useEditPage<Company>({
   store: companiesStore,
   onAdd: (res) => {
-    console.error("qdqsd");
     router.push("/companies/" + res.id);
     company.value = res;
   },

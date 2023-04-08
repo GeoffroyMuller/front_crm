@@ -26,7 +26,6 @@ const reservationService = serviceFactory<Reservation, User>(Reservation, {
     if (isPopulateNeeded(filters, "lines.product"))  {
       try {
         const products = await productsProvider.fetch([], auth);
-        console.error({products})
         data.lines = (data.lines || []).map((line: ReservationLine) => {
           const product = products.find((p) => p.id == line.idProduct);
           if (product == null) return line;
