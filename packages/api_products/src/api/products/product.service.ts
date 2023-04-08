@@ -9,6 +9,14 @@ const productService = serviceFactory<Product, User>(Product, {
   isAuthorized: async (model: Product | Object, user: User) => {
     return Product.fromJson(model)?.idCompany == user?.idCompany;
   },
+  async onBeforeGetById({ query, auth, filters, data }) {
+    if (auth != null) {
+      if (auth.idCompany) {
+        query.where("idCompany", auth.idCompany);
+      }
+    }
+    return { query, auth, filters, data};
+  },
   async onBeforeFetchList({ query, auth, filters, data }) {
     if (auth != null) {
       if (auth.idCompany) {
