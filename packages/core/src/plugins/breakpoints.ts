@@ -82,6 +82,7 @@ const breakpointsPlugin: Plugin = {
       down,
     };
 
+    // @ts-ignore
     app.config.globalProperties.$breakpoints = opt;
 
     app.provide("breakpoints", opt);
