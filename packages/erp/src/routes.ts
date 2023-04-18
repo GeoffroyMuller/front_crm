@@ -4,11 +4,26 @@ import Layout404 from "./layouts/404Layout.vue";
 
 import auth from "./middleware/auth";
 
+import Home from "./pages/Home.vue";
+import Settings from "./pages/settings/index.vue";
+import Products from "./pages/products/index.vue";
+import EditProduct from "./pages/products/EditProduct.vue";
+import Reservations from "./pages/reservations/index.vue";
+import Quotes from "./pages/quotes/index.vue";
+import EditQuote from "./pages/quotes/EditQuote.vue";
+import Clients from "./pages/clients/index.vue";
+import EditCompany from "./pages/clients/EditCompany.vue";
+import Events from "./pages/events/index.vue";
+import Invoices from "./pages/invoices/index.vue";
+import EditInvoice from "./pages/invoices/EditInvoice.vue";
+import Invoice from "./pages/invoices/Invoice.vue";
+import Quote from "./pages/quotes/Quote.vue";
+
 export default [
   {
     path: "/",
     name: "home",
-    component: () => import("./pages/Home.vue"),
+    component: Home,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -17,7 +32,7 @@ export default [
   {
     path: "/settings",
     name: "settings",
-    component: () => import("./pages/settings/index.vue"),
+    component: Settings,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -26,7 +41,7 @@ export default [
   {
     path: "/products",
     name: "products",
-    component: () => import("./pages/products/index.vue"),
+    component: Products,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -35,7 +50,7 @@ export default [
   {
     path: "/products/:id",
     name: "products-id",
-    component: () => import("./pages/products/EditProduct.vue"),
+    component: EditProduct,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -44,7 +59,7 @@ export default [
   {
     path: "/reservations",
     name: "reservations",
-    component: () => import("./pages/reservations/index.vue"),
+    component: Reservations,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -53,7 +68,7 @@ export default [
   {
     path: "/quotes",
     name: "quotes",
-    component: () => import("./pages/quotes/index.vue"),
+    component: Quotes,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -62,7 +77,7 @@ export default [
   {
     path: "/quotes/:id/edit",
     name: "quotes-id-edit",
-    component: () => import("./pages/quotes/EditQuote.vue"),
+    component: EditQuote,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -71,7 +86,7 @@ export default [
   {
     path: "/quotes/:id",
     name: "quotes-id",
-    component: () => import("./pages/quotes/Quote.vue"),
+    component: Quote,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -80,7 +95,7 @@ export default [
   {
     path: "/customers",
     name: "customers",
-    component: () => import("./pages/clients/index.vue"),
+    component: Clients,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -89,7 +104,7 @@ export default [
   {
     path: "/companies/:id",
     name: "edit-company",
-    component: () => import("./pages/clients/EditCompany.vue"),
+    component: EditCompany,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -98,7 +113,7 @@ export default [
   {
     path: "/events",
     name: "events",
-    component: () => import("./pages/events/index.vue"),
+    component: Events,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -107,7 +122,7 @@ export default [
   {
     path: "/invoices",
     name: "invoices",
-    component: () => import("./pages/invoices/index.vue"),
+    component: Invoices,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -116,7 +131,7 @@ export default [
   {
     path: "/invoices/:id/edit",
     name: "invoices-id-edit",
-    component: () => import("./pages/invoices/EditInvoice.vue"),
+    component: EditInvoice,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
@@ -125,7 +140,7 @@ export default [
   {
     path: "/invoices/:id",
     name: "invoices-id",
-    component: () => import("./pages/invoices/Invoice.vue"),
+    component: Invoice,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
