@@ -78,7 +78,6 @@ export type APIStore<T> = Store<
 export function makeAPIStore<T>(
   props: makeAPIStoreProps & { id: string }
 ): APIStoreDef<T> {
-
   function _getPath({
     id,
     resource,
