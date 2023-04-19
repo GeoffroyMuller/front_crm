@@ -115,6 +115,7 @@ export function makeAPIStore<T>(
     const queryStrObj = queryStrKeys
       .filter((key) => typeof q[key] === "object")
       .map((key: string) => {
+        // @ts-ignore
         return _getQueryString(q[key], base ? `${base}[${key}]` : key);
       });
     const queryStrString = queryStrKeys
@@ -156,8 +157,8 @@ export function makeAPIStore<T>(
       ...props.state,
     }),
     getters: {
-      getList: (state) => state.list,
-      getById: (state) => (id: ID) => state.byId[id],
+      getList: (state: any) => state.list,
+      getById: (state: any) => (id: ID) => state.byId[id],
       ...props.getters,
     },
     actions: {
@@ -237,6 +238,7 @@ export function makeAPIStore<T>(
           res.results = response.data as Array<T>;
         }
         if (applyState) {
+          // @ts-ignore
           this.list = res.results;
           this.totalPages = res.totalPages;
         }
