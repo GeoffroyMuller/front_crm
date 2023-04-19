@@ -93,27 +93,28 @@ axios.interceptors.response.use(
   },
   async (error) => {
     const userStore = useUserStore();
+
     if (error.response.status == 401) {
-      const refresh_token = getRefreshToken();
-      if (refreshTokenRequest == null) {
-        refreshTokenRequest = userStore.login({ refresh_token });
-        await refreshTokenRequest;
-        refreshTokenRequest = null;
-      } else {
-        await refreshTokenRequest;
-      }
-      if (refresh_token) {
-        try {
+      try {
+        const refresh_token = getRefreshToken();
+        if (refreshTokenRequest == null) {
+          refreshTokenRequest = userStore.login({ refresh_token });
+          await refreshTokenRequest;
+          refreshTokenRequest = null;
+        } else {
+          await refreshTokenRequest;
+        }
+        if (refresh_token) {
           const response = await axios(error.config);
           return response;
-        } catch (err) {
+        } else {
           userStore.disconnect();
         }
-      } else {
+      } catch (err) {
         userStore.disconnect();
       }
+      Promise.reject(error);
     }
-    Promise.reject(error);
   }
 );
 
