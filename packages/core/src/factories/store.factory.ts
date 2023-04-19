@@ -14,8 +14,6 @@ export interface makeAPIStoreProps {
   // if path is different of the id
   path?: string;
 
-  primaryKey?: string;
-
   persist?: boolean;
   filters?: Filters;
 
@@ -80,7 +78,6 @@ export type APIStore<T> = Store<
 export function makeAPIStore<T>(
   props: makeAPIStoreProps & { id: string }
 ): APIStoreDef<T> {
-  const _primaryKey = props.primaryKey || "id";
 
   function _getPath({
     id,
