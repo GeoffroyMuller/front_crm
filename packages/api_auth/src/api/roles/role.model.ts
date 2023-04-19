@@ -5,7 +5,7 @@ export default class Role extends Model implements RoleType {
   id?: ID;
   name?: string;
   idCompany?: ID;
-  rights?: string;
+  rights?: string | string[];
 
   static get tableName() {
     return "roles";

@@ -7,7 +7,7 @@ export interface Role {
   id?: ID;
   name?: string;
   idCompany?: ID;
-  rights?: string;
+  rights?: string | string[];
 }
 
 export interface User {
