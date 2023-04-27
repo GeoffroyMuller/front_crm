@@ -114,7 +114,7 @@ const { toast } = useUI();
 const { t } = useI18n();
 
 const sidebarOpen = ref(false);
-const paymentEdit = ref<InvoicePayment | null>();
+const paymentEdit = ref<Partial<InvoicePayment> | null>();
 
 const paymentsAdded = ref<InvoicePayment[]>([]);
 
