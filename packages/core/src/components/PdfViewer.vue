@@ -127,6 +127,7 @@ async function displayPdf() {
   overflow: auto;
   position: relative;
   padding-top: spacing(7);
+  border-radius: map-deep-get($rounded, "sm");
   .pdf-viewer-actions-wrapper {
     position: absolute;
     top: 0;
