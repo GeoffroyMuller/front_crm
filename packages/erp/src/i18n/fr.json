@@ -47,7 +47,8 @@
       "comment": "Commentaire",
       "product": "Produit",
       "order": "Commande",
-      "add-order": "Ajouter une commande"
+      "add-order": "Ajouter une commande",
+      "save": "Enregistrer le devis"
     },
     "edit-invoice": {
       "qty": "Quantitée",

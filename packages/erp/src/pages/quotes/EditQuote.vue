@@ -90,19 +90,6 @@
               :label="$t('pages.edit-quote.footer')"
             />
           </Card>
-          <!--  <div class="actions">
-            <Button
-              :disabled="hasError || !hasChanged"
-              :loading="loading"
-              type="submit"
-              v-tooltip="{
-                text: $t('keyboardshortcuts.ctrl+s'),
-                placement: 'bottom',
-              }"
-            >
-              {{ $t("save") }}
-            </Button>
-          </div> -->
         </div>
         <div class="quote-summary-container">
           <Card class="quote-summary" no-padding>
@@ -141,7 +128,7 @@
             color="success"
             rounded
           >
-            {{ $t("save") }}
+            {{ $t("pages.edit-quote.save") }}
           </Button>
         </div>
       </template>
