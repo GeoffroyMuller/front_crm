@@ -1,6 +1,40 @@
 <template>
   <div class="layout-side-mobile-menu">
-    <slot name="mobile-nav" />
+    <slot
+      name="mobile-nav"
+      :setMobileNavOpen="(o: boolean) => (mobileNavOpen = o)"
+    />
+    <Sidebar v-model:open="mobileNavOpen">
+      <div class="mobile-nav-items-container">
+        <Tree :list="menu" class="mobile-nav-items" default-open>
+          <template #item-rollable="{ data, isOpen }">
+            <div class="mobile-nav-items" tabindex="0">
+              <Icon
+                name="arrow_right"
+                class="icons-arrow"
+                :class="{ active: isOpen }"
+                color="black"
+              />
+              <div>{{ $t(data.title) }}</div>
+            </div>
+          </template>
+          <template #item="{ data }">
+            <div
+              class="mobile-nav-item"
+              tabindex="0"
+              @keyup.enter="$router.push(data.path)"
+              @click="
+                mobileNavOpen = false;
+                $router.push(data.path);
+              "
+            >
+              <Icon :name="data.icon" color="black" />
+              <div>{{ $t(data.title) }}</div>
+            </div>
+          </template>
+        </Tree>
+      </div>
+    </Sidebar>
   </div>
   <nav class="layout-side-menu" :class="{ mini: isNavMini }">
     <div class="logo-container">
@@ -85,8 +119,9 @@ import Tree from "../components/Tree.vue";
 import useKeyboardShortcut from "../composables/keyboardshortcut";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import Sidebar from "../components/Sidebar.vue";
 
-type MenuItem = {
+export type MenuItem = {
   key: string;
   path: string;
   title: string;
@@ -94,7 +129,7 @@ type MenuItem = {
   children?: MenuItem[];
 };
 
-type LayoutSideMenuProps = {
+export type LayoutSideMenuProps = {
   menu: MenuItem[];
   bottomMenuItem?: MenuItem;
 };
@@ -102,6 +137,7 @@ type LayoutSideMenuProps = {
 const props = withDefaults(defineProps<LayoutSideMenuProps>(), {});
 
 const isNavMini = ref(false);
+const mobileNavOpen = ref(false);
 
 const router = useRouter();
 const route = useRoute();
@@ -260,6 +296,23 @@ $headerHeightMobile: 50px;
     width: 100%;
     height: auto;
     margin-top: $headerHeightMobile;
+  }
+}
+.mobile-nav-items-container {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  .mobile-nav-items {
+    display: flex;
+    flex-direction: column;
+    gap: spacing(1.5);
+    align-items: flex-start;
+    justify-content: center;
+    .mobile-nav-item {
+      display: flex;
+      align-items: flex-end;
+      gap: spacing(0.75);
+    }
   }
 }
 </style>

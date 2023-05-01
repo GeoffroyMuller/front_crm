@@ -4,6 +4,7 @@
     class="flex layout-component"
     :class="{
       divided,
+      'full-height': fullHeight,
     }"
     ref="flex"
     :style="{
@@ -32,6 +33,7 @@ interface FlexProps {
   component?: Component;
   divided?: boolean;
   flexWrap?: FlexWrapOptions;
+  fullHeight?: boolean;
 
   gap?: number;
 
@@ -85,5 +87,8 @@ useLayoutComponent({
 }
 .divided {
   @include flex-separator();
+}
+.full-height {
+  height: 100%;
 }
 </style>

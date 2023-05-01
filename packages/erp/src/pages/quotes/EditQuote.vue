@@ -162,6 +162,7 @@ import Grid from "core/src/components/layouts/Grid.vue";
 import Text from "core/src/components/Text.vue";
 import IconButton from "core/src/components/IconButton.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
+import useQuote from "@/components/quotes/quote";
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();
@@ -219,6 +220,17 @@ const {
     quote.value = res;
   },
 });
+
+const {
+  downloadPdf,
+  selected,
+  setArchived,
+  setArchivedSelection,
+  sendMail,
+  quoteToSendMail,
+  edit,
+  createInvoiceFromQuote,
+} = useQuote({});
 </script>
 
 <style scoped lang="scss">
