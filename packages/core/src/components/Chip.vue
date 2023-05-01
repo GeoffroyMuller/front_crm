@@ -8,7 +8,7 @@
       name="cancel"
       class="icon-btn-cancel"
       size="sm"
-      :color="isOutline ? color : color ? 'white' : 'black'"
+      :color="color"
       @click.stop="$emit('close')"
     />
   </div>
