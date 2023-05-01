@@ -13,7 +13,7 @@ import * as yup from "yup";
 import { computed, watch } from "vue";
 import { RouterView, useRoute } from "vue-router";
 
-import Default from "../layouts/Default.vue";
+import LayoutDefault from "../layouts/LayoutDefault.vue";
 import NotificationsContainer from "./providers/NotificationsContainer.vue";
 import ConfirmModalContainer from "./providers/ConfirmModalContainer.vue";
 import { useI18n } from "vue-i18n";
@@ -39,6 +39,6 @@ const layout = computed(() => {
     return route.meta.layout;
   }
 
-  return Default;
+  return LayoutDefault;
 });
 </script>

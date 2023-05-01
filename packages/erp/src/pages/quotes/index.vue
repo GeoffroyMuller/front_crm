@@ -83,7 +83,7 @@
                 text: $t('add'),
                 placement: 'bottom',
               }"
-              @click="$router.push(`/quotes/new/edit`)"
+              @click="$router.push(`/quotes/new`)"
             >
               {{ $t("add") }}
             </Button>
@@ -92,7 +92,7 @@
             <FloatingButton
               color="success"
               icon="add"
-              @click="$router.push(`/quotes/new/edit`)"
+              @click="$router.push(`/quotes/new`)"
             />
           </Media>
         </div>

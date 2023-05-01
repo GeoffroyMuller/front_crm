@@ -17,11 +17,11 @@
       </Media>
     </div>
   </div>
-  <div class="page-btn-back" v-if="back">
+  <!--   <div class="page-btn-back" v-if="back">
     <Button @click="goToBack" variant="text" icon="chevron_left">{{
       $t("back")
     }}</Button>
-  </div>
+  </div> -->
   <Spinner v-if="loading" class="page-spinner" />
   <div
     v-else
@@ -83,6 +83,7 @@ async function disconnect() {
 </script>
 
 <style lang="scss">
+$header_height: 80px;
 .page-spinner {
   position: absolute;
   top: 50%;
@@ -90,18 +91,31 @@ async function disconnect() {
   transform: translate(-100%, -100%);
 }
 .page-content {
+  height: calc(100% - $header_height);
+  overflow-y: auto;
   &.padding-light {
     padding: spacing(2);
+    margin-top: $header_height;
   }
   &.padding-large {
     padding: spacing(2);
-    max-width: 1200px;
-    margin: auto;
+    padding-left: max(calc((100% - 1200px) / 2), spacing(2));
+    padding-right: max(calc((100% - 1200px) / 2), spacing(2));
+    // max-width: 1200px;
+    // margin: auto;
+    margin-top: $header_height;
   }
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   gap: spacing(1);
 }
 .page-menu {
+  position: fixed;
+  z-index: 25;
+  top: 0;
+  width: 100%;
+  height: $header_height;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -136,9 +150,13 @@ async function disconnect() {
   .page-menu {
     background-color: unset;
     background: unset;
+    height: auto;
     .typo-title {
       color: unset;
     }
+  }
+  .page-content {
+    margin-top: 0;
   }
 }
 .page-btn-back {

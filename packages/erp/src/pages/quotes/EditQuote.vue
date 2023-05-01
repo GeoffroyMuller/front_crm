@@ -1,108 +1,110 @@
 <template>
   <Page :title="title" :loading="loadingPage" back padding="large">
-    <Form
-      shortcuts
-      :initial-value="quote"
-      @submit="save"
-      class="quote-form-content"
-    >
+    <Form shortcuts :initial-value="quote" @submit="save" class="quote-details">
       <template #default="{ hasError, hasChanged }">
-        <div class="form-head">
-          <Card>
-            <Grid :gap="1">
-              <TextField name="name" :label="$t('title')" />
-              <div v-if="auth.company?.name">{{ auth.company.name }}</div>
-              <div v-if="auth.company?.address">{{ auth.company.address }}</div>
-              <div v-if="auth.company?.city">
-                {{ auth.company.city }} {{ auth.company.zip_code }}
-              </div>
-              <div v-if="auth.company?.country">{{ auth.company.country }}</div>
-              <div v-if="auth.company?.phone">{{ auth.company.phone }}</div>
-            </Grid>
+        <div class="quote-form-content">
+          <div class="form-head">
+            <Card>
+              <Grid :gap="1">
+                <TextField name="name" :label="$t('title')" />
+                <div v-if="auth.company?.name">{{ auth.company.name }}</div>
+                <div v-if="auth.company?.address">
+                  {{ auth.company.address }}
+                </div>
+                <div v-if="auth.company?.city">
+                  {{ auth.company.city }} {{ auth.company.zip_code }}
+                </div>
+                <div v-if="auth.company?.country">
+                  {{ auth.company.country }}
+                </div>
+                <div v-if="auth.company?.phone">{{ auth.company.phone }}</div>
+              </Grid>
+            </Card>
+
+            <Card>
+              <MagicAutocomplete
+                :label="$t('customer')"
+                :store="clientsStore"
+                :get-filters="
+                  (str) => ({
+                    $or: {
+                      $contains: { lastname: str, firstname: str },
+                    },
+                  })
+                "
+                :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
+                :get-option-value="(opt) => opt.id"
+                optionKey="id"
+                name="idClient"
+                :addText="$t(`pages.edit-quote.add-customer`)"
+                can-add
+                @add="isAddClientOpen = true"
+                v-model:options="clientOptions"
+                v-model="idClient"
+              />
+            </Card>
+          </div>
+          <Card class="form-table">
+            <Repetable name="lines" :label="$t('products')" orderable>
+              <template #default="{ data }">
+                <QuoteLineVue :line="(data as unknown as SaleLine)" />
+              </template>
+              <template #actions="{ addSection }">
+                <Button
+                  type="button"
+                  variant="text"
+                  @click="addSection({ type: 'product' })"
+                >
+                  {{ $t("pages.edit-quote.add-line-product") }}
+                </Button>
+                <Button
+                  type="button"
+                  variant="text"
+                  @click="addSection({ type: 'comment' })"
+                >
+                  {{ $t("pages.edit-quote.add-line-comment") }}
+                </Button>
+                <Button
+                  type="button"
+                  variant="text"
+                  @click="addSection({ type: 'title' })"
+                >
+                  {{ $t("pages.edit-quote.add-line-title") }}
+                </Button>
+              </template>
+            </Repetable>
           </Card>
 
           <Card>
-            <MagicAutocomplete
-              :label="$t('customer')"
-              :store="clientsStore"
-              :get-filters="
-                (str) => ({
-                  $or: {
-                    $contains: { lastname: str, firstname: str },
-                  },
-                })
-              "
-              :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
-              :get-option-value="(opt) => opt.id"
-              optionKey="id"
-              name="idClient"
-              :addText="$t(`pages.edit-quote.add-customer`)"
-              can-add
-              @add="isAddClientOpen = true"
-              v-model:options="clientOptions"
-              v-model="idClient"
+            <HtmlEditor
+              id="modalities"
+              name="modalities"
+              :label="$t('pages.edit-quote.modalities')"
             />
           </Card>
-        </div>
-        <Card class="form-table">
-          <Repetable name="lines" :label="$t('products')" orderable>
-            <template #default="{ data }">
-              <QuoteLineVue :line="(data as unknown as SaleLine)" />
-            </template>
-            <template #actions="{ addSection }">
-              <Button
-                type="button"
-                variant="text"
-                @click="addSection({ type: 'product' })"
-              >
-                {{ $t("pages.edit-quote.add-line-product") }}
-              </Button>
-              <Button
-                type="button"
-                variant="text"
-                @click="addSection({ type: 'comment' })"
-              >
-                {{ $t("pages.edit-quote.add-line-comment") }}
-              </Button>
-              <Button
-                type="button"
-                variant="text"
-                @click="addSection({ type: 'title' })"
-              >
-                {{ $t("pages.edit-quote.add-line-title") }}
-              </Button>
-            </template>
-          </Repetable>
-        </Card>
 
-        <Card>
-          <HtmlEditor
-            id="modalities"
-            name="modalities"
-            :label="$t('pages.edit-quote.modalities')"
-          />
-        </Card>
-
-        <Card>
-          <HtmlEditor
-            id="footer"
-            name="footer"
-            :label="$t('pages.edit-quote.footer')"
-          />
-        </Card>
-        <div class="actions">
-          <Button
-            :disabled="hasError || !hasChanged"
-            :loading="loading"
-            type="submit"
-            v-tooltip="{
-              text: $t('keyboardshortcuts.ctrl+s'),
-              placement: 'bottom',
-            }"
-          >
-            {{ $t("save") }}
-          </Button>
+          <Card>
+            <HtmlEditor
+              id="footer"
+              name="footer"
+              :label="$t('pages.edit-quote.footer')"
+            />
+          </Card>
+          <div class="actions">
+            <Button
+              :disabled="hasError || !hasChanged"
+              :loading="loading"
+              type="submit"
+              v-tooltip="{
+                text: $t('keyboardshortcuts.ctrl+s'),
+                placement: 'bottom',
+              }"
+            >
+              {{ $t("save") }}
+            </Button>
+          </div>
         </div>
+        <Card class="quote-summary"> TETS </Card>
       </template>
     </Form>
   </Page>
@@ -184,30 +186,43 @@ const {
     return data;
   },
   onAdd: (res) => {
-    router.push("/quotes/" + res.id + "/edit");
+    router.push("/quotes/" + res.id);
     quote.value = res;
   },
 });
 </script>
 
 <style scoped lang="scss">
-.quote-form-content {
-  @include grid(1, 0, 2);
-  .actions {
-    display: flex;
-    gap: spacing(1);
-    margin-top: spacing(1);
-  }
-  .form-head {
-    @include grid(2, 0, 2);
-  }
-  .form-table {
+.quote-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: spacing(2);
+  .quote-form-content {
+    grid-column: span 2;
+    @include grid(1, 0, 2);
     .actions {
       display: flex;
-      justify-content: flex-end;
-      width: 100%;
       gap: spacing(1);
+      margin-top: spacing(1);
     }
+    .form-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: spacing(2);
+    }
+    .form-table {
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        gap: spacing(1);
+      }
+    }
+  }
+  .quote-summary {
+    height: fit-content;
+    position: sticky;
+    top: 0;
   }
 }
 </style>

@@ -17,7 +17,6 @@ import Events from "./pages/events/index.vue";
 import Invoices from "./pages/invoices/index.vue";
 import EditInvoice from "./pages/invoices/EditInvoice.vue";
 import Invoice from "./pages/invoices/Invoice.vue";
-import Quote from "./pages/quotes/Quote.vue";
 
 export default [
   {
@@ -75,18 +74,9 @@ export default [
     },
   },
   {
-    path: "/quotes/:id/edit",
-    name: "quotes-id-edit",
-    component: EditQuote,
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
     path: "/quotes/:id",
     name: "quotes-id",
-    component: Quote,
+    component: EditQuote,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
