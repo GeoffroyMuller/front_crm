@@ -13,6 +13,7 @@ interface IconProps {
   color?: Color;
   sharp?: boolean;
   size?: Size;
+  weight?: "bold" | "regular";
 }
 
 const classes = computed(() => {
@@ -24,6 +25,9 @@ const classes = computed(() => {
   }
   res.push(`icon-${props.size}`);
   res.push(`icon-${props.color}`);
+  if (props.weight === "bold") {
+    res.push("icon-bold");
+  }
   return res;
 });
 
@@ -31,6 +35,7 @@ const props = withDefaults(defineProps<IconProps>(), {
   color: "black",
   sharp: false,
   size: "md",
+  weight: "bold",
 });
 </script>
 
@@ -52,6 +57,10 @@ const props = withDefaults(defineProps<IconProps>(), {
 }
 .icon-xl {
   font-size: 26px !important;
+}
+
+.icon-bold {
+  font-weight: 700;
 }
 
 @each $key, $value in $colors {

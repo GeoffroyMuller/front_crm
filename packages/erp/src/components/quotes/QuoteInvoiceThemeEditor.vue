@@ -45,6 +45,7 @@
           />
         </Flex>
       </Grid>
+      <footer>footer</footer>
     </Card>
   </div>
 </template>
@@ -64,10 +65,19 @@ const theme = ref<QuoteInvoiceTheme>();
 .quote-invoice-modele-editor {
   background: color("zinc", 200);
   padding: spacing(2);
+  min-height: 840px;
+  overflow-y: auto !important;
   .content {
     max-width: 1200px;
+    min-height: 840px;
     margin: auto;
     border: color("zinc", 300) 1px solid;
+    position: relative;
+    footer {
+      position: absolute;
+      bottom: 0;
+      margin: auto;
+    }
   }
 }
 </style>
