@@ -4,7 +4,7 @@
       name="mobile-nav"
       :setMobileNavOpen="(o: boolean) => (mobileNavOpen = o)"
     />
-    <Sidebar v-model:open="mobileNavOpen">
+    <Sidebar v-model:open="mobileNavOpen" position="left">
       <div class="mobile-nav-items-container">
         <Tree :list="menu" class="mobile-nav-items" default-open>
           <template #item-rollable="{ data, isOpen }">

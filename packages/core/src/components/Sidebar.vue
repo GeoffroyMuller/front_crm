@@ -4,6 +4,7 @@
       class="sidebar"
       :class="{
         'sidebar-open': open,
+        left: position === 'left',
       }"
       v-click-outside="onClickOutside"
     >
@@ -36,9 +37,11 @@ interface SidebarProps {
   displayCloseBtn?: boolean;
   title?: string;
   padding?: boolean;
+  position?: "left" | "right";
 }
 const props = withDefaults(defineProps<SidebarProps>(), {
   displayCloseBtn: true,
+  position: "right",
 });
 const emit = defineEmits(["update:open"]);
 
@@ -68,7 +71,12 @@ function onClickOutside(event: PointerEvent) {
     }
   }
   position: fixed;
-  right: 0;
+  &.left {
+    left: 0;
+  }
+  &:not(.left) {
+    right: 0;
+  }
   top: 0;
   bottom: 0;
   height: 100vh;
