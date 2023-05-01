@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 type TextProps = {
-  typo?: "title" | "subtitle" | "text" | "text2s";
+  typo?: "title" | "subtitle" | "text" | "text2";
   htmlComponent?: string;
 };
 
