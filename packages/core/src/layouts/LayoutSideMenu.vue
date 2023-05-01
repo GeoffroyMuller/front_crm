@@ -1,4 +1,7 @@
 <template>
+  <div class="layout-side-mobile-menu">
+    <slot name="mobile-nav" />
+  </div>
   <nav class="layout-side-menu" :class="{ mini: isNavMini }">
     <div class="logo-container">
       <span v-if="!isNavMini"> CRM </span>
@@ -75,7 +78,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IconName } from "src/components/types";
+import type { IconName } from "../components/types";
 import Icon from "../components/Icon.vue";
 import IconButton from "../components/IconButton.vue";
 import Tree from "../components/Tree.vue";
@@ -128,6 +131,20 @@ function isItemSelected(data: any) {
 <style lang="scss" scoped>
 $navWidth: 240px;
 $miniNavWidth: 60px;
+$headerHeightMobile: 50px;
+
+.layout-side-mobile-menu {
+  @include media-up(md) {
+    display: none;
+  }
+  width: 100%;
+  background-color: color("white");
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  height: $headerHeightMobile;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+}
 .layout-side-menu {
   &.mini {
     width: $miniNavWidth;
@@ -242,6 +259,7 @@ $miniNavWidth: 60px;
     left: 0;
     width: 100%;
     height: auto;
+    margin-top: $headerHeightMobile;
   }
 }
 </style>
