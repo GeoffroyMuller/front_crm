@@ -9,6 +9,7 @@
       [`button-${color}`]: variant !== 'text',
       'align-end': align === 'end',
       'align-start': align === 'start',
+      rounded
     }"
     :disabled="disabled || loading"
     v-bind="buttonAdditionnalProps"
@@ -39,7 +40,7 @@ interface ButtonProps {
   loading?: boolean;
   variant?: "base" | "text" | "outlined";
   type?: "button" | "submit";
-
+  rounded?: boolean;
   align?: "center" | "end" | "start";
   icon?: IconName;
   component?: "button" | "a";
@@ -73,6 +74,10 @@ const buttonAdditionnalProps = computed(() => {
   padding: spacing(0.5) spacing(1.5);
   border: none;
   border-radius: map-deep-get($rounded, "sm");
+  &.rounded {
+    border-radius: map-deep-get($rounded, "xl");
+    padding: spacing(1.5) spacing(3);
+  }
   min-height: 33px;
   color: white;
   display: flex;

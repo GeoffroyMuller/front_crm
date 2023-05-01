@@ -104,31 +104,46 @@
             </Button>
           </div> -->
         </div>
-        <Card class="quote-summary" no-padding>
-          <Text typo="subtitle">
-            {{ $t("pages.edit-quote.total-global") }}
-          </Text>
-          <div class="totals">
-            <Text>{{ $t("pages.edit-quote.without-taxes") }}</Text>
-            <Text>{{ 12 }} €</Text>
-            <Text>{{ $t("pages.edit-quote.with-taxes") }}</Text>
-            <Text>{{ 12 }} €</Text>
-          </div>
-          <div class="quote-summary-divider" />
-          <div class="quote-summary-end">
-            <Text>{{ $t("pages.edit-quote.pdf") }}</Text>
-            <Flex :gap="1" justify-content="end">
-              <IconButton name="download" />
-              <IconButton name="preview" />
-            </Flex>
-            <Text>{{ $t("pages.edit-quote.order") }}</Text>
-            <div>
-              <Button variant="text">
-                {{ $t("pages.edit-quote.add-order") }}
-              </Button>
+        <div class="quote-summary-container">
+          <Card class="quote-summary" no-padding>
+            <Text typo="subtitle">
+              {{ $t("pages.edit-quote.total-global") }}
+            </Text>
+            <div class="totals">
+              <Text>{{ $t("pages.edit-quote.without-taxes") }}</Text>
+              <Text>{{ 12 }} €</Text>
+              <Text>{{ $t("pages.edit-quote.with-taxes") }}</Text>
+              <Text>{{ 12 }} €</Text>
             </div>
-          </div>
-        </Card>
+            <div class="quote-summary-divider" />
+            <div class="quote-summary-end">
+              <Text>{{ $t("pages.edit-quote.pdf") }}</Text>
+              <Flex :gap="1" justify-content="end">
+                <IconButton name="download" />
+                <IconButton name="preview" />
+              </Flex>
+              <Text>{{ $t("pages.edit-quote.order") }}</Text>
+              <div>
+                <Button variant="text">
+                  {{ $t("pages.edit-quote.add-order") }}
+                </Button>
+              </div>
+            </div>
+          </Card>
+          <Button
+            :disabled="hasError || !hasChanged"
+            :loading="loading"
+            type="submit"
+            v-tooltip="{
+              text: $t('keyboardshortcuts.ctrl+s'),
+              placement: 'bottom',
+            }"
+            color="success"
+            rounded
+          >
+            {{ $t("save") }}
+          </Button>
+        </div>
       </template>
     </Form>
   </Page>
@@ -233,10 +248,16 @@ const {
       gap: spacing(3);
     }
   }
-  .quote-summary {
+  .quote-summary-container {
     height: fit-content;
     position: sticky;
     top: 0;
+    > *:last-child {
+      margin: auto;
+      margin-top: spacing(3);
+    }
+  }
+  .quote-summary {
     display: grid;
     gap: spacing(2);
     padding: spacing(1.5) 0;
