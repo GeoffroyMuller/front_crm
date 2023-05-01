@@ -1,26 +1,13 @@
 <template>
   <div
     class="card"
-    :class="[`card-rd-${rounded}`, { padding: withPadding }, $props.class]"
+    :class="[
+      `card-rd-${rounded}`,
+      { padding: withPadding && !noPadding },
+      $props.class,
+    ]"
   >
-    <div
-      class="card-head"
-      v-if="
-        title?.length || subtitle?.length || $slots.title || $slots.subtitle
-      "
-    >
-      <div v-if="title?.length || $slots.title" class="typo-title">
-        {{ title }}
-        <slot name="title" />
-      </div>
-      <div v-if="subtitle?.length || $slots.subtitle" class="typo-subtitle">
-        {{ subtitle }}
-        <slot name="subtitle" />
-      </div>
-    </div>
-    <div class="card-content">
-      <slot />
-    </div>
+    <slot />
   </div>
 </template>
 
@@ -32,7 +19,9 @@ export interface CardProps {
   rounded?: Size;
   title?: string;
   subtitle?: string;
+  // @deprecated : use noPadding instead
   withPadding?: boolean;
+  noPadding?: boolean;
   class?: string;
   actionOnTop?: boolean;
 }
@@ -49,10 +38,6 @@ const props = withDefaults(defineProps<CardProps>(), {
   background-color: color("white");
   color: color("black");
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.07);
-
-  .card-head {
-    margin-bottom: spacing(3.5);
-  }
 }
 
 .padding {

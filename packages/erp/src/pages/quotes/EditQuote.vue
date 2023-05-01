@@ -90,7 +90,7 @@
               :label="$t('pages.edit-quote.footer')"
             />
           </Card>
-          <div class="actions">
+          <!--  <div class="actions">
             <Button
               :disabled="hasError || !hasChanged"
               :loading="loading"
@@ -102,9 +102,33 @@
             >
               {{ $t("save") }}
             </Button>
-          </div>
+          </div> -->
         </div>
-        <Card class="quote-summary"> TETS </Card>
+        <Card class="quote-summary" no-padding>
+          <Text typo="subtitle">
+            {{ $t("pages.edit-quote.total-global") }}
+          </Text>
+          <div class="totals">
+            <Text>{{ $t("pages.edit-quote.without-taxes") }}</Text>
+            <Text>{{ 12 }} €</Text>
+            <Text>{{ $t("pages.edit-quote.with-taxes") }}</Text>
+            <Text>{{ 12 }} €</Text>
+          </div>
+          <div class="quote-summary-divider" />
+          <div class="quote-summary-end">
+            <Text>{{ $t("pages.edit-quote.pdf") }}</Text>
+            <Flex :gap="1" justify-content="end">
+              <IconButton name="download" />
+              <IconButton name="preview" />
+            </Flex>
+            <Text>{{ $t("pages.edit-quote.order") }}</Text>
+            <div>
+              <Button variant="text">
+                {{ $t("pages.edit-quote.add-order") }}
+              </Button>
+            </div>
+          </div>
+        </Card>
       </template>
     </Form>
   </Page>
@@ -133,6 +157,9 @@ import useEditPage from "@/components/editpage";
 import type { SaleLine } from "@/types/sale";
 import useUserStore from "@/stores/user";
 import Grid from "core/src/components/layouts/Grid.vue";
+import Text from "core/src/components/Text.vue";
+import IconButton from "core/src/components/IconButton.vue";
+import Flex from "core/src/components/layouts/Flex.vue";
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();
@@ -196,33 +223,46 @@ const {
 .quote-details {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: spacing(2);
+  gap: spacing(3);
   .quote-form-content {
     grid-column: span 2;
-    @include grid(1, 0, 2);
-    .actions {
-      display: flex;
-      gap: spacing(1);
-      margin-top: spacing(1);
-    }
+    @include grid(1, 0, 3);
     .form-head {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: spacing(2);
-    }
-    .form-table {
-      .actions {
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
-        gap: spacing(1);
-      }
+      gap: spacing(3);
     }
   }
   .quote-summary {
     height: fit-content;
     position: sticky;
     top: 0;
+    display: grid;
+    gap: spacing(2);
+    padding: spacing(1.5) 0;
+    .quote-summary-divider {
+      width: 100%;
+      height: 1px;
+      border-top: dashed 1px color("slate", 400);
+    }
+    > *:not(.quote-summary-divider) {
+      padding: 0 spacing(2);
+    }
+    .totals {
+      display: grid;
+      grid-template-columns: min-content 1fr;
+      gap: spacing(1);
+    }
+    .quote-summary-end {
+      display: grid;
+      grid-template-columns: min-content 1fr;
+      gap: spacing(3);
+      align-items: center;
+      > :nth-child(2n) {
+        text-align: right;
+        justify-self: end;
+      }
+    }
   }
 }
 </style>
