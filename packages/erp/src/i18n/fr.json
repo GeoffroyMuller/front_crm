@@ -36,7 +36,7 @@
       "total-without-taxes": "Total HT",
       "without-taxes": "HT",
       "with-taxes": "TTC",
-      "pdf": "Pdf",
+      "pdf": "PDF",
       "add-line-product": "Ajouter une ligne de produit",
       "add-line-title": "Ajouter une ligne de titre",
       "add-line-comment": "Ajouter une ligne de commentaire",
@@ -48,7 +48,8 @@
       "product": "Produit",
       "order": "Commande",
       "add-order": "Ajouter une commande",
-      "save": "Enregistrer le devis"
+      "save": "Enregistrer le devis",
+      "sendemail": "Envoyer par mail"
     },
     "edit-invoice": {
       "qty": "Quantitée",

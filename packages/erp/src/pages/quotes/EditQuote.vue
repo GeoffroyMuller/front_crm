@@ -1,6 +1,12 @@
 <template>
   <Page :title="title" :loading="loadingPage" back padding="large">
-    <Form shortcuts :initial-value="quote" @submit="save" class="quote-details">
+    <Form
+      shortcuts
+      :initial-value="quote"
+      @submit="save"
+      class="quote-details"
+      v-model="formValue"
+    >
       <template #default="{ hasError, hasChanged }">
         <div class="quote-form-content">
           <div class="form-head">
@@ -98,21 +104,29 @@
             </Text>
             <div class="totals">
               <Text>{{ $t("pages.edit-quote.without-taxes") }}</Text>
-              <Text>{{ 12 }} €</Text>
+              <Text> {{ $utils.formatPrice(prices.totalPrice) }} </Text>
               <Text>{{ $t("pages.edit-quote.with-taxes") }}</Text>
-              <Text>{{ 12 }} €</Text>
+              <Text>
+                {{ $utils.formatPrice(prices.totalPriceWithTaxes) }}
+              </Text>
             </div>
             <div class="quote-summary-divider" />
             <div class="quote-summary-end">
               <Text>{{ $t("pages.edit-quote.pdf") }}</Text>
               <Flex :gap="1" justify-content="end">
-                <IconButton name="download" />
-                <IconButton name="preview" />
+                <IconButton name="download" @click="downloadPdf(quote)" />
+                <IconButton name="preview" @click.stop="preview(quote)" />
               </Flex>
               <Text>{{ $t("pages.edit-quote.order") }}</Text>
               <div>
                 <Button variant="text">
                   {{ $t("pages.edit-quote.add-order") }}
+                </Button>
+              </div>
+              <Text>{{ $t("email") }}</Text>
+              <div>
+                <Button variant="text" color="success" @click="sendMail(quote)">
+                  {{ $t("pages.edit-quote.sendemail") }}
                 </Button>
               </div>
             </div>
@@ -134,6 +148,12 @@
       </template>
     </Form>
   </Page>
+  <QuoteSendMail
+    @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)"
+    @close="quoteToSendMail = null"
+    :quote="quoteToSendMail"
+  />
+  <QuotePreview @close="quoteToPreview = null" :quote="quoteToPreview" />
   <EditClientSidebar @add="onAddClient" v-model:open="isAddClientOpen" />
 </template>
 
@@ -163,6 +183,8 @@ import Text from "core/src/components/Text.vue";
 import IconButton from "core/src/components/IconButton.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import useQuote from "@/components/quotes/quote";
+import QuoteSendMail from "@/components/quotes/QuoteSendMail.vue";
+import QuotePreview from "@/components/quotes/QuotePreview.vue";
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();
@@ -174,6 +196,8 @@ const auth = computed(() => userStore.auth);
 const isAddClientOpen = ref(false);
 const idClient = ref();
 const clientOptions = ref();
+
+const formValue = ref<Quote>();
 
 const title = computed(() => {
   if (isAddAction.value) {
@@ -190,6 +214,23 @@ function onAddClient(client: Client) {
   idClient.value = client.id;
   clientOptions.value = [client];
 }
+
+const prices = computed(() => {
+  let totalPrice = 0;
+  let totalPriceWithTaxes = 0;
+  if (!formValue.value?.lines) return { totalPrice, totalPriceWithTaxes };
+  for (const line of formValue.value.lines) {
+    if (!line.qty || !line.unit_price) continue;
+    const price = line.qty * line.unit_price;
+    const vatPrice = price * (1 + line.vat.rate / 100);
+    totalPriceWithTaxes += vatPrice;
+    totalPrice += price;
+  }
+  return {
+    totalPrice,
+    totalPriceWithTaxes,
+  };
+});
 
 const {
   isAddAction,
@@ -221,16 +262,8 @@ const {
   },
 });
 
-const {
-  downloadPdf,
-  selected,
-  setArchived,
-  setArchivedSelection,
-  sendMail,
-  quoteToSendMail,
-  edit,
-  createInvoiceFromQuote,
-} = useQuote({});
+const { downloadPdf, preview, quoteToPreview, sendMail, quoteToSendMail } =
+  useQuote({});
 </script>
 
 <style scoped lang="scss">

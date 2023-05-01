@@ -39,6 +39,12 @@ export default function useQuote(props?: UseQuoteProps) {
     quoteToSendMail.value = _quote;
   }
 
+  const quoteToPreview = ref<Quote | null>();
+  function preview(item?: Quote) {
+    const _quote = (props?.quote?.value || item) as Quote;
+    quoteToPreview.value = _quote;
+  }
+
   function downloadPdf(item?: Quote) {
     const _quote = (props?.quote?.value || item) as Quote;
     const url = `${config.API_URL}/quotes/${_quote.id}/pdf?token=${getJWT()}`;
@@ -120,6 +126,8 @@ export default function useQuote(props?: UseQuoteProps) {
     edit,
     sendMail,
     quoteToSendMail,
+    preview,
+    quoteToPreview,
 
     createInvoiceFromQuote,
   };
