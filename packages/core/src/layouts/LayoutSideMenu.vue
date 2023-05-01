@@ -231,6 +231,8 @@ $miniNavWidth: 60px;
   height: 100%;
   overflow-y: hidden;
   overflow-x: auto;
+  // transform: translate(0, 0); --> this allows position: fixex to work with this parent block
+  transform: translate(0, 0);
   &.nav-is-mini {
     left: $miniNavWidth;
     width: calc(100% - $miniNavWidth);
