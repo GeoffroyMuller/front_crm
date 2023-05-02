@@ -9,7 +9,7 @@
     <div v-if="!isMin">
       <IconButton
         class=""
-        name="close"
+        name="delete"
         color="danger"
         v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
         @click.stop="emit('unregister')"
