@@ -56,27 +56,34 @@
                 <QuoteLineVue :line="(data as unknown as SaleLine)" />
               </template>
               <template #actions="{ addSection }">
-                <Button
-                  type="button"
-                  variant="text"
-                  @click="addSection({ type: 'product' })"
+                <Flex
+                  :gap="1.5"
+                  flex-wrap="wrap"
+                  justify-content="center"
+                  align-items="center"
                 >
-                  {{ $t("pages.edit-quote.add-line-product") }}
-                </Button>
-                <Button
-                  type="button"
-                  variant="text"
-                  @click="addSection({ type: 'comment' })"
-                >
-                  {{ $t("pages.edit-quote.add-line-comment") }}
-                </Button>
-                <Button
-                  type="button"
-                  variant="text"
-                  @click="addSection({ type: 'title' })"
-                >
-                  {{ $t("pages.edit-quote.add-line-title") }}
-                </Button>
+                  <Button
+                    type="button"
+                    variant="text"
+                    @click="addSection({ type: 'product' })"
+                  >
+                    {{ $t("pages.edit-quote.add-line-product") }}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="text"
+                    @click="addSection({ type: 'comment' })"
+                  >
+                    {{ $t("pages.edit-quote.add-line-comment") }}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="text"
+                    @click="addSection({ type: 'title' })"
+                  >
+                    {{ $t("pages.edit-quote.add-line-title") }}
+                  </Button>
+                </Flex>
               </template>
             </Repetable>
           </Card>

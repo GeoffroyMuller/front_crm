@@ -186,24 +186,52 @@ function handleProductChange(product: Product) {
 </script>
 
 <style lang="scss" scoped>
+$productLineBreakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  lg2: 1150px,
+  xl: 1270px,
+  xl2: 1400px,
+);
 .line-product {
   display: grid;
+  gap: spacing(1);
   grid-template-columns: 1fr 90px 120px 90px min-content;
   justify-content: center;
-  align-items: center;
-  gap: spacing(1);
-  & > :last-child {
-    justify-self: end;
-    padding-left: spacing(1);
-  }
-
+  align-items: end;
   .totals {
     display: grid;
     grid-template-columns: min-content 1fr;
     gap: spacing(1);
+    justify-self: end;
+    padding-left: spacing(1);
     & > :first-child {
       grid-column: 1 / -1;
     }
+  }
+  @include media-down(xl2, $productLineBreakpoints) {
+    > *:first-child {
+      grid-column: 1 / -1;
+    }
+    gap: spacing(1) spacing(0.5);
+    grid-template-columns: 90px 1fr 90px min-content;
+  }
+  @include media-down(xl, $productLineBreakpoints) {
+    .totals {
+      grid-column: 1 / -1;
+      display: flex;
+      padding-left: 0;
+      justify-self: start;
+      align-self: start;
+    }
+  }
+  @include media-down(lg2, $productLineBreakpoints) {
+    > *:first-child {
+      grid-column: initial;
+    }
+    grid-template-columns: 1fr 90px;
   }
 }
 @include media-up(md) {
@@ -212,9 +240,6 @@ function handleProductChange(product: Product) {
   .line-product {
     display: grid;
     gap: spacing(1.5);
-    .total {
-      justify-content: start;
-    }
   }
 }
 .line-product-container {
