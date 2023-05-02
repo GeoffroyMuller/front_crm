@@ -229,7 +229,7 @@ watch(
     &:not(:last-child) {
       margin-bottom: spacing(2);
     }
-    border-radius: map-get($rounded, "sm");
+    border-radius: map-get($rounded, "md");
     background-color: color("slate", 100);
     border: dashed 1px color("slate", 400);
     position: relative;
@@ -243,7 +243,7 @@ watch(
     margin-top: spacing(1);
     border: dashed 1px color("slate", 400);
     padding: spacing(3) spacing(4);
-    border-radius: map-get($rounded, "sm");
+    border-radius: map-get($rounded, "md");
   }
 }
 </style>
