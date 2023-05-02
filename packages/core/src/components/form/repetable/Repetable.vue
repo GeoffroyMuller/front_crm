@@ -3,80 +3,61 @@
     <label class="repetable-label" v-if="label">
       {{ label }}
     </label>
-    <Card :withPadding="false" class="repetable">
-      <draggable
-        v-if="orderable"
-        v-model="sections"
-        group="section"
-        @start="handleDragStart"
-        @end="handleDragEnd"
-        item-key="key"
-        ghost-class="repetable-section-ghost"
-        handle=".drag_handle"
-        :forceFallback="true"
-        dragClass="repetable-section-cloned-element"
-        direction="vertical"
-      >
-        <template #item="{ element }">
-          <RepetableSection
-            orderable
-            class="repetable-section"
-            :value="element.value"
-            @inputChange="
-              ({ name, value }) =>
-                handleSectionInputChange(element.key, name, value)
-            "
-            @register="($v) => registerSection(element.key, $v)"
-          >
-            <div class="icon-delete" v-if="!isMin">
-              <div>
-                <IconButton
-                  class=""
-                  name="close"
-                  color="danger"
-                  v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
-                  @click.stop="unregisterSection(element.key)"
-                />
-              </div>
-            </div>
-            <slot :data="element.value" />
-          </RepetableSection>
-        </template>
-      </draggable>
-      <template v-if="!orderable">
+
+    <draggable
+      v-if="orderable"
+      v-model="sections"
+      group="section"
+      @start="handleDragStart"
+      @end="handleDragEnd"
+      item-key="key"
+      ghost-class="repetable-section-ghost"
+      handle=".drag_handle"
+      :forceFallback="true"
+      dragClass="repetable-section-cloned-element"
+      direction="vertical"
+    >
+      <template #item="{ element }">
         <RepetableSection
+          orderable
           class="repetable-section"
-          v-for="section of sections"
-          :key="section.key"
-          :value="section.value"
+          :value="element.value"
+          :isMin="isMin"
           @inputChange="
             ({ name, value }) =>
-              handleSectionInputChange(section.key, name, value)
+              handleSectionInputChange(element.key, name, value)
           "
-          @register="($v) => registerSection(section.key, $v)"
+          @register="($v) => registerSection(element.key, $v)"
+          @unregister="unregisterSection(element.key)"
         >
-          <div class="icon-delete" v-if="!isMin">
-            <div>
-              <IconButton
-                class=""
-                name="close"
-                color="danger"
-                v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
-                @click.stop="unregisterSection(section.key)"
-              />
-            </div>
-          </div>
-          <slot :data="section.value" />
+          <slot :data="element.value" />
         </RepetableSection>
       </template>
+    </draggable>
+    <template v-if="!orderable">
+      <RepetableSection
+        class="repetable-section"
+        v-for="section of sections"
+        :key="section.key"
+        :isMin="isMin"
+        :value="section.value"
+        @inputChange="
+          ({ name, value }) =>
+            handleSectionInputChange(section.key, name, value)
+        "
+        @register="($v) => registerSection(section.key, $v)"
+        @unregister="unregisterSection(section.key)"
+      >
+        <slot :data="section.value" />
+      </RepetableSection>
+    </template>
 
-      <div class="repetable-actions" v-if="!isMax">
-        <Button @click="() => addSection()" v-if="!$slots['actions']">
-          {{ buttonText || $t("add") }}
-        </Button>
-        <slot name="actions" :addSection="addSection" />
-      </div>
-    </Card>
+    <div class="repetable-actions" v-if="!isMax">
+      <Button @click="() => addSection()" v-if="!$slots['actions']">
+        {{ buttonText || $t("add") }}
+      </Button>
+      <slot name="actions" :addSection="addSection" />
+    </div>
   </div>
 </template>
 
@@ -244,32 +225,25 @@ watch(
   label.repetable-label {
     @include typo(text2);
   }
-  .repetable {
+  .repetable-section {
+    &:not(:last-child) {
+      margin-bottom: spacing(2);
+    }
+    border-radius: map-get($rounded, "sm");
+    background-color: color("slate", 100);
+    border: dashed 1px color("slate", 400);
+    position: relative;
+    padding: spacing(2);
+  }
+  .repetable-actions {
     display: flex;
-    width: 100%;
-    flex-direction: column;
-    .repetable-section,
-    .repetable-actions {
-      padding: 0 spacing(2);
-      padding: spacing(1) spacing(2);
-    }
-    .repetable-section {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-      position: relative;
-      padding: spacing(2);
-      .icon-delete {
-        position: absolute;
-        top: spacing(1);
-        right: spacing(2);
-      }
-    }
-    .repetable-actions {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: spacing(1);
-      @include flex-separator();
-    }
+    justify-content: center;
+    align-items: center;
+    gap: spacing(1.5);
+    margin-top: spacing(1);
+    border: dashed 1px color("slate", 400);
+    padding: spacing(3) spacing(4);
+    border-radius: map-get($rounded, "sm");
   }
 }
 </style>

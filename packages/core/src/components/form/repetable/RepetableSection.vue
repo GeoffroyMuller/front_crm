@@ -3,11 +3,23 @@
     <div v-if="orderable" class="drag_handle">
       <Icon name="drag_handle"></Icon>
     </div>
-    <slot />
+    <div class="repetable-section-content">
+      <slot />
+    </div>
+    <div v-if="!isMin">
+      <IconButton
+        class=""
+        name="close"
+        color="danger"
+        v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
+        @click.stop="emit('unregister')"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import IconButton from "../../IconButton.vue";
 import type { _CustomInput } from "../../../composables/form";
 import useForm from "../../../composables/form";
 import Icon from "../../Icon.vue";
@@ -16,6 +28,7 @@ import { onMounted, onUnmounted, toRef } from "vue";
 interface RepetableSectionProps {
   value: any;
   orderable?: boolean;
+  isMin: boolean;
 }
 
 const props = withDefaults(defineProps<RepetableSectionProps>(), {});
@@ -42,16 +55,16 @@ onUnmounted(() => {
 
 <style lang="scss">
 .repetable-section {
-  background-color: color("zinc", 50);
   display: flex;
   align-items: center;
   gap: spacing(1);
-  > *:last-child {
-    flex-grow: 1;
-  }
+
   .drag_handle {
     cursor: grab;
     margin-left: spacing(-1);
+  }
+  .repetable-section-content {
+    flex-grow: 1;
   }
 }
 .repetable-section-ghost {
