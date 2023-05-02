@@ -1,7 +1,7 @@
 <template>
   <div class="repetable-section">
     <div v-if="orderable" class="drag_handle">
-      <Icon name="drag_handle"></Icon>
+      <Icon name="drag_indicator"></Icon>
     </div>
     <div class="repetable-section-content">
       <slot />
