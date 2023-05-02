@@ -128,7 +128,7 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
 }
 .page-menu {
   position: fixed;
-  z-index: 25;
+  z-index: 21;
   top: 0;
   transition: width 0.3s ease;
   width: calc(100% - $navWidth);

@@ -41,7 +41,7 @@ const emit = defineEmits(["update:open"]);
 </script>
 
 <style lang="scss" scoped>
-$zIndexModal: 55;
+$zIndexModal: 45;
 
 .modal {
   position: fixed;

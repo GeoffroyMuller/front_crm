@@ -240,7 +240,7 @@ export default function useMenu(props: MenuProps) {
   function init() {
     container.value.classList.add("layout-component");
     container.value.style.position = "absolute";
-    container.value.style.zIndex = "20";
+    container.value.style.zIndex = "27";
     if (!props.container) {
       document.body.appendChild(container.value);
     }
