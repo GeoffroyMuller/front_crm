@@ -98,7 +98,7 @@ $header_height: 80px;
     margin-top: $header_height;
   }
   &.padding-large {
-    $pageContentPLargeWidth: 1400px;
+    $pageContentPLargeWidth: 1300px;
     padding: spacing(2);
     padding-left: max(calc((100% - $pageContentPLargeWidth) / 2), spacing(2));
     padding-right: max(calc((100% - $pageContentPLargeWidth) / 2), spacing(2));
