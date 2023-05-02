@@ -57,7 +57,7 @@ onUnmounted(() => {
 .repetable-section {
   display: flex;
   align-items: center;
-  gap: spacing(1);
+  gap: spacing(2);
 
   .drag_handle {
     cursor: grab;

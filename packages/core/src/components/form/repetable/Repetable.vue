@@ -233,7 +233,7 @@ watch(
     background-color: color("slate", 100);
     border: dashed 1px color("slate", 400);
     position: relative;
-    padding: spacing(2);
+    padding: spacing(3) spacing(4);
   }
   .repetable-actions {
     display: flex;

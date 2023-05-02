@@ -41,10 +41,7 @@ const props = withDefaults(defineProps<CardProps>(), {
 }
 
 .padding {
-  padding-left: spacing(2);
-  padding-right: spacing(2);
-  padding-top: spacing(1.5);
-  padding-bottom: spacing(1.5);
+  padding: spacing(3) spacing(4);
 }
 
 @each $key, $value in $rounded {

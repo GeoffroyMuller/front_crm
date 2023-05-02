@@ -10,16 +10,64 @@
     <TextField :label="$t('pages.edit-quote.title')" name="description" />
   </div>
   <div v-if="line.type === 'product'" class="line-product-container">
-    <MagicAutocomplete
-      class="input"
-      :get-option-value="(opt) => opt.id"
-      :label="$t('pages.edit-quote.product')"
-      :store="productsStore"
-      :get-option-label="(opt) => opt?.name"
-      @update:selected="handleProductChange"
-      option-key="id"
-      name="idProduct"
-    />
+    <div class="line-product">
+      <MagicAutocomplete
+        class="input"
+        :get-option-value="(opt) => opt.id"
+        :label="$t('pages.edit-quote.product')"
+        :store="productsStore"
+        :get-option-label="(opt) => opt?.name"
+        @update:selected="handleProductChange"
+        option-key="id"
+        name="idProduct"
+      />
+      <TextField
+        class="input"
+        type="number"
+        v-model="internalLine.qty"
+        :label="$t('pages.edit-quote.qty')"
+        :step="1"
+        name="qty"
+      />
+      <TextField
+        class="input"
+        type="number"
+        :step="0.01"
+        v-model="internalLine.unit_price"
+        :label="$t('pages.edit-quote.unit_price')"
+        name="unit_price"
+      />
+      <Select
+        class="input"
+        :options="vats"
+        :get-option-label="(opt) => (opt?.rate != null ? `${opt?.rate}%` : '')"
+        :get-option-value="(opt) => opt.id"
+        v-model="internalLine.idVat"
+        :label="$t('pages.edit-quote.vat')"
+        name="idVat"
+      />
+      <div class="totals">
+        <Text typo="subtitle">
+          {{ $t("pages.edit-quote.total-global") }}
+        </Text>
+        <Text>{{ $t("pages.edit-quote.without-taxes") }}</Text>
+        <Text>
+          {{
+            typeof totalWithoutTaxes === "string"
+              ? totalWithoutTaxes
+              : $utils.formatPrice(totalWithoutTaxes)
+          }}
+        </Text>
+        <Text>{{ $t("pages.edit-quote.with-taxes") }}</Text>
+        <Text>
+          {{
+            typeof totalWithTaxes === "string"
+              ? totalWithTaxes
+              : $utils.formatPrice(totalWithTaxes)
+          }}
+        </Text>
+      </div>
+    </div>
     <HtmlEditor
       class="description"
       :label="$t('pages.edit-quote.description')"
@@ -55,48 +103,6 @@
       </Sidebar>
     </div>
 
-    <div class="line-product">
-      <TextField
-        class="input"
-        type="number"
-        v-model="internalLine.qty"
-        :label="$t('pages.edit-quote.qty')"
-        :step="1"
-        name="qty"
-      />
-      <TextField
-        class="input"
-        type="number"
-        :step="0.01"
-        v-model="internalLine.unit_price"
-        :label="$t('pages.edit-quote.unit_price')"
-        name="unit_price"
-      />
-      <Select
-        class="input"
-        :options="vats"
-        :get-option-label="(opt) => (opt?.rate != null ? `${opt?.rate}%` : '')"
-        :get-option-value="(opt) => opt.id"
-        v-model="internalLine.idVat"
-        :label="$t('pages.edit-quote.vat')"
-        name="idVat"
-      />
-
-      <div class="total">
-        <div class="inner">
-          <div>
-            <div class="label">
-              {{ $t("pages.edit-quote.total-without-taxes") }}
-            </div>
-            <div class="value">{{ totalWithoutTaxes }} €</div>
-          </div>
-          <div>
-            <div class="label">{{ $t("pages.edit-quote.total") }}</div>
-            <div class="value">{{ totalWithTaxes }} €</div>
-          </div>
-        </div>
-      </div>
-    </div>
     <div
       v-if="
         !$_.isNil(internalProduct) &&
@@ -141,7 +147,7 @@ const totalWithoutTaxes = computed(() => {
   if (!internalLine.value.unit_price || !internalLine.value.qty) {
     return "-";
   }
-  return (internalLine.value.unit_price * internalLine.value.qty).toFixed(2);
+  return internalLine.value.unit_price * internalLine.value.qty;
 });
 
 const totalWithTaxes = computed(() => {
@@ -151,8 +157,8 @@ const totalWithTaxes = computed(() => {
   if (totalWithoutTaxes.value === "-" || vatRate == null) {
     return "-";
   }
-  const twt = Number.parseFloat(totalWithoutTaxes.value);
-  return (twt + twt * (vatRate / 100)).toFixed(2);
+  const twt = totalWithoutTaxes.value;
+  return twt + twt * (vatRate / 100);
 });
 
 const props = withDefaults(defineProps<QuoteLineProps>(), {});
@@ -181,30 +187,22 @@ function handleProductChange(product: Product) {
 
 <style lang="scss" scoped>
 .line-product {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 90px 120px 90px min-content;
+  justify-content: center;
   align-items: center;
   gap: spacing(1);
-  .input {
-    width: fit-content;
+  & > :last-child {
+    justify-self: end;
+    padding-left: spacing(1);
   }
 
-  .total {
-    display: flex;
-    justify-content: center;
-    .inner {
-      @include grid(1, 0, 1.2);
-      > div {
-        width: max-content;
-        @include grid(1, 0, 0.75);
-        .label {
-          font-weight: bold;
-          @include typo(subtitle);
-        }
-        .value {
-          @include typo(text);
-        }
-      }
+  .totals {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    gap: spacing(1);
+    & > :first-child {
+      grid-column: 1 / -1;
     }
   }
 }
@@ -223,5 +221,4 @@ function handleProductChange(product: Product) {
   display: grid;
   gap: spacing(1.5);
 }
-
 </style>

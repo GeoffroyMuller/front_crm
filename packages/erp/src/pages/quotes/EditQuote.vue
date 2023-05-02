@@ -270,7 +270,7 @@ const { downloadPdf, preview, quoteToPreview, sendMail, quoteToSendMail } =
 <style scoped lang="scss">
 .quote-details {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr min-content;
   gap: spacing(3);
   .quote-form-content {
     grid-column: span 2;
@@ -293,14 +293,14 @@ const { downloadPdf, preview, quoteToPreview, sendMail, quoteToSendMail } =
   .quote-summary {
     display: grid;
     gap: spacing(2);
-    padding: spacing(1.5) 0;
+    padding: spacing(3) 0;
     .quote-summary-divider {
       width: 100%;
       height: 1px;
       border-top: dashed 1px color("slate", 400);
     }
     > *:not(.quote-summary-divider) {
-      padding: 0 spacing(2);
+      padding: 0 spacing(4);
     }
     .totals {
       display: grid;
