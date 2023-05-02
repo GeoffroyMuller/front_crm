@@ -1,5 +1,8 @@
 <template>
-  <div class="page-menu">
+  <div
+    class="page-menu"
+    :class="{ 'mini-nav': layoutSideMenu?.isNavMini?.value }"
+  >
     <div class="typo-title">
       {{ title }}
     </div>
@@ -48,6 +51,8 @@ import ActionMenu from "core/src/components/ActionMenu.vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import useUI from "core/src/composables/ui";
+import { inject } from "vue";
+import type { LayoutSideMenuProvide } from "core/src/layouts/types";
 
 interface PageProps {
   title: string;
@@ -60,6 +65,12 @@ interface PageProps {
 const props = withDefaults(defineProps<PageProps>(), {
   padding: "light",
 });
+
+const layoutSideMenu = inject<LayoutSideMenuProvide>("LayoutSideMenu");
+
+if (layoutSideMenu) {
+  layoutSideMenu.isNavMini.value = false;
+}
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -84,6 +95,10 @@ async function disconnect() {
 
 <style lang="scss">
 $header_height: 80px;
+$navWidth: $layoutSideNavWidth;
+$miniNavWidth: $layoutSideMiniNavWidth;
+$headerHeightMobile: $layoutSideHeaderHeightMobile;
+
 .page-spinner {
   position: absolute;
   top: 50%;
@@ -115,7 +130,11 @@ $header_height: 80px;
   position: fixed;
   z-index: 25;
   top: 0;
-  width: 100%;
+  transition: width 0.3s ease;
+  width: calc(100% - $navWidth);
+  &.mini-nav {
+    width: calc(100% - $miniNavWidth);
+  }
   height: $header_height;
   display: flex;
   justify-content: space-between;
@@ -149,6 +168,7 @@ $header_height: 80px;
 }
 @include media-down(md) {
   .page-menu {
+    display: none;
     background-color: unset;
     background: unset;
     height: auto;

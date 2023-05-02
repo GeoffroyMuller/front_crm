@@ -120,19 +120,13 @@ import useKeyboardShortcut from "../composables/keyboardshortcut";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import Sidebar from "../components/Sidebar.vue";
+import { provide } from "vue";
+import type { LayoutSideMenuProvide, MenuItem } from "./types";
 
-export type MenuItem = {
-  key: string;
-  path: string;
-  title: string;
-  icon: IconName;
-  children?: MenuItem[];
-};
-
-export type LayoutSideMenuProps = {
+interface LayoutSideMenuProps {
   menu: MenuItem[];
   bottomMenuItem?: MenuItem;
-};
+}
 
 const props = withDefaults(defineProps<LayoutSideMenuProps>(), {});
 
@@ -162,12 +156,16 @@ function isItemSelected(data: any) {
   }
   return route.path.includes(data.path);
 }
+
+provide<LayoutSideMenuProvide>("LayoutSideMenu", {
+  isNavMini: isNavMini,
+});
 </script>
 
 <style lang="scss" scoped>
-$navWidth: 240px;
-$miniNavWidth: 60px;
-$headerHeightMobile: 50px;
+$navWidth: $layoutSideNavWidth;
+$miniNavWidth: $layoutSideMiniNavWidth;
+$headerHeightMobile: $layoutSideHeaderHeightMobile;
 
 .layout-side-mobile-menu {
   @include media-up(md) {
@@ -284,8 +282,6 @@ $headerHeightMobile: 50px;
   height: 100%;
   overflow-y: hidden;
   overflow-x: auto;
-  // transform: translate(0, 0); --> this allows position: fixex to work with this parent block
-  transform: translate(0, 0);
   &.nav-is-mini {
     left: $miniNavWidth;
     width: calc(100% - $miniNavWidth);
