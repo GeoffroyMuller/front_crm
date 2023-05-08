@@ -1,3 +1,7 @@
+import type { Store } from "pinia";
+import type { RouteRecordRaw } from "vue-router";
+import type { APIStore } from "./factories/store.factory";
+
 export type ID = string | number;
 
 export interface PaginateResult<T> {
@@ -18,4 +22,10 @@ export type Filters = {
     | Filters
     | undefined
     | null;
+};
+
+export type AppModule = {
+  name: string;
+  routes?: Readonly<RouteRecordRaw>;
+  stores?: Array<Store | APIStore<unknown>>;
 };

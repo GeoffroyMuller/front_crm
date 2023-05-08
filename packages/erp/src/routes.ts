@@ -9,14 +9,9 @@ import Settings from "./pages/settings/index.vue";
 import Products from "./pages/products/index.vue";
 import EditProduct from "./pages/products/EditProduct.vue";
 import Reservations from "./pages/reservations/index.vue";
-import Quotes from "./pages/quotes/index.vue";
-import EditQuote from "./pages/quotes/EditQuote.vue";
 import Clients from "./pages/clients/index.vue";
 import EditCompany from "./pages/clients/EditCompany.vue";
 import Events from "./pages/events/index.vue";
-import Invoices from "./pages/invoices/index.vue";
-import EditInvoice from "./pages/invoices/EditInvoice.vue";
-import Invoice from "./pages/invoices/Invoice.vue";
 
 export default [
   {
@@ -65,24 +60,6 @@ export default [
     },
   },
   {
-    path: "/quotes",
-    name: "quotes",
-    component: Quotes,
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
-    path: "/quotes/:id",
-    name: "quotes-id",
-    component: EditQuote,
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
     path: "/customers",
     name: "customers",
     component: Clients,
@@ -104,33 +81,6 @@ export default [
     path: "/events",
     name: "events",
     component: Events,
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
-    path: "/invoices",
-    name: "invoices",
-    component: Invoices,
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
-    path: "/invoices/:id/edit",
-    name: "invoices-id-edit",
-    component: EditInvoice,
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
-    path: "/invoices/:id",
-    name: "invoices-id",
-    component: Invoice,
     meta: {
       middleware: [auth],
       layout: LayoutPage,

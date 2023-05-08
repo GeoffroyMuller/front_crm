@@ -120,13 +120,13 @@
 import MagicDataTable from "core/src/components/magic/MagicDataTable.vue";
 import Button from "core/src/components/Button.vue";
 import Page from "@/components/Page.vue";
-import QuoteSendMail from "@/components/quotes/QuoteSendMail.vue";
+import QuoteSendMail from "../../components/quotes/QuoteSendMail.vue";
 import Media from "core/src/components/Media.vue";
 import FloatingButton from "core/src/components/FloatingButton.vue";
-import QuoteFilters from "@/components/quotes/QuoteFilters.vue";
-import QuoteActionsMenu from "@/components/quotes/QuoteActionsMenu.vue";
+import QuoteFilters from "../../components/quotes/QuoteFilters.vue";
+import QuoteActionsMenu from "../../components/quotes/QuoteActionsMenu.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
-import useQuote from "@/components/quotes/quote";
+import useQuote from "../../components/quotes/quote";
 import type { Quote } from "@/types/quote";
 import { useRouter } from "vue-router";
 import { ref } from "vue";

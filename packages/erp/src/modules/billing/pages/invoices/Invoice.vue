@@ -54,9 +54,9 @@
 
 <script setup lang="ts">
 import useEditPage from "@/components/editpage";
-import useInvoice from "@/components/invoices/invoice";
-import InvoicePayments from "@/components/invoices/InvoicePayments.vue";
-import InvoiceSendMail from "@/components/invoices/InvoiceSendMail.vue";
+import useInvoice from "../../components/invoices/invoice";
+import InvoicePayments from "../../components/invoices/InvoicePayments.vue";
+import InvoiceSendMail from "../../components/invoices/InvoiceSendMail.vue";
 import Page from "@/components/Page.vue";
 import Button from "core/src/components/Button.vue";
 import Card from "core/src/components/Card.vue";

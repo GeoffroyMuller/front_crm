@@ -20,6 +20,7 @@ import clickOutside from "./directives/clickOutside";
 import tooltip from "./directives/tooltip";
 import utilsPlugin from "./plugins/utils";
 import breakpointsPlugin from "./plugins/breakpoints";
+import type { AppModule } from "./types";
 
 interface SetupOptions {
   routes: Readonly<RouteRecordRaw[]>;
@@ -29,6 +30,7 @@ interface SetupOptions {
   };
   axios?: Partial<AxiosDefaults>;
   app?: VueApp;
+  modules?: AppModule[];
 }
 
 export function setupPlugins(options: SetupOptions) {
@@ -43,6 +45,14 @@ export function setupPlugins(options: SetupOptions) {
 
   if (options.axios) {
     setupAxios(options.axios);
+  }
+
+  if (options.modules) {
+    options.modules.forEach((module) => {
+      if (module.routes) {
+        router.addRoute(module.routes);
+      }
+    });
   }
 
   return {

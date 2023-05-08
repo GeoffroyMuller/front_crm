@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import Card from "core/src/components/Card.vue";
 import Select from "core/src/components/form/Select.vue";
-import QuoteInvoiceThemeEditor from "@/components/quotes/QuoteInvoiceThemeEditor.vue";
+import QuoteInvoiceThemeEditor from "@/modules/billing/components/quotes/QuoteInvoiceThemeEditor.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import type { QuoteInvoiceTheme } from "@/types/quotetheme";
 import { ref } from "vue";

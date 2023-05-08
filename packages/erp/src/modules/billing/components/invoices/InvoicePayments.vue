@@ -99,8 +99,8 @@ import type { InvoicePayment } from "@/types/invoice";
 import dayjs from "dayjs";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import PriceInput from "../PriceInput.vue";
-import PricePresenter from "../PricePresenter.vue";
+import PriceInput from "@/components/PriceInput.vue";
+import PricePresenter from "@/components/PricePresenter.vue";
 
 interface InvoicePaymentsProps {
   invoice: Invoice;

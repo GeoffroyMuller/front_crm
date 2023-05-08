@@ -108,7 +108,7 @@ import Repetable from "core/src/components/form/repetable/Repetable.vue";
 import Button from "core/src/components/Button.vue";
 import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import HtmlEditor from "core/src/components/HtmlEditor.vue";
-import InvoiceLineVue from "@/components/invoices/InvoiceLine.vue";
+import InvoiceLineVue from "../../components/invoices/InvoiceLine.vue";
 import Card from "core/src/components/Card.vue";
 import useEditPage from "@/components/editpage";
 import type { SaleLine } from "@/types/sale";
