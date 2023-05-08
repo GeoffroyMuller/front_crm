@@ -29,7 +29,7 @@
           sortable: true,
         },
       ]"
-      @row-click="(item) => $router.push(`/quotes/${item.id}`)"
+      @row-click="(item) => edit(item)"
       selectable
       v-model:selected="selected"
     >
@@ -83,17 +83,13 @@
                 text: $t('add'),
                 placement: 'bottom',
               }"
-              @click="$router.push(`/quotes/new`)"
+              @click="add()"
             >
               {{ $t("add") }}
             </Button>
           </Media>
           <Media down="md">
-            <FloatingButton
-              color="success"
-              icon="add"
-              @click="$router.push(`/quotes/new`)"
-            />
+            <FloatingButton color="success" icon="add" @click="add()" />
           </Media>
         </div>
       </template>
@@ -127,13 +123,7 @@ import QuoteFilters from "../../components/quotes/QuoteFilters.vue";
 import QuoteActionsMenu from "../../components/quotes/QuoteActionsMenu.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import useQuote from "../../components/quotes/quote";
-import type { Quote } from "@/types/quote";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-
-const router = useRouter();
-
-const quoteToEdit = ref<Quote>();
+import type { Quote } from "../../types";
 
 const {
   quotestore,
@@ -145,6 +135,7 @@ const {
   quoteToSendMail,
   edit,
   createInvoiceFromQuote,
+  add,
 } = useQuote({
   afterAction: () => {
     quotestore.fetchList();

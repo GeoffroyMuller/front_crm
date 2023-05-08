@@ -115,7 +115,7 @@
 import MagicDataTable from "core/src/components/magic/MagicDataTable.vue";
 import Button from "core/src/components/Button.vue";
 import Page from "@/components/Page.vue";
-import type Invoice from "@/types/invoice";
+import type Invoice from "../../types";
 import InvoiceFilters from "../../components/invoices/InvoiceFilters.vue";
 import InvoiceActionsMenu from "../../components/invoices/InvoiceActionsMenu.vue";
 import InvoiceSendMail from "../../components/invoices/InvoiceSendMail.vue";

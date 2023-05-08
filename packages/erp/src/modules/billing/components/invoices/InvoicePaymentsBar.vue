@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import ProgressBar from "core/src/components/ProgressBar.vue";
-import type Invoice from "@/types/invoice";
+import type Invoice from "../../types";
 import { computed } from "vue";
 
 interface InvoicePaymentsBarProps {

@@ -148,7 +148,7 @@ import Grid from "core/src/components/layouts/Grid.vue";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
 import useClientStore from "@/stores/clients";
 import type { Reservation } from "@/types/reservation";
-import type { SaleLine } from "@/types/sale";
+import type { SaleLine } from "@/modules/billing/types";
 import ReservationProductLine from "./ReservationProductLine.vue";
 import useReservationStore from "@/stores/reservations";
 import { isNil } from "lodash";

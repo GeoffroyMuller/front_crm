@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import IconButton from "core/src/components/IconButton.vue";
 import ActionMenu from "core/src/components/ActionMenu.vue";
-import type Invoice from "@/types/invoice";
+import type Invoice from "../../types";
 import { computed } from "vue";
 
 interface InvoiceActionsMenuProps {

@@ -50,8 +50,8 @@ import HtmlEditor from "core/src/components/HtmlEditor.vue";
 import IconButton from "core/src/components/IconButton.vue";
 import Modal from "core/src/components/Modal.vue";
 import useUI from "core/src/composables/ui";
-import useQuoteStore from "@/stores/quotes";
-import type { Quote } from "@/types/quote";
+import useQuoteStore from "../../stores/quotes";
+import type { Quote } from "../../types";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 

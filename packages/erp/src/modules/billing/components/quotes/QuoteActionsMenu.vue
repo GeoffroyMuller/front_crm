@@ -4,7 +4,7 @@
   </ActionMenu>
 </template>
 <script setup lang="ts">
-import type { Quote } from "@/types/quote";
+import type { Quote } from "../../types";
 import IconButton from "core/src/components/IconButton.vue";
 import ActionMenu from "core/src/components/ActionMenu.vue";
 import { computed } from "vue";

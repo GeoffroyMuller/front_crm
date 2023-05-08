@@ -34,7 +34,7 @@ import Repetable from "core/src/components/form/repetable/Repetable.vue";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
 import useProductsRealStore from "@/stores/products_real";
 import type { Product, ProductReal } from "@/types/product";
-import type { SaleSubline } from "@/types/sale";
+import type { SaleSubline } from "../../types";
 import { isNil } from "lodash";
 import { computed, ref, watch } from "vue";
 

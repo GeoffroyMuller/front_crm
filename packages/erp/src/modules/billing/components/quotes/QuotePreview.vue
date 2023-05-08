@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import useQuoteStore from "@/stores/quotes";
-import type { Quote } from "@/types/quote";
+import useQuoteStore from "../../stores/quotes";
+import type { Quote } from "../../types";
 import Sidebar from "core/src/components/Sidebar.vue";
 import { ref, watch } from "vue";
 import PdfViewer from "core/src/components/PdfViewer.vue";

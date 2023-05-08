@@ -95,10 +95,10 @@
 <script setup lang="ts">
 import Page from "@/components/Page.vue";
 import useClientStore from "@/stores/clients";
-import useInvoicesStore from "@/stores/invoices";
+import useInvoicesStore from "../../stores/invoices";
 import useVatStore from "@/stores/vat";
 import type Client from "@/types/client";
-import type Invoice from "@/types/invoice";
+import type Invoice from "../../types";
 import { ref, computed, onMounted } from "vue";
 import { isEmpty } from "lodash";
 import TextField from "core/src/components/form/TextField.vue";
@@ -111,7 +111,7 @@ import HtmlEditor from "core/src/components/HtmlEditor.vue";
 import InvoiceLineVue from "../../components/invoices/InvoiceLine.vue";
 import Card from "core/src/components/Card.vue";
 import useEditPage from "@/components/editpage";
-import type { SaleLine } from "@/types/sale";
+import type { SaleLine } from "@/modules/billing/types";
 
 const invoiceStore = useInvoicesStore();
 const clientsStore = useClientStore();

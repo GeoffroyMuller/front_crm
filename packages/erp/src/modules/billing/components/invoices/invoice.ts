@@ -1,7 +1,7 @@
 import { getJWT } from "core/src/helpers/utils";
 import useUI from "core/src/composables/ui";
-import useInvoicesStore from "@/stores/invoices";
-import type Invoice from "@/types/invoice";
+import useInvoicesStore from "@/modules/billing/stores/invoices";
+import type Invoice from "../../types";
 import config from "@/const";
 import { ref, type Ref } from "vue";
 import { useI18n } from "vue-i18n";

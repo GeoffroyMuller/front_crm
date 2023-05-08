@@ -1,24 +1,25 @@
 import { getJWT } from "core/src/helpers/utils";
 import useUI from "core/src/composables/ui";
-import useQuotesStore from "@/stores/quotes";
-import type { Quote } from "@/types/quote";
+import useQuotesStore from "../../stores/quotes";
+import type { Quote } from "../../types";
 import config from "@/const";
 import { ref, type Ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import useInvoicesStore from "@/stores/invoices";
+import useInvoicesStore from "@/modules/billing/stores/invoices";
 
 export interface UseQuoteProps {
   quote?: Ref<Quote>;
   afterAction?: () => void;
 }
 /*
-to send mail, add the following to the <template> :
+to send mail, and preview : add the following to the <template> :
     <QuoteSendMail
       @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)"
       @close="quoteToSendMail = null"
       :quote="quoteToSendMail"
     />
+    <QuotePreview @close="quoteToPreview = null" :quote="quoteToPreview" />
 */
 
 export default function useQuote(props?: UseQuoteProps) {
@@ -114,7 +115,20 @@ export default function useQuote(props?: UseQuoteProps) {
   }
 
   function edit(item: Quote) {
-    router.push(`/quotes/${item.id}`);
+    router.push({
+      name: "quotes-id",
+      params: {
+        id: item.id,
+      },
+    });
+  }
+  function add() {
+    router.push({
+      name: "quotes-id",
+      params: {
+        id: "new",
+      },
+    });
   }
 
   return {
@@ -123,6 +137,7 @@ export default function useQuote(props?: UseQuoteProps) {
     setArchived,
     setArchivedSelection,
     downloadPdf,
+    add,
     edit,
     sendMail,
     quoteToSendMail,

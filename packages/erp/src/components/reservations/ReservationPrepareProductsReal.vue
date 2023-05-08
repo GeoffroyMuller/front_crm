@@ -71,7 +71,7 @@ import SubForm from "core/src/components/form/subform.vue";
 import { isEqual, isNil } from "lodash";
 import Flex from "core/src/components/layouts/Flex.vue";
 import Form from "core/src/components/form/Form.vue";
-import type { SaleLine, SaleSubline } from "@/types/sale";
+import type { SaleLine, SaleSubline } from "../../types";
 import useReservationStore from "@/stores/reservations";
 import useUI from "core/src/composables/ui";
 

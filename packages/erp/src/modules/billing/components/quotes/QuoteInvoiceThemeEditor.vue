@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import type { QuoteInvoiceTheme } from "@/types/quotetheme";
+import type { QuoteInvoiceTheme } from "../../types";
 import Card from "core/src/components/Card.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import Grid from "core/src/components/layouts/Grid.vue";

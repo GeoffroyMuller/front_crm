@@ -34,7 +34,7 @@ import Grid from "core/src/components/layouts/Grid.vue";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
 import useProductsStore from "@/stores/products";
 import type { Product } from "@/types/product";
-import type { SaleLine } from "@/types/sale";
+import type { SaleLine } from "@/modules/billing/types";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import ReservationProductRealLine from "./ReservationProductRealLine.vue";

@@ -1,6 +1,6 @@
 import { makeAPIStore } from "core/src/factories/store.factory";
-import type { InvoicePayment } from "@/types/invoice";
-import type Invoice from "@/types/invoice";
+import type { InvoicePayment } from "../../types";
+import type Invoice from "../../types";
 import type { ID } from "core/src/types";
 import axios from "axios";
 import useQuoteStore from "./quotes";

@@ -132,7 +132,7 @@ import QuoteSublineForm from "./QuoteSublineForm.vue";
 import Sidebar from "core/src/components/Sidebar.vue";
 import Button from "core/src/components/Button.vue";
 import Alert from "core/src/components/Alert.vue";
-import type { SaleLine } from "@/types/sale";
+import type { SaleLine } from "@/modules/billing/types";
 
 interface QuoteLineProps {
   line: SaleLine;
