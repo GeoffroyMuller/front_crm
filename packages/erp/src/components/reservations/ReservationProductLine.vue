@@ -32,7 +32,7 @@ import Button from "core/src/components/Button.vue";
 import Repetable from "core/src/components/form/repetable/Repetable.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
-import useProductsStore from "@/stores/products";
+import useProductsStore from "@/modules/products/stores/products";
 import type { Product } from "@/types/product";
 import type { SaleLine } from "@/modules/billing/types";
 import { ref } from "vue";

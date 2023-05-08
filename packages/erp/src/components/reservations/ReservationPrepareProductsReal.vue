@@ -62,7 +62,7 @@
 import Button from "core/src/components/Button.vue";
 import Repetable from "core/src/components/form/repetable/Repetable.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
-import useProductsStore from "@/stores/products";
+import useProductsStore from "@/modules/products/stores/products";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import ReservationProductRealLine from "./ReservationProductRealLine.vue";

@@ -157,7 +157,7 @@ import { useI18n } from "vue-i18n";
 import { computed, ref, watch } from "vue";
 import Card from "core/src/components/Card.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
-import useProductsStore from "@/stores/products";
+import useProductsStore from "@/modules/products/stores/products";
 
 interface ReservationFormProps {
   initialReservation: Reservation | null;

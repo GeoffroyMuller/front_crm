@@ -52,18 +52,18 @@
   </Page>
 </template>
 <script setup lang="ts">
-import ProductForm from "@/components/products/ProductForm.vue";
+import ProductForm from "@/modules/products/components/ProductForm.vue";
 import Page from "@/components/Page.vue";
-import useProductStore from "@/stores/products";
+import useProductStore from "@/modules/products/stores/products";
 import { computed, onMounted, ref } from "vue";
 import Card from "core/src/components/Card.vue";
 import Tabs from "core/src/components/Tabs.vue";
-import ProductAvancedSettingsPhysical from "@/components/products/ProductAvancedSettingsPhysical.vue";
-import ProductStock from "@/components/products/ProductStock.vue";
+import ProductAvancedSettingsPhysical from "@/modules/products/components/ProductAvancedSettingsPhysical.vue";
+import ProductStock from "@/modules/products/components/ProductStock.vue";
 import useVatStore from "@/stores/vat";
 import useEditPage from "@/components/editpage";
 import type { Product } from "@/types/product";
-import ProductAdvancedSettingsEvents from "@/components/products/ProductAdvancedSettingsEvents.vue";
+import ProductAdvancedSettingsEvents from "@/modules/products/components/ProductAdvancedSettingsEvents.vue";
 
 const productsStore = useProductStore();
 const vatStore = useVatStore();

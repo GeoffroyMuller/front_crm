@@ -6,8 +6,6 @@ import auth from "./middleware/auth";
 
 import Home from "./pages/Home.vue";
 import Settings from "./pages/settings/index.vue";
-import Products from "./pages/products/index.vue";
-import EditProduct from "./pages/products/EditProduct.vue";
 import Reservations from "./pages/reservations/index.vue";
 import Clients from "./pages/clients/index.vue";
 import EditCompany from "./pages/clients/EditCompany.vue";
@@ -27,24 +25,6 @@ export default [
     path: "/settings",
     name: "settings",
     component: Settings,
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
-    path: "/products",
-    name: "products",
-    component: Products,
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
-    path: "/products/:id",
-    name: "products-id",
-    component: EditProduct,
     meta: {
       middleware: [auth],
       layout: LayoutPage,

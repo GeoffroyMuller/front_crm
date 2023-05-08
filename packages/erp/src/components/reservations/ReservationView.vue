@@ -178,7 +178,7 @@ import Flex from "core/src/components/layouts/Flex.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import type { Reservation } from "@/types/reservation";
 import type { SaleLine } from "@/modules/billing/types";
-import useProductsStore from "@/stores/products";
+import useProductsStore from "@/modules/products/stores/products";
 import { isNil } from "lodash";
 import { computed } from "vue";
 import Table from "core/src/components/Table.vue";

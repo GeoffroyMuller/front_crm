@@ -70,7 +70,7 @@ import Form from "core/src/components/form/Form.vue";
 import Repetable from "core/src/components/form/repetable/Repetable.vue";
 import Select from "core/src/components/form/Select.vue";
 import TextField from "core/src/components/form/TextField.vue";
-import useProductsStore from "@/stores/products";
+import useProductsStore from "@/modules/products/stores/products";
 import type { Product, ProductField } from "@/types/product";
 import { isNil } from "lodash";
 import { computed } from "vue";

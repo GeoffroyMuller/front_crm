@@ -123,7 +123,7 @@ import TextField from "core/src/components/form/TextField.vue";
 import Select from "core/src/components/form/Select.vue";
 import HtmlEditor from "core/src/components/HtmlEditor.vue";
 import useVatStore from "@/stores/vat";
-import useProductStore from "@/stores/products";
+import useProductStore from "@/modules/products/stores/products";
 import type { Vat } from "@/types/vat";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
 import type { Product, ProductReal } from "@/types/product";

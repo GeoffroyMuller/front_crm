@@ -8,7 +8,8 @@ import config from "@/const";
 
 import canPlugin from "./plugins/can";
 
-import billing from "./modules/billing";
+import BillingModule from "./modules/billing";
+import ProductsModule from "./modules/products";
 
 const { app } = setup({
   routes,
@@ -19,7 +20,7 @@ const { app } = setup({
   axios: {
     baseURL: config.API_URL,
   },
-  modules: [billing],
+  modules: [BillingModule, ProductsModule],
 });
 
 app.use(canPlugin);

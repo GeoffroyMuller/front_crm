@@ -60,21 +60,33 @@ const props = withDefaults(defineProps<ChipProps>(), {
         color($key, 500) 0%,
         color($key, 400) 100%
       );
+      .icon-btn-cancel {
+        color: color("white");
+      }
     }
     .chip-outline-#{$key} {
       border: 1px solid color($key, 500);
       background-color: transparent;
       color: color($key, 500);
+      .icon-btn-cancel {
+        color: color($key, 500) !important;
+      }
     }
   } @else {
     .chip-#{$key} {
       background-color: rgba(0, 0, 0, 0.25);
       color: color("white");
+      .icon-btn-cancel {
+        color: color("white") !important;
+      }
     }
     .chip-outline-#{$key} {
       border: 1px solid rgba(0, 0, 0, 0.25);
       background-color: transparent;
       color: color("black");
+      .icon-btn-cancel {
+        color: color("black") !important;
+      }
     }
   }
 }

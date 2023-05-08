@@ -34,11 +34,11 @@
 <script setup lang="ts">
 import Button from "core/src/components/Button.vue";
 import MagicDataTable from "core/src/components/magic/MagicDataTable.vue";
-import useProductsStore from "@/stores/products";
+import useProductsStore from "@/modules/products/stores/products";
 import type { Event } from "@/types/events";
 import type { Product } from "@/types/product";
 import { ref } from "vue";
-import EditEventSidebar from "../events/EditEventSidebar.vue";
+import EditEventSidebar from "@/components/events/EditEventSidebar.vue";
 
 interface ProductAvancedSettingsEventProps {
   product: Product | null;

@@ -106,7 +106,7 @@ import Select from "core/src/components/form/Select.vue";
 import HtmlEditor from "core/src/components/HtmlEditor.vue";
 import Switch from "core/src/components/form/Switch.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
-import useProductsStore from "@/stores/products";
+import useProductsStore from "@/modules/products/stores/products";
 
 interface ProductFormProps {
   product: Product | null;
