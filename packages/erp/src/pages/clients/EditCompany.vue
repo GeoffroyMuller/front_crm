@@ -84,8 +84,8 @@ const {
 } = useEditPage<Company>({
   store: companiesStore,
   onAdd: (res) => {
-    router.push("/companies/" + res.id);
     company.value = res;
+    router.push({ name: "customers" });
   },
 });
 

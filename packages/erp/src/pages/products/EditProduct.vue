@@ -101,7 +101,7 @@ const productTabs = computed(() => {
 });
 
 const goToProductsPage = () => {
-  router.push("/products");
+  router.push({ name: "products" });
 };
 
 onMounted(async () => {

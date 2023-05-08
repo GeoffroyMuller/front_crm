@@ -30,7 +30,7 @@ export default {
       },
     },
     {
-      path: "/invoices",
+      path: "invoices",
       name: "invoices",
       component: Invoices,
       meta: {
@@ -39,7 +39,7 @@ export default {
       },
     },
     {
-      path: "/invoices/:id/edit",
+      path: "invoices/:id/edit",
       name: "invoices-id-edit",
       component: EditInvoice,
       meta: {
@@ -48,7 +48,7 @@ export default {
       },
     },
     {
-      path: "/invoices/:id",
+      path: "invoices/:id",
       name: "invoices-id",
       component: Invoice,
       meta: {

@@ -136,7 +136,7 @@ const {
   store: invoiceStore,
   populate: ["client.company", "lines.[vat, sublines]", "total"],
   onAdd: (res) => {
-    router.push("/invoices/" + res.id);
+    router.push({ name: "invoices-id", params: { id: res.id } });
     invoice.value = res;
   },
   mapBeforeSave: (data) => {

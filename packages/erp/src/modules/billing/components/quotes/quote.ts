@@ -56,7 +56,12 @@ export default function useQuote(props?: UseQuoteProps) {
     try {
       const _quote = (props?.quote?.value || item) as Quote;
       await invoiceStore.invoiceToCreateFromQuote(_quote.id);
-      router.push("/invoices/new");
+      router.push({
+        name: "invoices-id",
+        params: {
+          id: "new",
+        },
+      });
     } catch (err) {
       console.error(err);
       toast({

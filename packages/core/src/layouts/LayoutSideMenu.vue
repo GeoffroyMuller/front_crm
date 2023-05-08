@@ -112,7 +112,6 @@
 </template>
 
 <script setup lang="ts">
-import type { IconName } from "../components/types";
 import Icon from "../components/Icon.vue";
 import IconButton from "../components/IconButton.vue";
 import Tree from "../components/Tree.vue";

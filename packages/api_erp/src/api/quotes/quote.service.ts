@@ -81,7 +81,6 @@ const quoteService = serviceFactory<Quote, User>(Quote, {
         idCompany: auth.idCompany,
         idResponsible: auth.id,
         identifier: await getNextIdentifier(auth),
-        status: "draft",
       },
     };
   },

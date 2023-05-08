@@ -30,7 +30,7 @@
           sortable: true,
         },
       ]"
-      @row-click="(product: Product) => $router.push(`/products/${product.id}`)"
+      @row-click="(product: Product) => $router.push({name: 'products-id', params: {id: product.id}})"
     >
       <template #content-stock="{ item }">
         {{
@@ -53,7 +53,9 @@
             color="success"
             icon="add"
             v-tooltip="{ text: $t('add'), placement: 'bottom' }"
-            @click="$router.push(`/products/new`)"
+            @click="
+              $router.push({ name: 'products-id', params: { id: 'new' } })
+            "
           >
             {{ $t("add") }}
           </Button>

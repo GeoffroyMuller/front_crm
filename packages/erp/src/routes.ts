@@ -70,7 +70,7 @@ export default [
   },
   {
     path: "/companies/:id",
-    name: "edit-company",
+    name: "companies-id",
     component: EditCompany,
     meta: {
       middleware: [auth],

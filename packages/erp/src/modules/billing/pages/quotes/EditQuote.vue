@@ -241,6 +241,15 @@ const prices = computed(() => {
 });
 
 const {
+  downloadPdf,
+  preview,
+  quoteToPreview,
+  sendMail,
+  quoteToSendMail,
+  edit,
+} = useQuote({});
+
+const {
   isAddAction,
   loading,
   loadingPage,
@@ -265,13 +274,10 @@ const {
     return data;
   },
   onAdd: (res) => {
-    router.push("/quotes/" + res.id);
+    edit(res);
     quote.value = res;
   },
 });
-
-const { downloadPdf, preview, quoteToPreview, sendMail, quoteToSendMail } =
-  useQuote({});
 </script>
 
 <style scoped lang="scss">

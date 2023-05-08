@@ -9,7 +9,9 @@
       <template #companies>
         <MagicDataTable
           :store="companiesStore"
-          @row-click="(c) => $router.push(`/companies/${c.id}`)"
+          @row-click="
+            (c) => $router.push({ name: 'companies-id', params: { id: c.id } })
+          "
           :columns="[
             {
               title: $t('company'),
@@ -33,7 +35,10 @@
               color="success"
               icon="add"
               v-tooltip="{ text: $t('add'), placement: 'bottom' }"
-              @click.stop="() => $router.push(`/companies/new`)"
+              @click.stop="
+                () =>
+                  $router.push({ name: 'companies-id', params: { id: 'new' } })
+              "
             >
               {{ $t("add") }}
             </Button>
