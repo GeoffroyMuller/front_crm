@@ -152,7 +152,7 @@ const maskOptions = computed<MaskOptions | null>(() => {
   gap: spacing(1);
   width: 100%;
   label {
-    @include typo(text2);
+    @include typo(label);
   }
   .input-wrapper {
     position: relative;

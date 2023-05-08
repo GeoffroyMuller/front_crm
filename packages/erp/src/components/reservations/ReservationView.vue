@@ -18,7 +18,7 @@
         <div class="reservation-content">
           <Grid :gap="5" :columns="{ xs: 1, sm: 2 }">
             <Grid :gap="1" :columns="1">
-              <div class="typo-text2">
+              <div class="typo-label">
                 {{ $t("firstname") }}:
                 {{
                   reservation?.client != null && reservation.client?.firstname
@@ -26,7 +26,7 @@
                     : "-"
                 }}
               </div>
-              <div class="typo-text2">
+              <div class="typo-label">
                 {{ $t("lastname") }}:
                 {{
                   reservation?.client != null && reservation.client?.lastname
@@ -34,7 +34,7 @@
                     : "-"
                 }}
               </div>
-              <div class="typo-text2">
+              <div class="typo-label">
                 {{ $t("email") }}:
                 {{
                   reservation?.client != null && reservation.client?.email
@@ -42,7 +42,7 @@
                     : "-"
                 }}
               </div>
-              <div class="typo-text2">
+              <div class="typo-label">
                 {{ $t("phone") }}:
                 {{
                   reservation?.client != null && reservation.client?.phone
@@ -50,7 +50,7 @@
                     : "-"
                 }}
               </div>
-              <div class="typo-text2">
+              <div class="typo-label">
                 {{ $t("address") }}:
                 {{
                   reservation?.client != null && reservation.client?.address
@@ -66,7 +66,7 @@
                 alignItems="flex-end"
                 justifyContent="flex-start"
               >
-                <div class="typo-text2">
+                <div class="typo-label">
                   {{ $t("dtstart") }}:
                   {{
                     reservation.dtstart
@@ -74,7 +74,7 @@
                       : "-"
                   }}
                 </div>
-                <div class="typo-text2">
+                <div class="typo-label">
                   {{ $t("dtend") }}:
                   {{
                     reservation.dtend
@@ -85,7 +85,7 @@
               </Flex>
             </div>
           </Grid>
-          <div class="reservation-description typo-text2">
+          <div class="reservation-description typo-label">
             {{ $t("description") }}: {{ reservation?.description ? "" : "-" }}
             <div
               class="reservation-description-text"
@@ -99,7 +99,7 @@
               <template
                 v-if="reservation.lines && reservation.lines.length > 0"
               >
-                <div class="typo-text2">
+                <div class="typo-label">
                   {{ `${$t("products")} :` }}
                 </div>
                 <!-- <Table
@@ -134,15 +134,15 @@
                 <div v-for="line in reservation.lines" :key="line.id">
                   <Card>
                     <Grid :gap="1">
-                      <Flex justify-content="space-between" class="typo-text2">
+                      <Flex justify-content="space-between" class="typo-label">
                         <div>{{ $t("name") }}</div>
                         <div>{{ line.product?.name }}</div>
                       </Flex>
-                      <Flex justify-content="space-between" class="typo-text2">
+                      <Flex justify-content="space-between" class="typo-label">
                         <div>{{ $t("description") }}</div>
                         <div>{{ line.product?.description || "-" }}</div>
                       </Flex>
-                      <Flex justify-content="space-between" class="typo-text2">
+                      <Flex justify-content="space-between" class="typo-label">
                         <div>{{ $t("quantity") }}</div>
                         <div>{{ line.qty || "-" }}</div>
                       </Flex>
@@ -150,7 +150,7 @@
                   </Card>
                 </div>
               </template>
-              <div v-else class="typo-text2">
+              <div v-else class="typo-label">
                 {{ `${$t("products")} : -` }}
               </div>
             </Grid>

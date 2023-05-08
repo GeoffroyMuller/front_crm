@@ -3,7 +3,7 @@
     class="page-menu"
     :class="{ 'mini-nav': layoutSideMenu?.isNavMini?.value }"
   >
-    <div class="typo-title">
+    <div class="typo-title2">
       {{ title }}
     </div>
     <div class="buttons">
@@ -13,7 +13,7 @@
             { icon: 'door_open', action: disconnect, title: 'disconnect' },
           ]"
         >
-          <Button variant="text" class="auth">
+          <Button typo="title2" variant="text" class="auth">
             {{ auth.firstname }} {{ auth.lastname }}
           </Button>
         </ActionMenu>
@@ -147,7 +147,7 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
     color("primary", 400) 100%
   );
 
-  .typo-title {
+  .typo-title2 {
     color: white;
   }
   .buttons {
@@ -172,7 +172,7 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
     background-color: unset;
     background: unset;
     height: auto;
-    .typo-title {
+    .typo-title2 {
       color: unset;
     }
   }

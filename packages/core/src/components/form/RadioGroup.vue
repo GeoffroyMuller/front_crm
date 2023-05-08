@@ -126,7 +126,7 @@ function handleClickOption(opt: any) {
 <style lang="scss">
 .radio-group {
   @include grid(1, 0, 1);
-  @include typo(text2);
+  @include typo(label);
   .radio-buttons {
     display: flex;
     gap: spacing(2);

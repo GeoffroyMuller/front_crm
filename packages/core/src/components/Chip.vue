@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<ChipProps>(), {
   width: max-content;
   padding: 8px 15px;
   line-height: unset;
-  @include typo(text2);
+  @include typo(label);
 }
 .icon-btn-cancel {
   margin-left: 8px;

@@ -253,7 +253,7 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
       align-items: center;
       cursor: pointer;
       user-select: none;
-      @include typo(text);
+      @include typo(title5);
       transition: all 0.3s;
       &.selected {
         color: color("primary", 500);

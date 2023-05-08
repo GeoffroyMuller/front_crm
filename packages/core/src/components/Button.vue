@@ -1,16 +1,18 @@
 <template>
-  <!-- :class="variant === 'text' ? `button-text button-text-${color}` : `button-${color}`" -->
   <component
     :is="component"
     class="button"
-    :class="{
-      [`button-text button-text-${color}`]: variant === 'text',
-      [`button-outlined button-outlined-${color}`]: variant === 'outlined',
-      [`button-${color}`]: variant !== 'text',
-      'align-end': align === 'end',
-      'align-start': align === 'start',
-      rounded
-    }"
+    :class="[
+      {
+        [`button-text button-text-${color}`]: variant === 'text',
+        [`button-outlined button-outlined-${color}`]: variant === 'outlined',
+        [`button-${color}`]: variant !== 'text',
+        'align-end': align === 'end',
+        'align-start': align === 'start',
+        rounded,
+      },
+      `typo-${typo}`,
+    ]"
     :disabled="disabled || loading"
     v-bind="buttonAdditionnalProps"
   >
@@ -34,6 +36,8 @@ import { computed, withDefaults } from "vue";
 import Spinner from "./Spinner.vue";
 import type { Color, IconName } from "./types";
 import Icon from "./Icon.vue";
+import type { Typo } from "core/src/components/types";
+
 interface ButtonProps {
   color?: Color;
   disabled?: boolean;
@@ -45,6 +49,7 @@ interface ButtonProps {
   icon?: IconName;
   component?: "button" | "a";
   href?: string;
+  typo: Typo;
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -53,6 +58,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   type: "button",
   align: "center",
   component: "button",
+  typo: "button",
 });
 
 const buttonAdditionnalProps = computed(() => {
@@ -86,7 +92,6 @@ const buttonAdditionnalProps = computed(() => {
   transition: background-color 0.15s ease, color 0.05s linear;
   user-select: none;
   text-decoration: none;
-  @include typo(text);
   &:not(.button-text):not(.button-outlined):not(:disabled) {
     box-shadow: 0px 0.3px 0.9px rgba(0, 0, 0, 0.32),
       0px 1.6px 3.6px rgba(0, 0, 0, 0.28);

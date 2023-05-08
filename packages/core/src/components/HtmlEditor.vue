@@ -68,7 +68,7 @@ button.ql-active .ql-stroke {
   flex-direction: column;
   width: 100%;
   label {
-    @include typo(text2);
+    @include typo(label);
   }
   gap: spacing(1);
   .html-editor-content {

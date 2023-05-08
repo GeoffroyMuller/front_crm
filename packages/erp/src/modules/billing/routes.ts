@@ -1,11 +1,6 @@
 import LayoutPage from "@/layouts/LayoutPage.vue";
 import auth from "@/middleware/auth";
 
-import EditQuote from "./pages/quotes/EditQuote.vue";
-import Invoices from "./pages/invoices/index.vue";
-import EditInvoice from "./pages/invoices/EditInvoice.vue";
-import Invoice from "./pages/invoices/Invoice.vue";
-
 export default {
   name: "billing",
   path: "/billing",
@@ -23,7 +18,7 @@ export default {
     {
       path: "quotes/:id",
       name: "quotes-id",
-      component: EditQuote,
+      component: () => import("./pages/quotes/EditQuote.vue"),
       meta: {
         middleware: [auth],
         layout: LayoutPage,
@@ -32,7 +27,7 @@ export default {
     {
       path: "invoices",
       name: "invoices",
-      component: Invoices,
+      component: () => import("./pages/invoices/index.vue"),
       meta: {
         middleware: [auth],
         layout: LayoutPage,
@@ -41,7 +36,7 @@ export default {
     {
       path: "invoices/:id/edit",
       name: "invoices-id-edit",
-      component: EditInvoice,
+      component: () => import("./pages/invoices/EditInvoice.vue"),
       meta: {
         middleware: [auth],
         layout: LayoutPage,
@@ -50,7 +45,7 @@ export default {
     {
       path: "invoices/:id",
       name: "invoices-id",
-      component: Invoice,
+      component: () => import("./pages/invoices/Invoice.vue"),
       meta: {
         middleware: [auth],
         layout: LayoutPage,

@@ -3,9 +3,6 @@ import auth from "@/middleware/auth";
 
 import type { AppModule } from "core/src/types";
 
-import Products from "@/modules/products/pages/index.vue";
-import EditProduct from "@/modules/products/pages/EditProduct.vue";
-
 const ProductsModule: AppModule = {
   name: "products",
   routes: {
@@ -15,7 +12,7 @@ const ProductsModule: AppModule = {
       {
         path: "/",
         name: "products",
-        component: Products,
+        component: () => import("@/modules/products/pages/index.vue"),
         meta: {
           middleware: [auth],
           layout: LayoutPage,
@@ -24,7 +21,7 @@ const ProductsModule: AppModule = {
       {
         path: ":id",
         name: "products-id",
-        component: EditProduct,
+        component: () => import("@/modules/products/pages/EditProduct.vue"),
         meta: {
           middleware: [auth],
           layout: LayoutPage,

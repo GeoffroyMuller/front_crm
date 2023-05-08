@@ -39,6 +39,16 @@ export type Color =
 
 export type Size = "sm" | "md" | "lg" | "xl";
 
+export type Typo =
+  | "title1"
+  | "title3"
+  | "title4"
+  | "title5"
+  | "title6"
+  | "text1"
+  | "label"
+  | "button";
+
 export type IconName =
   | "search"
   | "search"

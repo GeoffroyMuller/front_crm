@@ -21,7 +21,7 @@ const tooltip = ref();
 
 <style lang="scss" scoped>
 .tooltip {
-  @include typo(text2);
+  @include typo(label);
   background-color: #616161e6;
   color: color("white");
   width: max-content;

@@ -427,6 +427,6 @@ table {
 label.table-label {
   display: block;
   margin-bottom: spacing(1);
-  @include typo(text2);
+  @include typo(label);
 }
 </style>

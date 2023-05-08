@@ -223,7 +223,7 @@ watch(
   flex-direction: column;
   gap: spacing(1);
   label.repetable-label {
-    @include typo(text2);
+    @include typo(label);
   }
   .repetable-section {
     &:not(:last-child) {

@@ -1,3 +1,10 @@
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+      $map: map-get($map, $key);
+  }
+  @return $map;
+};
+
 $spacing: 8;
 
 
@@ -11,29 +18,6 @@ $rounded: (
 $sidebar-width: 650px;
 
 $grid-breakpoints: (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px);
-
-$typos: (
-  title: (
-    font-size: 1.5em,
-    font-weight: 500,
-    color: #636363,
-  ),
-  subtitle: (
-    font-size: 1.2em,
-    font-weight: 500,
-    color: #5a5a5a,
-  ),
-  text2: (
-    font-size: .9em,
-    font-weight: 600,
-    color: #334155,
-  ),
-  text: (
-    font-weight: 400,
-    font-size:  1em,
-    color: #636363,
-  )
-);
 
 $input-min-height: 33px;
 
@@ -114,6 +98,74 @@ $colors: (
     800:#27272a,
     900:#18181b,
   )
+);
+
+$typos: (
+  title: (
+    font-size: 1.5em,
+    font-weight: 500,
+    color: #636363,
+  ),
+
+  subtitle: (
+    font-size: 1.2em,
+    font-weight: 500,
+    color: #5a5a5a,
+  ),
+  text2: (
+    font-size: .9em,
+    font-weight: 600,
+    color: #334155,
+  ),
+  text: (
+    font-weight: 400,
+    font-size:  1em,
+    color: #636363,
+  ),
+  label: (
+    font-weight: 600,
+    font-size:  .8125em,
+    color: map-deep-get($colors, "slate", 700),
+  ),
+  title1: (
+    font-weight: 600,
+    font-size:  1.625em,
+    color: map-deep-get($colors, "slate", 700),
+  ),
+  title2: (
+    font-weight: 600,
+    font-size:  1.25em,
+    color: map-deep-get($colors, "slate", 700),
+  ),
+  title3: (
+    font-weight: 600,
+    font-size:  1.0625em,
+    color: map-deep-get($colors, "slate", 700),
+  ),
+  title4: (
+    font-weight: 600,
+    font-size:  .9375em,
+    color: map-deep-get($colors, "slate", 700),
+  ),
+  title5: (
+    font-weight: 600,
+    font-size:  .8125em,
+    color: map-deep-get($colors, "slate", 500),
+  ),
+  title6: (
+    font-weight: 600,
+    font-size:  .625em,
+    color: map-deep-get($colors, "slate", 700),
+  ),
+  text1: (
+    font-weight: 600,
+    font-size:  .625em,
+    color: map-deep-get($colors, "slate", 400),
+  ),
+  button: (
+    font-weight: 400,
+    font-size:  .8125em,
+  ),
 );
 
 

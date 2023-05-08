@@ -66,7 +66,7 @@ function handleSwitch() {
   cursor: pointer;
   label {
     cursor: pointer;
-    @include typo(text2);
+    @include typo(label);
   }
   .switch {
     border-radius: 10px;
