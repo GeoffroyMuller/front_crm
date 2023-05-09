@@ -202,17 +202,12 @@ const maskOptions = computed<MaskOptions | null>(() => {
 
   input,
   textarea {
-    @include typo(title5);
-    &::placeholder {
-      color: lighten(color("slate", 400), 18%);
-    }
     min-height: $input-min-height;
     background-color: color("white");
     display: block;
     padding: 4px 8px;
     border: 1px solid #d1d5db;
     width: 100%;
-    color: color("black");
     transition: border-color 0.5s, box-shadow 0.5s;
 
     &:disabled {

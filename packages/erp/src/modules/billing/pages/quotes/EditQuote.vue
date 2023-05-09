@@ -106,35 +106,35 @@
         </div>
         <div class="quote-summary-container">
           <Card class="quote-summary" no-padding>
-            <Text typo="title5">
+            <Text typo="title7">
               {{ $t("pages.edit-quote.total-global") }}
             </Text>
             <div class="totals">
-              <Text typo="title5">
+              <Text typo="title7">
                 {{ $t("pages.edit-quote.without-taxes") }}
               </Text>
               <Text typo="title3">
                 {{ $utils.formatPrice(prices.totalPrice) }}
               </Text>
-              <Text typo="title5">{{ $t("pages.edit-quote.with-taxes") }}</Text>
+              <Text typo="title7">{{ $t("pages.edit-quote.with-taxes") }}</Text>
               <Text typo="title3">
                 {{ $utils.formatPrice(prices.totalPriceWithTaxes) }}
               </Text>
             </div>
             <div class="quote-summary-divider" />
             <div class="quote-summary-end">
-              <Text typo="title5">{{ $t("pages.edit-quote.pdf") }}</Text>
+              <Text typo="title6">{{ $t("pages.edit-quote.pdf") }}</Text>
               <Flex :gap="1" justify-content="end">
                 <IconButton name="download" @click="downloadPdf(quote)" />
                 <IconButton name="preview" @click.stop="preview(quote)" />
               </Flex>
-              <Text typo="title5">{{ $t("pages.edit-quote.order") }}</Text>
+              <Text typo="title6">{{ $t("pages.edit-quote.order") }}</Text>
               <div>
                 <Button variant="text">
                   {{ $t("pages.edit-quote.add-order") }}
                 </Button>
               </div>
-              <Text typo="title5">{{ $t("email") }}</Text>
+              <Text typo="title6">{{ $t("email") }}</Text>
               <div>
                 <Button variant="text" color="success" @click="sendMail(quote)">
                   {{ $t("pages.edit-quote.sendemail") }}

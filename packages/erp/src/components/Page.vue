@@ -13,7 +13,7 @@
             { icon: 'door_open', action: disconnect, title: 'disconnect' },
           ]"
         >
-          <Button typo="title2" variant="text" class="auth">
+          <Button typo="title3" variant="text" class="auth">
             {{ auth.firstname }} {{ auth.lastname }}
           </Button>
         </ActionMenu>
@@ -94,7 +94,7 @@ async function disconnect() {
 </script>
 
 <style lang="scss">
-$header_height: 80px;
+$header_height: $layoutSideHeaderHeight;
 $navWidth: $layoutSideNavWidth;
 $miniNavWidth: $layoutSideMiniNavWidth;
 $headerHeightMobile: $layoutSideHeaderHeightMobile;
@@ -156,7 +156,6 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
     align-items: center;
     gap: spacing(1.5);
     .auth {
-      font-weight: 600;
       color: white;
       margin-right: spacing(0.25);
       &:hover {

@@ -46,9 +46,12 @@ export type Typo =
   | "title4"
   | "title5"
   | "title6"
+  | "title7"
   | "text1"
   | "label"
   | "button";
+
+export type TypoWeight = "regular" | "bold";
 
 export type IconName =
   | "search"

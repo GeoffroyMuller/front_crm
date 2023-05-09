@@ -11,13 +11,14 @@ html, body {
 
 body {
     background-color: color("background");
-    @include typo(title5);
+    @include typo(text1);
 }
 
 * {
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
     line-height: 1;
+    letter-spacing: .5px;
 }
 
 pre.code {
@@ -61,6 +62,15 @@ button {
     border: none;
     outline: none;
     cursor: pointer;
+}
+
+input, textarea, select {
+    @include typo(title5);
+    font-weight: 500;
+    &::placeholder {
+        @include typo(title7);
+        font-weight: 500;
+    }
 }
 
 .layout-component {

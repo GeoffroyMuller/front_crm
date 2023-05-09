@@ -51,7 +51,7 @@
     <Tree :list="menu" class="tree-menu" :isHidden="isNavMini" default-open>
       <template #item-rollable="{ data, isOpen }">
         <div
-          class="tree-items"
+          class="tree-items typo-title5 typo-regular"
           tabindex="0"
           :class="{ selected: isItemSelected(data) }"
           v-if="!isNavMini"
@@ -65,7 +65,7 @@
           <div>{{ $t(data.title) }}</div>
         </div>
         <div
-          class="tree-items"
+          class="tree-items typo-title5 typo-regular"
           tabindex="0"
           :class="{ selected: isItemSelected(data) }"
           v-else
@@ -76,7 +76,7 @@
       </template>
       <template #item="{ data }">
         <div
-          class="tree-items"
+          class="tree-items typo-title5 typo-regular"
           tabindex="0"
           @keyup.enter="$router.push(data.path)"
           :class="{ selected: isItemSelected(data) }"
@@ -231,6 +231,7 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
     width: 100%;
     padding: spacing(3.5) 20px;
     font-size: 1.3rem;
+    height: $layoutSideHeaderHeight;
     & span {
       font-weight: 600;
       color: color("primary", 400);
@@ -253,7 +254,6 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
       align-items: center;
       cursor: pointer;
       user-select: none;
-      @include typo(title5);
       transition: all 0.3s;
       &.selected {
         color: color("primary", 500);

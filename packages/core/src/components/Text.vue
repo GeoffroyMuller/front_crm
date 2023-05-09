@@ -1,14 +1,18 @@
 <template>
-  <component :is="htmlComponent" :class="`typo-${typo}`">
+  <component
+    :is="htmlComponent"
+    :class="`typo-${typo} ${weight ? `typo-${weight}` : ''}`"
+  >
     <slot />
   </component>
 </template>
 
 <script setup lang="ts">
-import type { Typo } from "core/src/components/types";
+import type { Typo, TypoWeight } from "core/src/components/types";
 
 type TextProps = {
   typo?: Typo;
+  weight?: TypoWeight;
   htmlComponent?: string;
 };
 

@@ -27,5 +27,5 @@ export type Filters = {
 export type AppModule = {
   name: string;
   routes?: Readonly<RouteRecordRaw>;
-  stores?: Array<Store | APIStore<unknown>>;
+  // stores?: Array<Store | APIStore<unknown>>;
 };

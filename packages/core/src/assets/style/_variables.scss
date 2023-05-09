@@ -124,47 +124,52 @@ $typos: (
   ),
   label: (
     font-weight: 600,
-    font-size:  .8125rem,
+    font-size:  .875rem,
     color: map-deep-get($colors, "slate", 700),
   ),
   title1: (
     font-weight: 600,
-    font-size:  1.625rem,
+    font-size:  1.6875rem,
     color: map-deep-get($colors, "slate", 700),
   ),
   title2: (
     font-weight: 600,
-    font-size:  1.25rem,
+    font-size:  1.3125rem,
     color: map-deep-get($colors, "slate", 700),
   ),
   title3: (
     font-weight: 600,
-    font-size:  1.0625rem,
+    font-size:  1.125rem,
     color: map-deep-get($colors, "slate", 700),
   ),
   title4: (
     font-weight: 600,
-    font-size:  .9375rem,
+    font-size:  1rem,
     color: map-deep-get($colors, "slate", 700),
   ),
   title5: (
     font-weight: 600,
-    font-size:  .8125rem,
-    color: map-deep-get($colors, "slate", 500),
+    font-size:  .875rem,
+    color: map-deep-get($colors, "slate", 700),
   ),
   title6: (
     font-weight: 600,
-    font-size:  .625rem,
-    color: map-deep-get($colors, "slate", 700),
+    font-size:  .875rem,
+    color: map-deep-get($colors, "slate", 500),
+  ),
+  title7: (
+    font-weight: 600,
+    font-size:  .875rem,
+    color: map-deep-get($colors, "slate", 400),
   ),
   text1: (
-    font-weight: 600,
-    font-size:  .625rem,
-    color: map-deep-get($colors, "slate", 400),
+    font-weight: 400,
+    font-size:  .9375rem,
+    color: map-deep-get($colors, "slate", 700),
   ),
   button: (
     font-weight: 400,
-    font-size:  .8125rem,
+    font-size:  .875rem,
   ),
 );
 
@@ -179,4 +184,6 @@ $padding-card-text:  (xs: 0, sm: 1rem, md: 2rem, lg: 2rem, xl: 2rem);
 // LAYOUT SIDE MENU
 $layoutSideNavWidth: 240px;
 $layoutSideMiniNavWidth: 60px;
+$layoutSideHeaderHeight: 80px;
 $layoutSideHeaderHeightMobile: 50px;
+

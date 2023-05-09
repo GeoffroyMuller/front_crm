@@ -6,3 +6,6 @@
         @include typo($key);
     } 
 }
+
+.typo-regular { font-weight: 500; }
+.typo-bold { font-weight: 600; }
