@@ -78,4 +78,7 @@ const props = withDefaults(defineProps<IconProps>(), {
     }
   }
 }
+.icon-white {
+  color: white;
+}
 </style>

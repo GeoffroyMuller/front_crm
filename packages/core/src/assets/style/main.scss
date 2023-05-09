@@ -57,6 +57,12 @@ iframe {
     border: none;
 }
 
+button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
 .layout-component {
  --mt: 0;
  --mb: 0;

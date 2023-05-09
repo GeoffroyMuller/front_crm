@@ -28,10 +28,12 @@
       <Chip text="blabla" color="primary" icon="mail" is-outline is-closable />
       <Chip text="blabla" color="warning" icon="mail" is-outline is-closable />
     </Flex>
+    <ColorPicker label="Color" />
   </Page>
 </template>
 <script setup lang="ts">
 import Page from "@/components/Page.vue";
 import Chip from "core/src/components/Chip.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
+import ColorPicker from "core/src/components/form/ColorPicker.vue";
 </script>

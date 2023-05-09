@@ -179,7 +179,7 @@ import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
 import useClientStore from "@/stores/clients";
 import type { Quote } from "../../types";
 import QuoteLineVue from "../../components/quotes/QuoteLine.vue";
-import HtmlEditor from "core/src/components/HtmlEditor.vue";
+import HtmlEditor from "core/src/components/form/HtmlEditor.vue";
 import useVatStore from "@/stores/vat";
 import Repetable from "core/src/components/form/repetable/Repetable.vue";
 import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";

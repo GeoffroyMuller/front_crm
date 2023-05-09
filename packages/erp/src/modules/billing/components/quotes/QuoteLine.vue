@@ -121,7 +121,7 @@
 import { computed, ref, toRef } from "vue";
 import TextField from "core/src/components/form/TextField.vue";
 import Select from "core/src/components/form/Select.vue";
-import HtmlEditor from "core/src/components/HtmlEditor.vue";
+import HtmlEditor from "core/src/components/form/HtmlEditor.vue";
 import useVatStore from "@/stores/vat";
 import useProductStore from "@/modules/products/stores/products";
 import type { Vat } from "@/types/vat";

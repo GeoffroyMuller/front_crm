@@ -50,7 +50,7 @@ import { useI18n } from "vue-i18n";
 import useInvoiceStore from "../../stores/invoices";
 import Form from "core/src/components/form/Form.vue";
 import TextField from "core/src/components/form/TextField.vue";
-import HtmlEditor from "core/src/components/HtmlEditor.vue";
+import HtmlEditor from "core/src/components/form/HtmlEditor.vue";
 import IconButton from "core/src/components/IconButton.vue";
 import Button from "core/src/components/Button.vue";
 import Modal from "core/src/components/Modal.vue";

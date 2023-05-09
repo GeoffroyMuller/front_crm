@@ -41,6 +41,7 @@ export type Size = "sm" | "md" | "lg" | "xl";
 
 export type Typo =
   | "title1"
+  | "title2"
   | "title3"
   | "title4"
   | "title5"
