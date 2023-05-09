@@ -7,6 +7,7 @@
       <button class="color-btn" :style="{ background: internalValue || '' }">
         <Icon
           name="colorize"
+          size="sm"
           :style="{ color: getContrastYIQ(internalValue || '') }"
         />
       </button>

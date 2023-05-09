@@ -1,5 +1,6 @@
 <template>
   <Card
+    :with-padding="false"
     rounded="sm"
     :title="title || ''"
     class="toast"
@@ -47,6 +48,7 @@ const props = withDefaults(defineProps<ToastProps>(), {});
 
 <style lang="scss">
 .toast {
+  padding: spacing(2);
   .toast-content {
     display: flex;
     justify-content: space-between;

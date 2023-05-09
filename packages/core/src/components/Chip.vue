@@ -90,9 +90,9 @@ const props = withDefaults(defineProps<ChipProps>(), {
     .chip-outline-#{$key} {
       border: 1px solid rgba(0, 0, 0, 0.25);
       background-color: transparent;
-      color: color("black");
+      color: rgba(0, 0, 0, 0.65);
       .icon-btn-cancel {
-        color: color("black") !important;
+        color: rgba(0, 0, 0, 0.65) !important;
       }
     }
   }
