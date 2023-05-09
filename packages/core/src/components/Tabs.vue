@@ -89,7 +89,7 @@ watch(
     border-radius: 1px;
   }
   .tab {
-    @include typo(text);
+    @include typo(button);
     font-weight: bold;
     border-radius: map-deep-get($rounded, "sm");
     padding-bottom: spacing(1);

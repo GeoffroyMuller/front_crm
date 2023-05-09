@@ -106,31 +106,35 @@
         </div>
         <div class="quote-summary-container">
           <Card class="quote-summary" no-padding>
-            <Text typo="subtitle">
+            <Text typo="title5">
               {{ $t("pages.edit-quote.total-global") }}
             </Text>
             <div class="totals">
-              <Text>{{ $t("pages.edit-quote.without-taxes") }}</Text>
-              <Text> {{ $utils.formatPrice(prices.totalPrice) }} </Text>
-              <Text>{{ $t("pages.edit-quote.with-taxes") }}</Text>
-              <Text>
+              <Text typo="title5">
+                {{ $t("pages.edit-quote.without-taxes") }}
+              </Text>
+              <Text typo="title3">
+                {{ $utils.formatPrice(prices.totalPrice) }}
+              </Text>
+              <Text typo="title5">{{ $t("pages.edit-quote.with-taxes") }}</Text>
+              <Text typo="title3">
                 {{ $utils.formatPrice(prices.totalPriceWithTaxes) }}
               </Text>
             </div>
             <div class="quote-summary-divider" />
             <div class="quote-summary-end">
-              <Text>{{ $t("pages.edit-quote.pdf") }}</Text>
+              <Text typo="title5">{{ $t("pages.edit-quote.pdf") }}</Text>
               <Flex :gap="1" justify-content="end">
                 <IconButton name="download" @click="downloadPdf(quote)" />
                 <IconButton name="preview" @click.stop="preview(quote)" />
               </Flex>
-              <Text>{{ $t("pages.edit-quote.order") }}</Text>
+              <Text typo="title5">{{ $t("pages.edit-quote.order") }}</Text>
               <div>
                 <Button variant="text">
                   {{ $t("pages.edit-quote.add-order") }}
                 </Button>
               </div>
-              <Text>{{ $t("email") }}</Text>
+              <Text typo="title5">{{ $t("email") }}</Text>
               <div>
                 <Button variant="text" color="success" @click="sendMail(quote)">
                   {{ $t("pages.edit-quote.sendemail") }}
@@ -319,6 +323,7 @@ const {
       display: grid;
       grid-template-columns: min-content 1fr;
       gap: spacing(1);
+      align-items: center;
     }
     .quote-summary-end {
       display: grid;

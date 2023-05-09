@@ -108,63 +108,63 @@ $typos: (
   ),
 
   subtitle: (
-    font-size: 1.2em,
+    font-size: 1.2rem,
     font-weight: 500,
     color: #5a5a5a,
   ),
   text2: (
-    font-size: .9em,
+    font-size: .9rem,
     font-weight: 600,
     color: #334155,
   ),
   text: (
     font-weight: 400,
-    font-size:  1em,
+    font-size:  1rem,
     color: #636363,
   ),
   label: (
     font-weight: 600,
-    font-size:  .8125em,
+    font-size:  .8125rem,
     color: map-deep-get($colors, "slate", 700),
   ),
   title1: (
     font-weight: 600,
-    font-size:  1.625em,
+    font-size:  1.625rem,
     color: map-deep-get($colors, "slate", 700),
   ),
   title2: (
     font-weight: 600,
-    font-size:  1.25em,
+    font-size:  1.25rem,
     color: map-deep-get($colors, "slate", 700),
   ),
   title3: (
     font-weight: 600,
-    font-size:  1.0625em,
+    font-size:  1.0625rem,
     color: map-deep-get($colors, "slate", 700),
   ),
   title4: (
     font-weight: 600,
-    font-size:  .9375em,
+    font-size:  .9375rem,
     color: map-deep-get($colors, "slate", 700),
   ),
   title5: (
     font-weight: 600,
-    font-size:  .8125em,
+    font-size:  .8125rem,
     color: map-deep-get($colors, "slate", 500),
   ),
   title6: (
     font-weight: 600,
-    font-size:  .625em,
+    font-size:  .625rem,
     color: map-deep-get($colors, "slate", 700),
   ),
   text1: (
     font-weight: 600,
-    font-size:  .625em,
+    font-size:  .625rem,
     color: map-deep-get($colors, "slate", 400),
   ),
   button: (
     font-weight: 400,
-    font-size:  .8125em,
+    font-size:  .8125rem,
   ),
 );
 

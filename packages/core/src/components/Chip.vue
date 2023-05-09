@@ -1,5 +1,8 @@
 <template>
-  <div class="chip" :class="isOutline ? `chip-outline-${color}` : `chip-${color}`">
+  <div
+    class="chip"
+    :class="isOutline ? `chip-outline-${color}` : `chip-${color}`"
+  >
     <Icon :name="icon" class="icon-chip" size="sm" v-if="icon" />
     <span v-if="$slots.default"><slot /></span>
     <span v-else-if="text">{{ text }}</span>
@@ -45,6 +48,10 @@ const props = withDefaults(defineProps<ChipProps>(), {
 }
 .icon-btn-cancel {
   margin-left: 8px;
+  &:hover {
+    transform: scale(1.08);
+    transition: transform 0.3s ease;
+  }
 }
 .icon-chip {
   margin-right: 4px;

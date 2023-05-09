@@ -202,6 +202,7 @@ const maskOptions = computed<MaskOptions | null>(() => {
 
   input,
   textarea {
+    @include typo(title5);
     &::placeholder {
       color: lighten(color("slate", 400), 18%);
     }

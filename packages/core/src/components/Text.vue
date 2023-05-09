@@ -1,17 +1,19 @@
 <template>
-  <component :is="htmlComponent" :class="`text typo-${typo}`">
+  <component :is="htmlComponent" :class="`typo-${typo}`">
     <slot />
   </component>
 </template>
 
 <script setup lang="ts">
+import type { Typo } from "core/src/components/types";
+
 type TextProps = {
-  typo?: "title" | "subtitle" | "text" | "text2";
+  typo?: Typo;
   htmlComponent?: string;
 };
 
 const props = withDefaults(defineProps<TextProps>(), {
   htmlComponent: "span",
-  typo: "text",
+  typo: "text1",
 });
 </script>
