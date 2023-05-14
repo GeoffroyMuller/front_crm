@@ -68,10 +68,6 @@ const props = withDefaults(defineProps<PageProps>(), {
 
 const layoutSideMenu = inject<LayoutSideMenuProvide>("LayoutSideMenu");
 
-if (layoutSideMenu) {
-  layoutSideMenu.isNavMini.value = false;
-}
-
 const router = useRouter();
 const userStore = useUserStore();
 const { t } = useI18n();

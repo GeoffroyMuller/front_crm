@@ -121,6 +121,7 @@ import { useRoute, useRouter } from "vue-router";
 import Sidebar from "../components/Sidebar.vue";
 import { provide } from "vue";
 import type { LayoutSideMenuProvide, MenuItem } from "./types";
+import useLocalStorage from "../composables/localStorage";
 
 interface LayoutSideMenuProps {
   menu: MenuItem[];
@@ -129,7 +130,7 @@ interface LayoutSideMenuProps {
 
 const props = withDefaults(defineProps<LayoutSideMenuProps>(), {});
 
-const isNavMini = ref(false);
+const isNavMini = useLocalStorage("is-nav-mini", false);
 const mobileNavOpen = ref(false);
 
 const router = useRouter();
@@ -146,7 +147,6 @@ function iconMiniClick(event: Event, isOpen: boolean, data: any) {
   if (data.path) {
     router.push(data.path);
   }
-  isNavMini.value = false;
 }
 
 function isItemSelected(data: any) {

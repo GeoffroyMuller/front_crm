@@ -66,6 +66,26 @@ const menu = ref<MenuItem[]>([
     icon: "home",
   },
   {
+    key: "test",
+    path: { name: "test" },
+    title: "Test",
+    icon: "home",
+    children: [
+      {
+        key: "events",
+        title: "menu.events",
+        icon: "calendar_month",
+        path: { name: "events" },
+      },
+      {
+        key: "quotes",
+        path: { name: "quotes" },
+        title: "quotes",
+        icon: "description",
+      },
+    ],
+  },
+  {
     key: "events",
     title: "menu.events",
     icon: "calendar_month",
