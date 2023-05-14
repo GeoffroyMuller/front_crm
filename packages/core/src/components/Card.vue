@@ -34,7 +34,6 @@ const props = withDefaults(defineProps<CardProps>(), {
 
 <style lang="scss">
 .card {
-  overflow: hidden;
   background-color: color("white");
   color: color("black");
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.07);
