@@ -65,7 +65,7 @@ const menu = ref<MenuItem[]>([
     title: "home",
     icon: "home",
   },
-  {
+ /*  {
     key: "test",
     path: { name: "test" },
     title: "Test",
@@ -82,9 +82,23 @@ const menu = ref<MenuItem[]>([
         path: { name: "quotes" },
         title: "quotes",
         icon: "description",
+        children: [
+          {
+            key: "events",
+            title: "menu.events",
+            icon: "calendar_month",
+            path: { name: "events" },
+          },
+          {
+            key: "quotes",
+            path: { name: "quotes" },
+            title: "quotes",
+            icon: "description",
+          },
+        ],
       },
     ],
-  },
+  }, */
   {
     key: "events",
     title: "menu.events",

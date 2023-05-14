@@ -187,3 +187,6 @@ $layoutSideMiniNavWidth: 60px;
 $layoutSideHeaderHeight: 80px;
 $layoutSideHeaderHeightMobile: 50px;
 
+$layoutSideRecursiveTreeBgColor:  map-deep-get($colors, "slate", 700);
+$layoutSideRecursiveTreeTextColor:  white;
+

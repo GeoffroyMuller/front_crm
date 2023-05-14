@@ -9,7 +9,7 @@
   </div>
   <Teleport to="body">
     <div ref="content">
-      <Card :withPadding="false">
+      <Card :withPadding="false" :class="contentCardClass">
         <slot name="content" />
       </Card>
     </div>
@@ -29,8 +29,13 @@ interface MenuProps {
   open?: boolean;
   stopOpenOnClickActivator?: boolean;
   fullActivatorWidth?: boolean;
+  contentCardClass?: any;
+  openOnHover?: boolean;
 }
-const props = withDefaults(defineProps<MenuProps>(), {});
+const props = withDefaults(defineProps<MenuProps>(), {
+  contentCardClass: "",
+  openOnHover: false,
+});
 const emit = defineEmits(["update:open"]);
 
 const activator = ref();
@@ -39,7 +44,7 @@ const content = ref();
 const { open } = useMenu({
   activator,
   container: content,
-  openOnHover: false,
+  openOnHover: props.openOnHover,
   placement: props.placement || "bottom",
   gap: props.gap || 0,
   fullActivatorWidth: props.fullActivatorWidth,

@@ -18,7 +18,7 @@
         "
         :list="getChildrenList(item)"
         :childrenKey="childrenKey"
-        class="tree-recursive"
+        :class="treeRecursiveClass ? treeRecursiveClass : 'tree-recursive'"
         :default-open="defaultOpen"
       >
         <template #item-rollable="{ data }">
@@ -41,6 +41,7 @@ interface TreeProps {
   childrenKey: string;
   isHidden: boolean;
   defaultOpen?: boolean;
+  treeRecursiveClass?: any;
 }
 
 const props = withDefaults(defineProps<TreeProps>(), {

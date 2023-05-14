@@ -64,15 +64,48 @@
           />
           <div>{{ $t(data.title) }}</div>
         </div>
-        <div
-          class="tree-items typo-title5 typo-regular"
-          tabindex="0"
-          :class="{ selected: isItemSelected(data) }"
+        <Menu
+          placement="right"
           v-else
-          @click="($e) => iconMiniClick($e, isOpen, data)"
+          contentCardClass="layout-sidebar-menu-mini"
         >
-          <Icon :name="data.icon" color="black" />
-        </div>
+          <template #activator>
+            <div
+              class="tree-items typo-title5 typo-regular"
+              tabindex="0"
+              :class="{ selected: isItemSelected(data) }"
+            >
+              <Icon :name="data.icon" color="black" />
+            </div>
+          </template>
+          <template #content>
+            <Tree :list="data.children" @click.stop class="tree-menu-mini">
+              <template #item-rollable="{ data: d, isOpen }">
+                <div class="item typo-title5 typo-regular">
+                  <Icon
+                    name="arrow_right"
+                    class="icons-arrow"
+                    :class="{ active: isOpen }"
+                    color="black"
+                  />
+                  <div>{{ $t(d.title) }}</div>
+                </div>
+              </template>
+              <template #item="{ data: d }">
+                <div
+                  class="item typo-title5 typo-regular"
+                  tabindex="0"
+                  @keyup.enter="$router.push(d.path)"
+                  :class="{ selected: isItemSelected(d) }"
+                  @click="$router.push(d.path)"
+                >
+                  <Icon :name="d.icon" color="black" />
+                  <div>{{ $t(d.title) }}</div>
+                </div>
+              </template>
+            </Tree>
+          </template>
+        </Menu>
       </template>
       <template #item="{ data }">
         <div
@@ -119,6 +152,7 @@ import useKeyboardShortcut from "../composables/keyboardshortcut";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import Sidebar from "../components/Sidebar.vue";
+import Menu from "../components/Menu.vue";
 import { provide } from "vue";
 import type { LayoutSideMenuProvide, MenuItem } from "./types";
 import useLocalStorage from "../composables/localStorage";
@@ -161,10 +195,24 @@ provide<LayoutSideMenuProvide>("LayoutSideMenu", {
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 $navWidth: $layoutSideNavWidth;
 $miniNavWidth: $layoutSideMiniNavWidth;
 $headerHeightMobile: $layoutSideHeaderHeightMobile;
+
+.layout-sidebar-menu-mini {
+  background-color: $layoutSideRecursiveTreeBgColor;
+}
+.tree-menu-mini {
+  .item {
+    display: flex;
+    align-items: center;
+    gap: spacing(1);
+    padding: spacing(1) spacing(1);
+    color: $layoutSideRecursiveTreeTextColor;
+    cursor: pointer;
+  }
+}
 
 .layout-side-mobile-menu {
   @include media-up(md) {
