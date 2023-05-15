@@ -185,11 +185,11 @@ function iconMiniClick(event: Event, isOpen: boolean, data: any) {
   }
 }
 
-function isItemSelected(data: any) {
-  if (data.path === "/") {
-    return route.path === "/";
+function isItemSelected(data: MenuItem) {
+  if (typeof data.path === "string") {
+    return data.path === route.path;
   }
-  return route.path.includes(data.path);
+  return data.path.name === route.name;
 }
 
 provide<LayoutSideMenuProvide>("LayoutSideMenu", {
@@ -213,6 +213,16 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
     padding: spacing(1) spacing(1);
     color: $layoutSideRecursiveTreeTextColor;
     cursor: pointer;
+    user-select: none;
+    &.selected {
+      color: color("primary", 400);
+    }
+    &:hover {
+      color: color("primary", 400);
+    }
+    .active {
+      transform: rotate(90deg * 1);
+    }
   }
 }
 

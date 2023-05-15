@@ -21,8 +21,8 @@
         :class="treeRecursiveClass ? treeRecursiveClass : 'tree-recursive'"
         :default-open="defaultOpen"
       >
-        <template #item-rollable="{ data }">
-          <slot name="item-rollable" :data="data"></slot>
+        <template #item-rollable="{ data, isOpen }">
+          <slot name="item-rollable" :data="data" :isOpen="isOpen"></slot>
         </template>
         <template #item="{ data }">
           <slot name="item" :data="data"></slot>
