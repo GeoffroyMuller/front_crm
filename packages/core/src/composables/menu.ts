@@ -6,6 +6,7 @@ import {
   watch,
   type Component,
   type Ref,
+  onMounted,
 } from "vue";
 
 export interface MenuProps {
@@ -19,6 +20,7 @@ export interface MenuProps {
   placement?: "top" | "bottom" | "left" | "right";
   gap?: number;
   openOnHover?: boolean;
+  strategy?: "root" | "absolute";
 }
 
 const mount = (component: Component, props: any, element: HTMLElement) => {
@@ -44,7 +46,76 @@ function getScrollParent(element: HTMLElement) {
   return document.body;
 }
 
+function useMenuPositionAbsolute(props: MenuProps) {
+  const open = ref(false);
+  const container = props.container
+    ? isRef(props.container)
+      ? props.container
+      : ref<HTMLElement>(props.container)
+    : ref(document.createElement("div"));
+  const activator = isRef(props.activator)
+    ? props.activator
+    : ref<HTMLElement>(props.activator);
+
+  function display() {
+    open.value = true;
+  }
+
+  function hide() {
+    open.value = false;
+  }
+
+  function init() {
+    if (!props.activator || !props.container) return;
+    activator.value.classList.add("menu");
+    container.value.classList.add("menu-content");
+    if (props.openOnHover) {
+      activator.value.classList.add("menu-openhover");
+    }
+    setContentPosition();
+  }
+
+  function setContentPosition() {
+    const coord = { top: "0", left: "0" };
+    switch (props.placement) {
+      case "right":
+        coord.left = "100%";
+        break;
+      case "left":
+        coord.left = "-100%";
+        break;
+      case "top":
+        coord.top = "100%";
+        break;
+      case "bottom":
+        coord.top = "-100%";
+        break;
+      default:
+        coord.top = "100%";
+        break;
+    }
+    Object.assign(container.value.style, {
+      top: coord.top,
+      left: coord.left,
+    });
+  }
+
+  onMounted(() => {
+    init();
+  });
+
+  return {
+    display,
+    hide,
+    open,
+  };
+}
+
 export default function useMenu(props: MenuProps) {
+  if (props.strategy === "absolute") {
+    return useMenuPositionAbsolute(props);
+  }
+
   const open = ref();
   const placement = props.placement || "bottom";
   const openOnHover = props.openOnHover == null ? true : props.openOnHover;

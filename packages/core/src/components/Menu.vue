@@ -6,8 +6,13 @@
     :class="$props.class"
   >
     <slot name="activator" />
+    <div ref="content" v-if="strategy !== 'root'">
+      <Card :withPadding="false" :class="contentCardClass">
+        <slot name="content" />
+      </Card>
+    </div>
   </div>
-  <Teleport to="body">
+  <Teleport v-if="strategy === 'root'" to="body">
     <div ref="content">
       <Card :withPadding="false" :class="contentCardClass">
         <slot name="content" />
@@ -18,11 +23,11 @@
 
 <script lang="ts" setup>
 import { ref, Teleport, watch } from "vue";
-import useMenu from "../composables/menu";
+import useMenu, { type MenuProps as UseMenuProps } from "../composables/menu";
 import Card from "./Card.vue";
 
 interface MenuProps {
-  placement?: "top" | "bottom" | "left" | "right";
+  placement?: UseMenuProps["placement"];
   gap?: number;
   class?: any;
   disabled?: boolean;
@@ -31,6 +36,7 @@ interface MenuProps {
   fullActivatorWidth?: boolean;
   contentCardClass?: any;
   openOnHover?: boolean;
+  strategy?: UseMenuProps["strategy"];
 }
 const props = withDefaults(defineProps<MenuProps>(), {
   contentCardClass: "",
@@ -48,6 +54,7 @@ const { open } = useMenu({
   placement: props.placement || "bottom",
   gap: props.gap || 0,
   fullActivatorWidth: props.fullActivatorWidth,
+  strategy: props.strategy,
 });
 
 watch(
@@ -68,3 +75,18 @@ function handleClickOutside() {
   emit("update:open", false);
 }
 </script>
+
+<style lang="scss">
+.menu {
+  position: relative;
+  .menu-content {
+    position: absolute;
+    display: none;
+  }
+  &.menu-openhover:hover {
+    .menu-content {
+      display: initial;
+    }
+  }
+}
+</style>

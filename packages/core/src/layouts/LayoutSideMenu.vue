@@ -68,6 +68,8 @@
           placement="right"
           v-else
           contentCardClass="layout-sidebar-menu-mini"
+          open-on-hover
+          strategy="absolute"
         >
           <template #activator>
             <div
@@ -227,6 +229,7 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
   z-index: 2;
 }
 .layout-side-menu {
+  z-index: 9999;
   &.mini {
     width: $miniNavWidth;
   }
@@ -321,14 +324,13 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
   }
 }
 .layout-side-page-container {
+  z-index: 1;
   position: absolute;
   transition: left 0.3s ease, width 0.3s ease;
   top: 0;
   left: $navWidth;
   width: calc(100% - $navWidth);
   height: 100%;
-  overflow-y: hidden;
-  overflow-x: auto;
   &.nav-is-mini {
     left: $miniNavWidth;
     width: calc(100% - $miniNavWidth);

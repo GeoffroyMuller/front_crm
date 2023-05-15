@@ -65,7 +65,7 @@ const menu = ref<MenuItem[]>([
     title: "home",
     icon: "home",
   },
- /*  {
+  {
     key: "test",
     path: { name: "test" },
     title: "Test",
@@ -98,7 +98,7 @@ const menu = ref<MenuItem[]>([
         ],
       },
     ],
-  }, */
+  },
   {
     key: "events",
     title: "menu.events",
