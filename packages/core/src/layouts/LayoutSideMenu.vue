@@ -229,7 +229,7 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
   z-index: 2;
 }
 .layout-side-menu {
-  z-index: 9999;
+  z-index: 3;
   &.mini {
     width: $miniNavWidth;
   }

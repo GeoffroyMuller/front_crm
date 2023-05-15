@@ -1,6 +1,11 @@
 <template>
   <div class="select">
-    <Menu full-activator-width stop-open-on-click-activator v-model:open="open">
+    <Menu
+      full-activator-width
+      stop-open-on-click-activator
+      v-model:open="open"
+      :strategy="menuStrategy"
+    >
       <template #activator>
         <TextField
           :model-value="displayed"
@@ -67,6 +72,7 @@ import IconButton from "../IconButton.vue";
 import Menu from "../Menu.vue";
 import SelectOptions from "../SelectOptions.vue";
 import useSelect from "../../composables/select";
+import type { MenuProps } from "src/composables/menu";
 
 export interface SelectProps {
   multiple?: boolean;
@@ -87,6 +93,7 @@ export interface SelectProps {
   error?: string | boolean;
   disabled?: boolean;
   rules?: AnySchema;
+  menuStrategy?: MenuProps["strategy"];
 }
 
 const props = withDefaults(defineProps<SelectProps>(), {

@@ -41,6 +41,7 @@ interface MenuProps {
 const props = withDefaults(defineProps<MenuProps>(), {
   contentCardClass: "",
   openOnHover: false,
+  strategy: "absolute",
 });
 const emit = defineEmits(["update:open"]);
 
@@ -80,10 +81,12 @@ function handleClickOutside() {
 .menu {
   position: relative;
   .menu-content {
+    z-index: 4;
     position: absolute;
     display: none;
   }
-  &.menu-openhover:hover {
+  &.menu-openhover:hover,
+  &.open {
     .menu-content {
       display: initial;
     }

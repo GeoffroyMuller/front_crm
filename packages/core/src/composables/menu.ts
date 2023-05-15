@@ -65,6 +65,17 @@ function useMenuPositionAbsolute(props: MenuProps) {
     open.value = false;
   }
 
+  watch(
+    () => open.value,
+    () => {
+      if (open.value) {
+        activator.value.classList.add("open");
+      } else {
+        activator.value.classList.remove("open");
+      }
+    }
+  );
+
   function init() {
     if (!props.activator || !props.container) return;
     activator.value.classList.add("menu");
@@ -85,10 +96,10 @@ function useMenuPositionAbsolute(props: MenuProps) {
         coord.left = "-100%";
         break;
       case "top":
-        coord.top = "100%";
+        coord.top = "-100%";
         break;
       case "bottom":
-        coord.top = "-100%";
+        coord.top = "100%";
         break;
       default:
         coord.top = "100%";
@@ -98,6 +109,9 @@ function useMenuPositionAbsolute(props: MenuProps) {
       top: coord.top,
       left: coord.left,
     });
+    if (props.fullActivatorWidth) {
+      container.value.style.minWidth = "100%";
+    }
   }
 
   onMounted(() => {

@@ -28,6 +28,7 @@
       <div class="pagination-items-per-page">
         <span>{{ $t("lines-per-page") }}</span>
         <Select
+          menu-strategy="root"
           class="items-per-page"
           :options="[
             { label: '5', value: 5 },
