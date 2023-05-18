@@ -126,7 +126,14 @@
     <div
       v-if="bottomMenuItem != null"
       class="bottom-menu-item"
-      :class="{ selected: isItemSelected({ path: bottomMenuItem.path }) }"
+      :class="{
+        selected: isItemSelected({
+          path: bottomMenuItem.path,
+          key: '',
+          title: '',
+          icon: 'function',
+        }),
+      }"
       @click="$router.push((bottomMenuItem as MenuItem).path)"
       tabindex="0"
       @keyup.enter="

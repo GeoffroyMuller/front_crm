@@ -1,5 +1,5 @@
 <template>
-  <Menu :placement="placement" :gap="0.5">
+  <Menu :placement="placement" :gap="0.5" strategy="root">
     <template #activator>
       <slot />
     </template>
