@@ -37,7 +37,7 @@ interface MenuProps {
   contentCardClass?: any;
   openOnHover?: boolean;
   strategy?: UseMenuProps["strategy"];
-  cardProps?: CardProps;
+  cardProps?: Partial<CardProps>;
 }
 const props = withDefaults(defineProps<MenuProps>(), {
   contentCardClass: "",
