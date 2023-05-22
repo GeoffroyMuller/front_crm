@@ -62,11 +62,5 @@ const emit = defineEmits(["select"]);
     background-color: color("primary", 50);
     color: color("primary", 500);
   }
-  &:last-child {
-    border-radius: 0 0 map-get($rounded, md) map-get($rounded, md);
-  }
-  &:first-child {
-    border-radius: map-get($rounded, md) map-get($rounded, md) 0 0;
-  }
 }
 </style>

@@ -1,5 +1,9 @@
 <template>
-  <component :is="isCard ? Card : 'div'" class="calendar">
+  <component
+    :is="wrapperComponent === 'card' ? Card : 'div'"
+    class="calendar"
+    :class="{ rounded, 'calendar-full-screen': fullScreen }"
+  >
     <div class="calendar-header">
       <div class="date">
         <div class="buttons">
@@ -111,8 +115,10 @@ export interface CalendarEvent {
 interface CalendarProps {
   // 0 for sunday, 6 for saturday
   firstDayDisplayIndex?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  isCard?: boolean;
+  wrapperComponent?: "card" | "div";
   events?: Array<CalendarEvent>;
+  rounded?: boolean;
+  fullScreen?: boolean;
 }
 
 const props = withDefaults(defineProps<CalendarProps>(), {
@@ -214,8 +220,7 @@ $borderRadius: map-deep-get($rounded, "md");
 .calendar {
   .calendar-header {
     @include flex(row, space-between, center, 1);
-    padding-top: spacing(2);
-    padding-bottom: spacing(2);
+    padding: spacing(2);
     .modes,
     .date {
       @include flex(row, flex-start, center, 1);
@@ -250,8 +255,7 @@ $borderRadius: map-deep-get($rounded, "md");
     .weekdays {
       @include grid(7, 0, 0);
       border: 1px solid $borderColor;
-      border-radius: $borderRadius $borderRadius 0 0;
-      background-color: #fafafa;
+      background-color: color("slate", 50);
       .weekday {
         padding: spacing(1);
         &:not(:last-child) {
@@ -262,7 +266,7 @@ $borderRadius: map-deep-get($rounded, "md");
     .days {
       @include grid(7, 0, 0);
       border: 1px solid $borderColor;
-      border-radius: 0 0 $borderRadius $borderRadius;
+      background-color: color("slate", 50);
       border-top: 0;
       .day {
         border-left: 1px solid $borderColor;
@@ -281,12 +285,11 @@ $borderRadius: map-deep-get($rounded, "md");
     }
     .weekdays {
       border-bottom: 0;
-      border-radius: $borderRadius $borderRadius 0 0;
-      background-color: #fafafa;
+      background-color: color("slate", 50);
     }
     .days {
       border-top: none;
-      border-radius: 0 0 $borderRadius $borderRadius;
+      background-color: color("slate", 50);
       :nth-child(7n) {
         border-right: 0;
       }
@@ -329,6 +332,22 @@ $borderRadius: map-deep-get($rounded, "md");
       &:last-child {
         border-right: none;
       }
+    }
+  }
+  &.calendar-full-screen {
+    background-color: color("white");
+    .days,
+    .weekdays {
+      border-right: 0;
+      border-left: 0;
+    }
+  }
+  &.rounded {
+    .weekdays {
+      border-radius: $borderRadius $borderRadius 0 0;
+    }
+    .days {
+      border-radius: 0 0 $borderRadius $borderRadius;
     }
   }
 }

@@ -104,18 +104,15 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
 .page-content {
   height: calc(100% - $header_height);
   overflow-y: auto;
+  margin-top: $header_height;
   &.padding-light {
     padding: spacing(2);
-    margin-top: $header_height;
   }
   &.padding-large {
     $pageContentPLargeWidth: 1300px;
     padding: spacing(2);
     padding-left: max(calc((100% - $pageContentPLargeWidth) / 2), spacing(2));
     padding-right: max(calc((100% - $pageContentPLargeWidth) / 2), spacing(2));
-    // max-width: 1200px;
-    // margin: auto;
-    margin-top: $header_height;
   }
   display: flex;
   flex-direction: column;

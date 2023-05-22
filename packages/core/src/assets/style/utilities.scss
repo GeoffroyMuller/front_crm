@@ -1,6 +1,8 @@
 @use "./_variables.scss";
 @use "./_mixins.scss";
 
+
+/*  --- TYPO --- */
 @each $key, $value in $typos {
     .typo-#{$key} {
         @include typo($key);
