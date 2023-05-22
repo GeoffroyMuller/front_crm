@@ -2,8 +2,8 @@
   <Grid :gap="0.5" :columns="1">
     {{ date.date() }}
     <div v-for="e of events" :key="e.id" @click.stop="$emit('edit', e)">
-      <Card :with-padding="false" class="event-block">
-        <Flex align-items="center" :gap="0.5" :p="0.5">
+      <Card :with-padding="false" class="event-block" rounded="sm">
+        <Flex align-items="center" :gap="0.5" :m="0.5" :ml="1" :mr="1">
           <div class="typo-text">{{ dayjs(e.dtstart).format("H") }}h</div>
           <div class="typo-text">-</div>
           <div class="typo-text">
@@ -33,6 +33,19 @@ const props = withDefaults(defineProps<BlockCalendarEventsProps>(), {});
 
 <style lang="scss" scoped>
 .event-block {
-  background-color: color("primary", 50);
+  background-color: white;
+  padding: spacing(0.5);
+  position: relative;
+  overflow: hidden;
+  &::before {
+    content: " ";
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 5px;
+    background-color: color("primary", 400);
+    z-index: 999;
+  }
 }
 </style>

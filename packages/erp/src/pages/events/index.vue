@@ -1,6 +1,10 @@
 <template>
-  <Page :title="$t('menu.events')">
-    <Calendar is-card @click="($d) => clickOnDate($d.dayjs)" :events="events">
+  <Page :title="$t('menu.events')" :padding="null">
+    <Calendar
+      @click="($d) => clickOnDate($d.dayjs)"
+      :events="events"
+      full-screen
+    >
       <template #mounth-day="{ events: _events, day }">
         <BlockCalendarEvents @edit="edit" :date="day.dayjs" :events="_events" />
       </template>
