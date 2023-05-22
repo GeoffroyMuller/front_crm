@@ -116,6 +116,22 @@
       </template>
       <template #item="{ data }">
         <div
+          v-if="isNavMini"
+          class="tree-items typo-title5 typo-regular"
+          tabindex="0"
+          @keyup.enter="$router.push(data.path)"
+          :class="{ selected: isItemSelected(data) }"
+          @click="$router.push(data.path)"
+          v-tooltip="{
+            text: $t(data.title),
+            placement: 'right',
+          }"
+        >
+          <Icon :name="data.icon" color="black" />
+        </div>
+
+        <div
+          v-else
           class="tree-items typo-title5 typo-regular"
           tabindex="0"
           @keyup.enter="$router.push(data.path)"
@@ -123,7 +139,7 @@
           @click="$router.push(data.path)"
         >
           <Icon :name="data.icon" color="black" />
-          <div v-if="!isNavMini">{{ $t(data.title) }}</div>
+          <div>{{ $t(data.title) }}</div>
         </div>
       </template>
     </Tree>
