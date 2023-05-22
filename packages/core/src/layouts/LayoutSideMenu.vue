@@ -81,31 +81,36 @@
             </div>
           </template>
           <template #content>
-            <Tree :list="data.children" @click.stop class="tree-menu-mini">
-              <template #item-rollable="{ data: d, isOpen }">
-                <div class="item typo-title5 typo-regular">
-                  <Icon
-                    name="arrow_right"
-                    class="icons-arrow"
-                    :class="{ active: isOpen }"
-                    color="black"
-                  />
-                  <div>{{ $t(d.title) }}</div>
-                </div>
-              </template>
-              <template #item="{ data: d }">
-                <div
-                  class="item typo-title5 typo-regular"
-                  tabindex="0"
-                  @keyup.enter="$router.push(d.path)"
-                  :class="{ selected: isItemSelected(d) }"
-                  @click="$router.push(d.path)"
-                >
-                  <Icon :name="d.icon" color="black" />
-                  <div>{{ $t(d.title) }}</div>
-                </div>
-              </template>
-            </Tree>
+            <div class="tree-menu-mini">
+              <div class="item-title typo-title5 typo-regular">
+                {{ data.title }}
+              </div>
+              <Tree :list="data.children" @click.stop>
+                <template #item-rollable="{ data: d, isOpen }">
+                  <div class="item typo-title5 typo-regular">
+                    <Icon
+                      name="arrow_right"
+                      class="icons-arrow"
+                      :class="{ active: isOpen }"
+                      color="black"
+                    />
+                    <div>{{ $t(d.title) }}</div>
+                  </div>
+                </template>
+                <template #item="{ data: d }">
+                  <div
+                    class="item typo-title5 typo-regular"
+                    tabindex="0"
+                    @keyup.enter="$router.push(d.path)"
+                    :class="{ selected: isItemSelected(d) }"
+                    @click="$router.push(d.path)"
+                  >
+                    <Icon :name="d.icon" color="black" />
+                    <div>{{ $t(d.title) }}</div>
+                  </div>
+                </template>
+              </Tree>
+            </div>
           </template>
         </Menu>
       </template>
@@ -211,6 +216,7 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
 
 .layout-sidebar-menu-mini {
   background-color: $layoutSideRecursiveTreeBgColor;
+  border-top-left-radius: 0px;
 }
 .tree-menu-mini {
   .item {
@@ -230,6 +236,17 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
     .active {
       transform: rotate(90deg * 1);
     }
+  }
+  .item-title {
+    @include media-up(md) {
+      height: 38px;
+    }
+    display: flex;
+    align-items: center;
+    user-select: none;
+    color: $layoutSideRecursiveTreeTextColor;
+    border-bottom: 1px dashed color("slate", 400);
+    padding: spacing(1) spacing(2.3);
   }
 }
 
