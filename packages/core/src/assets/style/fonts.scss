@@ -11,6 +11,27 @@
     font-weight: 400;
     src: url(../fonts/material-symbols-outlined.woff2) format('woff2');
 }
+
+@font-face {
+    font-family: 'Open Sans Font';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts/OpenSans-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Open Sans Font';
+    font-style: normal;
+    font-weight: 500;
+    src: url(../fonts/OpenSans-Medium.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Open Sans Font';
+    font-style: normal;
+    font-weight: 600;
+    src: url(../fonts/OpenSans-SemiBold.ttf) format('truetype');
+}
   
 .material-symbols-sharp {
     font-family: 'Material Symbols Sharp';
