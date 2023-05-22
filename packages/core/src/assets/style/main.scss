@@ -66,10 +66,10 @@ button {
 
 input, textarea, select {
     @include typo(title5);
-    font-weight: 500;
+    font-weight: 400;
     &::placeholder {
         @include typo(title7);
-        font-weight: 500;
+        font-weight: 400;
     }
 }
 
