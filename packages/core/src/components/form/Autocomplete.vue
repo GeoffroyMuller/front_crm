@@ -1,6 +1,12 @@
 <template>
   <div class="autocomplete">
-    <Menu full-activator-width stop-open-on-click-activator v-model:open="open">
+    <Menu
+      full-activator-width
+      stop-open-on-click-activator
+      v-model:open="open"
+      content-card-class="select-menu"
+      :card-props="{ rounded: 'sm' }"
+    >
       <template #activator>
         <TextField
           v-model="search"
@@ -229,5 +235,10 @@ function handleBlur() {
   display: grid;
   gap: spacing(1);
   width: 100%;
+}
+.select-menu {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  overflow: hidden;
 }
 </style>

@@ -5,6 +5,8 @@
       stop-open-on-click-activator
       v-model:open="open"
       :strategy="menuStrategy"
+      content-card-class="select-menu"
+      :card-props="{ rounded: 'sm' }"
     >
       <template #activator>
         <TextField
@@ -156,5 +158,10 @@ const {
   input {
     cursor: pointer;
   }
+}
+.select-menu {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  overflow: hidden;
 }
 </style>

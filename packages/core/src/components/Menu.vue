@@ -7,14 +7,14 @@
   >
     <slot name="activator" />
     <div ref="content" v-if="strategy !== 'root'">
-      <Card :withPadding="false" :class="contentCardClass">
+      <Card :withPadding="false" :class="contentCardClass" v-bind="cardProps">
         <slot name="content" />
       </Card>
     </div>
   </div>
   <Teleport v-if="strategy === 'root'" to="body">
     <div ref="content">
-      <Card :withPadding="false" :class="contentCardClass">
+      <Card :withPadding="false" :class="contentCardClass" v-bind="cardProps">
         <slot name="content" />
       </Card>
     </div>
@@ -24,7 +24,7 @@
 <script lang="ts" setup>
 import { ref, Teleport, watch } from "vue";
 import useMenu, { type MenuProps as UseMenuProps } from "../composables/menu";
-import Card from "./Card.vue";
+import Card, { type CardProps } from "./Card.vue";
 
 interface MenuProps {
   placement?: UseMenuProps["placement"];
@@ -37,6 +37,7 @@ interface MenuProps {
   contentCardClass?: any;
   openOnHover?: boolean;
   strategy?: UseMenuProps["strategy"];
+  cardProps?: CardProps;
 }
 const props = withDefaults(defineProps<MenuProps>(), {
   contentCardClass: "",
