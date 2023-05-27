@@ -351,4 +351,11 @@ $borderRadius: map-deep-get($rounded, "md");
     }
   }
 }
+.calendar {
+  overflow: auto;
+}
+.calendar-header,
+.weekdays {
+  position: sticky;
+}
 </style>

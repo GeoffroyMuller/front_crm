@@ -134,5 +134,10 @@
   "dtend": "Date de fin",
   "created_at": "Créer le",
   "description": "Description",
-  "dates": "Dates"
+  "dates": "Dates",
+  "core": {
+    "colorpicker": {
+      "edit-color": "Editer la couleur"
+    }
+  }
 }

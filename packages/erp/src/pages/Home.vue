@@ -35,5 +35,5 @@
 import Page from "@/components/Page.vue";
 import Chip from "core/src/components/Chip.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
-import ColorPicker from "core/src/components/form/ColorPicker.vue";
+import ColorPicker from "core/src/components/form/colorpicker/ColorPicker.vue";
 </script>
