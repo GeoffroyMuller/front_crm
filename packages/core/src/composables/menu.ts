@@ -17,7 +17,19 @@ export interface MenuProps {
 
   fullActivatorWidth?: boolean;
 
-  placement?: "top" | "bottom" | "left" | "right";
+  placement?:
+    | "top"
+    | "bottom"
+    | "left"
+    | "right"
+    | "top-left"
+    | "top-right"
+    | "top-center"
+    | "bottom-left"
+    | "bottom-right"
+    | "bottom-center"
+    | "left-center"
+    | "right-center";
   gap?: number;
   openOnHover?: boolean;
   strategy?: "root" | "absolute";
@@ -87,27 +99,74 @@ function useMenuPositionAbsolute(props: MenuProps) {
   }
 
   function setContentPosition() {
-    const coord = { top: "0", left: "0" };
+    const coord = { top: "auto", left: "auto", bottom: "auto", right: "auto" };
+    let transformTranslate = "";
     switch (props.placement) {
       case "right":
+      case "right-center":
         coord.left = "100%";
+        coord.right = "auto";
+        coord.top = "50%";
+        transformTranslate = "translateY(-50%)";
         break;
       case "left":
-        coord.left = "-100%";
+      case "left-center":
+        coord.right = "100%";
+        coord.left = "auto";
+        coord.top = "50%";
+        transformTranslate = "translateY(-50%)";
         break;
       case "top":
-        coord.top = "-100%";
+      case "top-center":
+        coord.bottom = "100%";
+        coord.top = "auto";
+        coord.left = "50%";
+        transformTranslate = "translateX(-50%)";
+        break;
+      case "top-right":
+        coord.bottom = "100%";
+        coord.top = "auto";
+        coord.left = "100%";
+        coord.right = "auto";
+        break;
+      case "top-left":
+        coord.bottom = "100%";
+        coord.top = "auto";
+        coord.left = "auto";
+        coord.right = "100%";
         break;
       case "bottom":
+      case "bottom-center":
         coord.top = "100%";
+        coord.bottom = "auto";
+        coord.left = "50%";
+        transformTranslate = "translateX(-50%)";
+        break;
+      case "bottom-right":
+        coord.bottom = "auto";
+        coord.top = "100%";
+        coord.left = "100%";
+        coord.right = "auto";
+        break;
+      case "bottom-left":
+        coord.bottom = "auto";
+        coord.top = "100%";
+        coord.left = "auto";
+        coord.right = "100%";
         break;
       default:
-        coord.top = "100%";
+        coord.bottom = "100%";
+        coord.top = "auto";
+        coord.left = "50%";
+        transformTranslate = "translateX(-50%)";
         break;
     }
     Object.assign(container.value.style, {
       top: coord.top,
       left: coord.left,
+      right: coord.right,
+      bottom: coord.bottom,
+      transform: transformTranslate,
     });
     if (props.fullActivatorWidth) {
       container.value.style.minWidth = "100%";
