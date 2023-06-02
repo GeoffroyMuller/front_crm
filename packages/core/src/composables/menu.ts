@@ -19,17 +19,26 @@ export interface MenuProps {
 
   placement?:
     | "top"
-    | "bottom"
-    | "left"
-    | "right"
+    | "top-center"
     | "top-left"
     | "top-right"
-    | "top-center"
+    | "top-left-corner"
+    | "top-right-corner"
+    | "bottom"
+    | "bottom-center"
     | "bottom-left"
     | "bottom-right"
-    | "bottom-center"
+    | "bottom-left-corner"
+    | "bottom-right-corner"
+    | "right"
+    | "right-center"
+    | "right-top"
+    | "right-bottom"
+    | "left"
     | "left-center"
-    | "right-center";
+    | "left-top"
+    | "left-bottom";
+
   gap?: number;
   openOnHover?: boolean;
   strategy?: "root" | "absolute";
@@ -128,8 +137,22 @@ function useMenuPositionAbsolute(props: MenuProps) {
         coord.top = "auto";
         coord.left = "100%";
         coord.right = "auto";
+        transformTranslate = "translateX(-100%)";
         break;
       case "top-left":
+        coord.bottom = "100%";
+        coord.top = "auto";
+        coord.left = "auto";
+        coord.right = "100%";
+        transformTranslate = "translateX(100%)";
+        break;
+      case "top-right-corner":
+        coord.bottom = "100%";
+        coord.top = "auto";
+        coord.left = "100%";
+        coord.right = "auto";
+        break;
+      case "top-left-corner":
         coord.bottom = "100%";
         coord.top = "auto";
         coord.left = "auto";
@@ -147,12 +170,46 @@ function useMenuPositionAbsolute(props: MenuProps) {
         coord.top = "100%";
         coord.left = "100%";
         coord.right = "auto";
+        transformTranslate = "translateX(-100%)";
         break;
       case "bottom-left":
         coord.bottom = "auto";
         coord.top = "100%";
         coord.left = "auto";
         coord.right = "100%";
+        transformTranslate = "translateX(100%)";
+        break;
+      case "bottom-right-corner":
+        coord.bottom = "auto";
+        coord.top = "100%";
+        coord.left = "100%";
+        coord.right = "auto";
+        break;
+      case "bottom-left-corner":
+        coord.bottom = "auto";
+        coord.top = "100%";
+        coord.left = "auto";
+        coord.right = "100%";
+        break;
+      case "left-top":
+        coord.right = "100%";
+        coord.left = "auto";
+        coord.top = "0";
+        break;
+      case "left-bottom":
+        coord.right = "100%";
+        coord.left = "auto";
+        coord.bottom = "0";
+        break;
+      case "right-top":
+        coord.left = "100%";
+        coord.right = "auto";
+        coord.top = "0";
+        break;
+      case "right-bottom":
+        coord.left = "100%";
+        coord.right = "auto";
+        coord.bottom = "0";
         break;
       default:
         coord.bottom = "100%";
@@ -272,6 +329,8 @@ export default function useMenu(props: MenuProps) {
       left: elemBoundingClientRect.left,
       height: element.offsetHeight,
       top: elemBoundingClientRect.top,
+      bottom: window.innerHeight - elemBoundingClientRect.bottom,
+      right: window.innerWidth - elemBoundingClientRect.right,
     };
   }
 
@@ -310,23 +369,32 @@ export default function useMenu(props: MenuProps) {
     const pageHeight = window.innerHeight;
     const pageWidth = window.innerWidth;
 
-    const coord = { left: 0, top: 0 };
+    const coord = { left: 0, top: 0, right: 0, bottom: 0 };
+    let transformTranslate = "";
 
     switch (placement) {
       case "right":
-        coord.top = dimensions.activator.top;
+      case "right-center":
+        coord.top = dimensions.activator.top + dimensions.activator.height / 2;
         coord.left = dimensions.activator.left + dimensions.activator.width;
         _setStyleProperties({ ml: props.gap });
+        transformTranslate = "translateY(-50%)";
         break;
       case "left":
-        coord.top = dimensions.activator.top;
-        coord.left = dimensions.activator.left - dimensions.container.width;
-        // todo: this do not have effect...
+      case "left-center":
+        coord.top = dimensions.activator.top + dimensions.activator.height / 2;
+        coord.right = dimensions.activator.right + dimensions.activator.width;
         _setStyleProperties({ mr: props.gap });
+        transformTranslate = "translateY(-50%)";
         break;
       case "top":
-        coord.top = dimensions.activator.top - dimensions.activator.height;
-        if (
+      case "top-center":
+        coord.bottom =
+          dimensions.activator.bottom + dimensions.activator.height;
+        coord.left = dimensions.activator.left + dimensions.activator.width / 2;
+        _setStyleProperties({ mb: props.gap });
+        transformTranslate = "translateX(-50%)";
+        /* if (
           dimensions.container.width + dimensions.activator.left >=
           pageWidth
         ) {
@@ -336,10 +404,15 @@ export default function useMenu(props: MenuProps) {
             dimensions.activator.width;
         } else {
           coord.left = dimensions.activator.left;
-        }
+        } */
         break;
       case "bottom":
-        if (
+      case "bottom-center":
+        coord.top = dimensions.activator.top + dimensions.activator.height;
+        coord.left = dimensions.activator.left + dimensions.activator.width / 2;
+        _setStyleProperties({ mt: props.gap });
+        transformTranslate = "translateX(-50%)";
+        /* if (
           dimensions.activator.top +
             dimensions.activator.height +
             dimensions.container.height >=
@@ -362,15 +435,18 @@ export default function useMenu(props: MenuProps) {
         } else {
           coord.left = dimensions.activator.left;
         }
-
+ */
         break;
       default:
         break;
     }
 
     Object.assign(container.value.style, {
-      top: coord.top + "px",
-      left: coord.left + "px",
+      top: coord.top === 0 ? "auto" : coord.top + "px",
+      left: coord.left === 0 ? "auto" : coord.left + "px",
+      bottom: coord.bottom === 0 ? "auto" : coord.bottom + "px",
+      right: coord.right === 0 ? "auto" : coord.right + "px",
+      transform: transformTranslate,
     });
     if (props.fullActivatorWidth) {
       container.value.style.minWidth = `${dimensions.activator.width}px`;
