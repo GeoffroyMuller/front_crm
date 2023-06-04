@@ -375,6 +375,8 @@ export default function useMenu(props: MenuProps) {
     switch (placement) {
       case "right":
       case "right-center":
+        coord.right = 0;
+        coord.bottom = 0;
         coord.top = dimensions.activator.top + dimensions.activator.height / 2;
         coord.left = dimensions.activator.left + dimensions.activator.width;
         _setStyleProperties({ ml: props.gap });
@@ -382,6 +384,8 @@ export default function useMenu(props: MenuProps) {
         break;
       case "left":
       case "left-center":
+        coord.left = 0;
+        coord.bottom = 0;
         coord.top = dimensions.activator.top + dimensions.activator.height / 2;
         coord.right = dimensions.activator.right + dimensions.activator.width;
         _setStyleProperties({ mr: props.gap });
@@ -389,6 +393,8 @@ export default function useMenu(props: MenuProps) {
         break;
       case "top":
       case "top-center":
+        coord.right = 0;
+        coord.top = 0;
         coord.bottom =
           dimensions.activator.bottom + dimensions.activator.height;
         coord.left = dimensions.activator.left + dimensions.activator.width / 2;
@@ -408,6 +414,8 @@ export default function useMenu(props: MenuProps) {
         break;
       case "bottom":
       case "bottom-center":
+        coord.right = 0;
+        coord.bottom = 0;
         coord.top = dimensions.activator.top + dimensions.activator.height;
         coord.left = dimensions.activator.left + dimensions.activator.width / 2;
         _setStyleProperties({ mt: props.gap });
@@ -436,6 +444,106 @@ export default function useMenu(props: MenuProps) {
           coord.left = dimensions.activator.left;
         }
  */
+        break;
+      case "top-right":
+        coord.right = 0;
+        coord.top = 0;
+        coord.bottom =
+          dimensions.activator.bottom + dimensions.activator.height;
+        coord.left = dimensions.activator.left + dimensions.activator.width;
+        _setStyleProperties({ mb: props.gap });
+        transformTranslate = "translateX(-100%)";
+        break;
+      case "top-left":
+        coord.left = 0;
+        coord.top = 0;
+        coord.bottom =
+          dimensions.activator.bottom + dimensions.activator.height;
+        coord.right = dimensions.activator.right + dimensions.activator.width;
+        _setStyleProperties({ mb: props.gap });
+        transformTranslate = "translateX(100%)";
+        break;
+      case "top-right-corner":
+        coord.right = 0;
+        coord.top = 0;
+        coord.bottom =
+          dimensions.activator.bottom + dimensions.activator.height;
+        coord.left = dimensions.activator.left + dimensions.activator.width;
+        _setStyleProperties({ mb: props.gap, ml: props.gap });
+        transformTranslate = "";
+        break;
+      case "top-left-corner":
+        coord.left = 0;
+        coord.top = 0;
+        coord.bottom =
+          dimensions.activator.bottom + dimensions.activator.height;
+        coord.right = dimensions.activator.right + dimensions.activator.width;
+        _setStyleProperties({ mb: props.gap, mr: props.gap });
+        transformTranslate = "";
+        break;
+      case "bottom-right":
+        coord.right = 0;
+        coord.bottom = 0;
+        coord.top = dimensions.activator.top + dimensions.activator.height;
+        coord.left = dimensions.activator.left + dimensions.activator.width;
+        _setStyleProperties({ mt: props.gap });
+        transformTranslate = "translateX(-100%)";
+        break;
+      case "bottom-left":
+        coord.left = 0;
+        coord.bottom = 0;
+        coord.top = dimensions.activator.top + dimensions.activator.height;
+        coord.right = dimensions.activator.right + dimensions.activator.width;
+        _setStyleProperties({ mt: props.gap });
+        transformTranslate = "translateX(100%)";
+        break;
+      case "bottom-right-corner":
+        coord.right = 0;
+        coord.bottom = 0;
+        coord.top = dimensions.activator.top + dimensions.activator.height;
+        coord.left = dimensions.activator.left + dimensions.activator.width;
+        _setStyleProperties({ mt: props.gap, ml: props.gap });
+        transformTranslate = "";
+        break;
+      case "bottom-left-corner":
+        coord.left = 0;
+        coord.bottom = 0;
+        coord.top = dimensions.activator.top + dimensions.activator.height;
+        coord.right = dimensions.activator.right + dimensions.activator.width;
+        _setStyleProperties({ mt: props.gap, mr: props.gap });
+        transformTranslate = "";
+        break;
+      case "left-top":
+        coord.left = 0;
+        coord.bottom = 0;
+        coord.top = dimensions.activator.top;
+        coord.right = dimensions.activator.right + dimensions.activator.width;
+        _setStyleProperties({ mr: props.gap });
+        transformTranslate = "";
+        break;
+      case "left-bottom":
+        coord.left = 0;
+        coord.top = 0;
+        coord.bottom = dimensions.activator.bottom;
+        coord.right = dimensions.activator.right + dimensions.activator.width;
+        _setStyleProperties({ mr: props.gap });
+        transformTranslate = "";
+        break;
+      case "right-top":
+        coord.right = 0;
+        coord.bottom = 0;
+        coord.top = dimensions.activator.top;
+        coord.left = dimensions.activator.left + dimensions.activator.width;
+        _setStyleProperties({ ml: props.gap });
+        transformTranslate = "";
+        break;
+      case "right-bottom":
+        coord.right = 0;
+        coord.top = 0;
+        coord.bottom = dimensions.activator.bottom;
+        coord.left = dimensions.activator.left + dimensions.activator.width;
+        _setStyleProperties({ ml: props.gap });
+        transformTranslate = "";
         break;
       default:
         break;
