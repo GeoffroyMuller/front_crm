@@ -29,6 +29,8 @@
       <Chip text="blabla" color="warning" icon="mail" is-outline is-closable />
     </Flex>
     <ColorPicker label="Color" />
+
+    <span class="font-bold text-[55px] text-red-500 text-3xl font-bold underline">LE TEST</span>
   </Page>
 </template>
 <script setup lang="ts">
