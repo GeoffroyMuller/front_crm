@@ -58,7 +58,7 @@ module.exports = {
             800: '#92400e',
             900: '#78350f',
         },
-    },
+      },
       borderRadius: {
         sm: '0.4rem',
         md: '0.8rem',
