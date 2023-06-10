@@ -16,8 +16,11 @@ module.exports = {
     {
       pattern: /text-(primary|danger|success|warning)/,
       variants: ["hover"]
+    },
+    {
+      pattern: /from-(primary|danger|success|warning)|to-(primary|danger|success|warning)/,
+      variants: ["hover"]
     }
-    
   ],
   theme: {
     extend: {
@@ -78,6 +81,9 @@ module.exports = {
         xl: '1.2rem',
         '2xl': '1.4rem',
         '3xl': '1.5rem',
+      },
+      backgroundImage: {
+        'gradient-245': 'linear-gradient(245deg, var(--tw-gradient-stops))'
       },
     },
   },

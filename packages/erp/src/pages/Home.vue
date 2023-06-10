@@ -65,6 +65,7 @@
    </div>
 
 
+   <Demo />
   </Page>
 </template>
 <script setup lang="ts">
@@ -73,4 +74,5 @@ import Chip from "core/src/components/Chip.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import ColorPicker from "core/src/components/form/colorpicker/ColorPicker.vue";
 import Icon from "core/src/components/Icon.vue";
+import Demo from "core/src/components/Demo.vue";
 </script>
