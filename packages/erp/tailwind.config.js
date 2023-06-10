@@ -7,6 +7,37 @@ module.exports = {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
     "../core/src/**/*.{vue,js,ts,jsx,tsx}",
   ],
+  safelist: [
+    'before:bg-primary-500',
+    'before:bg-danger-500',
+    'before:bg-success-500',
+    'before:bg-warning-500',
+  
+    'hover:bg-primary-500',
+    'hover:bg-danger-500',
+    'hover:bg-success-500',
+    'hover:bg-warning-500',
+
+    'before:border-primary-500',
+    'before:border-danger-500',
+    'before:border-success-500',
+    'before:border-warning-500',
+  
+    'hover:border-primary-500',
+    'hover:border-danger-500',
+    'hover:border-success-500',
+    'hover:border-warning-500',
+
+
+    'hover:text-primary-500',
+    'hover:text-danger-500',
+    'hover:text-success-500',
+    'hover:text-warning-500',
+    {
+      pattern:
+        /bg-(primary|danger|success|warning)|text-(primary|danger|success|warning)|border-(primary|danger|success|warning)/,
+    }
+  ],
   theme: {
     extend: {
       colors: {
