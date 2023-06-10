@@ -15,7 +15,7 @@
         
         [`button-outlined button-outlined-${color}`]: variant === 'outlined',
         [`text-${color}-500 bg-transparent  border border-solid border-${color}-500 hover:bg-${color}-500 hover:text-white`]: variant === 'outlined' && !disabled && !loading,
-        [`border-${color}-300 text-${color}-300`]: variant === 'outlined' && (disabled || loading),
+        [`border border-solid border-${color}-300 text-${color}-300 bg-transparent`]: variant === 'outlined' && (disabled || loading),
        
         'align-end': align === 'end',
         'align-start': align === 'start',
@@ -135,6 +135,6 @@ const buttonAdditionnalProps = computed(() => {
   position: relative;
 }
 .button-outlined-white, .button-outlined-black {
-  @apply text-[#6b7280] bg-transparent border-[#6b7280] border border-solid hover:text-white hover:bg-[#6b7280];
+  @apply text-[#6b7280] border-[#6b7280] border border-solid hover:text-white hover:bg-[#6b7280] disabled:text-[#6b7280] disabled:bg-transparent;
 }
 </style>

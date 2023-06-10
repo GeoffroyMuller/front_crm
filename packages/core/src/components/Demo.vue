@@ -13,7 +13,6 @@
       </div>
       <div class="grid gap-2 grid-cols-6">
         <Button v-for="color of colors" :color="color" rounded>Button</Button>
-        <Button v-for="color of colors" :color="color" variant="text" rounded>Button</Button>
         <Button v-for="color of colors" :color="color" variant="outlined" rounded>Button</Button>
       </div>
       <div>
