@@ -100,7 +100,7 @@ const buttonAdditionnalProps = computed(() => {
       0px 1.6px 3.6px rgba(0, 0, 0, 0.28);
   }
   &:not(.button-text) .content-icon {
-    @apply ml-1.5;
+    @apply -ml-1.5;
   }
   &.align-end {
     align-items: flex-end;
