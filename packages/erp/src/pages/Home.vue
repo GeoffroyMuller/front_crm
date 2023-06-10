@@ -42,7 +42,7 @@
     </div>
    
    <div class="flex gap-4 flex-wrap">
-      <div v-for="color of ['primary', 'danger', 'success', 'warning']" :class="`w-fit relative bg-slate-800 text-white px-4 pl-6 py-3 rounded-md flex items-center gap-4 before:content-[''] before:bg-${color}-500 before:absolute before:h-full before:w-1 before:rounded-md  before:top-0 before:left-0 overflow-hidden`">
+      <div v-for="color of ['primary', 'danger', 'success', 'warning']" :class="`w-fit relative bg-slate-800 text-white px-4 py-3 rounded-md flex items-center gap-4 before:content-[''] before:bg-${color}-500 before:absolute before:h-full before:w-1 before:rounded-md  before:top-0 before:left-0 overflow-hidden`">
         <Icon 
           :name="color === 'success' ? 'check' : (color == 'danger' ?  'dangerous' : (color == 'warning' ? 'warning' : 'info'))" 
           size="sm" 
