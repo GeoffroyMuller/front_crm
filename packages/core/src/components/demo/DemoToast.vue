@@ -3,6 +3,7 @@
         <Button color="success" @click="() => handleClick('success')">Success</Button>
         <Button color="danger" @click="() => handleClick('danger')">Danger</Button>
         <Button color="warning" @click="() => handleClick('warning')">Warning</Button>
+        <Button color="primary" @click="() => handleClick('info')">Info</Button>
     </div>
 </template>
 <script setup lang="ts">
