@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden w-[400px] fixed bottom-4 right-4 flex flex-col gap-4 justify-end items-end">
+  <div class="overflow-hidden w-[400px] fixed bottom-4 max-xl:left-1/2 transform max-xl:-translate-x-1/2 xl:right-4 flex flex-col gap-4 justify-end items-end z-[9999]">
     <TransitionGroup name="toast">
       <Toast
         v-for="notification of notifications"

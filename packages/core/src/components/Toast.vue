@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="`w-fit relative bg-slate-800 text-white px-4 py-3 rounded-md flex items-center gap-4 before:content-[''] before:bg-${color}-500 before:absolute before:h-full before:w-1 before:rounded-md  before:top-0 before:left-0 overflow-hidden`">
+    :class="`w-fit z-[9999] relative bg-slate-800 text-white px-4 py-3 rounded-md flex items-center gap-4 before:content-[''] before:bg-${color}-500 before:absolute before:h-full before:w-1 before:rounded-md  before:top-0 before:left-0 overflow-hidden`">
     <Icon :name="icon" size="sm" :class="`text-${color}-500`" />
     <div>
       <div class="font-semibold text-md">
