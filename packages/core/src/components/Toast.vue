@@ -10,18 +10,25 @@
         Le message d'alerte est le suivant
       </div>
     </div>
-    <Icon name="close" size="sm" :class="`text-white cursor-pointer hover:text-${color}-500 rounded-full`" />
+    <Icon name="close" size="sm" :class="`text-white cursor-pointer hover:text-${color}-500 rounded-full`" @click="() => {
+        if (deleteNotification) {
+          deleteNotification(props.id);
+        }
+      }" />
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, inject } from "vue";
 import Icon from "./Icon.vue";
 import type { Color, IconName, Notification } from "./types";
 interface ToastProps {
   type: Notification["type"];
   message: Notification["message"];
   title: Notification["title"];
+  id: Notification["id"];
 }
+
+const deleteNotification = inject<(id: Notification['id']) => void>("deleteNotification");
 
 const icon = computed<IconName>(() => {
   switch (props.type) {

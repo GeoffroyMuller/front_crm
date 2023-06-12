@@ -4,6 +4,7 @@
       <Toast
         v-for="notification of notifications"
         :key="notification.id"
+        :id="notification.id"
         :title="notification.title"
         :type="notification.type"
         :message="notification.message"
@@ -22,9 +23,10 @@ import Toast from "../Toast.vue";
 
 const notifications = ref<Notification[]>([]);
 
+
 function createNotification(n: Notification | string) {
   const defaultNotification: Notification = {
-    type: "primary",
+    type: "info",
     title: "",
     autoClose: true,
     duration: 5000,
@@ -54,6 +56,7 @@ function deleteNotification(id: string | number) {
 }
 
 provide("notifications", createNotification);
+provide("deleteNotification", deleteNotification);
 </script>
 
 <style lang="scss">
