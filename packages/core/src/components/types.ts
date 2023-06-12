@@ -2,7 +2,7 @@ import type { AnySchema } from "yup";
 
 export interface Notification {
   id?: string;
-  type?: Color;
+  type?: 'danger' | 'warning' | 'success' | 'info';
   message: string;
   title?: string;
   duration?: number;
