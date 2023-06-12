@@ -9,7 +9,19 @@ import { ref } from "vue";
 
 export interface TooltipProps {
   text?: string;
-  placement?: "top" | "bottom" | "left" | "right";
+  placement?:
+    | "top"
+    | "bottom"
+    | "left"
+    | "right"
+    | "top-left"
+    | "top-right"
+    | "top-center"
+    | "bottom-left"
+    | "bottom-right"
+    | "bottom-center"
+    | "left-center"
+    | "right-center";
   pxGap?: number;
 }
 const props = withDefaults(defineProps<TooltipProps>(), {
@@ -18,10 +30,10 @@ const props = withDefaults(defineProps<TooltipProps>(), {
 
 const tooltip = ref();
 </script>
-
 <style lang="scss" scoped>
 .tooltip {
   @include typo(label);
+  position: relative;
   background-color: #616161e6;
   color: color("white");
   width: max-content;

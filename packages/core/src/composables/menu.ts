@@ -1,3 +1,4 @@
+import { accessMiddlewareFactory } from "core_api/middlewares/access.middleware";
 import {
   createApp,
   isRef,
@@ -39,6 +40,7 @@ export interface MenuProps {
     | "left-top"
     | "left-bottom";
 
+  hasArrow?: boolean;
   gap?: number;
   openOnHover?: boolean;
   strategy?: "root" | "absolute";
@@ -262,6 +264,9 @@ export default function useMenu(props: MenuProps) {
     }
   });
 
+  const arrowContainerElement = document.createElement("div");
+  const arrowElement = document.createElement("div");
+
   const container = props.container
     ? isRef(props.container)
       ? props.container
@@ -369,9 +374,20 @@ export default function useMenu(props: MenuProps) {
     const pageHeight = window.innerHeight;
     const pageWidth = window.innerWidth;
 
-    const coord = { left: 0, top: 0, right: 0, bottom: 0 };
-    let transformTranslate = "";
-
+    const coord = {
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+      transformTranslate: "",
+    };
+    const coordArrowContainer = {
+      top: "auto",
+      left: "auto",
+      bottom: "auto",
+      right: "auto",
+      transform: "",
+    };
     switch (placement) {
       case "right":
       case "right-center":
@@ -380,7 +396,11 @@ export default function useMenu(props: MenuProps) {
         coord.top = dimensions.activator.top + dimensions.activator.height / 2;
         coord.left = dimensions.activator.left + dimensions.activator.width;
         _setStyleProperties({ ml: props.gap });
-        transformTranslate = "translateY(-50%)";
+        coord.transformTranslate = "translateY(-50%)";
+
+        coordArrowContainer.top = "50%";
+        coordArrowContainer.left = "0";
+        coordArrowContainer.transform = "translateY(-50%)";
         break;
       case "left":
       case "left-center":
@@ -389,7 +409,8 @@ export default function useMenu(props: MenuProps) {
         coord.top = dimensions.activator.top + dimensions.activator.height / 2;
         coord.right = dimensions.activator.right + dimensions.activator.width;
         _setStyleProperties({ mr: props.gap });
-        transformTranslate = "translateY(-50%)";
+        coord.transformTranslate = "translateY(-50%)";
+
         break;
       case "top":
       case "top-center":
@@ -399,7 +420,7 @@ export default function useMenu(props: MenuProps) {
           dimensions.activator.bottom + dimensions.activator.height;
         coord.left = dimensions.activator.left + dimensions.activator.width / 2;
         _setStyleProperties({ mb: props.gap });
-        transformTranslate = "translateX(-50%)";
+        coord.transformTranslate = "translateX(-50%)";
         /* if (
           dimensions.container.width + dimensions.activator.left >=
           pageWidth
@@ -419,7 +440,7 @@ export default function useMenu(props: MenuProps) {
         coord.top = dimensions.activator.top + dimensions.activator.height;
         coord.left = dimensions.activator.left + dimensions.activator.width / 2;
         _setStyleProperties({ mt: props.gap });
-        transformTranslate = "translateX(-50%)";
+        coord.transformTranslate = "translateX(-50%)";
         /* if (
           dimensions.activator.top +
             dimensions.activator.height +
@@ -452,7 +473,7 @@ export default function useMenu(props: MenuProps) {
           dimensions.activator.bottom + dimensions.activator.height;
         coord.left = dimensions.activator.left + dimensions.activator.width;
         _setStyleProperties({ mb: props.gap });
-        transformTranslate = "translateX(-100%)";
+        coord.transformTranslate = "translateX(-100%)";
         break;
       case "top-left":
         coord.left = 0;
@@ -461,7 +482,7 @@ export default function useMenu(props: MenuProps) {
           dimensions.activator.bottom + dimensions.activator.height;
         coord.right = dimensions.activator.right + dimensions.activator.width;
         _setStyleProperties({ mb: props.gap });
-        transformTranslate = "translateX(100%)";
+        coord.transformTranslate = "translateX(100%)";
         break;
       case "top-right-corner":
         coord.right = 0;
@@ -470,7 +491,7 @@ export default function useMenu(props: MenuProps) {
           dimensions.activator.bottom + dimensions.activator.height;
         coord.left = dimensions.activator.left + dimensions.activator.width;
         _setStyleProperties({ mb: props.gap, ml: props.gap });
-        transformTranslate = "";
+        coord.transformTranslate = "";
         break;
       case "top-left-corner":
         coord.left = 0;
@@ -479,7 +500,7 @@ export default function useMenu(props: MenuProps) {
           dimensions.activator.bottom + dimensions.activator.height;
         coord.right = dimensions.activator.right + dimensions.activator.width;
         _setStyleProperties({ mb: props.gap, mr: props.gap });
-        transformTranslate = "";
+        coord.transformTranslate = "";
         break;
       case "bottom-right":
         coord.right = 0;
@@ -487,7 +508,7 @@ export default function useMenu(props: MenuProps) {
         coord.top = dimensions.activator.top + dimensions.activator.height;
         coord.left = dimensions.activator.left + dimensions.activator.width;
         _setStyleProperties({ mt: props.gap });
-        transformTranslate = "translateX(-100%)";
+        coord.transformTranslate = "translateX(-100%)";
         break;
       case "bottom-left":
         coord.left = 0;
@@ -495,7 +516,7 @@ export default function useMenu(props: MenuProps) {
         coord.top = dimensions.activator.top + dimensions.activator.height;
         coord.right = dimensions.activator.right + dimensions.activator.width;
         _setStyleProperties({ mt: props.gap });
-        transformTranslate = "translateX(100%)";
+        coord.transformTranslate = "translateX(100%)";
         break;
       case "bottom-right-corner":
         coord.right = 0;
@@ -503,7 +524,7 @@ export default function useMenu(props: MenuProps) {
         coord.top = dimensions.activator.top + dimensions.activator.height;
         coord.left = dimensions.activator.left + dimensions.activator.width;
         _setStyleProperties({ mt: props.gap, ml: props.gap });
-        transformTranslate = "";
+        coord.transformTranslate = "";
         break;
       case "bottom-left-corner":
         coord.left = 0;
@@ -511,7 +532,7 @@ export default function useMenu(props: MenuProps) {
         coord.top = dimensions.activator.top + dimensions.activator.height;
         coord.right = dimensions.activator.right + dimensions.activator.width;
         _setStyleProperties({ mt: props.gap, mr: props.gap });
-        transformTranslate = "";
+        coord.transformTranslate = "";
         break;
       case "left-top":
         coord.left = 0;
@@ -519,7 +540,7 @@ export default function useMenu(props: MenuProps) {
         coord.top = dimensions.activator.top;
         coord.right = dimensions.activator.right + dimensions.activator.width;
         _setStyleProperties({ mr: props.gap });
-        transformTranslate = "";
+        coord.transformTranslate = "";
         break;
       case "left-bottom":
         coord.left = 0;
@@ -527,7 +548,7 @@ export default function useMenu(props: MenuProps) {
         coord.bottom = dimensions.activator.bottom;
         coord.right = dimensions.activator.right + dimensions.activator.width;
         _setStyleProperties({ mr: props.gap });
-        transformTranslate = "";
+        coord.transformTranslate = "";
         break;
       case "right-top":
         coord.right = 0;
@@ -535,7 +556,7 @@ export default function useMenu(props: MenuProps) {
         coord.top = dimensions.activator.top;
         coord.left = dimensions.activator.left + dimensions.activator.width;
         _setStyleProperties({ ml: props.gap });
-        transformTranslate = "";
+        coord.transformTranslate = "";
         break;
       case "right-bottom":
         coord.right = 0;
@@ -543,7 +564,7 @@ export default function useMenu(props: MenuProps) {
         coord.bottom = dimensions.activator.bottom;
         coord.left = dimensions.activator.left + dimensions.activator.width;
         _setStyleProperties({ ml: props.gap });
-        transformTranslate = "";
+        coord.transformTranslate = "";
         break;
       default:
         break;
@@ -554,8 +575,19 @@ export default function useMenu(props: MenuProps) {
       left: coord.left === 0 ? "auto" : coord.left + "px",
       bottom: coord.bottom === 0 ? "auto" : coord.bottom + "px",
       right: coord.right === 0 ? "auto" : coord.right + "px",
-      transform: transformTranslate,
+      transform: coord.transformTranslate,
     });
+
+    if (props.hasArrow === true) {
+      Object.assign(arrowContainerElement.style, {
+        top: coordArrowContainer.top,
+        left: coordArrowContainer.left,
+        bottom: coordArrowContainer.bottom,
+        right: coordArrowContainer.right,
+        transform: coordArrowContainer.transform,
+      });
+    }
+
     if (props.fullActivatorWidth) {
       container.value.style.minWidth = `${dimensions.activator.width}px`;
     }
@@ -584,6 +616,13 @@ export default function useMenu(props: MenuProps) {
         props.componentProps || {},
         container.value
       );
+    }
+    if (props.hasArrow === true) {
+      arrowContainerElement.classList.add("menu-arrow-container");
+      arrowElement.classList.add("menu-arrow");
+      arrowContainerElement.appendChild(arrowElement);
+      container.value.appendChild(arrowContainerElement);
+      console.error(container.value);
     }
   }
 

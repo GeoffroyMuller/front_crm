@@ -79,6 +79,24 @@ function handleClickOutside() {
 </script>
 
 <style lang="scss">
+.menu-arrow-container {
+  position: absolute;
+  overflow: hidden;
+  width: 8px;
+  padding-left: 2px;
+  height: 16px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  .menu-arrow {
+    position: absolute;
+    background-color: red;
+    transform: rotate(45deg);
+    width: 10px;
+    height: 10px;
+  }
+}
+
 .menu {
   position: relative;
   .menu-content {
