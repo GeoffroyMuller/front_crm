@@ -19,6 +19,8 @@
        
         'align-end': align === 'end',
         'align-start': align === 'start',
+        'w-max': !fullWidth,
+        'w-full': fullWidth,
         rounded,
       },
       
@@ -60,6 +62,7 @@ interface ButtonProps {
   component?: "button" | "a";
   href?: string;
   typo: Typo;
+  fullWidth?: boolean;
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {

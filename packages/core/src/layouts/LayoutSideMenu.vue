@@ -44,7 +44,7 @@
         :name="!isNavMini ? 'chevron_left' : 'menu'"
         v-tooltip="{
           text: $t('keyboardshortcuts.ctrl+b'),
-          placement: 'right',
+          placement: 'bottom',
         }"
       />
     </div>
