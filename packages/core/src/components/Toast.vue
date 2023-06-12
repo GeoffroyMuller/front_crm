@@ -4,10 +4,10 @@
     <Icon :name="icon" size="sm" :class="`text-${color}-500`" />
     <div>
       <div class="font-semibold text-md">
-        Toast title
+        {{ title }}
       </div>
       <div class="text-sm">
-        Le message d'alerte est le suivant
+        {{ message }}
       </div>
     </div>
     <Icon name="close" size="sm" :class="`text-white cursor-pointer hover:text-${color}-500 rounded-full`" @click="() => {

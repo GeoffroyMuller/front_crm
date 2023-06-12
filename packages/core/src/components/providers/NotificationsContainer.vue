@@ -1,5 +1,5 @@
 <template>
-  <div class="notifications-container">
+  <div class="overflow-hidden w-[400px] fixed bottom-4 right-4 flex flex-col gap-4 justify-end items-end">
     <TransitionGroup name="toast">
       <Toast
         v-for="notification of notifications"
@@ -60,21 +60,6 @@ provide("deleteNotification", deleteNotification);
 </script>
 
 <style lang="scss">
-.notifications-container {
-  overflow: hidden;
-  z-index: 50;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  width: 400px;
-  @include media-down("md") {
-    width: unset;
-  }
-  > * {
-    margin: spacing(2);
-  }
-}
-
 .toast-enter-active,
 .toast-leave-active {
   transition: transform 0.5s ease, opacity 0.2s;
