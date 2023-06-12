@@ -5,7 +5,7 @@
             <template #default="{ hasError, hasChanged }">
                 <div class="grid gap-6">
                     <div class="grid grid-cols-2 w-full gap-6">
-                        <Card>
+                        <Card padding>
                             <Grid :gap="1">
                                 <TextField name="name" :label="$t('title')" />
                                 <div v-if="auth.company?.name">{{ auth.company.name }}</div>
@@ -22,7 +22,7 @@
                             </Grid>
                         </Card>
 
-                        <Card>
+                        <Card padding>
                             <MagicAutocomplete :label="$t('customer')" :store="clientsStore" :get-filters="(str) => ({
                                     $or: {
                                         $contains: { lastname: str, firstname: str },
@@ -34,7 +34,7 @@
                                 v-model:options="clientOptions" v-model="idClient" />
                         </Card>
                     </div>
-                    <Card>
+                    <Card padding>
                         <Repetable name="lines" :label="$t('products')" orderable>
                             <template #default="{ data }">
                                 <QuoteLineVue :line="(data as unknown as SaleLine)" />
@@ -55,11 +55,11 @@
                         </Repetable>
                     </Card>
 
-                    <Card>
+                    <Card padding>
                         <HtmlEditor id="modalities" name="modalities" :label="$t('pages.edit-quote.modalities')" />
                     </Card>
 
-                    <Card>
+                    <Card padding>
                         <HtmlEditor id="footer" name="footer" :label="$t('pages.edit-quote.footer')" />
                     </Card>
                 </div>
