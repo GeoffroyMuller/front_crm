@@ -9,6 +9,12 @@
     <template #toast>
       <DemoToast />
     </template>
+    <template #color>
+      <DemoColor />
+    </template>
+    <template #chips>
+      <DemoChips />
+    </template>
   </Tabs>
 </template>
 
@@ -17,10 +23,14 @@ import Tabs from '../Tabs.vue';
 import DemoButtons from './DemoButtons.vue';
 import DemoCard from './DemoCard.vue';
 import DemoToast from './DemoToast.vue';
+import DemoColor from './DemoColor.vue';
+import DemoChips from './DemoChips.vue';
 
 const tabs = [
+  { id: 'color', title: 'color' },
   { id: 'buttons', title: 'buttons' },
   { id: 'cards', title: 'cards' },
-  { id: 'toast', title: 'toast'}
+  { id: 'toast', title: 'toast' },
+  { id: 'chips', title: 'chips' },
 ]
 </script>
