@@ -1,13 +1,10 @@
 <template>
-    <div class="w-full h-px b border-t border-transparent border-dashed border-t-slate-400" :class="{ '-px-8': padding }" />
+    <div class=" h-px b border-t border-transparent border-dashed border-t-slate-400" :class="{ '-mx-8 my-4 relative': card?.padding }" />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
+import { inject } from 'vue';
+import type { CardProvide } from './Card.vue';
 
-type CardDividerProps = {
-    padding?: boolean;
-}
-
-const props = withDefaults(defineProps<CardDividerProps>(), {});
-
+const card = inject<CardProvide>('card');
 </script>

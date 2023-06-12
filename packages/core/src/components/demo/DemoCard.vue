@@ -1,5 +1,5 @@
 <template>
-    <div class="flex gap-2">
+    <div class="grid grid-cols-2 gap-2">
         <Card>
             <CardHead title="Card" subtitle="Card subtitle" />
             <CardDivider />
@@ -26,7 +26,14 @@
                 </p>
             </CardContent>
         </Card>
-
+        <Card padding class="w-fit h-fit">
+            Card with padding
+        </Card>
+        <Card padding class="w-fit h-fit">
+            Card with padding and divider
+            <CardDivider />
+            Card with padding and divider
+        </Card>
     </div>
 </template>
   

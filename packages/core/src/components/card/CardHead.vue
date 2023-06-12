@@ -1,9 +1,9 @@
 <template>
     <CardContent>
-        <div v-if="title" class="typo-title5 typo-bold">
+        <div v-if="title" class="typo-title3 typo-bold">
             {{ title }}
         </div>
-        <div class="typo-title6" v-if="subtitle">
+        <div class="typo-title7 mt-1" v-if="subtitle">
             {{ subtitle  }}
         </div>
 
