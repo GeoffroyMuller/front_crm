@@ -1,23 +1,34 @@
 <template>
   <button
-    class="float-button"
+    class="select-none h-[50px] w-[50px] grid place-items-center cursor-pointer rounded-full border-none p-2 fixed right-2 bottom-2 z-50 shadow-[2px_2px_3px_#999] text-white"
     :class="{
-      [`float-button-${color}`]: true,
-    }"
-  >
-    <Icon v-if="icon" :name="icon" />
-    <div v-if="$slots.default">
-      <slot />
-    </div>
+      [`bg-gradient-245 from-${color}-500 to-${color}-400 hover:from-${color}-600 hover:to-${color}-500 `]: !disabled && !loading,
+      [`bg-${color}-200`]: (disabled || loading)
+    }">
+
+
+    <Spinner
+      v-if="loading"
+      size="1rem"
+      color="white"
+    />
+
+
+    <Icon v-if="icon && !loading" :name="icon" />
+
+    <slot v-if="$slots.default && !loading" />
+
   </button>
 </template>
 <script setup lang="ts">
 import type { Color, IconName } from "./types";
 import Icon from "./Icon.vue";
+import Spinner from "./Spinner.vue";
 
 export interface FloatingButtonProps {
   color?: Color;
   disabled?: boolean;
+  loading?: boolean;
   type?: "button" | "submit";
   icon?: IconName;
 }
@@ -27,59 +38,3 @@ const props = withDefaults(defineProps<FloatingButtonProps>(), {
   type: "button",
 });
 </script>
-
-<style lang="scss">
-.float-button {
-  user-select: none;
-  padding: spacing(1);
-  position: fixed;
-  right: spacing(1);
-  bottom: spacing(1);
-  border: none;
-  min-width: spacing(6.5);
-  min-height: spacing(6.5);
-  border-radius: spacing(3.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 2px 2px 3px #999;
-  cursor: pointer;
-}
-
-.float-button-black,
-.float-button-white {
-  background-color: #9ca3af;
-  color: white;
-  &:hover {
-    background-color: #6b7280;
-  }
-}
-
-@each $key, $value in $colors {
-  @if type-of($value) == "map" {
-    .float-button-#{$key} {
-      background: color($key, 500);
-      background: linear-gradient(
-        245deg,
-        map-deep-get($value, 500) 0%,
-        map-deep-get($value, 400) 100%
-      );
-      color: white;
-
-      &:hover:not(:disabled) {
-        background-color: map-deep-get($value, 600);
-        background: linear-gradient(
-          245deg,
-          map-deep-get($value, 600) 0%,
-          map-deep-get($value, 500) 100%
-        );
-      }
-
-      &:disabled {
-        background-color: map-deep-get($value, 200);
-      }
-    }
-  } @else {
-  }
-}
-</style>

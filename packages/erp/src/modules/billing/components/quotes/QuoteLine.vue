@@ -1,115 +1,68 @@
 <template>
-  <div v-if="line.type === 'comment'">
-    <TextField
-      multiline
-      :label="$t('pages.edit-quote.comment')"
-      name="description"
-    />
-  </div>
-  <div v-if="line.type === 'title'">
-    <TextField :label="$t('pages.edit-quote.title')" name="description" />
-  </div>
-  <div v-if="line.type === 'product'" class="line-product-container">
-    <div class="line-product">
-      <MagicAutocomplete
-        class="input"
-        :get-option-value="(opt) => opt.id"
-        :label="$t('pages.edit-quote.product')"
-        :store="productsStore"
-        :get-option-label="(opt) => opt?.name"
-        @update:selected="handleProductChange"
-        option-key="id"
-        name="idProduct"
-      />
-      <TextField
-        class="input"
-        type="number"
-        v-model="internalLine.qty"
-        :label="$t('pages.edit-quote.qty')"
-        :step="1"
-        name="qty"
-      />
-      <TextField
-        class="input"
-        type="number"
-        :step="0.01"
-        v-model="internalLine.unit_price"
-        :label="$t('pages.edit-quote.unit_price')"
-        name="unit_price"
-      />
-      <Select
-        class="input"
-        :options="vats"
-        :get-option-label="(opt) => (opt?.rate != null ? `${opt?.rate}%` : '')"
-        :get-option-value="(opt) => opt.id"
-        v-model="internalLine.idVat"
-        :label="$t('pages.edit-quote.vat')"
-        name="idVat"
-      />
-      <div class="totals">
-        <Text typo="subtitle">
+  <TextField v-if="line.type === 'comment'" multiline :label="$t('pages.edit-quote.comment')" name="description" />
+
+  <TextField v-else-if="line.type === 'title'" :label="$t('pages.edit-quote.title')" name="description" />
+
+  <div v-else-if="line.type === 'product'" class="line-product-container">
+    <div class="lg:flex items-end gap-2">
+      <div class="grid flex-1 items-end gap-2 max-xl:grid-cols-[1fr_90px] xl:grid-cols-[1fr_90px_120px_90px]">
+        <MagicAutocomplete class="min-w-[200px]" :get-option-value="(opt) => opt.id"
+          :label="$t('pages.edit-quote.product')" :store="productsStore" :get-option-label="(opt) => opt?.name"
+          @update:selected="handleProductChange" option-key="id" name="idProduct" />
+        <TextField type="number" v-model="internalLine.qty" :label="$t('pages.edit-quote.qty')" :step="1" name="qty" />
+        <TextField type="number" :step="0.01" v-model="internalLine.unit_price" :label="$t('pages.edit-quote.unit_price')"
+          name="unit_price" />
+        <Select :options="vats" :get-option-label="(opt) => (opt?.rate != null ? `${opt?.rate}%` : '')"
+          :get-option-value="(opt) => opt.id" v-model="internalLine.idVat" :label="$t('pages.edit-quote.vat')"
+          name="idVat" />
+      </div>
+      <div
+        class="max-lg:flex lg:w-[100px] max-lg:justify-end max-lg:items-center max-lg:py-4 grid grid-cols-2 gap-2 lg:gap-1 self-center">
+
+        <Text typo="title7" class="col-span-2 lg:mb-2 max-lg:mr-4">
           {{ $t("pages.edit-quote.total-global") }}
         </Text>
-        <Text>{{ $t("pages.edit-quote.without-taxes") }}</Text>
-        <Text>
+        <Text typo="title7">{{ $t("pages.edit-quote.without-taxes") }}</Text>
+        <Text typo="title3">
           {{
             typeof totalWithoutTaxes === "string"
-              ? totalWithoutTaxes
-              : $utils.formatPrice(totalWithoutTaxes)
+            ? totalWithoutTaxes
+            : $utils.formatPrice(totalWithoutTaxes)
           }}
         </Text>
-        <Text>{{ $t("pages.edit-quote.with-taxes") }}</Text>
-        <Text>
+        <Text typo="title7">{{ $t("pages.edit-quote.with-taxes") }}</Text>
+        <Text typo="title3">
           {{
             typeof totalWithTaxes === "string"
-              ? totalWithTaxes
-              : $utils.formatPrice(totalWithTaxes)
+            ? totalWithTaxes
+            : $utils.formatPrice(totalWithTaxes)
           }}
         </Text>
       </div>
     </div>
-    <HtmlEditor
-      class="description"
-      :label="$t('pages.edit-quote.description')"
-      v-model="internalLine.description"
-      name="description"
-    />
-    <div
-      v-if="
-        !$_.isNil(internalProduct) &&
+    <HtmlEditor class="description" :label="$t('pages.edit-quote.description')" v-model="internalLine.description"
+      name="description" />
+    <div v-if="!$_.isNil(internalProduct) &&
         productsStore.isPhysicalStock(internalProduct)
-      "
-      class="products-real"
-    >
+        " class="grid gap-2 mt-2">
       <div v-if="nbProductReal" class="typo-text">
         {{ $t("pages.sales.count-sentence", { count: nbProductReal }) }}
       </div>
       <div v-else class="typo-text">
         {{ $t("pages.sales.add-product-real-sentence") }}
       </div>
-      <Button
-        color="primary"
-        icon="edit"
-        variant="text"
-        @click.stop="openSublineForm"
-      >
+      <Button color="primary" icon="edit" variant="text" @click.stop="openSublineForm">
         {{ $t("pages.sales.edit-list-products-real") }}
       </Button>
       <Sidebar v-model:open="isSidebarOpen" displayCloseBtn padding>
-        <QuoteSublineForm
-          :product="internalProduct"
-          v-model:count="nbProductReal"
-        ></QuoteSublineForm>
+        <QuoteSublineForm :product="internalProduct" v-model:count="nbProductReal"></QuoteSublineForm>
       </Sidebar>
     </div>
 
-    <div
-      v-if="
-        !$_.isNil(internalProduct) &&
-        productsStore.isPhysicalStock(internalProduct) &&
-        nbProductReal != internalLine.qty
-      "
-    >
+    <div class="mt-2" v-if="!$_.isNil(internalProduct) &&
+      productsStore.isPhysicalStock(internalProduct) &&
+      nbProductReal != internalLine.qty
+      ">
       <Alert color="warning">{{
         $t("pages.sales.warning-sentence-qty")
       }}</Alert>
@@ -133,6 +86,7 @@ import Sidebar from "core/src/components/Sidebar.vue";
 import Button from "core/src/components/Button.vue";
 import Alert from "core/src/components/Alert.vue";
 import type { SaleLine } from "@/modules/billing/types";
+import Text from "core/src/components/Text.vue";
 
 interface QuoteLineProps {
   line: SaleLine;
@@ -185,65 +139,3 @@ function handleProductChange(product: Product) {
 }
 </script>
 
-<style lang="scss" scoped>
-$productLineBreakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  lg2: 1150px,
-  xl: 1270px,
-  xl2: 1400px,
-);
-.line-product {
-  display: grid;
-  gap: spacing(1);
-  grid-template-columns: 1fr 90px 120px 90px min-content;
-  justify-content: center;
-  align-items: end;
-  .totals {
-    display: grid;
-    grid-template-columns: min-content 1fr;
-    gap: spacing(1);
-    justify-self: end;
-    padding-left: spacing(1);
-    & > :first-child {
-      grid-column: 1 / -1;
-    }
-  }
-  @include media-down(xl2, $productLineBreakpoints) {
-    > *:first-child {
-      grid-column: 1 / -1;
-    }
-    gap: spacing(1) spacing(0.5);
-    grid-template-columns: 90px 1fr 90px min-content;
-  }
-  @include media-down(xl, $productLineBreakpoints) {
-    .totals {
-      grid-column: 1 / -1;
-      display: flex;
-      padding-left: 0;
-      justify-self: start;
-      align-self: start;
-    }
-  }
-  @include media-down(lg2, $productLineBreakpoints) {
-    > *:first-child {
-      grid-column: initial;
-    }
-    grid-template-columns: 1fr 90px;
-  }
-}
-@include media-up(md) {
-}
-@include media-down(md) {
-  .line-product {
-    display: grid;
-    gap: spacing(1.5);
-  }
-}
-.line-product-container {
-  display: grid;
-  gap: spacing(1.5);
-}
-</style>
