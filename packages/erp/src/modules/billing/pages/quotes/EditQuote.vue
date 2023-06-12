@@ -64,11 +64,11 @@
                     </Card>
                 </div>
                 <div class="sticky h-fit top-0 grid gap-6 place-items-center max-xl:hidden">
-                    <Card :with-padding="false">
+                    <Card padding>
                         <Text typo="title7">
                             {{ $t("pages.edit-quote.total-global") }}
                         </Text>
-                        <div class="grid grid-cols-[min-content_1fr] gap-2">
+                        <div class="grid grid-cols-[min-content_1fr] gap-2 items-center mt-4">
                             <Text typo="title7">
                                 {{ $t("pages.edit-quote.without-taxes") }}
                             </Text>
@@ -137,7 +137,6 @@ import useVatStore from "@/stores/vat";
 import Repetable from "core/src/components/form/repetable/Repetable.vue";
 import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import type Client from "@/types/client";
-import Card from "core/src/components/Card.vue";
 import { isEmpty } from "lodash";
 import useEditPage from "@/components/editpage";
 import type { SaleLine } from "@/modules/billing/types";
@@ -149,6 +148,7 @@ import Flex from "core/src/components/layouts/Flex.vue";
 import useQuote from "../../components/quotes/quote";
 import QuoteSendMail from "../../components/quotes/QuoteSendMail.vue";
 import QuotePreview from "../../components/quotes/QuotePreview.vue";
+import Card from "core/src/components/card/Card.vue";
 import CardDivider from "core/src/components/card/CardDivider.vue";
 
 const clientsStore = useClientStore();
