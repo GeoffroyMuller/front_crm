@@ -1,5 +1,5 @@
 <template>
-  <Page :title="$t('menu.events')" :padding="null">
+  <Page :title="$t('menu.events')" :padding="null" class="calendar-page">
     <Calendar
       @click="($d) => clickOnDate($d.dayjs)"
       :events="events"
@@ -73,3 +73,9 @@ function edit(e: Event) {
   editOpen.value = true;
 }
 </script>
+
+<style>
+.calendar-page {
+  overflow: hidden;
+}
+</style>

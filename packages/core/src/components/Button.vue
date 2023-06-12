@@ -3,15 +3,27 @@
     :is="component"
     class="button"
     :class="[
+      `typo-${typo}`,
       {
-        [`button-text button-text-${color}`]: variant === 'text',
+        [`button-${color} text-white border-none`]: variant !== 'text' && variant !== 'outlined',
+        [`bg-gradient-245 from-${color}-500 to-${color}-400 hover:from-${color}-600 hover:to-${color}-500 `]: variant !== 'text' && variant !== 'outlined' && !disabled && !loading,
+        [`bg-${color}-200`]: variant !== 'text' && variant !== 'outlined' && (disabled || loading),
+
+        [`button-text button-text-${color} border-none`]: variant === 'text',
+        [`text-${color}-500 hover:text-${color}-700`]: variant === 'text' && !disabled && !loading,
+        [`text-${color}-200`]: variant === 'text' && (disabled || loading),
+        
         [`button-outlined button-outlined-${color}`]: variant === 'outlined',
-        [`button-${color}`]: variant !== 'text',
+        [`text-${color}-500 bg-transparent  border border-solid border-${color}-500 hover:bg-${color}-500 hover:text-white`]: variant === 'outlined' && !disabled && !loading,
+        [`border border-solid border-${color}-300 text-${color}-300 bg-transparent`]: variant === 'outlined' && (disabled || loading),
+       
         'align-end': align === 'end',
         'align-start': align === 'start',
+        'w-max': !fullWidth,
+        'w-full': fullWidth,
         rounded,
       },
-      `typo-${typo}`,
+      
     ]"
     :disabled="disabled || loading"
     v-bind="buttonAdditionnalProps"
@@ -50,6 +62,7 @@ interface ButtonProps {
   component?: "button" | "a";
   href?: string;
   typo: Typo;
+  fullWidth?: boolean;
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -75,33 +88,23 @@ const buttonAdditionnalProps = computed(() => {
 });
 </script>
 
-<style lang="scss" scoped>
+
+
+<style lang="postcss" scoped>
 .button {
-  padding: spacing(0.5) spacing(1.5);
-  border: none;
-  border-radius: map-deep-get($rounded, "sm");
-  &.rounded {
-    border-radius: map-deep-get($rounded, "xl");
-    padding: spacing(1.5) spacing(3);
-  }
-  min-height: 33px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @apply py-1 px-3 rounded-sm flex items-center justify-center gap-2 select-none min-h-[33px];
   transition: background-color 0.15s ease, color 0.05s linear;
-  user-select: none;
   text-decoration: none;
+  &.rounded {
+    @apply py-3 px-6 rounded-xl;
+  }
   &:not(.button-text):not(.button-outlined):not(:disabled) {
     box-shadow: 0px 0.3px 0.9px rgba(0, 0, 0, 0.32),
       0px 1.6px 3.6px rgba(0, 0, 0, 0.28);
   }
   &:not(.button-text) .content-icon {
-    margin-left: spacing(-0.75);
+    @apply -ml-1.5;
   }
-  display: flex;
-  align-items: center;
-  gap: spacing(1);
   &.align-end {
     align-items: flex-end;
   }
@@ -110,8 +113,6 @@ const buttonAdditionnalProps = computed(() => {
     align-items: flex-start;
   }
 
-  gap: spacing(1);
-
   &:not(:disabled) {
     cursor: pointer;
   }
@@ -119,105 +120,24 @@ const buttonAdditionnalProps = computed(() => {
     cursor: not-allowed;
   }
 }
-
 .button-black,
 .button-white {
-  background-color: #9ca3af;
-  color: white;
-  &:hover {
-    background-color: #6b7280;
-  }
+  @apply  text-white bg-[#9ca3af] hover:bg-[#6b7280]
 }
-
-@each $key, $value in $colors {
-  @if type-of($value) == "map" {
-    .button-#{$key} {
-      background: map-deep-get($value, 500);
-      background: linear-gradient(
-        245deg,
-        map-deep-get($value, 500) 0%,
-        map-deep-get($value, 400) 100%
-      );
-      color: white;
-
-      &:hover:not(:disabled) {
-        background: map-deep-get($value, 600);
-        background: linear-gradient(
-          245deg,
-          map-deep-get($value, 600) 0%,
-          map-deep-get($value, 500) 100%
-        );
-      }
-
-      &:disabled {
-        background: map-deep-get($value, 200);
-      }
-    }
-  }
-}
-
 .button-text {
-  background-color: transparent;
-  color: color("black");
-  position: relative;
-  padding: 0;
-  min-height: 0;
-  &:hover {
-    color: color("black");
-  }
+  @apply gap-1 bg-transparent relative p-0 min-h-0;
   span {
     width: max-content;
   }
-  gap: spacing(0.5);
 }
-
-@each $key, $value in $colors {
-  @if type-of($value) == "map" {
-    .button-text-#{$key} {
-      color: map-deep-get($value, 500);
-
-      &:hover:not(:disabled) {
-        color: map-deep-get($value, 700);
-        text-shadow: map-deep-get($value, 50) 1px 0 10px;
-      }
-
-      &:disabled {
-        color: map-deep-get($value, 200);
-      }
-    }
-  }
+.button-text-white, .button-text-black {
+  @apply hover:text-black text-black disabled:text-[#9ca3af];
 }
 
 .button-outlined {
-  background-color: transparent;
   position: relative;
-  color: #6b7280;
-  border: solid 1px #6b7280;
-
-  &:hover:not(:disabled) {
-    color: color("white");
-    background: #6b7280;
-  }
 }
-
-@each $key, $value in $colors {
-  @if type-of($value) == "map" {
-    .button-outlined-#{$key} {
-      color: map-deep-get($value, 500);
-      background: transparent;
-      border: solid 1px map-deep-get($value, 500);
-
-      &:hover:not(:disabled) {
-        color: color("white");
-        background: map-deep-get($value, 500);
-      }
-
-      &:disabled {
-        color: map-deep-get($value, 300);
-        background: transparent;
-        border: solid 1px map-deep-get($value, 300);
-      }
-    }
-  }
+.button-outlined-white, .button-outlined-black {
+  @apply text-[#6b7280] border-[#6b7280] border border-solid hover:text-white hover:bg-[#6b7280] disabled:text-[#6b7280] disabled:bg-transparent;
 }
 </style>

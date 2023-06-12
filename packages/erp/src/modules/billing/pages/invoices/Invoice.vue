@@ -5,7 +5,7 @@
     :loading="!invoice"
   >
     <Grid :gap="1">
-      <Card :withPadding="false" action-on-top>
+      <Card>
         <div class="quote-actions">
           <Button
             variant="text"

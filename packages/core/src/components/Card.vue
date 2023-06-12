@@ -23,7 +23,6 @@ export interface CardProps {
   withPadding?: boolean;
   noPadding?: boolean;
   class?: string;
-  actionOnTop?: boolean;
 }
 
 const props = withDefaults(defineProps<CardProps>(), {

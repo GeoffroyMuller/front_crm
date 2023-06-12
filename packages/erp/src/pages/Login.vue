@@ -1,6 +1,6 @@
 <template>
   <div id="login-container">
-    <Card :title="$t('connection')">
+    <Card>
       <Form id="login-card" @submit="login">
         <template #default="{ hasError }">
           <GoogleLoginBtn :disabled="loading" />

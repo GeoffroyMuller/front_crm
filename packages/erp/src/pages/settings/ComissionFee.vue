@@ -1,5 +1,5 @@
 <template>
-  <Card :title="$t('settings-page.commission-fee.title')">
+  <Card>
     <Grid :gap="1">
       <Switch
         name="fee"
