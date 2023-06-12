@@ -4,11 +4,11 @@
   <TextField v-else-if="line.type === 'title'" :label="$t('pages.edit-quote.title')" name="description" />
 
   <div v-else-if="line.type === 'product'" class="line-product-container">
-    <div class="lg:flex items-end gap-2">
-      <div class="grid flex-1 items-end gap-2 max-xl:grid-cols-[1fr_90px] xl:grid-cols-[1fr_90px_120px_90px]">
-        <MagicAutocomplete class="min-w-[200px]" :get-option-value="(opt) => opt.id"
-          :label="$t('pages.edit-quote.product')" :store="productsStore" :get-option-label="(opt) => opt?.name"
-          @update:selected="handleProductChange" option-key="id" name="idProduct" />
+    <div class="2xl:flex items-end gap-2">
+      <div class="grid flex-1 items-end gap-2 max-2xl:grid-cols-[1fr_90px] 2xl:grid-cols-[1fr_90px_120px_90px]">
+        <MagicAutocomplete :get-option-value="(opt) => opt.id" :label="$t('pages.edit-quote.product')"
+          :store="productsStore" :get-option-label="(opt) => opt?.name" @update:selected="handleProductChange"
+          option-key="id" name="idProduct" />
         <TextField type="number" v-model="internalLine.qty" :label="$t('pages.edit-quote.qty')" :step="1" name="qty" />
         <TextField type="number" :step="0.01" v-model="internalLine.unit_price" :label="$t('pages.edit-quote.unit_price')"
           name="unit_price" />
@@ -17,9 +17,9 @@
           name="idVat" />
       </div>
       <div
-        class="max-lg:flex lg:w-[100px] max-lg:justify-end max-lg:items-center max-lg:py-4 grid grid-cols-2 gap-2 lg:gap-1 self-center">
+        class="max-2xl:flex  2xl:pl-2 2xl:w-[100px] max-2xl:justify-end max-2xl:items-center max-2xl:py-4 grid grid-cols-2  gap-2 2xl:gap-1 self-center">
 
-        <Text typo="title7" class="col-span-2 lg:mb-2 max-lg:mr-4">
+        <Text typo="title7" class="col-span-2 2xl:mb-2 max-2xl:mr-4">
           {{ $t("pages.edit-quote.total-global") }}
         </Text>
         <Text typo="title7">{{ $t("pages.edit-quote.without-taxes") }}</Text>
@@ -40,7 +40,7 @@
         </Text>
       </div>
     </div>
-    <HtmlEditor class="description" :label="$t('pages.edit-quote.description')" v-model="internalLine.description"
+    <HtmlEditor class="mt-2" :label="$t('pages.edit-quote.description')" v-model="internalLine.description"
       name="description" />
     <div v-if="!$_.isNil(internalProduct) &&
         productsStore.isPhysicalStock(internalProduct)
@@ -79,8 +79,7 @@ import useVatStore from "@/stores/vat";
 import useProductStore from "@/modules/products/stores/products";
 import type { Vat } from "@/types/vat";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
-import type { Product, ProductReal } from "@/types/product";
-import useProductsRealStore from "@/stores/products_real";
+import type { Product } from "@/types/product";
 import QuoteSublineForm from "./QuoteSublineForm.vue";
 import Sidebar from "core/src/components/Sidebar.vue";
 import Button from "core/src/components/Button.vue";

@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-side-mobile-menu">
+  <!-- <div class="layout-side-mobile-menu">
     <slot
       name="mobile-nav"
       :setMobileNavOpen="(o: boolean) => (mobileNavOpen = o)"
@@ -35,7 +35,7 @@
         </Tree>
       </div>
     </Sidebar>
-  </div>
+  </div> -->
   <nav class="layout-side-menu" :class="{ mini: isNavMini }">
     <div class="logo-container">
       <span v-if="!isNavMini"> CRM </span>
@@ -390,7 +390,6 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
     left: 0;
     width: 100%;
     height: auto;
-    margin-top: $headerHeightMobile;
   }
 }
 .mobile-nav-items-container {

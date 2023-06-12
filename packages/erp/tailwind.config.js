@@ -81,7 +81,7 @@ module.exports = {
         '3xl': '1.5rem',
       },
       backgroundImage: {
-        'gradient-245': 'linear-gradient(245deg, var(--tw-gradient-stops))'
+        'gradient-245': 'linear-gradient(245deg, var(--tw-gradient-stops))',
       },
     },
   },

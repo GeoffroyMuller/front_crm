@@ -1,9 +1,13 @@
 <template>
   <div class="page-menu" :class="{ 'mini-nav': layoutSideMenu?.isNavMini?.value }">
-    <div class="typo-title2">
+    <div class="typo-title2 text-white flex items-center md:hidden">
+      <IconButton v-if="back" @click="goToBack" name="chevron_left" class="text-white hover:text-primary-500" />
       {{ title }}
     </div>
-    <div class="buttons">
+    <div class="typo-title2 max-md:hidden">
+      {{ title }}
+    </div>
+    <div class="buttons max-md-hidden">
       <Media up="md">
         <ActionMenu :actions="[
           { icon: 'door_open', action: disconnect, title: 'disconnect' },
@@ -15,6 +19,7 @@
       </Media>
     </div>
   </div>
+ 
   <!--   <div class="page-btn-back" v-if="back">
     <Button @click="goToBack" variant="text" icon="chevron_left">{{
       $t("back")
@@ -42,6 +47,8 @@ import useUI from "core/src/composables/ui";
 import { inject } from "vue";
 import type { LayoutSideMenuProvide } from "core/src/layouts/types";
 import PageContent, { type PageContentProps } from "./PageContent.vue";
+import Avatar from "core/src/components/Avatar.vue";
+import IconButton from "core/src/components/IconButton.vue";
 
 interface PageProps {
   title: string;
@@ -120,7 +127,10 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
   z-index: 21;
   top: 0;
   transition: width 0.3s ease;
-  width: calc(100% - $navWidth);
+  width: 100%;
+  @include media_up(md) {
+    width: calc(100% - $navWidth);
+  }
 
   &.mini-nav {
     width: calc(100% - $miniNavWidth);
@@ -155,23 +165,6 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
         color: color("primary", 100);
       }
     }
-  }
-}
-
-@include media-down(md) {
-  .page-menu {
-    display: none;
-    background-color: unset;
-    background: unset;
-    height: auto;
-
-    .typo-title2 {
-      color: unset;
-    }
-  }
-
-  .page-content {
-    margin-top: 0;
   }
 }
 
