@@ -1,6 +1,6 @@
 <template>
   <div class="page-menu" :class="{ 'mini-nav': layoutSideMenu?.isNavMini?.value }">
-    <div class="typo-title2 text-white flex items-center md:hidden">
+    <div class="typo-title2 text-white flex items-center h-full md:hidden">
       <IconButton v-if="back" @click="goToBack" name="chevron_left" class="text-white hover:text-primary-500" />
       {{ title }}
     </div>
