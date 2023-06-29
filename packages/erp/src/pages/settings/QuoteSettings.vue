@@ -1,5 +1,5 @@
 <template>
-  <Card :with-padding="false">
+  <Card>
     <Grid :gap="1">
       <Grid :p="2">
         <Select
@@ -16,7 +16,7 @@
   </Card>
 </template>
 <script setup lang="ts">
-import Card from "core/src/components/Card.vue";
+import Card from "core/src/components/card/Card.vue";
 import Select from "core/src/components/form/Select.vue";
 import QuoteInvoiceThemeEditor from "@/modules/billing/components/quotes/QuoteInvoiceThemeEditor.vue";
 import Grid from "core/src/components/layouts/Grid.vue";

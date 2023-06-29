@@ -155,7 +155,7 @@ import { isNil } from "lodash";
 import useUI from "core/src/composables/ui";
 import { useI18n } from "vue-i18n";
 import { computed, ref, watch } from "vue";
-import Card from "core/src/components/Card.vue";
+import Card from "core/src/components/card/Card.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import useProductsStore from "@/modules/products/stores/products";
 

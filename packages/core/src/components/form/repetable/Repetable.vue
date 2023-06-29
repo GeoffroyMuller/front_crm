@@ -68,8 +68,6 @@ import { computed, ref, watch } from "vue";
 import { ValidationError, type AnySchema } from "yup";
 import RepetableSection from "./RepetableSection.vue";
 import Button from "../../Button.vue";
-import Card from "../../Card.vue";
-import IconButton from "../../IconButton.vue";
 import draggable from "vuedraggable";
 
 interface RepetableProps {

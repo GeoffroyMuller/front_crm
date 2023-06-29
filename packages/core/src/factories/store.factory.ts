@@ -45,8 +45,8 @@ export interface APIStoreActions<T> {
     signal?: AbortSignal
   ) => Promise<PaginateResult2<T>>;
   search: (filters?: Filters, signal?: AbortSignal) => Promise<Array<T>>;
-  update: (id: ID, body: T) => Promise<T>;
-  create: (body: T) => Promise<T>;
+  update: (id: ID, body: Partial<T>) => Promise<T>;
+  create: (body: Partial<T>) => Promise<T>;
   delete: (id: ID) => Promise<T>;
 
   getDerivedStore: <M>(

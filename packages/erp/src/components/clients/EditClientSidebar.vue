@@ -29,7 +29,7 @@
           v-model="idCompany"
           v-model:options="companiesOptions"
         />
-        <Card v-if="isAddCompanyOpen">
+        <Card padding v-if="isAddCompanyOpen">
           <div class="add-company-card">
             <div class="typo-subtitle">{{ $t("new-company") }}</div>
             <TextField :label="$t('new-company-name')" v-model="companyName" />
@@ -65,7 +65,7 @@
 </template>
 <script setup lang="ts">
 import Button from "core/src/components/Button.vue";
-import Card from "core/src/components/Card.vue";
+import Card from "core/src/components/card/Card.vue";
 import Form from "core/src/components/form/Form.vue";
 import TextField from "core/src/components/form/TextField.vue";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";

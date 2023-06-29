@@ -109,7 +109,7 @@ import Button from "core/src/components/Button.vue";
 import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import HtmlEditor from "core/src/components/form/HtmlEditor.vue";
 import InvoiceLineVue from "../../components/invoices/InvoiceLine.vue";
-import Card from "core/src/components/Card.vue";
+import Card from "core/src/components/card/Card.vue";
 import useEditPage from "@/components/editpage";
 import type { SaleLine } from "@/modules/billing/types";
 

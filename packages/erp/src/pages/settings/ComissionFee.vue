@@ -59,7 +59,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import Button from "core/src/components/Button.vue";
-import Card from "core/src/components/Card.vue";
+import Card from "core/src/components/card/Card.vue";
 import Switch from "core/src/components/form/Switch.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import Grid from "core/src/components/layouts/Grid.vue";

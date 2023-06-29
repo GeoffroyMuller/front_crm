@@ -59,7 +59,7 @@ import InvoicePayments from "../../components/invoices/InvoicePayments.vue";
 import InvoiceSendMail from "../../components/invoices/InvoiceSendMail.vue";
 import Page from "@/components/Page.vue";
 import Button from "core/src/components/Button.vue";
-import Card from "core/src/components/Card.vue";
+import Card from "core/src/components/card/Card.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import useInvoicesStore from "../../stores/invoices";
 import type Invoice from "../../types";

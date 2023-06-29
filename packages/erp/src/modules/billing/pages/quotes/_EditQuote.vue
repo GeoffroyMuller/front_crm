@@ -184,7 +184,7 @@ import useVatStore from "@/stores/vat";
 import Repetable from "core/src/components/form/repetable/Repetable.vue";
 import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import type Client from "@/types/client";
-import Card from "core/src/components/Card.vue";
+import Card from "core/src/components/card/Card.vue";
 import { isEmpty } from "lodash";
 import useEditPage from "@/components/editpage";
 import type { SaleLine } from "@/modules/billing/types";

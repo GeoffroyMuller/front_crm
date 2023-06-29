@@ -93,7 +93,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import IconButton from "./IconButton.vue";
-import Card from "./Card.vue";
+import Card from "./card/Card.vue";
 import useCalendar, { type Day } from "../composables/calendar";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";

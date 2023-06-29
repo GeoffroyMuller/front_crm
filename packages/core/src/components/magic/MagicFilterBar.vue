@@ -55,7 +55,7 @@
 import type { APIStore } from "../../factories/store.factory";
 import { debounce, get, set } from "lodash";
 import { computed, ref, watch } from "vue";
-import Card from "../Card.vue";
+import Card from "../card/Card.vue";
 import MagicForm from "./MagicForm.vue";
 import type { MagicFormFieldProps } from "./MagicFormField.vue";
 import type { GridColumnsOptions } from "../layouts/types";

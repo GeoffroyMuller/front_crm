@@ -2,7 +2,7 @@
   <Grid :gap="0.5" :columns="1">
     {{ date.date() }}
     <div v-for="e of events" :key="e.id" @click.stop="$emit('edit', e)">
-      <Card :with-padding="false" class="event-block" rounded="sm">
+      <Card class="event-block" rounded="sm">
         <Flex align-items="center" :gap="0.5" :m="0.5" :ml="1" :mr="1">
           <div class="typo-text">{{ dayjs(e.dtstart).format("H") }}h</div>
           <div class="typo-text">-</div>
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import Card from "core/src/components/Card.vue";
+import Card from "core/src/components/card/Card.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import type { Event } from "@/types/events";

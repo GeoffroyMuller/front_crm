@@ -56,7 +56,7 @@ import ProductForm from "@/modules/products/components/ProductForm.vue";
 import Page from "@/components/Page.vue";
 import useProductStore from "@/modules/products/stores/products";
 import { computed, onMounted, ref } from "vue";
-import Card from "core/src/components/Card.vue";
+import Card from "core/src/components/card/Card.vue";
 import Tabs from "core/src/components/Tabs.vue";
 import ProductAvancedSettingsPhysical from "@/modules/products/components/ProductAvancedSettingsPhysical.vue";
 import ProductStock from "@/modules/products/components/ProductStock.vue";

@@ -14,7 +14,7 @@
   </div>
   <Teleport v-if="strategy === 'root'" to="body">
     <div ref="content">
-      <Card :withPadding="false" :class="contentCardClass" v-bind="cardProps">
+      <Card  :class="contentCardClass" v-bind="cardProps">
         <slot name="content" />
       </Card>
     </div>
@@ -24,7 +24,7 @@
 <script lang="ts" setup>
 import { ref, Teleport, watch } from "vue";
 import useMenu, { type MenuProps as UseMenuProps } from "../composables/menu";
-import Card, { type CardProps } from "./Card.vue";
+import Card, { type CardProps } from "./card/Card.vue";
 
 interface MenuProps {
   placement?: UseMenuProps["placement"];

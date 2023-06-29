@@ -213,7 +213,7 @@
 import { withDefaults, ref, watch, onMounted, computed } from "vue";
 import type { Column } from "./types";
 import { isEqual, isNil } from "lodash";
-import Card from "./Card.vue";
+import Card from "./card/Card.vue";
 import Spinner from "./Spinner.vue";
 import Media from "./Media.vue";
 import Checkbox from "./form/Checkbox.vue";

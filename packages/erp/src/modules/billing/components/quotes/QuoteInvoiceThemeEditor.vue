@@ -52,7 +52,7 @@
 
 <script setup lang="ts">
 import type { QuoteInvoiceTheme } from "../../types";
-import Card from "core/src/components/Card.vue";
+import Card from "core/src/components/card/Card.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import { ref } from "vue";
