@@ -1,5 +1,5 @@
 <template>
-  <Menu :placement="placement" :gap="0.5" strategy="root">
+  <Menu :placement="placement" :gap="0.5" strategy="root" :card-props="{ rounded: 'sm' }">
     <template #activator>
       <slot />
     </template>
