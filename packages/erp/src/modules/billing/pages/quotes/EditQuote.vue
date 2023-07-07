@@ -192,6 +192,9 @@ const title = computed(() => {
     return `${t("quote")} ${quote.value?.identifier || ""}`;
 });
 
+
+const vats = computed(() => vatsStore.getList);
+
 onMounted(() => {
     vatsStore.fetchList();
 });
@@ -208,8 +211,8 @@ const prices = computed(() => {
     for (const line of formValue.value.lines) {
         if (!line.qty || !line.unit_price) continue;
         const price = line.qty * line.unit_price;
-
-        const vatPrice = price * (1 + (line.vat?.rate || 0) / 100);
+        const vat = vats.value.find(v => v.id == line.idVat);
+        const vatPrice = price * (1 + (vat?.rate || 0) / 100);
         totalPriceWithTaxes += vatPrice;
         totalPrice += price;
     }
