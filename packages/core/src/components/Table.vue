@@ -13,6 +13,7 @@
         </div>
         <template v-if="items && items.length > 0">
           <Card
+            padding
             v-for="item in items"
             :key="item[itemsKey]"
             @click.stop="$emit('row-click', item)"
