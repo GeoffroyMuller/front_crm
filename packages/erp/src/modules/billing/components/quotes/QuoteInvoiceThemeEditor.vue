@@ -1,6 +1,6 @@
 <template>
   <div class="quote-invoice-modele-editor">
-    <Card class="content">
+    <Card padding class="content">
       <Grid :columns="2" :gap="4" dir="ltr">
         <Grid :gap="1">
           <QuoteInvoiceThemeEditorInput

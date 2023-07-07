@@ -26,7 +26,7 @@
     >
       <template #default="{ hasError, hasChanged }">
         <Grid :pb="14" :gap="1" :columns="1">
-          <Card class="reservation-form-client">
+          <Card padding class="reservation-form-client">
             <Grid class="typo-text" :pb="2">
               {{
                 isSelectExistingClient

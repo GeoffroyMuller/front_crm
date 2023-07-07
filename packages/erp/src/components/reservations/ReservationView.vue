@@ -4,7 +4,7 @@
       <div class="typo-title">
         {{ $t("reservation") }}
       </div>
-      <Card>
+      <Card padding>
         <div class="reservation-actions" :gap="1">
           <Button
             variant="text"

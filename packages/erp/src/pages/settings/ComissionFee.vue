@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card padding>
     <Grid :gap="1">
       <Switch
         name="fee"

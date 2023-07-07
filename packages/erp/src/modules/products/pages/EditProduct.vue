@@ -11,7 +11,7 @@
     <div class="edit-product">
       <Tabs v-if="id != 'new'" :tabs="productTabs">
         <template #informations>
-          <Card>
+          <Card padding>
             <ProductForm
               :product="product"
               @saved="save"
@@ -25,7 +25,7 @@
           <ProductStock :product="product" />
         </template>
         <template #advanced_settings>
-          <Card>
+          <Card padding>
             <ProductAvancedSettingsPhysical
               v-if="productsStore.isPhysicalStock(product)"
               :loading="loading"
@@ -39,7 +39,7 @@
           </Card>
         </template>
       </Tabs>
-      <Card v-else>
+      <Card padding v-else>
         <ProductForm
           :product="product"
           @saved="save"
