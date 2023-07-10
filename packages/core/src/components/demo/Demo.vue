@@ -1,5 +1,5 @@
 <template>
-  <Tabs :tabs="tabs">
+  <Tabs :tabs="tabs.map((t) => ({ id: t.id, title: t.id }))">
     <template #buttons>
       <DemoButtons />
     </template>
@@ -15,22 +15,27 @@
     <template #chips>
       <DemoChips />
     </template>
+    <template #inputs>
+      <DemoInput />
+    </template>
   </Tabs>
 </template>
 
 <script setup lang="ts">
-import Tabs from '../Tabs.vue';
-import DemoButtons from './DemoButtons.vue';
-import DemoCard from './DemoCard.vue';
-import DemoToast from './DemoToast.vue';
-import DemoColor from './DemoColor.vue';
-import DemoChips from './DemoChips.vue';
+import Tabs from "../Tabs.vue";
+import DemoButtons from "./DemoButtons.vue";
+import DemoCard from "./DemoCard.vue";
+import DemoToast from "./DemoToast.vue";
+import DemoColor from "./DemoColor.vue";
+import DemoChips from "./DemoChips.vue";
+import DemoInput from "./DemoInput.vue";
 
 const tabs = [
-  { id: 'color', title: 'color' },
-  { id: 'buttons', title: 'buttons' },
-  { id: 'cards', title: 'cards' },
-  { id: 'toast', title: 'toast' },
-  { id: 'chips', title: 'chips' },
-]
+  { id: "color" },
+  { id: "buttons" },
+  { id: "cards" },
+  { id: "toast" },
+  { id: "chips" },
+  { id: "inputs" },
+];
 </script>

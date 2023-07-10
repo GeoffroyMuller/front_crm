@@ -1,11 +1,21 @@
 <template>
   <Teleport to="body">
     <div
-      class="modal-background"
-      :class="{ 'no-padding': !withPadding, open }"
+      class="fixed top-0 left-0 w-screen h-screen bg-black"
+      :class="{
+        'no-padding': !withPadding,
+        'z-modal opacity-[0.4]': open,
+        'opacity-0 pointer-events-none': !open,
+      }"
       @click.stop="$emit('update:open', false)"
     ></div>
-    <Card class="modal" :class="{ open }">
+    <Card
+      class="max-md:w-[95%] p-6 fixed top-1/2 left-1/2 min-w-[50%] transform -translate-x-1/2 -translate-y-1/2"
+      :class="{
+        'z-modal opacity-100': open,
+        'opacity-0 pointer-events-none': !open,
+      }"
+    >
       <div class="modal-content">
         <slot />
       </div>
@@ -13,7 +23,7 @@
         <IconButton
           @click.stop="$emit('update:open', false)"
           name="close"
-          class="close-button"
+          class="absolute top-0 right-0 p-6"
           size="xl"
         />
       </div>
@@ -22,7 +32,6 @@
 </template>
 <script lang="ts" setup>
 import { withDefaults } from "vue";
-import Media from "./Media.vue";
 import Card from "./card/Card.vue";
 import IconButton from "./IconButton.vue";
 
@@ -39,59 +48,3 @@ const props = withDefaults(defineProps<ModalProps>(), {
 
 const emit = defineEmits(["update:open"]);
 </script>
-
-<style lang="scss" scoped>
-$zIndexModal: 45;
-
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  min-width: 50%;
-  transform: translate(-50%, -50%);
-  z-index: $zIndexModal;
-  padding: spacing(3);
-  opacity: 1;
-}
-@include media-down(md) {
-  .modal {
-    width: 95%;
-  }
-}
-
-.modal-background {
-  position: absolute;
-  background-color: black;
-  opacity: 0.4;
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: $zIndexModal;
-}
-
-.close-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: spacing(0.5);
-  z-index: $zIndexModal;
-}
-
-.modal-background,
-.modal {
-  transition: opacity 0.3s, visibility 0.35s;
-  &:not(.open) {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    .modal-content {
-      opacity: 0;
-    }
-  }
-  .modal-content {
-    opacity: 1;
-  }
-}
-</style>

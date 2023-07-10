@@ -15,7 +15,7 @@ import DatePicker, {
 import RadioGroup, { type RadioGroupProps } from "../form/RadioGroup.vue";
 import Select, { type SelectProps } from "../form/Select.vue";
 import Switch, { type SwitchProps } from "../form/Switch.vue";
-import TextField, { type InputProps } from "../form/TextField.vue";
+import TextField, { type TextFieldProps } from "../form/TextField.vue";
 import MagicAutocomplete, {
   type MagicAutocompleteProps,
 } from "./MagicAutocomplete.vue";
@@ -31,7 +31,7 @@ export type MagicFormFieldType =
   | "magicautocomplete";
 export type MagicFormFieldPropsProps =
   | AutocompleteProps
-  | InputProps
+  | TextFieldProps
   | DatePickerProps
   | SelectProps
   | RadioGroupProps

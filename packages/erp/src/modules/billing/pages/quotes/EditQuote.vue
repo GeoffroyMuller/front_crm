@@ -24,7 +24,7 @@
                 <template #default="{ hasError, hasChanged }">
                     <FloatingButton :disabled="hasError || !hasChanged" :loading="loading" type="submit" color="success" icon="save" class="xl:hidden" />
                     <div class="grid gap-6">
-                        <div class="grid grid-cols-2 w-full gap-6">
+                        <div class="grid md:grid-cols-2 w-full gap-6">
                             <Card padding>
                                 <Grid :gap="1">
                                     <TextField name="name" :label="$t('title')" />

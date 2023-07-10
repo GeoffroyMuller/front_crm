@@ -1,6 +1,10 @@
 <template>
   <div
-    @click="($refs.internalRef as HTMLInputElement).focus()"
+    @click="
+      ($refs.internalRef as HTMLInputElement)?.focus?.(),
+        // @ts-ignore
+        $refs?.inputRef?.$refs?.internalRef?.focus?.()
+    "
     class="text-field"
     :class="{
       error: internalError || error,
@@ -13,47 +17,48 @@
     <div class="input-wrapper">
       <textarea
         v-if="multiline"
-        :placeholder="placeholder"
         @blur="onBlur"
-        v-bind="$props"
+        v-bind="{
+          min: min as InputHTMLAttributes['min'],
+          max: max as InputHTMLAttributes['min'],
+          type,
+          step,
+          disabled,
+          readonly,
+          name,
+          id,
+          placeholder,
+        }"
         ref="internalRef"
         class="mousetrap"
         :class="{
           'appearance-none': appearanceNone === true,
-          [inputClass]: true,
         }"
         v-model="internalValue"
         @focus="onFocus"
         :id="id"
       />
-      <input
+      <Input
         v-if="!multiline"
-        :placeholder="placeholder"
-        @blur="onBlur"
-        v-bind="$props"
-        class="input-class mousetrap"
-        :class="{
-          'appearance-none': appearanceNone === true,
-          [inputClass]: true,
-        }"
-        ref="internalRef"
+        ref="inputRef"
         v-model="internalValue"
-        @focus="onFocus"
-        @input="(e) => onInput(e)"
-        :id="id"
-        v-maska:[maskOptions]
+        v-bind="{
+          min,
+          max,
+          step,
+          icon,
+          placeholder,
+          error,
+          id,
+          disabled,
+          blur: onBlur,
+          focus: onFocus,
+          input: onInput,
+          mask,
+          appearanceNone,
+          rounded,
+        }"
       />
-      <div
-        v-if="(icon || $slots.icon) && !multiline"
-        :class="{ disabled }"
-        class="icon-hook"
-      >
-        <Icon v-if="icon" :name="icon" />
-        <slot name="icon" />
-      </div>
-      <div class="input-content" ref="inputContent">
-        <slot name="content" />
-      </div>
     </div>
     <Alert
       v-if="
@@ -67,14 +72,14 @@
 
 <script lang="ts" setup>
 import useValidatable from "../../composables/validatable";
-import { computed, withDefaults } from "vue";
+import { withDefaults, type InputHTMLAttributes } from "vue";
 import type { IconName, Size } from "../types";
-import Icon from "../Icon.vue";
 import Alert from "../Alert.vue";
 import type { AnySchema } from "yup";
-import { type MaskOptions, vMaska } from "maska";
+import Input from "./Input.vue";
+import type { MaskOptions } from "maska/dist/types/mask";
 
-export interface InputProps {
+export interface TextFieldProps {
   mask?: string | MaskOptions;
   icon?: IconName;
   multiline?: boolean;
@@ -93,16 +98,13 @@ export interface InputProps {
   id?: string;
   placeholder?: string;
   //hide arrows input number
-  appearanceNone?: boolean | null;
+  appearanceNone?: boolean;
   rounded?: Size | "full";
-
-  inputClass?: string;
 }
 
-const props = withDefaults(defineProps<InputProps>(), {
+const props = withDefaults(defineProps<TextFieldProps>(), {
   type: "text",
   rounded: "sm",
-  inputClass: "",
   placeholder: "",
 });
 const emit = defineEmits([
@@ -120,6 +122,7 @@ function onBlur() {
 }
 
 function onFocus() {
+  console.error("HHHEEYY");
   emit("focus");
 }
 
@@ -130,18 +133,6 @@ const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
   error: props.error,
   rules: props.rules,
-});
-
-const maskOptions = computed<MaskOptions | null>(() => {
-  if (props.mask) {
-    if (typeof props.mask === "string") {
-      return {
-        mask: props.mask,
-      };
-    }
-    return props.mask;
-  }
-  return null;
 });
 </script>
 
@@ -154,71 +145,11 @@ const maskOptions = computed<MaskOptions | null>(() => {
   label {
     @include typo(label);
   }
-  .input-wrapper {
-    position: relative;
-    .input-content {
-    }
-  }
-  .icon-hook {
-    border-radius: 0 map-get($rounded, "sm") map-get($rounded, "sm") 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: calc(100% - 2px);
-    margin: 1px;
-    display: grid;
-    place-items: center;
-    margin-right: spacing(1);
-    background-color: color("white");
-    &.disabled {
-      background-color: #f0f0f0;
-      cursor: not-allowed;
-    }
-    .icon {
-      background-color: transparent;
-    }
-  }
-  @each $key, $value in $rounded {
-    &.rounded-#{$key} {
-      input,
-      textarea {
-        border-radius: map-get($rounded, $key);
-      }
-      .icon-hook {
-        border-radius: map-get($rounded, $key);
-      }
-    }
-    &.rounded-full {
-      input,
-      textarea {
-        border-radius: 9999px;
-        padding: 4px 12px;
-      }
-      .icon-hook {
-        border-radius: 9999px;
-      }
-    }
-  }
 
-  input,
   textarea {
-    min-height: $input-min-height;
-    background-color: color("white");
-    display: block;
-    padding: 4px 8px;
-    border: 1px solid #d1d5db;
-    width: 100%;
-    transition: border-color 0.5s, box-shadow 0.5s;
-
     &:disabled {
       background-color: #f0f0f0;
       cursor: not-allowed;
-    }
-
-    &:focus {
-      outline: none;
-      border-color: color("primary", 500);
-      box-shadow: 0 0 5pt 0.5pt color("primary", 200);
     }
   }
   textarea {
@@ -226,33 +157,6 @@ const maskOptions = computed<MaskOptions | null>(() => {
     min-height: spacing(12);
     height: auto;
     resize: vertical;
-  }
-  input {
-    height: 35px;
-    &.appearance-none {
-      /* Firefox */
-      -moz-appearance: textfield;
-
-      /* Chrome */
-      &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
-
-      /* Opéra*/
-      &::-o-inner-spin-button {
-        -o-appearance: none;
-        margin: 0;
-      }
-    }
-  }
-  &.error {
-    input,
-    textarea {
-      outline: none;
-      border-color: color("danger", 500);
-      box-shadow: 0 0 5pt 0.5pt color("danger", 200);
-    }
   }
 }
 </style>
