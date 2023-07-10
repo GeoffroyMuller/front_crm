@@ -16,7 +16,7 @@
         'opacity-0 pointer-events-none': !open,
       }"
     >
-      <div class="modal-content">
+      <div>
         <slot />
       </div>
       <div>

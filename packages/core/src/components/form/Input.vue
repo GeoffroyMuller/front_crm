@@ -12,16 +12,6 @@
     }"
     @click="($refs.internalRef as HTMLInputElement)?.focus?.()"
   >
-    <div
-      v-if="icon || $slots.icon"
-      class="mr-1"
-      :class="{
-        [`rounded-${rounded}`]: true,
-      }"
-    >
-      <Icon v-if="icon" :name="icon" />
-      <slot name="icon" />
-    </div>
     <input
       class="mousetrap flex-1 min-h-input h-input outline-none focus:outline-none border-none disabled:cursor-not-allowed"
       @blur="onBlur"
@@ -45,6 +35,16 @@
         placeholder,
       }"
     />
+    <div
+      v-if="icon || $slots.icon"
+      class="ml-1"
+      :class="{
+        [`rounded-${rounded}`]: true,
+      }"
+    >
+      <Icon v-if="icon" :name="icon" />
+      <slot name="icon" />
+    </div>
   </div>
 </template>
 

@@ -30,9 +30,10 @@
           placeholder,
         }"
         ref="internalRef"
-        class="mousetrap"
+        class="mousetrap border border-solid overflow-hidden px-2 py-1 disabled:bg-inputDisabled disabled:cursor-not-allowed bg-white focus:border-primary-400 focus:shadow-[0_0_2pt_0.5pt] focus:shadow-primary-200 border-input w-full outline-none focus:outline-none"
         :class="{
           'appearance-none': appearanceNone === true,
+          [`rounded-${rounded}`]: true,
         }"
         v-model="internalValue"
         @focus="onFocus"
@@ -58,7 +59,11 @@
           appearanceNone,
           rounded,
         }"
-      />
+      >
+        <template #icon v-if="$slots.icon">
+          <slot name="icon" />
+        </template>
+      </Input>
     </div>
     <Alert
       v-if="
