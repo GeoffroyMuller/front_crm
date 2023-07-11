@@ -34,6 +34,7 @@
         :class="{
           'appearance-none': appearanceNone === true,
           [`rounded-${rounded}`]: true,
+          [inputClass]: inputClass,
         }"
         v-model="internalValue"
         @focus="onFocus"
@@ -43,6 +44,7 @@
         v-if="!multiline"
         ref="inputRef"
         v-model="internalValue"
+        :inputClass="inputClass"
         v-bind="{
           min,
           max,
@@ -105,6 +107,8 @@ export interface TextFieldProps {
   //hide arrows input number
   appearanceNone?: boolean;
   rounded?: Size | "full";
+
+  inputClass?: any;
 }
 
 const props = withDefaults(defineProps<TextFieldProps>(), {

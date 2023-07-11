@@ -1,24 +1,59 @@
 <template>
-  <TextField v-if="line.type === 'comment'" multiline :label="$t('pages.edit-quote.comment')" name="description" />
+  <TextField
+    v-if="line.type === 'comment'"
+    multiline
+    :label="$t('pages.edit-quote.comment')"
+    name="description"
+  />
 
-  <TextField v-else-if="line.type === 'title'" :label="$t('pages.edit-quote.title')" name="description" />
+  <TextField
+    v-else-if="line.type === 'title'"
+    :label="$t('pages.edit-quote.title')"
+    name="description"
+  />
 
   <div v-else-if="line.type === 'product'" class="line-product-container">
     <div class="2xl:flex items-end gap-2">
-      <div class="grid flex-1 items-end gap-2 max-2xl:grid-cols-[1fr_90px] 2xl:grid-cols-[1fr_90px_120px_90px]">
-        <MagicAutocomplete :get-option-value="(opt) => opt.id" :label="$t('pages.edit-quote.product')"
-          :store="productsStore" :get-option-label="(opt) => opt?.name" @update:selected="handleProductChange"
-          option-key="id" name="idProduct" />
-        <TextField type="number" v-model="internalLine.qty" :label="$t('pages.edit-quote.qty')" :step="1" name="qty" />
-        <TextField type="number" :step="0.01" v-model="internalLine.unit_price" :label="$t('pages.edit-quote.unit_price')"
-          name="unit_price" />
-        <Select :options="vats" :get-option-label="(opt) => (opt?.rate != null ? `${opt?.rate}%` : '')"
-          :get-option-value="(opt) => opt.id" v-model="internalLine.idVat" :label="$t('pages.edit-quote.vat')"
-          name="idVat" />
+      <div
+        class="grid flex-1 items-end gap-2 max-2xl:grid-cols-[1fr_90px] 2xl:grid-cols-[1fr_90px_120px_90px]"
+      >
+        <MagicAutocomplete
+          :get-option-value="(opt) => opt.id"
+          :label="$t('pages.edit-quote.product')"
+          :store="productsStore"
+          :get-option-label="(opt) => opt?.name"
+          @update:selected="handleProductChange"
+          option-key="id"
+          name="idProduct"
+        />
+        <TextField
+          type="number"
+          v-model="internalLine.qty"
+          :label="$t('pages.edit-quote.qty')"
+          :step="1"
+          name="qty"
+        />
+        <TextField
+          type="number"
+          :step="0.01"
+          v-model="internalLine.unit_price"
+          :label="$t('pages.edit-quote.unit_price')"
+          name="unit_price"
+        />
+        <Select
+          :options="vats"
+          :get-option-label="
+            (opt) => (opt?.rate != null ? `${opt?.rate}%` : '')
+          "
+          :get-option-value="(opt) => opt.id"
+          v-model="internalLine.idVat"
+          :label="$t('pages.edit-quote.vat')"
+          name="idVat"
+        />
       </div>
       <div
-        class="max-2xl:flex  2xl:pl-2 2xl:w-[100px] max-2xl:justify-end max-2xl:items-center max-2xl:py-4 grid grid-cols-2  gap-2 2xl:gap-1 self-center">
-
+        class="max-2xl:flex 2xl:pl-2 2xl:w-[100px] max-2xl:justify-end max-2xl:items-center max-2xl:py-4 grid grid-cols-2 gap-2 2xl:gap-1 self-center"
+      >
         <Text typo="title7" class="col-span-2 2xl:mb-2 max-2xl:mr-4">
           {{ $t("pages.edit-quote.total-global") }}
         </Text>
@@ -26,43 +61,63 @@
         <Text typo="title3">
           {{
             typeof totalWithoutTaxes === "string"
-            ? totalWithoutTaxes
-            : $utils.formatPrice(totalWithoutTaxes)
+              ? totalWithoutTaxes
+              : $utils.formatPrice(totalWithoutTaxes)
           }}
         </Text>
         <Text typo="title7">{{ $t("pages.edit-quote.with-taxes") }}</Text>
         <Text typo="title3">
           {{
             typeof totalWithTaxes === "string"
-            ? totalWithTaxes
-            : $utils.formatPrice(totalWithTaxes)
+              ? totalWithTaxes
+              : $utils.formatPrice(totalWithTaxes)
           }}
         </Text>
       </div>
     </div>
-    <HtmlEditor class="mt-2" :label="$t('pages.edit-quote.description')" v-model="internalLine.description"
-      name="description" />
-    <div v-if="!$_.isNil(internalProduct) &&
+    <HtmlEditor
+      class="mt-2"
+      :label="$t('pages.edit-quote.description')"
+      v-model="internalLine.description"
+      name="description"
+    />
+    <div
+      v-if="
+        !$_.isNil(internalProduct) &&
         productsStore.isPhysicalStock(internalProduct)
-        " class="grid gap-2 mt-2">
+      "
+      class="grid gap-2 mt-2"
+    >
       <div v-if="nbProductReal" class="typo-text">
         {{ $t("pages.sales.count-sentence", { count: nbProductReal }) }}
       </div>
       <div v-else class="typo-text">
         {{ $t("pages.sales.add-product-real-sentence") }}
       </div>
-      <Button color="primary" icon="edit" variant="text" @click.stop="openSublineForm">
+      <Button
+        color="primary"
+        icon="edit"
+        variant="text"
+        @click.stop="openSublineForm"
+      >
         {{ $t("pages.sales.edit-list-products-real") }}
       </Button>
       <Sidebar v-model:open="isSidebarOpen" displayCloseBtn padding>
-        <QuoteSublineForm :product="internalProduct" v-model:count="nbProductReal"></QuoteSublineForm>
+        <QuoteSublineForm
+          :product="internalProduct"
+          v-model:count="nbProductReal"
+        ></QuoteSublineForm>
       </Sidebar>
     </div>
 
-    <div class="mt-2" v-if="!$_.isNil(internalProduct) &&
-      productsStore.isPhysicalStock(internalProduct) &&
-      nbProductReal != internalLine.qty
-      ">
+    <div
+      class="mt-2"
+      v-if="
+        !$_.isNil(internalProduct) &&
+        productsStore.isPhysicalStock(internalProduct) &&
+        nbProductReal != internalLine.qty
+      "
+    >
       <Alert color="warning">{{
         $t("pages.sales.warning-sentence-qty")
       }}</Alert>
@@ -137,4 +192,3 @@ function handleProductChange(product: Product) {
   }
 }
 </script>
-

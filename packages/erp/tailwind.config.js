@@ -23,6 +23,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        card: "0 1px 3px 0 rgb(0 0 0 / 0.07)",
+      },
       zIndex: {
         modal: 45,
       },

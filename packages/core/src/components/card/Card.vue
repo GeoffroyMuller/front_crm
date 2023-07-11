@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow-[0_1px_3px_0_rgb(0_0_0/0.07)]" :class="{
+  <div class="bg-white shadow-card" :class="{
 
     'px-8 py-5': padding,
     'rounded-sm': rounded === 'sm',

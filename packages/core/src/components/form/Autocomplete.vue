@@ -1,5 +1,5 @@
 <template>
-  <div class="autocomplete">
+  <div class="grid w-full gap-2">
     <Menu
       full-activator-width
       stop-open-on-click-activator
@@ -231,11 +231,6 @@ function handleBlur() {
 </script>
 
 <style lang="scss">
-.autocomplete {
-  display: grid;
-  gap: spacing(1);
-  width: 100%;
-}
 .select-menu {
   border-top-left-radius: 0;
   border-top-right-radius: 0;

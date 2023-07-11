@@ -1,11 +1,11 @@
 <template>
-  <div class="select">
+  <div class="grid w-full gap-2 h-fit cursor-pointer">
     <Menu
       full-activator-width
       stop-open-on-click-activator
       v-model:open="open"
       :strategy="menuStrategy"
-      content-card-class="select-menu"
+      content-card-class="select-menu max-w-full"
       :card-props="{ rounded: 'sm' }"
     >
       <template #activator>
@@ -19,6 +19,7 @@
           @blur="isFocus = false"
           @click="open = !open"
           @keydown="handleKeydown"
+          :class="$props.class"
         >
           <template #icon>
             <Icon
@@ -150,15 +151,6 @@ const {
 </script>
 
 <style lang="scss">
-.select {
-  display: grid;
-  gap: spacing(1);
-  width: 100%;
-  height: fit-content;
-  input {
-    cursor: pointer;
-  }
-}
 .select-menu {
   border-top-left-radius: 0;
   border-top-right-radius: 0;

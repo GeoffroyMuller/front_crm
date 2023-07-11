@@ -13,10 +13,11 @@
     @click="($refs.internalRef as HTMLInputElement)?.focus?.()"
   >
     <input
-      class="mousetrap flex-1 min-h-input h-input outline-none focus:outline-none border-none disabled:cursor-not-allowed"
+      class="mousetrap flex-1 min-h-input h-input outline-none focus:outline-none border-none disabled:cursor-not-allowed w-full"
       @blur="onBlur"
       :class="{
         'appearance-none': appearanceNone === true,
+        [inputClass]: true,
       }"
       ref="internalRef"
       v-model="internalValue"
@@ -76,6 +77,8 @@ export type InputProps = {
   //hide arrows input number
   appearanceNone?: boolean;
   rounded?: Size | "full";
+
+  inputClass?: any;
 };
 
 const props = withDefaults(defineProps<InputProps>(), {

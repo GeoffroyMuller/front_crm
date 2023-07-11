@@ -13,7 +13,7 @@
           @click="onClickOutside"
           v-if="displayCloseBtn && open"
           name="close"
-          class="close-button"
+          class="absolute p-6 top-0 right-0"
           size="xl"
         />
         <div class="content">
@@ -92,14 +92,6 @@ function onClickOutside(event: PointerEvent) {
     height: 100vh;
     min-width: $sidebar-width;
     position: relative;
-  }
-  .close-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: spacing(2);
-    opacity: 0;
-    transition: opacity 0.4s linear;
   }
   &.sidebar-open {
     border-width: 1px;
