@@ -20,6 +20,7 @@
           @click="open = !open"
           @keydown="handleKeydown"
           :class="$props.class"
+          input-class="cursor-pointer"
         >
           <template #icon>
             <Icon

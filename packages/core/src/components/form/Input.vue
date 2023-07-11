@@ -12,6 +12,9 @@
     }"
     @click="($refs.internalRef as HTMLInputElement)?.focus?.()"
   >
+    <div v-if="$slots.start">
+      <slot name="start" />
+    </div>
     <input
       class="mousetrap flex-1 min-h-input h-input outline-none focus:outline-none border-none disabled:cursor-not-allowed w-full"
       @blur="onBlur"
