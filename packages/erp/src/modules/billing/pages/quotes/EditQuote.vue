@@ -1,143 +1,218 @@
 <template>
-    <Page :title="title" :loading="loadingPage" back class="relative" :padding="null">
-        <div class="xl:hidden sticky top-0 w-full flex justify-between items-center bg-white z-20 h-fit py-2 px-4 border-b border-0 border-solid border-b-[#CBD5E1] shadow-[0px_0px_20px_rgba(136,152,170,0.15)]">
-            <Text typo="title7" htmlComponent="div">
-                {{ $t("pages.edit-quote.total-global") }}
-            </Text>
-            <div class="flex gap-2 items-center w-fit">
-                <Text typo="title7">
-                    {{ $t("pages.edit-quote.without-taxes") }}
-                </Text>
-                <Text typo="title3">
-                    {{ $utils.formatPrice(prices.totalPrice) }}
-                </Text>
-                <Text typo="title7">{{ $t("pages.edit-quote.with-taxes") }}</Text>
-                <Text typo="title3">
-                    {{ $utils.formatPrice(prices.totalPriceWithTaxes) }}
-                </Text>
+  <Page
+    :title="title"
+    :loading="loadingPage"
+    back
+    class="relative"
+    :padding="null"
+  >
+    <div
+      class="xl:hidden sticky top-0 w-full flex justify-between items-center bg-white z-20 h-fit py-2 px-4 border-b border-0 border-solid border-b-[#CBD5E1] shadow-[0px_0px_20px_rgba(136,152,170,0.15)]"
+    >
+      <Text typo="title7" htmlComponent="div">
+        {{ $t("pages.edit-quote.total-global") }}
+      </Text>
+      <div class="flex gap-2 items-center w-fit">
+        <Text typo="title7">
+          {{ $t("pages.edit-quote.without-taxes") }}
+        </Text>
+        <Text typo="title3">
+          {{ $utils.formatPrice(prices.totalPrice) }}
+        </Text>
+        <Text typo="title7">{{ $t("pages.edit-quote.with-taxes") }}</Text>
+        <Text typo="title3">
+          {{ $utils.formatPrice(prices.totalPriceWithTaxes) }}
+        </Text>
+      </div>
+    </div>
+
+    <PageContent padding="large">
+      <Form
+        shortcuts
+        :initial-value="quote"
+        @submit="save"
+        v-model="formValue"
+        class="grid xl:grid-cols-[1fr_min-content] gap-6"
+      >
+        <template #default="{ hasError, hasChanged }">
+          <FloatingButton
+            :disabled="hasError || !hasChanged"
+            :loading="loading"
+            type="submit"
+            color="success"
+            icon="save"
+            class="xl:hidden"
+          />
+          <div class="grid gap-6">
+            <div class="grid md:grid-cols-2 w-full gap-6">
+              <Card padding>
+                <Grid :gap="1">
+                  <TextField name="name" :label="$t('title')" />
+                  <div v-if="auth.company?.name">{{ auth.company.name }}</div>
+                  <div v-if="auth.company?.address">
+                    {{ auth.company.address }}
+                  </div>
+                  <div v-if="auth.company?.city">
+                    {{ auth.company.city }} {{ auth.company.zip_code }}
+                  </div>
+                  <div v-if="auth.company?.country">
+                    {{ auth.company.country }}
+                  </div>
+                  <div v-if="auth.company?.phone">{{ auth.company.phone }}</div>
+                </Grid>
+              </Card>
+
+              <Card padding>
+                <MagicAutocomplete
+                  :label="$t('customer')"
+                  :store="clientsStore"
+                  :get-filters="
+                    (str) => ({
+                      $or: {
+                        $contains: { lastname: str, firstname: str },
+                      },
+                    })
+                  "
+                  :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
+                  :get-option-value="(opt) => opt.id"
+                  optionKey="id"
+                  name="idClient"
+                  :addText="$t(`pages.edit-quote.add-customer`)"
+                  can-add
+                  @add="isAddClientOpen = true"
+                  v-model:options="clientOptions"
+                  v-model="idClient"
+                />
+              </Card>
             </div>
-        </div>
-        
-        <PageContent padding="large">
-            <Form shortcuts :initial-value="quote" @submit="save" v-model="formValue"
-                class="grid xl:grid-cols-[1fr_min-content] gap-6">
-                <template #default="{ hasError, hasChanged }">
-                    <FloatingButton :disabled="hasError || !hasChanged" :loading="loading" type="submit" color="success" icon="save" class="xl:hidden" />
-                    <div class="grid gap-6">
-                        <div class="grid md:grid-cols-2 w-full gap-6">
-                            <Card padding>
-                                <Grid :gap="1">
-                                    <TextField name="name" :label="$t('title')" />
-                                    <div v-if="auth.company?.name">{{ auth.company.name }}</div>
-                                    <div v-if="auth.company?.address">
-                                        {{ auth.company.address }}
-                                    </div>
-                                    <div v-if="auth.company?.city">
-                                        {{ auth.company.city }} {{ auth.company.zip_code }}
-                                    </div>
-                                    <div v-if="auth.company?.country">
-                                        {{ auth.company.country }}
-                                    </div>
-                                    <div v-if="auth.company?.phone">{{ auth.company.phone }}</div>
-                                </Grid>
-                            </Card>
-
-                            <Card padding>
-                                <MagicAutocomplete :label="$t('customer')" :store="clientsStore" :get-filters="(str) => ({
-                                        $or: {
-                                            $contains: { lastname: str, firstname: str },
-                                        },
-                                    })
-                                    " :getOptionLabel="(opt) => `${opt.firstname} ${opt.lastname}`"
-                                    :get-option-value="(opt) => opt.id" optionKey="id" name="idClient"
-                                    :addText="$t(`pages.edit-quote.add-customer`)" can-add @add="isAddClientOpen = true"
-                                    v-model:options="clientOptions" v-model="idClient" />
-                            </Card>
-                        </div>
-                        <Card padding>
-                            <Repetable name="lines" :label="$t('products')" orderable>
-                                <template #default="{ data }">
-                                    <QuoteLineVue :line="(data as unknown as SaleLine)" />
-                                </template>
-                                <template #actions="{ addSection }">
-                                    <Flex :gap="1.5" flex-wrap="wrap" justify-content="center" align-items="center">
-                                        <Button type="button" variant="text" @click="addSection({ type: 'product' })">
-                                            {{ $t("pages.edit-quote.add-line-product") }}
-                                        </Button>
-                                        <Button type="button" variant="text" @click="addSection({ type: 'comment' })">
-                                            {{ $t("pages.edit-quote.add-line-comment") }}
-                                        </Button>
-                                        <Button type="button" variant="text" @click="addSection({ type: 'title' })">
-                                            {{ $t("pages.edit-quote.add-line-title") }}
-                                        </Button>
-                                    </Flex>
-                                </template>
-                            </Repetable>
-                        </Card>
-
-                        <Card padding>
-                            <HtmlEditor id="modalities" name="modalities" :label="$t('pages.edit-quote.modalities')" />
-                        </Card>
-
-                        <Card padding>
-                            <HtmlEditor id="footer" name="footer" :label="$t('pages.edit-quote.footer')" />
-                        </Card>
-                    </div>
-                    <div class="sticky h-fit top-4 grid gap-6 place-items-center max-xl:hidden">
-                        <Card padding>
-                            <Text typo="title7">
-                                {{ $t("pages.edit-quote.total-global") }}
-                            </Text>
-                            <div class="grid grid-cols-[min-content_1fr] gap-2 items-center mt-4">
-                                <Text typo="title7">
-                                    {{ $t("pages.edit-quote.without-taxes") }}
-                                </Text>
-                                <Text typo="title3">
-                                    {{ $utils.formatPrice(prices.totalPrice) }}
-                                </Text>
-                                <Text typo="title7">{{ $t("pages.edit-quote.with-taxes") }}</Text>
-                                <Text typo="title3">
-                                    {{ $utils.formatPrice(prices.totalPriceWithTaxes) }}
-                                </Text>
-                            </div>
-
-                            <CardDivider />
-                            <div class="grid grid-cols-[min-content_1fr] items-center gap-6">
-                                <Text typo="title6">{{ $t("pages.edit-quote.pdf") }}</Text>
-                                <Flex :gap="1" justify-content="end" class="justify-self-end">
-                                    <IconButton name="download" @click="downloadPdf(quote)" />
-                                    <IconButton name="preview" @click.stop="preview(quote)" />
-                                </Flex>
-                                <Text typo="title6">{{ $t("pages.edit-quote.order") }}</Text>
-                                <div class="justify-self-end">
-                                    <Button variant="text">
-                                        {{ $t("pages.edit-quote.add-order") }}
-                                    </Button>
-                                </div>
-                                <Text typo="title6">{{ $t("email") }}</Text>
-                                <div class="justify-self-end">
-                                    <Button variant="text" color="success" @click="sendMail(quote)">
-                                        {{ $t("pages.edit-quote.sendemail") }}
-                                    </Button>
-                                </div>
-                            </div>
-                        </Card>
-                        <Button :disabled="hasError || !hasChanged" :loading="loading" type="submit" v-tooltip="{
-                                text: $t('keyboardshortcuts.ctrl+s'),
-                                placement: 'bottom',
-                            }" color="success" rounded>
-                            {{ $t("pages.edit-quote.save") }}
-                        </Button>
-                    </div>
+            <Card padding>
+              <Repetable name="lines" :label="$t('products')" orderable>
+                <template #default="{ data }">
+                  <QuoteLineVue :line="(data as unknown as SaleLine)" />
                 </template>
-            </Form>
-        </PageContent>
+                <template #actions="{ addSection }">
+                  <Flex
+                    :gap="1.5"
+                    flex-wrap="wrap"
+                    justify-content="center"
+                    align-items="center"
+                  >
+                    <Button
+                      type="button"
+                      variant="text"
+                      @click="addSection({ type: 'product' })"
+                    >
+                      {{ $t("pages.edit-quote.add-line-product") }}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="text"
+                      @click="addSection({ type: 'comment' })"
+                    >
+                      {{ $t("pages.edit-quote.add-line-comment") }}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="text"
+                      @click="addSection({ type: 'title' })"
+                    >
+                      {{ $t("pages.edit-quote.add-line-title") }}
+                    </Button>
+                  </Flex>
+                </template>
+              </Repetable>
+            </Card>
 
-    </Page>
-    <QuoteSendMail @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)" @close="quoteToSendMail = null"
-        :quote="quoteToSendMail" />
-    <QuotePreview @close="quoteToPreview = null" :quote="quoteToPreview" />
-    <EditClientSidebar @add="onAddClient" v-model:open="isAddClientOpen" />
+            <Card padding>
+              <HtmlEditor
+                id="modalities"
+                name="modalities"
+                :label="$t('pages.edit-quote.modalities')"
+              />
+            </Card>
+
+            <Card padding>
+              <HtmlEditor
+                id="footer"
+                name="footer"
+                :label="$t('pages.edit-quote.footer')"
+              />
+            </Card>
+          </div>
+          <div
+            class="sticky h-fit top-4 grid gap-6 place-items-center max-xl:hidden"
+          >
+            <Card padding>
+              <Text typo="title7">
+                {{ $t("pages.edit-quote.total-global") }}
+              </Text>
+              <div
+                class="grid grid-cols-[min-content_1fr] gap-2 items-center mt-4"
+              >
+                <Text typo="title7">
+                  {{ $t("pages.edit-quote.without-taxes") }}
+                </Text>
+                <Text typo="title3">
+                  {{ $utils.formatPrice(prices.totalPrice) }}
+                </Text>
+                <Text typo="title7">{{
+                  $t("pages.edit-quote.with-taxes")
+                }}</Text>
+                <Text typo="title3">
+                  {{ $utils.formatPrice(prices.totalPriceWithTaxes) }}
+                </Text>
+              </div>
+
+              <CardDivider />
+              <div class="grid grid-cols-[min-content_1fr] items-center gap-6">
+                <Text typo="title6">{{ $t("pages.edit-quote.pdf") }}</Text>
+                <Flex :gap="1" justify-content="end" class="justify-self-end">
+                  <IconButton name="download" @click="downloadPdf(quote)" />
+                  <IconButton name="preview" @click.stop="preview(quote)" />
+                </Flex>
+                <Text typo="title6">{{ $t("pages.edit-quote.order") }}</Text>
+                <div class="justify-self-end">
+                  <Button variant="text">
+                    {{ $t("pages.edit-quote.add-order") }}
+                  </Button>
+                </div>
+                <Text typo="title6">{{ $t("email") }}</Text>
+                <div class="justify-self-end">
+                  <Button
+                    variant="text"
+                    color="success"
+                    @click="sendMail(quote)"
+                  >
+                    {{ $t("pages.edit-quote.sendemail") }}
+                  </Button>
+                </div>
+              </div>
+            </Card>
+            <Button
+              :disabled="hasError || !hasChanged"
+              :loading="loading"
+              type="submit"
+              v-tooltip="{
+                text: $t('keyboardshortcuts.ctrl+s'),
+                placement: 'bottom',
+              }"
+              color="success"
+              rounded
+            >
+              {{ $t("pages.edit-quote.save") }}
+            </Button>
+          </div>
+        </template>
+      </Form>
+    </PageContent>
+  </Page>
+  <QuoteSendMail
+    @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)"
+    @close="quoteToSendMail = null"
+    :quote="quoteToSendMail"
+  />
+  <QuotePreview @close="quoteToPreview = null" :quote="quoteToPreview" />
+  <EditClientSidebar @add="onAddClient" v-model:open="isAddClientOpen" />
 </template>
 
 <script setup lang="ts">
@@ -186,78 +261,77 @@ const clientOptions = ref();
 const formValue = ref<Quote>();
 
 const title = computed(() => {
-    if (isAddAction.value) {
-        return t("new-quote");
-    }
-    return `${t("quote")} ${quote.value?.identifier || ""}`;
+  if (isAddAction.value) {
+    return t("new-quote");
+  }
+  return `${t("quote")} ${quote.value?.identifier || ""}`;
 });
-
 
 const vats = computed(() => vatsStore.getList);
 
 onMounted(() => {
-    vatsStore.fetchList();
+  vatsStore.fetchList();
 });
 
 function onAddClient(client: Client) {
-    idClient.value = client.id;
-    clientOptions.value = [client];
+  idClient.value = client.id;
+  clientOptions.value = [client];
 }
 
 const prices = computed(() => {
-    let totalPrice = 0;
-    let totalPriceWithTaxes = 0;
-    if (!formValue.value?.lines) return { totalPrice, totalPriceWithTaxes };
-    for (const line of formValue.value.lines) {
-        if (!line.qty || !line.unit_price) continue;
-        const price = line.qty * line.unit_price;
-        const vat = vats.value.find(v => v.id == line.idVat);
-        const vatPrice = price * (1 + (vat?.rate || 0) / 100);
-        totalPriceWithTaxes += vatPrice;
-        totalPrice += price;
-    }
-    return {
-        totalPrice,
-        totalPriceWithTaxes,
-    };
+  let totalPrice = 0;
+  let totalPriceWithTaxes = 0;
+  if (!formValue.value?.lines) return { totalPrice, totalPriceWithTaxes };
+  for (const line of formValue.value.lines) {
+    if (!line.qty || !line.unit_price) continue;
+    const price = line.qty * line.unit_price;
+    const vat = vats.value.find((v) => v.id == line.idVat);
+    const vatPrice = price * (1 + (vat?.rate || 0) / 100);
+    totalPriceWithTaxes += vatPrice;
+    totalPrice += price;
+  }
+  return {
+    totalPrice,
+    totalPriceWithTaxes,
+  };
 });
 
 const {
-    downloadPdf,
-    preview,
-    quoteToPreview,
-    sendMail,
-    quoteToSendMail,
-    edit,
+  downloadPdf,
+  preview,
+  quoteToPreview,
+  sendMail,
+  quoteToSendMail,
+  edit,
 } = useQuote({});
 
 const {
-    isAddAction,
-    loading,
-    loadingPage,
-    model: quote,
-    router,
-    t,
-    save,
+  isAddAction,
+  loading,
+  loadingPage,
+  model: quote,
+  router,
+  t,
+  save,
 } = useEditPage<Quote>({
-    store: quotesStore,
-    populate: ["client.company", "responsible.company", "lines.[vat, sublines]"],
-    mapBeforeSave: (data) => {
-        if (data.lines) {
-            data.lines = data.lines
-                .map((line: any) => {
-                    const newLine = { ...line };
-                    delete newLine.vat;
-                    return newLine;
-                })
-                .filter((line: any) => !isEmpty(line));
-        }
-        delete data.client;
-        return data;
-    },
-    onAdd: (res) => {
-        edit(res);
-        quote.value = res;
-    },
+  store: quotesStore,
+  populate: ["client.company", "responsible.company", "lines.[vat, sublines]"],
+  mapBeforeSave: (data) => {
+    if (data.lines) {
+      data.lines = data.lines
+        .map((line: any) => {
+          const newLine = { ...line };
+          delete newLine.vat;
+          return newLine;
+        })
+        .filter((line: any) => !isEmpty(line));
+    }
+    delete data.client;
+    return data;
+  },
+  onAdd: (res) => {
+    edit(res);
+    quote.value = res;
+  },
 });
 </script>
