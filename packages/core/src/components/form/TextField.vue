@@ -131,7 +131,6 @@ function onBlur() {
 }
 
 function onFocus() {
-  console.error("HHHEEYY");
   emit("focus");
 }
 
