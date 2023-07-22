@@ -54,6 +54,14 @@
           >
             {{ $t("pages.edit-quote.validated") }}
           </Text>
+          <Button
+            v-if="quote.validationStatus !== QuoteValidationStatus.DRAFT"
+            color="white"
+            variant="text"
+            @click="cancelValidation"
+          >
+            {{ $t("cancel") }}
+          </Button>
           <IconButton
             v-if="
               quote.validationStatus === QuoteValidationStatus.DRAFT ||
@@ -66,6 +74,7 @@
               text: $t('pages.edit-quote.customer-validated'),
               placement: 'bottom',
             }"
+            @click="validateQuote"
           />
           <IconButton
             v-if="
@@ -79,6 +88,7 @@
               text: $t('pages.edit-quote.customer-refused'),
               placement: 'bottom',
             }"
+            @click="refuseQuote"
           />
         </div>
       </div>
@@ -108,6 +118,9 @@ import Flex from "core/src/components/layouts/Flex.vue";
 import Card from "core/src/components/card/Card.vue";
 import CardDivider from "core/src/components/card/CardDivider.vue";
 import { QuoteValidationStatus } from "../../types";
+import useQuoteStore from "../../stores/quotes";
+import useUI from "core/src/composables/ui";
+import { useI18n } from "vue-i18n";
 
 type EditQuoteSummaryProps = {
   prices: {
@@ -123,5 +136,63 @@ type EditQuoteSummaryProps = {
   sendMail: (quote: Quote) => void;
 };
 
-defineProps<EditQuoteSummaryProps>();
+const props = defineProps<EditQuoteSummaryProps>();
+
+const quoteStore = useQuoteStore();
+const { toast } = useUI();
+const { t } = useI18n();
+
+async function validateQuote() {
+  try {
+    await quoteStore.update(props.quote.id, {
+      validationStatus: QuoteValidationStatus.VALIDATED,
+    });
+    toast({
+      message: t("pages.edit-quote.customer-validated"),
+      type: "success",
+    });
+  } catch (err) {
+    console.error(err);
+    toast({
+      message: t("error_occured"),
+      type: "danger",
+    });
+  }
+}
+
+async function refuseQuote() {
+  try {
+    await quoteStore.update(props.quote.id, {
+      validationStatus: QuoteValidationStatus.REFUSED,
+    });
+    toast({
+      message: t("pages.edit-quote.customer-refused"),
+      type: "info",
+    });
+  } catch (err) {
+    console.error(err);
+    toast({
+      message: t("error_occured"),
+      type: "danger",
+    });
+  }
+}
+
+async function cancelValidation() {
+  try {
+    await quoteStore.update(props.quote.id, {
+      validationStatus: QuoteValidationStatus.DRAFT,
+    });
+    toast({
+      message: t("canceled"),
+      type: "info",
+    });
+  } catch (err) {
+    console.error(err);
+    toast({
+      message: t("error_occured"),
+      type: "danger",
+    });
+  }
+}
 </script>

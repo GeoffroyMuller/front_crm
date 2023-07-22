@@ -71,6 +71,7 @@
   "status": "Etat",
   "ID": "ID",
   "cancel": "Annuler",
+  "canceled": "Annulé",
   "name": "Nom",
   "email": "Email",
   "firstname": "Prenom",
