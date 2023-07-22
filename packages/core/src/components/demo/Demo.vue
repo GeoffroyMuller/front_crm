@@ -18,6 +18,9 @@
     <template #inputs>
       <DemoInput />
     </template>
+    <template #typo>
+      <DemoTypo />
+    </template>
   </Tabs>
 </template>
 
@@ -29,6 +32,7 @@ import DemoToast from "./DemoToast.vue";
 import DemoColor from "./DemoColor.vue";
 import DemoChips from "./DemoChips.vue";
 import DemoInput from "./DemoInput.vue";
+import DemoTypo from "./DemoTypo.vue";
 
 const tabs = [
   { id: "color" },
@@ -37,5 +41,6 @@ const tabs = [
   { id: "toast" },
   { id: "chips" },
   { id: "inputs" },
+  { id: "typo" },
 ];
 </script>

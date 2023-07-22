@@ -186,6 +186,29 @@
                     {{ $t("pages.edit-quote.sendemail") }}
                   </Button>
                 </div>
+                <Text typo="title6">{{
+                  $t("pages.edit-quote.customer-validation")
+                }}</Text>
+                <div class="justify-self-end flex gap-4 justify-end">
+                  <IconButton
+                    defaultColored
+                    name="check"
+                    color="success"
+                    v-tooltip="{
+                      text: $t('pages.edit-quote.customer-validated'),
+                      placement: 'bottom',
+                    }"
+                  />
+                  <IconButton
+                    defaultColored
+                    name="close"
+                    color="danger"
+                    v-tooltip="{
+                      text: $t('pages.edit-quote.customer-refused'),
+                      placement: 'bottom',
+                    }"
+                  />
+                </div>
               </div>
             </Card>
             <Button
