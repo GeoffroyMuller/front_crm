@@ -2,7 +2,6 @@ import { Model, Pojo } from "objection";
 import Client from "../clients/client.model";
 import Invoice from "../invoices/invoice.model";
 import QuoteLine from "./quote_line.model";
-import type { User } from "core_api/types";
 import { orderBy } from "lodash";
 import { QuoteValidationStatus } from "./status";
 
@@ -34,7 +33,6 @@ export default class Quote extends Model {
     if (json.lines?.length) {
       json.lines = orderBy(json.lines, "order");
     }
-    json.validationStatus = Quote.getValidationStatus(json.validationStatus);
     return json;
   }
 
@@ -42,9 +40,9 @@ export default class Quote extends Model {
     return "quotes";
   }
 
-  static getValidationStatus(intValidationStatus: number) {
+  static getValidationStatusString(intValidationStatus: number) {
     return Object.keys(QuoteValidationStatus)[
-      Object.values(QuoteValidationStatus).indexOf(intValidationStatus)
+      Object.values(QuoteValidationStatus).indexOf(intValidationStatus || 0)
     ];
   }
 

@@ -49,7 +49,12 @@
       "order": "Commande",
       "add-order": "Ajouter une commande",
       "save": "Enregistrer le devis",
-      "sendemail": "Envoyer par mail"
+      "sendemail": "Envoyer par mail",
+      "customer-validation": "Validation",
+      "customer-validated": "Validé par le client",
+      "customer-refused": "Refusé par le client",
+      "validated": "Validé",
+      "refused": "Refusé"
     },
     "edit-invoice": {
       "qty": "Quantitée",

@@ -5,25 +5,30 @@
     :class="[
       `typo-${typo}`,
       {
-        [`button-${color} text-white border-none`]: variant !== 'text' && variant !== 'outlined',
-        [`bg-gradient-245 from-${color}-500 to-${color}-400 hover:from-${color}-600 hover:to-${color}-500 `]: variant !== 'text' && variant !== 'outlined' && !disabled && !loading,
-        [`bg-${color}-200`]: variant !== 'text' && variant !== 'outlined' && (disabled || loading),
+        [`button-${color} text-white border-none`]:
+          variant !== 'text' && variant !== 'outlined',
+        [`bg-gradient-245 from-${color}-500 to-${color}-400 hover:from-${color}-600 hover:to-${color}-500 `]:
+          variant !== 'text' && variant !== 'outlined' && !disabled && !loading,
+        [`bg-${color}-200`]:
+          variant !== 'text' && variant !== 'outlined' && (disabled || loading),
 
         [`button-text button-text-${color} border-none`]: variant === 'text',
-        [`text-${color}-500 hover:text-${color}-700`]: variant === 'text' && !disabled && !loading,
+        [`text-${color}-500 hover:text-${color}-700`]:
+          variant === 'text' && !disabled && !loading,
         [`text-${color}-200`]: variant === 'text' && (disabled || loading),
-        
+
         [`button-outlined button-outlined-${color}`]: variant === 'outlined',
-        [`text-${color}-500 bg-transparent  border border-solid border-${color}-500 hover:bg-${color}-500 hover:text-white`]: variant === 'outlined' && !disabled && !loading,
-        [`border border-solid border-${color}-300 text-${color}-300 bg-transparent`]: variant === 'outlined' && (disabled || loading),
-       
+        [`text-${color}-500 bg-transparent  border border-solid border-${color}-500 hover:bg-${color}-500 hover:text-white`]:
+          variant === 'outlined' && !disabled && !loading,
+        [`border border-solid border-${color}-300 text-${color}-300 bg-transparent`]:
+          variant === 'outlined' && (disabled || loading),
+
         'align-end': align === 'end',
         'align-start': align === 'start',
         'w-max': !fullWidth,
         'w-full': fullWidth,
         rounded,
       },
-      
     ]"
     :disabled="disabled || loading"
     v-bind="buttonAdditionnalProps"
@@ -88,8 +93,6 @@ const buttonAdditionnalProps = computed(() => {
 });
 </script>
 
-
-
 <style lang="postcss" scoped>
 .button {
   @apply py-1 px-3 rounded-sm flex items-center justify-center gap-2 select-none min-h-[33px];
@@ -122,7 +125,7 @@ const buttonAdditionnalProps = computed(() => {
 }
 .button-black,
 .button-white {
-  @apply  text-white bg-[#9ca3af] hover:bg-[#6b7280]
+  @apply text-white bg-[#9ca3af] hover:bg-[#6b7280];
 }
 .button-text {
   @apply gap-1 bg-transparent relative p-0 min-h-0;
@@ -130,14 +133,16 @@ const buttonAdditionnalProps = computed(() => {
     width: max-content;
   }
 }
-.button-text-white, .button-text-black {
-  @apply hover:text-black text-black disabled:text-[#9ca3af];
+.button-text-white,
+.button-text-black {
+  @apply hover:text-slate-600 text-slate-500 disabled:text-[#9ca3af];
 }
 
 .button-outlined {
   position: relative;
 }
-.button-outlined-white, .button-outlined-black {
+.button-outlined-white,
+.button-outlined-black {
   @apply text-[#6b7280] border-[#6b7280] border border-solid hover:text-white hover:bg-[#6b7280] disabled:text-[#6b7280] disabled:bg-transparent;
 }
 </style>

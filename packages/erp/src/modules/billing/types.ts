@@ -28,6 +28,12 @@ export interface SaleLine {
   sublines?: Array<SaleSubline>;
 }
 
+export enum QuoteValidationStatus {
+  DRAFT = 0,
+  REFUSED = 1,
+  VALIDATED = 2,
+}
+
 export interface Quote {
   archived: boolean;
   client: Client;
@@ -43,7 +49,7 @@ export interface Quote {
   madeOn: string;
   modalities: string;
   name: string;
-  status: "draft" | "refused" | "validated";
+  validationStatus: QuoteValidationStatus;
   price?: number;
   taxes?: number;
 }

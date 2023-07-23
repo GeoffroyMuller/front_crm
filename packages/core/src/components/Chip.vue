@@ -42,7 +42,7 @@ const props = withDefaults(defineProps<ChipProps>(), {
   background-color: rgba(0, 0, 0, 0.08);
   color: rgba(0, 0, 0, 0.87);
   width: max-content;
-  padding: 8px 15px;
+  padding: 8px 12px;
   line-height: unset;
   @include typo(label);
 }
