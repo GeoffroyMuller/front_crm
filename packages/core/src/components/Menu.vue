@@ -14,7 +14,7 @@
   </div>
   <Teleport v-if="strategy === 'root'" to="body">
     <div ref="content">
-      <Card  :class="contentCardClass" v-bind="cardProps">
+      <Card :class="contentCardClass" v-bind="cardProps">
         <slot name="content" />
       </Card>
     </div>
@@ -79,21 +79,19 @@ function handleClickOutside() {
 </script>
 
 <style lang="scss">
+
 .menu-arrow-container {
   position: absolute;
-  overflow: hidden;
-  width: 8px;
-  padding-left: 2px;
-  height: 16px;
   display: flex;
-  justify-content: start;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-end;
+  width: 10px;
+  height: 10px;
   .menu-arrow {
-    position: absolute;
     background-color: red;
-    transform: rotate(45deg);
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
     width: 10px;
-    height: 10px;
+    height: 8px;
   }
 }
 
