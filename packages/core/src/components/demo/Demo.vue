@@ -18,6 +18,9 @@
     <template #inputs>
       <DemoInput />
     </template>
+    <template #menu>
+      <DemoMenu />
+    </template>
   </Tabs>
 </template>
 
@@ -29,8 +32,10 @@ import DemoToast from "./DemoToast.vue";
 import DemoColor from "./DemoColor.vue";
 import DemoChips from "./DemoChips.vue";
 import DemoInput from "./DemoInput.vue";
+import DemoMenu from "./DemoMenu.vue";
 
 const tabs = [
+  { id: "menu" },
   { id: "color" },
   { id: "buttons" },
   { id: "cards" },
