@@ -321,7 +321,7 @@ export default function useMenu(props: MenuProps) {
             },
             false
           );
-        } else {
+        } /* else {
           //TODO
           elem.addEventListener(
             "click",
@@ -330,7 +330,7 @@ export default function useMenu(props: MenuProps) {
             },
             false
           );
-        }
+        } */
       }
     },
     { immediate: true }
