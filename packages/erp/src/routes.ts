@@ -81,4 +81,12 @@ export default [
       layout: Layout404,
     },
   },
+  {
+    path: "/register",
+    name: "register",
+    component: () => import("./pages/Register.vue"),
+    meta: {
+      layout: Default,
+    },
+  },
 ];

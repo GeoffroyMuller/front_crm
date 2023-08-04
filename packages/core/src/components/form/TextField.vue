@@ -60,6 +60,7 @@
           mask,
           appearanceNone,
           rounded,
+          type,
         }"
       >
         <template #icon v-if="$slots.icon">

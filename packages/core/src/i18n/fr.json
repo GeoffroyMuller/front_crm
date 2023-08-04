@@ -85,6 +85,7 @@
   "products": "Produits",
   "product": "Produit",
   "login": "Se connecter",
+  "register": "S'enregistrer",
   "password": "Mot de passe",
   "confirm": "Confirmer",
   "lines-per-page": "Lignes par page",
@@ -139,6 +140,11 @@
   "core": {
     "colorpicker": {
       "edit-color": "Editer la couleur"
-    }
+    },
+    "city": "Ville",
+    "zip_code": "Code postal",
+    "gender": "Genre",
+    "men": "Homme",
+    "women": "Femme"
   }
 }
