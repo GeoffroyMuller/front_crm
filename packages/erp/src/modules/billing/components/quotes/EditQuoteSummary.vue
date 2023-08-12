@@ -43,22 +43,18 @@
           $t("pages.edit-quote.customer-validation")
         }}</Text>
         <div class="justify-self-end flex gap-4 justify-end text-end">
-          <Text
-            v-if="quote?.validationStatus === QuoteValidationStatus.REFUSED"
-            color="danger"
-            weight="bold"
-          >
-            {{ $t("pages.edit-quote.refused") }}
-          </Text>
-          <Text
-            v-if="quote?.validationStatus === QuoteValidationStatus.VALIDATED"
-            color="success"
-            weight="bold"
-          >
-            {{ $t("pages.edit-quote.validated") }}
-          </Text>
+          <QuoteStatusChips
+            v-if="
+              quote?.validationStatus !== QuoteValidationStatus.DRAFT &&
+              quote?.validationStatus != null
+            "
+            :quote="quote"
+          />
           <Button
-            v-if="quote?.validationStatus !== QuoteValidationStatus.DRAFT"
+            v-if="
+              quote?.validationStatus !== QuoteValidationStatus.DRAFT &&
+              quote?.validationStatus != null
+            "
             color="white"
             variant="text"
             @click="cancelValidation"
@@ -124,6 +120,7 @@ import { QuoteValidationStatus } from "../../types";
 import useQuoteStore from "../../stores/quotes";
 import useUI from "core/src/composables/ui";
 import { useI18n } from "vue-i18n";
+import QuoteStatusChips from "./QuoteStatusChips.vue";
 
 type EditQuoteSummaryProps = {
   prices: {
