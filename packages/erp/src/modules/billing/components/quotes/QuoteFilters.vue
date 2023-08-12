@@ -11,7 +11,7 @@ import useCompaniesStore from "@/stores/companies";
 import useQuoteStore from "../../stores/quotes";
 import type Client from "@/types/client";
 import type { Company } from "@/types/company";
-import type { Quote } from "../../types";
+import { QuoteValidationStatus, type Quote } from "../../types";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -31,7 +31,7 @@ const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
     mapSearch: "$contains.name",
     map: {
       name: "$contains.name",
-      status: "$in.status",
+      status: "$in.validationStatus",
       customer: "$eq.idClient",
       company: "$eq.client.idCompany",
       archived: "$eq.archived",
@@ -45,9 +45,16 @@ const filterBarProps = computed<MagicFilterBarProps<Quote>>(() => {
           name: "status",
           label: "status",
           multiple: true,
-          options: ["draft", "refused", "validated"],
+          options: [
+            { label: "draft", value: QuoteValidationStatus.DRAFT },
+            { label: "refused", value: QuoteValidationStatus.REFUSED },
+            { label: "validated", value: QuoteValidationStatus.VALIDATED },
+          ],
           getOptionLabel(opt) {
-            return t(`data.status.${opt}`);
+            return t(`data.status.${opt.label}`);
+          },
+          getOptionValue(opt) {
+            return opt.value;
           },
         },
       },
