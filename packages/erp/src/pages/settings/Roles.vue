@@ -35,7 +35,7 @@
             <TextField name="name" :label="$t('settings-page.role.rolename')">
             </TextField>
             <Grid :mb="1" :mt="1">
-              <div class="typo-subtitle">
+              <div class="typo-title6">
                 {{ $t("settings-page.role.rights") }}
               </div>
             </Grid>
