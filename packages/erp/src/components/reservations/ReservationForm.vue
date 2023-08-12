@@ -1,6 +1,6 @@
 <template>
   <div class="reservation-form">
-    <div class="typo-title">
+    <div class="typo-title2">
       {{
         isNewReseravation
           ? $t("pages.edit-reservation.new-reservation")

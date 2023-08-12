@@ -23,7 +23,7 @@
   <Sidebar v-model:open="isSidebarOpen" padding>
     <Form :initial-value="roleSelected" @submit="handleSubmit">
       <template #default="{ hasError, value }">
-        <div class="typo-title">
+        <div class="typo-title2">
           {{
             isAddAction
               ? $t("settings-page.role.new-role")

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="typo-title">
+    <div class="typo-title2">
       {{ $t("edit-products-real") }}
     </div>
     <div class="typo-text1 subline-form-subtitle">

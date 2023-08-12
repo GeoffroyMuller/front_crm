@@ -1,6 +1,6 @@
 <template>
   <div class="reservation-prepare-products-real">
-    <div class="typo-title">
+    <div class="typo-title2">
       {{ $t("pages.edit-reservation.prepare-the-products") }}
     </div>
     <div class="reservation-btn-back">
