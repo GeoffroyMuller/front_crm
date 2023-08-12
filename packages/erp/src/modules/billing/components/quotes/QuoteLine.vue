@@ -88,10 +88,10 @@
       "
       class="grid gap-2 mt-2"
     >
-      <div v-if="nbProductReal" class="typo-text">
+      <div v-if="nbProductReal" class="typo-text1">
         {{ $t("pages.sales.count-sentence", { count: nbProductReal }) }}
       </div>
-      <div v-else class="typo-text">
+      <div v-else class="typo-text1">
         {{ $t("pages.sales.add-product-real-sentence") }}
       </div>
       <Button

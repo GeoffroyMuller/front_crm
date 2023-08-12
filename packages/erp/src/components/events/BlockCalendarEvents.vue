@@ -4,9 +4,9 @@
     <div v-for="e of events" :key="e.id" @click.stop="$emit('edit', e)">
       <Card class="event-block" rounded="sm">
         <Flex align-items="center" :gap="0.5" :m="0.5" :ml="1" :mr="1">
-          <div class="typo-text">{{ dayjs(e.dtstart).format("H") }}h</div>
-          <div class="typo-text">-</div>
-          <div class="typo-text">
+          <div class="typo-text1">{{ dayjs(e.dtstart).format("H") }}h</div>
+          <div class="typo-text1">-</div>
+          <div class="typo-text1">
             {{ e.summary }}
           </div>
         </Flex>
