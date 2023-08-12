@@ -148,6 +148,7 @@
             :has-error="hasError"
             :loading="loading"
             :send-mail="sendMail"
+            :isAddAction="isAddAction"
           />
         </template>
       </Form>
@@ -277,7 +278,6 @@ const {
   },
   onAdd: (res) => {
     edit(res);
-    quote.value = res;
   },
 });
 </script>

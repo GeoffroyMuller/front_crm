@@ -17,8 +17,11 @@
         </Text>
       </div>
 
-      <CardDivider />
-      <div class="grid grid-cols-[min-content_1fr] items-center gap-6">
+      <CardDivider v-if="!isAddAction" />
+      <div
+        v-if="!isAddAction"
+        class="grid grid-cols-[min-content_1fr] items-center gap-6"
+      >
         <Text typo="title6">{{ $t("pages.edit-quote.pdf") }}</Text>
         <Flex :gap="1" justify-content="end" class="justify-self-end">
           <IconButton name="download" @click="downloadPdf(quote)" />
@@ -41,21 +44,21 @@
         }}</Text>
         <div class="justify-self-end flex gap-4 justify-end text-end">
           <Text
-            v-if="quote.validationStatus === QuoteValidationStatus.REFUSED"
+            v-if="quote?.validationStatus === QuoteValidationStatus.REFUSED"
             color="danger"
             weight="bold"
           >
             {{ $t("pages.edit-quote.refused") }}
           </Text>
           <Text
-            v-if="quote.validationStatus === QuoteValidationStatus.VALIDATED"
+            v-if="quote?.validationStatus === QuoteValidationStatus.VALIDATED"
             color="success"
             weight="bold"
           >
             {{ $t("pages.edit-quote.validated") }}
           </Text>
           <Button
-            v-if="quote.validationStatus !== QuoteValidationStatus.DRAFT"
+            v-if="quote?.validationStatus !== QuoteValidationStatus.DRAFT"
             color="white"
             variant="text"
             @click="cancelValidation"
@@ -64,8 +67,8 @@
           </Button>
           <IconButton
             v-if="
-              quote.validationStatus === QuoteValidationStatus.DRAFT ||
-              quote.validationStatus == null
+              quote?.validationStatus === QuoteValidationStatus.DRAFT ||
+              quote?.validationStatus == null
             "
             defaultColored
             name="check"
@@ -78,8 +81,8 @@
           />
           <IconButton
             v-if="
-              quote.validationStatus === QuoteValidationStatus.DRAFT ||
-              quote.validationStatus == null
+              quote?.validationStatus === QuoteValidationStatus.DRAFT ||
+              quote?.validationStatus == null
             "
             defaultColored
             name="close"
@@ -134,6 +137,7 @@ type EditQuoteSummaryProps = {
   downloadPdf: (quote: Quote) => void;
   preview: (quote: Quote) => void;
   sendMail: (quote: Quote) => void;
+  isAddAction?: boolean;
 };
 
 const props = defineProps<EditQuoteSummaryProps>();
