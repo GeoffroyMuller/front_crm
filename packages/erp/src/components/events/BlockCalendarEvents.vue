@@ -1,24 +1,19 @@
 <template>
-  <Grid :gap="0.5" :columns="1">
+  <div class="grid gap-1">
     {{ date.date() }}
     <div v-for="e of events" :key="e.id" @click.stop="$emit('edit', e)">
-      <Card class="event-block" rounded="sm">
-        <Flex align-items="center" :gap="0.5" :m="0.5" :ml="1" :mr="1">
-          <div class="typo-text1">{{ dayjs(e.dtstart).format("H") }}h</div>
-          <div class="typo-text1">-</div>
-          <div class="typo-text1">
-            {{ e.summary }}
-          </div>
-        </Flex>
+      <Card class="event-block p-2 pl-3 flex gap-1 items-center" rounded="sm">
+        <div class="typo-title7 font-semibold">E</div>
+        <div class="typo-text5 font-semibold">
+          {{ getEventTitle(e) }}
+        </div>
       </Card>
     </div>
-  </Grid>
+  </div>
 </template>
 
 <script setup lang="ts">
 import Card from "core/src/components/card/Card.vue";
-import Flex from "core/src/components/layouts/Flex.vue";
-import Grid from "core/src/components/layouts/Grid.vue";
 import type { Event } from "@/types/events";
 import dayjs, { type Dayjs } from "dayjs";
 
@@ -29,12 +24,15 @@ interface BlockCalendarEventsProps {
 
 const emit = defineEmits([]);
 const props = withDefaults(defineProps<BlockCalendarEventsProps>(), {});
+
+function getEventTitle(e: Event) {
+  return `${dayjs(e.dtstart).format("H")}h - ${(e as Event)?.summary}`;
+}
 </script>
 
 <style lang="scss" scoped>
 .event-block {
   background-color: white;
-  padding: spacing(0.5);
   position: relative;
   overflow: hidden;
   &::before {
