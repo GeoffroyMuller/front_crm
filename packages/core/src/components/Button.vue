@@ -12,8 +12,9 @@
         [`bg-${color}-200`]:
           variant !== 'text' && variant !== 'outlined' && (disabled || loading),
 
-        [`button-text button-text-${color} border-none`]: variant === 'text',
-        [`text-${color}-500 hover:text-${color}-700`]:
+        [`button-text button-text-${color} border-none font-semibold`]:
+          variant === 'text',
+        [`text-${color}-400 hover:text-${color}-600`]:
           variant === 'text' && !disabled && !loading,
         [`text-${color}-200`]: variant === 'text' && (disabled || loading),
 

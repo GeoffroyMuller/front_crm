@@ -163,7 +163,7 @@ watch(
   max-width: 100%;
   .footer {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     width: 100%;
     align-items: center;
     &.alert {

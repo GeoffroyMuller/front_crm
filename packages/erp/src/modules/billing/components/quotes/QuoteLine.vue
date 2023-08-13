@@ -91,9 +91,6 @@
       <div v-if="nbProductReal" class="typo-text1">
         {{ $t("pages.sales.count-sentence", { count: nbProductReal }) }}
       </div>
-      <div v-else class="typo-text1">
-        {{ $t("pages.sales.add-product-real-sentence") }}
-      </div>
       <Button
         color="primary"
         icon="edit"

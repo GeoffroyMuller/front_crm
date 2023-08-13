@@ -45,24 +45,66 @@
           />
           <div class="grid gap-6">
             <div class="grid md:grid-cols-2 w-full gap-6">
-              <Card padding>
-                <Grid :gap="1">
-                  <TextField name="name" :label="$t('title')" />
-                  <div v-if="auth.company?.name">{{ auth.company.name }}</div>
-                  <div v-if="auth.company?.address">
-                    {{ auth.company.address }}
+              <Card padding class="flex flex-col">
+                <TextField name="name" :label="$t('title')" />
+                <div
+                  class="typo-title5 font-semibold mt-8 flex-1 flex flex-col justify-start"
+                >
+                  <div class="mb-4">
+                    {{ $t("pages.edit-quote.responsible") }}
                   </div>
-                  <div v-if="auth.company?.city">
-                    {{ auth.company.city }} {{ auth.company.zip_code }}
+                  <div class="grid gap-3">
+                    <div class="flex gap-2" v-if="auth.company?.name">
+                      <div class="text-slate-400">
+                        {{ $t("pages.edit-quote.company") }}
+                      </div>
+                      <div class="text-slate-500">
+                        {{ auth.company.name }}
+                      </div>
+                    </div>
+                    <div class="flex gap-2" v-if="auth.company?.siret">
+                      <div class="text-slate-400">
+                        {{ $t("pages.edit-quote.siret") }}
+                      </div>
+                      <div></div>
+                    </div>
+                    <div class="flex gap-2" v-if="auth?.email">
+                      <div class="text-slate-400">
+                        {{ $t("pages.edit-quote.email") }}
+                      </div>
+                      <div class="text-slate-500">
+                        {{ auth.email }}
+                      </div>
+                    </div>
+                    <div class="flex gap-2" v-if="auth.company?.address">
+                      <div class="text-slate-400">
+                        {{ $t("pages.edit-quote.address") }}
+                      </div>
+                      <div class="text-slate-500">
+                        {{ auth.company.address }}
+                      </div>
+                    </div>
+                    <div class="flex gap-2" v-if="auth.company?.city">
+                      <div class="text-slate-400">
+                        {{ $t("pages.edit-quote.city") }}
+                      </div>
+                      <div class="text-slate-500">
+                        {{ auth.company.city }} {{ auth.company.zip_code }}
+                      </div>
+                    </div>
+                    <div class="flex gap-2" v-if="auth?.phone">
+                      <div class="text-slate-400">
+                        {{ $t("pages.edit-quote.phone") }}
+                      </div>
+                      <div class="text-slate-500">
+                        {{ auth.phone }}
+                      </div>
+                    </div>
                   </div>
-                  <div v-if="auth.company?.country">
-                    {{ auth.company.country }}
-                  </div>
-                  <div v-if="auth.company?.phone">{{ auth.company.phone }}</div>
-                </Grid>
+                </div>
               </Card>
 
-              <Card padding>
+              <Card padding class="flex flex-col">
                 <MagicAutocomplete
                   :label="$t('customer')"
                   :store="clientsStore"
@@ -83,6 +125,66 @@
                   v-model:options="clientOptions"
                   v-model="idClient"
                 />
+                <div
+                  class="typo-title5 font-semibold mt-8 flex-1 flex flex-col justify-start"
+                >
+                  <div class="mb-4">
+                    {{ $t("pages.edit-quote.customer") }}
+                  </div>
+                  <div class="grid gap-3">
+                    <div class="flex gap-2" v-if="client?.company?.name">
+                      <div class="text-slate-400">
+                        {{ $t("pages.edit-quote.company") }}
+                      </div>
+                      <div class="text-slate-500">
+                        {{ client?.company?.name }}
+                      </div>
+                    </div>
+
+                    <!-- <div class="flex gap-2" v-if="client.company?.siret">
+                      <div class="text-slate-400">
+                        {{ $t("pages.edit-quote.siret") }}
+                      </div>
+                      <div></div>
+                    </div>
+                    </div> -->
+                    <div class="flex gap-2" v-if="client?.email">
+                      <div class="text-slate-400">
+                        {{ $t("pages.edit-quote.email") }}
+                      </div>
+                      <div class="text-slate-500">
+                        {{ client.email }}
+                      </div>
+                    </div>
+                    <!--
+                      <div class="flex gap-2" v-if="client.company?.address">
+                      <div class="text-slate-400">
+                        {{ $t("pages.edit-quote.address") }}
+                      </div>
+                      <div class="text-slate-500">
+                        {{ client.company.address }}
+                      </div>
+                    </div>
+
+                    <div class="flex gap-2" v-if="client.company?.city">
+                      <div class="text-slate-400">
+                        {{ $t("pages.edit-quote.city") }}
+                      </div>
+                      <div class="text-slate-500">
+                        {{ client.company.city }}
+                        {{ client.company.zip_code }}
+                      </div>
+                    -->
+                    <div class="flex gap-2" v-if="client?.phone">
+                      <div class="text-slate-400">
+                        {{ $t("pages.edit-quote.phone") }}
+                      </div>
+                      <div class="text-slate-500">
+                        {{ client.phone }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </Card>
             </div>
             <Card padding>
@@ -164,7 +266,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, onMounted, watch } from "vue";
 import Form from "core/src/components/form/Form.vue";
 import TextField from "core/src/components/form/TextField.vue";
 import Button from "core/src/components/Button.vue";
@@ -241,6 +343,19 @@ const prices = computed(() => {
     totalPrice,
     totalPriceWithTaxes,
   };
+});
+watch(
+  () => idClient.value,
+  (val, oldVal) => {
+    if (val != null && val != oldVal) {
+      clientsStore.fetchById(val);
+    }
+  },
+  { immediate: true }
+);
+
+const client = computed(() => {
+  return clientsStore.getById(idClient.value);
 });
 
 const {
