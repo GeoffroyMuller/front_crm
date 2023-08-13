@@ -22,7 +22,7 @@
     },
     "sales": {
       "edit-list-products-real": "Editer le stock {count}",
-      "warning-sentence-qty": "Le nombre de produits physique est différent de la quantité."
+      "warning-sentence-qty": "L'impact sur le stock est différent de la quantité."
     },
     "edit-quote": {
       "qty": "Quantitée",
