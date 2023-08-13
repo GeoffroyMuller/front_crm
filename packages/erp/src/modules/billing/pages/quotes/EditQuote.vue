@@ -48,7 +48,7 @@
               <Card padding class="flex flex-col">
                 <TextField name="name" :label="$t('title')" />
                 <div
-                  class="typo-title5 font-semibold mt-8 flex-1 flex flex-col justify-start"
+                  class="typo-title5 font-semibold mt-8 flex-1 flex flex-col justify-end"
                 >
                   <div class="mb-4">
                     {{ $t("pages.edit-quote.responsible") }}
@@ -126,7 +126,7 @@
                   v-model="idClient"
                 />
                 <div
-                  class="typo-title5 font-semibold mt-8 flex-1 flex flex-col justify-start"
+                  class="typo-title5 font-semibold mt-8 flex-1 flex flex-col justify-end"
                 >
                   <div class="mb-4">
                     {{ $t("pages.edit-quote.customer") }}
@@ -348,7 +348,7 @@ watch(
   () => idClient.value,
   (val, oldVal) => {
     if (val != null && val != oldVal) {
-      clientsStore.fetchById(val);
+      clientsStore.fetchById(val, { populate: "company" });
     }
   },
   { immediate: true }
