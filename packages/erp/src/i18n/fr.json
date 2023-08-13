@@ -21,8 +21,7 @@
       "sure_archive_selected": "Etes vous sur de vouloir archiver la séléction ?"
     },
     "sales": {
-      "edit-list-products-real": "Editer le stock",
-      "count-sentence": "Vous avez selectionné {count} produits physique",
+      "edit-list-products-real": "Editer le stock {count}",
       "warning-sentence-qty": "Le nombre de produits physique est différent de la quantité."
     },
     "edit-quote": {
