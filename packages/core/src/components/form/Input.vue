@@ -4,7 +4,7 @@
     :class="{
       'border-danger-400 focus-within:shadow-[0_0_2pt_0.5pt] focus-within:shadow-danger-200':
         internalError || error,
-      'focus-within:border-primary-400 focus-within:shadow-[0_0_2pt_0.5pt] focus-within:shadow-primary-200 border-input':
+      'focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input':
         !internalError && !error,
       [`rounded-${rounded}`]: true,
       'bg-white': !disabled,

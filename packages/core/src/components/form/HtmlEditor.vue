@@ -74,12 +74,12 @@ button.ql-active .ql-stroke {
   .html-editor-content {
     &:focus-within {
       .ql-editor {
-        border-color: color("primary", 500);
-        box-shadow: 0 0 5pt 0.5pt color("primary", 200);
+        border-color: color("primary", 300);
+        box-shadow: 0 0 1pt 0.5pt color("primary", 200);
       }
       .ql-toolbar {
-        border-color: color("primary", 500);
-        box-shadow: 0 0 5pt 0.5pt color("primary", 200);
+        border-color: color("primary", 300);
+        box-shadow: 0 0 1pt 0.5pt color("primary", 200);
       }
     }
     height: fit-content;
