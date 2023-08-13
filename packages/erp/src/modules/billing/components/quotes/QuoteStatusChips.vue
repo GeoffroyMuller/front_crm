@@ -16,6 +16,7 @@ const props = defineProps<{
 }>();
 
 const statusLabel = computed(() => {
+  if (props.quote.validationStatus == null) return t(`data.status.draft`);
   const quoteValidationStatusKey = Object.keys(QuoteValidationStatus).find(
     // @ts-ignore
     (key: string) => QuoteValidationStatus[key] == props.quote.validationStatus
