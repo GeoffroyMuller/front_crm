@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <div
-      class="sidebar"
+      class="sidebar shadow-sidebar"
       :class="{
         'sidebar-open': open,
         left: position === 'left',
@@ -85,16 +85,18 @@ function onClickOutside(event: PointerEvent) {
   transition: max-width 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   z-index: 26;
   width: fit-content;
-  border: color("zinc", 100) 0px solid;
   background-color: color("white");
   > * {
     height: 100%;
     height: 100vh;
+    @include media-up(md) {
+      height: calc(100vh - $layoutSideHeaderHeight);
+    }
+
     min-width: $sidebar-width;
     position: relative;
   }
   &.sidebar-open {
-    border-width: 1px;
     max-width: 100%;
     .close-button {
       opacity: 1;
@@ -102,6 +104,10 @@ function onClickOutside(event: PointerEvent) {
   }
   .typo-title2 {
     margin-bottom: spacing(2);
+  }
+  @include media-up(md) {
+    height: calc(100vh - $layoutSideHeaderHeight);
+    top: $layoutSideHeaderHeight;
   }
 }
 
