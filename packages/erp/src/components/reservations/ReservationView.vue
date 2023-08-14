@@ -1,7 +1,7 @@
 <template>
   <div class="reservation-view">
     <Grid :gap="1">
-      <div class="typo-title">
+      <div class="typo-title2">
         {{ $t("reservation") }}
       </div>
       <Card padding>

@@ -24,6 +24,9 @@
     <template #typo>
       <DemoTypo />
     </template>
+    <template #breadcrumb>
+      <DemoBreadcrumb />
+    </template>
   </Tabs>
 </template>
 
@@ -37,6 +40,7 @@ import DemoChips from "./DemoChips.vue";
 import DemoInput from "./DemoInput.vue";
 import DemoMenu from "./DemoMenu.vue";
 import DemoTypo from "./DemoTypo.vue";
+import DemoBreadcrumb from "./DemoBreadcrumb.vue";
 
 const tabs = [
   { id: "menu" },
@@ -47,5 +51,6 @@ const tabs = [
   { id: "chips" },
   { id: "inputs" },
   { id: "typo" },
+  { id: "breadcrumb" },
 ];
 </script>

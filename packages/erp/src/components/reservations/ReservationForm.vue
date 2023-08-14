@@ -1,6 +1,6 @@
 <template>
   <div class="reservation-form">
-    <div class="typo-title">
+    <div class="typo-title2">
       {{
         isNewReseravation
           ? $t("pages.edit-reservation.new-reservation")
@@ -27,7 +27,7 @@
       <template #default="{ hasError, hasChanged }">
         <Grid :pb="14" :gap="1" :columns="1">
           <Card padding class="reservation-form-client">
-            <Grid class="typo-text" :pb="2">
+            <Grid class="typo-text1" :pb="2">
               {{
                 isSelectExistingClient
                   ? $t("pages.edit-reservation.select-existing-client")

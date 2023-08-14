@@ -28,6 +28,11 @@
           key: 'price2',
           sortable: true,
         },
+        {
+          title: $t('status'),
+          key: 'validationStatus',
+          sortable: true,
+        },
       ]"
       @row-click="(item) => edit(item)"
       selectable
@@ -36,7 +41,7 @@
       <template #head>
         <Flex align-items="center" justify-content="space-between">
           <Media up="md">
-            <div class="typo-title">
+            <div class="typo-title2">
               {{ $t("quotes") }}
             </div>
           </Media>
@@ -59,6 +64,9 @@
             </Button>
           </div>
         </Flex>
+      </template>
+      <template #content-validationStatus="{ item }">
+        <QuoteStatusChips :quote="item" />
       </template>
       <template #content-price="{ item }">
         {{ $utils.formatPrice(item.price) || "-" }}
@@ -124,6 +132,7 @@ import QuoteActionsMenu from "../../components/quotes/QuoteActionsMenu.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import useQuote from "../../components/quotes/quote";
 import type { Quote } from "../../types";
+import QuoteStatusChips from "../../components/quotes/QuoteStatusChips.vue";
 
 const {
   quotestore,

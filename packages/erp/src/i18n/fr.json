@@ -21,10 +21,8 @@
       "sure_archive_selected": "Etes vous sur de vouloir archiver la séléction ?"
     },
     "sales": {
-      "edit-list-products-real": "Editer la liste des produits physiques",
-      "count-sentence": "Vous avez selectionné {count} produits physique",
-      "add-product-real-sentence": "Vous pouvez ajouter des produit physique",
-      "warning-sentence-qty": "Attention, le nombre de produits physique est différent de la quantité."
+      "edit-list-products-real": "Editer le stock {count}",
+      "warning-sentence-qty": "L'impact sur le stock est différent de la quantité."
     },
     "edit-quote": {
       "qty": "Quantitée",
@@ -54,7 +52,15 @@
       "customer-validated": "Validé par le client",
       "customer-refused": "Refusé par le client",
       "validated": "Validé",
-      "refused": "Refusé"
+      "refused": "Refusé",
+      "responsible": "Responsable",
+      "company": "Entreprise",
+      "address": "Adresse",
+      "siret": "Siret",
+      "email": "Email",
+      "phone": "Téléphone",
+      "city": "Ville",
+      "customer": "Client"
     },
     "edit-invoice": {
       "qty": "Quantitée",

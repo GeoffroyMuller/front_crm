@@ -1,7 +1,7 @@
 <template>
   <Form shortcuts :initial-value="productRealInternal" @submit="handleSubmit">
     <template #default="{ hasError, hasChanged }">
-      <div class="typo-title">
+      <div class="typo-title2">
         {{
           productRealInternal?.id
             ? $t("pages.edit-product.edit-product-real")

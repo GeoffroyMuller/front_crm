@@ -17,8 +17,11 @@
         </Text>
       </div>
 
-      <CardDivider />
-      <div class="grid grid-cols-[min-content_1fr] items-center gap-6">
+      <CardDivider v-if="!isAddAction" />
+      <div
+        v-if="!isAddAction"
+        class="grid grid-cols-[min-content_1fr] items-center gap-6"
+      >
         <Text typo="title6">{{ $t("pages.edit-quote.pdf") }}</Text>
         <Flex :gap="1" justify-content="end" class="justify-self-end">
           <IconButton name="download" @click="downloadPdf(quote)" />
@@ -40,22 +43,18 @@
           $t("pages.edit-quote.customer-validation")
         }}</Text>
         <div class="justify-self-end flex gap-4 justify-end text-end">
-          <Text
-            v-if="quote.validationStatus === QuoteValidationStatus.REFUSED"
-            color="danger"
-            weight="bold"
-          >
-            {{ $t("pages.edit-quote.refused") }}
-          </Text>
-          <Text
-            v-if="quote.validationStatus === QuoteValidationStatus.VALIDATED"
-            color="success"
-            weight="bold"
-          >
-            {{ $t("pages.edit-quote.validated") }}
-          </Text>
+          <QuoteStatusChips
+            v-if="
+              quote?.validationStatus !== QuoteValidationStatus.DRAFT &&
+              quote?.validationStatus != null
+            "
+            :quote="quote"
+          />
           <Button
-            v-if="quote.validationStatus !== QuoteValidationStatus.DRAFT"
+            v-if="
+              quote?.validationStatus !== QuoteValidationStatus.DRAFT &&
+              quote?.validationStatus != null
+            "
             color="white"
             variant="text"
             @click="cancelValidation"
@@ -64,8 +63,8 @@
           </Button>
           <IconButton
             v-if="
-              quote.validationStatus === QuoteValidationStatus.DRAFT ||
-              quote.validationStatus == null
+              quote?.validationStatus === QuoteValidationStatus.DRAFT ||
+              quote?.validationStatus == null
             "
             defaultColored
             name="check"
@@ -78,8 +77,8 @@
           />
           <IconButton
             v-if="
-              quote.validationStatus === QuoteValidationStatus.DRAFT ||
-              quote.validationStatus == null
+              quote?.validationStatus === QuoteValidationStatus.DRAFT ||
+              quote?.validationStatus == null
             "
             defaultColored
             name="close"
@@ -121,6 +120,7 @@ import { QuoteValidationStatus } from "../../types";
 import useQuoteStore from "../../stores/quotes";
 import useUI from "core/src/composables/ui";
 import { useI18n } from "vue-i18n";
+import QuoteStatusChips from "./QuoteStatusChips.vue";
 
 type EditQuoteSummaryProps = {
   prices: {
@@ -134,6 +134,7 @@ type EditQuoteSummaryProps = {
   downloadPdf: (quote: Quote) => void;
   preview: (quote: Quote) => void;
   sendMail: (quote: Quote) => void;
+  isAddAction?: boolean;
 };
 
 const props = defineProps<EditQuoteSummaryProps>();

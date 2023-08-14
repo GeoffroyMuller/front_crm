@@ -7,7 +7,7 @@ import {
 import type { ID } from "../types";
 import axios, { type AxiosResponse } from "axios";
 import type { Filters, PaginateResult, PaginateResult2 } from "../types";
-import { cloneDeep, merge, uniqueId } from "lodash";
+import { cloneDeep, merge } from "lodash";
 
 export interface makeAPIStoreProps {
   id?: string;
@@ -259,16 +259,20 @@ export function makeAPIStore<T>(
         const response = _formatResponse<T>(
           await axios.put(_getPath({ id }), body)
         );
+        this.byId[id] = merge(this.byId[id], response.data);
         return response.data;
       },
       async create(body: T): Promise<T> {
         const response = _formatResponse<T>(await axios.post(_getPath(), body));
+        // @ts-ignore
+        this.byId[response.data.id] = response.data;
         return response.data;
       },
       async delete(id: ID): Promise<T> {
         const response = _formatResponse<T>(
           await axios.delete(_getPath({ id }))
         );
+        delete this.byId[id];
         return response.data;
       },
       ...props.actions,

@@ -31,7 +31,7 @@
         />
         <Card padding v-if="isAddCompanyOpen">
           <div class="add-company-card">
-            <div class="typo-subtitle">{{ $t("new-company") }}</div>
+            <div class="typo-title6">{{ $t("new-company") }}</div>
             <TextField :label="$t('new-company-name')" v-model="companyName" />
             <div class="add-company-card-actions">
               <Button

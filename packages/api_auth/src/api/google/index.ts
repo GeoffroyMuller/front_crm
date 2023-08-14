@@ -19,7 +19,7 @@ router.get(callbackURL, async (req, res) => {
       redirectURL
     );
     if (code != null) {
-      res.redirect(`http://127.0.0.1:5173?access_code=${code}`);
+      res.redirect(`http://localhost:5173?access_code=${code}`);
     }
     res.status(401).end();
   } catch (err) {

@@ -88,19 +88,17 @@
       "
       class="grid gap-2 mt-2"
     >
-      <div v-if="nbProductReal" class="typo-text">
-        {{ $t("pages.sales.count-sentence", { count: nbProductReal }) }}
-      </div>
-      <div v-else class="typo-text">
-        {{ $t("pages.sales.add-product-real-sentence") }}
-      </div>
       <Button
         color="primary"
         icon="edit"
         variant="text"
         @click.stop="openSublineForm"
       >
-        {{ $t("pages.sales.edit-list-products-real") }}
+        {{
+          $t("pages.sales.edit-list-products-real", {
+            count: nbProductReal ? `(${nbProductReal})` : "",
+          })
+        }}
       </Button>
       <Sidebar v-model:open="isSidebarOpen" displayCloseBtn padding>
         <QuoteSublineForm
