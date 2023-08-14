@@ -1,7 +1,15 @@
 <template>
-  <div class="page-menu" :class="{ 'mini-nav': layoutSideMenu?.isNavMini?.value }">
+  <div
+    class="page-menu"
+    :class="{ 'mini-nav': layoutSideMenu?.isNavMini?.value }"
+  >
     <div class="typo-title2 text-white flex items-center h-full md:hidden">
-      <IconButton v-if="back" @click="goToBack" name="chevron_left" class="text-white hover:text-primary-500" />
+      <IconButton
+        v-if="back"
+        @click="goToBack"
+        name="chevron_left"
+        class="text-white hover:text-primary-500"
+      />
       {{ title }}
     </div>
     <div class="typo-title2 max-md:hidden">
@@ -9,9 +17,11 @@
     </div>
     <div class="buttons max-md-hidden">
       <Media up="md">
-        <ActionMenu :actions="[
-          { icon: 'door_open', action: disconnect, title: 'disconnect' },
-        ]">
+        <ActionMenu
+          :actions="[
+            { icon: 'door_open', action: disconnect, title: 'disconnect' },
+          ]"
+        >
           <Button typo="title3" variant="text" class="auth">
             {{ auth.firstname }} {{ auth.lastname }}
           </Button>
@@ -19,7 +29,7 @@
       </Media>
     </div>
   </div>
- 
+
   <!--   <div class="page-btn-back" v-if="back">
     <Button @click="goToBack" variant="text" icon="chevron_left">{{
       $t("back")
@@ -55,7 +65,7 @@ interface PageProps {
   loading?: boolean;
   class?: any;
   back?: boolean;
-  padding?: PageContentProps['padding'];
+  padding?: PageContentProps["padding"];
 }
 
 const props = withDefaults(defineProps<PageProps>(), {
@@ -101,7 +111,13 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
 .page-container {
   height: calc(100% - $header_height);
   overflow-y: auto;
-  margin-top: $header_height;
+  @include media-down(md) {
+    position: absolute;
+    top: $header_height;
+  }
+  @include media-up(md) {
+    margin-top: $header_height;
+  }
 }
 
 .page-content {
@@ -142,9 +158,11 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
   align-items: center;
   padding: spacing(3.5) spacing(2);
   background-color: color("primary", 400);
-  background: linear-gradient(95deg,
+  background: linear-gradient(
+    95deg,
     darken(color("primary", 400), 1%) 0%,
-    color("primary", 400) 100%);
+    color("primary", 400) 100%
+  );
 
   .typo-title2 {
     color: white;
