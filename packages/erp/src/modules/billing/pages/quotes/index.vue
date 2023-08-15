@@ -53,11 +53,15 @@
               visibility: !selected.length ? 'hidden' : 'initial',
               userSelect: !selected.length ? 'none' : 'initial',
             }"
+            class="flex gap-2 justify-end"
           >
+            <Button icon="download" variant="text" color="primary">
+              {{ $t("export") }}
+            </Button>
             <Button
               icon="archive"
               variant="text"
-              color="primary"
+              color="danger"
               @click="setArchivedSelection"
             >
               {{ $t("archive") }}
