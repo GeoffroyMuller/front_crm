@@ -1,12 +1,17 @@
 <template>
-  <Menu :placement="placement" :gap="0.5" strategy="root" :card-props="{ rounded: 'sm' }">
+  <Menu
+    :placement="placement"
+    :gap="0.5"
+    strategy="root"
+    :card-props="{ rounded: 'sm' }"
+  >
     <template #activator>
       <slot />
     </template>
     <template #content>
-      <div class="actions-menu">
+      <div class="grid gap-1 p-1">
         <div
-          class="action"
+          class="flex gap-2 items-center cursor-pointer rounded-sm p-1 hover:bg-primary-50"
           v-for="action in actions"
           :key="action.title"
           @click="handleAction(action)"
@@ -46,28 +51,3 @@ function handleAction(a: Action) {
   }
 }
 </script>
-
-<style lang="scss">
-.actions-menu {
-  display: grid;
-  gap: spacing(0.5);
-  padding: spacing(1) 0;
-  .action {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: spacing(1);
-    width: 100%;
-    padding: spacing(0.25) spacing(1);
-    min-width: max-content;
-    cursor: pointer;
-    &:hover {
-      background-color: color("primary", 50);
-      color: color("primary", 500);
-      svg {
-        fill: color("primary", 500);
-      }
-    }
-  }
-}
-</style>
