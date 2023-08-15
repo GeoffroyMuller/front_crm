@@ -4,11 +4,12 @@
     :title="`${$t('quote')} ${quote?.identifier || ''}`"
     padding
   >
-    <PdfViewer
-      v-if="isOpen"
-      :src="`${config.API_URL}/quotes/${quote?.id}/pdf?token=${getJWT()}`"
-      class="h-max"
-    />
+    <SidebarContent>
+      <PdfViewer
+        v-if="isOpen"
+        :src="`${config.API_URL}/quotes/${quote?.id}/pdf?token=${getJWT()}`"
+      />
+    </SidebarContent>
   </Sidebar>
 </template>
 
@@ -20,6 +21,7 @@ import { ref, watch } from "vue";
 import PdfViewer from "core/src/components/PdfViewer.vue";
 import config from "@/const";
 import { getJWT } from "core/src/helpers/utils";
+import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 
 interface QuotePreviewProps {
   quote?: Quote | null;
