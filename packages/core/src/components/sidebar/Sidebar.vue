@@ -17,6 +17,9 @@
   </Teleport>
 </template>
 <script setup lang="ts">
+import { provide } from "vue";
+import type { SidebarInject } from "./sidebar.types";
+
 interface SidebarProps {
   open: boolean;
   displayCloseBtn?: boolean;
@@ -39,6 +42,11 @@ function onClickOutside(event: PointerEvent) {
     emit("update:open", false);
   }
 }
+
+provide<SidebarInject>("sidebar", {
+  open: props.open,
+  close: () => emit("update:open", false),
+});
 </script>
 
 <style lang="scss">

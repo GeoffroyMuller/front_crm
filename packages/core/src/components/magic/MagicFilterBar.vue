@@ -16,20 +16,18 @@
     </Button>
   </Flex>
   <Card :withPadding="false" class="magic-filter-bar" v-else>
-    <template #title>
-      <Flex justify-content="space-between" align-items="center">
-        <div>
-          <Icon name="filter_alt" />
-          {{ $t("filters") }}
-        </div>
-        <IconButton
-          @click="isAdvancedFiltersDisplayed = false"
-          name="close"
-          class="close-button"
-          size="xl"
-        />
-      </Flex>
-    </template>
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2 typo-title2">
+        <Icon name="filter_alt" />
+        {{ $t("filters") }}
+      </div>
+      <IconButton
+        @click="isAdvancedFiltersDisplayed = false"
+        name="close"
+        class="close-button"
+        size="xl"
+      />
+    </div>
     <MagicForm
       :columns="columns"
       :gap="gap"

@@ -7,6 +7,7 @@
     <PdfViewer
       v-if="isOpen"
       :src="`${config.API_URL}/quotes/${quote?.id}/pdf?token=${getJWT()}`"
+      class="h-max"
     />
   </Sidebar>
 </template>

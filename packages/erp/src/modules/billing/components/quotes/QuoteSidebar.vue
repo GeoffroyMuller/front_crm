@@ -5,7 +5,6 @@
     @update:open="($val) => !$val && emit('close')"
   >
     <SidebarHead
-      @close="emit('close')"
       :title="title"
       :actions="[
         { title: t('edit'), icon: 'edit', action: 'edit', main: true },
@@ -16,10 +15,28 @@
           main: true,
           color: 'danger',
         },
+        {
+          icon: 'mail',
+          action: 'sendMail',
+          title: t('send_by_mail'),
+          main: true,
+          color: 'success',
+        },
+        { icon: 'download', action: 'downloadPdf', title: t('download') },
+        {
+          icon: 'request_quote',
+          action: 'invoice',
+          title: t('pages.quotes.create_invoice'),
+        },
       ]"
       @action="($action) => $emit($action, quote)"
     />
-    <SidebarContent>dqsdsq</SidebarContent>
+    <SidebarContent>
+      <PdfViewer
+        v-if="open"
+        :src="`${config.API_URL}/quotes/${quote?.id}/pdf?token=${getJWT()}`"
+      />
+    </SidebarContent>
   </Sidebar>
 </template>
 <script lang="ts" setup>
@@ -31,6 +48,9 @@ import { computed } from "vue";
 import useQuoteStore from "../../stores/quotes";
 import { useI18n } from "vue-i18n";
 import { merge } from "lodash";
+import PdfViewer from "core/src/components/PdfViewer.vue";
+import config from "@/const";
+import { getJWT } from "core/src/helpers/utils";
 
 const props = defineProps<{ open: boolean; model?: Quote }>();
 const emit = defineEmits(["close"]);
