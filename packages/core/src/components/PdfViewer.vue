@@ -41,6 +41,7 @@ import IconButton from "./IconButton.vue";
 
 interface PdfViewerProps {
   src?: string;
+  initialZoom?: number;
 }
 
 const props = defineProps<PdfViewerProps>();
@@ -52,7 +53,7 @@ const canvasRef = ref<HTMLCanvasElement | null>(null);
 const textRef = ref<HTMLDivElement | null>(null);
 const currentPage = ref(1);
 const totalPages = ref(1);
-const zoom = ref(1);
+const zoom = ref(props.initialZoom || 1);
 let pdf: any = null;
 
 async function fetchPdf() {
