@@ -134,7 +134,7 @@ import type { Vat } from "@/types/vat";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
 import type { Product } from "@/types/product";
 import QuoteSublineForm from "./QuoteSublineForm.vue";
-import Sidebar from "core/src/components/Sidebar.vue";
+import Sidebar from "core/src/components/sidebar/Sidebar.vue";
 import Button from "core/src/components/Button.vue";
 import Alert from "core/src/components/Alert.vue";
 import type { SaleLine } from "@/modules/billing/types";

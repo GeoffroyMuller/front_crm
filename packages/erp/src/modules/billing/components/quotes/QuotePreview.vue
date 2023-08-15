@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import useQuoteStore from "../../stores/quotes";
 import type { Quote } from "../../types";
-import Sidebar from "core/src/components/Sidebar.vue";
+import Sidebar from "core/src/components/sidebar/Sidebar.vue";
 import { ref, watch } from "vue";
 import PdfViewer from "core/src/components/PdfViewer.vue";
 import config from "@/const";

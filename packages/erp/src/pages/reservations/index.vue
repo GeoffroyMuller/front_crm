@@ -118,7 +118,7 @@ import MagicDataTable from "core/src/components/magic/MagicDataTable.vue";
 import Page from "@/components/Page.vue";
 import useReservationStore from "@/stores/reservations";
 import type { Reservation } from "@/types/reservation";
-import Sidebar from "core/src/components/Sidebar.vue";
+import Sidebar from "core/src/components/sidebar/Sidebar.vue";
 import { computed, ref, watch } from "vue";
 import ReservationForm from "@/components/reservations/ReservationForm.vue";
 import Button from "core/src/components/Button.vue";

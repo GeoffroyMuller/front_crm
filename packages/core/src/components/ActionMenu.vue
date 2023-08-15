@@ -26,11 +26,10 @@ import Icon from "./Icon.vue";
 import type { IconName } from "./types";
 import type { MenuProps } from "../composables/menu";
 
-interface Action {
+export interface Action {
   icon: IconName;
   action: string | (() => void);
   title: string;
-  condition?: (data: any) => boolean;
 }
 interface ActionMenuProps {
   actions: Action[];

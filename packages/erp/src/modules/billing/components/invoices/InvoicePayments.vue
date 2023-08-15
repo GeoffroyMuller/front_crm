@@ -88,7 +88,7 @@ import TextField from "core/src/components/form/TextField.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
-import Sidebar from "core/src/components/Sidebar.vue";
+import Sidebar from "core/src/components/sidebar/Sidebar.vue";
 import Table from "core/src/components/Table.vue";
 import useUI from "core/src/composables/ui";
 import useClientStore from "@/stores/clients";

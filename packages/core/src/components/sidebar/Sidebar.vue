@@ -9,29 +9,14 @@
       v-click-outside="onClickOutside"
     >
       <div class="sidebar-wrapper">
-        <IconButton
-          @click="onClickOutside"
-          v-if="displayCloseBtn && open"
-          name="close"
-          class="absolute p-6 top-0 right-0"
-          size="xl"
-        />
         <div class="content">
-          <div :class="{ padding }">
-            <div v-if="title" class="typo-title2">
-              {{ title }}
-            </div>
-            <slot />
-          </div>
-          <slot name="no-padding" />
+          <slot />
         </div>
       </div>
     </div>
   </Teleport>
 </template>
 <script setup lang="ts">
-import IconButton from "./IconButton.vue";
-
 interface SidebarProps {
   open: boolean;
   displayCloseBtn?: boolean;
@@ -40,7 +25,6 @@ interface SidebarProps {
   position?: "left" | "right";
 }
 const props = withDefaults(defineProps<SidebarProps>(), {
-  displayCloseBtn: true,
   position: "right",
 });
 const emit = defineEmits(["update:open"]);
@@ -63,10 +47,7 @@ function onClickOutside(event: PointerEvent) {
     overflow-y: auto;
     .content {
       .padding {
-        padding: spacing(3.5) spacing(2);
-      }
-      .typo-title2 {
-        margin-bottom: spacing(3);
+        padding: 0 spacing(2);
       }
     }
   }
@@ -101,9 +82,6 @@ function onClickOutside(event: PointerEvent) {
     .close-button {
       opacity: 1;
     }
-  }
-  .typo-title2 {
-    margin-bottom: spacing(2);
   }
   @include media-up(md) {
     height: calc(100vh - $layoutSideHeaderHeight);

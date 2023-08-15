@@ -34,7 +34,7 @@
           sortable: true,
         },
       ]"
-      @row-click="(item) => edit(item)"
+      @row-click="(item) => (quoteSidebarOpen = item)"
       selectable
       v-model:selected="selected"
     >
@@ -118,6 +118,16 @@
       :quote="quoteToSendMail"
     />
   </Page>
+  <QuoteSidebar
+    :open="!!quoteSidebarOpen?.id"
+    :model="quoteSidebarOpen"
+    @close="quoteSidebarOpen = undefined"
+    @setArchived="setArchived"
+    @downloadPdf="downloadPdf"
+    @sendMail="sendMail"
+    @edit="edit"
+    @invoice="createInvoiceFromQuote"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -133,6 +143,10 @@ import Flex from "core/src/components/layouts/Flex.vue";
 import useQuote from "../../components/quotes/quote";
 import type { Quote } from "../../types";
 import QuoteStatusChips from "../../components/quotes/QuoteStatusChips.vue";
+import QuoteSidebar from "../../components/quotes/QuoteSidebar.vue";
+import { ref } from "vue";
+
+const quoteSidebarOpen = ref<Quote>();
 
 const {
   quotestore,

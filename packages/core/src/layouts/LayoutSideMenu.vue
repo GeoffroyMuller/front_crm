@@ -181,7 +181,7 @@ import Tree from "../components/Tree.vue";
 import useKeyboardShortcut from "../composables/keyboardshortcut";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import Sidebar from "../components/Sidebar.vue";
+import Sidebar from "../components/sidebar/Sidebar.vue";
 import Menu from "../components/Menu.vue";
 import { provide } from "vue";
 import type { LayoutSideMenuProvide, MenuItem } from "./types";

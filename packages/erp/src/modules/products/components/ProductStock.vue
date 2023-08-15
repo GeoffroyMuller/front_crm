@@ -53,7 +53,7 @@
 import MagicDataTable from "core/src/components/magic/MagicDataTable.vue";
 import type { Product, ProductReal } from "@/types/product";
 import ProductRealForm from "./ProductRealForm.vue";
-import Sidebar from "core/src/components/Sidebar.vue";
+import Sidebar from "core/src/components/sidebar/Sidebar.vue";
 import { ref } from "vue";
 import Button from "core/src/components/Button.vue";
 import { isNil } from "lodash";

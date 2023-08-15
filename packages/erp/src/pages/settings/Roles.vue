@@ -72,7 +72,7 @@ import TextField from "core/src/components/form/TextField.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import MagicDataTable from "core/src/components/magic/MagicDataTable.vue";
-import Sidebar from "core/src/components/Sidebar.vue";
+import Sidebar from "core/src/components/sidebar/Sidebar.vue";
 import useUI from "core/src/composables/ui";
 import useRoleStore from "@/stores/roles";
 import type { Role } from "@/types/roles";
