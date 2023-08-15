@@ -12,7 +12,7 @@
         [`bg-${color}-200`]:
           variant !== 'text' && variant !== 'outlined' && (disabled || loading),
 
-        [`button-text button-text-${color} border-none font-semibold`]:
+        [`button-text button-text-${color} border-none font-semibold text-left`]:
           variant === 'text',
         [`text-${color}-400 hover:text-${color}-600`]:
           variant === 'text' && !disabled && !loading,
@@ -39,7 +39,7 @@
       v-if="icon"
       :class="{ 'content-icon': !!$slots.default }"
     />
-    <span v-if="$slots.default"> <slot /></span>
+    <span v-if="$slots.default" class="w-fit"> <slot /></span>
 
     <Spinner
       size="1rem"

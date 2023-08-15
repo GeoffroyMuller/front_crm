@@ -10,7 +10,7 @@
       @click.stop="$emit('update:open', false)"
     ></div>
     <Card
-      class="max-md:w-[95%] p-6 fixed top-1/2 left-1/2 min-w-[50%] transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300"
+      class="max-md:w-[95%] p-card fixed top-1/2 left-1/2 min-w-[50%] transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300"
       :class="{
         'z-modal opacity-100': open,
         'opacity-0 pointer-events-none': !open,
@@ -23,7 +23,7 @@
         <IconButton
           @click.stop="$emit('update:open', false)"
           name="close"
-          class="absolute top-0 right-0 p-6"
+          class="absolute top-0 right-0 p-card"
           size="xl"
         />
       </div>

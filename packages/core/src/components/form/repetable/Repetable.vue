@@ -20,7 +20,7 @@
       <template #item="{ element }">
         <RepetableSection
           orderable
-          class="repetable-section"
+          class="repetable-section p-repetable"
           :value="element.value"
           :isMin="isMin"
           @inputChange="
@@ -36,7 +36,7 @@
     </draggable>
     <template v-if="!orderable">
       <RepetableSection
-        class="repetable-section"
+        class="repetable-section p-repetable"
         v-for="section of sections"
         :key="section.key"
         :isMin="isMin"
@@ -52,7 +52,7 @@
       </RepetableSection>
     </template>
 
-    <div class="repetable-actions" v-if="!isMax">
+    <div class="repetable-actions p-repetable" v-if="!isMax">
       <Button @click="() => addSection()" v-if="!$slots['actions']">
         {{ buttonText || $t("add") }}
       </Button>
@@ -231,7 +231,6 @@ watch(
     background-color: color("slate", 100);
     border: dashed 1px color("slate", 400);
     position: relative;
-    padding: spacing(3) spacing(4);
   }
   .repetable-actions {
     display: flex;
@@ -240,7 +239,6 @@ watch(
     gap: spacing(1.5);
     margin-top: spacing(1);
     border: dashed 1px color("slate", 400);
-    padding: spacing(3) spacing(4);
     border-radius: map-get($rounded, "md");
   }
 }
