@@ -2,8 +2,11 @@
   <div class="grid gap-1">
     {{ date.date() }}
     <div v-for="e of events" :key="e.id" @click.stop="$emit('edit', e)">
-      <Card class="event-block p-2 pl-3 flex gap-1 items-center" rounded="sm">
-        <div class="typo-title7 font-semibold">E</div>
+      <Card
+        class="event-block gap-[5px] pr-[5px] flex py-2 items-center"
+        rounded="sm"
+      >
+        <div class="typo-title7 font-semibold ml-[10px]">E</div>
         <div class="typo-text5 font-semibold">
           {{ getEventTitle(e) }}
         </div>
