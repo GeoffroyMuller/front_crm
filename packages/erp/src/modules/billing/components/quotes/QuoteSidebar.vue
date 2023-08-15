@@ -19,12 +19,13 @@
       ]"
       @action="($action) => $emit($action, quote)"
     />
-    dqsdsq
+    <SidebarContent>dqsdsq</SidebarContent>
   </Sidebar>
 </template>
 <script lang="ts" setup>
 import Sidebar from "core/src/components/sidebar/Sidebar.vue";
 import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
+import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 import type { Quote } from "../../types";
 import { computed } from "vue";
 import useQuoteStore from "../../stores/quotes";
