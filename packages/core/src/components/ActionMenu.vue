@@ -9,7 +9,7 @@
       <slot />
     </template>
     <template #content>
-      <div class="grid gap-1 p-1">
+      <div class="grid gap-1 p-1 w-max">
         <div
           class="flex gap-2 items-center cursor-pointer rounded-sm p-1 hover:bg-primary-50"
           v-for="action in actions"
