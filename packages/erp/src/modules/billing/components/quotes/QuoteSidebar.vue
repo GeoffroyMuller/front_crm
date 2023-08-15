@@ -33,7 +33,7 @@
     />
     <SidebarContent>
       <PdfViewer
-        v-if="open"
+        :key="quote?.id"
         :src="`${config.API_URL}/quotes/${quote?.id}/pdf?token=${getJWT()}`"
       />
     </SidebarContent>
