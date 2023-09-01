@@ -216,20 +216,17 @@ watch(
 
 <style lang="scss">
 .repetable-wrapper {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  gap: spacing(1);
   label.repetable-label {
     @include typo(label);
   }
   .repetable-section {
-    &:not(:last-child) {
-      margin-bottom: spacing(2);
+    &:first-child {
+      margin-top: spacing(1);
+      border-top-left-radius: map-get($rounded, "md");
+      border-top-right-radius: map-get($rounded, "md");
     }
-    border-radius: map-get($rounded, "md");
-    background-color: color("slate", 100);
-    border: dashed 1px color("slate", 400);
+    background-color: color("zinc", 50);
+    border-bottom: dashed 1px color("slate", 400);
     position: relative;
   }
   .repetable-actions {
@@ -237,9 +234,9 @@ watch(
     justify-content: center;
     align-items: center;
     gap: spacing(1.5);
-    margin-top: spacing(1);
-    border: dashed 1px color("slate", 400);
-    border-radius: map-get($rounded, "md");
+    background-color: color("zinc", 50);
+    border-bottom-left-radius: map-get($rounded, "md");
+    border-bottom-right-radius: map-get($rounded, "md");
   }
 }
 </style>

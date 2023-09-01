@@ -1,19 +1,23 @@
 <template>
   <div class="repetable-section">
-    <div v-if="orderable" class="drag_handle">
-      <Icon name="drag_indicator"></Icon>
-    </div>
-    <div class="repetable-section-content">
-      <slot />
-    </div>
-    <div v-if="!isMin">
+    <div
+      v-if="!isMin"
+      class="w-full flex col-span-2"
+      :class="{ 'justify-end': !orderable, 'justify-between': orderable }"
+    >
+      <div v-if="orderable" class="drag_handle">
+        <Icon name="drag_indicator"></Icon>
+      </div>
       <IconButton
-        class=""
+        class="justify-self-end"
         name="delete"
         color="danger"
         v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
         @click.stop="emit('unregister')"
       />
+    </div>
+    <div class="repetable-section-content">
+      <slot />
     </div>
   </div>
 </template>
@@ -56,7 +60,7 @@ onUnmounted(() => {
 <style lang="scss">
 .repetable-section {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: spacing(2);
 
   .drag_handle {

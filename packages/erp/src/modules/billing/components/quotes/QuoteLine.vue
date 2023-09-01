@@ -13,9 +13,9 @@
   />
 
   <div v-else-if="line.type === 'product'" class="line-product-container">
-    <div class="2xl:flex items-end gap-2">
+    <div class="items-end gap-2">
       <div
-        class="grid flex-1 items-end gap-2 max-2xl:grid-cols-[1fr_90px] 2xl:grid-cols-[1fr_90px_120px_90px]"
+        class="grid flex-1 items-end gap-2 max-2xl:grid-cols-[1fr_90px] 2xl:grid-cols-[1fr_90px_150px_90px]"
       >
         <MagicAutocomplete
           :get-option-value="(opt) => opt.id"
@@ -51,10 +51,8 @@
           name="idVat"
         />
       </div>
-      <div
-        class="max-2xl:flex 2xl:pl-2 2xl:w-[100px] max-2xl:justify-end max-2xl:items-center max-2xl:py-4 grid grid-cols-2 gap-2 2xl:gap-1 self-center"
-      >
-        <Text typo="title7" class="col-span-2 2xl:mb-2 max-2xl:mr-4">
+      <div class="flex justify-end items-center py-4 gap-2 self-center">
+        <Text typo="title7" class="mr-4">
           {{ $t("pages.edit-quote.total-global") }}
         </Text>
         <Text typo="title7">{{ $t("pages.edit-quote.without-taxes") }}</Text>

@@ -12,7 +12,7 @@
       @click="isAdvancedFiltersDisplayed = true"
       class="advanced-filters-button"
     >
-      {{ $t("advanced_filters") }}
+      {{ $t("advanced_filters") }} <span v-if="+nbFilters > 0">({{ nbFilters }})</span>
     </Button>
   </Flex>
   <Card :withPadding="false" class="magic-filter-bar" v-else>
@@ -135,6 +135,8 @@ const props = withDefaults(defineProps<MagicFilterBarProps<any>>(), {
 });
 
 const filtersValues = ref<any>(mapFiltersFromStore());
+
+const nbFilters = computed(() => props.store.getNbFilters);
 
 let controller = new AbortController();
 const debounceFetch = debounce(() => {

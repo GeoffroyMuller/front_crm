@@ -159,6 +159,7 @@ export function makeAPIStore<T>(
     getters: {
       getList: (state: any) => state.list,
       getById: (state: any) => (id: ID) => state.byId[id],
+      getNbFilters: (state: any) => Object.keys(state.filters).length - 2,
       ...props.getters,
     },
     actions: {
