@@ -16,6 +16,9 @@ export interface MenuProps {
   activator: HTMLElement | Ref<HTMLElement>;
   container?: HTMLElement | Ref<HTMLElement>;
 
+  // milliseconds
+  delayOpen?: number;
+
   fullActivatorWidth?: boolean;
 
   placement?:
@@ -251,6 +254,7 @@ export default function useMenu(props: MenuProps) {
   const open = ref();
   const placement = props.placement || "bottom";
   const openOnHover = props.openOnHover == null ? true : props.openOnHover;
+  const delayOpen = props.delayOpen || 0;
 
   if (isRef(props.activator)) {
     onUnmounted(() => {
@@ -302,8 +306,21 @@ export default function useMenu(props: MenuProps) {
         if (openOnHover) {
           elem.addEventListener(
             "mouseenter",
-            () => {
-              open.value = true;
+            (e) => {
+              let currentMouseTarget: any = null;
+              window.addEventListener("mousemove", (ev) => {
+                currentMouseTarget = ev.target;
+              });
+              setTimeout(() => {
+                if (
+                  // @ts-ignore
+                  e.target?.contains(currentMouseTarget) ||
+                  // @ts-ignore
+                  e.target?.isEqualNode(currentMouseTarget)
+                ) {
+                  open.value = true;
+                }
+              }, delayOpen);
             },
             false
           );

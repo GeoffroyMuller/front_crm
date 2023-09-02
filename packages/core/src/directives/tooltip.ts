@@ -11,6 +11,7 @@ const tooltip: Directive = {
       componentProps: binding.value,
       openOnHover: true,
       hasArrow: true,
+      delayOpen: 500,
       placement: binding.value?.placement || "bottom",
       gap: 0.5,
     });
