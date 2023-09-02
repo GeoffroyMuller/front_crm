@@ -262,11 +262,13 @@ export default function useMenu(props: MenuProps) {
     });
   }
 
-  window.addEventListener("resize", () => {
+  const onResize = () => {
     if (!isHidden()) {
       open.value = false;
     }
-  });
+  };
+
+  window.addEventListener("resize", onResize);
 
   const arrowContainerElement = document.createElement("div");
   const arrowElement = document.createElement("div");
@@ -308,10 +310,11 @@ export default function useMenu(props: MenuProps) {
             "mouseenter",
             (e) => {
               let currentMouseTarget: any = null;
-              window.addEventListener("mousemove", (ev) => {
+              const listener = (ev: MouseEvent) => {
                 currentMouseTarget = ev.target;
-              });
-              setTimeout(() => {
+              };
+              window.addEventListener("mousemove", listener);
+              const timeout = setTimeout(() => {
                 if (
                   // @ts-ignore
                   e.target?.contains(currentMouseTarget) ||
@@ -321,6 +324,16 @@ export default function useMenu(props: MenuProps) {
                   open.value = true;
                 }
               }, delayOpen);
+
+              const onClick = () => {
+                clearTimeout(timeout);
+                window.removeEventListener("mousemove", listener);
+              };
+              e.target?.addEventListener("click", onClick);
+              setTimeout(() => {
+                window.removeEventListener("mousemove", listener);
+                e.target?.removeEventListener("click", onClick);
+              }, delayOpen + 1);
             },
             false
           );
@@ -729,6 +742,7 @@ export default function useMenu(props: MenuProps) {
     if (!props.container) {
       container.value.remove();
     }
+    window.removeEventListener("resize", onResize);
   }
 
   return {
