@@ -146,6 +146,7 @@
     "zip_code": "Code postal",
     "gender": "Genre",
     "men": "Homme",
-    "women": "Femme"
+    "women": "Femme",
+    "close": "Fermer"
   }
 }

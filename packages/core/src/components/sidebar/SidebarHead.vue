@@ -30,7 +30,12 @@
         >
           <IconButton size="xl" name="more_horiz" default-colored />
         </ActionMenu>
-        <IconButton name="close" size="xl" @click="handleClose" />
+        <IconButton
+          v-tooltip="{ text: $t('core.close'), placement: 'top-right' }"
+          name="close"
+          size="xl"
+          @click="handleClose"
+        />
       </div>
     </div>
   </div>

@@ -24,8 +24,18 @@
       >
         <Text typo="title6">{{ $t("pages.edit-quote.pdf") }}</Text>
         <Flex :gap="1" justify-content="end" class="justify-self-end">
-          <IconButton name="download" @click="downloadPdf(quote)" />
-          <IconButton name="preview" @click.stop="preview(quote)" />
+          <IconButton
+            v-tooltip="{ text: $t('download'), placement: 'bottom-right' }"
+            name="download"
+            @click="downloadPdf(quote)"
+            size="lg"
+          />
+          <IconButton
+            v-tooltip="{ text: $t('preview'), placement: 'bottom-right' }"
+            name="visibility"
+            @click.stop="preview(quote)"
+            size="lg"
+          />
         </Flex>
         <Text typo="title6">{{ $t("pages.edit-quote.order") }}</Text>
         <div class="justify-self-end">
