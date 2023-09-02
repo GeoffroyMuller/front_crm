@@ -1,5 +1,5 @@
 <template>
-  <Flex v-if="!isAdvancedFiltersDisplayed" :gap="1" align-items="end">
+  <Flex v-show="!isAdvancedFiltersDisplayed" :gap="1" align-items="end">
     <SearchBar
       :placeholder="searchBarPlaceholder"
       v-model="search"
@@ -12,10 +12,15 @@
       @click="isAdvancedFiltersDisplayed = true"
       class="advanced-filters-button"
     >
-      {{ $t("advanced_filters") }} <span v-if="+nbFilters > 0">({{ nbFilters }})</span>
+      {{ $t("advanced_filters") }}
+      <span v-if="+nbFilters > 0">({{ nbFilters }})</span>
     </Button>
   </Flex>
-  <Card :withPadding="false" class="magic-filter-bar" v-else>
+  <Card
+    :withPadding="false"
+    class="magic-filter-bar"
+    v-show="isAdvancedFiltersDisplayed"
+  >
     <div class="flex items-center justify-between mb-4">
       <div class="flex items-center gap-2 typo-title2">
         <Icon name="filter_alt" />
