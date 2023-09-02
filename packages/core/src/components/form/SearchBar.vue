@@ -3,7 +3,7 @@
     rounded="full"
     v-bind="$attrs"
     :label="$props.label || $t('search')"
-    input-class="input-style-card"
+    input-class="input-style-card shadow-card"
     :placeholder="$props.placeholder || ''"
   >
     <template #icon>
@@ -46,9 +46,8 @@ const props = defineProps<SearchBarProps>();
 
 <style lang="scss">
 .input-style-card {
-  &:not(:focus) {
+  &:not(:focus-within) {
     border-color: transparent !important;
   }
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.07);
 }
 </style>
