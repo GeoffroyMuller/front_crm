@@ -217,11 +217,12 @@ watch(
 <style lang="scss">
 .repetable-wrapper {
   label.repetable-label {
+    display: block;
     @include typo(label);
+    margin-bottom: spacing(1);
   }
   .repetable-section {
     &:first-child {
-      margin-top: spacing(1);
       border-top-left-radius: map-get($rounded, "md");
       border-top-right-radius: map-get($rounded, "md");
     }

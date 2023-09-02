@@ -8,7 +8,7 @@
       <PdfViewer
         v-if="isOpen"
         :src="`${config.API_URL}/quotes/${quote?.id}/pdf?token=${getJWT()}`"
-        :initialZoom="0.7"
+        :initialZoom="0.9"
       />
     </SidebarContent>
   </Sidebar>
