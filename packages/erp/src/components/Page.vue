@@ -19,6 +19,11 @@
       <Media up="md">
         <ActionMenu
           :actions="[
+            {
+              icon: 'settings',
+              action: () => router.push({ name: 'settings' }),
+              title: 'settings',
+            },
             { icon: 'door_open', action: disconnect, title: 'disconnect' },
           ]"
           placement="bottom-right"
