@@ -1,15 +1,18 @@
 <template>
   <div
     class="min-h-input h-input relative border border-solid overflow-hidden flex items-center px-2 py-1"
-    :class="{
-      'border-danger-400 focus-within:shadow-[0_0_2pt_0.5pt] focus-within:shadow-danger-200':
-        internalError || error,
-      'focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input':
-        !internalError && !error,
-      [`rounded-${rounded}`]: true,
-      'bg-white': !disabled,
-      'bg-inputDisabled cursor-not-allowed': disabled,
-    }"
+    :class="[
+      {
+        'border-danger-400 focus-within:shadow-[0_0_2pt_0.5pt] focus-within:shadow-danger-200':
+          internalError || error,
+        'focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input':
+          !internalError && !error,
+        [`rounded-${rounded}`]: true,
+        'bg-white': !disabled,
+        'bg-inputDisabled cursor-not-allowed': disabled,
+      },
+      inputClass,
+    ]"
     @click="($refs.internalRef as HTMLInputElement)?.focus?.()"
   >
     <div v-if="$slots.start">
@@ -20,7 +23,6 @@
       @blur="onBlur"
       :class="{
         'appearance-none': appearanceNone === true,
-        [inputClass]: true,
       }"
       ref="internalRef"
       v-model="internalValue"
