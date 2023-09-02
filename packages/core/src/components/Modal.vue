@@ -15,6 +15,7 @@
         'z-modal opacity-100': open,
         'opacity-0 pointer-events-none': !open,
       }"
+      @click.stop
     >
       <div>
         <slot />

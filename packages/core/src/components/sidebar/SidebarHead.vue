@@ -26,7 +26,7 @@
         <ActionMenu
           :actions="actions"
           @action="($a) => emit('action', $a)"
-          placement="left-top"
+          placement="bottom-right"
         >
           <IconButton size="xl" name="more_horiz" default-colored />
         </ActionMenu>
