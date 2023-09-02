@@ -1,5 +1,9 @@
 <template>
-  <ActionMenu :actions="actions" @action="($action) => $emit($action, item)">
+  <ActionMenu
+    :actions="actions"
+    @action="($action) => $emit($action, item)"
+    placement="left-top"
+  >
     <IconButton name="more_horiz" />
   </ActionMenu>
 </template>

@@ -48,7 +48,7 @@
       "order": "Commande",
       "add-order": "Ajouter une commande",
       "save": "Enregistrer le devis",
-      "sendemail": "Envoyer par mail",
+      "sendemail": "Envoyer",
       "customer-validation": "Validation",
       "customer-validated": "Validé par le client",
       "customer-refused": "Refusé par le client",

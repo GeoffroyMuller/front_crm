@@ -1,9 +1,12 @@
 {
-  "name": "pdfs",
+  "name": "@megaapp/pdfs",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "license": "MIT",
   "dependencies": {
     "jspdf": "^2.5.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
   }
 }

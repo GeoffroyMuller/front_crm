@@ -7,7 +7,7 @@
     <SidebarContent>
       <PdfViewer
         v-if="isOpen"
-        :src="`${config.API_URL}/quotes/${quote?.id}/pdf?token=${getJWT()}`"
+        :src="generateQuotePDF(quote, { output: 'datauristring' })"
         :initialZoom="0.9"
       />
     </SidebarContent>
@@ -20,10 +20,8 @@ import type { Quote } from "../../types";
 import Sidebar from "core/src/components/sidebar/Sidebar.vue";
 import { ref, watch } from "vue";
 import PdfViewer from "core/src/components/PdfViewer.vue";
-import config from "@/const";
-import { getJWT } from "core/src/helpers/utils";
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
-
+import { generateQuotePDF } from "@megaapp/pdfs";
 interface QuotePreviewProps {
   quote?: Quote | null;
 }

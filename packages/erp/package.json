@@ -16,6 +16,7 @@
     "autoprefixer": "^10.4.14",
     "axios": "^0.27.2",
     "core": "1.0.0",
+    "@megaapp/pdfs": "1.0.0",
     "dayjs": "^1.11.4",
     "dotenv": "^16.0.2",
     "lodash": "^4.17.21",

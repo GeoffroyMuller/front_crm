@@ -21,6 +21,7 @@
           :actions="[
             { icon: 'door_open', action: disconnect, title: 'disconnect' },
           ]"
+          placement="bottom-right"
         >
           <Button typo="title3" variant="text" class="auth">
             {{ auth.firstname }} {{ auth.lastname }}

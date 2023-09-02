@@ -26,7 +26,11 @@
           />
         </template>
       </div>
-      <ActionMenu :actions="actions" @action="($a) => emit('action', $a)">
+      <ActionMenu
+        :actions="actions"
+        @action="($a) => emit('action', $a)"
+        placement="left-top"
+      >
         <IconButton
           size="xl"
           name="more_horiz"

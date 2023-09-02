@@ -96,7 +96,7 @@
   "welcome": "Bienvenue {name}",
   "invoices": "Factures",
   "invoice": "Facture",
-  "send_by_mail": "Envoyer par email",
+  "send_by_mail": "Envoyer",
   "send": "Envoyer",
   "error_while_send_mail": "Une erreur est survenue lors de l'envoie de l'email",
   "mail_sended": "Email envoyé",
