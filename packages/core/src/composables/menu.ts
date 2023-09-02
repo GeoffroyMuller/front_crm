@@ -328,6 +328,7 @@ export default function useMenu(props: MenuProps) {
               const onClick = () => {
                 clearTimeout(timeout);
                 window.removeEventListener("mousemove", listener);
+                open.value = false;
               };
               e.target?.addEventListener("click", onClick);
               setTimeout(() => {
