@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-28 h-28 bg-blue-400"
+    class="w-28 h-28 bg-blue-400 cursor-pointer"
     v-tooltip="{
       text: 'Je test',
       placement: 'right',
