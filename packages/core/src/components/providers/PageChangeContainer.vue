@@ -1,9 +1,11 @@
 <template>
   <div
-    class="fixed top-0 right-0 z-[998] w-full h-1 bg-primary-100"
+    class="fixed top-0 right-0 z-[998] w-full h-[2px] bg-primary-100 shadow-lg"
     v-if="displayLoadingPage"
   >
-    <div class="bg-primary-300 h-full animation-loading-page" />
+    <div
+      class="bg-primary-600 h-full animation-loading-page shadow-lg shadow-primary-600"
+    />
   </div>
   <slot />
 </template>
