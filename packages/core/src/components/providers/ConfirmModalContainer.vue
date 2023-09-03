@@ -5,14 +5,14 @@
     :title="confirmationData?.title"
   >
     <div>{{ confirmationData?.message }}</div>
-    <div class="actions">
+    <ModalFooter>
       <Button variant="text" color="black" @click="cancelConfirm">
         {{ $t("cancel") }}
       </Button>
       <Button color="primary" @click="confirmConfirm">
         {{ $t("confirm") }}
       </Button>
-    </div>
+    </ModalFooter>
   </Modal>
   <slot />
 </template>
@@ -23,6 +23,7 @@ import type { Confirmation } from "../types";
 import { isNil } from "lodash";
 import Modal from "../modal/Modal.vue";
 import Button from "../Button.vue";
+import ModalFooter from "../modal/ModalFooter.vue";
 
 const confirmation = ref<Confirmation | string | null>(null);
 const confirmationResponse = ref<boolean | null>(null);
@@ -76,12 +77,3 @@ function cancelConfirm() {
 
 provide("confirmation", confirm);
 </script>
-
-<style scoped lang="scss">
-.actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: spacing(2);
-}
-</style>
