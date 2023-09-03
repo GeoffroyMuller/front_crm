@@ -26,7 +26,12 @@ const props = withDefaults(defineProps<FormProps>(), {
   component: "form",
 });
 
-const emit = defineEmits(["update:modelValue", "submit", "inputChange"]);
+const emit = defineEmits([
+  "update:modelValue",
+  "update:hasChanged",
+  "submit",
+  "inputChange",
+]);
 
 const {
   hasError,
@@ -48,6 +53,9 @@ const {
   },
   onInputChange(val) {
     emit("inputChange", val);
+  },
+  onUpdateHasChanged(val) {
+    emit("update:hasChanged", val);
   },
 });
 

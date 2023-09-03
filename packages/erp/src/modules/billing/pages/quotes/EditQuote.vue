@@ -33,6 +33,7 @@
         @submit="save"
         v-model="formValue"
         class="grid xl:grid-cols-[1fr_min-content] gap-6"
+        @update:has-changed="($hc: boolean) => (formHasChanged = $hc)"
       >
         <template #default="{ hasError, hasChanged }">
           <FloatingButton
@@ -297,8 +298,6 @@ import FloatingButton from "core/src/components/FloatingButton.vue";
 import EditQuoteSummary from "../../components/quotes/EditQuoteSummary.vue";
 import useUI from "core/src/composables/ui";
 
-useUI({ pageChangeConditionMessage: "Test" });
-
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();
 const vatsStore = useVatStore();
@@ -311,6 +310,8 @@ const idClient = ref();
 const clientOptions = ref();
 
 const formValue = ref<Quote>();
+
+const formHasChanged = ref<boolean>(false);
 
 const title = computed(() => {
   if (isAddAction.value) {
@@ -396,6 +397,13 @@ const {
   },
   onAdd: (res) => {
     edit(res);
+  },
+});
+useUI({
+  pageChangeBlockedMessage: t("core.confirm_quite_without_save"),
+  isPageChangeBlocked: () => {
+    console.error({ formHasChanged: formHasChanged.value });
+    return formHasChanged.value;
   },
 });
 </script>
