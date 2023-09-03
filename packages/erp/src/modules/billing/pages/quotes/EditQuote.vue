@@ -395,13 +395,12 @@ const {
     return data;
   },
   onAdd: (res) => {
-    edit(res);
+    quote.value = res;
   },
 });
 useUI({
   pageChangeBlockedMessage: t("core.confirm_quite_without_save"),
   isPageChangeBlocked: () => {
-    console.error({ formHasChanged: formHasChanged.value });
     return formHasChanged.value;
   },
 });

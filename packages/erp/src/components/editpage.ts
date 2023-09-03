@@ -32,8 +32,8 @@ export default function useEditPage<T extends WithID>(
     : (ref<T>(props.store.getById(id as string)) as Ref<T>);
 
   const isAddAction = computed(() => {
-    if (props.model) {
-      return props.model.value?.id == null;
+    if (model.value?.id != null) {
+      return false;
     }
     return !id || id === "new";
   });
