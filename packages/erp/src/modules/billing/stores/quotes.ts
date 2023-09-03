@@ -1,6 +1,6 @@
 import { makeAPIStore } from "core/src/factories/store.factory";
 import axiosIntance from "axios";
-import type { Quote } from "../../types";
+import type { Quote } from "../types";
 import type { ID } from "core/src/types";
 
 const useQuoteStore = makeAPIStore<Quote>({
