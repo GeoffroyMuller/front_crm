@@ -21,7 +21,9 @@
 </template>
 <script lang="ts" setup>
 import Sidebar from "core/src/components/sidebar/Sidebar.vue";
-import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
+import SidebarHead, {
+  type SidebarHeadAction,
+} from "core/src/components/sidebar/SidebarHead.vue";
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 import type { Quote } from "../../types";
 import { computed } from "vue";
@@ -37,8 +39,8 @@ const emit = defineEmits(["close"]);
 const quotesStore = useQuoteStore();
 const { t } = useI18n();
 
-const actions = computed(() => {
-  const res = [
+const actions = computed<SidebarHeadAction[]>(() => {
+  const res: SidebarHeadAction[] = [
     { title: t("edit"), icon: "edit", action: "edit", main: true },
     {
       icon: "mail",
