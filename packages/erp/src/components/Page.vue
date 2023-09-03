@@ -141,7 +141,7 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: spacing(1);
+  gap: spacing(2);
 }
 
 .page-menu {

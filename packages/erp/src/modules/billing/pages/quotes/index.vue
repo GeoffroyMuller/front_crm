@@ -1,5 +1,5 @@
 <template>
-  <Page :title="$t('quotes')" class="quotes-page">
+  <Page :title="$t('quotes')">
     <QuoteFilters />
     <MagicDataTable
       :store="quotestore"
