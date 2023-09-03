@@ -1,11 +1,11 @@
 <template>
   <NotificationsContainer>
     <ConfirmModalContainer>
-      <PageChangeConditionContainer>
+      <PageChangeContainer>
         <component :is="layout">
           <RouterView />
         </component>
-      </PageChangeConditionContainer>
+      </PageChangeContainer>
     </ConfirmModalContainer>
   </NotificationsContainer>
 </template>
@@ -19,7 +19,7 @@ import LayoutDefault from "../layouts/LayoutDefault.vue";
 import NotificationsContainer from "./providers/NotificationsContainer.vue";
 import ConfirmModalContainer from "./providers/ConfirmModalContainer.vue";
 import { useI18n } from "vue-i18n";
-import PageChangeConditionContainer from "./providers/PageChangeConditionContainer.vue";
+import PageChangeContainer from "./providers/PageChangeContainer.vue";
 
 const route = useRoute();
 const { getLocaleMessage, locale } = useI18n();
