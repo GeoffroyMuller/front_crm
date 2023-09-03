@@ -295,6 +295,9 @@ import QuotePreview from "../../components/quotes/QuotePreview.vue";
 import Card from "core/src/components/card/Card.vue";
 import FloatingButton from "core/src/components/FloatingButton.vue";
 import EditQuoteSummary from "../../components/quotes/EditQuoteSummary.vue";
+import useUI from "core/src/composables/ui";
+
+useUI({ pageChangeConditionMessage: "Test" });
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();

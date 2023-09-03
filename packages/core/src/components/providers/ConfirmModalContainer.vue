@@ -1,8 +1,9 @@
 <template>
-  <Modal :open="confirmOpen" @update:open="cancelConfirm">
-    <div v-if="confirmationData?.title">
-      {{ confirmationData?.title }}
-    </div>
+  <Modal
+    :open="confirmOpen"
+    @update:open="cancelConfirm"
+    :title="confirmationData?.title"
+  >
     <div>{{ confirmationData?.message }}</div>
     <div class="actions">
       <Button variant="text" color="black" @click="cancelConfirm">

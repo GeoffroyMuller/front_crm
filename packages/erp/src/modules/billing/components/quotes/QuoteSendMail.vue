@@ -1,14 +1,11 @@
 <template>
-  <Modal v-model:open="isOpen">
+  <Modal v-model:open="isOpen" :title="$t('send_by_mail')">
     <Form
       class="quote_send_mail"
       @submit="send"
       :initial-value="formInitialData"
     >
       <template #default="{ hasError }">
-        <div class="typo-title2">
-          {{ $t("send_by_mail") }}
-        </div>
         <div class="quote_send_mail_content">
           <TextField name="subject" :label="$t('subject')" />
           <HtmlEditor :label="$t('content')" name="content" />
