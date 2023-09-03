@@ -62,11 +62,7 @@ async function confirm(c: Confirmation | string) {
           resolve(confirmationResponse.value);
           unwatchResponse();
           confirmOpen.value = false;
-          // wait for modal disapear
-          setTimeout(() => {
-            confirmationResponse.value = null;
-            confirmation.value = null;
-          }, 500);
+          confirmationResponse.value = null;
         }
       }
     );
