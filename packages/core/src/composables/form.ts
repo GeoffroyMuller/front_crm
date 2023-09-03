@@ -21,6 +21,7 @@ export interface useFormProps {
   initialValue: Ref<any>;
   onUpdateValue?: (value: any) => void;
   onInputChange?: (val: { name: string; value: any; formValue: any }) => void;
+  onUpdateHasChanged?: (val: boolean) => void
 }
 
 export default function useForm(props: useFormProps) {
@@ -93,7 +94,9 @@ export default function useForm(props: useFormProps) {
   );
 
   const hasChanged = computed(() => {
-    return !isEqual(internalValue.value, internalInitialValue.value);
+    const changed = !isEqual(internalValue.value, internalInitialValue.value);
+    props?.onUpdateHasChanged?.(changed);
+    return changed;
   });
 
   function register(input: _CustomInput) {

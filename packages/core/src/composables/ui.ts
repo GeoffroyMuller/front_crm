@@ -1,20 +1,30 @@
+import type { PageChangeConditionInject } from "../components/providers/PageChangeConditionContainer.vue";
 import type { Confirmation, ToastFunc, ConfirmFunc } from "../components/types";
-import { inject, onMounted, type Ref } from "vue";
+import { inject, onMounted } from "vue";
 
 type UseUIProps = {
-  pageChangeConditionMessage?: Confirmation | string;
+  pageChangeBlockedMessage?: Confirmation | string;
+  isPageChangeBlocked?: () => boolean | Promise<boolean>;
 };
 
 export default function useUI(props?: UseUIProps) {
   const toast = inject<ToastFunc>("notifications");
   const confirm = inject<ConfirmFunc>("confirmation");
-  const pageChangeCondition = inject<Ref<Confirmation | string>>(
+  const pageChangeCondition = inject<PageChangeConditionInject>(
     "page-change-condition"
   );
 
   onMounted(() => {
-    if (!pageChangeCondition || !props?.pageChangeConditionMessage) return;
-    pageChangeCondition.value = props.pageChangeConditionMessage;
+    if (
+      !pageChangeCondition ||
+      !props?.pageChangeBlockedMessage ||
+      !props?.isPageChangeBlocked
+    ) {
+      return;
+    }
+    pageChangeCondition.changePageConfirmationMessage.value =
+      props.pageChangeBlockedMessage;
+    pageChangeCondition.isPageChangeBlocked.value = props.isPageChangeBlocked;
   });
 
   return {
