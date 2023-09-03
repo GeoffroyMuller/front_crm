@@ -28,7 +28,7 @@ import ModalFooter from "../modal/ModalFooter.vue";
 const confirmation = ref<Confirmation | string | null>(null);
 const confirmationResponse = ref<boolean | null>(null);
 
-const confirmOpen = computed(() => !isNil(confirmation.value));
+const confirmOpen = ref(false);
 
 const confirmationData = computed<Confirmation | null>(() => {
   const confirmationDefaultData = {
@@ -54,14 +54,19 @@ const confirmationData = computed<Confirmation | null>(() => {
 async function confirm(c: Confirmation | string) {
   return new Promise((resolve) => {
     confirmation.value = c;
+    confirmOpen.value = true;
     const unwatchResponse = watch(
       () => confirmationResponse.value,
       () => {
         if (typeof confirmationResponse.value === "boolean") {
           resolve(confirmationResponse.value);
           unwatchResponse();
-          confirmationResponse.value = null;
-          confirmation.value = null;
+          confirmOpen.value = false;
+          // wait for modal disapear
+          setTimeout(() => {
+            confirmationResponse.value = null;
+            confirmation.value = null;
+          }, 500);
         }
       }
     );

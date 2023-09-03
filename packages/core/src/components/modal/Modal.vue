@@ -1,18 +1,18 @@
 <template>
   <Teleport to="body">
     <div
-      class="fixed top-0 left-0 w-screen h-screen bg-black transition-opacity z-modal duration-300"
+      class="fixed top-0 left-0 w-screen h-screen bg-black transition-modalbackdrop z-modal duration-300"
       :class="{
         'no-padding': !withPadding,
-        'opacity-[0.4]': open,
+        'opacity-[0.5]': open,
         'opacity-0 pointer-events-none': !open,
       }"
       @click.stop="$emit('update:open', false)"
     ></div>
     <Card
-      class="max-md:w-[95%] fixed top-1/2 left-1/2 min-w-[50%] transform -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300"
+      class="max-md:w-[95%] fixed top-1/2 left-1/2 min-w-[50%] transform -translate-x-1/2 -translate-y-1/2 transition-modalbackdrop duration-300 z-modal"
       :class="{
-        'z-modal opacity-100': open,
+        'opacity-100': open,
         'opacity-0 pointer-events-none': !open,
       }"
       @click.stop
@@ -27,7 +27,7 @@
         <slot />
       </CardContent>
       <div
-        class="absolute -top-1 right-0 p-card grid place-items-center w-fit h-fit"
+        class="absolute -top-1 right-0 m-card grid place-items-center w-fit h-fit"
       >
         <IconButton
           @click.stop="$emit('update:open', false)"
@@ -61,3 +61,9 @@ const props = withDefaults(defineProps<ModalProps>(), {
 
 const emit = defineEmits(["update:open"]);
 </script>
+
+<style lang="scss">
+.transition-modalbackdrop {
+  transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+</style>
