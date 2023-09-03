@@ -287,7 +287,6 @@ import { isEmpty } from "lodash";
 import useEditPage from "@/components/editpage";
 import type { SaleLine } from "@/modules/billing/types";
 import useUserStore from "@/stores/user";
-import Grid from "core/src/components/layouts/Grid.vue";
 import Text from "core/src/components/Text.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import useQuote from "../../components/quotes/quote";
