@@ -40,10 +40,10 @@
 </template>
 <script lang="ts" setup>
 import { withDefaults } from "vue";
-import Card from "./card/Card.vue";
-import IconButton from "./IconButton.vue";
-import CardHead from "./card/CardHead.vue";
-import CardContent from "./card/CardContent.vue";
+import Card from "../card/Card.vue";
+import IconButton from "../IconButton.vue";
+import CardHead from "../card/CardHead.vue";
+import CardContent from "../card/CardContent.vue";
 
 interface ModalProps {
   open: boolean;

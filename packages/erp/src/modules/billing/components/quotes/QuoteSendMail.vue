@@ -45,7 +45,7 @@ import Form from "core/src/components/form/Form.vue";
 import TextField from "core/src/components/form/TextField.vue";
 import HtmlEditor from "core/src/components/form/HtmlEditor.vue";
 import IconButton from "core/src/components/IconButton.vue";
-import Modal from "core/src/components/Modal.vue";
+import Modal from "core/src/components/modal/Modal.vue";
 import useUI from "core/src/composables/ui";
 import useQuoteStore from "../../stores/quotes";
 import type { Quote } from "../../types";

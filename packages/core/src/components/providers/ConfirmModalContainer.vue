@@ -21,7 +21,7 @@
 import { ref, computed, provide, watch } from "vue";
 import type { Confirmation } from "../types";
 import { isNil } from "lodash";
-import Modal from "../Modal.vue";
+import Modal from "../modal/Modal.vue";
 import Button from "../Button.vue";
 
 const confirmation = ref<Confirmation | string | null>(null);
