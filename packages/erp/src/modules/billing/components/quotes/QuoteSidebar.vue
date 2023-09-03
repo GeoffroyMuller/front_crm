@@ -6,29 +6,7 @@
   >
     <SidebarHead
       :title="title"
-      :actions="[
-        { title: t('edit'), icon: 'edit', action: 'edit', main: true },
-        {
-          title: t('archive'),
-          icon: 'archive',
-          action: 'setArchived',
-          main: true,
-          color: 'danger',
-        },
-        {
-          icon: 'mail',
-          action: 'sendMail',
-          title: t('send_by_mail'),
-          main: true,
-          color: 'success',
-        },
-        { icon: 'download', action: 'downloadPdf', title: t('download') },
-        {
-          icon: 'request_quote',
-          action: 'invoice',
-          title: t('pages.quotes.create_invoice'),
-        },
-      ]"
+      :actions="actions"
       @action="($action) => $emit($action, quote)"
     />
     <SidebarContent>
@@ -58,6 +36,39 @@ const emit = defineEmits(["close"]);
 
 const quotesStore = useQuoteStore();
 const { t } = useI18n();
+
+const actions = computed(() => {
+  const res = [
+    { title: t("edit"), icon: "edit", action: "edit", main: true },
+    {
+      icon: "mail",
+      action: "sendMail",
+      title: t("send_by_mail"),
+      main: true,
+      color: "success",
+    },
+    {
+      icon: "download",
+      action: "downloadPdf",
+      title: t("download"),
+    },
+    {
+      icon: "request_quote",
+      action: "invoice",
+      title: t("pages.quotes.create_invoice"),
+    },
+  ];
+  if (!quote.value?.archived) {
+    res.push({
+      title: t("archive"),
+      icon: "archive",
+      action: "setArchived",
+      color: "danger",
+      main: true,
+    });
+  }
+  return res;
+});
 
 const quote = computed<Quote>(() => {
   if (props.model != null) {
