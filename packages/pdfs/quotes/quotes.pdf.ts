@@ -52,15 +52,26 @@ export function generateQuotePDF(
     },
   ];
 
-  const data: { [key: string]: string }[] = (quoteData.lines || []).map((l) => {
+  /*  const data: { [key: string]: string }[] = (quoteData.lines || []).map((l) => {
     return {
       description: l.description,
       unit_price: l.unit_price as unknown as string,
       vat: l.vat.rate as unknown as string,
+      qty: l.qty
     };
-  });
+  }); */
+  const data: { [key: string]: string }[] = [
+    {
+      description: "blambladsqd qsdsq qsdmdsqdqsj qsdqd",
+      unit_price: "12.54 €",
+      qty: "3",
+    },
+  ];
 
-  doc.table(10, 60, data, headers, {});
+  doc.table(10, 60, data, headers, {
+    headerBackgroundColor: "#6366f1",
+    headerTextColor: "white",
+  });
 
   if (opts.save) {
     doc.save(`Devis_${quoteData.identifier}.pdf`);
