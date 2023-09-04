@@ -45,8 +45,6 @@
       "title": "Titre",
       "comment": "Commentaire",
       "product": "Produit",
-      "order": "Commande",
-      "add-order": "Ajouter une commande",
       "save": "Enregistrer le devis",
       "sendemail": "Envoyer",
       "customer-validation": "Validation",
