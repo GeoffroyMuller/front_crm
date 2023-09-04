@@ -11,9 +11,10 @@ const tooltip: Directive = {
       componentProps: binding.value,
       openOnHover: true,
       hasArrow: true,
-      delayOpen: 800,
+      delayOpen: 0,
       placement: binding.value?.placement || "bottom",
-      gap: 0.5,
+      alignment: binding.value?.alignment || "center",
+      gap: 1,
     });
     target["data-destroy-tooltip"] = destroy;
   },

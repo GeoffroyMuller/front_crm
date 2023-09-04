@@ -26,12 +26,13 @@
         <ActionMenu
           :actions="actions"
           @action="($a) => emit('action', $a)"
-          placement="bottom-right"
+          placement="bottom"
+          :alignment="'end'"
         >
           <IconButton size="xl" name="more_horiz" default-colored />
         </ActionMenu>
         <IconButton
-          v-tooltip="{ text: $t('core.close'), placement: 'top-right' }"
+          v-tooltip="{ text: $t('core.close'), placement: 'top', alignment: 'end' }"
           name="close"
           size="xl"
           @click="handleClose"

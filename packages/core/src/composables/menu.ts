@@ -15,32 +15,22 @@ export interface MenuProps {
 
   fullActivatorWidth?: boolean;
 
-  placement?:
-    | "top"
-    | "top-center"
-    | "top-left"
-    | "top-right"
-    | "top-left-corner"
-    | "top-right-corner"
-    | "bottom"
-    | "bottom-center"
-    | "bottom-left"
-    | "bottom-right"
-    | "bottom-left-corner"
-    | "bottom-right-corner"
-    | "right"
-    | "right-center"
-    | "right-top"
-    | "right-bottom"
-    | "left"
-    | "left-center"
-    | "left-top"
-    | "left-bottom";
-
+  placement?: "top" | "bottom" | "right" | "left";
+  alignment?: "start" | "end" | "center";
   hasArrow?: boolean;
   gap?: number;
   openOnHover?: boolean;
   strategy?: "root" | "absolute";
+}
+
+export function getPlacementAlignmentToString(
+  placement?: MenuProps["placement"],
+  alignment?: MenuProps["alignment"]
+): string | null {
+  console.log({ placement, alignment });
+  if (!placement) return null;
+  const stringConcat = !alignment ? "" : "-" + alignment;
+  return placement + stringConcat;
 }
 
 export default function useMenu(props: MenuProps) {

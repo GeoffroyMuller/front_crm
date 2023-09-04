@@ -22,10 +22,12 @@ export interface TooltipProps {
     | "bottom-center"
     | "left-center"
     | "right-center";
+  alignment?: "start" | "end" | "center";
   pxGap?: number;
 }
 const props = withDefaults(defineProps<TooltipProps>(), {
   placement: "top",
+  alignment: "start",
 });
 
 const tooltip = ref();

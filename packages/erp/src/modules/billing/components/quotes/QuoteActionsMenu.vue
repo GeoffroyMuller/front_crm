@@ -2,7 +2,8 @@
   <ActionMenu
     :actions="actions"
     @action="($action) => $emit($action, item)"
-    placement="left-top"
+    placement="left"
+    alignment="start"
   >
     <IconButton name="more_horiz" />
   </ActionMenu>

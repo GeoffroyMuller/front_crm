@@ -1,4 +1,4 @@
-import type { MenuProps } from "../menu";
+import { type MenuProps, getPlacementAlignmentToString } from "../menu";
 import {
   createApp,
   isRef,
@@ -53,7 +53,11 @@ export default function useMenuPositionAbsolute(props: MenuProps) {
   function setContentPosition() {
     const coord = { top: "auto", left: "auto", bottom: "auto", right: "auto" };
     let transformTranslate = "";
-    switch (props.placement) {
+    console.log(
+      "absolute: ",
+      getPlacementAlignmentToString(props.placement, props.alignment)
+    );
+    switch (getPlacementAlignmentToString(props.placement, props.alignment)) {
       case "right":
       case "right-center":
         coord.left = "100%";
@@ -75,27 +79,27 @@ export default function useMenuPositionAbsolute(props: MenuProps) {
         coord.left = "50%";
         transformTranslate = "translateX(-50%)";
         break;
-      case "top-right":
+      case "top-end":
         coord.bottom = "100%";
         coord.top = "auto";
         coord.left = "100%";
         coord.right = "auto";
         transformTranslate = "translateX(-100%)";
         break;
-      case "top-left":
+      case "top-start":
         coord.bottom = "100%";
         coord.top = "auto";
         coord.left = "auto";
         coord.right = "100%";
         transformTranslate = "translateX(100%)";
         break;
-      case "top-right-corner":
+      case "top-end-corner":
         coord.bottom = "100%";
         coord.top = "auto";
         coord.left = "100%";
         coord.right = "auto";
         break;
-      case "top-left-corner":
+      case "top-start-corner":
         coord.bottom = "100%";
         coord.top = "auto";
         coord.left = "auto";
@@ -108,48 +112,48 @@ export default function useMenuPositionAbsolute(props: MenuProps) {
         coord.left = "50%";
         transformTranslate = "translateX(-50%)";
         break;
-      case "bottom-right":
+      case "bottom-end":
         coord.bottom = "auto";
         coord.top = "100%";
         coord.left = "100%";
         coord.right = "auto";
         transformTranslate = "translateX(-100%)";
         break;
-      case "bottom-left":
+      case "bottom-start":
         coord.bottom = "auto";
         coord.top = "100%";
         coord.left = "auto";
         coord.right = "100%";
         transformTranslate = "translateX(100%)";
         break;
-      case "bottom-right-corner":
+      case "bottom-end-corner":
         coord.bottom = "auto";
         coord.top = "100%";
         coord.left = "100%";
         coord.right = "auto";
         break;
-      case "bottom-left-corner":
+      case "bottom-start-corner":
         coord.bottom = "auto";
         coord.top = "100%";
         coord.left = "auto";
         coord.right = "100%";
         break;
-      case "left-top":
+      case "left-start":
         coord.right = "100%";
         coord.left = "auto";
         coord.top = "0";
         break;
-      case "left-bottom":
+      case "left-end":
         coord.right = "100%";
         coord.left = "auto";
         coord.bottom = "0";
         break;
-      case "right-top":
+      case "right-start":
         coord.left = "100%";
         coord.right = "auto";
         coord.top = "0";
         break;
-      case "right-bottom":
+      case "right-end":
         coord.left = "100%";
         coord.right = "auto";
         coord.bottom = "0";

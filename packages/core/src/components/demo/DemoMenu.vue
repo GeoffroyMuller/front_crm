@@ -39,109 +39,117 @@
     class="w-28 h-28 bg-green-400"
     v-tooltip="{
       text: 'Je test',
-      placement: 'top-right',
+      placement: 'top',
+      alignment: 'end',
     }"
   >
-    <div>top-right</div>
+    <div>top-end</div>
   </div>
   <div
     class="w-28 h-28 bg-green-400"
     v-tooltip="{
       text: 'Je test',
-      placement: 'top-left',
+      placement: 'top',
+      alignment: 'start',
     }"
   >
-    <div>top-left</div>
+    <div>top-start</div>
   </div>
   <div
     class="w-28 h-28 bg-green-400"
     v-tooltip="{
       text: 'Je test',
-      placement: 'top-right-corner',
+      placement: 'top-end-corner',
     }"
   >
-    <div>top-right-corner</div>
+    <div>top-end-corner</div>
   </div>
   <div
     class="w-28 h-28 bg-green-400"
     v-tooltip="{
       text: 'Je test',
-      placement: 'top-left-corner',
+      placement: 'top-start-corner',
     }"
   >
-    <div>top-left-corner</div>
+    <div>top-start-corner</div>
   </div>
   <div
     class="w-28 h-28 bg-purple-400"
     v-tooltip="{
       text: 'Je test',
-      placement: 'bottom-right',
+      placement: 'bottom',
+      alignment: 'end',
     }"
   >
-    <div>bottom-right</div>
+    <div>bottom-end</div>
   </div>
   <div
     class="w-28 h-28 bg-purple-400"
     v-tooltip="{
       text: 'Je test',
-      placement: 'bottom-left',
+      placement: 'bottom',
+      alignment: 'start',
     }"
   >
-    <div>bottom-left</div>
+    <div>bottom-start</div>
   </div>
   <div
     class="w-28 h-28 bg-purple-400"
     v-tooltip="{
       text: 'Je test',
-      placement: 'bottom-right-corner',
+      placement: 'bottom-end-corner',
     }"
   >
-    <div>bottom-right-corner</div>
+    <div>bottom-end-corner</div>
   </div>
   <div
     class="w-28 h-28 bg-purple-400"
     v-tooltip="{
       text: 'Je test',
-      placement: 'bottom-left-corner',
+      placement: 'bottom-start-corner',
     }"
   >
-    <div>bottom-left-corner</div>
+    <div>bottom-start-corner</div>
   </div>
   <div
     class="w-28 h-28 bg-red-400"
     v-tooltip="{
       text: 'Je test',
-      placement: 'left-top',
+      placement: 'left',
+      alignment: 'start',
     }"
   >
-    <div>left-top</div>
+    <div>left-start</div>
   </div>
   <div
     class="w-28 h-28 bg-red-400"
     v-tooltip="{
       text: 'Je test',
-      placement: 'left-bottom',
+      placement: 'left',
+      alignment: 'end',
     }"
   >
-    <div>left-bottom</div>
+    <div>left-end</div>
   </div>
   <div
     class="w-28 h-28 bg-blue-400"
     v-tooltip="{
       text: 'Je test',
-      placement: 'right-top',
+      placement: 'right',
+      alignment: 'start',
     }"
   >
-    <div>right-top</div>
+    <div>right-start</div>
   </div>
   <div
     class="w-28 h-28 bg-blue-400"
     v-tooltip="{
       text: 'Je test',
-      placement: 'right-bottom',
+      placement: 'right',
+      alignment: 'end',
     }"
   >
-    <div>right-bottom</div>
+    <div>right-end</div>
   </div>
 </template>
 <script setup lang="ts">

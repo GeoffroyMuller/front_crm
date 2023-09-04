@@ -32,6 +32,7 @@ import Card, { type CardProps } from "./card/Card.vue";
 
 interface MenuProps {
   placement?: UseMenuProps["placement"];
+  alignment?: UseMenuProps["alignment"];
   gap?: number;
   class?: any;
   disabled?: boolean;
@@ -58,6 +59,7 @@ const { open } = useMenu({
   container: content,
   openOnHover: props.openOnHover,
   placement: props.placement || "bottom",
+  alignment: props.alignment || "center",
   gap: props.gap || 0,
   fullActivatorWidth: props.fullActivatorWidth,
   strategy: props.strategy,
@@ -89,6 +91,7 @@ function handleClickOutside() {
   justify-content: center;
   align-items: flex-end;
   width: 10px;
+  pointer-events: none;
   height: 10px;
   .menu-arrow {
     background-color: red;

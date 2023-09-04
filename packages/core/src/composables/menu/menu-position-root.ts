@@ -1,4 +1,4 @@
-import type { MenuProps } from "../menu";
+import { type MenuProps, getPlacementAlignmentToString } from "../menu";
 import {
   createApp,
   isRef,
@@ -35,6 +35,7 @@ function getScrollParent(element: HTMLElement) {
 export default function useMenuPositionRoot(props: MenuProps) {
   const open = ref();
   const placement = props.placement || "bottom";
+  const alignment = props.alignment || "center";
   const openOnHover = props.openOnHover == null ? true : props.openOnHover;
   const delayOpen = props.delayOpen || 0;
 
@@ -127,13 +128,13 @@ export default function useMenuPositionRoot(props: MenuProps) {
             },
             false
           );
-          elem.addEventListener(
+          /* elem.addEventListener(
             "click",
             () => {
               open.value = false;
             },
             false
-          );
+          ); */
         } /* else {
             //TODO
             elem.addEventListener(
@@ -211,7 +212,11 @@ export default function useMenuPositionRoot(props: MenuProps) {
       transform: "",
     };
 
-    switch (placement) {
+    console.log(
+      "absolute: ",
+      getPlacementAlignmentToString(props.placement, props.alignment)
+    );
+    switch (getPlacementAlignmentToString(placement, props.alignment)) {
       case "right":
       case "right-center":
         coord.right = 0;
@@ -294,7 +299,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
           }
    */
         break;
-      case "top-right":
+      case "top-end":
         coord.right = 0;
         coord.top = 0;
         coord.bottom =
@@ -305,7 +310,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
 
         coordArrowContainer.right = "0";
         break;
-      case "top-left":
+      case "top-start":
         coord.left = 0;
         coord.top = 0;
         coord.bottom =
@@ -314,7 +319,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         _setStyleProperties({ mb: props.gap });
         coord.transformTranslate = "translateX(100%)";
         break;
-      case "top-right-corner":
+      case "top-end-corner":
         coord.right = 0;
         coord.top = 0;
         coord.bottom =
@@ -323,7 +328,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         _setStyleProperties({ mb: props.gap, ml: props.gap });
         coord.transformTranslate = "";
         break;
-      case "top-left-corner":
+      case "top-start-corner":
         coord.left = 0;
         coord.top = 0;
         coord.bottom =
@@ -332,7 +337,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         _setStyleProperties({ mb: props.gap, mr: props.gap });
         coord.transformTranslate = "";
         break;
-      case "bottom-right":
+      case "bottom-end":
         coord.right = 0;
         coord.bottom = 0;
         coord.top = dimensions.activator.top + dimensions.activator.height;
@@ -340,7 +345,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         _setStyleProperties({ mt: props.gap });
         coord.transformTranslate = "translateX(-100%)";
         break;
-      case "bottom-left":
+      case "bottom-start":
         coord.left = 0;
         coord.bottom = 0;
         coord.top = dimensions.activator.top + dimensions.activator.height;
@@ -348,7 +353,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         _setStyleProperties({ mt: props.gap });
         coord.transformTranslate = "translateX(100%)";
         break;
-      case "bottom-right-corner":
+      case "bottom-end-corner":
         coord.right = 0;
         coord.bottom = 0;
         coord.top = dimensions.activator.top + dimensions.activator.height;
@@ -356,7 +361,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         _setStyleProperties({ mt: props.gap, ml: props.gap });
         coord.transformTranslate = "";
         break;
-      case "bottom-left-corner":
+      case "bottom-start-corner":
         coord.left = 0;
         coord.bottom = 0;
         coord.top = dimensions.activator.top + dimensions.activator.height;
@@ -364,7 +369,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         _setStyleProperties({ mt: props.gap, mr: props.gap });
         coord.transformTranslate = "";
         break;
-      case "left-top":
+      case "left-start":
         coord.left = 0;
         coord.bottom = 0;
         coord.top = dimensions.activator.top;
@@ -372,7 +377,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         _setStyleProperties({ mr: props.gap });
         coord.transformTranslate = "";
         break;
-      case "left-bottom":
+      case "left-end":
         coord.left = 0;
         coord.top = 0;
         coord.bottom = dimensions.activator.bottom;
@@ -380,7 +385,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         _setStyleProperties({ mr: props.gap });
         coord.transformTranslate = "";
         break;
-      case "right-top":
+      case "right-start":
         coord.right = 0;
         coord.bottom = 0;
         coord.top = dimensions.activator.top;
@@ -388,7 +393,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         _setStyleProperties({ ml: props.gap });
         coord.transformTranslate = "";
         break;
-      case "right-bottom":
+      case "right-end":
         coord.right = 0;
         coord.top = 0;
         coord.bottom = dimensions.activator.bottom;
@@ -400,40 +405,41 @@ export default function useMenuPositionRoot(props: MenuProps) {
         break;
     }
 
-    const placementArray = placement.split("-");
-    if (placementArray != null && placementArray.length > 0) {
-      if (placementArray[0] == "right") {
+    if (placement != null) {
+      if (placement == "right") {
         coordArrowContainer.transform =
           coordArrowContainer.transform + "translateX(-100%) rotate(270deg)";
         coordArrowContainer.left = "0";
       }
-      if (placementArray[0] == "left") {
+      if (placement == "left") {
         coordArrowContainer.transform =
           coordArrowContainer.transform + "translateX(100%) rotate(90deg)";
         coordArrowContainer.right = "0";
       }
-      if (placementArray[0] == "top") {
+      if (placement == "top") {
         coordArrowContainer.transform =
           coordArrowContainer.transform + "translateY(100%) rotate(180deg)";
         coordArrowContainer.bottom = "0";
       }
-      if (placementArray[0] == "bottom") {
+      if (placement == "bottom") {
         coordArrowContainer.transform =
           coordArrowContainer.transform + "translateY(-100%) rotate(0deg)";
         coordArrowContainer.top = "0";
       }
     }
-    if (placementArray != null && placementArray.length > 1) {
-      if (placementArray[1] == "right") {
+    if (alignment != null) {
+      const direction: "vertical" | "horizontal" =
+        placement == "top" || placement == "bottom" ? "vertical" : "horizontal";
+      if (direction == "vertical" && alignment == "end") {
         coordArrowContainer.right = "0";
       }
-      if (placementArray[1] == "left") {
+      if (direction == "vertical" && alignment == "start") {
         coordArrowContainer.left = "0";
       }
-      if (placementArray[1] == "top") {
+      if (direction == "horizontal" && alignment == "start") {
         coordArrowContainer.top = "0";
       }
-      if (placementArray[1] == "bottom") {
+      if (direction == "horizontal" && alignment == "end") {
         coordArrowContainer.bottom = "0";
       }
     }

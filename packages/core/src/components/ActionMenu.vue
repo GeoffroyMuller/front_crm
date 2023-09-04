@@ -1,6 +1,7 @@
 <template>
   <Menu
     :placement="placement"
+    :alignment="alignment"
     :gap="0.5"
     strategy="root"
     :card-props="{ rounded: 'sm' }"
@@ -39,6 +40,7 @@ export interface Action {
 interface ActionMenuProps {
   actions: Action[];
   placement?: MenuProps["placement"];
+  alignment?: MenuProps["alignment"];
 }
 const props = withDefaults(defineProps<ActionMenuProps>(), {});
 const emit = defineEmits(["action"]);
