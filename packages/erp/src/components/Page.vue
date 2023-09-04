@@ -28,9 +28,13 @@
           ]"
           placement="bottom-right"
         >
-          <Button typo="title3" variant="text" class="auth">
+          <!-- <Button typo="title3" variant="text" class="auth">
             {{ auth.firstname }} {{ auth.lastname }}
-          </Button>
+          </Button> -->
+          <Avatar color="white" class="cursor-pointer">
+            {{ auth.firstname.toUpperCase()[0]
+            }}{{ auth.lastname.toUpperCase()[0] }}
+          </Avatar>
         </ActionMenu>
       </Media>
     </div>
