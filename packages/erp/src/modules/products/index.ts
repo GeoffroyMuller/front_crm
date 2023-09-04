@@ -10,7 +10,7 @@ const ProductsModule: AppModule = {
     component: () => import("./index.vue"),
     children: [
       {
-        path: "/",
+        path: "",
         name: "products",
         component: () => import("@/modules/products/pages/index.vue"),
         meta: {
