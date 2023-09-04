@@ -23,8 +23,10 @@ module.exports = {
   ],
   theme: {
     extend: {
-      padding: {
+      spacing: {
         card: "2rem",
+      },
+      padding: {
         repetable: "1.4rem",
         sidebarX: "1rem",
       },

@@ -2,7 +2,7 @@ import type { AnySchema } from "yup";
 
 export interface Notification {
   id?: string;
-  type?: 'danger' | 'warning' | 'success' | 'info';
+  type?: "danger" | "warning" | "success" | "info";
   message: string;
   title?: string;
   duration?: number;
@@ -12,10 +12,15 @@ export interface Notification {
 export type ToastFunc = (n: Notification | string) => void;
 export type ConfirmFunc = (c: Confirmation | string) => Promise<boolean>;
 
+/* export type ConfirmationActions = {
+  action: () => void;
+  title: string;
+}; */
 export interface Confirmation {
   type?: Notification["type"];
   message: string;
   title: string;
+  // actions?: ConfirmationActions[];
 }
 
 export interface Column<T = any> {

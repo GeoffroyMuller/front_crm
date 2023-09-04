@@ -45,12 +45,6 @@
             size="lg"
           />
         </Flex>
-        <Text typo="title6">{{ $t("pages.edit-quote.order") }}</Text>
-        <div class="justify-self-end">
-          <Button variant="text">
-            {{ $t("pages.edit-quote.add-order") }}
-          </Button>
-        </div>
         <Text typo="title6">{{ $t("email") }}</Text>
         <div class="justify-self-end">
           <Button variant="text" color="success" @click="sendMail(quote)">

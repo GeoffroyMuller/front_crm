@@ -29,9 +29,13 @@
           placement="bottom"
           alignment="end"
         >
-          <Button typo="title3" variant="text" class="auth">
+          <!-- <Button typo="title3" variant="text" class="auth">
             {{ auth.firstname }} {{ auth.lastname }}
-          </Button>
+          </Button> -->
+          <Avatar color="white" class="cursor-pointer">
+            {{ auth.firstname.toUpperCase()[0]
+            }}{{ auth.lastname.toUpperCase()[0] }}
+          </Avatar>
         </ActionMenu>
       </Media>
     </div>
@@ -142,7 +146,7 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: spacing(1);
+  gap: spacing(2);
 }
 
 .page-menu {

@@ -15,7 +15,7 @@
             <IconButton @click="$emit('clickDownloadPDF')" name="download" />
           </div>
         </div>
-        <div class="actions">
+        <ModalFooter>
           <Button
             color="black"
             type="button"
@@ -33,7 +33,7 @@
           >
             {{ $t("send") }}
           </Button>
-        </div>
+        </ModalFooter>
       </template>
     </Form>
   </Modal>
@@ -45,12 +45,13 @@ import Form from "core/src/components/form/Form.vue";
 import TextField from "core/src/components/form/TextField.vue";
 import HtmlEditor from "core/src/components/form/HtmlEditor.vue";
 import IconButton from "core/src/components/IconButton.vue";
-import Modal from "core/src/components/Modal.vue";
+import Modal from "core/src/components/modal/Modal.vue";
 import useUI from "core/src/composables/ui";
 import useQuoteStore from "../../stores/quotes";
 import type { Quote } from "../../types";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import ModalFooter from "core/src/components/modal/ModalFooter.vue";
 
 interface QuoteSendMailProps {
   quote?: Quote | null;
@@ -128,11 +129,6 @@ watch(
   flex-direction: column;
   gap: spacing(3);
   width: 100%;
-  .actions {
-    display: flex;
-    align-items: center;
-    gap: spacing(1);
-  }
   .quote_send_mail_content {
     display: grid;
     gap: spacing(1);

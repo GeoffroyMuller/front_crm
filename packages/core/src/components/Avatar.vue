@@ -41,7 +41,6 @@ const props = withDefaults(defineProps<AvatarProps>(), {
 .avatar {
   overflow: hidden;
   border-radius: 50%;
-  color: color("black");
   background-color: gray;
   font-weight: bold;
   @include flex(row, center, center);
@@ -83,7 +82,12 @@ const props = withDefaults(defineProps<AvatarProps>(), {
   } @else {
     .avatar-#{$key} {
       background-color: $value;
-      color: white;
+      @if $key == 'white' {
+        color: black;
+      } @else {
+        color: white;
+      }
+     
     }
   }
 }

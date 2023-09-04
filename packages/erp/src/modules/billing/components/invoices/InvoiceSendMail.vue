@@ -18,7 +18,7 @@
             <IconButton @click="$emit('clickDownloadPDF')" name="download" />
           </div>
         </div>
-        <div class="actions">
+        <ModalFooter>
           <Button
             color="black"
             type="button"
@@ -36,7 +36,7 @@
           >
             {{ $t("send") }}
           </Button>
-        </div>
+        </ModalFooter>
       </template>
     </Form>
   </Modal>
@@ -53,7 +53,8 @@ import TextField from "core/src/components/form/TextField.vue";
 import HtmlEditor from "core/src/components/form/HtmlEditor.vue";
 import IconButton from "core/src/components/IconButton.vue";
 import Button from "core/src/components/Button.vue";
-import Modal from "core/src/components/Modal.vue";
+import Modal from "core/src/components/modal/Modal.vue";
+import ModalFooter from "core/src/components/modal/ModalFooter.vue";
 
 interface InvoiceSendMailProps {
   invoice?: Invoice | null;
