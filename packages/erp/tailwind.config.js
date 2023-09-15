@@ -25,6 +25,8 @@ module.exports = {
     extend: {
       spacing: {
         card: "2rem",
+        headerHeight: "56px",
+        screenMinusHeaderHeight: "calc(100vh - 56px)",
       },
       padding: {
         repetable: "1.4rem",
@@ -33,9 +35,10 @@ module.exports = {
       boxShadow: {
         card: "0 1px 3px 0 rgb(0 0 0 / 7%)",
         sidebar: "0 1px 0 1px #edeae9, 0 5px 20px 0 rgba(109, 110, 111, 0.08)",
+        nav: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
       },
       zIndex: {
-        modal: 45,
+        modal: 60,
       },
       backgroundColor: {
         inputDisabled: "f0f0f0",

@@ -46,7 +46,7 @@ function getEventTitle(e: Event) {
     left: 0;
     width: 5px;
     background-color: color("primary", 400);
-    z-index: 999;
+    z-index: 20;
   }
 }
 </style>

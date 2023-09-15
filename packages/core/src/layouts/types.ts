@@ -4,6 +4,7 @@ import type { RouteRecordRaw } from "vue-router";
 
 export type LayoutSideMenuProvide = {
   isNavMini: Ref<boolean>;
+  toggleNavMini: () => void;
 };
 
 export type MenuItem = {

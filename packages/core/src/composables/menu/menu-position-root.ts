@@ -474,7 +474,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
   function init() {
     container.value.classList.add("layout-component");
     container.value.style.position = "absolute";
-    container.value.style.zIndex = "27";
+    container.value.style.zIndex = "55";
     if (!props.container) {
       document.body.appendChild(container.value);
     }

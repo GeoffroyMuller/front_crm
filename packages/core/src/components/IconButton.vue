@@ -44,8 +44,10 @@ const iconProps = computed(() => {
   &:disabled {
     cursor: not-allowed;
   }
-  &:hover:not(:disabled) {
-    color: color("primary", 500);
+  @include media-up(md) {
+    &:hover:not(:disabled) {
+      color: color("primary", 500);
+    }
   }
 }
 @each $key, $value in $colors {
@@ -54,11 +56,16 @@ const iconProps = computed(() => {
       &.default-colored {
         color: color($key, 500);
       }
-      &:hover:not(:disabled) {
-        color: color($key, 600);
+      @include media-up(md) {
+        &:hover:not(:disabled) {
+          color: color($key, 600);
+        }
       }
     }
   } @else {
   }
+}
+.icon-button-white {
+  color: white;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div
+  <!--   <div
     class="page-menu"
     :class="{ 'mini-nav': layoutSideMenu?.isNavMini?.value }"
   >
@@ -29,9 +29,6 @@
           placement="bottom"
           alignment="end"
         >
-          <!-- <Button typo="title3" variant="text" class="auth">
-            {{ auth.firstname }} {{ auth.lastname }}
-          </Button> -->
           <Avatar color="white" class="cursor-pointer">
             {{ auth.firstname.toUpperCase()[0]
             }}{{ auth.lastname.toUpperCase()[0] }}
@@ -39,7 +36,7 @@
         </ActionMenu>
       </Media>
     </div>
-  </div>
+  </div> -->
 
   <!--   <div class="page-btn-back" v-if="back">
     <Button @click="goToBack" variant="text" icon="chevron_left">{{
@@ -120,25 +117,22 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
 }
 
 .page-container {
-  height: calc(100% - $header_height);
   overflow-y: auto;
-  @include media-down(md) {
-    position: absolute;
-    top: $header_height;
-  }
-  @include media-up(md) {
-    margin-top: $header_height;
-  }
 }
 
 .page-content {
   &.padding-light {
-    padding: spacing(2);
+    padding-top: spacing(2);
+    padding-bottom: spacing(2);
+    padding-left: spacing(2);
+    padding-right: spacing(2);
   }
 
   &.padding-large {
     $pageContentPLargeWidth: 1300px;
-    padding: spacing(2);
+    padding-top: spacing(2);
+    padding-bottom: spacing(2);
+
     padding-left: max(calc((100% - $pageContentPLargeWidth) / 2), spacing(2));
     padding-right: max(calc((100% - $pageContentPLargeWidth) / 2), spacing(2));
   }
