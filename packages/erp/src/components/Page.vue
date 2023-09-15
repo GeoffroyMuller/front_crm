@@ -17,23 +17,7 @@
     </div>
     <div class="buttons max-md-hidden">
       <Media up="md">
-        <ActionMenu
-          :actions="[
-            {
-              icon: 'settings',
-              action: () => router.push({ name: 'settings' }),
-              title: 'settings',
-            },
-            { icon: 'door_open', action: disconnect, title: 'disconnect' },
-          ]"
-          placement="bottom"
-          alignment="end"
-        >
-          <Avatar color="white" class="cursor-pointer">
-            {{ auth.firstname.toUpperCase()[0]
-            }}{{ auth.lastname.toUpperCase()[0] }}
-          </Avatar>
-        </ActionMenu>
+        
       </Media>
     </div>
   </div> -->

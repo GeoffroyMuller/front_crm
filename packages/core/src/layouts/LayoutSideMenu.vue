@@ -14,6 +14,9 @@
         color="white"
       />
     </div>
+    <div class="flex gap-4 items-center justify-end text-white">
+      <slot name="header-right" />
+    </div>
   </header>
   <div class="md:flex w-full h-screenMinusHeaderHeight mt-headerHeight">
     <nav
@@ -121,7 +124,7 @@
 
       <div
         v-if="bottomMenuItem != null"
-        class="tree-items -my-2 !mx-0 !rounded-none"
+        class="tree-items -my-2 !mx-0 px-5 !rounded-none"
         :class="{
           selected: isItemSelected({
             path: bottomMenuItem.path,

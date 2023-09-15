@@ -8,25 +8,24 @@
       icon: 'settings',
     }"
   >
-    <template #mobile-nav="{ setMobileNavOpen }">
-      <Flex
-        full-height
-        :px="1"
-        justify-content="space-between"
-        align-items="center"
+    <template #header-right>
+      <ActionMenu
+        :actions="[
+          {
+            icon: 'settings',
+            action: () => router.push({ name: 'settings' }),
+            title: 'settings',
+          },
+          { icon: 'door_open', action: disconnect, title: 'disconnect' },
+        ]"
+        placement="bottom"
+        alignment="end"
       >
-        <IconButton name="menu" @click.stop="setMobileNavOpen(true)" />
-
-        <ActionMenu
-          :actions="[
-            { icon: 'door_open', action: disconnect, title: 'disconnect' },
-          ]"
-        >
-          <Avatar color="primary" size="sm">
-            {{ user.firstname?.[0] || "" }}{{ user.lastname?.[0] || "" }}
-          </Avatar>
-        </ActionMenu>
-      </Flex>
+        <Avatar color="white" class="cursor-pointer">
+          {{ auth.firstname.toUpperCase()[0]
+          }}{{ auth.lastname.toUpperCase()[0] }}
+        </Avatar>
+      </ActionMenu>
     </template>
     <slot />
   </LayoutSideMenu>
@@ -48,6 +47,10 @@ const userStore = useUserStore();
 const user = computed(() => userStore.getAuth);
 const router = useRouter();
 const { t } = useI18n();
+
+const auth = computed(() => {
+  return userStore.getAuth;
+});
 
 const { confirm } = useUI();
 
