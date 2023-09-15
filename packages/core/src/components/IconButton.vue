@@ -1,6 +1,11 @@
 <template>
   <button :disabled="disabled" type="button" class="icon-btn">
-    <Icon v-bind="iconProps" :color="color" class="relative" />
+    <Icon
+      v-bind="iconProps"
+      :color="color"
+      class="relative"
+      :class="[`hover:text-${color || 'primary'}-500`]"
+    />
   </button>
 </template>
 <script setup lang="ts">
