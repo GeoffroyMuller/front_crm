@@ -2,7 +2,7 @@
   <button :disabled="disabled" type="button" class="icon-btn">
     <Icon
       v-bind="iconProps"
-      :color="color"
+      :color="defaultColored || color === 'white' ? color : undefined"
       class="relative"
       :class="[`hover:text-${color || 'primary'}-500`]"
     />
