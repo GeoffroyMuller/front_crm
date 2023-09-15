@@ -179,15 +179,6 @@ useKeyboardShortcut("mod+b", (e) => {
   isNavMini.value = !isNavMini.value;
 });
 
-function iconMiniClick(event: Event, isOpen: boolean, data: any) {
-  if (isOpen) {
-    event.stopPropagation();
-  }
-  if (data.path) {
-    router.push(data.path);
-  }
-}
-
 function isItemSelected(data: MenuItem) {
   if (typeof data.path === "string") {
     return data.path === route.path;
