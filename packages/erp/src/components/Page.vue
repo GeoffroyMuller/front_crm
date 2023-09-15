@@ -118,6 +118,7 @@ $headerHeightMobile: $layoutSideHeaderHeightMobile;
 
 .page-container {
   overflow-y: auto;
+  height: 100%;
 }
 
 .page-content {

@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <div
-      class="sidebar shadow-sidebar"
+      class="sidebar z-sidebar shadow-sidebar"
       :class="{
         'sidebar-open': open,
         left: position === 'left',
@@ -72,7 +72,6 @@ provide<SidebarInject>("sidebar", {
   max-width: 0;
   overflow: hidden;
   transition: max-width 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-  z-index: 26;
   width: fit-content;
   background-color: color("white");
   > * {

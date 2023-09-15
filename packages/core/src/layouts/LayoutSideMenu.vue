@@ -1,6 +1,6 @@
 <template>
   <header
-    class="flex justify-between items-center w-full bg-primary-400 h-headerHeight px-5 fixed top-0 left-0 z-50"
+    class="flex justify-between items-center w-full bg-primary-400 h-headerHeight px-5 fixed top-0 left-0 z-header"
   >
     <div class="flex items-center">
       <IconButton
@@ -17,10 +17,10 @@
   </header>
   <div class="md:flex w-full h-screenMinusHeaderHeight mt-headerHeight">
     <nav
-      class="flex flex-col justify-between bg-white py-2 transition-all h-full shadow-nav z-30 max-md:fixed max-md:top-headerHeight left-0"
+      class="flex flex-col justify-between bg-white py-2 transition-all h-full shadow-nav z-nav max-md:fixed max-md:top-headerHeight left-0 overflow-hidden"
       :class="{
         'w-60': !isNavMini,
-        'w-16 max-md:w-0 overflow-hidden': isNavMini,
+        'w-16 max-md:w-0': isNavMini,
       }"
     >
       <Tree :list="menu" class="tree-menu" :isHidden="isNavMini" default-open>

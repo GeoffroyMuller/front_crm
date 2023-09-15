@@ -39,6 +39,10 @@ module.exports = {
       },
       zIndex: {
         modal: 60,
+        nav: 45,
+        sidebar: 55,
+        header: 50,
+        // todo : add z-index menu position 'root'
       },
       backgroundColor: {
         inputDisabled: "f0f0f0",
