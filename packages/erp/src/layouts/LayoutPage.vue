@@ -34,8 +34,6 @@
 import useUserStore from "@/stores/user";
 import ActionMenu from "core/src/components/ActionMenu.vue";
 import Avatar from "core/src/components/Avatar.vue";
-import IconButton from "core/src/components/IconButton.vue";
-import Flex from "core/src/components/layouts/Flex.vue";
 import useUI from "core/src/composables/ui";
 import LayoutSideMenu from "core/src/layouts/LayoutSideMenu.vue";
 import type { MenuItem } from "core/src/layouts/types";

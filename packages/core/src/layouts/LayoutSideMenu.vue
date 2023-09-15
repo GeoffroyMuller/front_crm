@@ -158,7 +158,6 @@ import Icon from "../components/Icon.vue";
 import IconButton from "../components/IconButton.vue";
 import Tree from "../components/Tree.vue";
 import useKeyboardShortcut from "../composables/keyboardshortcut";
-import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import Menu from "../components/Menu.vue";
 import { provide } from "vue";
