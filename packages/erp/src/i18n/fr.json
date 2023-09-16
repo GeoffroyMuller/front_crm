@@ -6,6 +6,9 @@
       "validated": "Validé"
     }
   },
+  "add-menu": {
+    "add-quote": "Nouveau devis"
+  },
   "pages": {
     "clients": {
       "sure_delete_company": "Etes vous sur de vouloir supprimer cette entreprise de vos clients ?",

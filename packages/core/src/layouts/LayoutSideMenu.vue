@@ -1,6 +1,6 @@
 <template>
   <header
-    class="flex justify-between items-center w-full bg-primary-400 h-headerHeight px-5 fixed top-0 left-0 z-header"
+    class="flex justify-between items-center w-full bg-header h-headerHeight px-5 fixed top-0 left-0 z-header"
   >
     <div class="flex items-center">
       <IconButton

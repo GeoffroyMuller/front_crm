@@ -12,6 +12,20 @@
       <ActionMenu
         :actions="[
           {
+            icon: 'description',
+            action: () =>
+              router.push({ name: 'quotes-id', params: { id: 'new' } }),
+            title: 'add-menu.add-quote',
+          },
+        ]"
+        placement="bottom"
+        alignment="end"
+      >
+        <IconButton color="white" name="add" size="lg" />
+      </ActionMenu>
+      <ActionMenu
+        :actions="[
+          {
             icon: 'settings',
             action: () => router.push({ name: 'settings' }),
             title: 'settings',
@@ -21,7 +35,7 @@
         placement="bottom"
         alignment="end"
       >
-        <Avatar color="white" class="cursor-pointer">
+        <Avatar color="primary" class="cursor-pointer">
           {{ auth.firstname.toUpperCase()[0]
           }}{{ auth.lastname.toUpperCase()[0] }}
         </Avatar>
@@ -34,6 +48,7 @@
 import useUserStore from "@/stores/user";
 import ActionMenu from "core/src/components/ActionMenu.vue";
 import Avatar from "core/src/components/Avatar.vue";
+import IconButton from "core/src/components/IconButton.vue";
 import useUI from "core/src/composables/ui";
 import LayoutSideMenu from "core/src/layouts/LayoutSideMenu.vue";
 import type { MenuItem } from "core/src/layouts/types";
