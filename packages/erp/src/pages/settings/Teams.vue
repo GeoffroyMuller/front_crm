@@ -30,45 +30,48 @@
     </template>
   </MagicDataTable>
 
-  <Sidebar v-model:open="isSidebarOpen" padding>
-    <Form :initial-value="userSelected" @submit="handleSubmit">
-      <template #default="{ hasError }">
-        <div class="typo-title2">
-          {{
-            isAddAction
-              ? $t("settings-page.teams.new-user")
-              : $t("settings-page.teams.user")
-          }}
-        </div>
-        <Grid :gap="3">
-          <Grid :gap="1">
-            <TextField name="firstname" :label="$t('firstname')" />
-            <TextField name="lastname" :label="$t('lastname')" />
-            <TextField name="email" :label="$t('email')" />
-            <TextField name="phone" :label="$t('phone')" />
-            <TextField name="address" :label="$t('address')" />
-            <MagicAutocomplete
-              name="idRole"
-              :store="roleStore"
-              :label="$t('role')"
-              option-key="id"
-              :get-option-label="(opt) => opt.name"
-              :get-option-value="(opt) => opt.id"
-            />
+  <Sidebar v-model:open="isSidebarOpen">
+    <SidebarHead
+      :title="
+        isAddAction
+          ? $t('settings-page.teams.new-user')
+          : $t('settings-page.teams.user')
+      "
+      :actions="[]"
+    ></SidebarHead>
+    <SidebarContent>
+      <Form :initial-value="userSelected" @submit="handleSubmit">
+        <template #default="{ hasError }">
+          <Grid :gap="3">
+            <Grid :gap="1">
+              <TextField name="firstname" :label="$t('firstname')" />
+              <TextField name="lastname" :label="$t('lastname')" />
+              <TextField name="email" :label="$t('email')" />
+              <TextField name="phone" :label="$t('phone')" />
+              <TextField name="address" :label="$t('address')" />
+              <MagicAutocomplete
+                name="idRole"
+                :store="roleStore"
+                :label="$t('role')"
+                option-key="id"
+                :get-option-label="(opt) => opt.name"
+                :get-option-value="(opt) => opt.id"
+              />
+            </Grid>
+            <SidebarActions class="flex justify-end">
+              <Button
+                type="submit"
+                color="success"
+                icon="add"
+                :disabled="hasError"
+              >
+                {{ isAddAction ? $t("add") : $t("save") }}
+              </Button>
+            </SidebarActions>
           </Grid>
-          <Flex align-items="center" justify-content="end">
-            <Button
-              type="submit"
-              color="success"
-              icon="add"
-              :disabled="hasError"
-            >
-              {{ isAddAction ? $t("add") : $t("save") }}
-            </Button>
-          </Flex>
-        </Grid>
-      </template>
-    </Form>
+        </template>
+      </Form>
+    </SidebarContent>
   </Sidebar>
 </template>
 
@@ -89,6 +92,9 @@ import type { User } from "@/types/user";
 import type { ID } from "core/src/types";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
+import SidebarActions from "core/src/components/sidebar/SidebarActions.vue";
+import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
 
 const emit = defineEmits(["add", "update"]);
 

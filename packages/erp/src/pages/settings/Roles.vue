@@ -20,47 +20,50 @@
     </template>
   </MagicDataTable>
 
-  <Sidebar v-model:open="isSidebarOpen" padding>
-    <Form :initial-value="roleSelected" @submit="handleSubmit">
-      <template #default="{ hasError, value }">
-        <div class="typo-title2">
-          {{
-            isAddAction
-              ? $t("settings-page.role.new-role")
-              : $t("settings-page.role.role")
-          }}
-        </div>
-        <Grid :gap="3">
-          <Grid :gap="1">
-            <TextField name="name" :label="$t('settings-page.role.rolename')">
-            </TextField>
-            <Grid :mb="1" :mt="1">
-              <div class="typo-title6">
-                {{ $t("settings-page.role.rights") }}
-              </div>
-            </Grid>
+  <Sidebar v-model:open="isSidebarOpen">
+    <SidebarHead
+      :title="
+        isAddAction
+          ? $t('settings-page.role.new-role')
+          : $t('settings-page.role.role')
+      "
+      :actions="[]"
+    ></SidebarHead>
+    <SidebarContent>
+      <Form :initial-value="roleSelected" @submit="handleSubmit">
+        <template #default="{ hasError, value }">
+          <Grid :gap="3">
+            <Grid :gap="1">
+              <TextField name="name" :label="$t('settings-page.role.rolename')">
+              </TextField>
+              <Grid :mb="1" :mt="1">
+                <div class="typo-title6">
+                  {{ $t("settings-page.role.rights") }}
+                </div>
+              </Grid>
 
-            <Switch
-              v-for="r in rights"
-              :key="r.id"
-              :label="r.lang.fr"
-              :model-value="rightsSelected.find((rr: any) => rr == r.id)"
-              @update:model-value="($val) => toggleValue($val, r)"
-            />
+              <Switch
+                v-for="r in rights"
+                :key="r.id"
+                :label="r.lang.fr"
+                :model-value="rightsSelected.find((rr: any) => rr == r.id)"
+                @update:model-value="($val) => toggleValue($val, r)"
+              />
+            </Grid>
+            <SidebarActions class="flex justify-end items-center">
+              <Button
+                type="submit"
+                color="success"
+                icon="add"
+                :disabled="hasError"
+              >
+                {{ isAddAction ? $t("add") : $t("save") }}
+              </Button>
+            </SidebarActions>
           </Grid>
-          <Flex align-items="center" justify-content="end">
-            <Button
-              type="submit"
-              color="success"
-              icon="add"
-              :disabled="hasError"
-            >
-              {{ isAddAction ? $t("add") : $t("save") }}
-            </Button>
-          </Flex>
-        </Grid>
-      </template>
-    </Form>
+        </template>
+      </Form>
+    </SidebarContent>
   </Sidebar>
 </template>
 
@@ -81,6 +84,9 @@ import { xor } from "lodash";
 import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import IconButton from "core/src/components/IconButton.vue";
+import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
+import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
+import SidebarActions from "core/src/components/sidebar/SidebarActions.vue";
 
 const emit = defineEmits(["add", "update"]);
 

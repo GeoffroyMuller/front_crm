@@ -1,6 +1,6 @@
 <template>
   <div
-    class="sticky top-0 left-0 w-full z-30 border border-slate-200 border-solid border-l-0 border-r-0 border-t-0"
+    class="sticky top-0 left-0 w-full z-30 border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0"
   >
     <div class="flex items-center justify-between px-sidebarX py-1">
       <div class="w-max">
