@@ -39,7 +39,9 @@
       v-if="icon"
       :class="{ 'content-icon': !!$slots.default }"
     />
-    <span v-if="$slots.default" class="w-fit"> <slot /></span>
+    <span v-if="$slots.default" class="w-fit flex gap-2 items-center">
+      <slot
+    /></span>
 
     <Spinner
       size="1rem"
@@ -124,9 +126,12 @@ const buttonAdditionnalProps = computed(() => {
     cursor: not-allowed;
   }
 }
-.button-black,
-.button-white {
+
+.button-black {
   @apply text-white bg-[#9ca3af] hover:bg-[#6b7280];
+}
+.button-white {
+  @apply bg-white hover:bg-gray-50 text-black;
 }
 .button-text {
   @apply gap-1 bg-transparent relative p-0 min-h-0;

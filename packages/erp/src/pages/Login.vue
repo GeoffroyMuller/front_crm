@@ -1,13 +1,15 @@
 <template>
-  <div id="login-container">
+  <div
+    class="m-0 p-0 w-screen h-screen absolute top-0 left-0 grid place-items-center"
+  >
     <Card padding>
-      <Form id="login-card" @submit="login">
+      <Form class="grid gap-4 w-[440px]" @submit="login">
         <template #default="{ hasError }">
-          <GoogleLoginBtn :disabled="loading" />
-          <span id="or-txt">- {{ $t("or") }} -</span>
+          <GoogleLoginBtn :disabled="loading" class="m-auto" />
+          <span class="text-slate-500 text-center">- {{ $t("or") }} -</span>
           <TextField :label="$t('email')" name="email" />
           <PasswordInput :label="$t('password')" name="password" />
-          <div id="login-actions">
+          <div class="grid gap-2">
             <Button :disabled="hasError" :loading="loading" type="submit">
               {{ $t("login") }}
             </Button>
@@ -85,39 +87,3 @@ onMounted(() => {
   }
 });
 </script>
-
-<style lang="scss" scoped>
-#login-container {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: grid;
-  place-items: center;
-}
-
-#login-card {
-  display: grid;
-  gap: spacing(1);
-  width: 440px;
-}
-
-@include media-down(sm) {
-  #login-card {
-    width: fit-content;
-  }
-}
-
-#login-actions {
-  display: grid;
-  margin-top: spacing(1);
-}
-
-#or-txt {
-  text-align: center;
-  margin: spacing(2) 0;
-}
-</style>
