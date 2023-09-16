@@ -1,32 +1,24 @@
 <template>
-  <div>
-    <div class="typo-title2">
-      {{ $t("edit-products-real") }}
-    </div>
-    <div class="typo-text1 subline-form-subtitle">
-      {{ $t("edit-products-real-product") }}
-    </div>
-    <Repetable v-model="sublines" v-if="product" name="sublines">
-      <template #default>
-        <MagicAutocomplete
-          name="idProductReal"
-          :label="$t('reference')"
-          :getOptionLabel="displayProductRealAutocomplete"
-          option-key="id"
-          :get-option-value="(opt) => opt.id"
-          :get-filters="
-            (str) => ({
-              $contains: {
-                reference: str,
-                idProduct: product?.id,
-              },
-            })
-          "
-          :store="productRealStore"
-        />
-      </template>
-    </Repetable>
-  </div>
+  <Repetable v-model="sublines" v-if="product" name="sublines">
+    <template #default>
+      <MagicAutocomplete
+        name="idProductReal"
+        :label="$t('reference')"
+        :getOptionLabel="displayProductRealAutocomplete"
+        option-key="id"
+        :get-option-value="(opt) => opt.id"
+        :get-filters="
+          (str) => ({
+            $contains: {
+              reference: str,
+              idProduct: product?.id,
+            },
+          })
+        "
+        :store="productRealStore"
+      />
+    </template>
+  </Repetable>
 </template>
 
 <script setup lang="ts">
@@ -74,9 +66,3 @@ function displayProductRealAutocomplete(productReal: ProductReal) {
   return `${productReal.reference}`;
 }
 </script>
-
-<style lang="scss" scoped>
-.subline-form-subtitle {
-  margin-bottom: spacing(2);
-}
-</style>

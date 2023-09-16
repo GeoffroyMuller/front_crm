@@ -98,11 +98,18 @@
           })
         }}
       </Button>
-      <Sidebar v-model:open="isSidebarOpen" displayCloseBtn padding>
-        <QuoteSublineForm
-          :product="internalProduct"
-          v-model:count="nbProductReal"
-        ></QuoteSublineForm>
+      <Sidebar v-model:open="isSidebarOpen">
+        <SidebarHead
+          :title="$t('edit-products-real')"
+          :subtitle="$t('edit-products-real-product')"
+          :actions="[]"
+        />
+        <SidebarContent>
+          <QuoteSublineForm
+            :product="internalProduct"
+            v-model:count="nbProductReal"
+          ></QuoteSublineForm>
+        </SidebarContent>
       </Sidebar>
     </div>
 
@@ -122,7 +129,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, toRef } from "vue";
+import { computed, ref } from "vue";
 import TextField from "core/src/components/form/TextField.vue";
 import Select from "core/src/components/form/Select.vue";
 import HtmlEditor from "core/src/components/form/HtmlEditor.vue";
@@ -137,6 +144,8 @@ import Button from "core/src/components/Button.vue";
 import Alert from "core/src/components/Alert.vue";
 import type { SaleLine } from "@/modules/billing/types";
 import Text from "core/src/components/Text.vue";
+import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
+import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
 
 interface QuoteLineProps {
   line: SaleLine;

@@ -23,8 +23,8 @@ defineProps<PageContentProps>();
 .page-content {
   &.padding-large {
     $pageContentPLargeWidth: 1300px;
-    padding-left: max(calc((100% - $pageContentPLargeWidth) / 2), spacing(2));
-    padding-right: max(calc((100% - $pageContentPLargeWidth) / 2), spacing(2));
+    padding-left: max(calc((100% - $pageContentPLargeWidth) / 2), 16px);
+    padding-right: max(calc((100% - $pageContentPLargeWidth) / 2), 16px);
   }
 }
 </style>

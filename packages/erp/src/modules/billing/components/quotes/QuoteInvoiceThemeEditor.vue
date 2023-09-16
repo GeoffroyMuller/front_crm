@@ -1,5 +1,5 @@
 <template>
-  <div class="quote-invoice-modele-editor">
+  <div>
     <Card padding class="content">
       <Grid :columns="2" :gap="4" dir="ltr">
         <Grid :gap="1">
@@ -60,24 +60,3 @@ import QuoteInvoiceThemeEditorInput from "./QuoteInvoiceThemeEditorInput.vue";
 
 const theme = ref<QuoteInvoiceTheme>();
 </script>
-
-<style lang="scss">
-.quote-invoice-modele-editor {
-  background: color("zinc", 200);
-  padding: spacing(2);
-  min-height: 840px;
-  overflow-y: auto !important;
-  .content {
-    max-width: 1200px;
-    min-height: 840px;
-    margin: auto;
-    border: color("zinc", 300) 1px solid;
-    position: relative;
-    footer {
-      position: absolute;
-      bottom: 0;
-      margin: auto;
-    }
-  }
-}
-</style>

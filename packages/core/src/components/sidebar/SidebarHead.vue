@@ -3,7 +3,14 @@
     class="sticky top-0 left-0 w-full z-30 border border-slate-200 border-solid border-l-0 border-r-0 border-t-0"
   >
     <div class="flex items-center justify-between px-sidebarX py-1">
-      <div class="typo-title2 w-max">{{ title }}</div>
+      <div class="w-max">
+        <div class="typo-title2">
+          {{ title }}
+        </div>
+        <div v-if="subtitle" class="typo-title5 mt-1">
+          {{ subtitle }}
+        </div>
+      </div>
       <div class="flex items-center gap-4 justify-end py-2 w-fit">
         <template
           v-for="(a, index) of actions.filter((a) => a.main)"
@@ -58,7 +65,11 @@ import type { SidebarInject } from "./sidebar.types";
 export type SidebarHeadAction = Action & { main?: boolean; color?: Color };
 
 const emit = defineEmits(["action", "close"]);
-defineProps<{ title: string; actions: SidebarHeadAction[] }>();
+defineProps<{
+  title: string;
+  subtitle?: string;
+  actions: SidebarHeadAction[];
+}>();
 
 const sidebar = inject<SidebarInject>("sidebar");
 
