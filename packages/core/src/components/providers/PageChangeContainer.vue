@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import useUI from "../../composables/ui";
 import { useRouter } from "vue-router";
-import type { Confirmation } from "../types";
+import type { ConfirmFunc, Confirmation } from "../types";
 import { ref } from "vue";
 import { provide } from "vue";
 import type { Ref } from "vue";
@@ -31,10 +31,18 @@ export type PageChangeConditionInject = {
 };
 
 router.beforeEach(async (from, to, next) => {
+  const confirmConfig: ConfirmFunc["arguments"] =
+    typeof changePageConfirmationMessage.value === "string"
+      ? {
+          message: changePageConfirmationMessage.value,
+        }
+      : {
+          ...changePageConfirmationMessage.value,
+        };
   if (
     changePageConfirmationMessage.value == null ||
     !isPageChangeBlocked?.value?.() ||
-    (await confirm(changePageConfirmationMessage.value))
+    (await confirm(confirmConfig))
   ) {
     next();
     changePageConfirmationMessage.value = undefined;

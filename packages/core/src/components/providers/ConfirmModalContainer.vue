@@ -1,10 +1,11 @@
 <template>
-  <Modal
-    :open="confirmOpen"
-    @update:open="cancelConfirm"
-    :title="confirmationData?.title"
-  >
-    <ModalContent>
+  <Modal :open="confirmOpen" @update:open="cancelConfirm">
+    <ModalHead :title="confirmationData?.title || $t('core.confirmation')">
+      <template #start>
+        <Icon name="warning" color="warning" />
+      </template>
+    </ModalHead>
+    <ModalContent class="flex items-center gap-2">
       <div>{{ confirmationData?.message }}</div>
     </ModalContent>
     <ModalActions>
@@ -27,6 +28,8 @@ import Modal from "../modal/Modal.vue";
 import Button from "../Button.vue";
 import ModalActions from "../modal/ModalActions.vue";
 import ModalContent from "../modal/ModalContent.vue";
+import ModalHead from "../modal/ModalHead.vue";
+import Icon from "../Icon.vue";
 
 const confirmation = ref<Confirmation | string | null>(null);
 const confirmationResponse = ref<boolean | null>(null);

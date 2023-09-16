@@ -1,6 +1,8 @@
 <template>
   <CardHead :title="title" :subtitle="subtitle">
+    <template #start v-if="$slots.start"><slot name="start" /> </template>
     <template #end>
+      <slot name="end" />
       <IconButton @click.stop="modal?.close?.()" name="close" size="xl" />
     </template>
   </CardHead>
