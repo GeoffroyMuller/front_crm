@@ -1,13 +1,9 @@
 <template>
-  <div class="repetable-section">
-    <div
-      v-if="!isMin"
-      class="w-full flex col-span-2"
-      :class="{ 'justify-end': !orderable, 'justify-between': orderable }"
-    >
-      <div v-if="orderable" class="drag_handle">
-        <Icon name="drag_indicator"></Icon>
-      </div>
+  <div
+    class="repetable-section"
+    :class="{ 'grid grid-cols-[min-content_1fr]': orderable }"
+  >
+    <div v-if="!isMin" class="w-full flex col-span-2 justify-end">
       <IconButton
         class="justify-self-end"
         name="delete"
@@ -16,9 +12,11 @@
         @click.stop="emit('unregister')"
       />
     </div>
-    <div class="repetable-section-content">
-      <slot />
+
+    <div v-if="orderable" class="drag_handle grid place-items-center">
+      <Icon name="drag_indicator"></Icon>
     </div>
+    <slot />
   </div>
 </template>
 
@@ -66,9 +64,6 @@ onUnmounted(() => {
   .drag_handle {
     cursor: grab;
     margin-left: spacing(-1);
-  }
-  .repetable-section-content {
-    flex-grow: 1;
   }
 }
 .repetable-section-ghost {

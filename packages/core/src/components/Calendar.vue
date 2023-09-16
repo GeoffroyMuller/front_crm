@@ -4,7 +4,7 @@
     class="calendar"
     :class="{ rounded, 'calendar-full-screen': fullScreen }"
   >
-    <div class="calendar-header">
+    <div class="calendar-header h-[60px] sticky top-0 bg-white">
       <div class="date">
         <div class="buttons">
           <IconButton name="chevron_left" @click.stop="decrement()" />
@@ -29,16 +29,16 @@
         </div>
       </div>
     </div>
-    <div class="calendar-content-week" v-if="displayWeek">
-      <div class="weekdays">
-        <div
-          v-for="(day, index) of weekDaysLabels"
-          :key="index"
-          class="weekday"
-        >
-          {{ day }}
-        </div>
+    <div class="weekdays sticky top-[60px]">
+      <div
+        v-for="(day, index) of weekDaysLabels"
+        :key="index"
+        class="weekday typo-title6 text-slate-500"
+      >
+        {{ day }}
       </div>
+    </div>
+    <div class="calendar-content-week" v-if="displayWeek">
       <div class="days">
         <div class="day" v-for="day of datesToDisplay" :key="day.id">
           <span v-if="!$slots['mounth-day']">
@@ -53,15 +53,6 @@
       </div>
     </div>
     <div class="calendar-content" v-if="!displayWeek">
-      <div class="weekdays">
-        <div
-          v-for="(day, index) of weekDaysLabels"
-          :key="index"
-          class="weekday"
-        >
-          {{ day }}
-        </div>
-      </div>
       <div class="days">
         <div
           class="day"
@@ -221,6 +212,9 @@ $borderRadius: map-deep-get($rounded, "md");
   .calendar-header {
     @include flex(row, space-between, center, 1);
     padding: spacing(2);
+    border-bottom: solid color("slate", 200) 1px;
+    opacity: 1;
+    z-index: 21;
     .modes,
     .date {
       @include flex(row, flex-start, center, 1);
@@ -251,18 +245,20 @@ $borderRadius: map-deep-get($rounded, "md");
       }
     }
   }
-  .calendar-content-week {
-    .weekdays {
-      @include grid(7, 0, 0);
-      border: 1px solid $borderColor;
-      background-color: color("slate", 50);
-      .weekday {
-        padding: spacing(1);
-        &:not(:last-child) {
-          border-right: 1px solid $borderColor;
-        }
+  .weekdays {
+    @include grid(7, 0, 0);
+    border: none;
+    background-color: white;
+    z-index: 21;
+    .weekday {
+      padding: spacing(1);
+      border-bottom: 1px solid $borderColor;
+      &:not(:last-child) {
+        border-right: 1px solid $borderColor;
       }
     }
+  }
+  .calendar-content-week {
     .days {
       @include grid(7, 0, 0);
       border: 1px solid $borderColor;
@@ -278,18 +274,16 @@ $borderRadius: map-deep-get($rounded, "md");
     }
   }
   .calendar-content {
-    .weekdays,
     .days {
       @include grid(7, 0, 0);
       border: 1px solid $borderColor;
     }
-    .weekdays {
-      border-bottom: 0;
-      background-color: color("slate", 50);
-    }
     .days {
       border-top: none;
       background-color: color("slate", 50);
+      > *:not(:nth-child(1n + 8)) {
+        border-top: 0;
+      }
       :nth-child(7n) {
         border-right: 0;
       }
@@ -318,8 +312,16 @@ $borderRadius: map-deep-get($rounded, "md");
         transform: translateX(-50%);
         z-index: 4;
       }
+      &::before {
+        content: " ";
+        @apply transition-all bg-primary-500 absolute bottom-2 right-2 w-[5px] h-[5px] opacity-0 rounded-full shadow shadow-primary-400;
+      }
       &:hover {
-        background-color: lighten(color("primary", 50), 1.5%);
+        position: relative;
+        &::before {
+          content: " ";
+          @apply opacity-50;
+        }
         cursor: pointer;
       }
       &.not-this-month {
@@ -342,20 +344,5 @@ $borderRadius: map-deep-get($rounded, "md");
       border-left: 0;
     }
   }
-  &.rounded {
-    .weekdays {
-      border-radius: $borderRadius $borderRadius 0 0;
-    }
-    .days {
-      border-radius: 0 0 $borderRadius $borderRadius;
-    }
-  }
-}
-.calendar {
-  overflow: auto;
-}
-.calendar-header,
-.weekdays {
-  position: sticky;
 }
 </style>
