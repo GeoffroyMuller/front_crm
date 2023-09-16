@@ -1,5 +1,7 @@
 <template>
-  <div class="overflow-hidden w-[400px] fixed bottom-4 max-xl:left-1/2 transform max-xl:-translate-x-1/2 xl:right-4 flex flex-col gap-4 justify-end items-end z-[9999]">
+  <div
+    class="overflow-hidden w-[400px] fixed bottom-0 pb-4 max-xl:left-1/2 transform max-xl:-translate-x-1/2 xl:right-4 flex flex-col gap-4 justify-end items-end z-[9999]"
+  >
     <TransitionGroup name="toast">
       <Toast
         v-for="notification of notifications"
@@ -22,7 +24,6 @@ import { uniqueId } from "lodash";
 import Toast from "../Toast.vue";
 
 const notifications = ref<Notification[]>([]);
-
 
 function createNotification(n: Notification | string) {
   const defaultNotification: Notification = {
@@ -60,7 +61,9 @@ provide("deleteNotification", deleteNotification);
 </script>
 
 <style lang="scss">
-.toast-enter-active,
+.toast-enter-active {
+  transition: transform 0.5s ease, opacity 0.4s;
+}
 .toast-leave-active {
   transition: transform 0.5s ease, opacity 0.2s;
 }

@@ -1,6 +1,7 @@
 <template>
   <div
-    :class="`w-fit z-[9999] relative bg-slate-800 text-white px-4 py-3 rounded-md flex items-center gap-4 before:content-[''] before:bg-${color}-400 before:absolute before:h-full before:w-1 before:rounded-md  before:top-0 before:left-0 overflow-hidden`">
+    :class="`w-fit z-[9999] relative bg-slate-800 text-white px-4 py-3 rounded-md flex items-center gap-4 before:content-[''] before:bg-${color}-400 before:absolute before:h-full before:w-1 before:rounded-md  before:top-0 before:left-0 overflow-hidden`"
+  >
     <Icon :name="icon" size="sm" :class="`text-${color}-400`" />
     <div>
       <div class="font-semibold text-md">
@@ -10,11 +11,18 @@
         {{ message }}
       </div>
     </div>
-    <Icon name="close" size="sm" :class="`text-white cursor-pointer hover:text-${color}-500 rounded-full`" @click="() => {
-        if (deleteNotification) {
-          deleteNotification(props.id);
+    <Icon
+      name="close"
+      size="sm"
+      :class="`text-white cursor-pointer hover:text-${color}-500 rounded-full`"
+      @click="
+        () => {
+          if (deleteNotification) {
+            deleteNotification(props.id);
+          }
         }
-      }" />
+      "
+    />
   </div>
 </template>
 <script setup lang="ts">
@@ -28,7 +36,8 @@ interface ToastProps {
   id: Notification["id"];
 }
 
-const deleteNotification = inject<(id: Notification['id']) => void>("deleteNotification");
+const deleteNotification =
+  inject<(id: Notification["id"]) => void>("deleteNotification");
 
 const icon = computed<IconName>(() => {
   switch (props.type) {
