@@ -195,11 +195,3 @@ function clickEdit(item?: Client) {
 const clientsStore = useClientStore();
 const companiesStore = useCompaniesStore();
 </script>
-
-<style lang="scss" scoped>
-.actions {
-  display: flex;
-  align-items: center;
-  gap: spacing(0.5);
-}
-</style>

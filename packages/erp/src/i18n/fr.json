@@ -26,7 +26,10 @@
     },
     "sales": {
       "edit-list-products-real": "Editer le stock {count}",
-      "warning-sentence-qty": "L'impact sur le stock est différent de la quantité."
+      "warning-sentence-qty": "L'impact sur le stock est différent de la quantité.",
+      "edit-products-real": "Produit avec stock",
+      "edit-products-real-product": "Choix des produit du stock"
+
     },
     "edit-quote": {
       "qty": "Quantitée",
@@ -121,7 +124,7 @@
   "new-company-name": "Nom",
   "new-company": "Nouvelle entreprise",
   "sure-disconnect": "Confirmer la deconnexion ?",
-  "login-with-google": "Se connecter avec Google",
+  "login-with-google": "Continuer avec Google",
   "connection": "Connexion",
   "menu": {
     "projects-calendar": "Calendrier",

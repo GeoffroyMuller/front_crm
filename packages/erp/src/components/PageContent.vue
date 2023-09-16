@@ -19,12 +19,10 @@ export type PageContentProps = {
 defineProps<PageContentProps>();
 </script>
 
-<style lang="scss">
-.page-content {
-  &.padding-large {
-    $pageContentPLargeWidth: 1300px;
-    padding-left: max(calc((100% - $pageContentPLargeWidth) / 2), 16px);
-    padding-right: max(calc((100% - $pageContentPLargeWidth) / 2), 16px);
-  }
+<style lang="scss" scoped>
+.padding-large {
+  $pageContentPLargeWidth: 1300px;
+  padding-left: max(calc((100% - $pageContentPLargeWidth) / 2), 16px);
+  padding-right: max(calc((100% - $pageContentPLargeWidth) / 2), 16px);
 }
 </style>

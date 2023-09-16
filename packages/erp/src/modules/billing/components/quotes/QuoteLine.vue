@@ -100,8 +100,8 @@
       </Button>
       <Sidebar v-model:open="isSidebarOpen">
         <SidebarHead
-          :title="$t('edit-products-real')"
-          :subtitle="$t('edit-products-real-product')"
+          :title="$t('pages.sales.edit-products-real')"
+          :subtitle="$t('pages.sales.edit-products-real-product')"
           :actions="[]"
         />
         <SidebarContent>

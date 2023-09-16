@@ -1,6 +1,6 @@
 <template>
-  <div class="invoice-payments-progress">
-    <div>
+  <div class="typo-label text-primary-500">
+    <div class="mb-1">
       {{ $utils.formatPrice(totalPayments) }}
     </div>
     <ProgressBar :progress="progress" />
@@ -34,13 +34,3 @@ const progress = computed(() => {
 
 const props = withDefaults(defineProps<InvoicePaymentsBarProps>(), {});
 </script>
-
-<style lang="scss">
-.invoice-payments-progress {
-  @include typo(label);
-  color: color("primary", 500);
-  :first-child {
-    margin-bottom: spacing(0.5);
-  }
-}
-</style>

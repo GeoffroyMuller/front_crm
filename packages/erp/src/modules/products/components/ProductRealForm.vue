@@ -1,45 +1,48 @@
 <template>
-  <Form shortcuts :initial-value="productRealInternal" @submit="handleSubmit">
-    <template #default="{ hasError, hasChanged }">
-      <div class="typo-title2">
-        {{
-          productRealInternal?.id
-            ? $t("pages.edit-product.edit-product-real")
-            : $t("pages.edit-product.creat-product-real")
-        }}
-      </div>
-      <div class="form-product-real">
+  <SidebarHead
+    :title="
+      productRealInternal?.id
+        ? $t('pages.edit-product.edit-product-real')
+        : $t('pages.edit-product.creat-product-real')
+    "
+    :actions="[]"
+  >
+  </SidebarHead>
+  <SidebarContent>
+    <Form
+      shortcuts
+      :initial-value="productRealInternal"
+      @submit="handleSubmit"
+      class="flex flex-col gap-2"
+    >
+      <template #default="{ hasError, hasChanged }">
         <TextField
           :rules="$yup.string().required()"
           name="reference"
           :label="$t('reference')"
         />
 
-        <div class="real-fields">
-          <Repetable
-            name="product_real_fields"
-            :label="$t('fields')"
-            :min="productRealInternal?.product_real_fields?.length"
-            :max="productRealInternal?.product_real_fields?.length"
-          >
-            <template #default="{ data }">
-              <MagicFormField
-                :props="{
-                  ...getFieldById(data.idProductField)?.props,
-                  name: 'value',
-                }"
-                :label="
-                  getFieldById(data.idProductField)?.name || data.idProductField
-                "
-                :type="getFieldById(data.idProductField)?.type || 'string'"
-              />
-            </template>
-          </Repetable>
-        </div>
-        <div class="form-bottom">
-          <Button @click="$emit('cancel')" variant="text">{{
-            $t("cancel")
-          }}</Button>
+        <Repetable
+          name="product_real_fields"
+          :label="$t('fields')"
+          :min="productRealInternal?.product_real_fields?.length"
+          :max="productRealInternal?.product_real_fields?.length"
+        >
+          <template #default="{ data }">
+            <MagicFormField
+              :props="{
+                ...getFieldById(data.idProductField)?.props,
+                name: 'value',
+              }"
+              :label="
+                getFieldById(data.idProductField)?.name || data.idProductField
+              "
+              :type="getFieldById(data.idProductField)?.type || 'string'"
+            />
+          </template>
+        </Repetable>
+
+        <SidebarActions class="flex justify-end items-center">
           <Button
             :disabled="hasError || !hasChanged"
             :loading="loading"
@@ -50,10 +53,10 @@
             }"
             >{{ $t("save") }}</Button
           >
-        </div>
-      </div>
-    </template>
-  </Form>
+        </SidebarActions>
+      </template>
+    </Form>
+  </SidebarContent>
 </template>
 <script setup lang="ts">
 import Form from "core/src/components/form/Form.vue";
@@ -73,6 +76,9 @@ import type { ID } from "core/src/types";
 import MagicFormField from "core/src/components/magic/MagicFormField.vue";
 import useUI from "core/src/composables/ui";
 import { useI18n } from "vue-i18n";
+import SidebarActions from "core/src/components/sidebar/SidebarActions.vue";
+import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
+import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 
 interface ProductRealFormProps {
   product: Product | null;
@@ -181,16 +187,3 @@ async function handleSubmit(data: any) {
   }
 }
 </script>
-<style lang="scss">
-.form-product-real {
-  display: flex;
-  flex-direction: column;
-  gap: spacing(1);
-  .real-fields {
-    @include grid(1, 0, 2);
-  }
-  .form-bottom {
-    @include flex(row, flex-end, center, 2);
-  }
-}
-</style>

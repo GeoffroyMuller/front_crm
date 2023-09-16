@@ -4,53 +4,55 @@
     @update:open="($event) => $emit('update:open', $event)"
     padding
   >
-    <Form
-      :initial-value="{
-        recurrence_freq: recurrenceOptions[0],
-        ...event,
-        all_day_event: event?.dtend == event?.dtstart,
-      }"
-      class="edit-event-form"
-      @submit="handleSubmit"
-    >
-      <template #default="{ hasError, value }">
-        <div class="typo-title6">
-          {{ isAddAction ? $t("events.new-event") : $t("events.event") }}
-        </div>
-        <TextField
-          v-if="!hideDescription"
-          name="summary"
-          :label="$t('events.summary')"
-        />
-        <TextField
-          v-if="!hideDescription"
-          name="description"
-          multiline
-          :label="$t('events.descriptions')"
-        />
-
-        <Flex align-items="center" :gap="1">
-          <DatePicker time name="dtstart" :label="$t('events.dtstart')" />
-          <DatePicker
-            time
-            name="dtend"
-            :label="$t('events.dtend')"
-            :disabled="value.all_day_event"
+    <SidebarHead
+      :title="isAddAction ? $t('events.new-event') : $t('events.event')"
+      :actions="[]"
+    ></SidebarHead>
+    <SidebarContent>
+      <Form
+        :initial-value="{
+          recurrence_freq: recurrenceOptions[0],
+          ...event,
+          all_day_event: event?.dtend == event?.dtstart,
+        }"
+        class="flex flex-col gap-2"
+        @submit="handleSubmit"
+      >
+        <template #default="{ hasError, value }">
+          <TextField
+            v-if="!hideDescription"
+            name="summary"
+            :label="$t('events.summary')"
           />
-        </Flex>
-        <Switch name="all_day_event" :label="$t('events.all_day_event')" />
-        <Select
-          :get-option-label="
-            (opt) => $t(`events.recurrenceopts.${opt || 'none'}`)
-          "
-          :label="$t('events.recurrence')"
-          :options="recurrenceOptions"
-          name="recurrence_freq"
-          :rules="$yup.string().nullable().defined()"
-          required
-        />
-        <Flex v-if="value.recurrence_freq != recurrenceOptions[0]" :gap="1">
-          <!-- <TextField
+          <TextField
+            v-if="!hideDescription"
+            name="description"
+            multiline
+            :label="$t('events.descriptions')"
+          />
+
+          <Flex align-items="center" :gap="1">
+            <DatePicker time name="dtstart" :label="$t('events.dtstart')" />
+            <DatePicker
+              time
+              name="dtend"
+              :label="$t('events.dtend')"
+              :disabled="value.all_day_event"
+            />
+          </Flex>
+          <Switch name="all_day_event" :label="$t('events.all_day_event')" />
+          <Select
+            :get-option-label="
+              (opt) => $t(`events.recurrenceopts.${opt || 'none'}`)
+            "
+            :label="$t('events.recurrence')"
+            :options="recurrenceOptions"
+            name="recurrence_freq"
+            :rules="$yup.string().nullable().defined()"
+            required
+          />
+          <Flex v-if="value.recurrence_freq != recurrenceOptions[0]" :gap="1">
+            <!-- <TextField
             name="recurrence_interval"
             :label="$t('events.recurrence_interval')"
             type="number"
@@ -59,25 +61,31 @@
             :model-value="1"
             :rules="$yup.string().required()"
           /> -->
-          <TextField
-            name="recurrence_count"
-            :label="$t('events.recurrence_count')"
-            type="number"
-            :step="1"
-          />
-          <DatePicker
-            name="recurrence_until"
-            :label="$t('events.recurrence_until')"
-          />
-        </Flex>
+            <TextField
+              name="recurrence_count"
+              :label="$t('events.recurrence_count')"
+              type="number"
+              :step="1"
+            />
+            <DatePicker
+              name="recurrence_until"
+              :label="$t('events.recurrence_until')"
+            />
+          </Flex>
 
-        <div class="actions">
-          <Button type="submit" color="success" icon="add" :disabled="hasError">
-            {{ isAddAction ? $t("add") : $t("save") }}
-          </Button>
-        </div>
-      </template>
-    </Form>
+          <SidebarActions class="flex justify-end items-center">
+            <Button
+              type="submit"
+              color="success"
+              icon="add"
+              :disabled="hasError"
+            >
+              {{ isAddAction ? $t("add") : $t("save") }}
+            </Button>
+          </SidebarActions>
+        </template>
+      </Form>
+    </SidebarContent>
   </Sidebar>
 </template>
 <script setup lang="ts">
@@ -94,6 +102,9 @@ import useEventsStore from "@/stores/events";
 import type { Event } from "@/types/events";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import SidebarActions from "core/src/components/sidebar/SidebarActions.vue";
+import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
+import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
 
 interface EditEventSidebarProps {
   open: boolean;
@@ -173,20 +184,3 @@ async function handleSubmit(data: any) {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.edit-event-form {
-  display: flex;
-  flex-direction: column;
-  gap: spacing(1);
-  .typo-title6 {
-    margin-bottom: spacing(2);
-  }
-  .actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-top: spacing(2);
-  }
-}
-</style>
