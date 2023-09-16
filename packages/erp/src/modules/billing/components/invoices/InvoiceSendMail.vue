@@ -1,19 +1,19 @@
 <template>
   <Modal v-model:open="isOpen">
     <ModalHead :title="$t('send_by_mail')"></ModalHead>
-    <Form
-      class="invoice_send_mail"
-      @submit="send"
-      :initial-value="formInitialData"
-    >
+    <Form @submit="send" :initial-value="formInitialData">
       <template #default="{ hasError }">
-        <ModalContent>
+        <ModalContent class="grid gap-2">
           <TextField name="subject" :label="$t('subject')" />
           <HtmlEditor :label="$t('content')" name="content" />
-          <div class="pdf-line">
+          <div class="flex items-end">
             <TextField name="pdf" :label="$t('pdf')" />
             <span :style="{ paddingLeft: '2px' }">.pdf</span>
-            <IconButton @click="$emit('clickDownloadPDF')" name="download" />
+            <IconButton
+              class="ml-2"
+              @click="$emit('clickDownloadPDF')"
+              name="download"
+            />
           </div>
         </ModalContent>
 
@@ -126,28 +126,3 @@ watch(
   { immediate: true }
 );
 </script>
-
-<style scoped lang="scss">
-.invoice_send_mail {
-  display: flex;
-  flex-direction: column;
-  gap: spacing(3);
-  width: 100%;
-  .actions {
-    display: flex;
-    align-items: center;
-    gap: spacing(1);
-  }
-  .invoice_send_mail_content {
-    display: grid;
-    gap: spacing(1);
-    .pdf-line {
-      display: flex;
-      align-items: flex-end;
-      > *:last-child {
-        margin-left: spacing(1);
-      }
-    }
-  }
-}
-</style>
