@@ -1,12 +1,13 @@
 <template>
-  <Modal v-model:open="isOpen" :title="$t('send_by_mail')">
+  <Modal v-model:open="isOpen">
+    <ModalHead :title="$t('send_by_mail')"> </ModalHead>
     <Form
       class="quote_send_mail"
       @submit="send"
       :initial-value="formInitialData"
     >
       <template #default="{ hasError }">
-        <div class="quote_send_mail_content">
+        <ModalContent>
           <TextField name="subject" :label="$t('subject')" />
           <HtmlEditor :label="$t('content')" name="content" />
           <div class="pdf-line">
@@ -14,8 +15,9 @@
             <span :style="{ paddingLeft: '2px' }">.pdf</span>
             <IconButton @click="$emit('clickDownloadPDF')" name="download" />
           </div>
-        </div>
-        <ModalFooter>
+        </ModalContent>
+
+        <ModalActions>
           <Button
             color="black"
             type="button"
@@ -33,7 +35,7 @@
           >
             {{ $t("send") }}
           </Button>
-        </ModalFooter>
+        </ModalActions>
       </template>
     </Form>
   </Modal>
@@ -51,7 +53,9 @@ import useQuoteStore from "../../stores/quotes";
 import type { Quote } from "../../types";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import ModalFooter from "core/src/components/modal/ModalFooter.vue";
+import ModalContent from "core/src/components/modal/ModalContent.vue";
+import ModalActions from "core/src/components/modal/ModalActions.vue";
+import ModalHead from "core/src/components/modal/ModalHead.vue";
 
 interface QuoteSendMailProps {
   quote?: Quote | null;

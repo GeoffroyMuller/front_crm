@@ -17,33 +17,13 @@
       }"
       @click.stop
     >
-      <CardHead
-        class="!pb-0"
-        v-if="title?.length"
-        :title="title"
-        :subtitle="subtitle"
-      />
-      <CardContent>
-        <slot />
-      </CardContent>
-      <div
-        class="absolute -top-1 right-0 m-card grid place-items-center w-fit h-fit"
-      >
-        <IconButton
-          @click.stop="$emit('update:open', false)"
-          name="close"
-          size="xl"
-        />
-      </div>
+      <slot />
     </Card>
   </Teleport>
 </template>
 <script lang="ts" setup>
-import { withDefaults } from "vue";
+import { provide, withDefaults } from "vue";
 import Card from "../card/Card.vue";
-import IconButton from "../IconButton.vue";
-import CardHead from "../card/CardHead.vue";
-import CardContent from "../card/CardContent.vue";
 
 interface ModalProps {
   open: boolean;
@@ -60,6 +40,16 @@ const props = withDefaults(defineProps<ModalProps>(), {
 });
 
 const emit = defineEmits(["update:open"]);
+
+export type ModalInject = {
+  close: () => void;
+};
+
+provide<ModalInject>("modal", {
+  close: () => {
+    emit("update:open", false);
+  },
+});
 </script>
 
 <style lang="scss">

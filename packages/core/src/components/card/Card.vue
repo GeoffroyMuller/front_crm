@@ -22,7 +22,7 @@ export interface CardProps {
   rounded: Size;
 }
 
-export type CardProvide = Pick<CardProps, "padding">;
+export type CardProvide = Pick<CardProps, "padding" | "rounded">;
 
 const props = withDefaults(defineProps<CardProps>(), {
   rounded: "md",
@@ -30,5 +30,6 @@ const props = withDefaults(defineProps<CardProps>(), {
 
 provide<CardProvide>("card", {
   padding: props.padding,
+  rounded: props.rounded,
 });
 </script>

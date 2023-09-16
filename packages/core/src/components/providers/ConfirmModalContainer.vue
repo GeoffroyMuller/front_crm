@@ -4,15 +4,17 @@
     @update:open="cancelConfirm"
     :title="confirmationData?.title"
   >
-    <div>{{ confirmationData?.message }}</div>
-    <ModalFooter>
+    <ModalContent>
+      <div>{{ confirmationData?.message }}</div>
+    </ModalContent>
+    <ModalActions>
       <Button variant="text" color="black" @click="cancelConfirm">
         {{ $t("cancel") }}
       </Button>
       <Button color="primary" @click="confirmConfirm">
         {{ $t("confirm") }}
       </Button>
-    </ModalFooter>
+    </ModalActions>
   </Modal>
   <slot />
 </template>
@@ -23,7 +25,8 @@ import type { Confirmation } from "../types";
 import { isNil } from "lodash";
 import Modal from "../modal/Modal.vue";
 import Button from "../Button.vue";
-import ModalFooter from "../modal/ModalFooter.vue";
+import ModalActions from "../modal/ModalActions.vue";
+import ModalContent from "../modal/ModalContent.vue";
 
 const confirmation = ref<Confirmation | string | null>(null);
 const confirmationResponse = ref<boolean | null>(null);
