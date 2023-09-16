@@ -1,10 +1,10 @@
 <template>
   <div
-    class="sticky top-0 left-0 w-full bg-white z-30 border border-slate-200 border-solid border-l-0 border-r-0 border-t-0"
+    class="sticky top-0 left-0 w-full z-30 border border-slate-200 border-solid border-l-0 border-r-0 border-t-0"
   >
     <div class="flex items-center justify-between px-sidebarX py-1">
-      <div class="typo-title2">{{ title }}</div>
-      <div class="flex items-center gap-4 justify-end py-2">
+      <div class="typo-title2 w-max">{{ title }}</div>
+      <div class="flex items-center gap-4 justify-end py-2 w-fit">
         <template
           v-for="(a, index) of actions.filter((a) => a.main)"
           :key="a.title"
@@ -24,6 +24,7 @@
         </template>
 
         <ActionMenu
+          v-if="actions.length"
           :actions="actions"
           @action="($a) => emit('action', $a)"
           placement="bottom"
@@ -32,7 +33,11 @@
           <IconButton size="xl" name="more_horiz" default-colored />
         </ActionMenu>
         <IconButton
-          v-tooltip="{ text: $t('core.close'), placement: 'top', alignment: 'end' }"
+          v-tooltip="{
+            text: $t('core.close'),
+            placement: 'top',
+            alignment: 'end',
+          }"
           name="close"
           size="xl"
           @click="handleClose"
