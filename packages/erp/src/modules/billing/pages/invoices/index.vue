@@ -1,5 +1,5 @@
 <template>
-  <Page :title="$t('invoices')" class="grid gap-4">
+  <Page :title="$t('invoices')">
     <InvoiceFilters />
     <MagicDataTable
       :store="invoiceStore"

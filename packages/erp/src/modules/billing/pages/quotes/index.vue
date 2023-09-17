@@ -1,5 +1,5 @@
 <template>
-  <Page :title="$t('quotes')" class="grid gap-4">
+  <Page :title="$t('quotes')">
     <QuoteFilters />
     <MagicDataTable
       :store="quotestore"

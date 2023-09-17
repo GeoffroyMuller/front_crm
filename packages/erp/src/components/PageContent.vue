@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col w-full"
+    class="flex flex-col gap-4 w-full"
     :class="[
       {
         'p-4': padding === 'light',

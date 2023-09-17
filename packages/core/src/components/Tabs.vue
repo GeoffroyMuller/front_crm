@@ -1,19 +1,21 @@
 <template>
-  <div class="tabs" ref="tabRef">
-    <div
-      v-for="tab of tabs"
-      tabindex="0"
-      @keyup.enter="handleClickTab(tab)"
-      :key="tab.id"
-      class="tab"
-      :class="{ selected: tab.id == currentTab }"
-      @click="handleClickTab(tab)"
-    >
-      {{ tab.title }}
+  <div>
+    <div class="tabs" ref="tabRef">
+      <div
+        v-for="tab of tabs"
+        tabindex="0"
+        @keyup.enter="handleClickTab(tab)"
+        :key="tab.id"
+        class="tab"
+        :class="{ selected: tab.id == currentTab }"
+        @click="handleClickTab(tab)"
+      >
+        {{ tab.title }}
+      </div>
     </div>
+    <slot :name="currentTab" :tab="currentTab" />
+    <slot :tab="currentTab" />
   </div>
-  <slot :name="currentTab" :tab="currentTab" />
-  <slot :tab="currentTab" />
 </template>
 
 <script setup lang="ts">
