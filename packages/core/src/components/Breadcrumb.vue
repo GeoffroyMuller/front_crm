@@ -10,7 +10,7 @@
         class="inline-block decoration-transparent flex items-center gap-1 text-gray-400 hover:text-primary-400"
         :to="item.to"
       >
-        <Icon v-if="item.icon" :name="item.icon" />
+        <Icon v-if="item.icon" :name="item.icon" class="!text-[1.1rem]" />
         {{ item.label }}
       </RouterLink>
       <span class="select-none" v-if="index !== items.length - 1">{{ ">" }}</span>
