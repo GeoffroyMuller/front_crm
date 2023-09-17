@@ -1,5 +1,11 @@
 <template>
   <Page :title="$t('reservations')">
+    <MagicFilterBar
+      mapSearch="$contains.description"
+      :filters="[]"
+      :map="{}"
+      :store="reservationStore"
+    />
     <MagicDataTable
       :store="reservationStore"
       :columns="[
@@ -125,6 +131,7 @@ import Button from "core/src/components/Button.vue";
 import ReservationView from "@/components/reservations/ReservationView.vue";
 import useUI from "core/src/composables/ui";
 import ReservationPrepareProductsReal from "@/components/reservations/ReservationPrepareProductsReal.vue";
+import MagicFilterBar from "core/src/components/magic/MagicFilterBar.vue";
 
 const { toast, confirm } = useUI();
 

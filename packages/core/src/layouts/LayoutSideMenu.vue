@@ -2,7 +2,7 @@
   <header
     class="flex justify-between items-center w-full bg-header h-headerHeight px-5 fixed top-0 left-0 z-header"
   >
-    <div class="flex items-center">
+    <div class="flex items-center gap-3">
       <IconButton
         @click="toggleNavMini()"
         name="menu"
@@ -13,6 +13,17 @@
         }"
         color="white"
       />
+    </div>
+    <div
+      class="flex items-center justify-center gap-3 !text-slate-200 typo-title6 [&>span]:cursor-pointer"
+    >
+      <span class="flex gap-2 items-center w-fit hover:text-white"
+        ><Icon name="home" />Home</span
+      ><span>{{ ">" }}</span
+      ><span class="hover:text-white">Facturation</span> <span>{{ ">" }}</span>
+      <span class="hover:text-white">Devis</span>
+      <span>{{ ">" }}</span>
+      <span class="hover:text-white">Devix #1</span>
     </div>
     <div class="flex gap-4 items-center justify-end text-white">
       <slot name="header-right" />

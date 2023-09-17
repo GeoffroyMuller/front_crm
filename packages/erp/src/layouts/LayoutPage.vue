@@ -9,6 +9,7 @@
     }"
   >
     <template #header-right>
+      <IconButton name="search" color="primary" default-colored />
       <ActionMenu
         :actions="[
           {
