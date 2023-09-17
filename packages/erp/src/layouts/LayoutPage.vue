@@ -89,7 +89,7 @@ const menu = ref<MenuItem[]>([
     children: [
       {
         key: "events",
-        title: "menu.events",
+        title: "menu.calendar",
         icon: "calendar_month",
         path: { name: "events" },
       },
@@ -101,7 +101,7 @@ const menu = ref<MenuItem[]>([
         children: [
           {
             key: "events",
-            title: "menu.events",
+            title: "menu.calendar",
             icon: "calendar_month",
             path: { name: "events" },
           },
@@ -117,7 +117,7 @@ const menu = ref<MenuItem[]>([
   }, */
   {
     key: "events",
-    title: "menu.events",
+    title: "menu.calendar",
     icon: "calendar_month",
     path: { name: "events" },
   },

@@ -4,7 +4,7 @@
   <div v-else class="page-container">
     <div
       v-if="!hideTitleBar"
-      class="h-[75px] border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0 px-4 flex items-center gap-6"
+      class="h-[85px] border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0 px-4 flex items-center gap-6"
     >
       <div class="grid gap-2 items-center justify-start w-fit">
         <Text

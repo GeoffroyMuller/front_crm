@@ -48,7 +48,7 @@ module.exports = {
       },
       backgroundColor: {
         inputDisabled: "f0f0f0",
-        header: "#818cf8",
+        header: "#2e2e30",
         actions: "rgb(249 250 251 / var(--tw-bg-opacity))",
       },
       borderColor: {
