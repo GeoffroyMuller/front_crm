@@ -1,5 +1,5 @@
 <template>
-  <Page :title="$t('products')">
+  <Page :title="$t('products')" class="grid gap-4">
     <MagicFilterBar
       mapSearch="$contains.name"
       :filters="[]"

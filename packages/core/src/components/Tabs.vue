@@ -69,13 +69,8 @@ watch(
 
 <style lang="scss">
 .tabs {
-  display: flex;
-  align-items: center;
-  gap: spacing(2);
-  user-select: none;
-  margin-bottom: spacing(1);
-  position: relative;
-  width: fit-content;
+  @apply flex items-center gap-2 mb-4 select-none relative w-fit;
+  
   &::before {
     content: " ";
     width: var(--tab-indicator-width, 0);

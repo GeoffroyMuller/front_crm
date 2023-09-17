@@ -1,8 +1,7 @@
 <template>
-  <Page :title="$t('quotes')">
+  <Page :title="$t('quotes')" class="grid gap-4">
     <QuoteFilters />
     <MagicDataTable
-      class="mt-2"
       :store="quotestore"
       :columns="[
         {
