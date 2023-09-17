@@ -9,7 +9,7 @@
       <div class="flex gap-5 items-center">
         <div
           v-if="icon"
-          class="bg-primary-400 shadow-md shadow-primary-200 rounded grid place-items-center w-12 h-12"
+          class="bg-gradient-245 from-primary-400 to-primary-300 shadow-md shadow-primary-200 rounded grid place-items-center w-12 h-12"
         >
           <Icon :name="icon" color="white" class="!text-3xl" />
         </div>
