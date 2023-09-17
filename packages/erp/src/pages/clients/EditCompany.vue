@@ -1,5 +1,6 @@
 <template>
   <Page
+    icon="person"
     :title="title"
     :loading="loadingPage"
     :breadcrumb="[

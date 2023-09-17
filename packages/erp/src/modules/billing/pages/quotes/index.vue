@@ -5,6 +5,7 @@
       { label: $t('menu.home'), icon: 'home', to: '/' },
       { label: $t('menu.quotes'), to: { name: 'quotes' } },
     ]"
+    icon="description"
   >
     <QuoteFilters />
     <MagicDataTable

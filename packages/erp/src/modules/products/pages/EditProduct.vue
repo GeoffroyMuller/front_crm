@@ -1,6 +1,6 @@
 <template>
   <Page
-    back
+    icon="inventory_2"
     :title="
       id == 'new' && product == null
         ? $t('pages.edit-product.new-product')

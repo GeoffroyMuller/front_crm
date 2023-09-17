@@ -6,16 +6,24 @@
       v-if="!hideTitleBar"
       class="h-[85px] border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0 px-4 flex items-center gap-6"
     >
-      <div class="grid gap-2 items-center justify-start w-fit">
-        <Text
-          v-if="title?.length"
-          typo="title1"
-          html-component="div"
-          weight="bold"
+      <div class="flex gap-5 items-center">
+        <div
+          v-if="icon"
+          class="bg-primary-400 shadow-md shadow-primary-200 rounded grid place-items-center w-12 h-12"
         >
-          {{ title }}
-        </Text>
-        <Breadcrumb v-if="breadcrumb?.length" :items="breadcrumb" />
+          <Icon :name="icon" color="white" class="!text-3xl" />
+        </div>
+        <div class="grid gap-2 items-center justify-start w-fit">
+          <Text
+            v-if="title?.length"
+            typo="title1"
+            html-component="div"
+            weight="bold"
+          >
+            {{ title }}
+          </Text>
+          <Breadcrumb v-if="breadcrumb?.length" :items="breadcrumb" />
+        </div>
       </div>
       <!-- <div class="h-full relative" v-if="tabs">
         <div class="absolute bottom-0 left-0">
@@ -37,6 +45,8 @@ import Breadcrumb, {
 } from "core/src/components/Breadcrumb.vue";
 import Text from "core/src/components/Text.vue";
 import Tabs, { type Tab } from "core/src/components/Tabs.vue";
+import Icon from "core/src/components/Icon.vue";
+import type { IconName } from "core/src/components/types";
 
 interface PageProps {
   title: string;
@@ -47,6 +57,7 @@ interface PageProps {
   breadcrumb?: BreadcrumbProps["items"];
   hideTitleBar?: boolean;
   tabs?: Tab[];
+  icon?: IconName;
 }
 
 withDefaults(defineProps<PageProps>(), {

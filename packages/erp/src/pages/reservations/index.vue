@@ -1,6 +1,7 @@
 <template>
   <Page
     :title="$t('reservations')"
+    icon="post_add"
     :breadcrumb="[
       { label: $t('menu.home'), icon: 'home', to: '/' },
       { label: $t('menu.reservations'), to: { name: 'reservations' } },

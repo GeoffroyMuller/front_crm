@@ -3,7 +3,7 @@
     rounded="full"
     v-bind="$attrs"
     :label="$props.label || $t('search')"
-    input-class="input-style-card shadow-card"
+    input-class="input-style-card shadow-card h-[37px]"
     :placeholder="$props.placeholder || ''"
   >
     <template #icon>

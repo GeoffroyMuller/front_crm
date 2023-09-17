@@ -20,6 +20,11 @@
     </div>
   </header>
   <div class="md:flex w-full h-screenMinusHeaderHeight mt-headerHeight">
+    <div
+      class="md:hidden fixed top-0 left-0 w-screen h-screen z-10"
+      @click="isNavMini = true"
+      v-if="!isNavMini"
+    />
     <nav
       class="flex flex-col justify-between bg-white py-2 transition-all h-full shadow-nav z-nav max-md:fixed max-md:top-headerHeight left-0 overflow-hidden"
       :class="{
@@ -164,6 +169,7 @@ import Menu from "../components/Menu.vue";
 import { provide } from "vue";
 import type { LayoutSideMenuProvide, MenuItem } from "./types";
 import useLocalStorage from "../composables/localStorage";
+import useBreakpoints from "../composables/breakpoints";
 
 interface LayoutSideMenuProps {
   menu: MenuItem[];
@@ -177,6 +183,7 @@ const toggleNavMini = () => (isNavMini.value = !isNavMini.value);
 
 const router = useRouter();
 const route = useRoute();
+const breakpoints = useBreakpoints();
 
 useKeyboardShortcut("mod+b", (e) => {
   isNavMini.value = !isNavMini.value;

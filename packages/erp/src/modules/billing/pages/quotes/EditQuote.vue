@@ -1,8 +1,8 @@
 <template>
   <Page
+    icon="description"
     :title="title"
     :loading="loadingPage"
-    back
     class="relative"
     :padding="null"
     :breadcrumb="[

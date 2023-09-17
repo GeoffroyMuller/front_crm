@@ -9,6 +9,7 @@
       { id: 'companies', title: $t('companies') },
       { id: 'clients', title: $t('customers') },
     ]"
+    icon="person"
   >
     <Tabs
       :tabs="[

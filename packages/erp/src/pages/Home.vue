@@ -1,5 +1,5 @@
 <template>
-  <Page :title="$t('home')">
+  <Page :title="$t('home')" icon="home">
     <Demo />
   </Page>
 </template>

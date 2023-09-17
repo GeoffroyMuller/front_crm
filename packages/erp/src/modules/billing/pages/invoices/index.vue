@@ -5,6 +5,7 @@
       { label: $t('menu.home'), icon: 'home', to: '/' },
       { label: $t('menu.invoices'), to: { name: 'invoices' } },
     ]"
+    icon="request_quote"
   >
     <InvoiceFilters />
     <MagicDataTable

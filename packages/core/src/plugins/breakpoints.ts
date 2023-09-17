@@ -11,8 +11,7 @@ export interface $breakpoints {
   down: ComputedRef<UpDownBreakpoints>;
 }
 
-// TODO: get breakpoints from css
-//import SCSSvariables from "core/src/assets/style/_variables.scss";
+// TODO: get breakpoints tailwindcss
 export const gridBreakpoints = {
   xs: 0,
   sm: 576,

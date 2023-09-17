@@ -5,6 +5,7 @@
       { label: $t('menu.home'), icon: 'home', to: '/' },
       { label: $t('settings'), to: { name: 'settings' } },
     ]"
+    icon="settings"
   >
     <Tabs :tabs="settings">
       <template
