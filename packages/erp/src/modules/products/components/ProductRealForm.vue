@@ -13,7 +13,7 @@
       shortcuts
       :initial-value="productRealInternal"
       @submit="handleSubmit"
-      class="flex flex-col gap-2"
+      class="flex flex-col gap-4"
     >
       <template #default="{ hasError, hasChanged }">
         <TextField

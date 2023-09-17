@@ -1,5 +1,5 @@
 <template>
-  <div class="px-sidebarX py-4">
+  <div class="px-sidebarX py-content">
     <slot />
   </div>
 </template>

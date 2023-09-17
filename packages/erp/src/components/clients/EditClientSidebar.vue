@@ -10,7 +10,7 @@
     >
     </SidebarHead>
     <SidebarContent>
-      <Form :initial-value="client" @submit="handleSubmit" class="grid gap-2">
+      <Form :initial-value="client" @submit="handleSubmit" class="grid gap-4">
         <template #default="{ hasError }">
           <TextField name="firstname" :label="$t('firstname')" />
           <TextField name="lastname" :label="$t('lastname')" />

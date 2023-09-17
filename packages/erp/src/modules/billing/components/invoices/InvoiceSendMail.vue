@@ -23,6 +23,7 @@
             type="button"
             @click="$emit('close')"
             :disabled="loading"
+            variant="text"
           >
             {{ $t("cancel") }}
           </Button>

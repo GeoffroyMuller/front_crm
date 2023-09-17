@@ -324,8 +324,6 @@ watch(
 <style lang="scss" scoped>
 .table {
   overflow-x: auto;
-  padding: 5px;
-  margin: -5px;
   width: 100%;
 }
 .table-container {

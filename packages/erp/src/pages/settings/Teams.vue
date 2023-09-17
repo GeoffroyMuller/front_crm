@@ -43,7 +43,7 @@
       <Form :initial-value="userSelected" @submit="handleSubmit">
         <template #default="{ hasError }">
           <Grid :gap="3">
-            <Grid :gap="1">
+            <Grid :gap="2">
               <TextField name="firstname" :label="$t('firstname')" />
               <TextField name="lastname" :label="$t('lastname')" />
               <TextField name="email" :label="$t('email')" />

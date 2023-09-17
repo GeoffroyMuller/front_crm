@@ -2,7 +2,7 @@
   <div
     class="sticky h-fit top-content grid gap-6 place-items-center max-xl:hidden"
   >
-    <Card padding>
+    <Card padding class="min-w-[310px]">
       <Text typo="title7">
         {{ $t("pages.edit-quote.total-global") }}
       </Text>

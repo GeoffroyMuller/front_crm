@@ -121,6 +121,7 @@ import useUI from "core/src/composables/ui";
 import type { Company } from "@/types/company";
 import { useI18n } from "vue-i18n";
 import IconButton from "core/src/components/IconButton.vue";
+import type { ConfirmFunc } from "core/src/components/types";
 
 const selected = ref<Array<Client>>([]);
 const isSidebarOpen = ref(false);
@@ -130,7 +131,11 @@ const { confirm, toast } = useUI();
 const { t } = useI18n();
 
 async function deleteCompany(company: Company) {
-  if (await confirm(t("pages.clients.sure_delete_company"))) {
+  const confirmConfig: ConfirmFunc["arguments"] = {
+    message: t("pages.clients.sure_delete_company"),
+    type: "danger",
+  };
+  if (await confirm(confirmConfig)) {
     try {
       await companiesStore.delete(company.id);
       toast({
@@ -149,7 +154,11 @@ async function deleteCompany(company: Company) {
 }
 
 async function deleteClient(client: Client) {
-  if (await confirm(t("pages.clients.sure_delete_client"))) {
+  const confirmConfig: ConfirmFunc["arguments"] = {
+    message: t("pages.clients.sure_delete_client"),
+    type: "danger",
+  };
+  if (await confirm(confirmConfig)) {
     try {
       await clientsStore.delete(client.id);
       toast({

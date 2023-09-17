@@ -33,7 +33,7 @@
       <Form :initial-value="roleSelected" @submit="handleSubmit">
         <template #default="{ hasError, value }">
           <Grid :gap="3">
-            <Grid :gap="1">
+            <Grid :gap="2">
               <TextField name="name" :label="$t('settings-page.role.rolename')">
               </TextField>
               <Grid :mb="1" :mt="1">
