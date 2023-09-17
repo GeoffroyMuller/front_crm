@@ -1,6 +1,7 @@
 <template>
   <Breadcrumb
     :items="[
+      { label: 'Home', to: '', icon: 'home' },
       { label: 'Test', to: 'test' },
       { label: 'Test 2', to: 'test2' },
     ]"

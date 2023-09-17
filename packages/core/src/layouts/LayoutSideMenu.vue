@@ -14,17 +14,7 @@
         color="white"
       />
     </div>
-    <div
-      class="flex items-center justify-center gap-3 !text-slate-200 typo-title6 [&>span]:cursor-pointer"
-    >
-      <span class="flex gap-2 items-center w-fit hover:text-white"
-        ><Icon name="home" />Home</span
-      ><span>{{ ">" }}</span
-      ><span class="hover:text-white">Facturation</span> <span>{{ ">" }}</span>
-      <span class="hover:text-white">Devis</span>
-      <span>{{ ">" }}</span>
-      <span class="hover:text-white">Devix #1</span>
-    </div>
+
     <div class="flex gap-4 items-center justify-end text-white">
       <slot name="header-right" />
     </div>
