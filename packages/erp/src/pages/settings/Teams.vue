@@ -95,6 +95,7 @@ import { useI18n } from "vue-i18n";
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 import SidebarActions from "core/src/components/sidebar/SidebarActions.vue";
 import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
+import type { ConfirmFunc } from "core/src/components/types";
 
 const emit = defineEmits(["add", "update"]);
 
@@ -159,7 +160,11 @@ async function handleSubmit(data: User) {
 }
 
 async function deleteUser(user: User) {
-  if (await confirm(t("settings-page.teams.sure_delete_user"))) {
+  const confirmConfig: ConfirmFunc["arguments"] = {
+    message: t("settings-page.teams.sure_delete_user"),
+    type: "danger",
+  };
+  if (await confirm(confirmConfig)) {
     try {
       await userStore.delete(user.id);
       toast({

@@ -2,7 +2,7 @@
   <Modal :open="confirmOpen" @update:open="cancelConfirm">
     <ModalHead :title="confirmationData?.title || $t('core.confirmation')">
       <template #start>
-        <Icon name="warning" color="warning" />
+        <Icon :name="icon" :color="color" />
       </template>
     </ModalHead>
     <ModalContent class="flex items-center gap-2">
@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref, computed, provide, watch } from "vue";
-import type { Confirmation } from "../types";
+import type { Color, Confirmation, IconName } from "../types";
 import { isNil } from "lodash";
 import Modal from "../modal/Modal.vue";
 import Button from "../Button.vue";
@@ -36,10 +36,36 @@ const confirmationResponse = ref<boolean | null>(null);
 
 const confirmOpen = ref(false);
 
+const icon = computed<IconName>(() => {
+  switch (confirmationData?.value?.type) {
+    case "success":
+      return "check";
+    case "danger":
+      return "dangerous";
+    case "warning":
+      return "warning";
+    default:
+      return "info";
+  }
+});
+
+const color = computed<Color>(() => {
+  switch (confirmationData?.value?.type) {
+    case "success":
+      return "success";
+    case "danger":
+      return "danger";
+    case "warning":
+      return "warning";
+    default:
+      return "primary";
+  }
+});
+
 const confirmationData = computed<Confirmation | null>(() => {
   const confirmationDefaultData = {
     title: "",
-    type: "info",
+    type: "warning",
   };
 
   if (isNil(confirmation.value)) {

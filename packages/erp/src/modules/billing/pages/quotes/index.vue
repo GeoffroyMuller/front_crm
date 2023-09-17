@@ -2,6 +2,7 @@
   <Page :title="$t('quotes')">
     <QuoteFilters />
     <MagicDataTable
+      class="mt-2"
       :store="quotestore"
       :columns="[
         {

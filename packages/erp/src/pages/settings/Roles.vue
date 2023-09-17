@@ -87,6 +87,7 @@ import IconButton from "core/src/components/IconButton.vue";
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
 import SidebarActions from "core/src/components/sidebar/SidebarActions.vue";
+import type { ConfirmFunc } from "core/src/components/types";
 
 const emit = defineEmits(["add", "update"]);
 
@@ -167,7 +168,11 @@ async function handleSubmit(data: Role) {
 }
 
 async function deleteRole(role: Role) {
-  if (await confirm(t("settings-page.role.sure_delete_role"))) {
+  const confirmConfig: ConfirmFunc["arguments"] = {
+    message: t("settings-page.role.sure_delete_role"),
+    type: "danger",
+  };
+  if (await confirm(confirmConfig)) {
     try {
       await roleStore.delete(role.id);
       toast({

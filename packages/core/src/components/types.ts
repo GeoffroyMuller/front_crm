@@ -14,12 +14,12 @@ export type ConfirmFunc = (c: Confirmation | string) => Promise<boolean>;
 
 /* export type ConfirmationActions = {
   action: () => void;
-  title: string;
+  title?: string;
 }; */
 export interface Confirmation {
   type?: Notification["type"];
   message: string;
-  title: string;
+  title?: string | null | undefined;
   // actions?: ConfirmationActions[];
 }
 
