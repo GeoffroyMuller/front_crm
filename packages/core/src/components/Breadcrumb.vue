@@ -23,7 +23,7 @@ import type { RouteLocationRaw } from "vue-router";
 import type { IconName } from "./types";
 import Icon from "./Icon.vue";
 
-interface BreadcrumbProps {
+export type BreadcrumbProps = {
   items: { label: string; to: RouteLocationRaw; icon?: IconName }[];
 }
 

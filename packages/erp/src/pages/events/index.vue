@@ -1,5 +1,5 @@
 <template>
-  <Page :title="$t('menu.events')" :padding="null">
+  <Page :title="$t('menu.events')" :padding="null" hide-title-bar>
     <Calendar
       @click="($d) => clickOnDate($d.dayjs)"
       :events="events"

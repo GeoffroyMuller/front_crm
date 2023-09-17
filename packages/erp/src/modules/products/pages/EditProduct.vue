@@ -7,6 +7,14 @@
         : product?.name || ''
     "
     :loading="loadingPage"
+    :breadcrumb="[
+      { label: $t('menu.home'), icon: 'home', to: '/' },
+      { label: $t('menu.products'), to: { name: 'products' } },
+      {
+        label: product?.name || $t('menu.product'),
+        to: { name: $route.name, params: $route.params },
+      },
+    ]"
   >
     <div class="edit-product">
       <Tabs v-if="id != 'new'" :tabs="productTabs">

@@ -1,5 +1,16 @@
 <template>
-  <Page :title="title" :loading="loadingPage" back>
+  <Page
+    :title="title"
+    :loading="loadingPage"
+    :breadcrumb="[
+      { label: $t('menu.home'), icon: 'home', to: '/' },
+      { label: $t('menu.clients'), to: { name: 'customers' } },
+      {
+        label: title,
+        to: { name: $route.name, params: $route.params },
+      },
+    ]"
+  >
     <EditClientSidebar
       v-model:open="editClientOpen"
       @update="editClientOpen = false"

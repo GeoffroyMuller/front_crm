@@ -130,7 +130,12 @@
     "projects-calendar": "Calendrier",
     "projects": "Projets",
     "billing": "Facturation",
-    "events": "Evenements"
+    "events": "Evenements",
+    "home": "Accueil",
+    "quotes": "Devis",
+    "products": "Produits",
+    "product": "Produit",
+    "clients": "Clients"
   },
   "events": {
     "new-event": "Nouvel Evenement",

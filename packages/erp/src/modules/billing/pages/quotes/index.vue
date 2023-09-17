@@ -1,5 +1,11 @@
 <template>
-  <Page :title="$t('quotes')">
+  <Page
+    :title="$t('quotes')"
+    :breadcrumb="[
+      { label: $t('menu.home'), icon: 'home', to: '/' },
+      { label: $t('menu.quotes'), to: { name: 'quotes' } },
+    ]"
+  >
     <QuoteFilters />
     <MagicDataTable
       :store="quotestore"
