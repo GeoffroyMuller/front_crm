@@ -17,11 +17,11 @@
         </Text>
         <Breadcrumb v-if="breadcrumb?.length" :items="breadcrumb" />
       </div>
-      <div class="h-full relative">
+      <!-- <div class="h-full relative" v-if="tabs">
         <div class="absolute bottom-0 left-0">
-          <!--  TODO: display page tabs here  -->
+          <Tabs :tabs="tabs"> </Tabs>
         </div>
-      </div>
+      </div> -->
     </div>
     <PageContent :class="$props.class" :padding="padding">
       <slot />
@@ -36,6 +36,7 @@ import Breadcrumb, {
   type BreadcrumbProps,
 } from "core/src/components/Breadcrumb.vue";
 import Text from "core/src/components/Text.vue";
+import Tabs, { type Tab } from "core/src/components/Tabs.vue";
 
 interface PageProps {
   title: string;
@@ -45,6 +46,7 @@ interface PageProps {
   padding?: PageContentProps["padding"];
   breadcrumb?: BreadcrumbProps["items"];
   hideTitleBar?: boolean;
+  tabs?: Tab[];
 }
 
 withDefaults(defineProps<PageProps>(), {

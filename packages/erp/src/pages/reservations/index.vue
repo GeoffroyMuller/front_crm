@@ -1,5 +1,11 @@
 <template>
-  <Page :title="$t('reservations')">
+  <Page
+    :title="$t('reservations')"
+    :breadcrumb="[
+      { label: $t('menu.home'), icon: 'home', to: '/' },
+      { label: $t('menu.reservations'), to: { name: 'reservations' } },
+    ]"
+  >
     <MagicFilterBar
       mapSearch="$contains.description"
       :filters="[]"

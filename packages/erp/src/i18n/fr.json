@@ -135,7 +135,9 @@
     "quotes": "Devis",
     "products": "Produits",
     "product": "Produit",
-    "clients": "Clients"
+    "clients": "Clients",
+    "invoices": "Factures",
+    "reservations": "Reservation"
   },
   "events": {
     "new-event": "Nouvel Evenement",

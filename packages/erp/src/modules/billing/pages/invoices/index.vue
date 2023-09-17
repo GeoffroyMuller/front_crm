@@ -1,5 +1,11 @@
 <template>
-  <Page :title="$t('invoices')">
+  <Page
+    :title="$t('invoices')"
+    :breadcrumb="[
+      { label: $t('menu.home'), icon: 'home', to: '/' },
+      { label: $t('menu.invoices'), to: { name: 'invoices' } },
+    ]"
+  >
     <InvoiceFilters />
     <MagicDataTable
       :store="invoiceStore"

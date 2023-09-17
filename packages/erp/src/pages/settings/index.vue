@@ -1,5 +1,11 @@
 <template>
-  <Page :title="$t('settings')">
+  <Page
+    :title="$t('settings')"
+    :breadcrumb="[
+      { label: $t('menu.home'), icon: 'home', to: '/' },
+      { label: $t('settings'), to: { name: 'settings' } },
+    ]"
+  >
     <Tabs :tabs="settings">
       <template
         v-for="setting in settings"
