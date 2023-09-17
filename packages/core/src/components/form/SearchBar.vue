@@ -2,7 +2,7 @@
   <TextField
     rounded="full"
     v-bind="$attrs"
-    input-class="input-style-card shadow-card h-[37px]"
+    input-class="input-style-card shadow-card h-[39px]"
     :placeholder="$props.placeholder || $t('search')"
   >
     <template #icon>
