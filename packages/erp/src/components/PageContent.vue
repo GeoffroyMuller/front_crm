@@ -1,10 +1,10 @@
 <template>
   <div
-    class="flex flex-col gap-4 w-full"
+    class="flex flex-col gap-content w-full"
     :class="[
       {
-        'p-4': padding === 'light',
-        'py-4 padding-large': padding === 'large',
+        'px-contentX py-content': padding === 'light',
+        'py-content padding-large': padding === 'large',
       },
     ]"
   >

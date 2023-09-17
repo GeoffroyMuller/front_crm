@@ -24,13 +24,15 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
-        card: "2rem",
         headerHeight: "56px",
         screenMinusHeaderHeight: "calc(100vh - 56px)",
+        content: "1.5rem",
       },
       padding: {
+        card: "2rem",
         repetable: "1.4rem",
         sidebarX: "1rem",
+        contentX: "1rem",
       },
       boxShadow: {
         card: "0 1px 3px 0 rgb(0 0 0 / 7%)",

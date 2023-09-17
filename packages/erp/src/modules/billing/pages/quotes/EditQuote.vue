@@ -32,7 +32,7 @@
         :initial-value="quote"
         @submit="save"
         v-model="formValue"
-        class="grid xl:grid-cols-[1fr_min-content] gap-6"
+        class="grid xl:grid-cols-[1fr_min-content] gap-content"
         @update:has-changed="($hc: boolean) => (formHasChanged = $hc)"
       >
         <template #default="{ hasError, hasChanged }">
@@ -44,8 +44,8 @@
             icon="save"
             class="xl:hidden"
           />
-          <div class="grid gap-6">
-            <div class="grid md:grid-cols-2 w-full gap-6">
+          <div class="grid gap-content">
+            <div class="grid md:grid-cols-2 w-full gap-content">
               <Card padding class="flex flex-col">
                 <TextField name="name" :label="$t('title')" />
                 <div

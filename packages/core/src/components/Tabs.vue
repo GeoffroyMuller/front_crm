@@ -71,7 +71,7 @@ watch(
 
 <style lang="scss">
 .tabs {
-  @apply flex items-center gap-2 mb-4 select-none relative w-fit;
+  @apply flex items-center gap-4 mb-content select-none relative w-fit;
   
   &::before {
     content: " ";

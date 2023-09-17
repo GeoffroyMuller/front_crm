@@ -326,6 +326,7 @@ watch(
   overflow-x: auto;
   padding: 5px;
   margin: -5px;
+  width: 100%;
 }
 .table-container {
   overflow-x: auto; // TODO : pourquoi il prend la taille des menu en compte pour sa taille

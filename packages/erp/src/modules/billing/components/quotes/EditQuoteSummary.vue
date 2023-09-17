@@ -1,5 +1,7 @@
 <template>
-  <div class="sticky h-fit top-4 grid gap-6 place-items-center max-xl:hidden">
+  <div
+    class="sticky h-fit top-content grid gap-6 place-items-center max-xl:hidden"
+  >
     <Card padding>
       <Text typo="title7">
         {{ $t("pages.edit-quote.total-global") }}
