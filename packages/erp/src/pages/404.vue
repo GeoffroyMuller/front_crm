@@ -1,7 +1,14 @@
 <template>
-  <div class="page-404">
-    <div class="text-container">
-      {{ $t("page-not-found") }}
+  <div class="grid place-items-center h-screenMinusHeaderHeight relative">
+    <div class="grid place-items-center gap-content transform -translate-y-14">
+      <div
+        class="text-5xl bg-gradient-245 from-primary-400 to-primary-300 text-transparent bg-clip-text font-semibold"
+      >
+        404
+      </div>
+      <Text typo="title5">
+        {{ $t("page-not-found") }}
+      </Text>
       <Button variant="text" icon="chevron_left" @click="$router.go(-1)">
         {{ $t("back") }}
       </Button>
@@ -11,17 +18,5 @@
 
 <script lang="ts" setup>
 import Button from "core/src/components/Button.vue";
+import Text from "core/src/components/Text.vue";
 </script>
-
-<style lang="scss" scoped>
-.page-404 {
-  display: grid;
-  place-items: center;
-  height: 100vh;
-  position: relative;
-  .text-container {
-    display: grid;
-    place-items: center;
-  }
-}
-</style>
