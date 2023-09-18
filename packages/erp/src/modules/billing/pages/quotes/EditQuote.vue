@@ -422,12 +422,20 @@ useUI({
           },
         },
         {
+          action: "confirm",
+          label: t("core.quite_without_save"),
+          buttonProps: {
+            color: "danger",
+             variant: "text",
+          },
+        },
+        {
           action: async () => {
             return save(formValue);
           },
           label: t("core.save_and_quite"),
           buttonProps: {
-            color: "warning",
+            color: "success",
           },
         },
       ],
