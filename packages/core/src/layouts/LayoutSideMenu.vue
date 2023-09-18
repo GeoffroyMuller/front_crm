@@ -209,4 +209,10 @@ provide<LayoutSideMenuProvide>("LayoutSideMenu", {
 .tree-items.selected {
   @apply !text-primary-600;
 }
+/* .tree-menu::before {
+  @apply bg-primary-400 w-[1.5px] absolute;
+  height: var(--selected-height, 0);
+  top: var(--selected-top, 0);
+  content: " ";
+} */
 </style>
