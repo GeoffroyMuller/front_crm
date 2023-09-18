@@ -47,6 +47,8 @@ router.beforeEach(async (from, to, next) => {
     next();
     changePageConfirmationMessage.value = undefined;
     isPageChangeBlocked.value = undefined;
+  } else {
+    next(false);
   }
 });
 
