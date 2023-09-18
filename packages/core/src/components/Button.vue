@@ -58,7 +58,7 @@ import type { Color, IconName } from "./types";
 import Icon from "./Icon.vue";
 import type { Typo } from "core/src/components/types";
 
-interface ButtonProps {
+export interface ButtonProps {
   color?: Color;
   disabled?: boolean;
   loading?: boolean;

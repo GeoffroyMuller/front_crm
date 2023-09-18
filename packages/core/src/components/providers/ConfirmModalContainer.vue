@@ -9,11 +9,13 @@
       <div>{{ confirmationData?.message }}</div>
     </ModalContent>
     <ModalActions>
-      <Button variant="text" color="black" @click="cancelConfirm">
-        {{ $t("cancel") }}
-      </Button>
-      <Button color="primary" @click="confirmConfirm">
-        {{ $t("confirm") }}
+      <Button
+        v-for="action of confirmationData?.actions"
+        :key="action.label"
+        v-bind="action.buttonProps || {}"
+        @click="getActionFunc(action)"
+      >
+        {{ action.label }}
       </Button>
     </ModalActions>
   </Modal>
@@ -22,7 +24,12 @@
 
 <script setup lang="ts">
 import { ref, computed, provide, watch } from "vue";
-import type { Color, Confirmation, IconName } from "../types";
+import type {
+  Color,
+  Confirmation,
+  ConfirmationActions,
+  IconName,
+} from "../types";
 import { isNil } from "lodash";
 import Modal from "../modal/Modal.vue";
 import Button from "../Button.vue";
@@ -30,11 +37,38 @@ import ModalActions from "../modal/ModalActions.vue";
 import ModalContent from "../modal/ModalContent.vue";
 import ModalHead from "../modal/ModalHead.vue";
 import Icon from "../Icon.vue";
+import { useI18n } from "vue-i18n";
 
 const confirmation = ref<Confirmation | string | null>(null);
 const confirmationResponse = ref<boolean | null>(null);
 
 const confirmOpen = ref(false);
+
+async function getActionFunc(action: ConfirmationActions) {
+  if (action.action === "confirm") {
+    return confirmConfirm();
+  }
+  if (action.action === "cancel") {
+    return cancelConfirm();
+  }
+
+  const actionResult = action.action();
+  if (typeof actionResult === "boolean") {
+    if (actionResult) {
+      return confirmConfirm();
+    } else {
+      return cancelConfirm();
+    }
+  } else {
+    if (await actionResult) {
+      return confirmConfirm();
+    } else {
+      return cancelConfirm();
+    }
+  }
+}
+
+const { t } = useI18n();
 
 const icon = computed<IconName>(() => {
   switch (confirmationData?.value?.type) {
@@ -66,6 +100,23 @@ const confirmationData = computed<Confirmation | null>(() => {
   const confirmationDefaultData = {
     title: "",
     type: "warning",
+    actions: [
+      {
+        action: "cancel",
+        label: t("cancel"),
+        buttonProps: {
+          variant: "text",
+          color: "black",
+        },
+      },
+      {
+        action: "confirm",
+        label: t("confirm"),
+        buttonProps: {
+          color: "primary",
+        },
+      },
+    ],
   };
 
   if (isNil(confirmation.value)) {
@@ -102,10 +153,12 @@ async function confirm(c: Confirmation | string) {
 }
 function confirmConfirm() {
   confirmationResponse.value = true;
+  return true;
 }
 
 function cancelConfirm() {
   confirmationResponse.value = false;
+  return false;
 }
 
 provide("confirmation", confirm);

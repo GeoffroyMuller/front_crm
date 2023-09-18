@@ -149,7 +149,8 @@
     "women": "Femme",
     "close": "Fermer",
     "confirm_quite_without_save": "Etes vous certain de vouloir quitter cette page sans sauvegarder ?",
-    "confirmation": "Confirmation"
+    "confirmation": "Confirmation",
+    "save_and_quite": "Enregistrer et quitter"
   }
 
 }

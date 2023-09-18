@@ -1,4 +1,5 @@
 import type { AnySchema } from "yup";
+import type { ButtonProps } from "./Button.vue";
 
 export interface Notification {
   id?: string;
@@ -12,16 +13,22 @@ export interface Notification {
 export type ToastFunc = (n: Notification | string) => void;
 export type ConfirmFunc = (c: Confirmation | string) => Promise<boolean>;
 
-/* export type ConfirmationActions = {
-  action: () => void;
-  title?: string;
-}; */
-export interface Confirmation {
+export type ConfirmationActions = {
+  /**
+   * action has return type BOOLEAN,
+   * if TRUE --> confirm change page
+   * if FALSE --> cancel change page
+   */
+  action: (() => boolean | Promise<boolean>) | "confirm" | "cancel";
+  label: string;
+  buttonProps?: ButtonProps;
+};
+export type Confirmation = {
   type?: Notification["type"];
   message: string;
   title?: string | null | undefined;
-  // actions?: ConfirmationActions[];
-}
+  actions?: ConfirmationActions[];
+};
 
 export interface Column<T = any> {
   title: string;

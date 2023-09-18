@@ -68,10 +68,11 @@ export default function useEditPage<T extends WithID>(
     }
   });
 
-  async function save(data: any) {
-    const _data = props.mapBeforeSave ? props.mapBeforeSave(data) : data;
-    loading.value = true;
+  async function save(data: any): Promise<boolean> {
     try {
+      const _data = props.mapBeforeSave ? props.mapBeforeSave(data) : data;
+      loading.value = true;
+
       if (!isAddAction.value) {
         const res = await props.store.update((model.value as T).id, _data);
         if (props.onUpdate) {
@@ -89,13 +90,15 @@ export default function useEditPage<T extends WithID>(
         type: "success",
         message: t(`saved`),
       });
-      return;
+      return true;
     } catch (err) {
       toast({
         type: "danger",
-        message: err.response.data.message,
+        message: t("error_occured"),
       });
-      return;
+      return false;
+    } finally {
+      loading.value = false;
     }
   }
 

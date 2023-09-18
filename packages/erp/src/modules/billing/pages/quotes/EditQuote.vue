@@ -407,9 +407,34 @@ const {
   },
 });
 useUI({
-  pageChangeBlockedMessage: t("core.confirm_quite_without_save"),
-  isPageChangeBlocked: () => {
-    return formHasChanged.value;
+  pageChangeBlocked: {
+    confirmation: {
+      title: "",
+      type: "warning",
+      message: t("core.confirm_quite_without_save"),
+      actions: [
+        {
+          action: "cancel",
+          label: t("cancel"),
+          buttonProps: {
+            variant: "text",
+            color: "black",
+          },
+        },
+        {
+          action: async () => {
+            return save(formValue);
+          },
+          label: t("core.save_and_quite"),
+          buttonProps: {
+            color: "warning",
+          },
+        },
+      ],
+    },
+    isPageChangeBlocked: () => {
+      return formHasChanged.value;
+    },
   },
 });
 </script>

@@ -18,52 +18,14 @@ import { provide } from "vue";
 import type { Ref } from "vue";
 
 const router = useRouter();
-const { confirm } = useUI();
 const displayLoadingPage = ref(false);
 
-// Condition page blocked
-const changePageConfirmationMessage = ref<Confirmation | string>();
-const isPageChangeBlocked = ref<() => boolean | Promise<boolean>>();
-
-export type PageChangeConditionInject = {
-  changePageConfirmationMessage: Ref<Confirmation | string>;
-  isPageChangeBlocked: Ref<() => boolean | Promise<boolean>>;
-};
-
-router.beforeEach(async (from, to, next) => {
-  const confirmConfig: ConfirmFunc["arguments"] =
-    typeof changePageConfirmationMessage.value === "string"
-      ? {
-          message: changePageConfirmationMessage.value,
-        }
-      : {
-          ...changePageConfirmationMessage.value,
-        };
-  if (
-    changePageConfirmationMessage.value == null ||
-    !isPageChangeBlocked?.value?.() ||
-    (await confirm(confirmConfig))
-  ) {
-    next();
-    changePageConfirmationMessage.value = undefined;
-    isPageChangeBlocked.value = undefined;
-  } else {
-    next(false);
-  }
-});
-
-//Display page load
 router.beforeEach((to, from, next) => {
   displayLoadingPage.value = true;
   next();
 });
 router.afterEach((to, from) => {
   displayLoadingPage.value = false;
-});
-
-provide("page-change-condition", {
-  changePageConfirmationMessage,
-  isPageChangeBlocked,
 });
 </script>
 
