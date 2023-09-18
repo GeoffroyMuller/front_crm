@@ -414,19 +414,11 @@ useUI({
       message: t("core.confirm_quite_without_save"),
       actions: [
         {
-          action: "cancel",
-          label: t("cancel"),
-          buttonProps: {
-            variant: "text",
-            color: "black",
-          },
-        },
-        {
           action: "confirm",
           label: t("core.quite_without_save"),
           buttonProps: {
-            color: "danger",
-             variant: "text",
+            color: "warning",
+            variant: "text",
           },
         },
         {
@@ -436,6 +428,8 @@ useUI({
           label: t("core.save_and_quite"),
           buttonProps: {
             color: "success",
+            icon: "save",
+            loading: loading,
           },
         },
       ],
