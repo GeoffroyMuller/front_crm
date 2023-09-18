@@ -1,7 +1,7 @@
 <template>
   <div
     class="avatar"
-    :class="[color ? `avatar-${color}` : '', size ? `avatar-${size}` : '']"
+    :class="[color ? `bg-${color}-500` : '', size ? `avatar-${size}` : '']"
   >
     <Icon class="icon" v-if="icon" :name="icon" />
     <img
@@ -41,7 +41,6 @@ const props = withDefaults(defineProps<AvatarProps>(), {
 .avatar {
   overflow: hidden;
   border-radius: 50%;
-  background-color: gray;
   font-weight: bold;
   @include flex(row, center, center);
   & .txt {

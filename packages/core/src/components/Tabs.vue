@@ -80,7 +80,8 @@ watch(
     height: 1.5px;
     position: absolute;
     bottom: 0;
-    background-color: color("primary", 500);
+    
+    @apply bg-primary-500;
     left: var(--tab-indicator-left, 0);
     transition: width 0.25s ease-in-out, left 0.25s ease-in-out;
     border-radius: 1px;
@@ -97,7 +98,7 @@ watch(
       opacity: 0.8;
     }
     &.selected {
-      color: color("primary", 500);
+      @apply text-primary-500;
     }
   }
 }
