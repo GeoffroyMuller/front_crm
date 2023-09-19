@@ -50,6 +50,7 @@ module.exports = {
         inputDisabled: "f0f0f0",
         header: "#2e2e30",
         actions: "rgb(249 250 251 / var(--tw-bg-opacity))",
+        tooltip: "#616161e6",
       },
       borderColor: {
         input: "#d1d5db",
