@@ -1,5 +1,5 @@
 <template>
-  <Page :title="$t('reservations')" icon="post_add">
+  <Page :title="$t('reservations')" icon="event">
     <MagicFilterBar
       mapSearch="$contains.description"
       :filters="[]"

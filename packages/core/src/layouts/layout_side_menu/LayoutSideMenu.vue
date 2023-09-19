@@ -122,7 +122,11 @@
             :class="{ selected: isItemSelected(data) }"
             @click="$router.push(data.path)"
           >
-            <Icon :name="data.icon" color="black" />
+            <Icon
+              :name="data.icon"
+              color="black"
+              :sharp="isItemSelected(data)"
+            />
             <div>{{ $t(data.title) }}</div>
           </div>
         </template>
@@ -204,11 +208,19 @@ provide<LayoutSideMenuProvide>("LayoutSideMenu", {
 
 <style>
 .tree-items {
-  @apply transition-all flex items-center gap-3 py-2 hover:bg-primary-50 hover:text-primary-500 px-3 mx-2 rounded-sm cursor-pointer;
+  @apply flex items-center gap-3 py-2 hover:bg-primary-50 hover:text-primary-500 px-3 mx-2 rounded-sm cursor-pointer min-h-[38px];
+}
+.tree-items .icon {
+  @apply bg-gradient-245 from-slate-600 to-slate-600 !text-transparent bg-clip-text;
 }
 .tree-items.selected {
-  @apply !text-primary-600;
+  @apply !text-primary-500;
 }
+.tree-items.selected .icon,
+.tree-items:hover .icon {
+  @apply bg-gradient-245 from-primary-500 to-primary-300 text-transparent bg-clip-text;
+}
+
 /* .tree-menu::before {
   @apply bg-primary-400 w-[1.5px] absolute;
   height: var(--selected-height, 0);
