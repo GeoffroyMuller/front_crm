@@ -160,16 +160,16 @@
 </template>
 
 <script lang="ts" setup>
-import Icon from "../components/Icon.vue";
-import IconButton from "../components/IconButton.vue";
-import Tree from "../components/Tree.vue";
-import useKeyboardShortcut from "../composables/keyboardshortcut";
+import Icon from "../../components/Icon.vue";
+import IconButton from "../../components/IconButton.vue";
+import Tree from "../../components/Tree.vue";
+import useKeyboardShortcut from "../../composables/keyboardshortcut";
 import { useRoute, useRouter } from "vue-router";
-import Menu from "../components/Menu.vue";
+import Menu from "../../components/Menu.vue";
 import { provide } from "vue";
-import type { LayoutSideMenuProvide, MenuItem } from "./types";
-import useLocalStorage from "../composables/localStorage";
-import useBreakpoints from "../composables/breakpoints";
+import type { LayoutSideMenuProvide, MenuItem } from "../types";
+import useLocalStorage from "../../composables/localStorage";
+import useBreakpoints from "../../composables/breakpoints";
 
 interface LayoutSideMenuProps {
   menu: MenuItem[];

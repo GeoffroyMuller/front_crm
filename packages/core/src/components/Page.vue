@@ -38,15 +38,12 @@
 </template>
 
 <script setup lang="ts">
-import Spinner from "core/src/components/Spinner.vue";
+import Spinner from "./Spinner.vue";
 import PageContent, { type PageContentProps } from "./PageContent.vue";
-import Breadcrumb, {
-  type BreadcrumbProps,
-} from "core/src/components/Breadcrumb.vue";
-import Text from "core/src/components/Text.vue";
-import Tabs, { type Tab } from "core/src/components/Tabs.vue";
-import Icon from "core/src/components/Icon.vue";
-import type { IconName } from "core/src/components/types";
+import Breadcrumb, { type BreadcrumbProps } from "./Breadcrumb.vue";
+import Text from "./Text.vue";
+import Icon from "./Icon.vue";
+import type { IconName } from "./types";
 
 interface PageProps {
   title: string;

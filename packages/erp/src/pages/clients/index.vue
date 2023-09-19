@@ -120,7 +120,7 @@
 <script lang="ts" setup>
 import MagicDataTable from "core/src/components/magic/MagicDataTable.vue";
 import Button from "core/src/components/Button.vue";
-import Page from "@/components/Page.vue";
+import Page from "core/src/components/Page.vue";
 import { ref } from "vue";
 
 import useClientStore from "@/stores/clients";

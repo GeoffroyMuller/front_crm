@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import BlockCalendarEvents from "@/components/events/BlockCalendarEvents.vue";
 import EditEventSidebar from "@/components/events/EditEventSidebar.vue";
-import Page from "@/components/Page.vue";
+import Page from "core/src/components/Page.vue";
 import Button from "core/src/components/Button.vue";
 import Calendar from "core/src/components/Calendar.vue";
 import FloatingButton from "core/src/components/FloatingButton.vue";

@@ -61,7 +61,7 @@
 </template>
 <script setup lang="ts">
 import ProductForm from "@/modules/products/components/ProductForm.vue";
-import Page from "@/components/Page.vue";
+import Page from "core/src/components/Page.vue";
 import useProductStore from "@/modules/products/stores/products";
 import { computed, onMounted, ref } from "vue";
 import Card from "core/src/components/card/Card.vue";

@@ -144,7 +144,7 @@
 <script lang="ts" setup>
 import MagicDataTable from "core/src/components/magic/MagicDataTable.vue";
 import Button from "core/src/components/Button.vue";
-import Page from "@/components/Page.vue";
+import Page from "core/src/components/Page.vue";
 import QuoteSendMail from "../../components/quotes/QuoteSendMail.vue";
 import Media from "core/src/components/Media.vue";
 import FloatingButton from "core/src/components/FloatingButton.vue";

@@ -128,7 +128,7 @@
 
 <script lang="ts" setup>
 import MagicDataTable from "core/src/components/magic/MagicDataTable.vue";
-import Page from "@/components/Page.vue";
+import Page from "core/src/components/Page.vue";
 import useReservationStore from "@/stores/reservations";
 import type { Reservation } from "@/types/reservation";
 import Sidebar from "core/src/components/sidebar/Sidebar.vue";

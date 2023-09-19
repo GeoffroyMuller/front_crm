@@ -4,6 +4,6 @@
   </Page>
 </template>
 <script setup lang="ts">
-import Page from "@/components/Page.vue";
+import Page from "core/src/components/Page.vue";
 import Demo from "core/src/components/demo/Demo.vue";
 </script>

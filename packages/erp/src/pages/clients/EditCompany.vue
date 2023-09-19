@@ -61,7 +61,7 @@
 <script lang="ts" setup>
 import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
 import useEditPage from "@/components/editpage";
-import Page from "@/components/Page.vue";
+import Page from "core/src/components/Page.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
 import Grid from "core/src/components/layouts/Grid.vue";
 import MagicDataTable from "core/src/components/magic/MagicDataTable.vue";

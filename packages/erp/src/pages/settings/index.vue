@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import Page from "@/components/Page.vue";
+import Page from "core/src/components/Page.vue";
 import Tabs from "core/src/components/Tabs.vue";
 import { useI18n } from "vue-i18n";
 

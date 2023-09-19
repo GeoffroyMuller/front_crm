@@ -9,7 +9,7 @@
       <Text typo="title5">
         {{ $t("page-not-found") }}
       </Text>
-      <Button variant="text" icon="chevron_left" @click="$router.go(-1)">
+      <Button variant="outlined" @click="$router.go(-1)">
         {{ $t("back") }}
       </Button>
     </div>

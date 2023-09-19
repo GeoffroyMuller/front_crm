@@ -50,7 +50,7 @@ import ActionMenu from "core/src/components/ActionMenu.vue";
 import Avatar from "core/src/components/Avatar.vue";
 import IconButton from "core/src/components/IconButton.vue";
 import useUI from "core/src/composables/ui";
-import LayoutSideMenu from "core/src/layouts/LayoutSideMenu.vue";
+import LayoutSideMenu from "core/src/layouts/layout_side_menu/LayoutSideMenu.vue";
 import type { MenuItem } from "core/src/layouts/types";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
