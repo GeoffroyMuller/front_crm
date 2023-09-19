@@ -1,27 +1,13 @@
 <template>
-  <Page
-    :title="$t('settings')"
-    :breadcrumb="[
-      { label: $t('menu.home'), icon: 'home', to: '/' },
-      { label: $t('settings'), to: { name: 'settings' } },
-    ]"
-    icon="settings"
-  >
-    <Tabs :tabs="settings">
-      <template
-        v-for="setting in settings"
-        :key="setting.id"
-        v-slot:[setting.id]
-      >
-        <component :is="setting.component"></component>
-      </template>
-    </Tabs>
+  <Page :title="$t('settings')" icon="settings" :tabs="settings">
+    <template v-for="setting in settings" :key="setting.id" v-slot:[setting.id]>
+      <component :is="setting.component"></component>
+    </template>
   </Page>
 </template>
 
 <script setup lang="ts">
 import Page from "core/src/components/Page.vue";
-import Tabs from "core/src/components/Tabs.vue";
 import { useI18n } from "vue-i18n";
 
 import Roles from "./Roles.vue";

@@ -1,17 +1,5 @@
 <template>
-  <Page
-    icon="person"
-    :title="title"
-    :loading="loadingPage"
-    :breadcrumb="[
-      { label: $t('menu.home'), icon: 'home', to: '/' },
-      { label: $t('menu.clients'), to: { name: 'customers' } },
-      {
-        label: title,
-        to: { name: $route.name, params: $route.params },
-      },
-    ]"
-  >
+  <Page icon="person" :title="title" :loading="loadingPage">
     <EditClientSidebar
       v-model:open="editClientOpen"
       @update="editClientOpen = false"

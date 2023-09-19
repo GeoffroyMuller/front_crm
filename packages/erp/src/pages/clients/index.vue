@@ -1,10 +1,6 @@
 <template>
   <Page
     :title="$t('customers')"
-    :breadcrumb="[
-      { label: $t('menu.home'), icon: 'home', to: '/' },
-      { label: $t('menu.clients'), to: { name: 'customers' } },
-    ]"
     :tabs="[
       { id: 'companies', title: $t('companies') },
       { id: 'clients', title: $t('customers') },

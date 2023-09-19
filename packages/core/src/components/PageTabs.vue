@@ -69,7 +69,6 @@ watch(
 <style lang="scss">
 .page-tabs {
   @apply flex items-center gap-4 select-none relative w-fit;
-
   &::before {
     content: " ";
     width: var(--tab-indicator-width, 0);

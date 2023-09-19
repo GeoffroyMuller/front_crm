@@ -5,14 +5,6 @@
     :loading="loadingPage"
     class="relative"
     :padding="null"
-    :breadcrumb="[
-      { label: $t('menu.home'), icon: 'home', to: '/' },
-      { label: $t('menu.quotes'), to: { name: 'quotes' } },
-      {
-        label: title,
-        to: { name: $route.name, params: $route.params },
-      },
-    ]"
   >
     <div
       class="xl:hidden sticky top-0 w-full flex justify-between items-center bg-white z-20 h-fit py-2 px-4 border-b border-0 border-solid border-b-[#CBD5E1] shadow-[0px_0px_20px_rgba(136,152,170,0.15)]"
