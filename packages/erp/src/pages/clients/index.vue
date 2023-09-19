@@ -11,109 +11,102 @@
     ]"
     icon="person"
   >
-    <Tabs
-      :tabs="[
-        { id: 'companies', title: $t('companies') },
-        { id: 'clients', title: $t('customers') },
-      ]"
-    >
-      <template #companies>
-        <MagicDataTable
-          :store="companiesStore"
-          @row-click="
-            (c) => $router.push({ name: 'companies-id', params: { id: c.id } })
-          "
-          :columns="[
-            {
-              title: $t('company'),
-              key: 'name',
-              sortable: true,
-            },
-          ]"
-        >
-          <template #actions="{ item }">
-            <IconButton
-              @click.stop="deleteCompany(item)"
-              color="danger"
-              default-colored
-              name="delete"
-              v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
-              variant="outlined"
-            />
-          </template>
-          <template #actions-title>
+    <template #companies>
+      <MagicDataTable
+        :store="companiesStore"
+        @row-click="
+          (c) => $router.push({ name: 'companies-id', params: { id: c.id } })
+        "
+        :columns="[
+          {
+            title: $t('company'),
+            key: 'name',
+            sortable: true,
+          },
+        ]"
+      >
+        <template #actions="{ item }">
+          <IconButton
+            @click.stop="deleteCompany(item)"
+            color="danger"
+            default-colored
+            name="delete"
+            v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
+            variant="outlined"
+          />
+        </template>
+        <template #actions-title>
+          <Button
+            color="success"
+            icon="add"
+            v-tooltip="{ text: $t('add'), placement: 'bottom' }"
+            @click.stop="
+              () =>
+                $router.push({ name: 'companies-id', params: { id: 'new' } })
+            "
+          >
+            {{ $t("add") }}
+          </Button>
+        </template>
+      </MagicDataTable>
+    </template>
+    <template #clients>
+      <MagicDataTable
+        @row-click="($item) => clickEdit($item)"
+        :store="clientsStore"
+        :columns="[
+          {
+            title: $t('name'),
+            key: 'name',
+            sortable: true,
+          },
+          {
+            title: $t('email'),
+            key: 'email',
+          },
+          {
+            title: $t('company'),
+            key: 'company',
+          },
+        ]"
+      >
+        <template #content-name="{ item }">
+          {{ item?.firstname || "" }} {{ item?.lastname || "" }}
+        </template>
+        <template #content-company="{ item }">
+          {{ item.company?.name || "" }}
+        </template>
+        <template #actions-title>
+          <div>
             <Button
               color="success"
               icon="add"
               v-tooltip="{ text: $t('add'), placement: 'bottom' }"
-              @click.stop="
-                () =>
-                  $router.push({ name: 'companies-id', params: { id: 'new' } })
-              "
+              @click.stop="() => clickEdit()"
             >
               {{ $t("add") }}
             </Button>
-          </template>
-        </MagicDataTable>
-      </template>
-      <template #clients>
-        <MagicDataTable
-          @row-click="($item) => clickEdit($item)"
-          :store="clientsStore"
-          :columns="[
-            {
-              title: $t('name'),
-              key: 'name',
-              sortable: true,
-            },
-            {
-              title: $t('email'),
-              key: 'email',
-            },
-            {
-              title: $t('company'),
-              key: 'company',
-            },
-          ]"
-        >
-          <template #content-name="{ item }">
-            {{ item?.firstname || "" }} {{ item?.lastname || "" }}
-          </template>
-          <template #content-company="{ item }">
-            {{ item.company?.name || "" }}
-          </template>
-          <template #actions-title>
-            <div>
-              <Button
-                color="success"
-                icon="add"
-                v-tooltip="{ text: $t('add'), placement: 'bottom' }"
-                @click.stop="() => clickEdit()"
-              >
-                {{ $t("add") }}
-              </Button>
-            </div>
-          </template>
-          <template #actions="{ item }">
-            <IconButton
-              @click.stop="deleteClient(item)"
-              color="danger"
-              default-colored
-              name="delete"
-              v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
-              variant="outlined"
-            />
-          </template>
-        </MagicDataTable>
+          </div>
+        </template>
+        <template #actions="{ item }">
+          <IconButton
+            @click.stop="deleteClient(item)"
+            color="danger"
+            default-colored
+            name="delete"
+            v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
+            variant="outlined"
+          />
+        </template>
+      </MagicDataTable>
 
-        <EditClientSidebar
-          @update="onEditClient"
-          @add="onAddClient"
-          v-model:open="isSidebarOpen"
-          :client="(clientSelected as Client)"
-        />
-      </template>
-    </Tabs>
+      <EditClientSidebar
+        @update="onEditClient"
+        @add="onAddClient"
+        v-model:open="isSidebarOpen"
+        :client="(clientSelected as Client)"
+      />
+    </template>
   </Page>
 </template>
 

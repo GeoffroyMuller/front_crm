@@ -4,7 +4,7 @@
   <div v-else class="page-container">
     <div
       v-if="!hideTitleBar"
-      class="h-[85px] border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0 px-4 flex items-center gap-6"
+      class="min-h-[85px] border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0 px-4 flex items-center justify-between gap-6"
     >
       <div class="flex gap-5 items-center">
         <div
@@ -13,7 +13,10 @@
         >
           <Icon :name="icon" color="white" class="!text-3xl" />
         </div>
-        <div class="grid gap-2 items-center justify-start w-fit">
+        <div
+          class="grid gap-3 items-center justify-start w-fit"
+          :class="{ 'transform translate-y-[9px]': tabs?.length }"
+        >
           <Text
             v-if="title?.length"
             typo="title1"
@@ -22,17 +25,20 @@
           >
             {{ title }}
           </Text>
-          <Breadcrumb v-if="breadcrumb?.length" :items="breadcrumb" />
+
+          <PageTabs
+            v-if="tabs?.length"
+            :tabs="tabs"
+            v-model:current-tab="currentTab"
+          />
         </div>
       </div>
-      <!-- <div class="h-full relative" v-if="tabs">
-        <div class="absolute bottom-0 left-0">
-          <Tabs :tabs="tabs"> </Tabs>
-        </div>
-      </div> -->
     </div>
     <PageContent :class="$props.class" :padding="padding">
       <slot />
+
+      <slot :name="currentTab" :tab="currentTab" />
+      <slot :tab="currentTab" />
     </PageContent>
   </div>
 </template>
@@ -40,10 +46,14 @@
 <script setup lang="ts">
 import Spinner from "./Spinner.vue";
 import PageContent, { type PageContentProps } from "./PageContent.vue";
-import Breadcrumb, { type BreadcrumbProps } from "./Breadcrumb.vue";
+import type { BreadcrumbProps } from "./Breadcrumb.vue";
 import Text from "./Text.vue";
 import Icon from "./Icon.vue";
 import type { IconName } from "./types";
+import PageTabs, { type PageTab } from "./PageTabs.vue";
+import { ref } from "vue";
+
+const currentTab = ref();
 
 interface PageProps {
   title: string;
@@ -53,7 +63,7 @@ interface PageProps {
   padding?: PageContentProps["padding"];
   breadcrumb?: BreadcrumbProps["items"];
   hideTitleBar?: boolean;
-  tabs?: Tab[];
+  tabs?: PageTab[];
   icon?: IconName;
 }
 
