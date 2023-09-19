@@ -35,9 +35,7 @@
       </div>
     </div>
     <PageContent :class="$props.class" :padding="padding">
-      <slot />
-
-      <slot :name="currentTab" :tab="currentTab" />
+      <slot v-if="currentTab" :name="currentTab" :tab="currentTab" />
       <slot :tab="currentTab" />
     </PageContent>
   </div>
