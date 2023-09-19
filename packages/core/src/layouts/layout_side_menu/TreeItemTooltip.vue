@@ -26,6 +26,6 @@ interface TreeItemTooltipProps {
 const props = defineProps<TreeItemTooltipProps>();
 
 function displayTooltip(): boolean {
-  return Boolean(props.label?.length && !props.displayLabel);
+  return Boolean(props.tooltip && !props.displayLabel);
 }
 </script>

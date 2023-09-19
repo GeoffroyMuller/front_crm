@@ -126,6 +126,7 @@
         "
         full-width
         class="-mb-2"
+        :tooltip="$t(bottomMenuItem.title)"
       />
     </nav>
     <div class="flex-1 overflow-hidden h-full z-10">
