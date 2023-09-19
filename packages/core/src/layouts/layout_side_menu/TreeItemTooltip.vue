@@ -1,14 +1,16 @@
 <template>
-  <TreeItem
-    v-bind="props"
-    v-if="displayTooltip()"
-    v-tooltip="{
-      text: tooltip,
-      placement: 'right',
-    }"
-    @click="$emit('click')"
-  />
-  <TreeItem v-bind="props" v-if="!displayTooltip()" @click="$emit('click')" />
+  <div>
+    <TreeItem
+      v-bind="props"
+      v-if="displayTooltip()"
+      v-tooltip="{
+        text: tooltip,
+        placement: 'right',
+      }"
+      @click="$emit('click')"
+    />
+    <TreeItem v-bind="props" v-if="!displayTooltip()" @click="$emit('click')" />
+  </div>
 </template>
 <script setup lang="ts">
 import type { IconName } from "../../components/types";
