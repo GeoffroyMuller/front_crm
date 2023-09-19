@@ -99,67 +99,34 @@
           </Menu>
         </template>
         <template #item="{ data }">
-          <div
-            v-if="isNavMini"
-            class="tree-items typo-title5 typo-regular"
-            tabindex="0"
-            @keyup.enter="$router.push(data.path)"
-            :class="{ selected: isItemSelected(data) }"
+          <TreeItem
+            :display-label="!isNavMini"
+            :icon="data.icon"
+            :label="$t(data.title)"
             @click="$router.push(data.path)"
-            v-tooltip="{
-              text: $t(data.title),
-              placement: 'right',
-            }"
-          >
-            <Icon :name="data.icon" color="black" />
-          </div>
-
-          <div
-            v-else
-            class="tree-items typo-title5 typo-regular"
-            tabindex="0"
-            @keyup.enter="$router.push(data.path)"
-            :class="{ selected: isItemSelected(data) }"
-            @click="$router.push(data.path)"
-          >
-            <Icon
-              :name="data.icon"
-              color="black"
-              :sharp="isItemSelected(data)"
-            />
-            <div>{{ $t(data.title) }}</div>
-          </div>
+            :selected="isItemSelected(data)"
+            :tooltip="$t(data.title)"
+          />
         </template>
       </Tree>
 
-      <div
+      <TreeItem
         v-if="bottomMenuItem != null"
-        class="tree-items -my-2 !mx-0 px-5 !rounded-none"
-        :class="{
-          selected: isItemSelected({
+        :display-label="!isNavMini"
+        :icon="bottomMenuItem.icon"
+        :label="$t(bottomMenuItem.title)"
+        @click="$router.push((bottomMenuItem as MenuItem).path)"
+        :selected="
+          isItemSelected({
             path: bottomMenuItem.path,
             key: '',
             title: '',
             icon: 'function',
-          }),
-        }"
-        @click="$router.push((bottomMenuItem as MenuItem).path)"
-        tabindex="0"
-        @keyup.enter="
-          {
-            if (bottomMenuItem != null) {
-              $router.push(bottomMenuItem.path);
-            }
-          }
+          })
         "
-      >
-        <Icon
-          :name="bottomMenuItem.icon"
-          color="black"
-          :sharp="isItemSelected(bottomMenuItem)"
-        />
-        <div v-if="!isNavMini">{{ $t(bottomMenuItem.title) }}</div>
-      </div>
+        full-width
+        class="-mb-2"
+      />
     </nav>
     <div class="flex-1 overflow-hidden h-full z-10">
       <slot />
@@ -178,6 +145,7 @@ import { provide } from "vue";
 import type { LayoutSideMenuProvide, MenuItem } from "../types";
 import useLocalStorage from "../../composables/localStorage";
 import useBreakpoints from "../../composables/breakpoints";
+import TreeItem from "./TreeItemTooltip.vue";
 
 interface LayoutSideMenuProps {
   menu: MenuItem[];
@@ -212,14 +180,12 @@ provide<LayoutSideMenuProvide>("LayoutSideMenu", {
 
 <style>
 .tree-items {
-  @apply flex items-center gap-3 py-2 hover:bg-primary-50 hover:text-primary-500 px-3 mx-2 rounded-sm cursor-pointer min-h-[38px];
+  @apply flex items-center gap-3 py-2 hover:bg-primary-50 px-3 mx-2 rounded-sm cursor-pointer min-h-[38px];
 }
 .tree-items .icon {
   @apply bg-gradient-245 from-slate-600 to-slate-600 !text-transparent bg-clip-text;
 }
-.tree-items.selected {
-  @apply !text-primary-500;
-}
+
 .tree-items.selected .icon,
 .tree-items:hover .icon {
   @apply bg-gradient-245 from-primary-500 to-primary-300 text-transparent bg-clip-text;
