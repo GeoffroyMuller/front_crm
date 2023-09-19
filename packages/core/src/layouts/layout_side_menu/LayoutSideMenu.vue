@@ -153,7 +153,11 @@
           }
         "
       >
-        <Icon :name="bottomMenuItem.icon" color="black" />
+        <Icon
+          :name="bottomMenuItem.icon"
+          color="black"
+          :sharp="isItemSelected(bottomMenuItem)"
+        />
         <div v-if="!isNavMini">{{ $t(bottomMenuItem.title) }}</div>
       </div>
     </nav>

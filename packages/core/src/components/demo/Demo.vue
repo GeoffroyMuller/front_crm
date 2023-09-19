@@ -1,5 +1,5 @@
 <template>
-  <Tabs :tabs="tabs.map((t) => ({ id: t.id, title: t.id }))">
+  <Page title="Demo" icon="tools_wrench" :tabs="tabs.map((t) => ({ id: t.id, title: t.id }))">
     <template #buttons>
       <DemoButtons />
     </template>
@@ -27,11 +27,12 @@
     <template #breadcrumb>
       <DemoBreadcrumb />
     </template>
-  </Tabs>
+  </Page>
 </template>
 
 <script setup lang="ts">
 import Tabs from "../Tabs.vue";
+import Page from "../Page.vue";
 import DemoButtons from "./DemoButtons.vue";
 import DemoCard from "./DemoCard.vue";
 import DemoToast from "./DemoToast.vue";
