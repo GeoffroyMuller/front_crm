@@ -85,7 +85,7 @@ button.ql-active .ql-stroke {
     height: fit-content;
     .ql-toolbar {
       border-radius: map-get($rounded, "sm") map-get($rounded, "sm") 0 0;
-      transition: border-color 0.5s, box-shadow 0.5s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
     .ql-container {
       border: none;

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-h-input h-input relative border border-solid overflow-hidden flex items-center px-2 py-1"
+    class="min-h-input h-input relative border border-solid overflow-hidden flex items-center px-2 py-1 transition-[box-shadow_border-color] duration-200"
     :class="[
       {
         'border-danger-400 focus-within:shadow-[0_0_2pt_0.5pt] focus-within:shadow-danger-200':
