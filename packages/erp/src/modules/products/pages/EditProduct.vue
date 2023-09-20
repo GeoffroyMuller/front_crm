@@ -7,39 +7,10 @@
         : product?.name || ''
     "
     :loading="loadingPage"
+    :tabs="id != 'new' ? productTabs : undefined"
   >
-    <div class="edit-product">
-      <Tabs v-if="id != 'new'" :tabs="productTabs">
-        <template #informations>
-          <Card padding>
-            <ProductForm
-              :product="product"
-              @saved="save"
-              @cancel="goToProductsPage"
-              :loading="loading"
-            >
-            </ProductForm>
-          </Card>
-        </template>
-        <template #stock>
-          <ProductStock :product="product" />
-        </template>
-        <template #advanced_settings>
-          <Card padding>
-            <ProductAvancedSettingsPhysical
-              v-if="productsStore.isPhysicalStock(product)"
-              :loading="loading"
-              :product="product"
-              @saved="save"
-            />
-            <ProductAdvancedSettingsEvents
-              v-if="productsStore.isEventStock(product)"
-              :product="product"
-            />
-          </Card>
-        </template>
-      </Tabs>
-      <Card padding v-else>
+    <template #informations>
+      <Card padding>
         <ProductForm
           :product="product"
           @saved="save"
@@ -48,7 +19,32 @@
         >
         </ProductForm>
       </Card>
-    </div>
+    </template>
+    <template #stock>
+      <ProductStock :product="product" />
+    </template>
+    <template #advanced_settings>
+      <ProductAvancedSettingsPhysical
+        v-if="productsStore.isPhysicalStock(product)"
+        :loading="loading"
+        :product="product"
+        @saved="save"
+      />
+      <ProductAdvancedSettingsEvents
+        v-if="productsStore.isEventStock(product)"
+        :product="product"
+      />
+    </template>
+
+    <Card padding v-if="id == 'new'">
+      <ProductForm
+        :product="product"
+        @saved="save"
+        @cancel="goToProductsPage"
+        :loading="loading"
+      >
+      </ProductForm>
+    </Card>
   </Page>
 </template>
 <script setup lang="ts">
@@ -108,8 +104,3 @@ onMounted(async () => {
   vatStore.fetchList();
 });
 </script>
-<style lang="scss">
-.edit-product {
-  @include grid(1, 0, 0);
-}
-</style>
