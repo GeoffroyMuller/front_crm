@@ -68,7 +68,29 @@ const auth = computed(() => {
 const { confirm } = useUI();
 
 async function disconnect() {
-  if (await confirm(t("sure-disconnect"))) {
+  if (
+    await confirm({
+      message: t("sure-disconnect"),
+      type: "info",
+      actions: [
+        {
+          action: "cancel",
+          label: t("cancel"),
+          buttonProps: {
+            color: "black",
+            variant: "text",
+          },
+        },
+        {
+          action: "confirm",
+          label: t("disconnect"),
+          buttonProps: {
+            color: "primary",
+          },
+        },
+      ],
+    })
+  ) {
     userStore.disconnect();
     router.replace("/login");
   }
