@@ -73,7 +73,7 @@ watch(
     content: " ";
     width: var(--tab-indicator-width, 0);
     transform: scale(1);
-    height: 2.3px;
+    height: 2px;
     position: absolute;
     @apply bg-primary-500 bottom-0;
     border-top-right-radius: 4px;
