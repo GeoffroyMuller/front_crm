@@ -168,9 +168,13 @@ useKeyboardShortcut("mod+b", (e) => {
 
 function isItemSelected(data: MenuItem) {
   if (typeof data.path === "string") {
-    return data.path === route.path;
+    return data.path === route.path || route.path.includes(data.path);
   }
-  return data.path.name === route.name;
+  return (
+    data.path.name === route.name ||
+    ((route?.name as string)?.includes &&
+      (route.name as string).includes(data.path.name))
+  );
 }
 
 provide<LayoutSideMenuProvide>("LayoutSideMenu", {

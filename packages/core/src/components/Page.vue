@@ -1,5 +1,9 @@
 <template>
-  <Spinner v-if="loading" class="page-spinner" />
+  <div v-if="loading" class="w-full h-screenMinusHeaderHeight relative">
+    <Spinner
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+    />
+  </div>
 
   <div v-else class="page-container">
     <div
@@ -71,13 +75,6 @@ withDefaults(defineProps<PageProps>(), {
 </script>
 
 <style lang="scss">
-.page-spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-100%, -100%);
-}
-
 .page-container {
   overflow-y: auto;
   height: 100%;
