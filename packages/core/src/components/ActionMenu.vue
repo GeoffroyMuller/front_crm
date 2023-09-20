@@ -3,7 +3,7 @@
     :placement="placement"
     :alignment="alignment"
     :gap="0.5"
-    strategy="root"
+    :strategy="strategy || 'root'"
     :card-props="{ rounded: 'sm' }"
   >
     <template #activator>
@@ -41,6 +41,7 @@ interface ActionMenuProps {
   actions: Action[];
   placement?: MenuProps["placement"];
   alignment?: MenuProps["alignment"];
+  strategy?: MenuProps["strategy"];
 }
 const props = withDefaults(defineProps<ActionMenuProps>(), {});
 const emit = defineEmits(["action"]);

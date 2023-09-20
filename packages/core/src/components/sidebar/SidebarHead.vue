@@ -29,13 +29,13 @@
             class="h-[15px] border-primary-200 border-r border-solid border-l-0 max-lg:hidden"
           />
         </template>
-
         <ActionMenu
           v-if="actions.length"
           :actions="actions"
           @action="($a) => emit('action', $a)"
           placement="bottom"
           :alignment="'end'"
+          strategy="absolute"
         >
           <IconButton size="xl" name="more_horiz" default-colored />
         </ActionMenu>

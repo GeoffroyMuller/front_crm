@@ -7,7 +7,12 @@
   >
     <slot name="activator" />
     <div ref="content" v-if="strategy !== 'root'">
-      <Card :withPadding="false" :class="contentCardClass" v-bind="cardProps">
+      <Card
+        :withPadding="false"
+        :class="contentCardClass"
+        class="border border-solid border-slate-200"
+        v-bind="cardProps"
+      >
         <slot name="content" />
       </Card>
     </div>
