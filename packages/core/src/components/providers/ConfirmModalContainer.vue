@@ -38,6 +38,7 @@ import ModalContent from "../modal/ModalContent.vue";
 import ModalHead from "../modal/ModalHead.vue";
 import Icon from "../Icon.vue";
 import { useI18n } from "vue-i18n";
+import { nextTick } from "vue";
 
 const confirmation = ref<Confirmation | string | null>(null);
 const confirmationResponse = ref<boolean | null>(null);
@@ -144,8 +145,10 @@ async function confirm(c: Confirmation | string) {
         if (typeof confirmationResponse.value === "boolean") {
           resolve(confirmationResponse.value);
           unwatchResponse();
-          confirmOpen.value = false;
-          confirmationResponse.value = null;
+          nextTick(() => {
+            confirmOpen.value = false;
+            confirmationResponse.value = null;
+          });
         }
       }
     );

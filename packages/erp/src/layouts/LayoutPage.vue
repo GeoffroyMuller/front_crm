@@ -36,8 +36,8 @@
         alignment="end"
       >
         <Avatar color="primary" class="cursor-pointer">
-          {{ auth.firstname.toUpperCase()[0]
-          }}{{ auth.lastname.toUpperCase()[0] }}
+          {{ auth.firstname ? auth.firstname.toUpperCase()[0] : ""
+          }}{{ auth.lastname ? auth.lastname.toUpperCase()[0] : "" }}
         </Avatar>
       </ActionMenu>
     </template>
