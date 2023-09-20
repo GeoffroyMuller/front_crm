@@ -8,7 +8,7 @@
   <div v-else class="page-container">
     <div
       v-if="!hideTitleBar"
-      class="min-h-[85px] border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0 px-4 flex items-center justify-between gap-6"
+      class="min-h-[85px] border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0 px-content flex items-center justify-between gap-6"
     >
       <div class="flex gap-5 items-center">
         <div
