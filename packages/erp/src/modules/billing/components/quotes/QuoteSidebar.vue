@@ -15,7 +15,6 @@
         v-if="quote"
         :key="quote?.id"
         :src="generateQuotePDF(quote, { output: 'datauristring' })"
-        :initialZoom="0.9"
         class="max-h-full"
       />
     </SidebarContent>

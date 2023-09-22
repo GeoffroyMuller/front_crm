@@ -3,12 +3,13 @@
     v-model:open="isOpen"
     :title="`${$t('quote')} ${quote?.identifier || ''}`"
     padding
+    contentClass="overflow-hidden"
   >
-    <SidebarContent>
+    <SidebarContent class="h-full">
       <PdfViewer
+        class="h-full"
         v-if="isOpen"
         :src="generateQuotePDF(quote, { output: 'datauristring' })"
-        :initialZoom="0.9"
       />
     </SidebarContent>
   </Sidebar>
