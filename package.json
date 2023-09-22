@@ -13,6 +13,6 @@
   "scripts": {
     "generate:keypair": "node ./cli/generate-keypair.mjs",
     "start:apis": "node ./cli/start-apis.mjs",
-    "setup": "node ./cli/setup-local.mjs"
+    "setup": "node ./cli/setup.mjs"
   }
 }

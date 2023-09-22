@@ -12,11 +12,11 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@megaapp/pdfs": "1.0.0",
     "@vueup/vue-quill": "^1.0.1",
     "autoprefixer": "^10.4.14",
     "axios": "^0.27.2",
     "core": "1.0.0",
-    "@megaapp/pdfs": "1.0.0",
     "dayjs": "^1.11.4",
     "dotenv": "^16.0.2",
     "lodash": "^4.17.21",
@@ -26,7 +26,7 @@
     "pinia-plugin-persistedstate": "^1.6.3",
     "postcss": "^8.4.24",
     "tailwindcss": "^3.3.2",
-    "vue": "^3.2.37",
+    "vue": "^3.3",
     "vue-i18n": "9",
     "vue-router": "^4.1.2",
     "vuedraggable": "^4.1.0",

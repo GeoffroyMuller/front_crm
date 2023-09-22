@@ -9,9 +9,14 @@
     - yarn start:apis
 # scripts
 yarn setup
-    --env: Copy packages/{PACKAGE_NAME}/.env.sample in packages/{PACKAGE_NAME}/.env
-    --migrate: 'yarn migrate' in packages/api_{PACKAGE_NAME}
+    -env: Copy packages/{PACKAGE_NAME}/.env.sample in packages/{PACKAGE_NAME}/.env
+    -migrate: 'yarn migrate' in packages/api_{PACKAGE_NAME}
+    -keypair: yarn generate:keypair
+    -all 
 yarn start:apis
     'yarn dev' in packages/api_{PACKAGE_NAME}
 yarn generate:keypair
     Generate private and public keys for authentication
+
+# documentations
+- Typescript fondamentaux : https://www.typescriptlang.org/docs/handbook/utility-types.html

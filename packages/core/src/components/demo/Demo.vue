@@ -1,5 +1,9 @@
 <template>
-  <Page title="Demo" icon="tools_wrench" :tabs="tabs.map((t) => ({ id: t.id, title: t.id }))">
+  <Page
+    title="Demo"
+    icon="tools_wrench"
+    :tabs="tabs.map((t) => ({ id: t.id, title: t.id }))"
+  >
     <template #buttons>
       <DemoButtons />
     </template>
@@ -27,6 +31,9 @@
     <template #breadcrumb>
       <DemoBreadcrumb />
     </template>
+    <template #kanban>
+      <DemoKanban />
+    </template>
   </Page>
 </template>
 
@@ -42,6 +49,7 @@ import DemoInput from "./DemoInput.vue";
 import DemoMenu from "./DemoMenu.vue";
 import DemoTypo from "./DemoTypo.vue";
 import DemoBreadcrumb from "./DemoBreadcrumb.vue";
+import DemoKanban from "./DemoKanban.vue";
 
 const tabs = [
   { id: "menu" },
@@ -53,5 +61,6 @@ const tabs = [
   { id: "inputs" },
   { id: "typo" },
   { id: "breadcrumb" },
+  { id: "kanban" },
 ];
 </script>

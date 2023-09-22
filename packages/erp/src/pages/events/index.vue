@@ -1,5 +1,10 @@
 <template>
-  <Page :title="$t('menu.calendar')" :padding="null" hide-title-bar>
+  <Page
+    :title="$t('menu.calendar')"
+    :padding="null"
+    hide-title-bar
+    icon="calendar_month"
+  >
     <Calendar
       @click="($d) => clickOnDate($d.dayjs)"
       :events="events"

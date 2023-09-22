@@ -32,12 +32,6 @@ export function runCommand(command, folder) {
     return child;
 }
 
-export function copyFile(source, target) {
-    if (!fs.existsSync(source)) return;
-    fs.copyFileSync(source, target);
-    print(chalk.blue(`Copied ${source} to ${target}`));
-}
-
 export const args = process.argv.slice(2);
 export function getArg(name) {
     for (const arg of args) {
