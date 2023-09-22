@@ -107,6 +107,10 @@ const buttonAdditionnalProps = computed(() => {
   &:not(.button-text):not(.button-outlined):not(:disabled) {
     box-shadow: 0px 0.3px 0.9px rgba(0, 0, 0, 0.32),
       0px 1.6px 3.6px rgba(0, 0, 0, 0.28);
+    &:active {
+      box-shadow: 0px 0.3px 0.9px rgba(0, 0, 0, 0.22),
+        0px 1.6px 3.6px rgba(0, 0, 0, 0.18);
+    }
   }
   &:not(.button-text) .content-icon {
     @apply -ml-1.5;
