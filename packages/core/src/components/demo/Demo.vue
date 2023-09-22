@@ -3,6 +3,7 @@
     title="Demo"
     icon="tools_wrench"
     :tabs="tabs.map((t) => ({ id: t.id, title: t.id }))"
+    page-head-fixed
   >
     <template #buttons>
       <DemoButtons />

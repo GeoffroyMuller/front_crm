@@ -11,7 +11,11 @@
       <MagicDataTable
         :store="companiesStore"
         @row-click="
-          (c) => $router.push({ name: 'companies-id', params: { id: c.id } })
+          (c) =>
+            $router.push({
+              name: 'customers-companies-id',
+              params: { id: c.id },
+            })
         "
         :columns="[
           {
@@ -38,7 +42,10 @@
             v-tooltip="{ text: $t('add'), placement: 'bottom' }"
             @click.stop="
               () =>
-                $router.push({ name: 'companies-id', params: { id: 'new' } })
+                $router.push({
+                  name: 'customers-companies-id',
+                  params: { id: 'new' },
+                })
             "
           >
             {{ $t("add") }}

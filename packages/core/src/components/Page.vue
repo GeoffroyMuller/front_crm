@@ -1,43 +1,27 @@
 <template>
+  <PageHead
+    v-if="!hideTitleBar && pageHeadFixed"
+    v-bind="$props"
+    v-model:current-tab="currentTab"
+  />
   <div v-if="loading" class="w-full h-screenMinusHeaderHeight relative">
     <Spinner
       class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
     />
   </div>
-
-  <div v-else class="page-container">
-    <div
-      v-if="!hideTitleBar"
-      class="min-h-[85px] border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0 px-content flex items-center justify-between gap-6"
-    >
-      <div class="flex gap-5 items-center">
-        <div
-          v-if="icon"
-          class="bg-gradient-245 from-primary-400 to-primary-300 shadow-md shadow-primary-200 rounded grid place-items-center w-12 h-12"
-        >
-          <Icon :name="icon" color="white" class="!text-3xl" />
-        </div>
-        <div
-          class="grid gap-3 items-center justify-start w-fit"
-          :class="{ 'transform translate-y-[9px]': tabs?.length }"
-        >
-          <Text
-            v-if="title?.length"
-            typo="title1"
-            html-component="div"
-            weight="bold"
-          >
-            {{ title }}
-          </Text>
-
-          <PageTabs
-            v-if="tabs?.length"
-            :tabs="tabs"
-            v-model:current-tab="currentTab"
-          />
-        </div>
-      </div>
-    </div>
+  <div
+    v-if="!loading"
+    :class="{
+      'h-[calc(100%-85px)]': !hideTitleBar && pageHeadFixed,
+      'h-full': !hideTitleBar || !pageHeadFixed,
+    }"
+    class="overflow-y-auto"
+  >
+    <PageHead
+      v-if="!hideTitleBar && !pageHeadFixed"
+      v-bind="$props"
+      v-model:current-tab="currentTab"
+    />
     <PageContent :class="$props.class" :padding="padding">
       <slot v-if="currentTab" :name="currentTab" :tab="currentTab" />
       <slot :tab="currentTab" />
@@ -49,15 +33,14 @@
 import Spinner from "./Spinner.vue";
 import PageContent, { type PageContentProps } from "./PageContent.vue";
 import type { BreadcrumbProps } from "./Breadcrumb.vue";
-import Text from "./Text.vue";
-import Icon from "./Icon.vue";
 import type { IconName } from "./types";
-import PageTabs, { type PageTab } from "./PageTabs.vue";
+import type { PageTab } from "./PageTabs.vue";
 import { ref } from "vue";
+import PageHead from "./PageHead.vue";
 
 const currentTab = ref();
 
-interface PageProps {
+export interface PageProps {
   title: string;
   loading?: boolean;
   class?: any;
@@ -67,16 +50,10 @@ interface PageProps {
   hideTitleBar?: boolean;
   tabs?: PageTab[];
   icon?: IconName;
+  pageHeadFixed?: boolean;
 }
 
 withDefaults(defineProps<PageProps>(), {
   padding: "light",
 });
 </script>
-
-<style lang="scss">
-.page-container {
-  overflow-y: auto;
-  height: 100%;
-}
-</style>

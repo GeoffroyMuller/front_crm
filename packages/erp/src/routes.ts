@@ -49,8 +49,8 @@ export default [
     },
   },
   {
-    path: "/companies/:id",
-    name: "companies-id",
+    path: "/customers/companies/:id",
+    name: "customers-companies-id",
     component: EditCompany,
     meta: {
       middleware: [auth],
