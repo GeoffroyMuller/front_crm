@@ -11,8 +11,14 @@
   </div>
   <PageContent
     v-if="!loading"
-    :class="[$props.class]"
-    class="overflow-y-auto h-fullMinusPageHeadHeight"
+    :class="[
+      $props.class,
+      {
+        'h-fullMinusPageHeadHeight': !hideTitleBar,
+        'h-full': hideTitleBar,
+      },
+    ]"
+    class="overflow-y-auto"
     :padding="padding"
     :gap="gap"
   >

@@ -24,7 +24,14 @@ defineProps<PageContentProps>();
 <style lang="scss" scoped>
 .padding-large {
   $pageContentPLargeWidth: 1300px;
-  padding-left: max(calc((100% - $pageContentPLargeWidth) / 2), 16px);
-  padding-right: max(calc((100% - $pageContentPLargeWidth) / 2), 16px);
+  $pageContentPaddingX: 1.5rem;
+  padding-left: max(
+    calc((100% - $pageContentPLargeWidth) / 2),
+    $pageContentPaddingX
+  );
+  padding-right: max(
+    calc((100% - $pageContentPLargeWidth) / 2),
+    $pageContentPaddingX
+  );
 }
 </style>
