@@ -6,7 +6,7 @@
       @keyup.enter="handleClickTab(tab)"
       :key="tab.id"
       class="page-tab"
-      :class="{ selected: tab.id == currentTab }"
+      :class="{ selected: tab.id == _currentTab }"
       @click="handleClickTab(tab)"
     >
       {{ tab.title }}
@@ -15,8 +15,9 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref, watch } from "vue";
+import { ref, watch, type Ref } from "vue";
 import { isEqual } from "lodash";
+import useTabs from "../composables/tabs";
 
 export interface PageTab {
   id: string;
@@ -33,36 +34,20 @@ const emit = defineEmits(["update:currentTab"]);
 
 const tabRef = ref<HTMLElement>();
 
-function handleClickTab(tab: PageTab) {
-  emit("update:currentTab", tab.id);
-  nextTick(() => {
-    if (!tabRef.value) return;
-    const selected = tabRef.value.querySelector(".selected");
-    if (!selected) return;
-    const selectedBounds = selected.getBoundingClientRect();
-    const selectedLeft = selectedBounds.left;
-    const tabsLeft = tabRef.value.getBoundingClientRect().left;
-    if (tabsLeft && selectedLeft) {
-      tabRef.value.style.setProperty(
-        "--tab-indicator-left",
-        `${selectedLeft - tabsLeft}px`
-      );
-      tabRef.value.style.setProperty(
-        "--tab-indicator-width",
-        `${selectedBounds.width}px`
-      );
-    }
-  });
-}
+const { handleClickTab, currentTab: _currentTab } = useTabs({
+  tabRef: tabRef as Ref<HTMLElement>,
+  tabs: props.tabs,
+});
 
 watch(
-  () => props.tabs,
-  (val, oldVal) => {
-    if (!isEqual(val, oldVal)) {
-      handleClickTab(val?.[0]);
-    }
+  () => _currentTab.value,
+  (tab) => {
+    console.error({ tab });
+    emit("update:currentTab", tab);
   },
-  { immediate: true }
+  {
+    immediate: true,
+  }
 );
 </script>
 

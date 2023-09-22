@@ -19,13 +19,10 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref, watch } from "vue";
-import { isEqual } from "lodash";
+import { ref, type Ref } from "vue";
+import useTabs, { type Tab } from "../composables/tabs";
 
-export interface Tab {
-  id: string;
-  title: string;
-}
+const tabRef = ref<HTMLElement>();
 
 interface TabsProps {
   tabs: Array<Tab>;
@@ -33,46 +30,16 @@ interface TabsProps {
 
 const props = withDefaults(defineProps<TabsProps>(), {});
 
-const tabRef = ref<HTMLElement>();
-const currentTab = ref();
-
-function handleClickTab(tab: Tab) {
-  currentTab.value = tab.id;
-  nextTick(() => {
-    if (!tabRef.value) return;
-    const selected = tabRef.value.querySelector(".selected");
-    if (!selected) return;
-    const selectedBounds = selected.getBoundingClientRect();
-    const selectedLeft = selectedBounds.left;
-    const tabsLeft = tabRef.value.getBoundingClientRect().left;
-    if (tabsLeft && selectedLeft) {
-      tabRef.value.style.setProperty(
-        "--tab-indicator-left",
-        `${selectedLeft - tabsLeft}px`
-      );
-      tabRef.value.style.setProperty(
-        "--tab-indicator-width",
-        `${selectedBounds.width}px`
-      );
-    }
-  });
-}
-
-watch(
-  () => props.tabs,
-  (val, oldVal) => {
-    if (!isEqual(val, oldVal)) {
-      handleClickTab(val?.[0]);
-    }
-  },
-  { immediate: true }
-);
+const { handleClickTab, currentTab } = useTabs({
+  tabRef: tabRef as Ref<HTMLElement>,
+  tabs: props.tabs,
+});
 </script>
 
 <style lang="scss">
 .tabs {
   @apply flex items-center gap-4 mb-content select-none relative w-fit;
-  
+
   &::before {
     content: " ";
     width: var(--tab-indicator-width, 0);
@@ -80,12 +47,13 @@ watch(
     height: 1.5px;
     position: absolute;
     bottom: 0;
-    
+
     @apply bg-primary-500;
     left: var(--tab-indicator-left, 0);
     transition: width 0.25s ease-in-out, left 0.25s ease-in-out;
-    border-radius: 1px;
+    border-radius: 4px;
   }
+
   .tab {
     @include typo(button);
     font-weight: bold;
@@ -94,9 +62,11 @@ watch(
     text-align: center;
     position: relative;
     cursor: pointer;
+
     &:hover:not(.selected) {
       opacity: 0.8;
     }
+
     &.selected {
       @apply text-primary-500;
     }

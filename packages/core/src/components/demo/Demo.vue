@@ -34,11 +34,13 @@
     <template #kanban>
       <DemoKanban />
     </template>
+    <template #tabs>
+      <DemoTabs />
+    </template>
   </Page>
 </template>
 
 <script setup lang="ts">
-import Tabs from "../Tabs.vue";
 import Page from "../Page.vue";
 import DemoButtons from "./DemoButtons.vue";
 import DemoCard from "./DemoCard.vue";
@@ -50,6 +52,7 @@ import DemoMenu from "./DemoMenu.vue";
 import DemoTypo from "./DemoTypo.vue";
 import DemoBreadcrumb from "./DemoBreadcrumb.vue";
 import DemoKanban from "./DemoKanban.vue";
+import DemoTabs from "./DemoTabs.vue";
 
 const tabs = [
   { id: "menu" },
@@ -62,5 +65,6 @@ const tabs = [
   { id: "typo" },
   { id: "breadcrumb" },
   { id: "kanban" },
+  { id: "tabs" },
 ];
 </script>
