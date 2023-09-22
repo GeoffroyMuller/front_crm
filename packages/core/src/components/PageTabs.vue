@@ -16,17 +16,11 @@
 
 <script setup lang="ts">
 import { ref, watch, type Ref } from "vue";
-import { isEqual } from "lodash";
-import useTabs from "../composables/tabs";
-
-export interface PageTab {
-  id: string;
-  title: string;
-}
+import useTabs, { type Tab } from "../composables/tabs";
 
 interface PageTabsProps {
-  tabs: Array<PageTab>;
-  currentTab?: PageTab["id"];
+  tabs: Array<Tab>;
+  currentTab?: Tab["id"];
 }
 
 const props = withDefaults(defineProps<PageTabsProps>(), {});
