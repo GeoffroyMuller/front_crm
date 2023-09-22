@@ -1,6 +1,6 @@
 <template>
-  <div class="pdf-viewer" v-if="src">
-    <div class="pdf-viewer-actions-wrapper">
+  <div class="pdf-viewer px-16 pb-4" v-if="src">
+    <div class="pdf-viewer-actions-wrapper pb-4">
       <div class="pdf-viewer-actions">
         <div>
           <IconButton name="chevron_left" @click.stop="substractOne()" />
@@ -123,17 +123,15 @@ async function displayPdf() {
 
 <style lang="scss">
 .pdf-viewer {
-  padding: spacing(2) spacing(8);
   background-color: color("zinc", 200);
   overflow: auto;
   position: relative;
-  padding-top: spacing(7);
   border-radius: map-deep-get($rounded, "sm");
   .pdf-viewer-actions-wrapper {
-    position: absolute;
+    position: sticky;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    display: grid;
+    place-items: center;
   }
   .pdf-viewer-actions {
     height: spacing(6);

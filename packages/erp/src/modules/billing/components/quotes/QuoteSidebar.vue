@@ -3,18 +3,20 @@
     :display-close-btn="false"
     :open="open"
     @update:open="($val) => !$val && emit('close')"
+    contentClass="flex flex-col overflow-hidden"
   >
     <SidebarHead
       :title="title"
       :actions="actions"
       @action="($action) => $emit($action, quote)"
     />
-    <SidebarContent>
+    <SidebarContent class="flex-1 overflow-hidden">
       <PdfViewer
         v-if="quote"
         :key="quote?.id"
         :src="generateQuotePDF(quote, { output: 'datauristring' })"
         :initialZoom="0.9"
+        class="max-h-full"
       />
     </SidebarContent>
   </Sidebar>

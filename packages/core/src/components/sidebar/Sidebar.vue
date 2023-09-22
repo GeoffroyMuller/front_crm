@@ -8,8 +8,8 @@
       }"
       v-click-outside="onClickOutside"
     >
-      <div class="sidebar-wrapper">
-        <div>
+      <div class="overflow-y-auto h-full">
+        <div class="h-full" :class="contentClass">
           <slot />
         </div>
       </div>
@@ -26,6 +26,7 @@ interface SidebarProps {
   title?: string;
   padding?: boolean;
   position?: "left" | "right";
+  contentClass?: any;
 }
 const props = withDefaults(defineProps<SidebarProps>(), {
   position: "right",
@@ -52,9 +53,6 @@ provide<SidebarInject>("sidebar", {
 <style lang="scss">
 .sidebar {
   @apply z-sidebar shadow-sidebar fixed top-0 bottom-0 h-screen max-w-0 overflow-hidden w-fit bg-white max-md:p-0 max-md:m-0 md:top-headerHeight md:h-screenMinusHeaderHeight;
-  .sidebar-wrapper {
-    overflow-y: auto;
-  }
 
   &.left {
     left: 0;
