@@ -1,5 +1,8 @@
 <template>
-  <div class="pdf-viewer px-16 pb-4" v-if="src">
+  <div
+    class="pdf-viewer px-16 pb-4 border border-slate-200 border-solid"
+    v-if="src"
+  >
     <div class="pdf-viewer-actions-wrapper pb-4">
       <div class="pdf-viewer-actions">
         <div>
