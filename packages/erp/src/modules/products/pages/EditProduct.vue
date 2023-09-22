@@ -8,6 +8,7 @@
     "
     :loading="loadingPage"
     :tabs="id != 'new' ? productTabs : undefined"
+    page-head-fixed
   >
     <template #informations>
       <Card padding>
