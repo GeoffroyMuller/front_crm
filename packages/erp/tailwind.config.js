@@ -26,6 +26,8 @@ module.exports = {
       spacing: {
         headerHeight: "56px",
         screenMinusHeaderHeight: "calc(100vh - 56px)",
+        pageHeadHeight: "85px",
+        fullMinusPageHeadHeight: "calc(100% - 85px)",
         content: "1.5rem",
       },
       padding: {

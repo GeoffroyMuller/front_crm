@@ -1,6 +1,6 @@
 <template>
   <div
-    class="chip"
+    class="chip typo-chip"
     :class="isOutline ? `chip-outline-${color}` : `chip-${color}`"
   >
     <Icon :name="icon" class="icon-chip" size="sm" v-if="icon" />
@@ -44,7 +44,6 @@ const props = withDefaults(defineProps<ChipProps>(), {
   width: max-content;
   padding: 8px 12px;
   line-height: unset;
-  @include typo(label);
 }
 .icon-btn-cancel {
   margin-left: 8px;

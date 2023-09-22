@@ -1,6 +1,6 @@
 <template>
   <PageHead
-    v-if="!hideTitleBar && pageHeadFixed"
+    v-if="!hideTitleBar"
     v-bind="$props"
     v-model:current-tab="currentTab"
   />
@@ -9,24 +9,16 @@
       class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
     />
   </div>
-  <div
+  <PageContent
     v-if="!loading"
-    :class="{
-      'h-[calc(100%-85px)]': !hideTitleBar && pageHeadFixed,
-      'h-full': hideTitleBar || !pageHeadFixed,
-    }"
-    class="overflow-y-auto"
+    :class="[$props.class]"
+    class="overflow-y-auto h-fullMinusPageHeadHeight"
+    :padding="padding"
+    :gap="gap"
   >
-    <PageHead
-      v-if="!hideTitleBar && !pageHeadFixed"
-      v-bind="$props"
-      v-model:current-tab="currentTab"
-    />
-    <PageContent :class="$props.class" :padding="padding">
-      <slot v-if="currentTab" :name="currentTab" :tab="currentTab" />
-      <slot :tab="currentTab" />
-    </PageContent>
-  </div>
+    <slot v-if="currentTab" :name="currentTab" :tab="currentTab" />
+    <slot :tab="currentTab" />
+  </PageContent>
 </template>
 
 <script setup lang="ts">
@@ -46,14 +38,15 @@ export interface PageProps {
   class?: any;
   back?: boolean;
   padding?: PageContentProps["padding"];
+  gap?: PageContentProps["gap"];
   breadcrumb?: BreadcrumbProps["items"];
   hideTitleBar?: boolean;
   tabs?: PageTab[];
   icon?: IconName;
-  pageHeadFixed?: boolean;
 }
 
 withDefaults(defineProps<PageProps>(), {
   padding: "light",
+  gap: true,
 });
 </script>

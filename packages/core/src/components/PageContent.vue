@@ -1,10 +1,11 @@
 <template>
   <div
-    class="flex flex-col gap-content w-full"
+    class="flex flex-col w-full"
     :class="[
       {
         'px-contentX py-content': padding === 'light',
         'py-content padding-large': padding === 'large',
+        'gap-content': gap,
       },
     ]"
   >
@@ -15,6 +16,7 @@
 <script setup lang="ts">
 export type PageContentProps = {
   padding?: null | "light" | "large";
+  gap?: boolean;
 };
 defineProps<PageContentProps>();
 </script>
