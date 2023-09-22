@@ -13,7 +13,7 @@
     v-if="!loading"
     :class="{
       'h-[calc(100%-85px)]': !hideTitleBar && pageHeadFixed,
-      'h-full': !hideTitleBar || !pageHeadFixed,
+      'h-full': hideTitleBar || !pageHeadFixed,
     }"
     class="overflow-y-auto"
   >

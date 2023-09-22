@@ -32,7 +32,7 @@ module.exports = {
         card: "2rem",
         repetable: "1.4rem",
         sidebarX: "1.25rem",
-        contentX: "1.25rem",
+        contentX: "1.5rem",
       },
       boxShadow: {
         card: "0 1px 3px 0 rgb(0 0 0 / 7%)",
