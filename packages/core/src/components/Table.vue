@@ -416,7 +416,7 @@ table {
   width: 100%;
 }
 .empty-block {
-  @include flex(row, center, center);
+  @apply flex justify-center items-center;
   margin: spacing(5);
 }
 .actions-block {

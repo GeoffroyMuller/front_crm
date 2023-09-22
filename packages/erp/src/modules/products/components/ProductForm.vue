@@ -148,7 +148,7 @@ async function handleSubmit(data: any) {
     @include grid(1, 0, 2);
   }
   .form-bottom {
-    @include flex(row, flex-end, center, 2);
+    @apply flex justify-end items-center gap-4;
   }
 }
 </style>

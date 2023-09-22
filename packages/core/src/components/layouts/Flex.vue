@@ -3,7 +3,6 @@
     :is="component || 'div'"
     class="flex layout-component"
     :class="{
-      divided,
       'full-height': fullHeight,
     }"
     ref="flex"
@@ -31,7 +30,6 @@ interface FlexProps {
   alignItems?: AlignItemsOptions;
   justifyContent?: JustifyContentOptions;
   component?: Component;
-  divided?: boolean;
   flexWrap?: FlexWrapOptions;
   fullHeight?: boolean;
 
@@ -85,9 +83,7 @@ useLayoutComponent({
   display: flex;
   width: 100%;
 }
-.divided {
-  @include flex-separator();
-}
+
 .full-height {
   height: 100%;
 }

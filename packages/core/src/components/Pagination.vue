@@ -134,7 +134,7 @@ span {
   white-space: nowrap;
 }
 .pagination {
-  @include flex(row, end, center);
+  @apply flex justify-end items-center;
   &.pagination-mobile {
     justify-content: start;
   }
@@ -142,7 +142,7 @@ span {
 }
 
 .pagination-items-per-page {
-  @include flex(row, center, center);
+  @apply flex justify-center items-center;
   & span {
     margin-right: 1rem;
   }
@@ -162,7 +162,7 @@ span {
   width: 2rem;
 }
 .pagination-buttons {
-  @include flex(row, center, center);
+  @apply flex justify-center items-center;
 }
 .items-per-page {
   width: 4rem;

@@ -155,7 +155,7 @@ function handleSubmit(data: any) {
     @include grid(2, 0, 1);
   }
   .avanced-settings-bottom {
-    @include flex(row, flex-end, center, 2);
+    @apply flex justify-end items-center gap-4;
   }
 }
 </style>

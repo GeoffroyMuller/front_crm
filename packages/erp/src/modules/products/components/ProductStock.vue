@@ -127,7 +127,7 @@ const openSideProductReal = async (productReal: ProductReal | null) => {
 .loading-spinner {
   width: 100%;
   height: 100%;
-  @include flex(col, center, center);
+  @apply flex flex-col justify-center items-center;
 }
 .product-real-sidebar {
   width: 100%;

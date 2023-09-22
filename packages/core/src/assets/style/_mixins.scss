@@ -22,64 +22,6 @@
 }
 }
 
-@mixin flex-separator() {
-    > *:not(:first-child)::before {
-        content: "";
-        border: 0.5px solid #d3d3d3;
-        align-self: stretch;
-    }
-}
-
-@mixin flex($direction, $justify-content, $align-items, $spacing-value: none) {
-    $directions: row, col, column;
-
-    @if not list.index($directions, $direction) {
-        @warn "Unknown property #{$direction}";
-    }
-
-    display: flex;
-
-    @if $direction==col or $direction==column {
-        flex-direction: column;
-    }
-
-    @if $spacing-value !=none {
-        &>* {
-            @if $direction==col or $direction==column {
-                @if unitless($spacing-value) {
-                    margin-bottom: spacing($spacing-value);
-                }
-
-                @else {
-                    margin-bottom: $spacing-value;
-                }
-
-                &:last-child {
-                    margin-bottom: 0;
-                }
-            }
-
-            @else {
-                @if unitless($spacing-value) {
-                    margin-right: spacing($spacing-value);
-                }
-
-                @else {
-                    margin-right: $spacing-value;
-                }
-
-
-                &:last-child {
-                    margin-right: 0;
-                }
-            }
-        }
-    }
-
-    justify-content: $justify-content;
-    align-items: $align-items;
-}
-
 
 @mixin grid($columns: 0, $rows: 0, $gap: 0) {
     display: grid;

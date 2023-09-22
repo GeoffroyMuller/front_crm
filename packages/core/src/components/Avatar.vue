@@ -42,7 +42,7 @@ const props = withDefaults(defineProps<AvatarProps>(), {
   overflow: hidden;
   border-radius: 50%;
   font-weight: bold;
-  @include flex(row, center, center);
+  @apply flex justify-center items-center;
   & .txt {
     padding-left: 1px;
     padding-top: 1px;
@@ -81,12 +81,11 @@ const props = withDefaults(defineProps<AvatarProps>(), {
   } @else {
     .avatar-#{$key} {
       background-color: $value;
-      @if $key == 'white' {
+      @if $key == "white" {
         color: black;
       } @else {
         color: white;
       }
-     
     }
   }
 }

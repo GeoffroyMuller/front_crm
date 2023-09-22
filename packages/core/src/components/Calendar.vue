@@ -210,14 +210,14 @@ $borderRadius: map-deep-get($rounded, "md");
 
 .calendar {
   .calendar-header {
-    @include flex(row, space-between, center, 1);
+    @apply flex justify-between items-center gap-2;
     padding: spacing(2);
     border-bottom: solid color("slate", 200) 1px;
     opacity: 1;
     z-index: 21;
     .modes,
     .date {
-      @include flex(row, flex-start, center, 1);
+      @apply flex justify-start items-center gap-2;
     }
     .mode {
       cursor: pointer;

@@ -211,7 +211,6 @@ const isPreparable = computed(() => {
   display: flex;
   align-items: center;
   gap: spacing(1);
-  background-color: color("primary", 50);
 }
 .reservation-content {
   padding: spacing(2);

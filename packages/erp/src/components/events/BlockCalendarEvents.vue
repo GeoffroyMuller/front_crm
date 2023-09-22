@@ -45,7 +45,7 @@ function getEventTitle(e: Event) {
     top: 0;
     left: 0;
     width: 5px;
-    background-color: color("primary", 400);
+    @apply bg-primary-400;
     z-index: 20;
   }
 }

@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<ChipProps>(), {
 
 <style lang="scss" scoped>
 .chip {
-  @include flex(row, center, center);
+  @apply flex justify-center items-center;
   border-radius: 50px;
   background-color: rgba(0, 0, 0, 0.08);
   color: rgba(0, 0, 0, 0.87);
