@@ -36,7 +36,6 @@ const { handleClickTab, currentTab: _currentTab } = useTabs({
 watch(
   () => _currentTab.value,
   (tab) => {
-    console.error({ tab });
     emit("update:currentTab", tab);
   },
   {

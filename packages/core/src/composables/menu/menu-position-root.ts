@@ -105,6 +105,11 @@ export default function useMenuPositionRoot(props: MenuProps) {
                   e.target?.isEqualNode(currentMouseTarget)
                 ) {
                   open.value = true;
+                } else {
+                  setTimeout(() => {
+                    window.removeEventListener("mousemove", listener);
+                    e.target?.removeEventListener("click", onClick);
+                  }, delayOpen + 1);
                 }
               }, delayOpen);
 
@@ -113,11 +118,9 @@ export default function useMenuPositionRoot(props: MenuProps) {
                 window.removeEventListener("mousemove", listener);
                 open.value = false;
               };
-              e.target?.addEventListener("click", onClick);
-              setTimeout(() => {
-                window.removeEventListener("mousemove", listener);
-                e.target?.removeEventListener("click", onClick);
-              }, delayOpen + 1);
+              if (props.hideOnClickActivator) {
+                e.target?.addEventListener("click", onClick);
+              }
             },
             false
           );
@@ -125,6 +128,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
             "mouseleave",
             () => {
               open.value = false;
+              setTimeout(() => (open.value = false), delayOpen);
             },
             false
           );

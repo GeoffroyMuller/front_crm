@@ -15,6 +15,7 @@ const tooltip: Directive = {
       placement: binding.value?.placement || "bottom",
       alignment: binding.value?.alignment || "center",
       gap: 1,
+      hideOnClickActivator: true,
     });
     target["data-destroy-tooltip"] = destroy;
   },

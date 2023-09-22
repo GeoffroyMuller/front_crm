@@ -21,6 +21,7 @@ export interface MenuProps {
   gap?: number;
   openOnHover?: boolean;
   strategy?: "root" | "absolute";
+  hideOnClickActivator?: boolean;
 }
 
 export function getPlacementAlignmentToString(
