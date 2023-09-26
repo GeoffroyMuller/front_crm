@@ -1,8 +1,8 @@
 <template>
-  <div class="w-full">
+  <div class="">
     <div class="tabs" ref="tabRef">
       <div
-        v-for="tab of tabs"
+        v-for="tab of tabsVisible"
         tabindex="0"
         @keyup.enter="handleClickTab(tab)"
         :key="tab.id"
@@ -12,6 +12,22 @@
       >
         {{ tab.title }}
       </div>
+      <ActionMenu
+        v-if="nbTabsHidden"
+        :actions="
+          tabsHidden.map((tab) => ({
+            title: tab.title,
+            action: () => {
+              handleClickTab(tab);
+            },
+          }))
+        "
+        placement="bottom"
+        alignment="start"
+        class="transform -translate-y-[4px]"
+      >
+        <IconButton name="more_horiz" />
+      </ActionMenu>
     </div>
     <slot :name="currentTab" :tab="currentTab" />
     <slot :tab="currentTab" />
@@ -21,6 +37,8 @@
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
 import useTabs, { type Tab } from "../composables/tabs";
+import ActionMenu from "./ActionMenu.vue";
+import IconButton from "./IconButton.vue";
 
 const tabRef = ref<HTMLElement>();
 
@@ -30,15 +48,16 @@ interface TabsProps {
 
 const props = withDefaults(defineProps<TabsProps>(), {});
 
-const { handleClickTab, currentTab } = useTabs({
-  tabRef: tabRef as Ref<HTMLElement>,
-  tabs: props.tabs,
-});
+const { handleClickTab, currentTab, tabsHidden, tabsVisible, nbTabsHidden } =
+  useTabs({
+    tabRef: tabRef as Ref<HTMLElement>,
+    tabs: props.tabs,
+  });
 </script>
 
 <style lang="scss">
 .tabs {
-  @apply flex items-center gap-4 mb-content select-none relative w-fit;
+  @apply flex items-center gap-4 mb-content select-none relative;
 
   &::before {
     content: " ";
@@ -62,7 +81,7 @@ const { handleClickTab, currentTab } = useTabs({
     text-align: center;
     position: relative;
     cursor: pointer;
-
+    @apply whitespace-nowrap;
     &:hover:not(.selected) {
       opacity: 0.8;
     }

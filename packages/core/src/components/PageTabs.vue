@@ -90,7 +90,7 @@ watch(
     text-align: center;
     position: relative;
     cursor: pointer;
-    @apply px-[1px];
+    @apply px-[1px] w-max whitespace-nowrap;
     &:hover:not(.selected) {
       opacity: 0.8;
     }

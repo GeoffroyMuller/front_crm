@@ -63,7 +63,7 @@ const tabs = [
   { id: "chips" },
   { id: "inputs" },
   { id: "typo" },
-  { id: "breadcrumb" },
+  { id: "breadcrumb qsd" },
   { id: "kanban" },
   { id: "tabs" },
 ];
