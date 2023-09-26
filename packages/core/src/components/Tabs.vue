@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-full">
     <div class="tabs" ref="tabRef">
       <div
         v-for="tab of tabs"

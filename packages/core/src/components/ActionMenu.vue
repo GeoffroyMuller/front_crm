@@ -19,7 +19,7 @@
           tabindex="0"
           @keyup.enter="handleAction(action)"
         >
-          <Icon :name="(action.icon as IconName)"></Icon>
+          <Icon v-if="action.icon" :name="(action.icon as IconName)"></Icon>
           {{ $t(action.title) }}
         </div>
       </div>
@@ -33,7 +33,7 @@ import type { IconName } from "./types";
 import type { MenuProps } from "../composables/menu";
 
 export interface Action {
-  icon: IconName;
+  icon?: IconName;
   action: string | (() => void);
   title: string;
 }

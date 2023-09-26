@@ -1,7 +1,7 @@
 <template>
   <div class="page-tabs" ref="tabRef">
     <div
-      v-for="tab of tabs"
+      v-for="tab of tabsVisible"
       tabindex="0"
       @keyup.enter="handleClickTab(tab)"
       :key="tab.id"
@@ -11,12 +11,29 @@
     >
       {{ tab.title }}
     </div>
+    <ActionMenu
+      v-if="nbTabsHidden"
+      :actions="
+        tabsHidden.map((tab) => ({
+          title: tab.title,
+          action: () => {
+            handleClickTab(tab);
+          },
+        }))
+      "
+      placement="bottom"
+      alignment="start"
+    >
+      <IconButton name="more_horiz" />
+    </ActionMenu>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, watch, type Ref } from "vue";
 import useTabs, { type Tab } from "../composables/tabs";
+import ActionMenu from "./ActionMenu.vue";
+import IconButton from "./IconButton.vue";
 
 interface PageTabsProps {
   tabs: Array<Tab>;
@@ -28,7 +45,13 @@ const emit = defineEmits(["update:currentTab"]);
 
 const tabRef = ref<HTMLElement>();
 
-const { handleClickTab, currentTab: _currentTab } = useTabs({
+const {
+  handleClickTab,
+  currentTab: _currentTab,
+  tabsHidden,
+  tabsVisible,
+  nbTabsHidden,
+} = useTabs({
   tabRef: tabRef as Ref<HTMLElement>,
   tabs: props.tabs,
 });
@@ -46,7 +69,7 @@ watch(
 
 <style lang="scss">
 .page-tabs {
-  @apply flex items-center gap-4 select-none relative w-fit;
+  @apply flex items-center gap-4 select-none relative overflow-hidden;
   &::before {
     content: " ";
     width: var(--tab-indicator-width, 0);

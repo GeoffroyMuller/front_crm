@@ -1,5 +1,13 @@
 import { isEqual } from "lodash";
-import { nextTick, ref, watch, type Ref } from "vue";
+import {
+  nextTick,
+  ref,
+  watch,
+  type Ref,
+  onMounted,
+  computed,
+  onUnmounted,
+} from "vue";
 
 export interface Tab {
   id: string;
@@ -13,6 +21,41 @@ export type UseTabsProps = {
 
 export default function useTabs({ tabRef, tabs }: UseTabsProps) {
   const currentTab = ref();
+
+  const nbTabsHidden = ref(0);
+
+  function computeTabOverflow() {
+    if (!tabRef.value) return;
+    nbTabsHidden.value = 0;
+    nextTick(() => {
+      const visibleWidth = tabRef.value.offsetWidth;
+      const totalWidth = tabRef.value.scrollWidth;
+      if (visibleWidth < totalWidth) {
+        const tabsLeft = tabRef.value.getBoundingClientRect().left;
+        const childrenDisplayed = Array.from(tabRef.value.children).filter(
+          (elem) => {
+            const elemRight = elem.getBoundingClientRect().right - tabsLeft;
+            if (elemRight >= visibleWidth) {
+              return true;
+            }
+            return false;
+          }
+        );
+        nbTabsHidden.value = childrenDisplayed.length
+          ? childrenDisplayed.length + 1
+          : 0;
+      }
+    });
+  }
+
+  onMounted(() => {
+    computeTabOverflow();
+    window.addEventListener("resize", computeTabOverflow);
+  });
+
+  onUnmounted(() => {
+    window.removeEventListener("resize", computeTabOverflow);
+  });
 
   function handleClickTab(tab: Tab) {
     currentTab.value = tab.id;
@@ -36,6 +79,16 @@ export default function useTabs({ tabRef, tabs }: UseTabsProps) {
     });
   }
 
+  const tabsHidden = computed(() => {
+    if (nbTabsHidden.value === 0) return [];
+    return tabs.slice(tabs.length - nbTabsHidden.value);
+  });
+
+  const tabsVisible = computed(() => {
+    if (nbTabsHidden.value === 0) return tabs;
+    return tabs.slice(0, tabs.length - nbTabsHidden.value);
+  });
+
   watch(
     () => tabs,
     (val, oldVal) => {
@@ -49,5 +102,8 @@ export default function useTabs({ tabRef, tabs }: UseTabsProps) {
   return {
     handleClickTab,
     currentTab,
+    nbTabsHidden,
+    tabsHidden,
+    tabsVisible,
   };
 }
