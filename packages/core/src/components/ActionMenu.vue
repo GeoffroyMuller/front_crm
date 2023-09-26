@@ -20,7 +20,7 @@
           @keyup.enter="handleAction(action)"
         >
           <Icon v-if="action.icon" :name="(action.icon as IconName)"></Icon>
-          {{ $t(action.title) }}
+          {{ action.title }}
         </div>
       </div>
     </template>

@@ -13,11 +13,14 @@ import type { Quote } from "../../types";
 import IconButton from "core/src/components/IconButton.vue";
 import ActionMenu from "core/src/components/ActionMenu.vue";
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 interface QuoteActionsMenuProps {
   item: Quote;
 }
 const props = withDefaults(defineProps<QuoteActionsMenuProps>(), {});
+
+const { t } = useI18n();
 
 const actions = computed(() => {
   let res: any[] = [];
@@ -41,6 +44,6 @@ const actions = computed(() => {
       },
     ],
   ];
-  return res;
+  return res.map((a) => ({ ...a, title: t(a.title) }));
 });
 </script>

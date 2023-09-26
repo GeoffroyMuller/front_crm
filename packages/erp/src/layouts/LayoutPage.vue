@@ -15,7 +15,7 @@
             icon: 'description',
             action: () =>
               router.push({ name: 'quotes-id', params: { id: 'new' } }),
-            title: 'add-menu.add-quote',
+            title: $t('add-menu.add-quote'),
           },
         ]"
         placement="bottom"
@@ -28,9 +28,9 @@
           {
             icon: 'settings',
             action: () => router.push({ name: 'settings' }),
-            title: 'settings',
+            title: $t('settings'),
           },
-          { icon: 'door_open', action: disconnect, title: 'disconnect' },
+          { icon: 'door_open', action: disconnect, title: $t('disconnect') },
         ]"
         placement="bottom"
         alignment="end"
