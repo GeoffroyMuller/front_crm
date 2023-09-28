@@ -21,3 +21,10 @@ yarn generate:keypair
 
 # documentations
 - Typescript fondamentaux : https://www.typescriptlang.org/docs/handbook/utility-types.html
+
+# packages
+- api_* : webservices de l'app
+- core_api : lib qui sert pour les service de l'app (specific à l'app)
+- core : lib de composants, helpers... frontend (generic, utilisable pour n'importe quel projet)
+- erp : frontend de l'app
+- pdfs : lib qui sert à générer des pdf de devis/factures, utilisé par api_erp et erp (specific à l'app)
