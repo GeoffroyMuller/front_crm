@@ -15,33 +15,7 @@
       {{ label }}
     </label>
     <div class="input-wrapper">
-      <textarea
-        v-if="multiline"
-        @blur="onBlur"
-        v-bind="{
-          min: min as InputHTMLAttributes['min'],
-          max: max as InputHTMLAttributes['min'],
-          type,
-          step,
-          disabled,
-          readonly,
-          name,
-          id,
-          placeholder,
-        }"
-        ref="internalRef"
-        class="mousetrap border border-solid overflow-hidden px-2 py-1 disabled:bg-inputDisabled disabled:cursor-not-allowed bg-white focus:border-primary-400 focus:shadow-[0_0_2pt_0.5pt] focus:shadow-primary-200 border-input w-full outline-none focus:outline-none"
-        :class="{
-          'appearance-none': appearanceNone === true,
-          [`rounded-${rounded}`]: true,
-          [inputClass]: inputClass,
-        }"
-        v-model="internalValue"
-        @focus="onFocus"
-        :id="id"
-      />
       <Input
-        v-if="!multiline"
         ref="inputRef"
         v-model="internalValue"
         :inputClass="inputClass"
@@ -61,6 +35,7 @@
           appearanceNone,
           rounded,
           type,
+          multiline
         }"
       >
         <template #icon v-if="$slots.icon">
