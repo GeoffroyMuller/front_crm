@@ -383,7 +383,7 @@ td,
 th {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   padding: 0px 16px;
-  height: 52px;
+  height: 47px;
 }
 th {
   text-align: left;

@@ -46,7 +46,7 @@
       </template>
       <template #content-description="{ item }">
         <div
-          class="line-clamp-3"
+          class="line-clamp-2"
           v-if="item.description"
           v-html="item.description"
         ></div>
