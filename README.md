@@ -24,6 +24,7 @@ yarn generate:keypair
 
 # packages
 - api_* : webservices de l'app
+- api_gateway : point d'entrée de l'API (check l'auth et relaie les requetes aux services)
 - core_api : lib qui sert pour les service de l'app (specific à l'app)
 - core : lib de composants, helpers... frontend (generic, utilisable pour n'importe quel projet)
 - erp : frontend de l'app
