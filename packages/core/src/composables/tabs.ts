@@ -20,7 +20,7 @@ export type UseTabsProps = {
 };
 
 export default function useTabs({ tabRef, tabs }: UseTabsProps) {
-  const currentTab = ref();
+  const currentTab = ref<Tab["id"]>();
 
   const nbTabsHidden = ref(0);
 
@@ -49,6 +49,30 @@ export default function useTabs({ tabRef, tabs }: UseTabsProps) {
     });
   }
 
+  function computeTabSelectedIndicator() {
+    if (tabsHidden.value.find((t) => t.id == currentTab.value)) {
+      tabRef.value.style.setProperty("--tab-indicator-left", `100%`);
+      tabRef.value.style.setProperty("--tab-indicator-width", `0px`);
+      return;
+    }
+    if (!tabRef.value) return;
+    const selected = tabRef.value.querySelector(".selected");
+    if (!selected) return;
+    const selectedBounds = selected.getBoundingClientRect();
+    const selectedLeft = selectedBounds.left;
+    const tabsLeft = tabRef.value.getBoundingClientRect().left;
+    if (tabsLeft && selectedLeft) {
+      tabRef.value.style.setProperty(
+        "--tab-indicator-left",
+        `${selectedLeft - tabsLeft}px`
+      );
+      tabRef.value.style.setProperty(
+        "--tab-indicator-width",
+        `${selectedBounds.width}px`
+      );
+    }
+  }
+
   onMounted(() => {
     computeTabOverflow();
     window.addEventListener("resize", computeTabOverflow);
@@ -60,24 +84,7 @@ export default function useTabs({ tabRef, tabs }: UseTabsProps) {
 
   function handleClickTab(tab: Tab) {
     currentTab.value = tab.id;
-    nextTick(() => {
-      if (!tabRef.value) return;
-      const selected = tabRef.value.querySelector(".selected");
-      if (!selected) return;
-      const selectedBounds = selected.getBoundingClientRect();
-      const selectedLeft = selectedBounds.left;
-      const tabsLeft = tabRef.value.getBoundingClientRect().left;
-      if (tabsLeft && selectedLeft) {
-        tabRef.value.style.setProperty(
-          "--tab-indicator-left",
-          `${selectedLeft - tabsLeft}px`
-        );
-        tabRef.value.style.setProperty(
-          "--tab-indicator-width",
-          `${selectedBounds.width}px`
-        );
-      }
-    });
+    nextTick(computeTabSelectedIndicator);
   }
 
   const tabsHidden = computed(() => {
@@ -89,6 +96,13 @@ export default function useTabs({ tabRef, tabs }: UseTabsProps) {
     if (nbTabsHidden.value === 0) return tabs;
     return tabs.slice(0, tabs.length - nbTabsHidden.value);
   });
+
+  watch(
+    () => tabsHidden.value,
+    () => {
+      nextTick(computeTabSelectedIndicator);
+    }
+  );
 
   watch(
     () => tabs,
