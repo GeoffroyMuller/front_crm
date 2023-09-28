@@ -27,6 +27,7 @@ export default function useTabs({ tabRef, tabs }: UseTabsProps) {
   function computeTabOverflow() {
     if (!tabRef.value) return;
     nbTabsHidden.value = 0;
+    if (tabs.length <= 2) return;
     nextTick(() => {
       const visibleWidth = tabRef.value.offsetWidth;
       const totalWidth = tabRef.value.scrollWidth;
