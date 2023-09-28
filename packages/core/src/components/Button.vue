@@ -69,7 +69,7 @@ export interface ButtonProps {
   icon?: IconName;
   component?: "button" | "a";
   href?: string;
-  typo: Typo;
+  typo?: Typo;
   fullWidth?: boolean;
 }
 

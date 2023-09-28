@@ -13,7 +13,7 @@
         class="grid w-fit relative h-full"
         :class="{
           'items-center': !tabs?.length,
-          'absolute bottom-0 left-0 items-end': tabs?.length,
+          'items-end': tabs?.length,
         }"
       >
         <Text
