@@ -298,21 +298,4 @@ async function handleSubmit(
   }
 }
 </script>
-<style lang="scss">
-.reservation-form {
-  .reservation-btn-back {
-    padding: 0;
-  }
-  .reservation-form-content {
-    margin-top: spacing(2);
-    .reservation-form-client {
-      margin-bottom: spacing(1);
-    }
-  }
-}
-.actions {
-  padding-top: spacing(2);
-  display: flex;
-  justify-content: flex-end;
-}
-</style>
+

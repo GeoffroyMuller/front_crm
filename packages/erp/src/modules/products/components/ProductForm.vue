@@ -140,12 +140,12 @@ async function handleSubmit(data: any) {
 </script>
 <style lang="scss">
 .form-product {
-  @include grid(1, 0, 2);
+  @apply grid grid-cols-1 gap-4;
   .form-head {
-    @include grid(1, 0, 2);
+    @apply grid grid-cols-1 gap-4;
   }
   .form-stock {
-    @include grid(1, 0, 2);
+    @apply grid grid-cols-1 gap-4;
   }
   .form-bottom {
     @apply flex justify-end items-center gap-4;

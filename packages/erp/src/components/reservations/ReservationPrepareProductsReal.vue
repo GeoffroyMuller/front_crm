@@ -165,10 +165,3 @@ async function handleSubmit(
   }
 }
 </script>
-<style lang="scss">
-.reservation-prepare-products-real {
-  .reservation-btn-back {
-    margin-bottom: spacing(2);
-  }
-}
-</style>

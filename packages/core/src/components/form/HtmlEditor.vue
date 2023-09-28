@@ -67,9 +67,6 @@ button.ql-active .ql-stroke {
   display: flex;
   flex-direction: column;
   width: 100%;
-  label {
-    @include typo(label);
-  }
   gap: spacing(1);
   .html-editor-content {
     &:focus-within {

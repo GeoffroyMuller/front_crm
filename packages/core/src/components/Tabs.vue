@@ -6,7 +6,7 @@
         tabindex="0"
         @keyup.enter="handleClickTab(tab)"
         :key="tab.id"
-        class="tab"
+        class="tab typo-button"
         :class="{ selected: tab.id == currentTab }"
         @click="handleClickTab(tab)"
       >
@@ -74,7 +74,6 @@ const { handleClickTab, currentTab, tabsHidden, tabsVisible, nbTabsHidden } =
   }
 
   .tab {
-    @include typo(button);
     font-weight: bold;
     border-radius: map-deep-get($rounded, "sm");
     padding-bottom: spacing(1);

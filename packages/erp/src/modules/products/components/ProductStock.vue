@@ -122,7 +122,7 @@ const openSideProductReal = async (productReal: ProductReal | null) => {
 </script>
 <style lang="scss">
 .product-stock {
-  @include grid(1, 0, 2);
+  @apply grid grid-cols-1 gap-4;
 }
 .loading-spinner {
   width: 100%;

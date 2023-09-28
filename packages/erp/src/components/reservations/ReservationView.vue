@@ -205,25 +205,3 @@ const isPreparable = computed(() => {
   return false;
 });
 </script>
-<style lang="scss" scoped>
-.reservation-actions {
-  padding: spacing(0.5) spacing(2);
-  display: flex;
-  align-items: center;
-  gap: spacing(1);
-}
-.reservation-content {
-  padding: spacing(2);
-  .reservation-description {
-    margin-top: spacing(2);
-    .reservation-description-text {
-      margin-top: spacing(0.5);
-      margin-left: spacing(1);
-      line-height: 1rem;
-    }
-  }
-  .reservation-products {
-    margin-top: spacing(3);
-  }
-}
-</style>

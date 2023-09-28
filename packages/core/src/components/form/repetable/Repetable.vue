@@ -218,7 +218,6 @@ watch(
 .repetable-wrapper {
   label.repetable-label {
     display: block;
-    @include typo(label);
     margin-bottom: spacing(1);
   }
   .repetable-section {

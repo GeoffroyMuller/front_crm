@@ -64,7 +64,6 @@ function handleSwitch() {
   cursor: pointer;
   label {
     cursor: pointer;
-    @include typo(label);
   }
   .checkbox {
     $size: 18px;

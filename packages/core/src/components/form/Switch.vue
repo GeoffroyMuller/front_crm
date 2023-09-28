@@ -66,7 +66,6 @@ function handleSwitch() {
   cursor: pointer;
   label {
     cursor: pointer;
-    @include typo(label);
   }
   .switch {
     border-radius: 10px;
@@ -88,10 +87,10 @@ function handleSwitch() {
       }
     }
     &.selected:not(.disabled) {
-      background: color("primary", 50);
+      @apply bg-primary-50;
       .switch-inner {
         margin-left: calc($width - $dotSize - 2 * $dotMargin);
-        background: color("primary", 500);
+        @apply bg-primary-500;
         background: linear-gradient(
           245deg,
           color("primary", 500) 0%,

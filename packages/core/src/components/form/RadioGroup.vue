@@ -1,5 +1,5 @@
 <template>
-  <div class="radio-group">
+  <div class="radio-group typo-label">
     <label v-if="label">
       {{ label }}
     </label>
@@ -126,7 +126,6 @@ function handleClickOption(opt: any) {
 <style lang="scss">
 .radio-group {
   @include grid(1, 0, 1);
-  @include typo(label);
   .radio-buttons {
     display: flex;
     gap: spacing(2);

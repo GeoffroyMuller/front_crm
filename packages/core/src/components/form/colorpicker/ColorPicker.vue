@@ -99,9 +99,6 @@ $defaultColorBtnSize: 21px;
   display: grid;
   gap: spacing(1);
   width: fit-content;
-  label {
-    @include typo(label);
-  }
   .color-btn {
     width: $pickerBtnSize;
     height: $pickerBtnSize;

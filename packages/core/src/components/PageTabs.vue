@@ -5,7 +5,7 @@
       tabindex="0"
       @keyup.enter="handleClickTab(tab)"
       :key="tab.id"
-      class="page-tab"
+      class="page-tab typo-button"
       :class="{ selected: tab.id == _currentTab }"
       @click="handleClickTab(tab)"
     >
@@ -84,7 +84,6 @@ watch(
     transition: width 0.25s ease-in-out, left 0.25s ease-in-out;
   }
   .page-tab {
-    @include typo(button);
     padding-bottom: 14px;
     font-weight: bold;
     text-align: center;

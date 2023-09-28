@@ -1,5 +1,5 @@
 <template>
-  <div ref="tooltip" class="tooltip bg-tooltip shadow-sm">
+  <div ref="tooltip" class="tooltip typo-label bg-tooltip shadow-sm">
     <p>{{ text }}</p>
   </div>
 </template>
@@ -34,7 +34,6 @@ const tooltip = ref();
 </script>
 <style lang="scss" scoped>
 .tooltip {
-  @include typo(label);
   position: relative;
   color: color("white");
   width: max-content;

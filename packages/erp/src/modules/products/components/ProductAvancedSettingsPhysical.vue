@@ -150,9 +150,9 @@ function handleSubmit(data: any) {
 </script>
 <style lang="scss">
 .avanced-settings-product {
-  @include grid(1, 0, 2);
+  @apply grid grid-cols-1 gap-4;
   .product_field {
-    @include grid(2, 0, 1);
+    @apply grid grid-cols-2 gap-2;
   }
   .avanced-settings-bottom {
     @apply flex justify-end items-center gap-4;
