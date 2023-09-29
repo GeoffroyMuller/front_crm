@@ -1,6 +1,12 @@
 <template>
   <button
     :class="{
+      'before:!bg-danger-50': color === 'danger',
+      'before:!bg-primary-50': color === 'primary',
+      'before:!bg-success-50': color === 'success',
+      'before:!bg-warning-50': color === 'warning',
+
+      'before:!bg-slate-50': !color || color === 'black',
       'icon-btn-white': color === 'white',
     }"
     :disabled="disabled"
@@ -46,6 +52,11 @@ const iconProps = computed(() => {
   transform: translate(-4px, -4px);
   width: calc(100% + 8px);
   height: calc(100% + 8px);
+}
+
+.icon-btn:not(:hover)::before {
+  content: " ";
+  @apply !bg-transparent;
 }
 
 .icon-btn:not(.icon-btn-white)::before {
