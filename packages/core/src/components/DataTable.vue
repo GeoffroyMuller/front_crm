@@ -29,8 +29,10 @@
       <slot :name="name" v-bind="data"></slot>
     </template>
     <template #footer>
-      <div class="flex justify-between items-center">
-        <div></div>
+      <div class="md:flex justify-between items-center">
+        <div :class="{ 'max-md:mb-2': $slots['data-actions'] }">
+          <slot name="data-actions" />
+        </div>
         <Pagination
           :current-page="currentPage"
           :itemsPerPage="itemsPerPage"

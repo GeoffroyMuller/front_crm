@@ -38,37 +38,7 @@
       selectable
       v-model:selected="selected"
     >
-      <template #head>
-        <Flex align-items="center" justify-content="space-between">
-          <Media up="md">
-            <div class="typo-title2">
-              {{ $t("quotes") }}
-            </div>
-          </Media>
-          <Media down="md">
-            {{ `${selected.length || 0} ${$t("selected")}` }}
-          </Media>
-          <div
-            :style="{
-              visibility: !selected.length ? 'hidden' : 'initial',
-              userSelect: !selected.length ? 'none' : 'initial',
-            }"
-            class="flex gap-2 justify-end"
-          >
-            <Button icon="download" variant="text" color="primary">
-              {{ $t("export") }}
-            </Button>
-            <Button
-              icon="archive"
-              variant="text"
-              color="danger"
-              @click="setArchivedSelection"
-            >
-              {{ $t("archive") }}
-            </Button>
-          </div>
-        </Flex>
-      </template>
+      <template #head> </template>
       <template #content-validationStatus="{ item }">
         <QuoteStatusChips :quote="item" />
       </template>
@@ -86,24 +56,21 @@
         {{ item?.client?.firstname || "" }} {{ item?.client?.lastname || "" }}
       </template>
       <template #actions-title>
-        <div>
-          <Media up="md">
-            <Button
-              color="success"
-              icon="add"
-              v-tooltip="{
-                text: $t('add'),
-                placement: 'bottom',
-              }"
-              @click="add()"
-            >
-              {{ $t("add") }}
-            </Button>
-          </Media>
-          <Media down="md">
-            <FloatingButton color="success" icon="add" @click="add()" />
-          </Media>
-        </div>
+        <Media up="md">
+          <IconButton
+            color="success"
+            name="add"
+            v-tooltip="{
+              text: $t('add'),
+              placement: 'bottom',
+            }"
+            @click="add()"
+            default-colored
+          />
+        </Media>
+        <Media down="md">
+          <FloatingButton color="success" icon="add" @click="add()" />
+        </Media>
       </template>
       <template #actions="{ item }">
         <QuoteActionsMenu
@@ -114,6 +81,33 @@
           @edit="edit"
           @invoice="createInvoiceFromQuote"
         />
+      </template>
+      <template #data-actions>
+        <div
+          class="flex items-center gap-2"
+          :style="{
+            visibility: !selected.length ? 'hidden' : 'initial',
+            userSelect: !selected.length ? 'none' : 'initial',
+          }"
+        >
+          <Badge>
+            {{ selected.length || 0 }}
+          </Badge>
+
+          <div class="flex gap-2 justify-end">
+            <Button icon="download" variant="text" color="primary">
+              {{ $t("export") }}
+            </Button>
+            <Button
+              icon="archive"
+              variant="text"
+              color="danger"
+              @click="setArchivedSelection"
+            >
+              {{ $t("archive") }}
+            </Button>
+          </div>
+        </div>
       </template>
     </MagicDataTable>
     <QuoteSendMail
@@ -149,6 +143,8 @@ import type { Quote } from "../../types";
 import QuoteStatusChips from "../../components/quotes/QuoteStatusChips.vue";
 import QuoteSidebar from "../../components/quotes/QuoteSidebar.vue";
 import { ref } from "vue";
+import IconButton from "core/src/components/IconButton.vue";
+import Badge from "core/src/components/Badge.vue";
 
 const quoteSidebarOpen = ref<Quote>();
 const quoteSidebarIsOpen = ref<boolean>(false);

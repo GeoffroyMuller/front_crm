@@ -423,6 +423,7 @@ table {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  width: 100%;
 }
 label.table-label {
   display: block;
