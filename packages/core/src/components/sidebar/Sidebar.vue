@@ -65,7 +65,7 @@ provide<SidebarInject>("sidebar", {
     @apply h-screen relative min-w-[650px] max-md:min-w-0 max-md:w-screen max-md:p-0 max-md:m-0 md:h-screenMinusHeaderHeight;
   }
   &.sidebar-open {
-    max-width: 100%;
+    max-width: 90%;
   }
 }
 

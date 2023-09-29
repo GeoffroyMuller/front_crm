@@ -19,9 +19,9 @@
         },
       ]"
     />
-    <div class="absolute bottom-0 left-0 p-2 flex items-center gap-1">
+    <div class="absolute bottom-0 left-0 p-2 flex z-10 items-center gap-1">
       <ActionMenu :actions="addActions" alignment="start">
-        <IconButton name="add" />
+        <IconButton name="add" class="-m-iconButtonPadding" />
       </ActionMenu>
     </div>
   </div>
@@ -66,7 +66,7 @@ onMounted(() => {
   }
   const e = new EditorJS({
     holder: editorElement.value,
-    minHeight: 80,
+    minHeight: 100,
     onChange: (api, event) => {
       handleEditorChange();
     },
