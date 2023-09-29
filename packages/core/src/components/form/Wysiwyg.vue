@@ -1,5 +1,5 @@
 <template>
-  <div class="" ref="editorWrapperElement">
+  <div class="relative" ref="editorWrapperElement">
     <label v-if="label">
       {{ label }}
     </label>
@@ -19,6 +19,9 @@
         },
       ]"
     />
+    <div class="absolute bottom-0 left-0 z-10 p-2">
+      <IconButton name="add" @click="handleAdd()" />
+    </div>
   </div>
 </template>
 
@@ -30,6 +33,7 @@ import useValidatable from "../../composables/validatable";
 import type { Size } from "../types";
 import { watch } from "vue";
 import DragDrop from "editorjs-drag-drop";
+import IconButton from "../IconButton.vue";
 
 export type WysiwygProps = {
   name?: string;
@@ -49,14 +53,15 @@ const { internalValue, internalError } = useValidatable({
 
 const editorElement = ref<HTMLDivElement>();
 const editorWrapperElement = ref<HTMLDivElement>();
+const editor = ref<EditorJS>();
 
 onMounted(() => {
   if (editorElement.value == null) return;
   async function handleEditorChange() {
-    const data = await editor.save();
+    const data = await editor.value.save();
     internalValue.value = JSON.stringify(data).trim();
   }
-  const editor = new EditorJS({
+  editor.value = new EditorJS({
     holder: editorElement.value,
     minHeight: 150,
     onChange: (api, event) => {
@@ -67,13 +72,14 @@ onMounted(() => {
       watch(
         () => internalValue.value,
         async () => {
+          if (!editor.value) return;
           if (editorWrapperElement.value == null) return;
           if (internalValue.value == null) return;
           const editorHasFocus = editorWrapperElement.value.contains(
             document.activeElement
           );
           if (!editorHasFocus) {
-            editor.render(JSON.parse(internalValue.value));
+            editor.value.render(JSON.parse(internalValue.value));
           }
         },
         {
@@ -83,4 +89,18 @@ onMounted(() => {
     },
   });
 });
+
+function handleAdd() {
+  editor.value?.blocks.insert("paragraph", { text: "blaqsdqsd " });
+}
 </script>
+
+<style lang="scss">
+.ce-toolbar__actions {
+  @apply bg-white rounded-sm shadow p-px -mt-px;
+  right: calc(100% + 8px);
+}
+.ce-inline-toolbar {
+  @apply shadow rounded-sm p-px border-none;
+}
+</style>
