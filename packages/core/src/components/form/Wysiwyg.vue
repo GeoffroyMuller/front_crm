@@ -66,7 +66,7 @@ onMounted(() => {
   }
   const e = new EditorJS({
     holder: editorElement.value,
-    minHeight: 100,
+    minHeight: 70,
     onChange: (api, event) => {
       handleEditorChange();
     },
