@@ -8,7 +8,7 @@
         class="justify-self-end"
         name="delete"
         color="danger"
-        v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
+        v-tooltip="{ text: $t('delete'), placement: 'top' }"
         @click.stop="emit('unregister')"
       />
     </div>

@@ -44,10 +44,10 @@ const iconProps = computed(() => {
 }
 
 .icon-btn-white::before {
+  content: " ";
   @apply transition-opacity opacity-0;
 }
 .icon-btn-white:hover::before {
-  content: " ";
-  @apply bg-white opacity-10 absolute w-full h-full left-0 top-0;
+  @apply bg-white opacity-10 absolute w-full h-full left-0 top-0 rounded-sm;
 }
 </style>
