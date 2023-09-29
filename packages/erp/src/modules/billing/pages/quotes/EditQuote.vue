@@ -228,8 +228,12 @@
             </Card>
 
             <Card padding>
-              <HtmlEditor
+              <!-- <HtmlEditor
                 id="modalities"
+                name="modalities"
+                :label="$t('pages.edit-quote.modalities')"
+              /> -->
+              <Wysiwyg
                 name="modalities"
                 :label="$t('pages.edit-quote.modalities')"
               />
@@ -297,6 +301,7 @@ import Card from "core/src/components/card/Card.vue";
 import FloatingButton from "core/src/components/FloatingButton.vue";
 import EditQuoteSummary from "../../components/quotes/EditQuoteSummary.vue";
 import useUI from "core/src/composables/ui";
+import Wysiwyg from "core/src/components/form/Wysiwyg.vue";
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();

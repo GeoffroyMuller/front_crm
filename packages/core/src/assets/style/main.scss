@@ -53,6 +53,10 @@ input, textarea, select {
     }
 }
 
+label {
+    @include typo(label);
+}
+
 .layout-component {
  --mt: 0;
  --mb: 0;
