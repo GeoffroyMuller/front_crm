@@ -74,7 +74,7 @@
       </div>
     </div>
     <Wysiwyg
-      class="mt-2"
+      class="lg:-mt-4"
       :label="$t('pages.edit-quote.description')"
       v-model="internalLine.description"
       name="description"

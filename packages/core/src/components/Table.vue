@@ -383,11 +383,11 @@ td,
 th {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   padding: 0px 16px;
-  height: 47px;
+  height: 50px;
 }
 th {
   text-align: left;
-  height: 60px;
+  height: 50px;
 }
 
 .table-head {
@@ -409,7 +409,7 @@ table {
   tfoot tr td {
     padding: 0px 16px;
     border-bottom: 0;
-    height: 60px;
+    height: 50px;
   }
 }
 .table-footer {

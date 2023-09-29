@@ -1,10 +1,16 @@
 <template>
   <button
     :class="{
-      'before:!bg-danger-50': color === 'danger',
+      /*'before:!bg-danger-50': color === 'danger',
       'before:!bg-primary-50': color === 'primary',
       'before:!bg-success-50': color === 'success',
-      'before:!bg-warning-50': color === 'warning',
+      'before:!bg-warning-50': color === 'warning',*/
+
+      'hover:bg-slate-50': !color || color === 'black',
+      'hover:bg-danger-50': color === 'danger',
+      'hover:bg-primary-50': color === 'primary',
+      'hover:bg-success-50': color === 'success',
+      'hover:bg-warning-50': color === 'warning',
 
       'before:!bg-slate-50': !color || color === 'black',
       'icon-btn-white': color === 'white',
@@ -44,21 +50,23 @@ const iconProps = computed(() => {
 
 <style>
 .icon-btn {
-  @apply cursor-pointer select-none bg-transparent block w-fit h-fit border-none transition-all p-0 rounded-sm leading-none disabled:cursor-not-allowed relative;
+  @apply cursor-pointer select-none bg-transparent block w-fit h-fit border-none transition-all rounded-sm leading-none disabled:cursor-not-allowed relative p-iconButtonPadding;
 }
 
 .icon-btn::before {
   position: absolute;
-  transform: translate(-4px, -4px);
+  /*transform: translate(-4px, -4px);
   width: calc(100% + 8px);
-  height: calc(100% + 8px);
+  height: calc(100% + 8px);*/
+  width: 100%;
+  height: 100%;
 }
 
 .icon-btn:not(:hover)::before {
   content: " ";
   @apply !bg-transparent;
 }
-
+/*
 .icon-btn:not(.icon-btn-white)::before {
   content: " ";
   @apply transition-[background-color] bg-transparent;
@@ -66,7 +74,7 @@ const iconProps = computed(() => {
 .icon-btn:not(.icon-btn-white):hover::before {
   @apply bg-slate-50 left-0 top-0 rounded-sm;
 }
-
+*/
 .icon-btn-white::before {
   content: " ";
   @apply transition-opacity opacity-0;

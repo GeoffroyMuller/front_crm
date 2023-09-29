@@ -12,6 +12,7 @@
           alignment: 'center',
         }"
         color="white"
+        class="[&>*]:transform [&>*]:translate-y-[2px]"
       />
     </div>
 

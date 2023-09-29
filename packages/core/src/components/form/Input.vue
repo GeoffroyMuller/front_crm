@@ -114,7 +114,7 @@ export type InputProps = {
 
   id?: string;
   placeholder?: string;
-  //hide arrows input number
+  // hide arrows input number
   appearanceNone?: boolean;
   rounded?: Size | "full";
 

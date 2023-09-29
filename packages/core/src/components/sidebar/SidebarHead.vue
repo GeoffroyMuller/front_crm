@@ -40,6 +40,7 @@
           <IconButton size="xl" name="more_horiz" default-colored />
         </ActionMenu>
         <IconButton
+          class="-mx-iconButtonPadding"
           v-tooltip="{
             text: $t('core.close'),
             placement: 'top',
