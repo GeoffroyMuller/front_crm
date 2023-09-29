@@ -28,6 +28,7 @@ import EditorJS from "@editorjs/editorjs";
 import { onMounted } from "vue";
 import useValidatable from "../../composables/validatable";
 import type { Size } from "../types";
+import { watch } from "vue";
 
 export type WysiwygProps = {
   name?: string;
@@ -49,10 +50,30 @@ const editorElement = ref<HTMLDivElement>();
 
 onMounted(() => {
   if (editorElement.value == null) return;
+  async function handleEditorChange() {
+    const data = await editor.save();
+    internalValue.value = JSON.stringify(data).trim();
+  }
   const editor = new EditorJS({
     holder: editorElement.value,
     onChange: (api, event) => {
-      console.log("Now I know that Editor's content changed!", event);
+      handleEditorChange();
+    },
+    onReady: () => {
+      watch(
+        () => internalValue.value,
+        async () => {
+          if (
+            internalValue?.value?.length &&
+            internalValue?.value !== JSON.stringify(await editor.save()).trim()
+          ) {
+            editor.render(JSON.parse(internalValue.value));
+          }
+        },
+        {
+          immediate: true,
+        }
+      );
     },
   });
 });
