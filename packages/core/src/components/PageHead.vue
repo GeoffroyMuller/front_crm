@@ -33,6 +33,9 @@
         />
       </div>
     </div>
+    <div>
+      <slot name="head-end" />
+    </div>
   </div>
 </template>
 

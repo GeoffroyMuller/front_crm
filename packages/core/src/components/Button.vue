@@ -19,7 +19,7 @@
         [`text-${color}-200`]: variant === 'text' && (disabled || loading),
 
         [`button-outlined button-outlined-${color}`]: variant === 'outlined',
-        [`text-${color}-500 bg-transparent  border border-solid border-${color}-500 hover:bg-${color}-500 hover:text-white`]:
+        [`text-${color}-500 bg-transparent  border border-solid border-${color}-300 hover:bg-${color}-50 `]:
           variant === 'outlined' && !disabled && !loading,
         [`border border-solid border-${color}-300 text-${color}-300 bg-transparent`]:
           variant === 'outlined' && (disabled || loading),
@@ -153,6 +153,6 @@ const buttonAdditionnalProps = computed(() => {
 }
 .button-outlined-white,
 .button-outlined-black {
-  @apply text-[#6b7280] border-[#6b7280] border border-solid hover:text-white hover:bg-[#6b7280] disabled:text-[#6b7280] disabled:bg-transparent;
+  @apply text-[#6b7280] border-slate-300 border border-solid hover:bg-slate-100 disabled:text-[#6b7280] disabled:bg-transparent;
 }
 </style>

@@ -30,7 +30,7 @@
     </template>
     <template #footer>
       <div class="md:flex justify-between items-center">
-        <div :class="{ 'max-md:mb-2': $slots['data-actions'] }">
+        <div class="max-md:mb-2">
           <slot name="data-actions" />
         </div>
         <Pagination

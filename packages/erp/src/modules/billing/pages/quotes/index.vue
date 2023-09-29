@@ -1,5 +1,10 @@
 <template>
   <Page :title="$t('quotes')" icon="description">
+    <template #head-end>
+      <Button @click="add()" variant="outlined" color="success">
+        {{ $t("add-menu.add-quote") }}
+      </Button>
+    </template>
     <QuoteFilters />
     <MagicDataTable
       :store="quotestore"

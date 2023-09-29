@@ -3,7 +3,11 @@
     v-if="!hideTitleBar"
     v-bind="$props"
     v-model:current-tab="currentTab"
-  />
+  >
+ <template #head-end>
+  <slot name="head-end" />
+ </template>
+  </PageHead>
   <div v-if="loading" class="w-full h-screenMinusHeaderHeight relative">
     <Spinner
       class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
