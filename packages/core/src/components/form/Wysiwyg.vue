@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="" ref="editorWrapperElement">
     <label v-if="label">
       {{ label }}
     </label>
@@ -29,6 +29,7 @@ import { onMounted } from "vue";
 import useValidatable from "../../composables/validatable";
 import type { Size } from "../types";
 import { watch } from "vue";
+import DragDrop from "editorjs-drag-drop";
 
 export type WysiwygProps = {
   name?: string;
@@ -47,6 +48,7 @@ const { internalValue, internalError } = useValidatable({
 });
 
 const editorElement = ref<HTMLDivElement>();
+const editorWrapperElement = ref<HTMLDivElement>();
 
 onMounted(() => {
   if (editorElement.value == null) return;
@@ -56,17 +58,21 @@ onMounted(() => {
   }
   const editor = new EditorJS({
     holder: editorElement.value,
+    minHeight: 150,
     onChange: (api, event) => {
       handleEditorChange();
     },
     onReady: () => {
+      new DragDrop(editor);
       watch(
         () => internalValue.value,
         async () => {
-          if (
-            internalValue?.value?.length &&
-            internalValue?.value !== JSON.stringify(await editor.save()).trim()
-          ) {
+          if (editorWrapperElement.value == null) return;
+          if (internalValue.value == null) return;
+          const editorHasFocus = editorWrapperElement.value.contains(
+            document.activeElement
+          );
+          if (!editorHasFocus) {
             editor.render(JSON.parse(internalValue.value));
           }
         },

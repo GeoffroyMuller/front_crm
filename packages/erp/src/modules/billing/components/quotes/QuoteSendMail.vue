@@ -5,7 +5,7 @@
       <template #default="{ hasError }">
         <ModalContent class="grid gap-2">
           <TextField name="subject" :label="$t('subject')" />
-          <HtmlEditor :label="$t('content')" name="content" />
+          <Wysiwyg :label="$t('content')" name="content" />
           <div class="flex items-end">
             <TextField name="pdf" :label="$t('pdf')" />
             <span :style="{ paddingLeft: '2px' }">.pdf</span>
@@ -46,7 +46,6 @@
 import Button from "core/src/components/Button.vue";
 import Form from "core/src/components/form/Form.vue";
 import TextField from "core/src/components/form/TextField.vue";
-import HtmlEditor from "core/src/components/form/HtmlEditor.vue";
 import IconButton from "core/src/components/IconButton.vue";
 import Modal from "core/src/components/modal/Modal.vue";
 import useUI from "core/src/composables/ui";
@@ -57,6 +56,7 @@ import { useI18n } from "vue-i18n";
 import ModalContent from "core/src/components/modal/ModalContent.vue";
 import ModalActions from "core/src/components/modal/ModalActions.vue";
 import ModalHead from "core/src/components/modal/ModalHead.vue";
+import Wysiwyg from "core/src/components/form/Wysiwyg.vue";
 
 interface QuoteSendMailProps {
   quote?: Quote | null;
