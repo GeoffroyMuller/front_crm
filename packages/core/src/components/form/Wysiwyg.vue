@@ -5,7 +5,7 @@
     </label>
     <div
       ref="editorElement"
-      class="rounded-sm px-2 py-1 transition-[box-shadow_border-color] duration-200 border border-solid focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input"
+      class="rounded-sm px-3 py-2 transition-[box-shadow_border-color] duration-200 border border-solid focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input"
       :class="[
         {
           'border-danger-400 focus-within:shadow-[0_0_2pt_0.5pt] focus-within:shadow-danger-200':
@@ -19,8 +19,10 @@
         },
       ]"
     />
-    <div class="absolute bottom-0 left-0 z-10 p-2">
-      <IconButton name="add" @click="handleAdd()" />
+    <div class="absolute bottom-0 left-0 z-10 p-1 flex items-center gap-1">
+      <ActionMenu :actions="addActions" alignment="start">
+        <IconButton name="add" />
+      </ActionMenu>
     </div>
   </div>
 </template>
@@ -32,8 +34,8 @@ import { onMounted } from "vue";
 import useValidatable from "../../composables/validatable";
 import type { Size } from "../types";
 import { watch } from "vue";
-import DragDrop from "editorjs-drag-drop";
 import IconButton from "../IconButton.vue";
+import ActionMenu, { type Action } from "../ActionMenu.vue";
 
 export type WysiwygProps = {
   name?: string;
@@ -58,28 +60,27 @@ const editor = ref<EditorJS>();
 onMounted(() => {
   if (editorElement.value == null) return;
   async function handleEditorChange() {
+    if (!editor.value) return;
     const data = await editor.value.save();
     internalValue.value = JSON.stringify(data).trim();
   }
-  editor.value = new EditorJS({
+  const e = new EditorJS({
     holder: editorElement.value,
-    minHeight: 150,
+    minHeight: 100,
     onChange: (api, event) => {
       handleEditorChange();
     },
     onReady: () => {
-      new DragDrop(editor);
       watch(
         () => internalValue.value,
         async () => {
-          if (!editor.value) return;
           if (editorWrapperElement.value == null) return;
           if (internalValue.value == null) return;
           const editorHasFocus = editorWrapperElement.value.contains(
             document.activeElement
           );
           if (!editorHasFocus) {
-            editor.value.render(JSON.parse(internalValue.value));
+            e.render(JSON.parse(internalValue.value));
           }
         },
         {
@@ -88,19 +89,46 @@ onMounted(() => {
       );
     },
   });
+  editor.value = e;
 });
 
-function handleAdd() {
-  editor.value?.blocks.insert("paragraph", { text: "blaqsdqsd " });
+async function add(type = "paragraph") {
+  const block = await editor.value?.blocks.insert(type, { autoFocus: true });
+  if (!block || !block.holder.parentElement) return;
+
+  const blockIndex = Array.from(block.holder.parentElement.children).findIndex(
+    // @ts-ignore
+    (elem) => elem?.dataset?.id === block.id
+  );
+  if (blockIndex === -1) {
+    editor.value?.caret.setToLastBlock();
+  } else {
+    editor.value?.caret.setToBlock(blockIndex);
+  }
 }
+
+const addActions: Action[] = [
+  {
+    action: () => add("paragraph"),
+    title: "Paragraph",
+    icon: "format_paragraph",
+  },
+];
 </script>
 
 <style lang="scss">
 .ce-toolbar__actions {
-  @apply bg-white rounded-sm shadow p-px -mt-px;
-  right: calc(100% + 8px);
+  display: none;
 }
 .ce-inline-toolbar {
   @apply shadow rounded-sm p-px border-none;
+}
+.ce-block__content {
+  max-width: none;
+  margin: 0;
+}
+.cdx-block {
+  padding-top: 0;
+  padding-bottom: 2px;
 }
 </style>

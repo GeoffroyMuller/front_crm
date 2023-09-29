@@ -23,7 +23,7 @@
       "
       placement="bottom"
       alignment="start"
-      class="transform -translate-y-[4px]"
+      class="mb-[8px]"
     >
       <IconButton name="more_horiz" />
     </ActionMenu>

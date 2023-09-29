@@ -1,10 +1,18 @@
 <template>
-  <button :disabled="disabled" type="button" class="icon-btn">
+  <button
+    :class="{
+      [`hover:bg-${color}-50`]: color && color !== 'white' && color !== 'black',
+      'hover:bg-slate-50': !color || color === 'black',
+      'icon-btn-white': color === 'white',
+    }"
+    :disabled="disabled"
+    type="button"
+    class="icon-btn transition-[background-color]"
+  >
     <Icon
       v-bind="iconProps"
       :color="defaultColored || color === 'white' ? color : undefined"
       class="relative"
-      :class="[`hover:text-${color || 'primary'}-500`]"
     />
   </button>
 </template>
@@ -32,14 +40,14 @@ const iconProps = computed(() => {
 
 <style>
 .icon-btn {
-  @apply cursor-pointer select-none bg-transparent block w-fit h-fit border-none transition-all p-0 leading-none disabled:cursor-not-allowed relative;
+  @apply cursor-pointer select-none bg-transparent block w-fit h-fit border-none transition-all p-1 rounded-sm leading-none disabled:cursor-not-allowed relative;
 }
-/* .icon-btn::before {
-  content: " ";
-  @apply absolute -top-[25%] -left-[25%] w-[150%] h-[150%] aspect-square rounded-full -z-10  bg-black opacity-0 transition-all duration-150;
+
+.icon-btn-white::before {
+  @apply transition-opacity opacity-0;
 }
-.icon-btn:hover::before {
+.icon-btn-white:hover::before {
   content: " ";
-  @apply opacity-[2%];
-} */
+  @apply bg-white opacity-10 absolute w-full h-full left-0 top-0;
+}
 </style>
