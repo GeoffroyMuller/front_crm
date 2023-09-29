@@ -34,7 +34,7 @@
           sortable: true,
         },
       ]"
-      @row-click="(item) => (quoteSidebarOpen = item)"
+      @row-click="(item) => handleRowClick(item)"
       selectable
       v-model:selected="selected"
     >
@@ -123,9 +123,9 @@
     />
   </Page>
   <QuoteSidebar
-    :open="!!quoteSidebarOpen?.id"
+    :open="quoteSidebarIsOpen"
     :model="quoteSidebarOpen"
-    @close="quoteSidebarOpen = undefined"
+    @close="quoteSidebarIsOpen = false"
     @setArchived="setArchived"
     @downloadPdf="downloadPdf"
     @sendMail="sendMail"
@@ -151,6 +151,12 @@ import QuoteSidebar from "../../components/quotes/QuoteSidebar.vue";
 import { ref } from "vue";
 
 const quoteSidebarOpen = ref<Quote>();
+const quoteSidebarIsOpen = ref<boolean>(false);
+
+function handleRowClick(item: Quote) {
+  quoteSidebarOpen.value = item;
+  quoteSidebarIsOpen.value = true;
+}
 
 const {
   quotestore,

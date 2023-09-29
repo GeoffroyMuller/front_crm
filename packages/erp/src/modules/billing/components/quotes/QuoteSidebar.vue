@@ -3,7 +3,7 @@
     :display-close-btn="false"
     :open="open"
     @update:open="($val) => !$val && emit('close')"
-    contentClass="flex flex-col overflow-hidden"
+    contentClass="flex flex-col overflow-hidden min-w-[800px] max-w-[800px]"
   >
     <SidebarHead
       :title="title"
