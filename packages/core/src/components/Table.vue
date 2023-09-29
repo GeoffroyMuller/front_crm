@@ -89,9 +89,9 @@
         class="table-container"
       >
         <div class="table-wrapper">
-          <div class="table-head" v-if="$slots['head']">
+         <!--  <div class="table-head" v-if="$slots['head']">
             <slot name="head" />
-          </div>
+          </div> -->
           <table
             :class="{
               'table-loading': loading,
@@ -390,9 +390,9 @@ th {
   height: 50px;
 }
 
-.table-head {
+/*.table-head {
   padding: 16px;
-}
+}*/
 table {
   width: 100%;
   border-collapse: collapse;

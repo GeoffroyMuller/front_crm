@@ -29,7 +29,8 @@
       <slot :name="name" v-bind="data"></slot>
     </template>
     <template #footer>
-      <div class="data-table-pagination">
+      <div class="flex justify-between items-center">
+        <div></div>
         <Pagination
           :current-page="currentPage"
           :itemsPerPage="itemsPerPage"
@@ -126,11 +127,6 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-.data-table-pagination {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-}
 .column-title {
   display: flex;
   align-items: center;
