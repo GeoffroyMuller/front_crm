@@ -407,7 +407,7 @@ table {
     }
   }
   tfoot tr td {
-    padding-right: 25px;
+    padding: 0px 16px;
     border-bottom: 0;
     height: 60px;
   }

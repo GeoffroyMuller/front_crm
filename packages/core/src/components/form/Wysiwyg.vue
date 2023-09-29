@@ -19,7 +19,7 @@
         },
       ]"
     />
-    <div class="absolute bottom-0 left-0 z-10 p-1 flex items-center gap-1">
+    <div class="absolute bottom-0 left-0 z-10 p-2 flex items-center gap-1">
       <ActionMenu :actions="addActions" alignment="start">
         <IconButton name="add" />
       </ActionMenu>
