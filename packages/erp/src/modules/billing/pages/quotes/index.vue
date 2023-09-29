@@ -48,14 +48,12 @@
         <QuoteStatusChips :quote="item" />
       </template>
       <template #content-price="{ item }">
-        {{ $utils.formatPrice(item.price) || "-" }}
+        <Price :price="item?.price" />
       </template>
       <template #content-price2="{ item }">
-        {{
-          !item.price || !item.taxes
-            ? "-"
-            : $utils.formatPrice(item.price + item.taxes) || "-"
-        }}
+        <Price
+          :price="!item.price || !item.taxes ? null : item.price + item.taxes"
+        />
       </template>
       <template #content-client="{ item }">
         {{ item?.client?.firstname || "" }} {{ item?.client?.lastname || "" }}
@@ -142,7 +140,7 @@ import Media from "core/src/components/Media.vue";
 import FloatingButton from "core/src/components/FloatingButton.vue";
 import QuoteFilters from "../../components/quotes/QuoteFilters.vue";
 import QuoteActionsMenu from "../../components/quotes/QuoteActionsMenu.vue";
-import Flex from "core/src/components/layouts/Flex.vue";
+import Price from "core/src/components/Price.vue";
 import useQuote from "../../components/quotes/quote";
 import type { Quote } from "../../types";
 import QuoteStatusChips from "../../components/quotes/QuoteStatusChips.vue";
