@@ -37,6 +37,9 @@
     <template #tabs>
       <DemoTabs />
     </template>
+    <template #wysiwyg>
+      <DemoWysiwyg />
+    </template>
   </Page>
 </template>
 
@@ -53,6 +56,7 @@ import DemoTypo from "./DemoTypo.vue";
 import DemoBreadcrumb from "./DemoBreadcrumb.vue";
 import DemoKanban from "./DemoKanban.vue";
 import DemoTabs from "./DemoTabs.vue";
+import DemoWysiwyg from "./DemoWysiwyg.vue";
 
 const tabs = [
   { id: "menu" },
@@ -66,5 +70,6 @@ const tabs = [
   { id: "breadcrumb" },
   { id: "kanban" },
   { id: "tabs" },
+  { id: "wysiwyg" },
 ];
 </script>

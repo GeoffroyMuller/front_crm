@@ -502,7 +502,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
       arrowElement.classList.add("menu-arrow");
       arrowContainerElement.appendChild(arrowElement);
       container.value.appendChild(arrowContainerElement);
-      console.error(container.value);
+      // console.error(container.value);
     }
   }
 
