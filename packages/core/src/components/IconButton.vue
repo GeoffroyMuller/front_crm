@@ -1,9 +1,6 @@
 <template>
   <button
     :class="{
-      [`before:bg-${color}-50`]:
-        color && color !== 'white' && color !== 'black',
-      'before:bg-slate-50': !color || color === 'black',
       'icon-btn-white': color === 'white',
     }"
     :disabled="disabled"
