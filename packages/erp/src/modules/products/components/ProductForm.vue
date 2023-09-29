@@ -1,30 +1,32 @@
 <template>
   <Form shortcuts :initial-value="product" @submit="handleSubmit">
     <template #default="{ hasError, hasChanged, value }">
-      <div class="form-product">
-        <div class="form-head">
-          <TextField
-            name="name"
-            :label="$t('name')"
-            :rules="$yup.string().required()"
-          />
-        </div>
+      <div class="grid gap-4">
         <TextField
-          name="price"
-          :label="$t('price')"
-          :step="0.01"
-          type="number"
+          name="name"
+          :label="$t('name')"
+          :rules="$yup.string().required()"
         />
-        <Select
-          class="input"
-          :options="vats"
-          :get-option-label="
+
+        <div class="grid grid-cols-2 gap-2">
+          <TextField
+            name="price"
+            :label="$t('price')"
+            :step="0.01"
+            type="number"
+          />
+          <Select
+            class="input"
+            :options="vats"
+            :get-option-label="
             (opt: Vat) => (opt?.rate != null ? `${opt?.rate}%` : '')
           "
-          :get-option-value="(opt: Vat) => opt.id"
-          :label="$t('vat')"
-          name="idVat"
-        />
+            :get-option-value="(opt: Vat) => opt.id"
+            :label="$t('vat')"
+            name="idVat"
+          />
+        </div>
+
         <Wysiwyg
           name="description"
           :label="$t('pages.edit-product.description')"
@@ -138,17 +140,3 @@ async function handleSubmit(data: any) {
   emit("saved", data);
 }
 </script>
-<style lang="scss">
-.form-product {
-  @apply grid grid-cols-1 gap-4;
-  .form-head {
-    @apply grid grid-cols-1 gap-4;
-  }
-  .form-stock {
-    @apply grid grid-cols-1 gap-4;
-  }
-  .form-bottom {
-    @apply flex justify-end items-center gap-4;
-  }
-}
-</style>
