@@ -11,6 +11,10 @@
     --font-size: 16px;
 }
 
+html {
+    overflow: hidden;
+}
+
 html, body {
     margin: 0;
     font-size: var(--font-size);
