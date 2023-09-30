@@ -1,20 +1,15 @@
 import { Stream } from "stream";
 import Quote from "./quote.model";
 import type { User } from "core_api/types";
-import PdfService from "core_api/services/pdf.service";
 import mailService from "core_api/services/mail.service";
 import serviceFactory from "core_api/service";
 import { merge } from "lodash";
 import { Service } from "core_api/types";
 import { raw } from "objection";
 import QuoteLine from "./quote_line.model";
-const fs = require("fs");
-let ejs = require("ejs");
 
 export interface IQuoteService extends Service<Quote, User> {
-  preview: (q: Quote, token: string) => Promise<string>;
   sendByMail: (q: Quote, token: string) => Promise<any>;
-  getPdf: (q: Quote, token: string) => Promise<Stream>;
 }
 
 async function getNextIdentifier(auth: User) {
@@ -32,11 +27,6 @@ const quoteService = serviceFactory<Quote, User>(Quote, {
     return Quote.fromJson(model)?.idCompany == user?.idCompany;
   },
   async onBeforeFetchList({ query, auth, filters, data }) {
-    if (auth != null) {
-      if (auth.idCompany) {
-        query.where("quotes.idCompany", auth.idCompany);
-      }
-    }
     query.select("quotes.*");
     query.select(
       raw(`(
@@ -55,63 +45,30 @@ const quoteService = serviceFactory<Quote, User>(Quote, {
     );
     return { query, auth, filters, data };
   },
-  async onBeforeUpdate({ query, auth, filters, data }) {
-    if (data.lines?.length) {
-      data.lines = data.lines.map((val: any, order: number) => ({
-        ...val,
-        order,
-      }));
-    }
-    data.idCompany = auth.idCompany;
-    return { query, auth, filters, data };
-  },
-  async onBeforeCreate({ query, auth, filters, data }) {
-    if (data.lines?.length) {
-      data.lines = data.lines.map((val: any, order: number) => ({
-        ...val,
-        order,
-      }));
-    }
-    return {
-      query,
-      auth,
-      filters,
-      data: {
-        ...data,
-        idCompany: auth.idCompany,
-        idResponsible: auth.id,
-        identifier: await getNextIdentifier(auth),
-      },
-    };
-  },
 }) as IQuoteService;
 
 quoteService.create = async (body: any, auth) => {
-  const { data, query } = await quoteService.onBeforeCreate({
-    query: Quote.query(),
-    data: body,
-    auth,
-  });
-  await quoteService.checkAuthorization(data, auth);
-  return (await query.upsertGraphAndFetch(
+  return (await Quote.query().upsertGraphAndFetch(
     {
-      ...data,
+      ...body,
+      idResponsible: auth.id,
+      identifier: await getNextIdentifier(auth),
     },
     { relate: true }
   )) as unknown as Quote;
 };
 
 quoteService.update = async (body: any, auth) => {
-  const { data, query } = await quoteService.onBeforeUpdate({
-    query: Quote.query(),
-    data: body,
-    auth,
-  });
-  await quoteService.getById(data.id, auth);
-  const quote = (await query.upsertGraphAndFetch(
+  const quote = (await Quote.query().upsertGraphAndFetch(
     {
-      id: data.id,
-      ...data,
+      id: body.id,
+      ...body,
+      lines: body.lines?.length
+        ? body.lines.map((val: any, order: number) => ({
+            ...val,
+            order,
+          }))
+        : undefined,
     },
     { relate: true }
   )) as unknown as Quote;
@@ -145,31 +102,10 @@ function _mapQuoteDataToDisplay(quote: Quote) {
   );
 }
 
-quoteService.preview = async (quote: Quote, token: string) => {
-  const html = fs.readFileSync(
-    __dirname + "/../../templates/quote.ejs",
-    "utf8"
-  );
-  const htmlReplaced: string = ejs.render(html, _mapQuoteDataToDisplay(quote));
-  return htmlReplaced;
-};
-
-quoteService.getPdf = async (quote: Quote, token: string) => {
-  const pdf = await PdfService.printPDF({
-    data: _mapQuoteDataToDisplay(quote),
-    inputPath: __dirname + "/../../templates/quote.ejs",
-    returnType: "stream",
-  });
-  return pdf as Stream;
-};
-
 quoteService.sendByMail = async (quote: Quote, token: string) => {
   try {
     const res = await mailService.sendMail({
-      html: ejs.render(
-        fs.readFileSync(__dirname + "/../../templates/quote.ejs", "utf8"),
-        _mapQuoteDataToDisplay(quote)
-      ),
+      html: "",
       text: "",
       subject: "Devis",
       to: quote?.client?.email as string,

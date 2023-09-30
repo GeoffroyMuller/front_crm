@@ -4,7 +4,6 @@ import { Service } from "core_api/types";
 import type { User } from "core_api/types";;
 import Invoice from "./invoice.model";
 import { filter, merge } from "lodash";
-import PdfService from "core_api/services/pdf.service";
 import mailService from "core_api/services/mail.service";
 import { QueryBuilder, raw } from "objection";
 import InvoicePayment from "./invoicepayment.model";
@@ -14,9 +13,7 @@ const fs = require("fs");
 let ejs = require("ejs");
 
 export interface IInvoiceService extends Service<Invoice, User> {
-  preview: (q: Invoice) => Promise<string>;
   sendByMail: (q: Invoice) => Promise<any>;
-  getPdf: (q: Invoice) => Promise<Stream>;
   getPayments: (i: Invoice) => Promise<InvoicePayment[]>;
   addPayment: (i: Invoice, data: any) => Promise<InvoicePayment>;
 }
@@ -174,25 +171,6 @@ function _mapDataToDisplay(invoice: Invoice) {
     }
   );
 }
-
-invoiceService.preview = async (invoice: Invoice) => {
-  const html = fs.readFileSync(
-    __dirname + "/../../templates/invoice.ejs",
-    "utf8"
-  );
-  const htmlReplaced: string = ejs.render(html, _mapDataToDisplay(invoice));
-  return htmlReplaced;
-};
-
-invoiceService.getPdf = async (invoice: Invoice) => {
-  let toPrint = invoice;
-  const pdf = await PdfService.printPDF({
-    data: _mapDataToDisplay(toPrint),
-    inputPath: __dirname + "/../../templates/invoice.ejs",
-    returnType: "stream",
-  });
-  return pdf as Stream;
-};
 
 invoiceService.sendByMail = async (invoice: Invoice) => {
   try {

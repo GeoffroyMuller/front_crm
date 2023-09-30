@@ -170,7 +170,6 @@ const serviceFactory = <
         data: { id },
         auth,
       });
-      await getById(data.id, auth);
       await query.findById(id).delete().execute();
       return;
     },
