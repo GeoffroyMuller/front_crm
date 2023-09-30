@@ -1,4 +1,8 @@
-import { type MenuProps, getPlacementAlignmentToString } from "../menu";
+import {
+  type MenuProps,
+  getPlacementAlignmentToString,
+  getPossibleDisplayPosition,
+} from "../menu";
 import {
   createApp,
   isRef,
@@ -51,60 +55,6 @@ export default function useMenuPositionAbsolute(props: MenuProps) {
     setContentPosition();
   }
 
-  function _getDimensions(element: HTMLElement) {
-    const elemBoundingClientRect = element.getBoundingClientRect();
-    return {
-      width: element.offsetWidth,
-      left: elemBoundingClientRect.left,
-      height: element.offsetHeight,
-      top: elemBoundingClientRect.top,
-      bottom: window.innerHeight - elemBoundingClientRect.bottom,
-      right: window.innerWidth - elemBoundingClientRect.right,
-    };
-  }
-
-  function _getPossibleDisplayPosition(
-    placement: MenuProps["placement"],
-    alignment: MenuProps["alignment"]
-  ): { placement: MenuProps["placement"]; alignment: MenuProps["alignment"] } {
-    const pageHeight = window.innerHeight;
-    const pageWidth = window.innerWidth;
-    const dimensions = {
-      container: _getDimensions(container.value as HTMLElement),
-      activator: _getDimensions(activator.value as HTMLElement),
-    };
-
-    if (
-      placement == "right" &&
-      dimensions.container.width +
-        dimensions.activator.left +
-        dimensions.activator.width >=
-        pageWidth
-    ) {
-      placement = "left";
-    } else if (
-      placement == "left" &&
-      dimensions.container.width >= dimensions.activator.left
-    ) {
-      placement = "right";
-    } else if (
-      placement == "bottom" &&
-      dimensions.container.height +
-        dimensions.activator.top +
-        dimensions.activator.height >=
-        pageHeight
-    ) {
-      placement = "top";
-    } else if (
-      placement == "top" &&
-      dimensions.container.height >= dimensions.activator.top
-    ) {
-      placement = "bottom";
-    }
-
-    return { placement, alignment };
-  }
-
   function _getCoordContainer(
     placement: MenuProps["placement"],
     alignment: MenuProps["alignment"]
@@ -116,7 +66,12 @@ export default function useMenuPositionAbsolute(props: MenuProps) {
       right: "auto",
       transformTranslate: "",
     };
-    const possiblePosition = _getPossibleDisplayPosition(placement, alignment);
+    const possiblePosition = getPossibleDisplayPosition(
+      placement,
+      alignment,
+      container,
+      activator
+    );
     switch (
       getPlacementAlignmentToString(
         possiblePosition.placement,
