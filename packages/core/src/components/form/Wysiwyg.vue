@@ -1,11 +1,11 @@
 <template>
-  <div class="relative" ref="editorWrapperElement">
+  <div class="relative wysiwyg" ref="editorWrapperElement">
     <label v-if="label">
       {{ label }}
     </label>
     <div
       ref="editorElement"
-      class="rounded-sm px-3 py-2 transition-[box-shadow_border-color] duration-200 border border-solid focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input"
+      class="rounded-sm z-20 px-3 py-2 transition-[box-shadow_border-color] duration-200 border border-solid focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input"
       :class="[
         {
           'border-danger-400 focus-within:shadow-[0_0_2pt_0.5pt] focus-within:shadow-danger-200':
@@ -36,6 +36,9 @@ import type { Size } from "../types";
 import { watch } from "vue";
 import IconButton from "../IconButton.vue";
 import ActionMenu, { type Action } from "../ActionMenu.vue";
+import { useI18n } from "vue-i18n";
+import Header from "@editorjs/header";
+import DragDrop from "editorjs-drag-drop";
 
 export type WysiwygProps = {
   name?: string;
@@ -57,6 +60,8 @@ const editorElement = ref<HTMLDivElement>();
 const editorWrapperElement = ref<HTMLDivElement>();
 const editor = ref<EditorJS>();
 
+const { t } = useI18n();
+
 onMounted(() => {
   if (editorElement.value == null) return;
   async function handleEditorChange() {
@@ -67,10 +72,14 @@ onMounted(() => {
   const e = new EditorJS({
     holder: editorElement.value,
     minHeight: 100,
+    tools: {
+      header: Header,
+    },
     onChange: (api, event) => {
       handleEditorChange();
     },
     onReady: () => {
+      // new DragDrop(e);
       watch(
         () => internalValue.value,
         async () => {
@@ -110,25 +119,52 @@ async function add(type = "paragraph") {
 const addActions: Action[] = [
   {
     action: () => add("paragraph"),
-    title: "Paragraph",
+    title: t("core.wysiwyg.paragraph"),
     icon: "format_paragraph",
+  },
+  {
+    action: () => add("header"),
+    title: t("core.wysiwyg.title"),
+    icon: "title",
   },
 ];
 </script>
 
 <style lang="scss">
-.ce-toolbar__actions {
-  display: none;
-}
-.ce-inline-toolbar {
-  @apply shadow rounded-sm p-px border-none;
-}
-.ce-block__content {
-  max-width: none;
-  margin: 0;
-}
-.cdx-block {
-  padding-top: 0;
-  padding-bottom: 2px;
+.wysiwyg {
+  .ce-toolbar__actions {
+    .ce-toolbar__plus {
+      display: none;
+    }
+    .ce-toolbar__settings-btn {
+      @apply shadow-card bg-white w-5 hover:bg-primary-50 border border-solid border-slate-200;
+    }
+  }
+  .ce-inline-toolbar {
+    @apply shadow rounded-sm p-px border-none;
+  }
+  .ce-block__content {
+    max-width: none;
+    margin: 0;
+  }
+  .cdx-block {
+    padding-top: 0;
+    padding-bottom: 12px;
+  }
+  .ce-toolbar__content {
+    max-width: none;
+  }
+  .ce-popover, .ce-popover__overlay {
+    display: none !important;
+  }
+
+  .codex-editor,
+  .ce-conversion-toolbar,
+  .ce-conversion-tool {
+    z-index: 20;
+  }
+  .codex-editor {
+    margin-bottom: 35px;
+  }
 }
 </style>

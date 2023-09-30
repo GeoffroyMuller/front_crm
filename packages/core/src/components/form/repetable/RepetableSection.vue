@@ -5,7 +5,7 @@
   >
     <div v-if="!isMin" class="w-full flex col-span-2 justify-end">
       <IconButton
-        class="justify-self-end"
+        class="justify-self-end -mr-iconButtonPadding"
         name="delete"
         color="danger"
         v-tooltip="{ text: $t('delete'), placement: 'top' }"

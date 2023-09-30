@@ -139,6 +139,10 @@
   "description": "Description",
   "dates": "Dates",
   "core": {
+    "wysiwyg": {
+      "paragraph": "Paragraph",
+      "title": "Titre"
+    },
     "colorpicker": {
       "edit-color": "Editer la couleur"
     },
