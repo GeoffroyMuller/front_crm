@@ -30,7 +30,7 @@
     </template>
     <template #footer>
       <div class="md:flex justify-between items-center">
-        <div class="max-md:mb-2">
+        <div class="max-md:hidden">
           <slot name="data-actions" />
         </div>
         <Pagination
@@ -41,6 +41,12 @@
           @update:items-per-page="(val) => $emit('update:itemsPerPage', val)"
         />
       </div>
+    </template>
+    <template #actions-title>
+      <div class="md:hidden">
+       dqqsdqsdq
+      </div>
+      <slot name="actions-title" />
     </template>
   </Table>
 </template>

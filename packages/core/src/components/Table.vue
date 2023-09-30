@@ -89,7 +89,7 @@
         class="table-container"
       >
         <div class="table-wrapper">
-         <!--  <div class="table-head" v-if="$slots['head']">
+          <!--  <div class="table-head" v-if="$slots['head']">
             <slot name="head" />
           </div> -->
           <table

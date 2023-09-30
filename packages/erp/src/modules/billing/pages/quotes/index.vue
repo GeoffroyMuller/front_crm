@@ -97,9 +97,9 @@
             {{ selected.length || 0 }}
           </Badge>
 
-          <div class="flex gap-2 justify-end">
+          <div class="flex gap-2 md:justify-end">
             <Button icon="download" variant="text" color="primary">
-              {{ $t("export") }}
+              <span class="max-md:hidden">{{ $t("export") }}</span>
             </Button>
             <Button
               icon="archive"
@@ -107,7 +107,7 @@
               color="danger"
               @click="setArchivedSelection"
             >
-              {{ $t("archive") }}
+              <span class="max-md:hidden"> {{ $t("archive") }}</span>
             </Button>
           </div>
         </div>

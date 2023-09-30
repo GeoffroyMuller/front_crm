@@ -3,7 +3,8 @@
     <div
       class="sidebar"
       :class="{
-        'sidebar-open': open,
+        'max-w-full md:max-w-[90%]': open,
+        'max-w-0': !open,
         left: position === 'left',
       }"
       v-click-outside="onClickOutside"
@@ -52,7 +53,7 @@ provide<SidebarInject>("sidebar", {
 
 <style lang="scss">
 .sidebar {
-  @apply z-sidebar shadow-sidebar fixed top-0 bottom-0 h-screen max-w-0 overflow-hidden w-fit bg-white max-md:p-0 max-md:m-0 md:top-headerHeight md:h-screenMinusHeaderHeight;
+  @apply z-sidebar shadow-sidebar fixed top-0 bottom-0 h-screen overflow-hidden w-fit bg-white max-md:p-0 max-md:m-0 md:top-headerHeight md:h-screenMinusHeaderHeight;
 
   &.left {
     left: 0;
@@ -64,10 +65,5 @@ provide<SidebarInject>("sidebar", {
   > * {
     @apply h-screen relative min-w-[650px] max-md:min-w-0 max-md:w-screen max-md:p-0 max-md:m-0 md:h-screenMinusHeaderHeight;
   }
-  &.sidebar-open {
-    max-width: 90%;
-  }
 }
-
-
 </style>
