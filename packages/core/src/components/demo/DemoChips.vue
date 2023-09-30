@@ -1,32 +1,41 @@
 <template>
-    <div class="flex gap-2">
-        <Chip text="blabla" color="success" icon="mail" />
-        <Chip text="blabla" color="black" icon="mail" />
-        <Chip text="blabla" color="danger" icon="mail" />
-        <Chip text="blabla" color="primary" icon="mail" />
-        <Chip text="blabla" color="warning" icon="mail" />
-    </div>
-    <div class="flex gap-2">
-        <Chip text="blabla" color="success" icon="mail" is-closable />
-        <Chip text="blabla" color="black" icon="mail" is-closable />
-        <Chip text="blabla" color="danger" icon="mail" is-closable />
-        <Chip text="blabla" color="primary" icon="mail" is-closable />
-        <Chip text="blabla" color="warning" icon="mail" is-closable />
-    </div>
-    <div class="flex gap-2">
-        <Chip text="blabla" color="success" icon="mail" is-outline />
-        <Chip text="blabla" color="black" icon="mail" is-outline />
-        <Chip text="blabla" color="danger" icon="mail" is-outline />
-        <Chip text="blabla" color="primary" icon="mail" is-outline />
-        <Chip text="blabla" color="warning" icon="mail" is-outline />
-    </div>
-    <div class="flex gap-2">
-        <Chip text="blabla" color="success" icon="mail" is-outline is-closable />
-        <Chip text="blabla" color="black" icon="mail" is-outline is-closable />
-        <Chip text="blabla" color="danger" icon="mail" is-outline is-closable />
-        <Chip text="blabla" color="primary" icon="mail" is-outline is-closable />
-        <Chip text="blabla" color="warning" icon="mail" is-outline is-closable />
-    </div>
+  <div class="flex gap-2">
+    <Chip
+      text="blabla"
+      v-for="color of [
+        'success',
+        'primary',
+        'danger',
+        'warning',
+        'white',
+        'black',
+        undefined,
+      ]"
+      :key="color"
+      :color="color"
+      icon="mail"
+      is-closable
+    />
+  </div>
+  <div class="flex gap-2">
+    <Chip
+      text="blabla"
+      v-for="color of [
+        'success',
+        'primary',
+        'danger',
+        'warning',
+        'white',
+        'black',
+        undefined,
+      ]"
+      :key="color"
+      :color="color"
+      icon="mail"
+      is-closable
+      is-outline
+    />
+  </div>
 </template>
 
 <script lang="ts" setup>

@@ -35,9 +35,12 @@
           appearanceNone,
           rounded,
           type,
-          multiline
+          multiline,
         }"
       >
+        <template #start v-if="$slots.start">
+          <slot name="start" />
+        </template>
         <template #icon v-if="$slots.icon">
           <slot name="icon" />
         </template>
