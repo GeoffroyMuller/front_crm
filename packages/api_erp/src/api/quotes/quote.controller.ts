@@ -13,7 +13,7 @@ quoteController.sendByMail = async (req, res) => {
       "client.company",
       "responsible.company",
       "lines.vat",
-    ]);
+    ], req.query);
     return res.json(await QuoteService.sendByMail(quote, getToken(req) as string));
   } catch (err) {
     return quoteController.handleError(req, res, err);

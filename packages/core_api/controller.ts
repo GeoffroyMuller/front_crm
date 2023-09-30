@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { ValidationError } from "objection";
-import { AuthError } from "./service";
+import { NotFoundError, handleError as _handleError } from "./errors";
 import {
   ControllerFactory,
   ControllerHandleError,
@@ -17,18 +16,7 @@ export function getToken(req: Request): string | undefined {
 
 const controllerFactory: ControllerFactory = (service, opts = undefined) => {
   const handleError: ControllerHandleError<any, any> =
-    opts?.handleError ||
-    (async (req: IAuthRequest<any>, res: Response, err: any) => {
-      if (err instanceof AuthError) {
-        return res.status(401).end();
-      }
-      if (err instanceof ValidationError) {
-        console.error(err);
-        return res.status(400).json(err.data);
-      }
-      console.error(err);
-      return res.status(500).end();
-    });
+    opts?.handleError || _handleError;
 
   function _getRelationArray(req: Request): string[] {
     if (Array.isArray(req.query.populate)) {
@@ -39,7 +27,6 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
     }
     return [];
   }
-
 
   return {
     handleError,
@@ -62,7 +49,7 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
         const items = await service.getAll(
           _getRelationArray(req),
           filters,
-          req.auth,
+          req.auth
         );
         return res.status(200).json(items);
       } catch (err) {
@@ -72,11 +59,12 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
     getById: async (req: IAuthRequest<any>, res: Response) => {
       try {
         const id = req.params.id;
+        const filters = req.query;
         const item = await service.getById(
           id,
           req.auth,
           _getRelationArray(req),
-          req.query,
+          filters
         );
         if (!item) {
           return res.status(404).json({
@@ -92,7 +80,8 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
     create: async (req: IAuthRequest<any>, res: Response) => {
       try {
         const item = req.body;
-        const createdItem = await service.create(item, req.auth);
+        const filters = req.query;
+        const createdItem = await service.create(item, req.auth, filters);
         return res.status(200).json(createdItem);
       } catch (err) {
         return handleError(req, res, err);
@@ -101,9 +90,10 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
     update: async (req: IAuthRequest<any>, res: Response) => {
       try {
         const item = { ...req.body, id: req.params.id };
-        const updatedItem = await service.update(item, req.auth);
+        const filters = req.query;
+        const updatedItem = await service.update(item, req.auth, filters);
         if (!updatedItem) {
-          return res.status(500).end();
+          throw new NotFoundError("no item found");
         }
         return res.status(200).json(updatedItem);
       } catch (err) {
@@ -112,9 +102,13 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
     },
     delete: async (req: IAuthRequest<any>, res: Response) => {
       try {
+        const filters = req.query;
         const id = req.params.id;
-        const deletedItem = await service.remove(id, req.auth);
-        return res.status(200).json(deletedItem);
+        const deletedItem = await service.remove(id, req.auth, filters);
+        if (!deletedItem) {
+          throw new NotFoundError("no item found");
+        }
+        return res.status(200).end();
       } catch (err) {
         return handleError(req, res, err);
       }

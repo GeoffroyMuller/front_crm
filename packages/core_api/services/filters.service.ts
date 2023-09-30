@@ -136,6 +136,7 @@ const handleFiltersIn: HandleFiltersFunction = (query, filters, or) => {
 };
 
 const handleFilters: HandleFiltersFunction = (query, filters, or) => {
+  console.error(filters)
   handleFiltersOr(query, filters);
   handleFiltersAnd(query, filters);
   handleFiltersEq(query, filters, or);

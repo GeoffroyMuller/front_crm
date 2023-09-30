@@ -2,7 +2,7 @@ import { Stream } from "stream";
 import Quote from "./quote.model";
 import type { User } from "core_api/types";
 import mailService from "core_api/services/mail.service";
-import serviceFactory from "core_api/service";
+import serviceFactory, { AuthError } from "core_api/service";
 import { merge } from "lodash";
 import { Service } from "core_api/types";
 import { raw } from "objection";
@@ -47,8 +47,10 @@ const quoteService = serviceFactory<Quote, User>(Quote, {
   },
 }) as IQuoteService;
 
-quoteService.create = async (body: any, auth) => {
-  return (await Quote.query().upsertGraphAndFetch(
+quoteService.create = async (body: any, auth, filters) => {
+  const data = await quoteService.getById(body.id, auth, [], filters);
+  if (!data) throw new AuthError();
+  return (await  Quote.query().upsertGraphAndFetch(
     {
       ...body,
       idResponsible: auth.id,
@@ -58,7 +60,9 @@ quoteService.create = async (body: any, auth) => {
   )) as unknown as Quote;
 };
 
-quoteService.update = async (body: any, auth) => {
+quoteService.update = async (body: any, auth, filters) => {
+  const data = await quoteService.getById(body.id, auth, [], filters);
+  if (!data) throw new AuthError();
   const quote = (await Quote.query().upsertGraphAndFetch(
     {
       id: body.id,
@@ -74,33 +78,6 @@ quoteService.update = async (body: any, auth) => {
   )) as unknown as Quote;
   return quote;
 };
-
-function _mapQuoteDataToDisplay(quote: Quote) {
-  return merge(
-    {
-      client: {
-        firstname: "",
-        lastname: "",
-        company: { name: "" },
-      },
-      responsible: {
-        firstname: "",
-        lastname: "",
-        company: { name: "" },
-      },
-      modalities: "",
-      footer: "",
-    },
-    {
-      ...quote,
-      lines:
-        quote?.lines?.map((line) => ({
-          ...line,
-          vatRate: line?.vat?.rate ? `${line?.vat?.rate}%` : "-",
-        })) || [],
-    }
-  );
-}
 
 quoteService.sendByMail = async (quote: Quote, token: string) => {
   try {
