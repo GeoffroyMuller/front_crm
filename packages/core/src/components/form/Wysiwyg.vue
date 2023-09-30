@@ -79,7 +79,7 @@ onMounted(() => {
       handleEditorChange();
     },
     onReady: () => {
-      // new DragDrop(e);
+      new DragDrop(e);
       watch(
         () => internalValue.value,
         async () => {
