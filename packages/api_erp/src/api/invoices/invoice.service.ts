@@ -1,7 +1,7 @@
 import { Stream } from "stream";
 import serviceFactory from "core_api/service";
 import { Service } from "core_api/types";
-import type { User } from "core_api/types";;
+import type { User } from "core_api/types";
 import Invoice from "./invoice.model";
 import { filter, merge } from "lodash";
 import mailService from "core_api/services/mail.service";
@@ -61,8 +61,7 @@ const invoiceService = serviceFactory(Invoice, {
     query.select("invoices.*");
     query = withPrice(query);
     query = withTaxes(query);
-    
-    
+
     return { query, auth, filters, data };
   },
   async onBeforeGetById({ query, auth, filters, data }) {
@@ -90,7 +89,7 @@ const invoiceService = serviceFactory(Invoice, {
         ...data,
         idCompany: auth.idCompany,
         idResponsible: auth.id,
-        identifier: await getNextIdentifier(auth)
+        identifier: await getNextIdentifier(auth),
       },
     };
   },
@@ -175,10 +174,7 @@ function _mapDataToDisplay(invoice: Invoice) {
 invoiceService.sendByMail = async (invoice: Invoice) => {
   try {
     const res = await mailService.sendMail({
-      html: ejs.render(
-        fs.readFileSync(__dirname + "/../../templates/invoice.ejs", "utf8"),
-        _mapDataToDisplay(invoice)
-      ),
+      html: "",
       text: "",
       subject: "Facture",
       to: invoice?.client?.email as string,
@@ -191,14 +187,13 @@ invoiceService.sendByMail = async (invoice: Invoice) => {
 };
 
 invoiceService.getPayments = async (i: Invoice) => {
-  return i.$relatedQuery('payments').execute();
+  return i.$relatedQuery("payments").execute();
 };
-
 
 invoiceService.addPayment = async (i: Invoice, data: any) => {
   return InvoicePayment.query().insertAndFetch({
     ...data,
-    idInvoice: i.id
+    idInvoice: i.id,
   });
 };
 
