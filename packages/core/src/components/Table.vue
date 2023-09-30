@@ -429,4 +429,8 @@ label.table-label {
   display: block;
   margin-bottom: spacing(1);
 }
+th:has(.actions-block),
+td:has(.actions-block) {
+  width: 0 !important;
+}
 </style>

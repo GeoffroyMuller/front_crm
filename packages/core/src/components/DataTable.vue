@@ -29,9 +29,10 @@
       <slot :name="name" v-bind="data"></slot>
     </template>
     <template #footer>
-      <div class="md:flex justify-between items-center">
+      <div class="md:flex w-full justify-between items-center">
         <div class="max-md:hidden">
           <slot name="data-actions" />
+          <slot name="head"></slot>
         </div>
         <Pagination
           :current-page="currentPage"
@@ -41,12 +42,6 @@
           @update:items-per-page="(val) => $emit('update:itemsPerPage', val)"
         />
       </div>
-    </template>
-    <template #actions-title>
-      <div class="md:hidden">
-       dqqsdqsdq
-      </div>
-      <slot name="actions-title" />
     </template>
   </Table>
 </template>

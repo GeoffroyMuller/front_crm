@@ -59,6 +59,31 @@
         {{ item?.client?.firstname || "" }} {{ item?.client?.lastname || "" }}
       </template>
       <template #actions-title>
+        <div
+          class="flex w-fit flex-1 gap-2 justify-end"
+          :style="{
+            display: !selected.length ? 'none' : 'flex',
+          }"
+        >
+          <Badge>
+            {{ selected.length || 0 }}
+          </Badge>
+          <div
+            class="border-0 border-r border-solid border-slate-300 mx-2 md:hidden"
+          />
+          <Button icon="download" variant="text" color="primary"> </Button>
+          <Button
+            icon="archive"
+            variant="text"
+            color="danger"
+            @click="setArchivedSelection"
+          >
+          </Button>
+          <div
+            class="border-0 border-r border-solid border-slate-300 mx-2 max-md:hidden"
+          />
+        </div>
+
         <Media up="md">
           <IconButton
             color="success"
@@ -97,9 +122,9 @@
             {{ selected.length || 0 }}
           </Badge>
 
-          <div class="flex gap-2 md:justify-end">
+          <div class="flex gap-2 justify-end">
             <Button icon="download" variant="text" color="primary">
-              <span class="max-md:hidden">{{ $t("export") }}</span>
+              {{ $t("export") }}
             </Button>
             <Button
               icon="archive"
@@ -107,7 +132,7 @@
               color="danger"
               @click="setArchivedSelection"
             >
-              <span class="max-md:hidden"> {{ $t("archive") }}</span>
+              {{ $t("archive") }}
             </Button>
           </div>
         </div>
