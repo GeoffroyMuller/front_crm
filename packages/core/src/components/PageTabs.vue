@@ -25,7 +25,10 @@
       alignment="start"
       class="mb-[8px]"
     >
-      <IconButton name="more_horiz" />
+      <Button variant="text" color="black">
+        <span>+{{ nbTabsHidden }}</span>
+        <Icon name="more_horiz" />
+      </Button>
     </ActionMenu>
   </div>
 </template>
@@ -34,7 +37,8 @@
 import { ref, watch, type Ref } from "vue";
 import useTabs, { type Tab } from "../composables/tabs";
 import ActionMenu from "./ActionMenu.vue";
-import IconButton from "./IconButton.vue";
+import Icon from "./Icon.vue";
+import Button from "./Button.vue";
 
 interface PageTabsProps {
   tabs: Array<Tab>;

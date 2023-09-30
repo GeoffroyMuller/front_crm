@@ -26,7 +26,10 @@
         alignment="start"
         class="transform -translate-y-[4px]"
       >
-        <IconButton name="more_horiz" />
+        <Button variant="text" color="black">
+          <span>+{{ nbTabsHidden }}</span>
+          <Icon name="more_horiz" />
+        </Button>
       </ActionMenu>
     </div>
     <slot :name="currentTab" :tab="currentTab" />
@@ -38,7 +41,8 @@
 import { ref, type Ref } from "vue";
 import useTabs, { type Tab } from "../composables/tabs";
 import ActionMenu from "./ActionMenu.vue";
-import IconButton from "./IconButton.vue";
+import Button from "./Button.vue";
+import Icon from "./Icon.vue";
 
 const tabRef = ref<HTMLElement>();
 

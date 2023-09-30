@@ -60,7 +60,10 @@ export default function useTabs({ tabRef, tabs }: UseTabsProps) {
             tabsLeft) - tabsLeft
         }px`
       );
-      tabRef.value.style.setProperty("--tab-indicator-width", `0px`);
+      tabRef.value.style.setProperty(
+        "--tab-indicator-width",
+        `${tabRef.value.lastElementChild?.getBoundingClientRect()?.width}px`
+      );
       return;
     }
     const selected = tabRef.value.querySelector(".selected");
