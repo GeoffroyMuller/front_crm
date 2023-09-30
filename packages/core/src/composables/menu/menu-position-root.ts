@@ -198,9 +198,6 @@ export default function useMenuPositionRoot(props: MenuProps) {
       activator: _getDimensions(activator.value as HTMLElement),
     };
 
-    const pageHeight = window.innerHeight;
-    const pageWidth = window.innerWidth;
-
     const coord = {
       left: 0,
       top: 0,

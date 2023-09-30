@@ -53,10 +53,6 @@ export default function useMenuPositionAbsolute(props: MenuProps) {
   function setContentPosition() {
     const coord = { top: "auto", left: "auto", bottom: "auto", right: "auto" };
     let transformTranslate = "";
-    console.log(
-      "absolute: ",
-      getPlacementAlignmentToString(props.placement, props.alignment)
-    );
     switch (getPlacementAlignmentToString(props.placement, props.alignment)) {
       case "right":
       case "right-center":
