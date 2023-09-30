@@ -1,5 +1,5 @@
 <template>
-  <span class="icon" :class="classes">
+  <span class="icon notranslate" :class="classes">
     {{ name }}
   </span>
 </template>
