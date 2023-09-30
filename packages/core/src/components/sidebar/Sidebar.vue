@@ -12,14 +12,16 @@
       <div class="overflow-y-auto h-full">
         <div class="h-full" :class="contentClass">
           <slot />
+          <slot v-if="currentTab" :name="currentTab" :tab="currentTab" />
         </div>
       </div>
     </div>
   </Teleport>
 </template>
 <script setup lang="ts">
-import { provide } from "vue";
+import { provide, ref } from "vue";
 import type { SidebarInject } from "./sidebar.types";
+import type { Tab } from "src/composables/tabs";
 
 interface SidebarProps {
   open: boolean;
@@ -33,6 +35,8 @@ const props = withDefaults(defineProps<SidebarProps>(), {
   position: "right",
 });
 const emit = defineEmits(["update:open"]);
+
+const currentTab = ref<Tab["id"]>();
 
 function onClickOutside(event: PointerEvent) {
   // click on body just if click started on sidebar and finish outside
@@ -48,6 +52,9 @@ function onClickOutside(event: PointerEvent) {
 provide<SidebarInject>("sidebar", {
   open: props.open,
   close: () => emit("update:open", false),
+  setCurrentTab(t) {
+    currentTab.value = t;
+  },
 });
 </script>
 
@@ -58,10 +65,13 @@ provide<SidebarInject>("sidebar", {
   &.left {
     left: 0;
   }
+
   &:not(.left) {
     right: 0;
   }
+
   transition: max-width 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
   > * {
     @apply h-screen relative min-w-[650px] max-md:min-w-0 max-md:w-screen max-md:p-0 max-md:m-0 md:h-screenMinusHeaderHeight;
   }

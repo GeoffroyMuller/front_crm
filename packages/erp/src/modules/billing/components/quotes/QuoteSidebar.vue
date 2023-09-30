@@ -9,15 +9,27 @@
       :title="title"
       :actions="actions"
       @action="($action) => $emit($action, quote)"
+      :tabs="[
+        {
+          id: 'pdf',
+          title: 'pdf',
+        },
+        {
+          id: 'invoice',
+          title: 'invoice',
+        },
+      ]"
     />
-    <SidebarContent class="flex-1 overflow-hidden">
-      <PdfViewer
-        v-if="quote"
-        :key="quote?.id"
-        :src="generateQuotePDF(quote, { output: 'datauristring' })"
-        class="max-h-full"
-      />
-    </SidebarContent>
+    <template #pdf>
+      <SidebarContent class="flex-1 overflow-hidden">
+        <PdfViewer
+          v-if="quote"
+          :key="quote?.id"
+          :src="generateQuotePDF(quote, { output: 'datauristring' })"
+          class="max-h-full"
+        />
+      </SidebarContent>
+    </template>
   </Sidebar>
 </template>
 <script lang="ts" setup>
@@ -33,6 +45,8 @@ import { useI18n } from "vue-i18n";
 import { merge } from "lodash";
 import PdfViewer from "core/src/components/PdfViewer.vue";
 import { generateQuotePDF } from "@megaapp/pdfs";
+import { ref } from "vue";
+import type { Tab } from "core/src/components/Tabs.vue";
 
 const props = defineProps<{ open: boolean; model?: Quote }>();
 const emit = defineEmits(["close"]);
