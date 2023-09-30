@@ -59,32 +59,26 @@
         {{ item?.client?.firstname || "" }} {{ item?.client?.lastname || "" }}
       </template>
       <template #actions-title>
-        <div
-          class="flex w-fit flex-1 gap-2 justify-end"
-          :style="{
-            display: !selected.length ? 'none' : 'flex',
-          }"
-        >
-          <Badge>
-            {{ selected.length || 0 }}
-          </Badge>
-          <div
-            class="border-0 border-r border-solid border-slate-300 mx-2 md:hidden"
-          />
-          <Button icon="download" variant="text" color="primary"> </Button>
-          <Button
-            icon="archive"
-            variant="text"
-            color="danger"
-            @click="setArchivedSelection"
+        <div class="relative">
+          <Card
+            class="flex p-2 w-fit absolute gap-2 justify-end right-0 md:left-0 top-1/2 -translate-y-1/2 transform md:-translate-x-full"
+            :style="{
+              display: !selected.length ? 'none' : 'flex',
+            }"
           >
-          </Button>
-          <div
-            class="border-0 border-r border-solid border-slate-300 mx-2 max-md:hidden"
-          />
-        </div>
+            <Badge>
+              {{ selected.length || 0 }}
+            </Badge>
+            <Button icon="download" variant="text" color="primary"> </Button>
+            <Button
+              icon="archive"
+              variant="text"
+              color="danger"
+              @click="setArchivedSelection"
+            >
+            </Button>
+          </Card>
 
-        <Media up="md">
           <IconButton
             color="success"
             name="add"
@@ -95,7 +89,7 @@
             @click="add()"
             default-colored
           />
-        </Media>
+        </div>
         <Media down="md">
           <FloatingButton color="success" icon="add" @click="add()" />
         </Media>
@@ -173,6 +167,7 @@ import QuoteSidebar from "../../components/quotes/QuoteSidebar.vue";
 import { ref } from "vue";
 import IconButton from "core/src/components/IconButton.vue";
 import Badge from "core/src/components/Badge.vue";
+import Card from "core/src/components/card/Card.vue";
 
 const quoteSidebarOpen = ref<Quote>();
 const quoteSidebarIsOpen = ref<boolean>(false);

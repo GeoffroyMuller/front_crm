@@ -401,6 +401,7 @@ table {
   }
   tbody tr {
     transition: 0.3s;
+    position: relative;
     &:hover {
       background-color: color("primary", 50);
       cursor: pointer;
@@ -410,6 +411,9 @@ table {
     padding: 0px 16px;
     border-bottom: 0;
     height: 50px;
+  }
+  th, td {
+    position: relative;
   }
 }
 .table-footer {
@@ -428,9 +432,5 @@ table {
 label.table-label {
   display: block;
   margin-bottom: spacing(1);
-}
-th:has(.actions-block),
-td:has(.actions-block) {
-  width: 0 !important;
 }
 </style>
