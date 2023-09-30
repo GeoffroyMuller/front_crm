@@ -2,7 +2,7 @@
   <div
     class="bg-white shadow-card"
     :class="{
-      'p-card': padding,
+      'max-md:p-cardMobile p-card': padding,
       'rounded-sm': rounded === 'sm',
       'rounded-md': rounded === 'md',
       'rounded-lg': rounded === 'lg',

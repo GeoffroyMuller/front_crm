@@ -1,6 +1,6 @@
 <template>
   <div
-    class="avatar"
+    class="avatar notranslate"
     :class="[color ? `bg-${color}-500` : '', size ? `avatar-${size}` : '']"
   >
     <Icon class="icon" v-if="icon" :name="icon" />

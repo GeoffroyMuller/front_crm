@@ -3,8 +3,9 @@
     class="flex flex-col w-full"
     :class="[
       {
-        'px-contentX py-content': padding === 'light',
-        'py-content padding-large': padding === 'large',
+        'px-contentX max-md:px-contentXMobile py-content': padding === 'light',
+        'py-content max-md:!px-contentXMobile padding-large':
+          padding === 'large',
         'gap-content': gap,
       },
     ]"

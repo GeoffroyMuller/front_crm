@@ -1,7 +1,12 @@
 <template>
   <div
     class="chip typo-chip"
-    :class="isOutline ? `chip-outline-${color}` : `chip-${color}`"
+    :class="[
+      isOutline ? `chip-outline-${color}` : `chip-${color}`,
+      {
+        '!text-white !border-white': color === 'white',
+      },
+    ]"
   >
     <Icon :name="icon" class="icon-chip" size="sm" v-if="icon" />
     <span v-if="$slots.default"><slot /></span>
@@ -12,7 +17,7 @@
       default-colored
       class="ml-2 -my-iconButtonPadding -mr-iconButtonPadding"
       size="sm"
-      :color="isOutline ? color : 'white'"
+      :color="computedColor"
       @click="$emit('close')"
     />
   </div>
@@ -22,6 +27,7 @@
 import Icon from "./Icon.vue";
 import type { Color, IconName } from "./types";
 import IconButton from "./IconButton.vue";
+import { computed } from "vue";
 
 interface ChipProps {
   icon?: IconName;
@@ -33,6 +39,14 @@ interface ChipProps {
 const props = withDefaults(defineProps<ChipProps>(), {
   isClosable: false,
   isOutline: false,
+});
+
+const computedColor = computed<Color>(() => {
+  if (props.isOutline) {
+    return props.color || "white";
+  }
+  if (!props.color || props.color === "black") return "black";
+  return "white";
 });
 </script>
 
@@ -70,6 +84,9 @@ const props = withDefaults(defineProps<ChipProps>(), {
     .chip-#{$key} {
       background-color: rgba(0, 0, 0, 0.25);
       color: color("white");
+    }
+    .chip-black {
+      color: rgba(0, 0, 0, 0.65);
     }
     .chip-outline-#{$key} {
       border: 1px solid rgba(0, 0, 0, 0.25);

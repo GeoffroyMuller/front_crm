@@ -10,7 +10,7 @@
     >
       <template #activator>
         <TextField
-          :model-value="displayed"
+          :model-value="multiple ? null : displayed"
           readonly
           :disabled="disabled"
           :label="label"
@@ -22,6 +22,18 @@
           :class="$props.class"
           input-class="cursor-pointer"
         >
+          <template #start>
+            <div class="flex items-center" v-if="props.multiple">
+              <Chip
+                v-for="(opt, index) in options.filter(isSelected)"
+                :key="index"
+                is-closable
+                @close="handleClickOption(opt)"
+              >
+                {{ getOptionLabel(opt) }}
+              </Chip>
+            </div>
+          </template>
           <template #icon>
             <Icon
               :name="!open ? 'expand_more' : 'expand_less'"
@@ -82,6 +94,7 @@ import Menu from "../Menu.vue";
 import SelectOptions from "../SelectOptions.vue";
 import useSelect from "../../composables/select";
 import type { MenuProps } from "src/composables/menu";
+import Chip from "../Chip.vue";
 
 export interface SelectProps {
   multiple?: boolean;
