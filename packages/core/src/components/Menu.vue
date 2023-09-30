@@ -98,6 +98,7 @@ function handleClickOutside() {
   width: 10px;
   pointer-events: none;
   height: 10px;
+  //filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5)); //TODO
   .menu-arrow {
     background-color: red;
     clip-path: polygon(50% 0, 100% 100%, 0 100%);
@@ -111,12 +112,14 @@ function handleClickOutside() {
   .menu-content {
     z-index: 4;
     position: absolute;
-    display: none;
+    //display: none;
+    visibility: hidden;
   }
   &.menu-openhover:hover,
   &.open {
     .menu-content {
-      display: initial;
+      //display: initial;
+      visibility: visible;
     }
   }
 }
