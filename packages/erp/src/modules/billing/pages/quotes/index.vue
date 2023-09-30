@@ -84,7 +84,7 @@
             name="add"
             v-tooltip="{
               text: $t('add'),
-              placement: 'bottom',
+              placement: 'top',
             }"
             @click="add()"
             default-colored

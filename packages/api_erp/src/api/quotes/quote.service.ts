@@ -1,12 +1,11 @@
-import { Stream } from "stream";
 import Quote from "./quote.model";
 import type { User } from "core_api/types";
 import mailService from "core_api/services/mail.service";
-import serviceFactory, { AuthError } from "core_api/service";
-import { merge } from "lodash";
+import serviceFactory from "core_api/service";
 import { Service } from "core_api/types";
 import { raw } from "objection";
 import QuoteLine from "./quote_line.model";
+import { NotFoundError } from "core_api/errors";
 
 export interface IQuoteService extends Service<Quote, User> {
   sendByMail: (q: Quote, token: string) => Promise<any>;
@@ -23,9 +22,6 @@ async function getNextIdentifier(auth: User) {
 }
 
 const quoteService = serviceFactory<Quote, User>(Quote, {
-  isAuthorized: async (model: Quote | Object, user: User) => {
-    return Quote.fromJson(model)?.idCompany == user?.idCompany;
-  },
   async onBeforeFetchList({ query, auth, filters, data }) {
     query.select("quotes.*");
     query.select(
@@ -48,9 +44,7 @@ const quoteService = serviceFactory<Quote, User>(Quote, {
 }) as IQuoteService;
 
 quoteService.create = async (body: any, auth, filters) => {
-  const data = await quoteService.getById(body.id, auth, [], filters);
-  if (!data) throw new AuthError();
-  return (await  Quote.query().upsertGraphAndFetch(
+  return (await Quote.query().upsertGraphAndFetch(
     {
       ...body,
       idResponsible: auth.id,
@@ -62,7 +56,7 @@ quoteService.create = async (body: any, auth, filters) => {
 
 quoteService.update = async (body: any, auth, filters) => {
   const data = await quoteService.getById(body.id, auth, [], filters);
-  if (!data) throw new AuthError();
+  if (!data) throw new NotFoundError();
   const quote = (await Quote.query().upsertGraphAndFetch(
     {
       id: body.id,
