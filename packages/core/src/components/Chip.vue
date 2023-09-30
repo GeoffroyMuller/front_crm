@@ -9,10 +9,11 @@
     <IconButton
       v-if="isClosable"
       name="cancel"
-      class="icon-btn-cancel"
+      default-colored
+      class="ml-2 -my-iconButtonPadding -mr-iconButtonPadding"
       size="sm"
-      :color="color"
-      @click.stop="$emit('close')"
+      :color="isOutline ? color : 'white'"
+      @click="$emit('close')"
     />
   </div>
 </template>
@@ -45,13 +46,6 @@ const props = withDefaults(defineProps<ChipProps>(), {
   padding: 8px 12px;
   line-height: unset;
 }
-.icon-btn-cancel {
-  margin-left: 8px;
-  &:hover {
-    transform: scale(1.08);
-    transition: transform 0.3s ease;
-  }
-}
 .icon-chip {
   margin-right: 4px;
 }
@@ -66,33 +60,21 @@ const props = withDefaults(defineProps<ChipProps>(), {
         color($key, 500) 0%,
         color($key, 400) 100%
       );
-      .icon-btn-cancel {
-        color: color("white");
-      }
     }
     .chip-outline-#{$key} {
       border: 1px solid color($key, 500);
       background-color: transparent;
       color: color($key, 500);
-      .icon-btn-cancel {
-        color: color($key, 500) !important;
-      }
     }
   } @else {
     .chip-#{$key} {
       background-color: rgba(0, 0, 0, 0.25);
       color: color("white");
-      .icon-btn-cancel {
-        color: color("white") !important;
-      }
     }
     .chip-outline-#{$key} {
       border: 1px solid rgba(0, 0, 0, 0.25);
       background-color: transparent;
       color: rgba(0, 0, 0, 0.65);
-      .icon-btn-cancel {
-        color: rgba(0, 0, 0, 0.65) !important;
-      }
     }
   }
 }
