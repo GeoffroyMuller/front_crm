@@ -50,7 +50,8 @@ const iconProps = computed(() => {
 
 <style>
 .icon-btn {
-  @apply cursor-pointer select-none bg-transparent block w-fit h-fit border-none transition-all rounded-sm leading-none disabled:cursor-not-allowed relative p-iconButtonPadding;
+  line-height: 0;
+  @apply cursor-pointer select-none bg-transparent block w-fit h-fit border-none transition-all rounded-sm disabled:cursor-not-allowed relative p-iconButtonPadding;
 }
 
 .icon-btn-white::before {
