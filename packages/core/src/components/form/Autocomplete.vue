@@ -30,7 +30,12 @@
               "
               v-if="multiple || internalValue == null"
             />
-            <IconButton name="close" v-else @click.stop="handleClickClose" />
+            <IconButton
+              class="-mr-iconButtonPadding"
+              name="close"
+              v-else
+              @click.stop="handleClickClose"
+            />
           </template>
         </TextField>
       </template>

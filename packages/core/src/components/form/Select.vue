@@ -34,7 +34,12 @@
               "
               v-if="required || multiple || internalValue === undefined"
             />
-            <IconButton name="close" v-else @click.stop="handleClickClose" />
+            <IconButton
+              class="-mr-iconButtonPadding"
+              name="close"
+              v-else
+              @click.stop="handleClickClose"
+            />
           </template>
           <!-- <template #content v-if="multiple">
         {{ internalValue }}
