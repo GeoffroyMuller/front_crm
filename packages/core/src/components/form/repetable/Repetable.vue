@@ -20,7 +20,7 @@
       <template #item="{ element }">
         <RepetableSection
           orderable
-          class="repetable-section p-repetable"
+          class="repetable-section max-md:p-repetableMobile p-repetable"
           :value="element.value"
           :isMin="isMin"
           @inputChange="
@@ -36,7 +36,7 @@
     </draggable>
     <template v-if="!orderable">
       <RepetableSection
-        class="repetable-section p-repetable"
+        class="repetable-section max-md:p-repetableMobile p-repetable"
         v-for="section of sections"
         :key="section.key"
         :isMin="isMin"
@@ -52,7 +52,10 @@
       </RepetableSection>
     </template>
 
-    <div class="repetable-actions p-repetable" v-if="!isMax">
+    <div
+      class="repetable-actions max-md:p-repetableMobile p-repetable"
+      v-if="!isMax"
+    >
       <Button @click="() => addSection()" v-if="!$slots['actions']">
         {{ buttonText || $t("add") }}
       </Button>

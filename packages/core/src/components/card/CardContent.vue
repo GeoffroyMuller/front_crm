@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'p-card': !card?.padding }">
+  <div :class="{ 'max-md:p-cardMobile p-card': !card?.padding }">
     <slot />
   </div>
 </template>

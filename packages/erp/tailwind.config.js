@@ -33,9 +33,12 @@ module.exports = {
       },
       padding: {
         card: "2rem",
+        cardMobile: "1.2rem",
         repetable: "1.4rem",
+        repetableMobile: ".8rem",
         sidebarX: "1.25rem",
         contentX: "1.5rem",
+        contentXMobile: "1rem",
       },
       boxShadow: {
         card: "0 1px 3px 0 rgb(0 0 0 / 7%)",

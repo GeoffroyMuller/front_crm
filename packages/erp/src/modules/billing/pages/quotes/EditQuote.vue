@@ -205,6 +205,7 @@
                       type="button"
                       variant="text"
                       @click="addSection({ type: 'product' })"
+                      icon="add"
                     >
                       {{ $t("pages.edit-quote.add-line-product") }}
                     </Button>
@@ -212,6 +213,7 @@
                       type="button"
                       variant="text"
                       @click="addSection({ type: 'comment' })"
+                      icon="add"
                     >
                       {{ $t("pages.edit-quote.add-line-comment") }}
                     </Button>
@@ -219,6 +221,7 @@
                       type="button"
                       variant="text"
                       @click="addSection({ type: 'title' })"
+                      icon="add"
                     >
                       {{ $t("pages.edit-quote.add-line-title") }}
                     </Button>
