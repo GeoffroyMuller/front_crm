@@ -12,7 +12,7 @@ interface IconProps {
   name: IconName;
   color?: Color;
   sharp?: boolean;
-  size?: Size;
+  size?: Size | "xs";
   weight?: "bold" | "regular";
 }
 
@@ -45,7 +45,9 @@ const props = withDefaults(defineProps<IconProps>(), {
   background-color: transparent;
   user-select: none;
 }
-
+.icon-xs {
+  font-size: 13px !important;
+}
 .icon-sm {
   font-size: 20px !important;
 }
