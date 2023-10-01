@@ -1,4 +1,9 @@
-import { type MenuProps, getPlacementAlignmentToString } from "../menu";
+import {
+  type MenuProps,
+  getPlacementAlignmentToString,
+  getDimensions,
+  getPossibleDisplayPosition,
+} from "../menu";
 import {
   createApp,
   isRef,
@@ -154,18 +159,6 @@ export default function useMenuPositionRoot(props: MenuProps) {
     { immediate: true }
   );
 
-  function _getDimensions(element: HTMLElement) {
-    const elemBoundingClientRect = element.getBoundingClientRect();
-    return {
-      width: element.offsetWidth,
-      left: elemBoundingClientRect.left,
-      height: element.offsetHeight,
-      top: elemBoundingClientRect.top,
-      bottom: window.innerHeight - elemBoundingClientRect.bottom,
-      right: window.innerWidth - elemBoundingClientRect.right,
-    };
-  }
-
   function _setStyleProperties({
     p,
     pt,
@@ -192,12 +185,14 @@ export default function useMenuPositionRoot(props: MenuProps) {
     container.value.style.setProperty("--m", `${m || 0}`);
   }
 
-  function _setStyle() {
+  function _getCoordContainer(
+    placement: MenuProps["placement"],
+    alignment: MenuProps["alignment"]
+  ) {
     const dimensions = {
-      container: _getDimensions(container.value as HTMLElement),
-      activator: _getDimensions(activator.value as HTMLElement),
+      container: getDimensions(container.value as HTMLElement),
+      activator: getDimensions(activator.value as HTMLElement),
     };
-
     const coord = {
       left: 0,
       top: 0,
@@ -212,12 +207,18 @@ export default function useMenuPositionRoot(props: MenuProps) {
       right: "auto",
       transform: "",
     };
-
-    console.log(
-      "absolute: ",
-      getPlacementAlignmentToString(props.placement, props.alignment)
+    const possiblePosition = getPossibleDisplayPosition(
+      placement,
+      alignment,
+      container,
+      activator
     );
-    switch (getPlacementAlignmentToString(placement, props.alignment)) {
+    switch (
+      getPlacementAlignmentToString(
+        possiblePosition.placement,
+        possiblePosition.alignment
+      )
+    ) {
       case "right":
       case "right-center":
         coord.right = 0;
@@ -444,7 +445,14 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coordArrowContainer.bottom = "0";
       }
     }
+    return { coord, coordArrowContainer };
+  }
 
+  function _setStyle() {
+    const { coord, coordArrowContainer } = _getCoordContainer(
+      props.placement,
+      props.alignment
+    );
     Object.assign(container.value.style, {
       top: coord.top === 0 ? "auto" : coord.top + "px",
       left: coord.left === 0 ? "auto" : coord.left + "px",
