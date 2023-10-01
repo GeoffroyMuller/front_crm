@@ -1,5 +1,6 @@
 <template>
   <Table
+    bordered
     :items="invoice.payments || []"
     :columns="[
       {
@@ -12,6 +13,9 @@
       },
     ]"
   >
+    <template #actions-title>
+      <IconButton name="add" color="success" default-colored />
+    </template>
     <template #content-amount="{ item }">
       <Price :price="item?.amount" />
     </template>
@@ -24,6 +28,7 @@
 import Table from "core/src/components/Table.vue";
 import type Invoice from "../../types";
 import Price from "core/src/components/Price.vue";
+import IconButton from "core/src/components/IconButton.vue";
 
 defineProps<{ invoice: Invoice }>();
 </script>

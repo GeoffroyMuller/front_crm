@@ -87,6 +87,9 @@
         :is="isCard ? Card : 'div'"
         :withPadding="false"
         class="table-container"
+        :class="{
+          'border border-slate-200 border-solid': bordered,
+        }"
       >
         <div class="table-wrapper">
           <!--  <div class="table-head" v-if="$slots['head']">
@@ -231,6 +234,7 @@ export interface TableProps<T = any> {
   selected?: any[];
   label?: string;
   itemsKey?: ID;
+  bordered?: boolean;
 }
 
 const props = withDefaults(defineProps<TableProps>(), {
@@ -396,6 +400,7 @@ th {
 table {
   width: 100%;
   border-collapse: collapse;
+
   tbody td {
     font-weight: 400;
   }
@@ -412,7 +417,8 @@ table {
     border-bottom: 0;
     height: 50px;
   }
-  th, td {
+  th,
+  td {
     position: relative;
   }
 }
