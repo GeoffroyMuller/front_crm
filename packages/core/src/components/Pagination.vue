@@ -162,7 +162,7 @@ span {
   width: 2rem;
 }
 .pagination-buttons {
-  @apply flex justify-center items-center;
+  @apply flex justify-center items-center  -mx-iconButtonPadding;
 }
 .items-per-page {
   width: 4rem;
