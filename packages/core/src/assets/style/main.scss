@@ -61,6 +61,7 @@ label {
     @include typo(label);
 }
 
+/// @deprecated
 .layout-component {
  --mt: 0;
  --mb: 0;
