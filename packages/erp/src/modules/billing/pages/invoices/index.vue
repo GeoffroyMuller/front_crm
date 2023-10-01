@@ -1,5 +1,10 @@
 <template>
   <Page :title="$t('invoices')" icon="request_quote">
+    <template #head-end>
+      <Button @click="add()" variant="outlined" color="success">
+        {{ $t("add-menu.add-invoice") }}
+      </Button>
+    </template>
     <InvoiceFilters />
     <MagicDataTable
       :store="invoiceStore"
@@ -34,7 +39,7 @@
           sortable: true,
         },
       ]"
-      @row-click="(i) => $router.push(`/invoices/${i.id}`)"
+      @row-click="(i) => handleRowClick(i)"
       v-model:selected="selected"
       selectable
     >
@@ -105,6 +110,15 @@
       @close="invoiceToSendMail = null"
       :invoice="invoiceToSendMail"
     />
+    <InvoiceSidebar
+      :open="sidebarIsOpen"
+      :model="sidebarOpen"
+      @close="sidebarIsOpen = false"
+      @setArchived="setArchived"
+      @downloadPdf="downloadPdf"
+      @sendMail="sendMail"
+      @edit="edit"
+    />
   </Page>
 </template>
 
@@ -117,13 +131,22 @@ import InvoiceFilters from "../../components/invoices/InvoiceFilters.vue";
 import InvoiceActionsMenu from "../../components/invoices/InvoiceActionsMenu.vue";
 import InvoiceSendMail from "../../components/invoices/InvoiceSendMail.vue";
 import InvoicePaymentsBar from "../../components/invoices/InvoicePaymentsBar.vue";
-import Flex from "core/src/components/layouts/Flex.vue";
 import useInvoice from "../../components/invoices/invoice";
 import Media from "core/src/components/Media.vue";
 import IconButton from "core/src/components/IconButton.vue";
 import Badge from "core/src/components/Badge.vue";
 import Card from "core/src/components/card/Card.vue";
 import FloatingButton from "core/src/components/FloatingButton.vue";
+import InvoiceSidebar from "../../components/invoices/InvoiceSidebar.vue";
+import { ref } from "vue";
+
+const sidebarOpen = ref<Invoice>();
+const sidebarIsOpen = ref<boolean>(false);
+
+function handleRowClick(item: Invoice) {
+  sidebarOpen.value = item;
+  sidebarIsOpen.value = true;
+}
 
 const {
   invoiceStore,

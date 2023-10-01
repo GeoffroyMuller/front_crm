@@ -7,7 +7,8 @@
     }
   },
   "add-menu": {
-    "add-quote": "Nouveau devis"
+    "add-quote": "Nouveau devis",
+    "add-invoice": "Nouvelle facture"
   },
   "pages": {
     "clients": {
@@ -22,7 +23,12 @@
     },
     "invoices": {
       "sure_archive_invoice": "Etes vous sur de vouloir archiver cette facture ?",
-      "sure_archive_selected": "Etes vous sur de vouloir archiver la séléction ?"
+      "sure_archive_selected": "Etes vous sur de vouloir archiver la séléction ?",
+      "invoice": "Facture",
+      "sidebartabs": {
+        "pdf": "PDF",
+        "payments": "Paiements"
+      } 
     },
     "sales": {
       "edit-list-products-real": "Editer le stock {count}",

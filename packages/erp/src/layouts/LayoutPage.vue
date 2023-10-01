@@ -17,6 +17,12 @@
               router.push({ name: 'quotes-id', params: { id: 'new' } }),
             title: $t('add-menu.add-quote'),
           },
+          {
+            icon: 'request_quote',
+            action: () =>
+              router.push({ name: 'invoices-id', params: { id: 'new' } }),
+            title: $t('add-menu.add-invoice'),
+          },
         ]"
         placement="bottom"
         alignment="end"
