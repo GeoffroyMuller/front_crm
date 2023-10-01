@@ -14,8 +14,6 @@ router.post('/', accessMiddlewareFactory('manage_invoices'), invoiceController.c
 router.put('/:id', accessMiddlewareFactory('manage_invoices'), invoiceController.update)
 router.delete('/:id', accessMiddlewareFactory('manage_invoices'), invoiceController.delete)
 router.get('/:id', invoiceController.getById)
-router.get('/:id/preview', invoiceController.preview)
-router.get('/:id/pdf', invoiceController.getPdf)
 router.post('/:id/send_mail', invoiceController.sendByMail)
 
 

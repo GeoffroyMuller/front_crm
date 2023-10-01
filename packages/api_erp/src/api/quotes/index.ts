@@ -1,19 +1,33 @@
-const express = require('express')
+const express = require("express");
 import QuoteController from "./quote.controller";
 import authMiddleware from "core_api/middlewares/auth.middleware";
 import { accessMiddlewareFactory } from "core_api/middlewares/access.middleware";
+import companyMiddleware from "core_api/middlewares/company.middleware";
+const router = express.Router();
 
-const router = express.Router()
+router.use(authMiddleware);
 
-router.use(authMiddleware)
+router.get("/", companyMiddleware, QuoteController.paginate);
+router.get("/:id", companyMiddleware, QuoteController.getById);
+router.post("/:id/send_mail", companyMiddleware, QuoteController.sendByMail);
 
-router.get('/', QuoteController.paginate)
-router.post('/', accessMiddlewareFactory('manage_quotes'), QuoteController.create)
-router.put('/:id', accessMiddlewareFactory('manage_quotes'), QuoteController.update)
-router.delete('/:id', accessMiddlewareFactory('manage_quotes'), QuoteController.delete)
-router.get('/:id', QuoteController.getById)
-router.get('/:id/preview', QuoteController.preview)
-router.get('/:id/pdf', QuoteController.getPdf)
-router.post('/:id/send_mail', QuoteController.sendByMail)
+router.post(
+  "/",
+  accessMiddlewareFactory("manage_quotes"),
+  companyMiddleware,
+  QuoteController.create
+);
+router.put(
+  "/:id",
+  accessMiddlewareFactory("manage_quotes"),
+  companyMiddleware,
+  QuoteController.update
+);
+router.delete(
+  "/:id",
+  accessMiddlewareFactory("manage_quotes"),
+  companyMiddleware,
+  QuoteController.delete
+);
 
 export default router;

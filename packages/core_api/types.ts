@@ -54,9 +54,9 @@ export interface Service<
     relations?: RelationExpression<T>[],
     filters?: any
   ) => Promise<T>;
-  create: (item: any, auth: AuthModel) => Promise<T>;
-  update: (item: any, auth: AuthModel) => Promise<T>;
-  remove: (id: ID, auth: AuthModel) => Promise<void>;
+  create: (item: any, auth: AuthModel, filters: any) => Promise<T>;
+  update: (item: any, auth: AuthModel, filters: any) => Promise<T>;
+  remove: (id: ID, auth: AuthModel, filters: any) => Promise<boolean>;
 
   isAuthorized: (model: T, auth: AuthModel) => boolean | Promise<boolean>;
 
@@ -67,6 +67,10 @@ export interface Service<
   onBeforeUpdate: ServiceLifeCycleAction<T, AuthModel>;
   onBeforeRemove: ServiceLifeCycleAction<T, AuthModel>;
   onAfterCreate: ServiceLifeCycleAction<T, AuthModel>;
+  handleFilters: (
+    query: QueryBuilderType<T>,
+    filters: any
+  ) => QueryBuilderType<T>;
 }
 export type ServiceFactoryOptions<
   T extends Model,

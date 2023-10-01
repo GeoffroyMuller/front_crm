@@ -29,11 +29,7 @@
       <slot :name="name" v-bind="data"></slot>
     </template>
     <template #footer>
-      <div class="md:flex w-full justify-between items-center">
-        <div class="max-md:hidden">
-          <slot name="data-actions" />
-          <slot name="head"></slot>
-        </div>
+      <div class="md:flex w-full justify-end items-center">
         <Pagination
           :current-page="currentPage"
           :itemsPerPage="itemsPerPage"

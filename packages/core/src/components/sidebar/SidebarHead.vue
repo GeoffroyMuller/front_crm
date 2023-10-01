@@ -1,8 +1,8 @@
 <template>
-  <div
-    class="sticky top-0 left-0 w-full z-30 border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0"
-  >
-    <div class="flex items-center justify-between px-sidebarX py-1">
+  <div class="sticky top-0 left-0 w-full z-30">
+    <div
+      class="flex items-center justify-between px-sidebarX border-0 border-b border-solid border-slate-200 py-1"
+    >
       <div class="w-max">
         <div class="typo-title2">
           {{ title }}
@@ -52,6 +52,16 @@
         />
       </div>
     </div>
+    <div
+      class="px-sidebarX border-0 border-b border-solid border-slate-200"
+      v-if="tabs?.length"
+    >
+      <PageTabs
+        @update:currentTab="($e) => updateCurrentTab($e)"
+        :tabs="tabs"
+        class="mt-3"
+      />
+    </div>
   </div>
 </template>
 
@@ -62,17 +72,27 @@ import Button from "../Button.vue";
 import IconButton from "../IconButton.vue";
 import type { Color } from "../types";
 import type { SidebarInject } from "./sidebar.types";
+import PageTabs from "../PageTabs.vue";
+import type { Tab } from "src/composables/tabs";
 
 export type SidebarHeadAction = Action & { main?: boolean; color?: Color };
 
-const emit = defineEmits(["action", "close"]);
+const emit = defineEmits(["action", "close", "update:currentTab"]);
 defineProps<{
   title: string;
   subtitle?: string;
   actions: SidebarHeadAction[];
+  tabs?: Tab[];
 }>();
 
 const sidebar = inject<SidebarInject>("sidebar");
+
+function updateCurrentTab(currentTab: Tab["id"]) {
+  emit("update:currentTab", currentTab);
+  if (sidebar) {
+    sidebar.setCurrentTab(currentTab);
+  }
+}
 
 function handleClose() {
   if (sidebar != null) {

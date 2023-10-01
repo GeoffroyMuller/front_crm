@@ -8,17 +8,38 @@
     <SidebarHead
       :title="title"
       :actions="actions"
-      @action="($action) => $emit($action, quote)"
+      @action="($action) => $emit($action, invoice)"
+      :tabs="[
+        {
+          id: 'pdf',
+          title: $t('pages.invoices.sidebartabs.pdf'),
+        },
+        {
+          id: 'payments',
+          title: $t('pages.invoices.sidebartabs.payments'),
+        },
+      ]"
     />
 
-    <SidebarContent class="flex-1 overflow-hidden">
-      <PdfViewer
-        v-if="quote"
-        :key="quote?.id"
-        :src="generateQuotePDF(quote, { output: 'datauristring' })"
-        class="max-h-full"
-      />
-    </SidebarContent>
+    <template #pdf>
+      <SidebarContent class="flex-1 overflow-hidden">
+        <PdfViewer
+          v-if="invoice"
+          :key="invoice?.id"
+          :src="generateQuotePDF(invoice, { output: 'datauristring' })"
+          class="max-h-full"
+        />
+      </SidebarContent>
+    </template>
+    <template #payments>
+      <SidebarContent>
+        <InvoicePayements
+          v-if="invoice"
+          :key="invoice?.id"
+          :invoice="invoice"
+        />
+      </SidebarContent>
+    </template>
   </Sidebar>
 </template>
 <script lang="ts" setup>
@@ -27,20 +48,19 @@ import SidebarHead, {
   type SidebarHeadAction,
 } from "core/src/components/sidebar/SidebarHead.vue";
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
-import type { Quote } from "../../types";
 import { computed } from "vue";
-import useQuoteStore from "../../stores/quotes";
 import { useI18n } from "vue-i18n";
 import { merge } from "lodash";
 import PdfViewer from "core/src/components/PdfViewer.vue";
 import { generateQuotePDF } from "@megaapp/pdfs";
-import { ref } from "vue";
-import type { Tab } from "core/src/components/Tabs.vue";
+import useInvoicesStore from "../../stores/invoices";
+import InvoicePayements from "./InvoicePayements.vue";
+import type Invoice from "../../types";
 
-const props = defineProps<{ open: boolean; model?: Quote }>();
+const props = defineProps<{ open: boolean; model?: Invoice }>();
 const emit = defineEmits(["close"]);
 
-const quotesStore = useQuoteStore();
+const invoiceStore = useInvoicesStore();
 const { t } = useI18n();
 
 const actions = computed<SidebarHeadAction[]>(() => {
@@ -58,13 +78,8 @@ const actions = computed<SidebarHeadAction[]>(() => {
       action: "downloadPdf",
       title: t("download"),
     },
-    {
-      icon: "request_quote",
-      action: "invoice",
-      title: t("pages.quotes.create_invoice"),
-    },
   ];
-  if (!quote.value?.archived) {
+  if (!invoice.value?.archived) {
     res.push({
       title: t("archive"),
       icon: "archive",
@@ -76,19 +91,19 @@ const actions = computed<SidebarHeadAction[]>(() => {
   return res;
 });
 
-const quote = computed<Quote>(() => {
+const invoice = computed<Invoice>(() => {
   if (props.model != null) {
-    return merge(props.model, quotesStore.getById(props.model.id));
+    return merge(props.model, invoiceStore.getById(props.model.id));
   }
   return null;
 });
 
 const title = computed<string>(() => {
-  if (quote.value == null) return "";
-  if (quote.value?.name) return quote.value?.name;
+  if (invoice.value == null) return "";
+  if (invoice.value?.name) return invoice.value?.name;
 
-  return `${t("pages.quotes.quote")} ${quote.value.client.firstname} ${
-    quote.value.client.lastname
-  }`;
+  return `${t("pages.invoices.quote")} ${
+    invoice.value?.client?.firstname || ""
+  } ${invoice.value?.client?.lastname || ""}`;
 });
 </script>

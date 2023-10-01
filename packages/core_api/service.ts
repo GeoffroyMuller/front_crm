@@ -7,14 +7,7 @@ import {
 } from "objection";
 import filtersService from "./services/filters.service";
 import { ServiceFactoryOptions, Service, ID } from "./types";
-
-export class AuthError extends Error {
-  constructor(msg: string = "") {
-    super(msg);
-    // Set the prototype explicitly.
-    Object.setPrototypeOf(this, AuthError.prototype);
-  }
-}
+import { AuthError } from "./errors";
 
 function isRelationExists<T extends Model>(
   model: ModelClass<T>,
@@ -24,12 +17,13 @@ function isRelationExists<T extends Model>(
   if (relation.includes("[")) return true;
   const split = relation.split(".");
   // @ts-ignore
-  if (model.relationMappings[split[0]] == null || split.length > 4) return false;
+  if (model.relationMappings[split[0]] == null || split.length > 4)
+    return false;
   if (split.length === 1) {
     return true;
   }
   return isRelationExists(
-     // @ts-ignore
+    // @ts-ignore
     model.relationMappings[split[0]].modelClass,
     split.slice(1).join(".")
   );
@@ -110,6 +104,7 @@ const serviceFactory = <
     onBeforeUpdate,
     onAfterCreate,
     getById,
+    handleFilters,
     getAll: async (
       relations: RelationExpression<T>[],
       filters: any,
@@ -140,13 +135,13 @@ const serviceFactory = <
       return q.execute() as Promise<T[]>;
     },
 
-    create: async (item: any, auth: any) => {
+    create: async (item: any, auth: any, filters: any) => {
       const { data, query } = await onBeforeCreate({
         query: model.query(),
         data: item,
         auth,
       });
-      await checkAuthorization(data, auth);
+      handleFilters(query, filters);
       const res = query.insert(data).execute() as Promise<T>;
       const { data: result } = await onAfterCreate({
         query: model.query(),
@@ -155,24 +150,25 @@ const serviceFactory = <
       });
       return result;
     },
-    update: async (body: any, auth: any) => {
+    update: async (body: any, auth: any, filters: any) => {
       const { data, query } = await onBeforeUpdate({
         query: model.query(),
         data: body,
         auth,
       });
-      await getById(data.id, auth);
+      handleFilters(query, filters);
       return query.updateAndFetchById(data.id, data).execute() as Promise<T>;
     },
-    remove: async (id: ID, auth: any) => {
+    remove: async (id: ID, auth: any, filters: any) => {
       const { query, data } = await onBeforeRemove({
         query: model.query(),
         data: { id },
         auth,
       });
-      await getById(data.id, auth);
-      await query.findById(id).delete().execute();
-      return;
+      handleFilters(query, filters);
+      const removed = await query.where("id", id).delete().execute();
+      console.log(removed);
+      return true;
     },
   };
 };

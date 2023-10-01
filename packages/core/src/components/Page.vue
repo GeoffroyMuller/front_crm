@@ -4,9 +4,9 @@
     v-bind="$props"
     v-model:current-tab="currentTab"
   >
- <template #head-end>
-  <slot name="head-end" />
- </template>
+    <template #head-end>
+      <slot name="head-end" />
+    </template>
   </PageHead>
   <div v-if="loading" class="w-full h-screenMinusHeaderHeight relative">
     <Spinner

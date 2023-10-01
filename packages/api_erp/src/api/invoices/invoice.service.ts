@@ -1,10 +1,9 @@
 import { Stream } from "stream";
 import serviceFactory from "core_api/service";
 import { Service } from "core_api/types";
-import type { User } from "core_api/types";;
+import type { User } from "core_api/types";
 import Invoice from "./invoice.model";
 import { filter, merge } from "lodash";
-import PdfService from "core_api/services/pdf.service";
 import mailService from "core_api/services/mail.service";
 import { QueryBuilder, raw } from "objection";
 import InvoicePayment from "./invoicepayment.model";
@@ -14,9 +13,7 @@ const fs = require("fs");
 let ejs = require("ejs");
 
 export interface IInvoiceService extends Service<Invoice, User> {
-  preview: (q: Invoice) => Promise<string>;
   sendByMail: (q: Invoice) => Promise<any>;
-  getPdf: (q: Invoice) => Promise<Stream>;
   getPayments: (i: Invoice) => Promise<InvoicePayment[]>;
   addPayment: (i: Invoice, data: any) => Promise<InvoicePayment>;
 }
@@ -64,8 +61,7 @@ const invoiceService = serviceFactory(Invoice, {
     query.select("invoices.*");
     query = withPrice(query);
     query = withTaxes(query);
-    
-    
+
     return { query, auth, filters, data };
   },
   async onBeforeGetById({ query, auth, filters, data }) {
@@ -93,7 +89,7 @@ const invoiceService = serviceFactory(Invoice, {
         ...data,
         idCompany: auth.idCompany,
         idResponsible: auth.id,
-        identifier: await getNextIdentifier(auth)
+        identifier: await getNextIdentifier(auth),
       },
     };
   },
@@ -175,32 +171,10 @@ function _mapDataToDisplay(invoice: Invoice) {
   );
 }
 
-invoiceService.preview = async (invoice: Invoice) => {
-  const html = fs.readFileSync(
-    __dirname + "/../../templates/invoice.ejs",
-    "utf8"
-  );
-  const htmlReplaced: string = ejs.render(html, _mapDataToDisplay(invoice));
-  return htmlReplaced;
-};
-
-invoiceService.getPdf = async (invoice: Invoice) => {
-  let toPrint = invoice;
-  const pdf = await PdfService.printPDF({
-    data: _mapDataToDisplay(toPrint),
-    inputPath: __dirname + "/../../templates/invoice.ejs",
-    returnType: "stream",
-  });
-  return pdf as Stream;
-};
-
 invoiceService.sendByMail = async (invoice: Invoice) => {
   try {
     const res = await mailService.sendMail({
-      html: ejs.render(
-        fs.readFileSync(__dirname + "/../../templates/invoice.ejs", "utf8"),
-        _mapDataToDisplay(invoice)
-      ),
+      html: "",
       text: "",
       subject: "Facture",
       to: invoice?.client?.email as string,
@@ -213,14 +187,13 @@ invoiceService.sendByMail = async (invoice: Invoice) => {
 };
 
 invoiceService.getPayments = async (i: Invoice) => {
-  return i.$relatedQuery('payments').execute();
+  return i.$relatedQuery("payments").execute();
 };
-
 
 invoiceService.addPayment = async (i: Invoice, data: any) => {
   return InvoicePayment.query().insertAndFetch({
     ...data,
-    idInvoice: i.id
+    idInvoice: i.id,
   });
 };
 

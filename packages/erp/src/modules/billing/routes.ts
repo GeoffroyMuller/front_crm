@@ -33,5 +33,13 @@ export default {
         layout: LayoutPage,
       },
     },
+    {
+      path: "invoices/:id",
+      name: "invoices-id",
+      meta: {
+        middleware: [auth],
+        layout: LayoutPage,
+      },
+    },
   ],
 };
