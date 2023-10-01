@@ -1,21 +1,15 @@
 <template>
-  <div
-    class="sticky top-0 left-0 w-full z-30 border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0"
-  >
-    <div class="flex items-center justify-between px-sidebarX">
+  <div class="sticky top-0 left-0 w-full z-30">
+    <div
+      class="flex items-center justify-between px-sidebarX border-0 border-b border-solid border-slate-200 py-1"
+    >
       <div class="w-max">
-        <div class="typo-title2" :class="{ 'mt-2': tabs?.length }">
+        <div class="typo-title2">
           {{ title }}
         </div>
         <div v-if="subtitle" class="typo-title5 mt-1">
           {{ subtitle }}
         </div>
-        <PageTabs
-          @update:currentTab="($e) => updateCurrentTab($e)"
-          :tabs="tabs"
-          v-if="tabs?.length"
-          class="mt-4"
-        />
       </div>
       <div class="flex items-center gap-4 justify-end py-2 w-fit">
         <template
@@ -57,6 +51,16 @@
           @click="handleClose"
         />
       </div>
+    </div>
+    <div
+      class="px-sidebarX border-0 border-b border-solid border-slate-200"
+      v-if="tabs?.length"
+    >
+      <PageTabs
+        @update:currentTab="($e) => updateCurrentTab($e)"
+        :tabs="tabs"
+        class="mt-3"
+      />
     </div>
   </div>
 </template>
