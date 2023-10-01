@@ -19,7 +19,7 @@
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
-import DataTable from "../DataTable.vue";
+import DataTable from "../table/DataTable.vue";
 import type { Column } from "../types";
 import type { Filters } from "../../types";
 import type { APIStore } from "../../factories/store.factory";

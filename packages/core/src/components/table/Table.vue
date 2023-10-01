@@ -215,14 +215,14 @@
 
 <script setup lang="ts">
 import { withDefaults, ref, watch, onMounted, computed } from "vue";
-import type { Column } from "./types";
+import type { Column } from "../types";
 import { isEqual, isNil } from "lodash";
-import Card from "./card/Card.vue";
-import Spinner from "./Spinner.vue";
-import Media from "./Media.vue";
-import Checkbox from "./form/Checkbox.vue";
-import Flex from "./layouts/Flex.vue";
-import type { ID } from "../types";
+import Card from "../card/Card.vue";
+import Spinner from "../Spinner.vue";
+import Media from "../Media.vue";
+import Checkbox from "../form/Checkbox.vue";
+import Flex from "../layouts/Flex.vue";
+import type { ID } from "../../types";
 
 export interface TableProps<T = any> {
   columns: Array<Column> | null;

@@ -25,7 +25,7 @@
   </Table>
 </template>
 <script setup lang="ts">
-import Table from "core/src/components/Table.vue";
+import Table from "core/src/components/table/Table.vue";
 import type Invoice from "../../types";
 import Price from "core/src/components/Price.vue";
 import IconButton from "core/src/components/IconButton.vue";
