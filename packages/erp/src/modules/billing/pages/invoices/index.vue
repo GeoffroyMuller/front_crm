@@ -38,33 +38,6 @@
       v-model:selected="selected"
       selectable
     >
-      <template #head>
-        <Flex align-items="center" justify-content="space-between">
-          <Media up="md">
-            <div class="typo-title2">
-              {{ $t("invoices") }}
-            </div>
-          </Media>
-          <Media down="md">
-            {{ `${selected.length || 0} ${$t("selected")}` }}
-          </Media>
-          <div
-            :style="{
-              visibility: !selected.length ? 'hidden' : 'initial',
-              userSelect: !selected.length ? 'none' : 'initial',
-            }"
-          >
-            <Button
-              icon="archive"
-              variant="text"
-              color="primary"
-              @click="setArchivedSelection"
-            >
-              {{ $t("archive") }}
-            </Button>
-          </div>
-        </Flex>
-      </template>
       <template #content-payments="{ item }">
         <InvoicePaymentsBar :invoice="item" />
       </template>
@@ -82,16 +55,40 @@
         {{ item?.client?.firstname || "" }} {{ item?.client?.lastname || "" }}
       </template>
       <template #actions-title>
-        <div>
-          <Button
-            color="success"
-            icon="add"
-            v-tooltip="{ text: $t('add'), placement: 'bottom' }"
-            @click="$router.push(`/invoices/new/edit`)"
+        <div class="relative">
+          <Card
+            class="flex p-2 w-fit absolute gap-2 justify-end right-0 md:left-0 top-1/2 -translate-y-1/2 transform md:-translate-x-full"
+            :style="{
+              display: !selected.length ? 'none' : 'flex',
+            }"
           >
-            {{ $t("add") }}
-          </Button>
+            <Badge>
+              {{ selected.length || 0 }}
+            </Badge>
+            <Button icon="download" variant="text" color="primary"> </Button>
+            <Button
+              icon="archive"
+              variant="text"
+              color="danger"
+              @click="setArchivedSelection"
+            >
+            </Button>
+          </Card>
+
+          <IconButton
+            color="success"
+            name="add"
+            v-tooltip="{
+              text: $t('add'),
+              placement: 'top',
+            }"
+            @click="add()"
+            default-colored
+          />
         </div>
+        <Media down="md">
+          <FloatingButton color="success" icon="add" @click="add()" />
+        </Media>
       </template>
       <template #actions="{ item }">
         <InvoiceActionsMenu
@@ -123,6 +120,10 @@ import InvoicePaymentsBar from "../../components/invoices/InvoicePaymentsBar.vue
 import Flex from "core/src/components/layouts/Flex.vue";
 import useInvoice from "../../components/invoices/invoice";
 import Media from "core/src/components/Media.vue";
+import IconButton from "core/src/components/IconButton.vue";
+import Badge from "core/src/components/Badge.vue";
+import Card from "core/src/components/card/Card.vue";
+import FloatingButton from "core/src/components/FloatingButton.vue";
 
 const {
   invoiceStore,
@@ -133,6 +134,7 @@ const {
   sendMail,
   invoiceToSendMail,
   edit,
+  add,
 } = useInvoice({
   afterAction: () => {
     invoiceStore.fetchList();

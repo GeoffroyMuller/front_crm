@@ -95,7 +95,20 @@ export default function useInvoice(props?: UseInvoiceProps) {
   }
 
   function edit(item: Invoice) {
-    router.push(`/invoices/${item.id}/edit`);
+    router.push({
+      name: "invoices-id",
+      params: {
+        id: item.id,
+      },
+    });
+  }
+  function add() {
+    router.push({
+      name: "invoices-id",
+      params: {
+        id: "new",
+      },
+    });
   }
 
   return {
@@ -107,5 +120,6 @@ export default function useInvoice(props?: UseInvoiceProps) {
     edit,
     sendMail,
     invoiceToSendMail,
+    add,
   };
 }

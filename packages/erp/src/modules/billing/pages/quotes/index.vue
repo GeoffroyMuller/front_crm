@@ -43,7 +43,6 @@
       selectable
       v-model:selected="selected"
     >
-      <template #head> </template>
       <template #content-validationStatus="{ item }">
         <QuoteStatusChips :quote="item" />
       </template>
@@ -103,33 +102,6 @@
           @edit="edit"
           @invoice="createInvoiceFromQuote"
         />
-      </template>
-      <template #data-actions>
-        <div
-          class="flex items-center gap-2"
-          :style="{
-            visibility: !selected.length ? 'hidden' : 'initial',
-            userSelect: !selected.length ? 'none' : 'initial',
-          }"
-        >
-          <Badge>
-            {{ selected.length || 0 }}
-          </Badge>
-
-          <div class="flex gap-2 justify-end">
-            <Button icon="download" variant="text" color="primary">
-              {{ $t("export") }}
-            </Button>
-            <Button
-              icon="archive"
-              variant="text"
-              color="danger"
-              @click="setArchivedSelection"
-            >
-              {{ $t("archive") }}
-            </Button>
-          </div>
-        </div>
       </template>
     </MagicDataTable>
     <QuoteSendMail

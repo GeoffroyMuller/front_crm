@@ -9,27 +9,16 @@
       :title="title"
       :actions="actions"
       @action="($action) => $emit($action, quote)"
-      :tabs="[
-        {
-          id: 'pdf',
-          title: 'pdf',
-        },
-        {
-          id: 'invoice',
-          title: 'invoice',
-        },
-      ]"
     />
-    <template #pdf>
-      <SidebarContent class="flex-1 overflow-hidden">
-        <PdfViewer
-          v-if="quote"
-          :key="quote?.id"
-          :src="generateQuotePDF(quote, { output: 'datauristring' })"
-          class="max-h-full"
-        />
-      </SidebarContent>
-    </template>
+
+    <SidebarContent class="flex-1 overflow-hidden">
+      <PdfViewer
+        v-if="quote"
+        :key="quote?.id"
+        :src="generateQuotePDF(quote, { output: 'datauristring' })"
+        class="max-h-full"
+      />
+    </SidebarContent>
   </Sidebar>
 </template>
 <script lang="ts" setup>
