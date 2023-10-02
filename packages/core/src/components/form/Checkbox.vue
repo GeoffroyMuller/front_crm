@@ -99,25 +99,25 @@ function handleSwitch() {
     .checkmark:after {
       content: "";
       position: absolute;
-      display: none;
+      opacity: 0;
     }
 
     /* Show the checkmark when checked */
     input:checked ~ .checkmark:after {
-      display: block;
+      opacity: 1;
+      @apply transform rotate-[45deg] scale-100;
     }
 
     /* Style the checkmark/indicator */
     .checkmark:after {
+      transform: scale(0);
       left: 6px;
       top: 3px;
       width: 3px;
       height: 6px;
       border: solid white;
       border-width: 0 1px 1px 0;
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
+      @apply transform rotate-[45deg] scale-0;
     }
   }
 }

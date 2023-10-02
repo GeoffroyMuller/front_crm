@@ -42,7 +42,7 @@
         }}
       </template>
       <template #content-price="{ item }">
-        {{ $utils.formatPrice(item.price) }}
+        <Price :price="item.price" />
       </template>
       <template #content-description="{ item }">
         <div
@@ -76,6 +76,7 @@ import Page from "core/src/components/Page.vue";
 import useProductStore from "@/modules/products/stores/products";
 import type { Product } from "@/types/product";
 import MagicFilterBar from "core/src/components/magic/MagicFilterBar.vue";
+import Price from "core/src/components/Price.vue";
 
 const productsStore = useProductStore();
 </script>
