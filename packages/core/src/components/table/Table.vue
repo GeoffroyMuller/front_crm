@@ -13,6 +13,7 @@
           v-for="item in items"
           :key="item[itemsKey]"
           @click.stop="$emit('row-click', item)"
+          :bordered="bordered"
         >
           <Flex :mb="1.5" v-if="selectable">
             <Checkbox
@@ -83,9 +84,8 @@
       :is="isCard ? Card : 'div'"
       :withPadding="false"
       class="table-container"
-      :class="{
-        'border border-slate-200 border-solid': bordered,
-      }"
+      :class="{ selectable }"
+      :bordered="bordered"
     >
       <div class="table-wrapper">
         <!--  <div class="table-head" v-if="$slots['head']">
@@ -117,10 +117,11 @@
                 />
                 <slot name="title" :column="column" />
               </th>
-              <th v-if="$slots['actions-title'] || $slots['actions']">
-                <div class="actions-block">
-                  <slot name="actions-title"></slot>
-                </div>
+              <th
+                v-if="$slots['actions-title'] || $slots['actions']"
+                class="actions-block"
+              >
+                <slot name="actions-title"></slot>
               </th>
             </tr>
           </thead>
@@ -428,5 +429,16 @@ table {
   align-items: center;
   justify-content: flex-end;
   width: 100%;
+}
+table .actions-block {
+  position: sticky;
+  right: 0;
+}
+.selectable {
+  th:first-child,
+  td:first-child {
+    position: sticky;
+    left: 0;
+  }
 }
 </style>

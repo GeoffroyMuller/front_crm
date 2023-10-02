@@ -5,7 +5,6 @@
       { key: 'dtend', title: $t('events.end') },
     ]"
     :store="eventStore"
-    :label="$t('events.events')"
     @row-click="onClickEvent"
   >
     <template #content-dtstart="{ item }">

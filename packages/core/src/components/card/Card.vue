@@ -7,6 +7,7 @@
       'rounded-md': rounded === 'md',
       'rounded-lg': rounded === 'lg',
       'rounded-xl': rounded === 'xl',
+      'border border-slate-200 border-solid': bordered,
     }"
   >
     <slot />
@@ -20,6 +21,7 @@ import type { Size } from "../types";
 export interface CardProps {
   padding?: boolean;
   rounded: Size;
+  bordered?: boolean;
 }
 
 export type CardProvide = Pick<CardProps, "padding" | "rounded">;
