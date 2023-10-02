@@ -76,6 +76,10 @@ onMounted(() => {
       header: Header,
     },
     onChange: (api, event) => {
+     /*  if (!Array.isArray(event) && event.type === "block-added") {
+        if (event.detail.target.name === "paragraph") {
+        }
+      } */
       handleEditorChange();
     },
     onReady: () => {
@@ -149,12 +153,13 @@ const addActions: Action[] = [
   }
   .cdx-block {
     padding-top: 0;
-    padding-bottom: 12px;
+    padding-bottom: 0;
   }
   .ce-toolbar__content {
     max-width: none;
   }
-  .ce-popover, .ce-popover__overlay {
+  .ce-popover,
+  .ce-popover__overlay {
     display: none !important;
   }
 
