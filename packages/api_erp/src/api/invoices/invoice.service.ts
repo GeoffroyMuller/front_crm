@@ -9,8 +9,6 @@ import { QueryBuilder, raw } from "objection";
 import InvoicePayment from "./invoicepayment.model";
 import InvoiceLine from "./invoice_line.model";
 import { isPopulateNeeded } from "core_api/services/filters.service";
-const fs = require("fs");
-let ejs = require("ejs");
 
 export interface IInvoiceService extends Service<Invoice, User> {
   sendByMail: (q: Invoice) => Promise<any>;
