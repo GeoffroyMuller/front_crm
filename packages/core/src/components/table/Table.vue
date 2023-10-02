@@ -326,7 +326,7 @@ watch(
   width: 100%;
 }
 .table-container {
-  overflow-x: auto; // TODO : pourquoi il prend la taille des menu en compte pour sa taille
+  overflow-x: auto;
 }
 .table-mobile {
   width: 100%;
@@ -395,13 +395,17 @@ th {
 table {
   width: 100%;
   border-collapse: collapse;
-
+  th,
+  td {
+    position: relative;
+  }
   tbody td {
     font-weight: 400;
   }
   tbody tr {
-    transition: 0.3s;
+    transition: background 0.3s;
     position: relative;
+    background-color: white;
     &:hover {
       @apply bg-primary-50;
       cursor: pointer;
@@ -411,10 +415,29 @@ table {
     padding: 0px 16px;
     border-bottom: 0;
     height: 50px;
+    position: sticky;
+    left: 0;
   }
-  th,
-  td {
-    position: relative;
+  .actions-block {
+    position: sticky;
+    right: 0;
+    z-index: 10;
+  }
+}
+.actions-block {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  background-color: inherit;
+}
+.selectable {
+  th:first-child,
+  td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: inherit;
+    z-index: 10;
   }
 }
 .table-footer {
@@ -423,22 +446,5 @@ table {
 .empty-block {
   @apply flex justify-center items-center;
   margin: spacing(5);
-}
-.actions-block {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
-}
-table .actions-block {
-  position: sticky;
-  right: 0;
-}
-.selectable {
-  th:first-child,
-  td:first-child {
-    position: sticky;
-    left: 0;
-  }
 }
 </style>
