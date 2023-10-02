@@ -402,42 +402,45 @@ table {
   tbody td {
     font-weight: 400;
   }
+  tr {
+    background-color: white;
+  }
   tbody tr {
     transition: background 0.3s;
     position: relative;
-    background-color: white;
     &:hover {
       @apply bg-primary-50;
       cursor: pointer;
     }
   }
-  tfoot tr td {
-    padding: 0px 16px;
-    border-bottom: 0;
-    height: 50px;
-    position: sticky;
-    left: 0;
+  tfoot {
+    tr td {
+      padding: 0px 16px;
+      border-bottom: 0;
+      height: 50px;
+    }
   }
   .actions-block {
     position: sticky;
     right: 0;
     z-index: 10;
+    background-color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: end;
   }
 }
-.actions-block {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
-  background-color: inherit;
-}
+
 .selectable {
-  th:first-child,
-  td:first-child {
-    position: sticky;
-    left: 0;
-    background-color: inherit;
-    z-index: 10;
+  thead,
+  tbody {
+    th:first-child,
+    td:first-child {
+      position: sticky;
+      left: 0;
+      background-color: inherit;
+      z-index: 10;
+    }
   }
 }
 .table-footer {
