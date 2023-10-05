@@ -32,10 +32,10 @@
         'w-16 max-md:w-0': isNavMini,
       }"
     >
-      <Tree :list="menu" class="tree-menu" :isHidden="isNavMini" default-open>
+      <Tree  :list="menu" class="tree-menu" :isHidden="isNavMini" default-open>
         <template #item-rollable="{ data, isOpen }">
           <div
-            class="tree-items typo-title5 typo-regular"
+            class="tree-items"
             tabindex="0"
             :class="{ selected: isItemSelected(data) }"
             v-if="!isNavMini"
@@ -57,7 +57,7 @@
           >
             <template #activator>
               <div
-                class="tree-items typo-title5 typo-regular"
+                class="tree-items"
                 tabindex="0"
                 :class="{ selected: isItemSelected(data) }"
               >
@@ -66,12 +66,12 @@
             </template>
             <template #content>
               <div class="tree-menu-mini">
-                <div class="item-title typo-title5 typo-regular">
+                <div class="item-title">
                   {{ data.title }}
                 </div>
                 <Tree :list="data.children" @click.stop>
                   <template #item-rollable="{ data: d, isOpen }">
-                    <div class="item typo-title5 typo-regular">
+                    <div class="item">
                       <Icon
                         name="arrow_right"
                         class="icons-arrow"
@@ -83,7 +83,7 @@
                   </template>
                   <template #item="{ data: d }">
                     <div
-                      class="item typo-title5 typo-regular"
+                      class="item"
                       tabindex="0"
                       @keyup.enter="$router.push(d.path)"
                       :class="{ selected: isItemSelected(d) }"
@@ -100,6 +100,7 @@
         </template>
         <template #item="{ data }">
           <TreeItem
+            
             :display-label="!isNavMini"
             :icon="data.icon"
             :label="$t(data.title)"

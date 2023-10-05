@@ -3,6 +3,7 @@
     <label @click="editor?.focus()" v-if="label">{{ label }}</label>
     <div
       ref="editorWrapperRef"
+      v-click-outside="handleBlur"
       class="wysiwyg-editor relative rounded-sm z-20 transition-[box-shadow_border-color] duration-200 border border-solid focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input"
       :class="{
         'mt-2': label?.length,
@@ -11,11 +12,28 @@
     >
       <div ref="editorRef" />
       <div ref="toolbarRef" class="wysiwyg-editor-toolbar">
+        <ActionMenu :actions="addActions" alignment="start">
+          <IconButton name="add" />
+        </ActionMenu>
+        <div
+          class="h-[15px] border-primary-200 border-r border-solid border-l-0"
+        />
         <button class="ql-bold" />
         <button class="ql-italic" />
         <button class="ql-underline" />
         <button class="ql-strike" />
       </div>
+      <Card
+        class="absolute p-2 transition-opacity"
+        :class="{
+          'opacity-0 invisible select-none pointer-events-none':
+            !displayTooltip,
+          'opacity-100': displayTooltip,
+        }"
+        :style="tooltipStyle"
+      >
+        blabla
+      </Card>
     </div>
   </div>
 </template>
@@ -24,9 +42,18 @@
 import { onMounted } from "vue";
 import { ref } from "vue";
 import Quill from "quill";
-import { watch } from "vue";
+import IconButton from "../IconButton.vue";
+import type { Action } from "../ActionMenu.vue";
+import { useI18n } from "vue-i18n";
+import ActionMenu from "../ActionMenu.vue";
+import Card from "../card/Card.vue";
 
 const toolbarRef = ref<HTMLDivElement>();
+
+const tooltipStyle = ref<Record<string, string | number>>({});
+const displayTooltip = ref(false);
+
+const { t } = useI18n();
 
 export type WysiwygProps = {
   label?: string;
@@ -38,10 +65,14 @@ const editorRef = ref<HTMLDivElement>();
 const editorWrapperRef = ref<HTMLDivElement>();
 const editor = ref<Quill>();
 
+function handleBlur() {
+  displayTooltip.value = false;
+}
+
 onMounted(() => {
   if (!editorRef.value || !editorWrapperRef.value) return;
   const e = new Quill(editorRef.value, {
-    debug: "info",
+    debug: false,
     bounds: editorWrapperRef.value,
     placeholder: "",
     modules: {
@@ -50,14 +81,41 @@ onMounted(() => {
     readOnly: false,
     theme: "snow",
   });
+  e.on("text-change", () => {
+    displayTooltip.value = false;
+  });
+  e.on("selection-change", (range, oldRange, source) => {
+    if (!range) return;
+    if (range.length === 0) {
+      displayTooltip.value = false;
+      return;
+    }
+    const selectionBound = e.getBounds(range.index, range.length);
+    tooltipStyle.value = {
+      left: `${selectionBound.left}px`,
+      top: `${selectionBound.bottom}px`,
+    };
+    displayTooltip.value = true;
+  });
   editor.value = e;
 });
 
-watch(
-  () => editor.value,
-  (val) => console.error({ val }),
-  { immediate: true }
-);
+function add(type: string) {
+  throw "Not implemented";
+}
+
+const addActions: Action[] = [
+  {
+    action: () => add("paragraph"),
+    title: t("core.wysiwyg.paragraph"),
+    icon: "format_paragraph",
+  },
+  {
+    action: () => add("header"),
+    title: t("core.wysiwyg.title"),
+    icon: "title",
+  },
+];
 </script>
 
 <style lang="scss">
@@ -74,20 +132,45 @@ watch(
   }
   cursor: text;
   .wysiwyg-editor-toolbar {
-    @apply cursor-text flex gap-2;
-    @apply pb-1 pt-4 px-2 transition-opacity duration-200;
+    @apply cursor-text flex gap-4 items-center;
+    @apply pb-1 pt-8 px-2 transition-opacity duration-200;
     opacity: 0;
     border: none;
     margin: 0;
+    button:hover,
+    button:hover,
+    button:focus,
+    button:focus,
+    button.ql-active,
+    button.ql-active {
+      @apply text-primary-400;
+      .ql-stroke {
+        @apply stroke-primary-400;
+      }
+      .ql-fill {
+        @apply fill-primary-400;
+      }
+    }
     button {
       padding: 0;
       width: 20px;
+      @apply text-slate-500;
+      .ql-stroke {
+        @apply stroke-slate-500;
+      }
+      .ql-fill {
+        @apply fill-slate-500;
+      }
       svg {
         width: 20px;
       }
     }
   }
-  &:hover,
+  &:hover {
+    .wysiwyg-editor-toolbar {
+      opacity: 0.3;
+    }
+  }
   &:focus,
   &:focus-within {
     .wysiwyg-editor-toolbar {
