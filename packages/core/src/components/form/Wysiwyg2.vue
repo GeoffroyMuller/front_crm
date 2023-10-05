@@ -1,30 +1,20 @@
 <template>
   <div>
-    <label @click="editor.focus()" v-if="label">{{ label }}</label>
+    <label @click="editor?.focus()" v-if="label">{{ label }}</label>
     <div
       ref="editorWrapperRef"
-      class="wysiwyg-editor relative min-h-[100px] rounded-sm z-20 px-3 py-2 transition-[box-shadow_border-color] duration-200 border border-solid focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input"
+      class="wysiwyg-editor relative rounded-sm z-20 transition-[box-shadow_border-color] duration-200 border border-solid focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input"
       :class="{
         'mt-2': label?.length,
       }"
-      @click="editor.focus()"
+      @click="editor?.focus()"
     >
       <div ref="editorRef" />
-      <div
-        class="wysiwyg-editor-toolbar absolute bottom-0 left-0 w-full flex items-center p-2"
-      >
-        <IconButton
-          name="format_bold"
-          @click.stop="editor.format('bold', true)"
-          class="-m-iconButtonPadding mr-0"
-          color="primary"
-        />
-        <IconButton
-          name="format_italic"
-          @click.stop="editor.format('italic', true)"
-          class="-m-iconButtonPadding mr-0"
-          color="primary"
-        />
+      <div ref="toolbarRef" class="wysiwyg-editor-toolbar">
+        <button class="ql-bold" />
+        <button class="ql-italic" />
+        <button class="ql-underline" />
+        <button class="ql-strike" />
       </div>
     </div>
   </div>
@@ -34,8 +24,9 @@
 import { onMounted } from "vue";
 import { ref } from "vue";
 import Quill from "quill";
-import IconButton from "../IconButton.vue";
 import { watch } from "vue";
+
+const toolbarRef = ref<HTMLDivElement>();
 
 export type WysiwygProps = {
   label?: string;
@@ -54,10 +45,10 @@ onMounted(() => {
     bounds: editorWrapperRef.value,
     placeholder: "",
     modules: {
-      toolbar: false,
+      toolbar: toolbarRef.value,
     },
     readOnly: false,
-    theme: "bubble",
+    theme: "snow",
   });
   editor.value = e;
 });
@@ -71,11 +62,30 @@ watch(
 
 <style lang="scss">
 .wysiwyg-editor {
+  .ql-editor {
+    @apply px-3 py-2;
+    outline: none;
+    &:focus {
+      outline: none;
+    }
+  }
+  .ql-container {
+    @apply border-0;
+  }
   cursor: text;
   .wysiwyg-editor-toolbar {
-    cursor: text;
-    @apply transition-opacity duration-200;
+    @apply cursor-text flex gap-2;
+    @apply pb-1 pt-4 px-2 transition-opacity duration-200;
     opacity: 0;
+    border: none;
+    margin: 0;
+    button {
+      padding: 0;
+      width: 20px;
+      svg {
+        width: 20px;
+      }
+    }
   }
   &:hover,
   &:focus,
@@ -83,16 +93,6 @@ watch(
     .wysiwyg-editor-toolbar {
       opacity: 1;
     }
-  }
-}
-.ql-editor {
-  // padding: 0;
-  padding-left: 0;
-  padding-right: 0;
-  padding-bottom: 50px;
-  outline: none;
-  &:focus {
-    outline: none;
   }
 }
 </style>
