@@ -17,6 +17,7 @@ import App from "./components/App.vue";
 import "./plugins/typescript";
 
 import clickOutside from "./directives/clickOutside";
+import mouseDownOutside from "./directives/mouseDownOutside";
 import tooltip from "./directives/tooltip";
 import utilsPlugin from "./plugins/utils";
 import breakpointsPlugin from "./plugins/breakpoints";
@@ -93,6 +94,7 @@ export default function setup(options: SetupOptions) {
     .use(breakpointsPlugin);
 
   app.directive("click-outside", clickOutside);
+  app.directive("mouse-down-outside", mouseDownOutside);
   app.directive("tooltip", tooltip);
 
   return {

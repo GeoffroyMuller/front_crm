@@ -3,7 +3,7 @@
     <label @click="editor?.focus()" v-if="label">{{ label }}</label>
     <div
       ref="editorWrapperRef"
-      v-click-outside="handleBlur"
+      v-mouse-down-outside="handleBlur"
       class="wysiwyg-editor relative rounded-sm z-20 transition-[box-shadow_border-color] duration-200 border border-solid focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input"
       :class="{
         'mt-2': label?.length,
@@ -24,7 +24,7 @@
         <button class="ql-strike" />
       </div>
       <Card
-        class="absolute p-2 transition-opacity"
+        class="absolute p-2 transition-opacity duration-200 ease-linear"
         :class="{
           'opacity-0 invisible select-none pointer-events-none':
             !displayTooltip,
