@@ -28,11 +28,12 @@
         <button class="ql-strike" />
       </div>
       <Card
-        class="absolute p-1 transition-opacity duration-200 ease-linear flex gap-1 w-fit"
+        class="absolute p-1 flex gap-1 w-fit"
         :class="{
           'opacity-0 invisible select-none pointer-events-none':
             !displayTooltip,
-          'opacity-100': displayTooltip,
+          'opacity-100 transition-opacity duration-200 ease-linear':
+            displayTooltip,
         }"
         :style="tooltipStyle"
       >
@@ -157,18 +158,22 @@ const addActions: Action[] = [
     opacity: 0;
     border: none;
     margin: 0;
-    button:hover,
-    button:hover,
-    button:focus,
-    button:focus,
-    button.ql-active,
-    button.ql-active {
+    button:hover {
       @apply text-primary-400;
       .ql-stroke {
         @apply stroke-primary-400;
       }
       .ql-fill {
         @apply fill-primary-400;
+      }
+    }
+    button.ql-active {
+      @apply text-primary-500;
+      .ql-stroke {
+        @apply stroke-primary-500;
+      }
+      .ql-fill {
+        @apply fill-primary-500;
       }
     }
     button {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="overflow-hidden w-[400px] fixed bottom-0 pb-4 max-xl:left-1/2 transform max-xl:-translate-x-1/2 xl:right-4 max-xl:items-center flex flex-col gap-4 justify-end items-end z-[9999]"
+    class="overflow-hidden w-[400px] fixed bottom-0 pb-4 max-md:left-1/2 transform max-md:-translate-x-1/2 md:right-4 max-md:items-center flex flex-col gap-4 justify-end items-end z-[9999]"
   >
     <TransitionGroup name="toast">
       <Toast
