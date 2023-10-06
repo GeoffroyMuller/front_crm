@@ -2,10 +2,19 @@
   <Card padding>
     <!-- <Wysiwyg label="Test"></Wysiwyg> -->
     <Wysiwyg2 label="Test" />
+
+    <div class="flex mt-4 gap-2">
+      <IconButton name="format_bold" />
+      <IconButton name="format_underlined" />
+      <IconButton name="format_italic" />
+
+      <IconButton name="format_strikethrough" />
+    </div>
   </Card>
 </template>
 
 <script setup lang="ts">
+import IconButton from "../IconButton.vue";
 import Card from "../card/Card.vue";
 import Wysiwyg from "../form/Wysiwyg.vue";
 import Wysiwyg2 from "../form/Wysiwyg2.vue";

@@ -29,12 +29,13 @@
 </template>
 <script setup lang="ts">
 import { computed } from "vue";
-import Icon from "./Icon.vue";
+import Icon, { type IconProps } from "./Icon.vue";
 import type { IconName, Size, Color } from "./types";
 interface IconButtonProps {
   name: IconName;
   color?: Color;
   sharp?: boolean;
+  weight?: IconProps["weight"];
   size?: Size;
   disabled?: boolean;
   defaultColored?: boolean;

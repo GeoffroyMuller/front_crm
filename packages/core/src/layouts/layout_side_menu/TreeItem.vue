@@ -19,6 +19,7 @@
         :name="icon"
         color="black"
         :sharp="selected"
+        transition
         class="bg-gradient-245 !text-transparent bg-clip-text"
         :class="{
           'from-primary-500 to-primary-300': selected,

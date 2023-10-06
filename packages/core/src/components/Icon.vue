@@ -8,25 +8,26 @@
 import { withDefaults, computed } from "vue";
 import type { Color, IconName, Size } from "./types";
 
-interface IconProps {
+export interface IconProps {
   name: IconName;
   color?: Color;
   sharp?: boolean;
   size?: Size | "xs";
-  weight?: "bold" | "regular";
+  weight?: "bold" | "normal";
+  transition?: boolean;
 }
 
 const classes = computed(() => {
   const res = [];
-  if (!props.sharp) {
-    res.push("material-symbols-outlined");
-  } else {
-    res.push("material-symbols-sharp");
+  res.push("material-symbols-outlined");
+  if (props.sharp) {
+    res.push("icon-sharp");
   }
   res.push(`icon-${props.size}`);
   res.push(`icon-${props.color}`);
-  if (props.weight === "bold") {
-    res.push("icon-bold");
+  res.push(`icon-${props.weight}`);
+  if (props.transition) {
+    res.push("transition-[font-variation-settings] duration-200");
   }
   return res;
 });
@@ -35,7 +36,7 @@ const props = withDefaults(defineProps<IconProps>(), {
   color: "black",
   sharp: false,
   size: "md",
-  weight: "bold",
+  weight: "normal",
 });
 </script>
 
@@ -44,6 +45,17 @@ const props = withDefaults(defineProps<IconProps>(), {
   transition: color 0.15s ease;
   background-color: transparent;
   user-select: none;
+  font-weight: 400;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+  &.icon-bold {
+    font-variation-settings: "FILL" 0, "wght" 700, "GRAD" 0, "opsz" 48;
+  }
+  &.icon-sharp {
+    font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
+    &.icon-bold {
+      font-variation-settings: "FILL" 1, "wght" 700, "GRAD" 0, "opsz" 48;
+    }
+  }
 }
 .icon-xs {
   font-size: 13px !important;
@@ -59,10 +71,6 @@ const props = withDefaults(defineProps<IconProps>(), {
 }
 .icon-xl {
   font-size: 26px !important;
-}
-
-.icon-bold {
-  font-weight: 700;
 }
 
 @each $key, $value in $colors {
