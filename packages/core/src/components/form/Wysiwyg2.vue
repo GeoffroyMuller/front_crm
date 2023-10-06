@@ -1,6 +1,10 @@
 <template>
   <div>
-    <label @click="editor?.focus()" v-if="label">{{ label }}</label>
+    <label
+      @click="!editor?.hasFocus() ? editor?.focus() : () => {}"
+      v-if="label"
+      >{{ label }}</label
+    >
     <div
       ref="editorWrapperRef"
       v-mouse-down-outside="handleBlur"
@@ -8,7 +12,7 @@
       :class="{
         'mt-2': label?.length,
       }"
-      @click="editor?.focus()"
+      @click="!editor?.hasFocus() ? editor?.focus() : () => {}"
     >
       <div ref="editorRef" />
       <div ref="toolbarRef" class="wysiwyg-editor-toolbar">
@@ -24,7 +28,7 @@
         <button class="ql-strike" />
       </div>
       <Card
-        class="absolute p-2 transition-opacity duration-200 ease-linear"
+        class="absolute p-1 transition-opacity duration-200 ease-linear flex gap-1 w-fit"
         :class="{
           'opacity-0 invisible select-none pointer-events-none':
             !displayTooltip,
@@ -32,7 +36,9 @@
         }"
         :style="tooltipStyle"
       >
-        blabla
+        <IconButton name="format_h1" @click="formatHeading(1)" />
+        <IconButton name="format_h2" @click="formatHeading(2)" />
+        <IconButton name="format_h3" @click="formatHeading(3)" />
       </Card>
     </div>
   </div>
@@ -69,6 +75,14 @@ function handleBlur() {
   displayTooltip.value = false;
 }
 
+function formatHeading(value = 3) {
+  if (!editor.value) return;
+  const selectionIndex = editor.value.getSelection()?.index;
+  if (!selectionIndex) return;
+  editor.value.getLine(selectionIndex);
+  editor.value.format("header", value);
+}
+
 onMounted(() => {
   if (!editorRef.value || !editorWrapperRef.value) return;
   const e = new Quill(editorRef.value, {
@@ -100,18 +114,24 @@ onMounted(() => {
   editor.value = e;
 });
 
-function add(type: string) {
-  throw "Not implemented";
+function addHeading(value = 3) {
+  if (!editor.value) return;
+  editor.value.setSelection(editor.value.getLength(), 1);
+  editor.value.format("header", value);
+}
+
+function addParagraph() {
+  throw new Error("not implemented");
 }
 
 const addActions: Action[] = [
   {
-    action: () => add("paragraph"),
+    action: () => addParagraph(),
     title: t("core.wysiwyg.paragraph"),
     icon: "format_paragraph",
   },
   {
-    action: () => add("header"),
+    action: () => addHeading(),
     title: t("core.wysiwyg.title"),
     icon: "title",
   },
