@@ -154,7 +154,7 @@ const addActions: Action[] = [
   cursor: text;
   .wysiwyg-editor-toolbar {
     @apply cursor-text flex gap-4 items-center;
-    @apply pb-1 pt-8 px-2 transition-opacity duration-200;
+    @apply pb-1 pt-10 px-2 transition-opacity duration-200;
     opacity: 0;
     border: none;
     margin: 0;

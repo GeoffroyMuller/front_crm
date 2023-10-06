@@ -3,7 +3,11 @@
     <!-- <Wysiwyg label="Test"></Wysiwyg> -->
     <Wysiwyg2 label="Test" />
 
-    <div class="flex mt-4 gap-2">
+    <div class="flex mt-4 gap-2 items-center">
+      <IconButton name="add" />
+      <div
+        class="h-[18px] border-primary-200 border-r border-solid border-l-0"
+      />
       <IconButton name="format_bold" />
       <IconButton name="format_underlined" />
       <IconButton name="format_italic" />
