@@ -78,9 +78,10 @@ function handleBlur() {
 
 function formatHeading(value = 3) {
   if (!editor.value) return;
-  const selectionIndex = editor.value.getSelection()?.index;
-  if (!selectionIndex) return;
-  editor.value.getLine(selectionIndex);
+  const selection = editor.value.getSelection();
+  if (!selection) return;
+  editor.value.removeFormat(selection.index, selection.length);
+  editor.value.setSelection(selection.index + selection.length, 0);
   editor.value.format("header", value);
 }
 
