@@ -1,8 +1,10 @@
 <template>
   <Kanban v-model:columns="columns">
     <template #element="{ element }">
-      <Card>
-        {{ element }}
+      <Card padding>
+        <div class="typo-title5">
+          {{ element.title }}
+        </div>
       </Card>
     </template>
   </Kanban>
@@ -22,9 +24,11 @@ const columns = ref<DemoKanbanColmun[]>([
     elements: [
       {
         id: 0,
+        title: "Faire le kanban",
       },
       {
         id: 1,
+        title: "Faire buttons",
       },
     ],
   },
@@ -34,11 +38,18 @@ const columns = ref<DemoKanbanColmun[]>([
     elements: [
       {
         id: 2,
+        title: "Fix form",
       },
       {
         id: 3,
+        title: "Fix carousel",
       },
     ],
+  },
+  {
+    id: 2,
+    title: "Terminé",
+    elements: [],
   },
 ]);
 </script>
