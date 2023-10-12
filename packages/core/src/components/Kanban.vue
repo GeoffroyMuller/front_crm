@@ -93,9 +93,9 @@ window.columns = columns;
 .kanban {
   height: 100%;
   .columns {
-    @apply h-full flex items-start gap-6;
+    @apply h-full flex items-start gap-4;
     .column {
-      @apply min-w-[250px] h-full min-h-[200px] flex flex-col;
+      @apply min-w-[250px] h-full min-h-[200px] flex flex-col p-2;
       .drag_handle {
         cursor: grab;
       }
@@ -105,9 +105,14 @@ window.columns = columns;
 .kanban-column-cloned-element {
   opacity: 1 !important;
   max-height: 600px !important;
+  @apply bg-slate-100 shadow-sm rounded;
 }
 .kanban-column-ghost {
-  opacity: 0.5 !important;
+  position: relative;
+  &::before {
+    content: " ";
+    @apply bg-slate-300 absolute top-0 left-0 w-full h-full z-20 rounded;
+  }
 }
 .kanban-elem-cloned-element {
   opacity: 1 !important;

@@ -7,11 +7,7 @@
     @element-drag-end="drag = false"
   >
     <template #title="{ column }">
-      <Input
-        v-model="column.title"
-        variant="text"
-        class="focus-within:bg-white"
-      />
+      <Input v-model="column.title" variant="text" />
     </template>
     <template #element="{ element }">
       <Card

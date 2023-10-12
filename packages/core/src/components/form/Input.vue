@@ -10,7 +10,7 @@
         [`rounded-${rounded}`]: true,
         'bg-white': !disabled && variant === 'base',
         'bg-inputDisabled cursor-not-allowed': disabled,
-        'bg-transparent border border-solid border-transparent hover:border-input focus-within:!border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200':
+        'bg-transparent border border-solid border-transparent hover:border-input focus-within:bg-white focus-within:!border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200':
           variant === 'text',
       },
       inputClass,
