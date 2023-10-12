@@ -5,7 +5,8 @@
     >
       <div class="w-max">
         <div class="typo-title2">
-          {{ title }}
+          {{ title || "" }}
+          <slot name="title" />
         </div>
         <div v-if="subtitle" class="typo-title5 mt-1">
           {{ subtitle }}
@@ -79,7 +80,7 @@ export type SidebarHeadAction = Action & { main?: boolean; color?: Color };
 
 const emit = defineEmits(["action", "close", "update:currentTab"]);
 defineProps<{
-  title: string;
+  title?: string;
   subtitle?: string;
   actions: SidebarHeadAction[];
   tabs?: Tab[];

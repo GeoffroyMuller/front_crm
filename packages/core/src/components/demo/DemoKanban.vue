@@ -11,7 +11,8 @@
     </template>
     <template #element="{ element }">
       <Card
-        padding
+        selectable
+        class="p-4 min-h-[70px]"
         :class="{
           'cursor-pointer': !drag,
           'cursor-grab': drag,
@@ -24,11 +25,26 @@
       </Card>
     </template>
     <template #column-footer="{ column }">
-      <Button variant="text" class="m-auto mt-4" color="black">Ajouter</Button>
+      <Button
+        variant="text"
+        class="m-auto mt-4"
+        color="black"
+        @click.stop="add(column)"
+        >Ajouter</Button
+      >
     </template>
   </Kanban>
   <Sidebar v-model:open="sidebarOpen">
-    <SidebarHead :title="selected?.title || ''" :actions="[]"></SidebarHead>
+    <SidebarHead :actions="[]">
+      <template #title>
+        <Input
+          variant="text"
+          :model-value="selected?.title"
+          @update:model-value="selected.title = $event"
+          ref="titleInputRef"
+        />
+      </template>
+    </SidebarHead>
     <SidebarContent> </SidebarContent>
   </Sidebar>
 </template>
@@ -42,13 +58,15 @@ import Button from "../Button.vue";
 import Sidebar from "../sidebar/Sidebar.vue";
 import SidebarHead from "../sidebar/SidebarHead.vue";
 import SidebarContent from "../sidebar/SidebarContent.vue";
-import Select from "../form/Select.vue";
+import { watch } from "vue";
+import { omitBy } from "lodash";
 
 type DemoKanbanColmun = {} & KanbanColumns<any>;
 
 const selected = ref<DemoKanbanColmun["elements"][0]>();
 const sidebarOpen = ref(false);
 const drag = ref(false);
+const titleInputRef = ref();
 
 function handleClickCard(card: DemoKanbanColmun["elements"][0]) {
   sidebarOpen.value = true;
@@ -90,6 +108,44 @@ const columns = ref<DemoKanbanColmun[]>([
     elements: [],
   },
 ]);
+
+function add(column: DemoKanbanColmun) {
+  const index = columns.value.findIndex((c) => c.id === column.id);
+
+  if (index != -1) {
+    columns.value[index].elements.push({
+      id: Math.random(),
+      title: "",
+    });
+    selected.value =
+      columns.value[index].elements[columns.value[index].elements.length - 1];
+    sidebarOpen.value = true;
+    titleInputRef?.value?.$refs?.internalRef?.focus();
+  }
+}
+
+watch(
+  () => sidebarOpen.value,
+  () => {
+    if (!sidebarOpen.value) {
+      const selectedPurged = omitBy(
+        selected.value,
+        (k) => k == null || (typeof k === "string" && k.trim() === "")
+      );
+      console.error({ selectedPurged });
+      if (Object.keys(selectedPurged).length === 1) {
+        columns.value.forEach((c, i) => {
+          const index = c.elements.findIndex((e) => e.id === selected.value.id);
+          if (index != -1) {
+            columns.value[i].elements = columns.value[i].elements.filter(
+              (e, i) => i !== index
+            );
+          }
+        });
+      }
+    }
+  }
+);
 
 // @ts-ignore
 window.columns = columns;

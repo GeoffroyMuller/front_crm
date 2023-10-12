@@ -8,6 +8,7 @@
       'rounded-lg': rounded === 'lg',
       'rounded-xl': rounded === 'xl',
       'border border-slate-200 border-solid': bordered,
+      'hover:shadow-md': selectable,
     }"
   >
     <slot />
@@ -22,6 +23,7 @@ export interface CardProps {
   padding?: boolean;
   rounded: Size;
   bordered?: boolean;
+  selectable?: boolean;
 }
 
 export type CardProvide = Pick<CardProps, "padding" | "rounded">;
