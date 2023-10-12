@@ -30,6 +30,7 @@ module.exports = {
         fullMinusPageHeadHeight: "calc(100% - 85px)",
         content: "1.5rem",
         iconButtonPadding: ".25rem",
+        inputXPadding: ".5rem",
       },
       padding: {
         card: "2rem",

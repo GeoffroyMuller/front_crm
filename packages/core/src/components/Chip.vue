@@ -57,7 +57,7 @@ const computedColor = computed<Color>(() => {
   background-color: rgba(0, 0, 0, 0.08);
   color: rgba(0, 0, 0, 0.87);
   width: max-content;
-  padding: 8px 12px;
+  padding: 7px 12px;
   line-height: unset;
 }
 .icon-chip {
@@ -69,6 +69,7 @@ const computedColor = computed<Color>(() => {
     .chip-#{$key} {
       background: color($key, 500);
       color: color("white");
+      border: 1px solid color($key, 500);
       background: linear-gradient(
         245deg,
         color($key, 500) 0%,
@@ -83,6 +84,7 @@ const computedColor = computed<Color>(() => {
   } @else {
     .chip-#{$key} {
       background-color: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(0, 0, 0, 0.25);
       color: color("white");
     }
     .chip-black {

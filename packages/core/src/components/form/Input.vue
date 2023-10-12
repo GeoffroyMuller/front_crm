@@ -1,50 +1,17 @@
 <template>
-  <textarea
-    v-if="multiline"
-    class="mousetrap min-h-input outline-none focus:outline-none border border-solid disabled:cursor-not-allowed w-full transition-[box-shadow_border-color] duration-200 px-2 py-1"
-    @blur="onBlur"
-    :class="[
-      {
-        'border-danger-400 focus-within:shadow-[0_0_2pt_0.5pt] focus-within:shadow-danger-200':
-          internalError || error,
-        'focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input':
-          !internalError && !error,
-        [`rounded-${rounded}`]: true,
-        'bg-white': !disabled,
-        'bg-inputDisabled cursor-not-allowed': disabled,
-        'appearance-none': appearanceNone === true,
-      },
-      inputClass,
-    ]"
-    ref="internalRef"
-    v-model="internalValue"
-    @focus="onFocus"
-    @input="(e) => onInput(e)"
-    v-maska:[maskOptions]
-    v-bind="{
-    min: min as InputHTMLAttributes['min'],
-    max: max as InputHTMLAttributes['min'],
-    type,
-    step,
-    disabled,
-    readonly,
-    name,
-    id,
-    placeholder,
-    }"
-  />
   <div
-    v-else
-    class="min-h-input h-input relative border border-solid overflow-hidden flex items-center px-2 py-1 transition-[box-shadow_border-color] duration-200"
+    class="min-h-input h-input relative border border-solid overflow-hidden flex items-center px-inputXPadding py-1 transition-[box-shadow_border-color] duration-200"
     :class="[
       {
         'border-danger-400 focus-within:shadow-[0_0_2pt_0.5pt] focus-within:shadow-danger-200':
-          internalError || error,
+          (internalError || error) && variant === 'base',
         'focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input':
-          !internalError && !error,
+          !internalError && !error && variant === 'base',
         [`rounded-${rounded}`]: true,
-        'bg-white': !disabled,
+        'bg-white': !disabled && variant === 'base',
         'bg-inputDisabled cursor-not-allowed': disabled,
+        'bg-transparent border border-solid border-transparent hover:border-slate-400 focus-within:border-slate-400':
+          variant === 'text',
       },
       inputClass,
     ]"
@@ -54,7 +21,7 @@
       <slot name="start" />
     </div>
     <input
-      class="mousetrap flex-1 min-h-input h-input outline-none focus:outline-none border-none disabled:cursor-not-allowed w-full"
+      class="mousetrap flex-1 min-h-input h-input outline-none focus:outline-none border-none disabled:cursor-not-allowed w-full bg-inherit"
       @blur="onBlur"
       :class="{
         'appearance-none': appearanceNone === true,
@@ -119,13 +86,15 @@ export type InputProps = {
   rounded?: Size | "full";
 
   inputClass?: any;
-  multiline?: boolean;
+
+  variant?: "text" | "base";
 };
 
 const props = withDefaults(defineProps<InputProps>(), {
   type: "text",
   rounded: "sm",
   placeholder: "",
+  variant: "base",
 });
 const emit = defineEmits([
   "update:modelValue",

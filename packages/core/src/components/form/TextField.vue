@@ -35,7 +35,7 @@
           appearanceNone,
           rounded,
           type,
-          multiline,
+          variant,
         }"
       >
         <template #start v-if="$slots.start">
@@ -68,7 +68,6 @@ import type { MaskOptions } from "maska/dist/types/mask";
 export interface TextFieldProps {
   mask?: string | MaskOptions;
   icon?: IconName;
-  multiline?: boolean;
   label?: string;
   modelValue?: any;
   type?: string;
@@ -88,6 +87,8 @@ export interface TextFieldProps {
   rounded?: Size | "full";
 
   inputClass?: any;
+
+  variant?: "text" | "base";
 }
 
 const props = withDefaults(defineProps<TextFieldProps>(), {
