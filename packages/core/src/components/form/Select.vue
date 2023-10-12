@@ -21,6 +21,7 @@
           @keydown="handleKeydown"
           :class="$props.class"
           input-class="cursor-pointer"
+          :variant="variant"
         >
           <template #start>
             <div class="flex items-center" v-if="props.multiple">
@@ -116,6 +117,8 @@ export interface SelectProps {
   disabled?: boolean;
   rules?: AnySchema;
   menuStrategy?: MenuProps["strategy"];
+
+  variant?: "text" | "base";
 }
 
 const props = withDefaults(defineProps<SelectProps>(), {

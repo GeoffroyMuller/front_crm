@@ -7,7 +7,11 @@
     @element-drag-end="drag = false"
   >
     <template #title="{ column }">
-      <Input v-model="column.title" variant="text" />
+      <Input
+        v-model="column.title"
+        variant="text"
+        class="focus-within:bg-white"
+      />
     </template>
     <template #element="{ element }">
       <Card
@@ -42,6 +46,7 @@ import Button from "../Button.vue";
 import Sidebar from "../sidebar/Sidebar.vue";
 import SidebarHead from "../sidebar/SidebarHead.vue";
 import SidebarContent from "../sidebar/SidebarContent.vue";
+import Select from "../form/Select.vue";
 
 type DemoKanbanColmun = {} & KanbanColumns<any>;
 
@@ -57,7 +62,7 @@ function handleClickCard(card: DemoKanbanColmun["elements"][0]) {
 const columns = ref<DemoKanbanColmun[]>([
   {
     id: 0,
-    title: "A faire",
+    title: "A faire 📋",
     elements: [
       {
         id: 0,
@@ -71,7 +76,7 @@ const columns = ref<DemoKanbanColmun[]>([
   },
   {
     id: 1,
-    title: "En cours",
+    title: "En cours 💻👨‍💻",
     elements: [
       {
         id: 2,
@@ -85,7 +90,7 @@ const columns = ref<DemoKanbanColmun[]>([
   },
   {
     id: 2,
-    title: "Terminé",
+    title: "Terminé 👌",
     elements: [],
   },
 ]);

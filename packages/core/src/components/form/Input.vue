@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-h-input h-input relative border border-solid overflow-hidden flex items-center px-inputXPadding py-1 transition-[box-shadow_border-color] duration-200"
+    class="min-h-input h-input relative border border-solid overflow-hidden flex items-center px-inputXPadding py-1 transition-[box-shadow_border-color_background] duration-200"
     :class="[
       {
         'border-danger-400 focus-within:shadow-[0_0_2pt_0.5pt] focus-within:shadow-danger-200':
@@ -10,7 +10,7 @@
         [`rounded-${rounded}`]: true,
         'bg-white': !disabled && variant === 'base',
         'bg-inputDisabled cursor-not-allowed': disabled,
-        'bg-transparent border border-solid border-transparent hover:border-slate-400 focus-within:border-slate-400':
+        'bg-transparent border border-solid border-transparent hover:border-input focus-within:!border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200':
           variant === 'text',
       },
       inputClass,
