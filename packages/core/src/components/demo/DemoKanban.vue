@@ -63,17 +63,7 @@ import { omitBy } from "lodash";
 
 type DemoKanbanColmun = {} & KanbanColumns<any>;
 
-const selected = ref<DemoKanbanColmun["elements"][0]>();
-const sidebarOpen = ref(false);
-const drag = ref(false);
-const titleInputRef = ref();
-
-function handleClickCard(card: DemoKanbanColmun["elements"][0]) {
-  sidebarOpen.value = true;
-  selected.value = { ...card };
-}
-
-const columns = ref<DemoKanbanColmun[]>([
+const COLUMNS_DEFAULTS = [
   {
     id: 0,
     title: "A faire 📋",
@@ -107,7 +97,19 @@ const columns = ref<DemoKanbanColmun[]>([
     title: "Terminé 👌",
     elements: [],
   },
-]);
+];
+
+const selected = ref<DemoKanbanColmun["elements"][0]>();
+const sidebarOpen = ref(false);
+const drag = ref(false);
+const titleInputRef = ref();
+
+function handleClickCard(card: DemoKanbanColmun["elements"][0]) {
+  sidebarOpen.value = true;
+  selected.value = { ...card };
+}
+
+const columns = ref<DemoKanbanColmun[]>(COLUMNS_DEFAULTS);
 
 function add(column: DemoKanbanColmun) {
   const index = columns.value.findIndex((c) => c.id === column.id);
@@ -132,7 +134,6 @@ watch(
         selected.value,
         (k) => k == null || (typeof k === "string" && k.trim() === "")
       );
-      console.error({ selectedPurged });
       if (Object.keys(selectedPurged).length === 1) {
         columns.value.forEach((c, i) => {
           const index = c.elements.findIndex((e) => e.id === selected.value.id);
