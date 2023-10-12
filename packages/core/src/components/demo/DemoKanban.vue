@@ -7,7 +7,7 @@
     @element-drag-end="drag = false"
   >
     <template #title="{ column }">
-      <Input v-model="column.title" variant="text" />
+      <Input v-model="column.title" variant="text" typo="title4" />
     </template>
     <template #element="{ element }">
       <Card
@@ -42,6 +42,8 @@
           :model-value="selected?.title"
           @update:model-value="selected.title = $event"
           ref="titleInputRef"
+          class="-ml-inputXPadding !h-12"
+          typo="title2"
         />
       </template>
     </SidebarHead>

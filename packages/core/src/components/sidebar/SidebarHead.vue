@@ -3,7 +3,7 @@
     <div
       class="flex items-center justify-between px-sidebarX border-0 border-b border-solid border-slate-200 py-1"
     >
-      <div class="w-max">
+      <div class="w-max flex-1">
         <div class="typo-title2">
           {{ title || "" }}
           <slot name="title" />

@@ -25,6 +25,7 @@
       @blur="onBlur"
       :class="{
         'appearance-none': appearanceNone === true,
+        [`typo-${typo}`]: typo,
       }"
       ref="internalRef"
       v-model="internalValue"
@@ -61,7 +62,7 @@ import type { MaskOptions } from "maska";
 import useValidatable from "../../composables/validatable";
 import { computed, type InputHTMLAttributes } from "vue";
 import type { AnySchema } from "yup";
-import type { IconName, Size } from "../types";
+import type { IconName, Size, Typo } from "../types";
 import Icon from "../Icon.vue";
 
 export type InputProps = {
@@ -88,6 +89,7 @@ export type InputProps = {
   inputClass?: any;
 
   variant?: "text" | "base";
+  typo?: Typo;
 };
 
 const props = withDefaults(defineProps<InputProps>(), {
