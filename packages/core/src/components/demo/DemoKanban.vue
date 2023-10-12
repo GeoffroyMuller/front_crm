@@ -106,7 +106,7 @@ const titleInputRef = ref();
 
 function handleClickCard(card: DemoKanbanColmun["elements"][0]) {
   sidebarOpen.value = true;
-  selected.value = { ...card };
+  selected.value = card;
 }
 
 const columns = ref<DemoKanbanColmun[]>(COLUMNS_DEFAULTS);
