@@ -5,3 +5,5 @@ export type SidebarInject = {
   close: () => void;
   setCurrentTab: (currentTab: Tab["id"]) => void;
 };
+
+export const SIDEBAR_ANIMATION_DURATION = 500;

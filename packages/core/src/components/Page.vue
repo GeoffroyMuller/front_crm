@@ -23,6 +23,7 @@
         'h-full': hideTitleBar,
       },
     ]"
+    ref="contentRef"
     :style="contentStyle"
     class="overflow-y-auto"
     :padding="padding"
@@ -51,6 +52,7 @@ import { computed, ref } from "vue";
 import PageHead from "./PageHead.vue";
 import Sidebar from "./sidebar/Sidebar.vue";
 import { watch } from "vue";
+import { SIDEBAR_ANIMATION_DURATION } from "./sidebar/sidebar.types";
 
 const currentTab = ref();
 const sidebarRef = ref();
@@ -92,7 +94,7 @@ watch(
       if (!sidebarHtmlElement) return;
       setTimeout(() => {
         sidebarWidth.value = getComputedStyle(sidebarHtmlElement)?.width || 0;
-      }, 300);
+      }, SIDEBAR_ANIMATION_DURATION - 50);
     } else {
       sidebarWidth.value = 0;
     }

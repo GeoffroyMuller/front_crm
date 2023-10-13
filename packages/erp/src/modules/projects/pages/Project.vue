@@ -113,8 +113,7 @@ import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 import { watch, ref, nextTick, inject } from "vue";
 import { omitBy } from "lodash";
 import { useRouter, useRoute } from "vue-router";
-
-const contentRef = inject("page-content-ref");
+import { SIDEBAR_ANIMATION_DURATION } from "core/src/components/sidebar/sidebar.types";
 
 type DemoKanbanColmun = {} & KanbanColumns<any>;
 
@@ -168,8 +167,10 @@ const titleInputRef = ref();
 function handleClickCard(card: DemoKanbanColmun["elements"][0], event: Event) {
   sidebarOpen.value = true;
   selected.value = card;
-  console.error(contentRef.value);
-  console.error(event.target.getBoundingClientRect());
+  setTimeout(() => {
+    const cardElement = event.target as HTMLElement;
+    cardElement.scrollIntoView({ behavior: "smooth" });
+  }, SIDEBAR_ANIMATION_DURATION);
 }
 
 const columns = ref<DemoKanbanColmun[]>(COLUMNS_DEFAULTS);
