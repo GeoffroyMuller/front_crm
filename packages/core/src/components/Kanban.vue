@@ -27,7 +27,7 @@
 
             <draggable
               item-key="id"
-              class="flex-1"
+              class="flex-1 overflow-auto"
               group="elements"
               :list="column.elements"
               @start="emit('element-drag-start')"
