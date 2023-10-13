@@ -8,9 +8,15 @@
   },
   "add-menu": {
     "add-quote": "Nouveau devis",
-    "add-invoice": "Nouvelle facture"
+    "add-invoice": "Nouvelle facture",
+    "new-project": "Nouveau Projet"
   },
   "pages": {
+    "projects": {
+      "overview": "Aperçu",
+      "kanban": "Tableau",
+      "list": "Liste"
+    },
     "clients": {
       "sure_delete_company": "Etes vous sur de vouloir supprimer cette entreprise de vos clients ?",
       "sure_delete_client": "Etes vous sur de vouloir supprimer ce client ?"
