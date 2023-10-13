@@ -1,5 +1,10 @@
 <template>
-  <Menu v-model:open="open" class="datepicker-input">
+  <Menu
+    v-model:open="open"
+    class="datepicker-input"
+    :placement="placement"
+    :alignment="alignment"
+  >
     <template #activator>
       <div>
         <TextField
@@ -93,7 +98,7 @@ import { computed, ref } from "vue";
 import TextField from "../TextField.vue";
 import Alert from "../../Alert.vue";
 import type { AnySchema } from "yup";
-import Menu from "../../Menu.vue";
+import Menu, { type MenuProps } from "../../Menu.vue";
 import useCalendar from "../../../composables/calendar";
 import IconButton from "../../IconButton.vue";
 import { Mask } from "maska";
@@ -111,6 +116,9 @@ export interface DatePickerProps {
   error?: string;
   rules?: AnySchema;
   disabled?: boolean;
+
+  placement?: MenuProps["placement"];
+  alignment?: MenuProps["alignment"];
 
   time?: boolean;
 }
