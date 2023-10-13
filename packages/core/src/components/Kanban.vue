@@ -19,7 +19,7 @@
               <div v-if="!$slots.title">
                 {{ column?.title || "" }}
               </div>
-              <div v-else>
+              <div v-else class="flex-1">
                 <slot name="title" :column="column" />
               </div>
               <Icon name="drag_indicator" class="drag_handle" />
