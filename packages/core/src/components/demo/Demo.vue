@@ -31,9 +31,6 @@
     <template #breadcrumb>
       <DemoBreadcrumb />
     </template>
-    <template #kanban>
-      <DemoKanban />
-    </template>
     <template #tabs>
       <DemoTabs />
     </template>
@@ -54,7 +51,6 @@ import DemoInput from "./DemoInput.vue";
 import DemoMenu from "./DemoMenu.vue";
 import DemoTypo from "./DemoTypo.vue";
 import DemoBreadcrumb from "./DemoBreadcrumb.vue";
-import DemoKanban from "./DemoKanban.vue";
 import DemoTabs from "./DemoTabs.vue";
 import DemoWysiwyg from "./DemoWysiwyg.vue";
 
@@ -68,7 +64,6 @@ const tabs = [
   { id: "inputs" },
   { id: "typo" },
   { id: "breadcrumb" },
-  { id: "kanban" },
   { id: "tabs" },
   { id: "wysiwyg" },
 ];

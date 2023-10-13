@@ -1,5 +1,32 @@
 <template>
-  <Page title="Monorepo" icon="check_circle">
+  <Page
+    title="Monorepo"
+    icon="check_circle"
+    :tabs="[
+      {
+        id: 'list',
+        title: 'Liste',
+      },
+      {
+        id: 'kanban',
+        title: 'Kanban',
+      },
+      {
+        id: 'calendar',
+        title: 'Calendrier',
+      },
+      {
+        id: 'gantt',
+        title: 'Gantt',
+      },
+      {
+        id: 'timeline',
+        title: 'Timeline',
+      },
+      { id: 'settings', title: 'Paramètres' },
+      { id: 'files', title: 'Fichiers' },
+    ]"
+  >
     <Kanban
       v-model:columns="columns"
       @column-drag-start="drag = true"
@@ -8,7 +35,12 @@
       @element-drag-end="drag = false"
     >
       <template #title="{ column }">
-        <Input v-model="column.title" variant="text" typo="title4" />
+        <Input
+          v-model="column.title"
+          variant="text"
+          typo="title4"
+          class="min-w-[230px]"
+        />
       </template>
       <template #element="{ element }">
         <Card
