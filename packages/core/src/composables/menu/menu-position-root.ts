@@ -187,12 +187,9 @@ export default function useMenuPositionRoot(props: MenuProps) {
 
   function _getCoordContainer(
     placement: MenuProps["placement"],
-    alignment: MenuProps["alignment"]
+    alignment: MenuProps["alignment"],
+    dimensions: { [key: string]: any }
   ) {
-    const dimensions = {
-      container: getDimensions(container.value as HTMLElement),
-      activator: getDimensions(activator.value as HTMLElement),
-    };
     const coord = {
       left: 0,
       top: 0,
@@ -449,9 +446,14 @@ export default function useMenuPositionRoot(props: MenuProps) {
   }
 
   function _setStyle() {
+    const dimensions = {
+      container: getDimensions(container.value as HTMLElement),
+      activator: getDimensions(activator.value as HTMLElement),
+    };
     const { coord, coordArrowContainer } = _getCoordContainer(
       props.placement,
-      props.alignment
+      props.alignment,
+      dimensions
     );
     Object.assign(container.value.style, {
       top: coord.top === 0 ? "auto" : coord.top + "px",
