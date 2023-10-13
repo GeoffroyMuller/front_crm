@@ -26,13 +26,13 @@
       v-if="!isNavMini"
     />
     <nav
-      class="flex flex-col justify-between bg-white py-2 transition-all h-full shadow-nav z-nav max-md:fixed max-md:top-headerHeight left-0"
+      class="flex flex-col justify-between bg-white py-2 transition-all h-full shadow-nav z-nav max-md:fixed max-md:top-headerHeight left-0 max-md:overflow-hidden"
       :class="{
         'w-60': !isNavMini,
         'w-16 max-md:w-0': isNavMini,
       }"
     >
-      <Tree  :list="menu" class="tree-menu" :isHidden="isNavMini" default-open>
+      <Tree :list="menu" class="tree-menu" :isHidden="isNavMini" default-open>
         <template #item-rollable="{ data, isOpen }">
           <div
             class="tree-items"
@@ -100,7 +100,6 @@
         </template>
         <template #item="{ data }">
           <TreeItem
-            
             :display-label="!isNavMini"
             :icon="data.icon"
             :label="$t(data.title)"

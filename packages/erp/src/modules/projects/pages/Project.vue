@@ -4,14 +4,18 @@
     icon="check_circle"
     :tabs="[
       {
+        id: 'overview',
+        title: $t('pages.projects.overview'),
+      },
+      {
         id: 'list',
-        title: 'Liste',
+        title: $t('pages.projects.list'),
       },
       {
         id: 'kanban',
-        title: 'Kanban',
+        title: $t('pages.projects.kanban'),
       },
-      {
+      /*{
         id: 'calendar',
         title: 'Calendrier',
       },
@@ -22,9 +26,7 @@
       {
         id: 'timeline',
         title: 'Timeline',
-      },
-      { id: 'settings', title: 'Paramètres' },
-      { id: 'files', title: 'Fichiers' },
+      },*/
     ]"
   >
     <Kanban
