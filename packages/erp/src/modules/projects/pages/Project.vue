@@ -137,6 +137,23 @@ const COLUMNS_DEFAULTS = [
         id: 1,
         title: "Faire buttons",
       },
+      { id: 5, title: "Faire des pates" },
+      { id: 6, title: "Faire des chips" },
+      { id: 7, title: "Preparer une apero" },
+      { id: 8, title: "Preparer des crepes" },
+      {
+        id: 9,
+        title: "Faire apparaitre la scrollbar avec plein de taches à la con",
+      },
+      {
+        id: 10,
+        title: "Faire apparaitre la scrollbar avec plein de taches à la con 2",
+      },
+      {
+        id: 11,
+        title: "Faire apparaitre la scrollbar avec plein de taches à la con 3",
+      },
+      { id: 12, title: "Preparer des gauffres" },
     ],
   },
   {
