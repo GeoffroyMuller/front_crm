@@ -31,6 +31,7 @@ module.exports = {
         content: "1.5rem",
         iconButtonPadding: ".25rem",
         inputXPadding: ".5rem",
+        kanbanColumnPadding: ".5rem",
       },
       padding: {
         card: "2rem",

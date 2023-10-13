@@ -57,6 +57,7 @@
           v-model="column.title"
           variant="text"
           typo="title4"
+          class="!pl-0 focus-within:!pl-inputXPadding transition-all"
           :id="getIdColumInputTitle(column.id)"
         />
       </template>
@@ -152,10 +153,13 @@ const COLUMNS_DEFAULTS = [
       },
     ],
   },
+  { id: 2, title: "Terminé 👌", elements: [] },
+  { id: 3, title: "A tester 🧪", elements: [] },
+  { id: 4, title: "Reporté ✌", elements: [] },
   {
-    id: 2,
-    title: "Terminé 👌",
-    elements: [],
+    id: 4,
+    title: "Infos & Idées 💡",
+    elements: [{ id: 4, title: "Ajouter un bouton pour ajouter une tâche" }],
   },
 ];
 

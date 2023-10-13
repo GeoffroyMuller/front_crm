@@ -95,12 +95,12 @@ const columns = computed({
 <style>
 .kanban {
   height: 100%;
-
+  @apply -mx-kanbanColumnPadding;
   .columns,
   .columns-wrapper {
-    @apply h-full flex items-start gap-2;
+    @apply h-full flex items-start;
     .column {
-      @apply h-full min-h-[200px] flex flex-col px-2 min-w-[275px];
+      @apply h-full min-h-[200px] flex flex-col px-kanbanColumnPadding min-w-[275px];
       .drag_handle {
         cursor: grab;
       }
