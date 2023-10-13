@@ -93,7 +93,7 @@ window.columns = columns;
 .kanban {
   height: 100%;
   .columns {
-    @apply h-full flex items-start gap-4;
+    @apply h-full flex items-start gap-2;
     .column {
       @apply min-w-[250px] h-full min-h-[200px] flex flex-col p-2;
       .drag_handle {

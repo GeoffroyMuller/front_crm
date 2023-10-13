@@ -34,7 +34,7 @@
       >
     </template>
   </Kanban>
-  <Sidebar v-model:open="sidebarOpen">
+  <Sidebar disable-teleport v-model:open="sidebarOpen">
     <SidebarHead :actions="[]">
       <template #title>
         <Input

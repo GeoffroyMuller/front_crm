@@ -1,5 +1,5 @@
 <template>
-  <Teleport to="body">
+  <Teleport to="body" :disabled="disableTeleport">
     <div
       class="sidebar"
       :class="{
@@ -30,6 +30,7 @@ interface SidebarProps {
   padding?: boolean;
   position?: "left" | "right";
   contentClass?: any;
+  disableTeleport?: boolean;
 }
 const props = withDefaults(defineProps<SidebarProps>(), {
   position: "right",
