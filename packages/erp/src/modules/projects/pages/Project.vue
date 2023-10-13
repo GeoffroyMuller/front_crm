@@ -169,7 +169,9 @@ function handleClickCard(card: DemoKanbanColmun["elements"][0], event: Event) {
   selected.value = card;
   setTimeout(() => {
     const cardElement = event.target as HTMLElement;
-    cardElement.scrollIntoView({ behavior: "smooth" });
+    if (cardElement?.scrollIntoView) {
+      cardElement.scrollIntoView({ behavior: "smooth" });
+    }
   }, SIDEBAR_ANIMATION_DURATION);
 }
 
