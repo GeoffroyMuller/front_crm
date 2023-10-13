@@ -57,7 +57,7 @@
           v-model="column.title"
           variant="text"
           typo="title4"
-          class="!pl-0 focus-within:!pl-inputXPadding transition-all"
+          class="!pl-0 hover:!pl-inputXPadding focus-within:!pl-inputXPadding transition-all"
           :id="getIdColumInputTitle(column.id)"
         />
       </template>
