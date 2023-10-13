@@ -1,6 +1,7 @@
 <template>
   <div
     class="flex flex-col w-full"
+    ref="internalRef"
     :class="[
       {
         'px-contentX max-md:px-contentXMobile py-content': padding === 'light',

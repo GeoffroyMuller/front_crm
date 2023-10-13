@@ -3,8 +3,9 @@
     v-if="!hideTitleBar"
     v-bind="$props"
     v-model:current-tab="currentTab"
+    :style="contentStyle"
   >
-    <template #head-end>
+    <template #head-end v-if="sidebarWidth === 0">
       <slot name="head-end" />
     </template>
   </PageHead>
@@ -22,6 +23,7 @@
         'h-full': hideTitleBar,
       },
     ]"
+    :style="contentStyle"
     class="overflow-y-auto"
     :padding="padding"
     :gap="gap"
@@ -29,6 +31,14 @@
     <slot v-if="currentTab" :name="currentTab" :tab="currentTab" />
     <slot :tab="currentTab" />
   </PageContent>
+  <Sidebar
+    :open="sidebarOpen || false"
+    @update:open="emit('update:sidebarOpen', $event)"
+    v-if="$slots.sidebar"
+    ref="sidebarRef"
+  >
+    <slot name="sidebar" />
+  </Sidebar>
 </template>
 
 <script setup lang="ts">
@@ -37,10 +47,20 @@ import PageContent, { type PageContentProps } from "./PageContent.vue";
 import type { BreadcrumbProps } from "./Breadcrumb.vue";
 import type { IconName } from "./types";
 import type { PageTab } from "./PageTabs.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import PageHead from "./PageHead.vue";
+import Sidebar from "./sidebar/Sidebar.vue";
+import { watch } from "vue";
 
 const currentTab = ref();
+const sidebarRef = ref();
+
+const sidebarWidth = ref<string | 0>(0);
+const contentStyle = computed(() => {
+  return {
+    width: `calc(100% - ${sidebarWidth.value || "0px"})`,
+  };
+});
 
 export interface PageProps {
   title: string;
@@ -53,10 +73,29 @@ export interface PageProps {
   hideTitleBar?: boolean;
   tabs?: PageTab[];
   icon?: IconName;
+
+  sidebarOpen?: boolean;
 }
 
-withDefaults(defineProps<PageProps>(), {
+const emit = defineEmits(["update:sidebarOpen"]);
+
+const props = withDefaults(defineProps<PageProps>(), {
   padding: "light",
   gap: true,
 });
+
+watch(
+  () => props.sidebarOpen,
+  (val) => {
+    if (val) {
+      const sidebarHtmlElement = sidebarRef.value.$refs.internalRef;
+      if (!sidebarHtmlElement) return;
+      setTimeout(() => {
+        sidebarWidth.value = getComputedStyle(sidebarHtmlElement)?.width || 0;
+      }, 300);
+    } else {
+      sidebarWidth.value = 0;
+    }
+  }
+);
 </script>

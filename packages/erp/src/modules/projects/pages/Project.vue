@@ -2,6 +2,7 @@
   <Page
     title="Monorepo"
     icon="check_circle"
+    v-model:sidebarOpen="sidebarOpen"
     :tabs="[
       {
         id: 'overview',
@@ -15,13 +16,21 @@
         id: 'kanban',
         title: $t('pages.projects.kanban'),
       },
-      /*{
+      /* {
         id: 'calendar',
         title: 'Calendrier',
       },
       {
         id: 'gantt',
         title: 'Gantt',
+      },
+      {
+        id: 'timeline',
+        title: 'Timeline',
+      },
+      {
+        id: 'timeqsdline',
+        title: 'Timeline',
       },
       {
         id: 'timeline',
@@ -36,12 +45,19 @@
       @column-drag-end="drag = false"
       @element-drag-end="drag = false"
     >
+      <template #section-end>
+        <div class="h-input grid items-center">
+          <Button variant="text" color="black" @click.stop="addColumn()">
+            {{ $t("pages.projects.add-section") }}
+          </Button>
+        </div>
+      </template>
       <template #title="{ column }">
         <Input
           v-model="column.title"
           variant="text"
           typo="title4"
-          class="min-w-[230px]"
+          :id="getIdColumInputTitle(column.id)"
         />
       </template>
       <template #element="{ element }">
@@ -51,7 +67,7 @@
           :class="{
             '!cursor-grab': drag,
           }"
-          @click.stop="handleClickCard(element)"
+          @click.stop="handleClickCard(element, $event)"
         >
           <div class="typo-title5">
             {{ element.title }}
@@ -64,11 +80,12 @@
           class="m-auto mt-4"
           color="black"
           @click.stop="add(column)"
-          >Ajouter</Button
         >
+          {{ $t("pages.projects.add-task") }}
+        </Button>
       </template>
     </Kanban>
-    <Sidebar disable-teleport v-model:open="sidebarOpen" ref="sidebarRef">
+    <template #sidebar>
       <SidebarHead :actions="[]">
         <template #title>
           <Input
@@ -82,7 +99,7 @@
         </template>
       </SidebarHead>
       <SidebarContent> </SidebarContent>
-    </Sidebar>
+    </template>
   </Page>
 </template>
 <script lang="ts" setup>
@@ -91,13 +108,21 @@ import Kanban, { type KanbanColumns } from "core/src/components/Kanban.vue";
 import Card from "core/src/components/card/Card.vue";
 import Input from "core/src/components/form/Input.vue";
 import Button from "core/src/components/Button.vue";
-import Sidebar from "core/src/components/sidebar/Sidebar.vue";
 import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
-import { watch, ref } from "vue";
+import { watch, ref, nextTick, inject } from "vue";
 import { omitBy } from "lodash";
+import { useRouter, useRoute } from "vue-router";
+
+const contentRef = inject("page-content-ref");
 
 type DemoKanbanColmun = {} & KanbanColumns<any>;
+
+const { id } = useRoute().params;
+
+function getIdColumInputTitle(idColumn: string | number) {
+  return `kanban-project-${id}-column-${idColumn}-title-input`;
+}
 
 const COLUMNS_DEFAULTS = [
   {
@@ -139,11 +164,12 @@ const selected = ref<DemoKanbanColmun["elements"][0]>();
 const sidebarOpen = ref(false);
 const drag = ref(false);
 const titleInputRef = ref();
-const sidebarRef = ref();
 
-function handleClickCard(card: DemoKanbanColmun["elements"][0]) {
+function handleClickCard(card: DemoKanbanColmun["elements"][0], event: Event) {
   sidebarOpen.value = true;
   selected.value = card;
+  console.error(contentRef.value);
+  console.error(event.target.getBoundingClientRect());
 }
 
 const columns = ref<DemoKanbanColmun[]>(COLUMNS_DEFAULTS);
@@ -161,6 +187,21 @@ function add(column: DemoKanbanColmun) {
     sidebarOpen.value = true;
     titleInputRef?.value?.$refs?.internalRef?.focus();
   }
+}
+
+function addColumn() {
+  const idColumn = Math.random();
+  columns.value.push({
+    id: idColumn,
+    title: "",
+    elements: [],
+  });
+  nextTick(() => {
+    const inputTitle = document.getElementById(getIdColumInputTitle(idColumn));
+    if (inputTitle != null) {
+      inputTitle.focus();
+    }
+  });
 }
 
 function checkIfSelectedIsEmptyAndDelete(
