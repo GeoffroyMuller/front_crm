@@ -117,7 +117,7 @@ window.columns = columns;
 .kanban-elem-cloned-element {
   opacity: 1 !important;
   max-height: 600px !important;
-  cursor: grap;
+  cursor: grap !important;
 }
 .kanban-elem-ghost {
   > * {
@@ -128,5 +128,6 @@ window.columns = columns;
       @apply bg-slate-300 absolute top-0 left-0 w-full h-full;
     }
   }
+  cursor: grap !important;
 }
 </style>

@@ -10,6 +10,7 @@ import canPlugin from "./plugins/can";
 
 import BillingModule from "./modules/billing";
 import ProductsModule from "./modules/products";
+import ProjectModule from "./modules/projects";
 
 const { app } = setup({
   routes,
@@ -20,7 +21,7 @@ const { app } = setup({
   axios: {
     baseURL: config.API_URL,
   },
-  modules: [BillingModule, ProductsModule],
+  modules: [BillingModule, ProductsModule, ProjectModule],
 });
 
 app.use(canPlugin);

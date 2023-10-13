@@ -55,6 +55,7 @@ import useUserStore from "@/stores/user";
 import ActionMenu from "core/src/components/ActionMenu.vue";
 import Avatar from "core/src/components/Avatar.vue";
 import IconButton from "core/src/components/IconButton.vue";
+import type { IconName } from "core/src/components/types";
 import useUI from "core/src/composables/ui";
 import LayoutSideMenu from "core/src/layouts/layout_side_menu/LayoutSideMenu.vue";
 import type { MenuItem } from "core/src/layouts/types";
@@ -178,6 +179,12 @@ const menu = ref<MenuItem[]>([
     path: { name: "customers" },
     title: "customers",
     icon: "person",
+  },
+  {
+    key: "projects",
+    path: { name: "projects" },
+    title: "menu.projects",
+    icon: "check_circle" as IconName,
   },
 ]);
 </script>

@@ -8,7 +8,7 @@
       'rounded-lg': rounded === 'lg',
       'rounded-xl': rounded === 'xl',
       'border border-slate-200 border-solid': bordered,
-      'hover:shadow-md': selectable,
+      'hover:shadow-md cursor-pointer': selectable,
     }"
   >
     <slot />

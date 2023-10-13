@@ -1,65 +1,66 @@
 <template>
-  <Kanban
-    v-model:columns="columns"
-    @column-drag-start="drag = true"
-    @element-drag-start="drag = true"
-    @column-drag-end="drag = false"
-    @element-drag-end="drag = false"
-  >
-    <template #title="{ column }">
-      <Input v-model="column.title" variant="text" typo="title4" />
-    </template>
-    <template #element="{ element }">
-      <Card
-        selectable
-        class="p-4 min-h-[70px]"
-        :class="{
-          '!cursor-grab': drag,
-        }"
-        @click.stop="handleClickCard(element)"
-      >
-        <div class="typo-title5">
-          {{ element.title }}
-        </div>
-      </Card>
-    </template>
-    <template #column-footer="{ column }">
-      <Button
-        variant="text"
-        class="m-auto mt-4"
-        color="black"
-        @click.stop="add(column)"
-        >Ajouter</Button
-      >
-    </template>
-  </Kanban>
-  <Sidebar disable-teleport v-model:open="sidebarOpen">
-    <SidebarHead :actions="[]">
-      <template #title>
-        <Input
-          variant="text"
-          :model-value="selected?.title"
-          @update:model-value="selected.title = $event"
-          ref="titleInputRef"
-          class="-ml-inputXPadding !h-12"
-          typo="title2"
-        />
+  <Page title="Monorepo" icon="check_circle">
+    <Kanban
+      v-model:columns="columns"
+      @column-drag-start="drag = true"
+      @element-drag-start="drag = true"
+      @column-drag-end="drag = false"
+      @element-drag-end="drag = false"
+    >
+      <template #title="{ column }">
+        <Input v-model="column.title" variant="text" typo="title4" />
       </template>
-    </SidebarHead>
-    <SidebarContent> </SidebarContent>
-  </Sidebar>
+      <template #element="{ element }">
+        <Card
+          selectable
+          class="p-4 min-h-[70px]"
+          :class="{
+            '!cursor-grab': drag,
+          }"
+          @click.stop="handleClickCard(element)"
+        >
+          <div class="typo-title5">
+            {{ element.title }}
+          </div>
+        </Card>
+      </template>
+      <template #column-footer="{ column }">
+        <Button
+          variant="text"
+          class="m-auto mt-4"
+          color="black"
+          @click.stop="add(column)"
+          >Ajouter</Button
+        >
+      </template>
+    </Kanban>
+    <Sidebar disable-teleport v-model:open="sidebarOpen">
+      <SidebarHead :actions="[]">
+        <template #title>
+          <Input
+            variant="text"
+            :model-value="selected?.title"
+            @update:model-value="selected.title = $event"
+            ref="titleInputRef"
+            class="-ml-inputXPadding !h-12"
+            typo="title2"
+          />
+        </template>
+      </SidebarHead>
+      <SidebarContent> </SidebarContent>
+    </Sidebar>
+  </Page>
 </template>
-
-<script setup lang="ts">
-import { ref } from "vue";
-import Kanban, { type KanbanColumns } from "../Kanban.vue";
-import Card from "../card/Card.vue";
-import Input from "../form/Input.vue";
-import Button from "../Button.vue";
-import Sidebar from "../sidebar/Sidebar.vue";
-import SidebarHead from "../sidebar/SidebarHead.vue";
-import SidebarContent from "../sidebar/SidebarContent.vue";
-import { watch } from "vue";
+<script lang="ts" setup>
+import Page from "core/src/components/Page.vue";
+import Kanban, { type KanbanColumns } from "core/src/components/Kanban.vue";
+import Card from "core/src/components/card/Card.vue";
+import Input from "core/src/components/form/Input.vue";
+import Button from "core/src/components/Button.vue";
+import Sidebar from "core/src/components/sidebar/Sidebar.vue";
+import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
+import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
+import { watch, ref } from "vue";
 import { omitBy } from "lodash";
 
 type DemoKanbanColmun = {} & KanbanColumns<any>;
@@ -148,7 +149,4 @@ watch(
     }
   }
 );
-
-// @ts-ignore
-window.columns = columns;
 </script>
