@@ -8,6 +8,7 @@
         left: position === 'left',
       }"
       v-click-outside="onClickOutside"
+      ref="internalRef"
     >
       <div class="overflow-y-auto h-full">
         <div class="h-full" :class="contentClass">

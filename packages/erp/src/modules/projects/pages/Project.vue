@@ -66,7 +66,7 @@
         >
       </template>
     </Kanban>
-    <Sidebar disable-teleport v-model:open="sidebarOpen">
+    <Sidebar disable-teleport v-model:open="sidebarOpen" ref="sidebarRef">
       <SidebarHead :actions="[]">
         <template #title>
           <Input
@@ -137,6 +137,7 @@ const selected = ref<DemoKanbanColmun["elements"][0]>();
 const sidebarOpen = ref(false);
 const drag = ref(false);
 const titleInputRef = ref();
+const sidebarRef = ref();
 
 function handleClickCard(card: DemoKanbanColmun["elements"][0]) {
   sidebarOpen.value = true;
@@ -160,25 +161,38 @@ function add(column: DemoKanbanColmun) {
   }
 }
 
+function checkIfSelectedIsEmptyAndDelete(
+  element?: DemoKanbanColmun["elements"][0]
+) {
+  const elem = element ?? selected.value;
+  const selectedPurged = omitBy(
+    elem,
+    (k) => k == null || (typeof k === "string" && k.trim() === "")
+  );
+  if (Object.keys(selectedPurged).length === 1) {
+    columns.value.forEach((c, i) => {
+      const index = c.elements.findIndex((e) => e.id === elem.id);
+      if (index != -1) {
+        columns.value[i].elements = columns.value[i].elements.filter(
+          (e, i) => i !== index
+        );
+      }
+    });
+  }
+}
+
 watch(
   () => sidebarOpen.value,
   () => {
     if (!sidebarOpen.value) {
-      const selectedPurged = omitBy(
-        selected.value,
-        (k) => k == null || (typeof k === "string" && k.trim() === "")
-      );
-      if (Object.keys(selectedPurged).length === 1) {
-        columns.value.forEach((c, i) => {
-          const index = c.elements.findIndex((e) => e.id === selected.value.id);
-          if (index != -1) {
-            columns.value[i].elements = columns.value[i].elements.filter(
-              (e, i) => i !== index
-            );
-          }
-        });
-      }
+      checkIfSelectedIsEmptyAndDelete();
     }
+  }
+);
+watch(
+  () => selected.value,
+  (val, old) => {
+    checkIfSelectedIsEmptyAndDelete(old);
   }
 );
 </script>
