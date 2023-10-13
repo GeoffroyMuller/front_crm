@@ -35,10 +35,9 @@ import { ref, Teleport, watch } from "vue";
 import useMenu, { type MenuProps as UseMenuProps } from "../composables/menu";
 import Card, { type CardProps } from "./card/Card.vue";
 
-interface MenuProps {
+export interface MenuProps {
   placement?: UseMenuProps["placement"];
   alignment?: UseMenuProps["alignment"];
-  gap?: number;
   class?: any;
   disabled?: boolean;
   open?: boolean;
@@ -65,7 +64,6 @@ const { open } = useMenu({
   openOnHover: props.openOnHover,
   placement: props.placement || "bottom",
   alignment: props.alignment || "center",
-  gap: props.gap || 0,
   fullActivatorWidth: props.fullActivatorWidth,
   strategy: props.strategy,
 });

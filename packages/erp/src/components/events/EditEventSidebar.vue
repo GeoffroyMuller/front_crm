@@ -32,12 +32,20 @@
           />
 
           <Flex align-items="center" :gap="1">
-            <DatePicker time name="dtstart" :label="$t('events.dtstart')" />
+            <DatePicker
+              time
+              name="dtstart"
+              :label="$t('events.dtstart')"
+              placement="bottom"
+              alignment="start"
+            />
             <DatePicker
               time
               name="dtend"
               :label="$t('events.dtend')"
               :disabled="value.all_day_event"
+              placement="bottom"
+              alignment="end"
             />
           </Flex>
           <Switch name="all_day_event" :label="$t('events.all_day_event')" />
