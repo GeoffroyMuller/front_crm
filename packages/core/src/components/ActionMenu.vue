@@ -19,7 +19,11 @@
           tabindex="0"
           @keyup.enter="handleAction(action)"
         >
-          <Icon v-if="action.icon" :name="(action.icon as IconName)"></Icon>
+          <Icon
+            size="sm"
+            v-if="action.icon"
+            :name="(action.icon as IconName)"
+          ></Icon>
           {{ action.title }}
         </div>
       </div>

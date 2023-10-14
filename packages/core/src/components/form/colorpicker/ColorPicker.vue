@@ -3,7 +3,7 @@
     <label v-if="label">
       {{ label }}
     </label>
-    <Menu full-activator-width strategy="root" :gap="1">
+    <Menu full-activator-width :disabled="!allowAllColors" strategy="root" :gap="1">
       <template #activator>
         <Flex align-items="center" :gap="1.2">
           <button
@@ -69,6 +69,8 @@ interface ColorPickerProps {
   label?: string;
   modelValue?: string;
   error?: string;
+
+  allowAllColors?: boolean;
 }
 
 const props = withDefaults(defineProps<ColorPickerProps>(), {

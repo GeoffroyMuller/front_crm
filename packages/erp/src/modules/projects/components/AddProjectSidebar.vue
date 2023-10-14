@@ -4,7 +4,12 @@
       :title="$t('pages.projects.new-projects')"
       :actions="[]"
     ></SidebarHead>
-    <SidebarContent> BSGDS </SidebarContent>
+    <SidebarContent>
+      <Form class="grid gap-4">
+        <TextField name="name" :label="$t('pages.projects.form.name')" />
+        <ColorPicker name="color" :label="$t('pages.projects.form.color')" />
+      </Form>
+    </SidebarContent>
   </Sidebar>
 </template>
 
@@ -12,6 +17,9 @@
 import Sidebar from "core/src/components/sidebar/Sidebar.vue";
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
+import TextField from "core/src/components/form/TextField.vue";
+import ColorPicker from "core/src/components/form/colorpicker/ColorPicker.vue";
+import Form from "core/src/components/form/Form.vue";
 
 const props = defineProps<{
   open: boolean;
