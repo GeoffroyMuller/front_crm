@@ -12,7 +12,7 @@ export interface IconProps {
   name: IconName;
   color?: Color;
   sharp?: boolean;
-  size?: Size | "xs";
+  size?: Size | "xs" | "3xl";
   weight?: "bold" | "normal";
 
   // TODO : this props exist just for LayoutSideMenu TreeItem selected, not so generic...
@@ -76,6 +76,9 @@ const props = withDefaults(defineProps<IconProps>(), {
 }
 .icon-xl {
   font-size: 26px !important;
+}
+.icon-3xl {
+  font-size: 1.875rem !important;
 }
 
 @each $key, $value in $colors {

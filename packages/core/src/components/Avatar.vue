@@ -46,7 +46,7 @@ const props = withDefaults(defineProps<AvatarProps>(), {
   overflow: hidden;
   border-radius: 50%;
   font-weight: bold;
-  @apply flex justify-center items-center select-none;
+  @apply flex justify-center items-center select-none shadow-avatar;
   color: white;
 
   &.selectable {

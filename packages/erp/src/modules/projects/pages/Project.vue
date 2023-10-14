@@ -80,12 +80,15 @@
         </div>
       </template>
       <template #title="{ column }">
-        <Input
-          v-model="column.title"
-          variant="text"
-          class="!pl-0 hover:!pl-inputXPadding focus-within:!pl-inputXPadding transition-all"
-          :id="getIdColumInputTitle(column.id)"
-        />
+        <div class="flex items-center">
+          <Input
+            v-model="column.title"
+            variant="text"
+            class="!pl-0 hover:!pl-inputXPadding focus-within:!pl-inputXPadding transition-all flex-1"
+            :id="getIdColumInputTitle(column.id)"
+          />
+          <IconButton name="more_horiz" class="mx-1" color="primary" />
+        </div>
       </template>
       <template #element="{ element }">
         <Card
@@ -130,6 +133,7 @@ import { SIDEBAR_ANIMATION_DURATION } from "core/src/components/sidebar/sidebar.
 import Menu from "core/src/components/Menu.vue";
 import Avatar from "core/src/components/Avatar.vue";
 import TaskSidebar from "../components/TaskSidebar.vue";
+import IconButton from "core/src/components/IconButton.vue";
 
 type DemoKanbanColmun = KanbanColumns<any>;
 

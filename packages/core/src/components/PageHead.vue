@@ -7,7 +7,7 @@
         v-if="icon"
         class="max-md:hidden bg-gradient-245 from-primary-400 to-primary-300 shadow-md shadow-primary-200 rounded grid place-items-center w-[3rem] min-w-[3rem] h-[3rem]"
       >
-        <Icon :name="icon" color="white" class="!text-3xl" />
+        <Icon :name="icon" color="white" size="3xl" />
       </div>
       <div
         class="grid w-fit relative h-full"

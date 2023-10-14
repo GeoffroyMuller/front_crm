@@ -46,6 +46,8 @@ module.exports = {
         card: "0 1px 3px 0 rgb(0 0 0 / 7%)",
         sidebar: "0 1px 0 1px #edeae9, 0 5px 20px 0 rgba(109, 110, 111, 0.08)",
         nav: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        avatar:
+          "0px 0.3px 0.9px rgba(0, 0, 0, 0.25), 0px 1.6px 3.6px rgba(0, 0, 0, 0.28)",
       },
       zIndex: {
         modal: 60,

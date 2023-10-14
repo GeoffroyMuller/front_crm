@@ -22,7 +22,8 @@
       "new-projects": "Nouveau projet",
       "form": {
         "name": "Titre du projet",
-        "color": "Couleur"
+        "color": "Couleur",
+        "icon": "Icone"
       }
     },
     "clients": {

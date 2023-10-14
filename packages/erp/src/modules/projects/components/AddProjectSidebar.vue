@@ -7,7 +7,16 @@
     <SidebarContent>
       <Form class="grid gap-4">
         <TextField name="name" :label="$t('pages.projects.form.name')" />
-        <ColorPicker name="color" :label="$t('pages.projects.form.color')" />
+        <ColorPicker
+          allow-all-colors
+          name="color"
+          :label="$t('pages.projects.form.color')"
+          :menuProps="{
+            placement: 'bottom',
+            alignement: 'start',
+          }"
+        />
+        <!-- <IconPicker :label="$t('pages.projects.form.icon')" /> -->
       </Form>
     </SidebarContent>
   </Sidebar>
