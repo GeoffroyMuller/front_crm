@@ -37,7 +37,7 @@
               :key="color"
               :style="{ background: color }"
               class="default-color-btn"
-              @click="internalValue = color"
+              @click="(internalValue = color), (hexaInput = color)"
             />
           </div>
         </div>
@@ -49,15 +49,22 @@
               {{ $t("core.colorpicker.edit-color") }}
             </Text>
           </div>
-          <canvas class="relative w-[300px] h-[150px]" ref="canvasRef"></canvas>
+          <canvas
+            class="relative cursor-pointer min-w-[250px] w-full h-[90px]"
+            ref="canvasRef"
+          ></canvas>
           <div class="p-3">
             <canvas
-              class="relative w-full h-[20px] rounded-full mb-2"
+              class="relative cursor-pointer w-full h-[20px] rounded-full mb-2"
               ref="canvasColorsLineRef"
             ></canvas>
             <div class="flex gap-4 items-center">
               <Text typo="title7">HEXA</Text>
-              <Input rounded="full" />
+              <Input
+                rounded="full"
+                :model-value="hexaInput"
+                @update:model-value="handleChangeHexa($event)"
+              />
             </div>
           </div>
         </div>
@@ -76,11 +83,6 @@ import { onMounted } from "vue";
 import Input from "../Input.vue";
 import type { MenuProps } from "src/composables/menu";
 import { watch } from "vue";
-
-const canvasRef = ref<HTMLCanvasElement>();
-const canvasColorsLineRef = ref<HTMLCanvasElement>();
-
-const colorLineColor = ref<string>();
 
 type ColorPickerDefaultColors = string[];
 
@@ -103,6 +105,20 @@ const { internalValue } = useValidatable({
   value: props.modelValue,
   error: props.error,
 });
+
+const canvasRef = ref<HTMLCanvasElement>();
+const canvasColorsLineRef = ref<HTMLCanvasElement>();
+
+const colorLineColor = ref<string>();
+const hexaInput = ref<string>(props.modelValue);
+
+function handleChangeHexa(val: string) {
+  if (!val) return;
+  if (!isHex(val)) return;
+  if (internalValue.value === val) return;
+  internalValue.value = val;
+  colorLineColor.value = val;
+}
 
 const pickerDefaultColors: ColorPickerDefaultColors = props.defaultColos || [
   "#818CF8",
@@ -167,7 +183,9 @@ function addClickCanvasListener() {
     const y = event.clientY - colorCanvas.getBoundingClientRect().top;
     const pixel = ColorCtx.getImageData(x, y, 1, 1)["data"];
     const rgb = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
-    internalValue.value = rgb;
+    const hex = rgbToHex(rgb);
+    internalValue.value = hex;
+    hexaInput.value = hex;
   });
 }
 
@@ -181,7 +199,7 @@ function addClickColorsLineListener() {
     const y = event.clientY - colorLineCanvas.getBoundingClientRect().top;
     const pixel = context.getImageData(x, y, 1, 1)["data"];
     const rgb = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
-    colorLineColor.value = rgb;
+    colorLineColor.value = rgbToHex(rgb);
   });
 }
 
@@ -225,7 +243,7 @@ watch(
   () => colorLineColor.value,
   (color) => {
     if (!color) return;
-    drawColorCanvas(rgbToHex(color));
+    drawColorCanvas(color);
   }
 );
 </script>
