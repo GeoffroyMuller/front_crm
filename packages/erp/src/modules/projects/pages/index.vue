@@ -1,7 +1,11 @@
 <template>
   <Page :title="$t('menu.projects')" icon="check_circle">
     <template #head-end>
-      <Button variant="outlined" color="success">
+      <Button
+        variant="outlined"
+        color="success"
+        @click.stop="addProjectOpen = true"
+      >
         {{ $t("add-menu.new-project") }}
       </Button>
     </template>
@@ -47,10 +51,15 @@
       </Card>
     </div>
   </Page>
+  <AddProjectSidebar v-model:open="addProjectOpen" />
 </template>
 <script lang="ts" setup>
+import { ref } from "vue";
 import Page from "core/src/components/Page.vue";
 import Card from "core/src/components/card/Card.vue";
 import Button from "core/src/components/Button.vue";
 import Icon from "core/src/components/Icon.vue";
+import AddProjectSidebar from "../components/AddProjectSidebar.vue";
+
+const addProjectOpen = ref(false);
 </script>

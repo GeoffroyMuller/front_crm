@@ -113,18 +113,7 @@
       </template>
     </Kanban>
     <template #sidebar>
-      <SidebarHead :actions="[]">
-        <template #title>
-          <Input
-            variant="title"
-            :model-value="selected?.title"
-            @update:model-value="selected.title = $event"
-            ref="titleInputRef"
-            class="-ml-inputXPadding"
-          />
-        </template>
-      </SidebarHead>
-      <SidebarContent> </SidebarContent>
+      <TaskSidebar :selected="selected" />
     </template>
   </Page>
 </template>
@@ -134,14 +123,13 @@ import Kanban, { type KanbanColumns } from "core/src/components/Kanban.vue";
 import Card from "core/src/components/card/Card.vue";
 import Input from "core/src/components/form/Input.vue";
 import Button from "core/src/components/Button.vue";
-import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
-import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 import { watch, ref, nextTick, inject } from "vue";
 import { omitBy } from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { SIDEBAR_ANIMATION_DURATION } from "core/src/components/sidebar/sidebar.types";
 import Menu from "core/src/components/Menu.vue";
 import Avatar from "core/src/components/Avatar.vue";
+import TaskSidebar from "../components/TaskSidebar.vue";
 
 type DemoKanbanColmun = KanbanColumns<any>;
 

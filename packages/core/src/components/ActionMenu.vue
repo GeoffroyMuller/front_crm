@@ -10,9 +10,9 @@
       <slot />
     </template>
     <template #content>
-      <div class="grid gap-1 p-1 w-max">
+      <div class="grid gap-1 py-2 w-max">
         <div
-          class="flex gap-2 items-center cursor-pointer rounded-sm p-1 hover:bg-primary-50 typo-title6 font-medium"
+          class="flex gap-2 items-center cursor-pointer px-2 py-1 hover:bg-primary-50 typo-title6 font-medium"
           v-for="action in actions"
           :key="action.title"
           @click="handleAction(action)"

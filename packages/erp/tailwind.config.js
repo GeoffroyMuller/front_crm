@@ -32,10 +32,10 @@ module.exports = {
         iconButtonPadding: ".25rem",
         inputXPadding: ".5rem",
         kanbanColumnPadding: ".5rem",
+        card: "1.5rem",
+        cardMobile: "1.2rem",
       },
       padding: {
-        card: "2rem",
-        cardMobile: "1.2rem",
         repetable: "1.4rem",
         repetableMobile: ".8rem",
         sidebarX: "1.25rem",

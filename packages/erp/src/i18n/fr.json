@@ -18,7 +18,8 @@
       "list": "Liste",
       "add-section": "Ajouter une section",
       "add-task": "Ajouter une tache",
-      "share": "Partager"
+      "share": "Partager",
+      "new-projects": "Nouveau projet"
     },
     "clients": {
       "sure_delete_company": "Etes vous sur de vouloir supprimer cette entreprise de vos clients ?",
