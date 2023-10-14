@@ -1,11 +1,12 @@
 <template>
-  <Text 
+  <Text
     :class="{
-      'bg-slate-100': price
+      'bg-slate-100 shadow-sm': price,
     }"
-    class="font-semibold  p-1 rounded-sm w-fit" typo="text1"
-    >
-      {{ price ? $utils.formatPrice(price) : "-" }}
+    class="font-semibold p-1 rounded-sm w-fit"
+    typo="text1"
+  >
+    {{ price ? $utils.formatPrice(price) : "-" }}
   </Text>
 </template>
 

@@ -409,7 +409,7 @@ table {
     transition: background 0.3s;
     position: relative;
     &:hover {
-      @apply bg-primary-50;
+      @apply bg-gray-100;
       cursor: pointer;
     }
   }
