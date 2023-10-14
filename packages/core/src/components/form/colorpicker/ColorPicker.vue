@@ -50,7 +50,7 @@
             </Text>
           </div>
           <canvas
-            class="relative cursor-pointer min-w-[250px] w-full h-[90px]"
+            class="relative cursor-pointer min-w-[290px] w-full h-[100px]"
             ref="canvasRef"
           ></canvas>
           <div class="p-3">
