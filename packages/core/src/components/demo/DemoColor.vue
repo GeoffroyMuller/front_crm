@@ -10,7 +10,7 @@
         </div>
         <div class="bg-white p-4 rounded-lg mt-4 w-fit">
        
-            <ColorPicker label="Color" />
+            <ColorPicker allow-all-colors label="Color" />
         </div>
     </div>
 </template>
