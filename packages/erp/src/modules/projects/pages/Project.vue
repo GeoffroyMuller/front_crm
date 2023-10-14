@@ -50,10 +50,18 @@
           >
             ER
           </Avatar>
-          <Avatar selectable size="sm" class="-mr-4" color="success">
+          <Avatar
+            selectable
+            size="sm"
+            class="-mr-4"
+            color="success"
+            custom-color="#72f039"
+          >
             GM
           </Avatar>
-          <Avatar selectable size="sm" class="" color="warning"> CR </Avatar>
+          <Avatar selectable size="sm" color="warning" custom-color="#ec7e2a">
+            CR
+          </Avatar>
 
           <Button class="ml-4" variant="outlined" color="primary">
             {{ $t("pages.projects.share") }}

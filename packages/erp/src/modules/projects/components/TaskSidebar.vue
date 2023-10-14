@@ -10,7 +10,7 @@
       />
     </template>
   </SidebarHead>
-  <SidebarContent class="grid gap-6">
+  <SidebarContent class="grid gap-6 max-w-[650px]">
     <div class="grid items-center grid-cols-[130px_1fr] gap-2">
       <Text typo="title7">{{ $t("pages.projects.task.responsible") }}</Text>
       <div class="w-fit -mx-selectActivatorPadding">
@@ -25,9 +25,7 @@
         >
           <template #activator>
             <div class="flex items-center gap-2">
-              <Avatar custom-color="rgb(241, 120, 182)" color="primary">
-                ER
-              </Avatar>
+              <Avatar custom-color="rgb(241, 120, 182)" color="primary"> ER </Avatar>
               <Text>Etienne</Text>
             </div>
           </template>
@@ -49,7 +47,7 @@
         </DatePicker>
       </div>
     </div>
-    <div class="grid gap-2">
+    <div class="grid gap-2 max-w-[650px]">
       <Text typo="title7">{{ $t("pages.projects.task.description") }}</Text>
       <Wysiwyg2 variant="text"></Wysiwyg2>
     </div>
