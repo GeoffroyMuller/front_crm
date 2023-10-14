@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="repetable-section"
-    :class="{ 'grid grid-cols-[min-content_1fr]': orderable }"
-  >
+  <div class="repetable-section">
     <div v-if="!isMin" class="w-full flex col-span-2 justify-end">
       <IconButton
         class="justify-self-end -mr-iconButtonPadding"
@@ -12,11 +9,12 @@
         @click.stop="emit('unregister')"
       />
     </div>
-
-    <div v-if="orderable" class="drag_handle grid place-items-center">
-      <Icon name="drag_indicator"></Icon>
+    <div :class="{ 'grid grid-cols-[min-content_1fr] gap-3': orderable }">
+      <div v-if="orderable" class="drag_handle grid place-items-center">
+        <Icon name="drag_indicator"></Icon>
+      </div>
+      <slot />
     </div>
-    <slot />
   </div>
 </template>
 
@@ -57,10 +55,6 @@ onUnmounted(() => {
 
 <style lang="scss">
 .repetable-section {
-  display: flex;
-  flex-direction: column;
-  gap: spacing(2);
-
   .drag_handle {
     cursor: grab;
     margin-left: spacing(-1);

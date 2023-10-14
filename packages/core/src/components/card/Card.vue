@@ -8,7 +8,8 @@
       'rounded-lg': rounded === 'lg',
       'rounded-xl': rounded === 'xl',
       'border border-slate-200 border-solid': bordered,
-      'hover:shadow-md cursor-pointer select-none': selectable,
+      'cursor-pointer select-none': selectable,
+      'hover:shadow-md': selectable && !selected,
       'bg-primary-50': selected,
       'bg-white': !selected,
     }"
