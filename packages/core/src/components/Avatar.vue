@@ -43,6 +43,7 @@ const props = withDefaults(defineProps<AvatarProps>(), {
   border-radius: 50%;
   font-weight: bold;
   @apply flex justify-center items-center;
+  color: white;
   & .txt {
     padding-left: 1px;
     padding-top: 1px;
@@ -56,8 +57,9 @@ const props = withDefaults(defineProps<AvatarProps>(), {
 }
 
 .avatar-sm {
-  height: 34px;
-  width: 34px;
+  height: 30px;
+  width: 30px;
+  font-size: 14px;
 }
 .avatar-md {
   height: 40px;
@@ -70,23 +72,5 @@ const props = withDefaults(defineProps<AvatarProps>(), {
 .avatar-xl {
   height: 120px;
   width: 120px;
-}
-
-@each $key, $value in $colors {
-  @if type-of($value) == "map" {
-    .avatar-#{$key} {
-      background-color: color($key, 500);
-      color: white;
-    }
-  } @else {
-    .avatar-#{$key} {
-      background-color: $value;
-      @if $key == "white" {
-        color: black;
-      } @else {
-        color: white;
-      }
-    }
-  }
 }
 </style>

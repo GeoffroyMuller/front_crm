@@ -17,7 +17,8 @@
       "kanban": "Tableau",
       "list": "Liste",
       "add-section": "Ajouter une section",
-      "add-task": "Ajouter une tache"
+      "add-task": "Ajouter une tache",
+      "share": "Partager"
     },
     "clients": {
       "sure_delete_company": "Etes vous sur de vouloir supprimer cette entreprise de vos clients ?",

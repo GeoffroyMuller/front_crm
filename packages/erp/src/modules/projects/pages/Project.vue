@@ -38,6 +38,29 @@
       },*/
     ]"
   >
+    <template #head-end>
+      <div class="flex flex-col items-end justify-end gap-2">
+        <div class="flex justify-end">
+          <Avatar size="sm" class="-mr-4" color="primary"> ER </Avatar>
+          <Avatar size="sm" class="-mr-4" color="success"> GM </Avatar>
+          <Avatar size="sm" class="" color="warning"> CR </Avatar>
+
+          <Button class="ml-4" variant="outlined" color="primary">
+            {{ $t("pages.projects.share") }}
+          </Button>
+        </div>
+        <Menu placement="bottom" alignment="end">
+          <template #activator>
+            <Button icon="filter_alt" variant="text">
+              {{ $t("core.to_filter") }}
+            </Button>
+          </template>
+          <template #content>
+            <div class="p-4">ICI CE TROUVERONS LES FILTRES</div>
+          </template>
+        </Menu>
+      </div>
+    </template>
     <Kanban
       v-model:columns="columns"
       @column-drag-start="drag = true"
@@ -115,8 +138,10 @@ import { watch, ref, nextTick, inject } from "vue";
 import { omitBy } from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { SIDEBAR_ANIMATION_DURATION } from "core/src/components/sidebar/sidebar.types";
+import Menu from "core/src/components/Menu.vue";
+import Avatar from "core/src/components/Avatar.vue";
 
-type DemoKanbanColmun = {} & KanbanColumns<any>;
+type DemoKanbanColmun = KanbanColumns<any>;
 
 const { id } = useRoute().params;
 

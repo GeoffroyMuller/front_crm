@@ -155,7 +155,8 @@
     "confirm_quite_without_save": "Etes vous certain de vouloir quitter cette page sans sauvegarder ?",
     "confirmation": "Confirmation",
     "save_and_quite": "Enregistrer et quitter",
-    "quite_without_save": "Quitter sans sauvegarder"
+    "quite_without_save": "Quitter sans sauvegarder",
+    "to_filter": "Filter"
   }
 
 }
