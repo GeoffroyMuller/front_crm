@@ -35,17 +35,13 @@
         <div class="datepicker">
           <div class="datepicker-header">
             <div>{{ monthNames[current.month] }} {{ current.year }}</div>
-            <div class="datepicker-header-actions">
+            <div class="datepicker-header-actions -mx-iconButtonPadding">
               <IconButton name="chevron_left" @click.stop="decrementMonth()" />
               <IconButton name="chevron_right" @click.stop="incrementMonth()" />
             </div>
           </div>
           <div class="datepicker-content">
-            <div
-              v-for="(day, index) of weekDaysLabels"
-              :key="index"
-              class="weekday"
-            >
+            <div v-for="(day, index) of weekDaysLabels" :key="index" class="weekday">
               {{ day }}
             </div>
             <div
@@ -213,7 +209,6 @@ const {
 }
 .datetimepicker {
   display: flex;
-  max-height: 280px;
   .timepicker {
     display: none;
   }
