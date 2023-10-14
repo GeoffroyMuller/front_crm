@@ -41,9 +41,13 @@
     <template #head-end>
       <div class="flex flex-col items-end justify-end gap-2">
         <div class="flex justify-end">
-          <Avatar size="sm" class="-mr-4" color="primary"> ER </Avatar>
-          <Avatar size="sm" class="-mr-4" color="success"> GM </Avatar>
-          <Avatar size="sm" class="" color="warning"> CR </Avatar>
+          <Avatar selectable size="sm" class="-mr-4" color="primary">
+            ER
+          </Avatar>
+          <Avatar selectable size="sm" class="-mr-4" color="success">
+            GM
+          </Avatar>
+          <Avatar selectable size="sm" class="" color="warning"> CR </Avatar>
 
           <Button class="ml-4" variant="outlined" color="primary">
             {{ $t("pages.projects.share") }}

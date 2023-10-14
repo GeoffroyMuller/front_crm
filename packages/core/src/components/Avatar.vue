@@ -1,7 +1,9 @@
 <template>
   <div
     class="avatar notranslate"
-    :class="[color ? `bg-${color}-500` : '', size ? `avatar-${size}` : '']"
+    :class="[color ? `bg-${color}-500` : '', size ? `avatar-${size}` : '', {
+      'selectable': selectable,
+    }]"
   >
     <Icon class="icon" v-if="icon" :name="icon" />
     <img
@@ -31,6 +33,8 @@ interface AvatarProps {
 
   imgSrc?: string;
   imgAlt?: string;
+
+  selectable?: boolean;
 }
 const props = withDefaults(defineProps<AvatarProps>(), {
   size: "md",
@@ -44,6 +48,17 @@ const props = withDefaults(defineProps<AvatarProps>(), {
   font-weight: bold;
   @apply flex justify-center items-center;
   color: white;
+
+  &.selectable {
+    cursor: pointer;
+    position: relative;
+    &:hover {
+      &::before {
+        content: " ";
+        @apply absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-black opacity-10 rounded-full pointer-events-none;
+      }
+    }
+  }
   & .txt {
     padding-left: 1px;
     padding-top: 1px;

@@ -41,7 +41,7 @@
         placement="bottom"
         alignment="end"
       >
-        <Avatar color="primary" class="cursor-pointer">
+        <Avatar color="primary" selectable>
           {{ auth.firstname ? auth.firstname.toUpperCase()[0] : ""
           }}{{ auth.lastname ? auth.lastname.toUpperCase()[0] : "" }}
         </Avatar>
