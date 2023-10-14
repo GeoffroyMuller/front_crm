@@ -77,5 +77,5 @@ const task = computed({
   set: (val) => emit("update:selected", val),
 });
 
-const dueDate = ref<string>();
+const dueDate = ref<string>(new Date().toISOString());
 </script>
