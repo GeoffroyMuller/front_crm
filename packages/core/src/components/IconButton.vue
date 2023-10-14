@@ -67,7 +67,7 @@ const iconProps = computed(() => {
 }
 
 .icon-btn-white:hover::before {
-  @apply bg-white opacity-10 absolute left-0 top-0 rounded-sm;
+  @apply bg-white opacity-5 absolute left-0 top-0 rounded-sm;
 }
 
 .icon-btn-black:hover::before {
