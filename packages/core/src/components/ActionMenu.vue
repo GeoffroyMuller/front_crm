@@ -12,18 +12,14 @@
     <template #content>
       <div class="grid gap-1 py-1 w-max overflow-hidden">
         <div
-          class="flex gap-2 items-center cursor-pointer px-2 py-1 hover:bg-slate-100 typo-title6 font-medium"
+          class="flex gap-2 items-center cursor-pointer px-2 py-1.5 hover:bg-slate-100 typo-title6 font-medium"
           v-for="action in actions"
           :key="action.title"
           @click="handleAction(action)"
           tabindex="0"
           @keyup.enter="handleAction(action)"
         >
-          <Icon
-            size="sm"
-            v-if="action.icon"
-            :name="(action.icon as IconName)"
-          ></Icon>
+          <Icon size="sm" v-if="action.icon" :name="(action.icon as IconName)"></Icon>
           {{ action.title }}
         </div>
       </div>

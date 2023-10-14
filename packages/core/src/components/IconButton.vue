@@ -5,16 +5,12 @@
       'before:!bg-primary-50': color === 'primary',
       'before:!bg-success-50': color === 'success',
       'before:!bg-warning-50': color === 'warning',*/
-
-      'hover:bg-slate-50': !color,
       'hover:bg-danger-50': color === 'danger',
       'hover:bg-primary-50': color === 'primary',
       'hover:bg-success-50': color === 'success',
       'hover:bg-warning-50': color === 'warning',
-
-      'before:!bg-slate-50': !color,
       'icon-btn-white': color === 'white',
-      'icon-btn-black': color === 'black',
+      'icon-btn-black': color === 'black' || !color,
     }"
     :disabled="disabled"
     type="button"
@@ -59,7 +55,7 @@ const iconProps = computed(() => {
 .icon-btn-white::before,
 .icon-btn-black::before {
   content: " ";
-  @apply transition-opacity opacity-0;
+  @apply transition-opacity opacity-0 absolute left-0 top-0 rounded-sm;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -67,10 +63,10 @@ const iconProps = computed(() => {
 }
 
 .icon-btn-white:hover::before {
-  @apply bg-white opacity-5 absolute left-0 top-0 rounded-sm;
+  @apply bg-white opacity-5;
 }
 
 .icon-btn-black:hover::before {
-  @apply bg-black opacity-5 absolute left-0 top-0 rounded-sm;
+  @apply bg-black opacity-5;
 }
 </style>
