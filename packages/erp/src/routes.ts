@@ -6,7 +6,6 @@ import auth from "./middleware/auth";
 
 import Home from "./pages/Home.vue";
 import Settings from "./pages/settings/index.vue";
-import Reservations from "./pages/reservations/index.vue";
 import Clients from "./pages/clients/index.vue";
 import EditCompany from "./pages/clients/EditCompany.vue";
 import Events from "./pages/events/index.vue";
@@ -25,15 +24,6 @@ export default [
     path: "/settings",
     name: "settings",
     component: Settings,
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
-    path: "/reservations",
-    name: "reservations",
-    component: Reservations,
     meta: {
       middleware: [auth],
       layout: LayoutPage,

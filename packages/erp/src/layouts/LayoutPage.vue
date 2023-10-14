@@ -169,12 +169,6 @@ const menu = ref<MenuItem[]>([
     icon: "inventory_2",
   },
   {
-    key: "reservations",
-    path: { name: "reservations" },
-    title: "reservations",
-    icon: "event",
-  },
-  {
     key: "customers",
     path: { name: "customers" },
     title: "customers",
