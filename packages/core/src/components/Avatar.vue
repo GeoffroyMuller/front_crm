@@ -13,10 +13,11 @@
   >
     <Icon class="icon" v-if="icon" :name="icon" />
     <img
-      v-else-if="imgSrc"
+      v-else-if="imgSrc && !loadImgError"
       :src="imgSrc"
       :alt="imgAlt ? imgAlt : 'avatar'"
       :class="[size ? `avatar-${size}` : '']"
+      @error="loadImgError = true"
     />
     <span class="txt" v-else>
       {{ text }}
@@ -28,7 +29,7 @@
 <script setup lang="ts">
 import type { Color, IconName, Size } from "./types";
 import Icon from "./Icon.vue";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 interface AvatarProps {
   color?: Color;
@@ -54,6 +55,8 @@ const style = computed(() => {
     backgroundColor: props.customColor,
   };
 });
+
+const loadImgError = ref(false);
 </script>
 
 <style lang="scss" scoped>

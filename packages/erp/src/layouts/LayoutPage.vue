@@ -13,14 +13,12 @@
         :actions="[
           {
             icon: 'description',
-            action: () =>
-              router.push({ name: 'quotes-id', params: { id: 'new' } }),
+            action: () => router.push({ name: 'quotes-id', params: { id: 'new' } }),
             title: $t('add-menu.add-quote'),
           },
           {
             icon: 'request_quote',
-            action: () =>
-              router.push({ name: 'invoices-id', params: { id: 'new' } }),
+            action: () => router.push({ name: 'invoices-id', params: { id: 'new' } }),
             title: $t('add-menu.add-invoice'),
           },
         ]"
@@ -41,7 +39,11 @@
         placement="bottom"
         alignment="end"
       >
-        <Avatar color="primary" selectable>
+        <Avatar
+          imgSrc="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/03/web-images.jpg?auto=format&q=60&w=1600&h=824&fit=crop&crop=faces"
+          color="primary"
+          selectable
+        >
           {{ auth.firstname ? auth.firstname.toUpperCase()[0] : ""
           }}{{ auth.lastname ? auth.lastname.toUpperCase()[0] : "" }}
         </Avatar>

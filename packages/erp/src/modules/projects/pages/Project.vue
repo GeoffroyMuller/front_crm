@@ -59,7 +59,14 @@
           >
             GM
           </Avatar>
-          <Avatar selectable size="sm" color="warning" custom-color="#ec7e2a">
+          <Avatar
+            selectable
+            size="sm"
+            color="primary"
+            custom-color="#ea6c23"
+            imgSrc="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/03/web-images.jpg?auto=format&q=60&w=1600&h=824&fit=crop&crop=faces"
+            imgAlt=""
+          >
             CR
           </Avatar>
 
