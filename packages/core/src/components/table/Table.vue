@@ -399,9 +399,6 @@ table {
   td {
     position: relative;
   }
-  tbody td {
-    font-weight: 400;
-  }
   tr {
     background-color: white;
   }
