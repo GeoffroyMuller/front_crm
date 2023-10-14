@@ -83,7 +83,6 @@
         <Input
           v-model="column.title"
           variant="text"
-          typo="title4"
           class="!pl-0 hover:!pl-inputXPadding focus-within:!pl-inputXPadding transition-all"
           :id="getIdColumInputTitle(column.id)"
         />
@@ -97,7 +96,7 @@
           }"
           @click.stop="handleClickCard(element, $event)"
         >
-          <div class="typo-title5">
+          <div>
             {{ element.title }}
           </div>
         </Card>
@@ -117,12 +116,11 @@
       <SidebarHead :actions="[]">
         <template #title>
           <Input
-            variant="text"
+            variant="title"
             :model-value="selected?.title"
             @update:model-value="selected.title = $event"
             ref="titleInputRef"
-            class="-ml-inputXPadding !h-12"
-            typo="title2"
+            class="-ml-inputXPadding"
           />
         </template>
       </SidebarHead>

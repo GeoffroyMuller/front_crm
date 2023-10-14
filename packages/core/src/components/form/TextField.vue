@@ -88,7 +88,7 @@ export interface TextFieldProps {
 
   inputClass?: any;
 
-  variant?: "text" | "base";
+  variant?: "text" | "title" | "base";
 }
 
 const props = withDefaults(defineProps<TextFieldProps>(), {

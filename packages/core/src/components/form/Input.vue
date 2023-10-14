@@ -11,7 +11,8 @@
         'bg-white': !disabled && variant === 'base',
         'bg-inputDisabled cursor-not-allowed': disabled,
         'bg-transparent border border-solid border-transparent hover:border-input focus-within:bg-white focus-within:!border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200':
-          variant === 'text',
+          variant === 'text' || variant === 'title',
+        '!h-12 ': variant === 'title',
       },
       inputClass,
     ]"
@@ -25,7 +26,8 @@
       @blur="onBlur"
       :class="{
         'appearance-none': appearanceNone === true,
-        [`typo-${typo}`]: typo,
+        'typo-title4': variant === 'text',
+        ' typo-title2': variant === 'title',
       }"
       ref="internalRef"
       v-model="internalValue"
@@ -88,8 +90,7 @@ export type InputProps = {
 
   inputClass?: any;
 
-  variant?: "text" | "base";
-  typo?: Typo;
+  variant?: "text" | "title" | "base";
 };
 
 const props = withDefaults(defineProps<InputProps>(), {

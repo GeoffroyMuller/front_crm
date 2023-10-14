@@ -118,7 +118,7 @@ export interface SelectProps {
   rules?: AnySchema;
   menuStrategy?: MenuProps["strategy"];
 
-  variant?: "text" | "base";
+  variant?: "text" | "title" | "base";
 }
 
 const props = withDefaults(defineProps<SelectProps>(), {
