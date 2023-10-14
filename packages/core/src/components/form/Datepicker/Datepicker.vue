@@ -6,7 +6,10 @@
     :alignment="alignment"
   >
     <template #activator>
-      <div>
+      <SelectActivator v-if="$slots.activator">
+        <slot name="activator" />
+      </SelectActivator>
+      <div v-else>
         <TextField
           :model-value="displayed"
           :label="label"
@@ -103,6 +106,7 @@ import useCalendar from "../../../composables/calendar";
 import IconButton from "../../IconButton.vue";
 import { Mask } from "maska";
 import Icon from "../../Icon.vue";
+import SelectActivator from "../../SelectActivator.vue";
 
 export interface DatePickerProps {
   // 0 for sunday, 6 for saturday

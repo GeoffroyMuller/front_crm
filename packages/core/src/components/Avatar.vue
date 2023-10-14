@@ -1,9 +1,15 @@
 <template>
   <div
     class="avatar notranslate"
-    :class="[color ? `bg-${color}-500` : '', size ? `avatar-${size}` : '', {
-      'selectable': selectable,
-    }]"
+    :class="[
+      color && !customColor ? `bg-${color}-500` : '',
+      size ? `avatar-${size}` : '',
+      {
+        selectable: selectable,
+        'text-white': color,
+      },
+    ]"
+    :style="style"
   >
     <Icon class="icon" v-if="icon" :name="icon" />
     <img
@@ -22,6 +28,7 @@
 <script setup lang="ts">
 import type { Color, IconName, Size } from "./types";
 import Icon from "./Icon.vue";
+import { computed } from "vue";
 
 interface AvatarProps {
   color?: Color;
@@ -35,9 +42,17 @@ interface AvatarProps {
   imgAlt?: string;
 
   selectable?: boolean;
+  customColor?: string;
 }
 const props = withDefaults(defineProps<AvatarProps>(), {
   size: "md",
+});
+
+const style = computed(() => {
+  if (!props.customColor) return undefined;
+  return {
+    backgroundColor: props.customColor,
+  };
 });
 </script>
 
@@ -47,11 +62,11 @@ const props = withDefaults(defineProps<AvatarProps>(), {
   border-radius: 50%;
   font-weight: bold;
   @apply flex justify-center items-center select-none shadow-avatar;
-  color: white;
 
   &.selectable {
     cursor: pointer;
     position: relative;
+
     &:hover {
       &::before {
         content: " ";
@@ -59,13 +74,7 @@ const props = withDefaults(defineProps<AvatarProps>(), {
       }
     }
   }
-  & .txt {
-    padding-left: 1px;
-    padding-top: 1px;
-  }
-  & .icon {
-    padding-left: 1px;
-  }
+
   & img {
     object-fit: cover;
   }
@@ -76,14 +85,17 @@ const props = withDefaults(defineProps<AvatarProps>(), {
   width: 30px;
   font-size: 14px;
 }
+
 .avatar-md {
   height: 40px;
   width: 40px;
 }
+
 .avatar-lg {
   height: 50px;
   width: 50px;
 }
+
 .avatar-xl {
   height: 120px;
   width: 120px;

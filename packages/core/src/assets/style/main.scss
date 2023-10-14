@@ -61,6 +61,13 @@ label {
     @include typo(label);
 }
 
+div, button {
+    &:focus-visible {
+        border: 2px solid #3730a3 !important;
+        outline: none !important;
+    }
+}
+
 /// @deprecated
 .layout-component {
  --mt: 0;

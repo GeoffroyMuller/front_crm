@@ -26,7 +26,9 @@
         "icon": "Icone"
       },
       "task": {
-        "responsible": "Responsable"
+        "responsible": "Responsable",
+        "due_date": "Echeance",
+        "description": "Description"
       }
     },
     "clients": {

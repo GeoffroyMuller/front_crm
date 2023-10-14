@@ -9,7 +9,8 @@ export interface $utils {
 const utilsPlugin: Plugin = {
   install(app) {
     app.config.globalProperties.$utils = {
-      formatDate: (date: string | dayjs.Dayjs | Date) => {
+      formatDate: (date?: string | dayjs.Dayjs | Date) => {
+        if (!date) return "";
         const FORMAT = "DD/MM/YYYY";
         return dayjs(date).format(FORMAT);
       },

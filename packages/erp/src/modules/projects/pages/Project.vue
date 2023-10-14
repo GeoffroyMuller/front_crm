@@ -41,7 +41,13 @@
     <template #head-end>
       <div class="flex flex-col items-end justify-end gap-2">
         <div class="flex justify-end">
-          <Avatar selectable size="sm" class="-mr-4" color="primary">
+          <Avatar
+            selectable
+            size="sm"
+            class="-mr-4"
+            color="primary"
+            custom-color="rgb(241, 120, 182)"
+          >
             ER
           </Avatar>
           <Avatar selectable size="sm" class="-mr-4" color="success">

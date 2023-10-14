@@ -8,9 +8,11 @@
     <div
       ref="editorWrapperRef"
       v-mouse-down-outside="handleBlur"
-      class="wysiwyg-editor relative rounded-sm z-20 transition-[box-shadow_border-color] duration-200 border border-solid focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input"
+      class="wysiwyg-editor relative rounded-sm z-20 transition-[box-shadow_border-color] duration-200 border border-solid focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200"
       :class="{
         'mt-2': label?.length,
+        'hover:border-input border-transparent': variant === 'text',
+        'border-input': variant !== 'text',
       }"
       @click="!editor?.hasFocus() ? editor?.focus() : () => {}"
     >
@@ -64,9 +66,12 @@ const { t } = useI18n();
 
 export type WysiwygProps = {
   label?: string;
+  variant?: "base" | "text";
 };
 
-defineProps<WysiwygProps>();
+withDefaults(defineProps<WysiwygProps>(), {
+  variant: "base",
+});
 
 const editorRef = ref<HTMLDivElement>();
 const editorWrapperRef = ref<HTMLDivElement>();
@@ -142,6 +147,9 @@ const addActions: Action[] = [
 
 <style lang="scss">
 .wysiwyg-editor {
+  :focus {
+    border: none !important;
+  }
   .ql-editor {
     @apply px-3 py-2;
     outline: none;

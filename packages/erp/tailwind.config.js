@@ -35,6 +35,7 @@ module.exports = {
         card: "1.5rem",
         cardMobile: "1.2rem",
         buttonTextPadding: ".5rem",
+        selectActivatorPadding: ".5rem",
       },
       padding: {
         repetable: "1.4rem",

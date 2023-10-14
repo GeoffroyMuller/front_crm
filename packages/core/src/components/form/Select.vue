@@ -9,7 +9,16 @@
       :card-props="{ rounded: 'sm' }"
     >
       <template #activator>
+        <SelectActivator
+          @click="open = !open"
+          v-if="$slots.activator"
+          @keydown="handleKeydown"
+          :class="$props.class"
+        >
+          <slot name="activator" />
+        </SelectActivator>
         <TextField
+          v-else
           :model-value="multiple ? null : displayed"
           readonly
           :disabled="disabled"
@@ -21,7 +30,6 @@
           @keydown="handleKeydown"
           :class="$props.class"
           input-class="cursor-pointer"
-          :variant="variant"
         >
           <template #start>
             <div class="flex items-center" v-if="props.multiple">
@@ -96,6 +104,7 @@ import SelectOptions from "../SelectOptions.vue";
 import useSelect from "../../composables/select";
 import type { MenuProps } from "src/composables/menu";
 import Chip from "../Chip.vue";
+import SelectActivator from "../SelectActivator.vue";
 
 export interface SelectProps {
   multiple?: boolean;
@@ -117,8 +126,6 @@ export interface SelectProps {
   disabled?: boolean;
   rules?: AnySchema;
   menuStrategy?: MenuProps["strategy"];
-
-  variant?: "text" | "title" | "base";
 }
 
 const props = withDefaults(defineProps<SelectProps>(), {
