@@ -69,7 +69,7 @@
               quote?.validationStatus !== QuoteValidationStatus.DRAFT &&
               quote?.validationStatus != null
             "
-            color="white"
+            color="black"
             variant="text"
             @click="cancelValidation"
           >

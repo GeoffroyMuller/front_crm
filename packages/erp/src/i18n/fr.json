@@ -24,6 +24,9 @@
         "name": "Titre du projet",
         "color": "Couleur",
         "icon": "Icone"
+      },
+      "task": {
+        "responsible": "Responsable"
       }
     },
     "clients": {

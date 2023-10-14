@@ -18,13 +18,27 @@
           :key="a.title"
         >
           <Button
+            v-if="$breakpoints.up.value['md'] || !a.icon"
             :icon="a.icon"
             :color="a.color || 'primary'"
             variant="text"
             @click="() => handleAction(a)"
+            class="-m-iconButtonPadding"
           >
-            <span class="max-lg:hidden">{{ a.title }}</span>
+            <span>{{ a.title }}</span>
           </Button>
+          <IconButton
+            v-else
+            :name="a.icon"
+            :color="a.color || 'primary'"
+            variant="text"
+            @click="() => handleAction(a)"
+            class="-m-iconButtonPadding"
+            default-colored
+            size="xl"
+          >
+            <span>{{ a.title }}</span>
+          </IconButton>
           <div
             v-if="index < actions.filter((a) => a.main).length - 1"
             class="h-[15px] border-primary-200 border-r border-solid border-l-0 max-lg:hidden"
@@ -38,10 +52,15 @@
           :alignment="'end'"
           strategy="absolute"
         >
-          <IconButton size="xl" name="more_horiz" default-colored />
+          <IconButton
+            class="-m-iconButtonPadding"
+            size="xl"
+            name="more_horiz"
+            default-colored
+          />
         </ActionMenu>
         <IconButton
-          class="-mx-iconButtonPadding"
+          class="-m-iconButtonPadding"
           v-tooltip="{
             text: $t('core.close'),
             placement: 'top',

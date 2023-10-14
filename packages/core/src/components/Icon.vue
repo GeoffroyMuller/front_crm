@@ -63,19 +63,19 @@ const props = withDefaults(defineProps<IconProps>(), {
   }
 }
 .icon-xs {
-  font-size: 13px !important;
+  font-size: 0.8125rem !important;
 }
 .icon-sm {
-  font-size: 20px !important;
+  font-size: 1.25rem !important;
 }
 .icon-md {
-  font-size: 22px !important;
+  font-size: 1.375rem !important;
 }
 .icon-lg {
-  font-size: 24px !important;
+  font-size: 1.5rem !important;
 }
 .icon-xl {
-  font-size: 26px !important;
+  font-size: 1.625rem !important;
 }
 .icon-3xl {
   font-size: 1.875rem !important;

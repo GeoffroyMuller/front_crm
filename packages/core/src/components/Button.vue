@@ -14,7 +14,7 @@
 
         [`button-text button-text-${color} border-none font-semibold text-left`]:
           variant === 'text',
-        [`text-${color}-400 hover:text-${color}-600`]:
+        [`text-${color}-400 hover:bg-${color}-50`]:
           variant === 'text' && !disabled && !loading,
         [`text-${color}-200`]: variant === 'text' && (disabled || loading),
 
@@ -39,7 +39,7 @@
       v-if="icon"
       :class="{ 'content-icon': !!$slots.default }"
     />
-    <span v-if="$slots.default" class="w-fit flex gap-2 items-center">
+    <span v-if="$slots.default" class="w-fit flex gap-2 items-center relative">
       <slot
     /></span>
 
@@ -138,14 +138,36 @@ const buttonAdditionnalProps = computed(() => {
   @apply bg-white hover:bg-gray-50 text-black;
 }
 .button-text {
-  @apply gap-1 bg-transparent relative p-0 min-h-0;
+  @apply gap-1 bg-transparent relative p-iconButtonPadding min-h-0;
   span {
     width: max-content;
   }
 }
-.button-text-white,
+.button-text-white {
+  @apply text-white disabled:text-[#9ca3af];
+  position: relative;
+  &::before {
+    content: " ";
+    @apply absolute top-0 left-0 w-full h-full rounded-sm transition-all bg-transparent pointer-events-none opacity-10;
+  }
+  &:hover {
+    &::before {
+      @apply bg-white;
+    }
+  }
+}
 .button-text-black {
-  @apply hover:text-slate-600 text-slate-500 disabled:text-[#9ca3af];
+  @apply text-slate-500 disabled:text-[#9ca3af];
+  position: relative;
+  &::before {
+    content: " ";
+    @apply absolute top-0 left-0 w-full h-full rounded-sm transition-all bg-transparent pointer-events-none opacity-5;
+  }
+  &:hover {
+    &::before {
+      @apply bg-black;
+    }
+  }
 }
 
 .button-outlined {

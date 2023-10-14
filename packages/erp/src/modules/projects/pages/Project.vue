@@ -93,7 +93,7 @@
       <template #element="{ element }">
         <Card
           selectable
-          :selected="selected?.id === element.id"
+          :selected="isSelected(element)"
           class="p-4 min-h-[70px]"
           :class="{
             '!cursor-grab': drag,
@@ -268,12 +268,15 @@ function checkIfSelectedIsEmptyAndDelete(
   }
 }
 
+function isSelected(element: DemoKanbanColmun["elements"][0]) {
+  return selected.value?.id === element.id && sidebarOpen.value;
+}
+
 watch(
   () => sidebarOpen.value,
   () => {
     if (!sidebarOpen.value) {
       checkIfSelectedIsEmptyAndDelete();
-      selected.value = null;
     }
   }
 );

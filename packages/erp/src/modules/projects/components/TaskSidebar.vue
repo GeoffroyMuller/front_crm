@@ -12,7 +12,7 @@
   </SidebarHead>
   <SidebarContent>
     <div class="grid items-center grid-cols-[130px_1fr]">
-      <Text typo="title7">Responsdqs</Text>
+      <Text typo="title7">{{ $t("pages.projects.task.responsible") }}</Text>
       <Select variant="text" :options="[]" />
     </div>
   </SidebarContent>
