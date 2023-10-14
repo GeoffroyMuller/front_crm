@@ -3,6 +3,7 @@
     :is="component"
     class="button"
     :class="[
+      $props.class,
       `typo-${typo}`,
       {
         [`button-${color} text-white border-none`]:
@@ -71,6 +72,7 @@ export interface ButtonProps {
   href?: string;
   typo?: Typo;
   fullWidth?: boolean;
+  class?: any;
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -138,7 +140,7 @@ const buttonAdditionnalProps = computed(() => {
   @apply bg-white hover:bg-gray-50 text-black;
 }
 .button-text {
-  @apply gap-1 bg-transparent relative p-iconButtonPadding min-h-0;
+  @apply gap-1 bg-transparent relative py-iconButtonPadding px-buttonTextPadding min-h-0;
   span {
     width: max-content;
   }

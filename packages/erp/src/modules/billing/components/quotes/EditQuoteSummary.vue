@@ -25,7 +25,7 @@
         class="grid grid-cols-[min-content_1fr] items-center gap-6"
       >
         <Text typo="title6">{{ $t("pages.edit-quote.pdf") }}</Text>
-        <Flex :gap="1" justify-content="end" class="justify-self-end">
+        <Flex :gap="2" justify-content="end" class="justify-self-end">
           <IconButton
             v-tooltip="{
               text: $t('download'),
@@ -34,7 +34,7 @@
             }"
             name="download"
             @click="downloadPdf(quote)"
-            size="lg"
+            class="-m-iconButtonPadding"
           />
           <IconButton
             v-tooltip="{
@@ -44,12 +44,17 @@
             }"
             name="visibility"
             @click.stop="preview(quote)"
-            size="lg"
+            class="-m-iconButtonPadding"
           />
         </Flex>
         <Text typo="title6">{{ $t("email") }}</Text>
         <div class="justify-self-end">
-          <Button variant="text" color="success" @click="sendMail(quote)">
+          <Button
+            variant="text"
+            color="success"
+            @click="sendMail(quote)"
+            class="-mx-buttonTextPadding"
+          >
             {{ $t("pages.edit-quote.sendemail") }}
           </Button>
         </div>
@@ -88,6 +93,7 @@
               placement: 'bottom',
             }"
             @click="validateQuote"
+            class="-m-iconButtonPadding"
           />
           <IconButton
             v-if="
@@ -102,6 +108,7 @@
               placement: 'bottom',
             }"
             @click="refuseQuote"
+            class="-m-iconButtonPadding"
           />
         </div>
       </div>

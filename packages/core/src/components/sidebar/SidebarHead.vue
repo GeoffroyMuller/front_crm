@@ -23,7 +23,7 @@
             :color="a.color || 'primary'"
             variant="text"
             @click="() => handleAction(a)"
-            class="-m-iconButtonPadding"
+            class="-mx-buttonTextPadding"
           >
             <span>{{ a.title }}</span>
           </Button>

@@ -14,6 +14,9 @@
         :key="action.label"
         v-bind="action.buttonProps || {}"
         @click="getActionFunc(action)"
+        :class="{
+          '-mx-buttonTextPadding': action?.buttonProps?.variant === 'text',
+        }"
       >
         {{ action.label }}
       </Button>
