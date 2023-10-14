@@ -93,6 +93,7 @@
       <template #element="{ element }">
         <Card
           selectable
+          :selected="selected?.id === element.id"
           class="p-4 min-h-[70px]"
           :class="{
             '!cursor-grab': drag,
@@ -272,6 +273,7 @@ watch(
   () => {
     if (!sidebarOpen.value) {
       checkIfSelectedIsEmptyAndDelete();
+      selected.value = null;
     }
   }
 );

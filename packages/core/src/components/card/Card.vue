@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white shadow-card"
+    class="shadow-card"
     :class="{
       'max-md:p-cardMobile p-card': padding,
       'rounded-sm': rounded === 'sm',
@@ -9,6 +9,8 @@
       'rounded-xl': rounded === 'xl',
       'border border-slate-200 border-solid': bordered,
       'hover:shadow-md cursor-pointer select-none': selectable,
+      'bg-primary-50': selected,
+      'bg-white': !selected,
     }"
   >
     <slot />
@@ -24,6 +26,7 @@ export interface CardProps {
   rounded: Size;
   bordered?: boolean;
   selectable?: boolean;
+  selected?: boolean;
 }
 
 export type CardProvide = Pick<CardProps, "padding" | "rounded">;
