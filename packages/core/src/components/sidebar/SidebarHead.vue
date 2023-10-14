@@ -35,7 +35,7 @@
             @click="() => handleAction(a)"
             class="-m-iconButtonPadding"
             default-colored
-            size="xl"
+            size="lg"
           >
             <span>{{ a.title }}</span>
           </IconButton>
@@ -54,7 +54,7 @@
         >
           <IconButton
             class="-m-iconButtonPadding"
-            size="xl"
+            size="lg"
             name="more_horiz"
             default-colored
           />
@@ -67,7 +67,7 @@
             alignment: 'end',
           }"
           name="close"
-          size="xl"
+          size="lg"
           @click="handleClose"
         />
       </div>
