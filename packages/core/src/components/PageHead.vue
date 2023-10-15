@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-pageHeadHeight min-h-pageHeadHeight max-h-pageHeadHeight border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0 px-content flex items-center justify-between gap-6"
+    class="h-pageHeadHeight min-h-pageHeadHeight max-h-pageHeadHeight border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0 px-contentXMobile md:px-contentX flex items-center justify-between gap-6"
   >
     <div class="flex gap-5 items-center h-full">
       <div

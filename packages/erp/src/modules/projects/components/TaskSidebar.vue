@@ -25,7 +25,9 @@
         >
           <template #activator>
             <div class="flex items-center gap-2">
-              <Avatar custom-color="rgb(241, 120, 182)" color="primary"> ER </Avatar>
+              <Avatar custom-color="rgb(241, 120, 182)" color="primary">
+                ER
+              </Avatar>
               <Text>Etienne</Text>
             </div>
           </template>
@@ -45,6 +47,20 @@
             </div>
           </template>
         </DatePicker>
+      </div>
+      <Text typo="title7">{{ $t("pages.projects.task.list") }}</Text>
+      <div class="w-fit -mx-selectActivatorPadding">
+        <Select
+          :placeholder="$t('pages.projects.task.list-placeholder')"
+          variant="text"
+          name="list"
+          :options="[
+            { label: 'A faire', value: 0 },
+            { label: 'En cours', value: 1 },
+          ]"
+          :get-option-label="(opt) => opt.label"
+          :get-option-value="(opt) => opt.value"
+        ></Select>
       </div>
     </div>
     <div class="grid gap-2 max-w-[650px]">

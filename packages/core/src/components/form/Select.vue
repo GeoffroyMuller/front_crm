@@ -18,7 +18,7 @@
           <slot name="activator" />
         </SelectActivator>
         <TextField
-          v-else
+          v-else-if="!$slots.activator && variant !== 'text'"
           :model-value="multiple ? null : displayed"
           readonly
           :disabled="disabled"
@@ -66,6 +66,35 @@
         {{ internalValue }}
       </template> -->
         </TextField>
+        <SelectActivator
+          v-else
+          @click="open = !open"
+          @keydown="handleKeydown"
+          :class="$props.class"
+        >
+          <Text
+            typo="title4"
+            class="flex items-center"
+            :class="{ 'text-slate-400': internalValue == null && placeholder }"
+          >
+            <span>
+              {{
+                internalValue == null && placeholder ? placeholder : displayed
+              }}
+            </span>
+            <Icon
+              :name="!open ? 'expand_more' : 'expand_less'"
+              weight="bold"
+              :color="
+                !isFocus
+                  ? 'black'
+                  : internalError || error
+                  ? 'danger'
+                  : 'primary'
+              "
+            />
+          </Text>
+        </SelectActivator>
       </template>
       <template #content>
         <SelectOptions
@@ -105,6 +134,7 @@ import useSelect from "../../composables/select";
 import type { MenuProps } from "src/composables/menu";
 import Chip from "../Chip.vue";
 import SelectActivator from "../SelectActivator.vue";
+import Text from "../Text.vue";
 
 export interface SelectProps {
   multiple?: boolean;
@@ -126,6 +156,10 @@ export interface SelectProps {
   disabled?: boolean;
   rules?: AnySchema;
   menuStrategy?: MenuProps["strategy"];
+
+  variant?: "base" | "text";
+
+  placeholder?: string;
 }
 
 const props = withDefaults(defineProps<SelectProps>(), {

@@ -29,6 +29,8 @@
       "task": {
         "responsible": "Responsable",
         "due_date": "Echeance",
+        "list": "Liste",
+        "list-placeholder": "Aucune",
         "description": "Description"
       }
     },
