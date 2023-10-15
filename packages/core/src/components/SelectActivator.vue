@@ -12,7 +12,7 @@
     @apply transition-opacity opacity-0 absolute top-0 left-0 w-full h-full pointer-events-none transition-all;
   }
   &:hover::before {
-    @apply bg-black opacity-5 rounded;
+    @apply bg-selectable opacity-10 rounded;
   }
 }
 </style>

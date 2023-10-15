@@ -63,10 +63,10 @@ const iconProps = computed(() => {
 }
 
 .icon-btn-white:hover::before {
-  @apply bg-white opacity-5;
+  @apply bg-white opacity-10;
 }
 
 .icon-btn-black:hover::before {
-  @apply bg-slate-500 opacity-5;
+  @apply bg-selectable opacity-10;
 }
 </style>

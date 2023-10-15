@@ -151,7 +151,7 @@ const buttonAdditionnalProps = computed(() => {
   position: relative;
   &::before {
     content: " ";
-    @apply absolute top-0 left-0 w-full h-full rounded-sm transition-all bg-transparent pointer-events-none opacity-5;
+    @apply absolute top-0 left-0 w-full h-full rounded-sm transition-all bg-transparent pointer-events-none opacity-10;
   }
   &:hover {
     &::before {
@@ -164,11 +164,11 @@ const buttonAdditionnalProps = computed(() => {
   position: relative;
   &::before {
     content: " ";
-    @apply absolute top-0 left-0 w-full h-full rounded-sm transition-all bg-transparent pointer-events-none opacity-5;
+    @apply absolute top-0 left-0 w-full h-full rounded-sm transition-all bg-transparent pointer-events-none opacity-10;
   }
   &:hover {
     &::before {
-      @apply bg-slate-500;
+      @apply bg-selectable;
     }
   }
 }
