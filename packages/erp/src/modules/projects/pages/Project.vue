@@ -138,7 +138,7 @@
       </template>
     </Kanban>
     <template #sidebar>
-      <TaskSidebar :selected="selected" />
+      <TaskSidebar ref="taskSidebar" :selected="selected" />
     </template>
   </Page>
 </template>
@@ -149,7 +149,7 @@ import Card from "core/src/components/card/Card.vue";
 import Input from "core/src/components/form/Input.vue";
 import Button from "core/src/components/Button.vue";
 import { watch, ref, nextTick, inject } from "vue";
-import { omitBy } from "lodash";
+import { omitBy, uniqBy, uniqueId } from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { SIDEBAR_ANIMATION_DURATION } from "core/src/components/sidebar/sidebar.types";
 import Menu from "core/src/components/Menu.vue";
@@ -224,7 +224,11 @@ const COLUMNS_DEFAULTS = [
 const selected = ref<DemoKanbanColmun["elements"][0]>();
 const sidebarOpen = ref(false);
 const drag = ref(false);
-const titleInputRef = ref();
+const taskSidebar = ref();
+
+function focusSidebarTitle() {
+  taskSidebar?.value?.$refs.titleInputRef?.$refs?.internalRef?.focus();
+}
 
 function handleClickCard(card: DemoKanbanColmun["elements"][0], event: Event) {
   sidebarOpen.value = true;
@@ -244,18 +248,18 @@ function add(column: DemoKanbanColmun) {
 
   if (index != -1) {
     columns.value[index].elements.push({
-      id: Math.random(),
+      id: uniqueId("kanban_task"),
       title: "",
     });
     selected.value =
       columns.value[index].elements[columns.value[index].elements.length - 1];
     sidebarOpen.value = true;
-    titleInputRef?.value?.$refs?.internalRef?.focus();
+    focusSidebarTitle();
   }
 }
 
 function addColumn() {
-  const idColumn = Math.random();
+  const idColumn = uniqueId("kanban_columns");
   columns.value.push({
     id: idColumn,
     title: "",
