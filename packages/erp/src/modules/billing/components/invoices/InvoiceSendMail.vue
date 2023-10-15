@@ -24,6 +24,7 @@
             @click="$emit('close')"
             :disabled="loading"
             variant="text"
+            class="-mx-buttonTextPadding"
           >
             {{ $t("cancel") }}
           </Button>
