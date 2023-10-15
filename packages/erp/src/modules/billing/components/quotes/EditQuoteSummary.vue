@@ -77,6 +77,7 @@
             color="black"
             variant="text"
             @click="cancelValidation"
+            class="-mx-buttonTextPadding"
           >
             {{ $t("cancel") }}
           </Button>
