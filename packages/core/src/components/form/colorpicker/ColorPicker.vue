@@ -34,6 +34,7 @@
           >
             <button
               v-for="color of pickerDefaultColors"
+              type="button"
               :key="color"
               :style="{ background: color }"
               class="default-color-btn"

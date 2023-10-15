@@ -12,7 +12,7 @@
     >
       <template #mounth-day="{ events: _events, day }">
         <BlockCalendarEvents
-          :isSelected="(e) => eventEdited?.id === e?.id"
+          :isSelected="(e) => eventEdited?.id === e?.id && editOpen"
           @edit="edit"
           :date="day.dayjs"
           :events="_events"

@@ -20,6 +20,7 @@
       "add-task": "Ajouter une tache",
       "share": "Partager",
       "new-projects": "Nouveau projet",
+      "create-project": "Créer le projet",
       "form": {
         "name": "Titre du projet",
         "color": "Couleur",

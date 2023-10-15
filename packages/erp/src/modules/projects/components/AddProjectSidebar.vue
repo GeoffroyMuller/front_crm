@@ -4,8 +4,8 @@
       :title="$t('pages.projects.new-projects')"
       :actions="[]"
     ></SidebarHead>
-    <SidebarContent>
-      <Form class="grid gap-4">
+    <Form @submit="create">
+      <SidebarContent class="grid gap-4">
         <TextField name="name" :label="$t('pages.projects.form.name')" />
         <ColorPicker
           allow-all-colors
@@ -17,8 +17,13 @@
           }"
         />
         <!-- <IconPicker :label="$t('pages.projects.form.icon')" /> -->
-      </Form>
-    </SidebarContent>
+      </SidebarContent>
+      <SidebarActions class="flex justify-end">
+        <Button color="success" type="submit">
+          {{ $t("pages.projects.create-project") }}
+        </Button>
+      </SidebarActions>
+    </Form>
   </Sidebar>
 </template>
 
@@ -29,10 +34,16 @@ import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
 import TextField from "core/src/components/form/TextField.vue";
 import ColorPicker from "core/src/components/form/colorpicker/ColorPicker.vue";
 import Form from "core/src/components/form/Form.vue";
+import SidebarActions from "core/src/components/sidebar/SidebarActions.vue";
+import Button from "core/src/components/Button.vue";
 
 const props = defineProps<{
   open: boolean;
 }>();
 
 const emit = defineEmits(["update:open"]);
+
+function create() {
+  emit("update:open", false);
+}
 </script>

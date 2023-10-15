@@ -48,13 +48,11 @@ import PageContent, { type PageContentProps } from "./PageContent.vue";
 import type { BreadcrumbProps } from "./Breadcrumb.vue";
 import type { IconName } from "./types";
 import type { PageTab } from "./PageTabs.vue";
-import { computed, ref } from "vue";
+import { watch, computed, ref } from "vue";
 import PageHead from "./PageHead.vue";
 import Sidebar from "./sidebar/Sidebar.vue";
-import { watch } from "vue";
 import { SIDEBAR_ANIMATION_DURATION } from "./sidebar/sidebar.types";
 
-const currentTab = ref();
 const sidebarRef = ref();
 
 const sidebarWidth = ref<string | 0>(0);
@@ -77,14 +75,22 @@ export interface PageProps {
   icon?: IconName;
 
   sidebarOpen?: boolean;
+
+  currentTab?: string;
 }
 
-const emit = defineEmits(["update:sidebarOpen"]);
+
+const emit = defineEmits(["update:sidebarOpen", "update:currentTab"]);
 
 const props = withDefaults(defineProps<PageProps>(), {
   padding: "light",
   gap: true,
 });
+
+const currentTab = props?.currentTab ? computed({
+  get: () => props.currentTab,
+  set: (val) => emit('update:currentTab', val)
+}) : ref();
 
 watch(
   () => props.sidebarOpen,

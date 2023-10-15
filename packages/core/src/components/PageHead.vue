@@ -45,9 +45,5 @@ import PageTabs from "./PageTabs.vue";
 import Text from "./Text.vue";
 import Icon from "./Icon.vue";
 
-defineProps<
-  PageProps & {
-    currentTab?: string;
-  }
->();
+defineProps<PageProps>();
 </script>
