@@ -4,11 +4,13 @@
       {{ label }}
     </label>
     <div
-      class="file-input min-h-input relative flex items-center justify-center gap-2 p-4 typo-title5 text-slate-400 cursor-pointer"
+      tabindex="0"
+      class="selectable-black min-h-input relative flex items-center justify-center gap-2 p-4 typo-title5 text-slate-400 cursor-pointer"
       :class="{
         'border border-dashed border-slate-400': variant === 'base',
         [`rounded-${rounded}`]: true,
       }"
+      @keydown.enter="$refs.internalRef?.click?.()"
       @click="$refs.internalRef?.click?.()"
     >
       <Icon name="file_upload" size="sm" />
@@ -78,15 +80,3 @@ const { internalValue, internalError, validate } = useValidatable({
   rules: props.rules,
 });
 </script>
-
-<style lang="scss">
-.file-input {
-  &::before {
-    content: " ";
-    @apply absolute top-0 left-0 w-full h-full rounded-sm transition-all bg-transparent pointer-events-none opacity-10;
-  }
-  &:hover::before {
-    @apply bg-selectable;
-  }
-}
-</style>
