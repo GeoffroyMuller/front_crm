@@ -129,7 +129,7 @@
       <template #column-footer="{ column }">
         <Button
           variant="text"
-          class="m-auto mt-4"
+          class="m-auto mt-2"
           color="black"
           @click.stop="add(column)"
         >

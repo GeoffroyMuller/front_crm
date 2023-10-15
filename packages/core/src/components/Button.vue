@@ -36,6 +36,7 @@
     v-bind="buttonAdditionnalProps"
   >
     <Icon
+      size="sm"
       :name="icon"
       v-if="icon"
       :class="{ 'content-icon': !!$slots.default }"
@@ -140,7 +141,7 @@ const buttonAdditionnalProps = computed(() => {
   @apply bg-white hover:bg-gray-50 text-black;
 }
 .button-text {
-  @apply gap-1 bg-transparent relative py-iconButtonPadding px-buttonTextPadding min-h-0;
+  @apply gap-1 bg-transparent relative py-iconButtonPadding px-buttonTextPadding;
   span {
     width: max-content;
   }
