@@ -86,7 +86,6 @@
               placement: 'top',
             }"
             @click="add()"
-            default-colored
           />
         </div>
         <Media down="md">

@@ -10,7 +10,6 @@
       variant="text"
       icon="filter_alt"
       @click="isAdvancedFiltersDisplayed = true"
-      class="advanced-filters-button"
     >
       {{ $t("advanced_filters") }}
       <span v-if="+nbFilters > 0">({{ nbFilters }})</span>
@@ -163,9 +162,7 @@ function handleInputChange({ name, value }: { name: string; value: any }) {
 .magic-filter-bar {
   padding: spacing(2);
 }
-.advanced-filters-button {
-  margin-bottom: calc($input-min-height / 4);
-}
+
 .magic-filters-bar-search {
   max-width: 800px;
 }

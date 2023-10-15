@@ -14,7 +14,7 @@
     ]"
   >
     <template #actions-title>
-      <IconButton name="add" color="success" default-colored />
+      <IconButton name="add" color="success" />
     </template>
     <template #content-amount="{ item }">
       <Price :price="item?.amount" />

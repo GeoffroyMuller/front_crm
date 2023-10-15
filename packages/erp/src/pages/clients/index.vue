@@ -38,7 +38,6 @@
         <template #actions-title>
           <Button
             color="success"
-            icon="add"
             v-tooltip="{ text: $t('add'), placement: 'bottom' }"
             @click.stop="
               () =>
@@ -83,7 +82,6 @@
           <div>
             <Button
               color="success"
-              icon="add"
               v-tooltip="{ text: $t('add'), placement: 'bottom' }"
               @click.stop="() => clickEdit()"
             >

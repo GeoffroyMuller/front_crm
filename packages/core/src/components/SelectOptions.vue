@@ -59,8 +59,7 @@ const emit = defineEmits(["select"]);
   }
   &:hover,
   &.active {
-    background-color: color("primary", 50);
-    color: color("primary", 500);
+    @apply bg-slate-100;
   }
 }
 </style>

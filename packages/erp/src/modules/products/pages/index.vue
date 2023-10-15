@@ -53,16 +53,14 @@
       </template>
       <template #actions-title>
         <div>
-          <Button
+          <IconButton
             color="success"
-            icon="add"
-            v-tooltip="{ text: $t('add'), placement: 'bottom' }"
+            name="add"
+            v-tooltip="{ text: $t('add'), placement: 'top' }"
             @click="
               $router.push({ name: 'products-id', params: { id: 'new' } })
             "
-          >
-            {{ $t("add") }}
-          </Button>
+          />
         </div>
       </template>
     </MagicDataTable>
@@ -77,6 +75,7 @@ import useProductStore from "@/modules/products/stores/products";
 import type { Product } from "@/types/product";
 import MagicFilterBar from "core/src/components/magic/MagicFilterBar.vue";
 import Price from "core/src/components/Price.vue";
+import IconButton from "core/src/components/IconButton.vue";
 
 const productsStore = useProductStore();
 </script>
