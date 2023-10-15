@@ -14,7 +14,7 @@
       @click="$refs.internalRef?.click?.()"
     >
       <Icon name="file_upload" size="sm" />
-      {{ placeholder || $t("core.import") }}
+      <span>{{ placeholder || $t("core.import") }}</span>
     </div>
     <input
       ref="internalRef"

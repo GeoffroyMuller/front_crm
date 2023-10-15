@@ -117,11 +117,10 @@
                 />
                 <slot name="title" :column="column" />
               </th>
-              <th
-                v-if="$slots['actions-title'] || $slots['actions']"
-                class="actions-block"
-              >
-                <slot name="actions-title"></slot>
+              <th v-if="$slots['actions-title'] || $slots['actions']">
+                <div class="actions-block">
+                  <slot name="actions-title"></slot>
+                </div>
               </th>
             </tr>
           </thead>
@@ -167,9 +166,10 @@
                 <td
                   v-if="$slots['actions-title'] || $slots['actions']"
                   :style="styleItem"
-                  class="actions-block"
                 >
-                  <slot name="actions" :item="item"></slot>
+                  <div class="actions-block">
+                    <slot name="actions" :item="item"></slot>
+                  </div>
                 </td>
               </tr>
             </template>
@@ -403,7 +403,7 @@ table {
     position: relative;
   }
   tr {
-    background-color: white;
+    // background-color: white;
   }
   tbody tr {
     transition: background 0.3s;

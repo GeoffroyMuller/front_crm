@@ -2,7 +2,7 @@
   <div
     :class="[
       `bg-${color}-500`,
-      'text-white rounded-full py-px px-1 w-fit grid place-items-center',
+      'text-white rounded-full py-px px-1 w-fit h-fit min-w-[18px] min-h-[18px] grid place-items-center',
     ]"
   >
     <slot />

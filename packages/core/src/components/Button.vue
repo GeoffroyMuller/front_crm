@@ -13,7 +13,7 @@
         [`bg-${color}-200`]:
           variant !== 'text' && variant !== 'outlined' && (disabled || loading),
 
-        [`button-text selectable-${color} border-none font-semibold text-left`]:
+        [`button-text button-text-${color} selectable-${color}  border-none font-semibold text-left`]:
           variant === 'text',
         [`text-${color}-400 hover:bg-${color}-50`]:
           variant === 'text' && !disabled && !loading,
@@ -145,6 +145,12 @@ const buttonAdditionnalProps = computed(() => {
   span {
     width: max-content;
   }
+}
+.button-text-white {
+  @apply text-white disabled:text-[#9ca3af];
+}
+.button-text-black {
+  @apply text-slate-500 disabled:text-[#9ca3af];
 }
 
 .button-outlined {
