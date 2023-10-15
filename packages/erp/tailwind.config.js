@@ -63,7 +63,7 @@ module.exports = {
         header: "#2e2e30",
         actions: "rgb(249 250 251 / var(--tw-bg-opacity))",
         tooltip: "#616161e6",
-        selectable: "rgb(55 65 81 / var(--tw-bg-opacity))",
+        selectable: "rgb(107 114 128 / var(--tw-bg-opacity))",
       },
       borderColor: {
         input: "#d1d5db",
