@@ -5,6 +5,8 @@
       <Card
         class="event-block gap-[5px] pr-[5px] flex py-2 items-center"
         rounded="sm"
+        selectable
+        :selected="isSelected(e)"
       >
         <div class="typo-title7 font-semibold ml-[10px]">E</div>
         <div class="typo-text5 font-semibold">
@@ -23,6 +25,7 @@ import dayjs, { type Dayjs } from "dayjs";
 interface BlockCalendarEventsProps {
   events: Array<Event>;
   date: Dayjs;
+  isSelected: (e: any) => boolean;
 }
 
 const emit = defineEmits([]);
@@ -35,7 +38,6 @@ function getEventTitle(e: Event) {
 
 <style lang="scss" scoped>
 .event-block {
-  background-color: white;
   position: relative;
   overflow: hidden;
   &::before {

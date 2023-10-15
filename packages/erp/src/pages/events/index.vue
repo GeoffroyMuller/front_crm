@@ -11,7 +11,12 @@
       full-screen
     >
       <template #mounth-day="{ events: _events, day }">
-        <BlockCalendarEvents @edit="edit" :date="day.dayjs" :events="_events" />
+        <BlockCalendarEvents
+          :isSelected="(e) => eventEdited?.id === e?.id"
+          @edit="edit"
+          :date="day.dayjs"
+          :events="_events"
+        />
       </template>
       <!-- <template #hover-footer>
         <Flex align-items="center" justify-content="center">
