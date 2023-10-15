@@ -4,7 +4,6 @@
     <div v-for="e of events" :key="e.id" @click.stop="$emit('edit', e)">
       <Card
         class="event-block gap-[5px] pr-[5px] flex py-2 items-center"
-        rounded="sm"
         selectable
         :selected="isSelected(e)"
       >

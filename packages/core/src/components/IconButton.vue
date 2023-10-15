@@ -9,8 +9,8 @@
       'hover:bg-primary-50': color === 'primary',
       'hover:bg-success-50': color === 'success',
       'hover:bg-warning-50': color === 'warning',
-      'icon-btn-white': color === 'white',
-      'icon-btn-black': color === 'black' || !color,
+      'selectable-white': color === 'white',
+      'selectable-black': color === 'black' || !color,
     }"
     :disabled="disabled"
     type="button"
@@ -50,23 +50,5 @@ const iconProps = computed(() => {
 .icon-btn {
   line-height: 0;
   @apply cursor-pointer select-none bg-transparent block w-fit h-fit border-none transition-all rounded-sm disabled:cursor-not-allowed relative p-iconButtonPadding;
-}
-
-.icon-btn-white::before,
-.icon-btn-black::before {
-  content: " ";
-  @apply transition-opacity opacity-0 absolute left-0 top-0 rounded-sm;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.icon-btn-white:hover::before {
-  @apply bg-white opacity-10;
-}
-
-.icon-btn-black:hover::before {
-  @apply bg-selectable opacity-10;
 }
 </style>

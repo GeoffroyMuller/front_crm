@@ -12,6 +12,9 @@
     "new-project": "Nouveau Projet"
   },
   "pages": {
+    "myaccount": {
+      "import-image": "Importer une image"
+    },
     "projects": {
       "overview": "Aperçu",
       "kanban": "Tableau",

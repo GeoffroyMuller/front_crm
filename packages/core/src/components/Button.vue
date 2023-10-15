@@ -13,7 +13,7 @@
         [`bg-${color}-200`]:
           variant !== 'text' && variant !== 'outlined' && (disabled || loading),
 
-        [`button-text button-text-${color} border-none font-semibold text-left`]:
+        [`button-text selectable-${color} border-none font-semibold text-left`]:
           variant === 'text',
         [`text-${color}-400 hover:bg-${color}-50`]:
           variant === 'text' && !disabled && !loading,
@@ -144,32 +144,6 @@ const buttonAdditionnalProps = computed(() => {
   @apply gap-1 bg-transparent relative py-iconButtonPadding px-buttonTextPadding;
   span {
     width: max-content;
-  }
-}
-.button-text-white {
-  @apply text-white disabled:text-[#9ca3af];
-  position: relative;
-  &::before {
-    content: " ";
-    @apply absolute top-0 left-0 w-full h-full rounded-sm transition-all bg-transparent pointer-events-none opacity-10;
-  }
-  &:hover {
-    &::before {
-      @apply bg-white;
-    }
-  }
-}
-.button-text-black {
-  @apply text-slate-500 disabled:text-[#9ca3af];
-  position: relative;
-  &::before {
-    content: " ";
-    @apply absolute top-0 left-0 w-full h-full rounded-sm transition-all bg-transparent pointer-events-none opacity-10;
-  }
-  &:hover {
-    &::before {
-      @apply bg-selectable;
-    }
   }
 }
 

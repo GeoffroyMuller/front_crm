@@ -157,7 +157,8 @@
     "confirmation": "Confirmation",
     "save_and_quite": "Enregistrer et quitter",
     "quite_without_save": "Quitter sans sauvegarder",
-    "to_filter": "Filter"
+    "to_filter": "Filter",
+    "import": "Importer"
   }
 
 }
