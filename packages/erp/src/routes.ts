@@ -9,6 +9,7 @@ import Settings from "./pages/settings/index.vue";
 import Clients from "./pages/clients/index.vue";
 import EditCompany from "./pages/clients/EditCompany.vue";
 import Events from "./pages/events/index.vue";
+import MyAccount from "./pages/MyAccount.vue";
 
 export default [
   {
@@ -51,6 +52,15 @@ export default [
     path: "/events",
     name: "events",
     component: Events,
+    meta: {
+      middleware: [auth],
+      layout: LayoutPage,
+    },
+  },
+  {
+    path: "/account",
+    name: "account",
+    component: MyAccount,
     meta: {
       middleware: [auth],
       layout: LayoutPage,

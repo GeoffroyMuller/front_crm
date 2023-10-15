@@ -4,10 +4,16 @@
   >
     <div class="flex gap-5 items-center h-full">
       <div
-        v-if="icon"
-        class="max-md:hidden bg-gradient-245 from-primary-400 to-primary-300 shadow-md shadow-primary-200 rounded grid place-items-center w-[3rem] min-w-[3rem] h-[3rem]"
+        v-if="icon || imageSrc"
+        class="overflow-hidden max-md:hidden bg-gradient-245 from-primary-400 to-primary-300 shadow-md shadow-primary-200 rounded grid place-items-center w-[3rem] min-w-[3rem] h-[3rem]"
       >
-        <Icon :name="icon" color="white" size="3xl" />
+        <Icon v-if="icon && !imageSrc" :name="icon" color="white" size="3xl" />
+        <img
+          class="object-cover w-full h-full"
+          v-if="imageSrc"
+          :src="imageSrc"
+          :alt="''"
+        />
       </div>
       <div
         class="grid w-fit relative h-full"

@@ -13,12 +13,14 @@
         :actions="[
           {
             icon: 'description',
-            action: () => router.push({ name: 'quotes-id', params: { id: 'new' } }),
+            action: () =>
+              router.push({ name: 'quotes-id', params: { id: 'new' } }),
             title: $t('add-menu.add-quote'),
           },
           {
             icon: 'request_quote',
-            action: () => router.push({ name: 'invoices-id', params: { id: 'new' } }),
+            action: () =>
+              router.push({ name: 'invoices-id', params: { id: 'new' } }),
             title: $t('add-menu.add-invoice'),
           },
         ]"
@@ -29,6 +31,11 @@
       </ActionMenu>
       <ActionMenu
         :actions="[
+          {
+            icon: 'account_circle',
+            title: $t('my-account'),
+            action: () => router.push({ name: 'account' }),
+          },
           {
             icon: 'settings',
             action: () => router.push({ name: 'settings' }),
