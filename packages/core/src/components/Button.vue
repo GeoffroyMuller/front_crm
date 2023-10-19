@@ -15,7 +15,7 @@
 
         [`button-text button-text-${color} selectable-${color}  border-none font-normal text-left`]:
           variant === 'text',
-        [`text-${color}-500 hover:text-${color}-600 hover:bg-${color}-50`]:
+        [`text-${color}-600 hover:text-${color}-700 hover:bg-${color}-50`]:
           variant === 'text' && !disabled && !loading,
         [`text-${color}-200`]: variant === 'text' && (disabled || loading),
 
