@@ -87,8 +87,8 @@ const props = withDefaults(defineProps<IconProps>(), {
       //color: map-deep-get($value, 500);
       background: linear-gradient(
         245deg,
-        map-deep-get($value, 500) 0%,
-        map-deep-get($value, 400) 100%
+        map-deep-get($value, 600) 0%,
+        map-deep-get($value, 500) 100%
       );
       -webkit-background-clip: text;
       background-clip: text;

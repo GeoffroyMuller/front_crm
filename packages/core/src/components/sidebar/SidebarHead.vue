@@ -20,10 +20,10 @@
           <Button
             v-if="$breakpoints.up.value['md'] || !a.icon"
             :icon="a.icon"
-            :color="a.color || 'primary'"
             variant="text"
             @click="() => handleAction(a)"
             class="-mx-buttonTextPadding"
+            :color="a.color || 'primary'"
           >
             <span>{{ a.title }}</span>
           </Button>
@@ -35,7 +35,7 @@
             @click="() => handleAction(a)"
             class="-m-iconButtonPadding"
             default-colored
-            size="lg"
+            size="md"
           >
             <span>{{ a.title }}</span>
           </IconButton>
@@ -46,7 +46,7 @@
         </template>
         <ActionMenu
           v-if="actions.length"
-          :actions="actions"
+          :actions="actions.map((a) => ({ ...a, color: 'black' }))"
           @action="($a) => emit('action', $a)"
           placement="bottom"
           :alignment="'end'"
@@ -90,12 +90,11 @@ import { inject } from "vue";
 import ActionMenu, { type Action } from "../ActionMenu.vue";
 import Button from "../Button.vue";
 import IconButton from "../IconButton.vue";
-import type { Color } from "../types";
 import type { SidebarInject } from "./sidebar.types";
 import PageTabs from "../PageTabs.vue";
 import type { Tab } from "src/composables/tabs";
 
-export type SidebarHeadAction = Action & { main?: boolean; color?: Color };
+export type SidebarHeadAction = Action & { main?: boolean };
 
 const emit = defineEmits(["action", "close", "update:currentTab"]);
 defineProps<{

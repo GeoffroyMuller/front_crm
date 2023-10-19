@@ -116,9 +116,6 @@
           selectable
           :selected="isSelected(element)"
           class="p-4 min-h-[70px]"
-          :class="{
-            '!cursor-grab': drag,
-          }"
           @click.stop="handleClickCard(element, $event)"
         >
           <div>
@@ -225,6 +222,17 @@ const selected = ref<DemoKanbanColmun["elements"][0]>();
 const sidebarOpen = ref(false);
 const drag = ref(false);
 const taskSidebar = ref();
+
+watch(
+  () => drag.value,
+  () => {
+    if (drag.value) {
+      document.body.classList.add("cursor-grab");
+    } else {
+      document.body.classList.remove("cursor-grab");
+    }
+  }
+);
 
 function focusSidebarTitle() {
   taskSidebar?.value?.$refs.titleInputRef?.$refs?.internalRef?.focus();

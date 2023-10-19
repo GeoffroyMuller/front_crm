@@ -41,7 +41,12 @@
             action: () => router.push({ name: 'settings' }),
             title: $t('settings'),
           },
-          { icon: 'door_open', action: disconnect, title: $t('disconnect') },
+          {
+            icon: 'door_open',
+            action: disconnect,
+            title: $t('disconnect'),
+            color: 'warning',
+          },
         ]"
         placement="bottom"
         alignment="end"

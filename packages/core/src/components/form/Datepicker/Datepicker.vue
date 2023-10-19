@@ -41,7 +41,11 @@
             </div>
           </div>
           <div class="datepicker-content">
-            <div v-for="(day, index) of weekDaysLabels" :key="index" class="weekday">
+            <div
+              v-for="(day, index) of weekDaysLabels"
+              :key="index"
+              class="weekday"
+            >
               {{ day }}
             </div>
             <div
@@ -56,28 +60,6 @@
               }"
             >
               {{ date.day }}
-            </div>
-          </div>
-        </div>
-        <div class="timepicker">
-          <div class="hours">
-            <div
-              v-for="index in 24"
-              :key="index"
-              :class="{ selected: current?.hour == index - 1 }"
-              @click="current.hour = index - 1"
-            >
-              {{ index - 1 }}
-            </div>
-          </div>
-          <div class="minutes">
-            <div
-              v-for="index in 60"
-              :key="index"
-              :class="{ selected: current?.minute == index - 1 }"
-              @click="current.minute = index - 1"
-            >
-              {{ index - 1 }}
             </div>
           </div>
         </div>
@@ -209,42 +191,7 @@ const {
 }
 .datetimepicker {
   display: flex;
-  .timepicker {
-    display: none;
-  }
   min-width: 280px;
-  &.time {
-    min-width: 380px;
-    .datepicker {
-      border-right: solid 1px #d3d3d3;
-    }
-    .timepicker {
-      display: flex;
-      .hours,
-      .minutes {
-        overflow-x: hidden;
-        overflow-y: scroll;
-        > * {
-          padding: spacing(1.5);
-          margin: spacing(0.75);
-          border-radius: map-deep-get($rounded, "sm");
-          user-select: none;
-          cursor: pointer;
-          text-align: center;
-          &.selected {
-            background-color: color("primary", 500);
-            color: color("white");
-          }
-        }
-        /* Hide scrollbar for Chrome, Safari and Opera */
-        &::-webkit-scrollbar {
-          display: none;
-        }
-        /* Hide scrollbar for IE, Edge and Firefox */
-        -ms-overflow-style: none;
-      }
-    }
-  }
   .datepicker {
     @include grid(1, 0, 2);
     padding: spacing(2);
