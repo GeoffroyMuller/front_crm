@@ -5,7 +5,7 @@
       tabindex="0"
       @keyup.enter="handleClickTab(tab)"
       :key="tab.id"
-      class="page-tab typo-button"
+      class="page-tab typo-button mb-4"
       :class="{ selected: tab.id == _currentTab }"
       @click="handleClickTab(tab)"
     >
@@ -23,7 +23,7 @@
       "
       placement="bottom"
       alignment="start"
-      class="mb-[8px]"
+      class="mb-4"
     >
       <Button variant="text" color="black">
         <span>+{{ nbTabsHidden }}</span>
@@ -88,7 +88,6 @@ watch(
     transition: width 0.25s ease-in-out, left 0.25s ease-in-out;
   }
   .page-tab {
-    padding-bottom: 14px;
     font-weight: bold;
     text-align: center;
     position: relative;

@@ -16,7 +16,7 @@
         id: 'kanban',
         title: $t('pages.projects.kanban'),
       },
-      /* {
+      {
         id: 'calendar',
         title: 'Calendrier',
       },
@@ -35,7 +35,7 @@
       {
         id: 'timeline',
         title: 'Timeline',
-      },*/
+      },
     ]"
   >
     <template #head-end>
@@ -222,17 +222,6 @@ const selected = ref<DemoKanbanColmun["elements"][0]>();
 const sidebarOpen = ref(false);
 const drag = ref(false);
 const taskSidebar = ref();
-
-watch(
-  () => drag.value,
-  () => {
-    if (drag.value) {
-      document.body.classList.add("cursor-grab");
-    } else {
-      document.body.classList.remove("cursor-grab");
-    }
-  }
-);
 
 function focusSidebarTitle() {
   taskSidebar?.value?.$refs.titleInputRef?.$refs?.internalRef?.focus();

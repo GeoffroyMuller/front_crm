@@ -127,7 +127,7 @@ module.exports = {
         lg: "1rem",
         xl: "1.2rem",
         "2xl": "1.4rem",
-        "3xl": "1.5rem",
+        "3xl": "2rem",
       },
       backgroundImage: {
         "gradient-245": "linear-gradient(245deg, var(--tw-gradient-stops))",
