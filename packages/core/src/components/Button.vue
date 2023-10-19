@@ -13,7 +13,7 @@
         [`bg-${color}-200`]:
           variant !== 'text' && variant !== 'outlined' && (disabled || loading),
 
-        [`button-text button-text-${color} selectable-${color}  border-none font-medium text-left`]:
+        [`button-text button-text-${color} selectable-${color}  border-none font-normal text-left`]:
           variant === 'text',
         [`text-${color}-500 hover:text-${color}-600 hover:bg-${color}-50`]:
           variant === 'text' && !disabled && !loading,

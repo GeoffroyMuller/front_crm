@@ -12,7 +12,7 @@
     <template #content>
       <div class="grid gap-1 py-1 w-max overflow-hidden">
         <div
-          class="flex gap-2 items-center cursor-pointer px-2 py-1.5 hover:bg-slate-100 typo-title6 font-medium"
+          class="flex gap-2 items-center cursor-pointer px-2 py-1.5 hover:bg-slate-100 typo-title6 font-normal"
           :class="{
             [`text-${action.color}-500 hover:text-${action.color}-600`]:
               action.color,
