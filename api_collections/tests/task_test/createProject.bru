@@ -1,0 +1,33 @@
+meta {
+  name: createProject
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{gatewayURL}}/projects
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: {{token}}
+}
+
+body:json {
+  {
+    "name": "Projet de test"
+  }
+}
+
+vars:post-response {
+  idProject: res.body.id
+}
+
+script:post-response {
+  bru.setVar('idProject', res.body.token);
+}
+
+docs {
+  API to create a project
+}
