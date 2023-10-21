@@ -21,6 +21,6 @@ app.use(cors());
 
 Routes(app, path.join(__dirname, "api"));
 
-app.listen(3007, () => {
-  console.log('The application is listening on port 3007!')
+app.listen(3008, () => {
+  console.log('The application is listening on port 3008!')
 })

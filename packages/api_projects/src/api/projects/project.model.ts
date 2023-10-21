@@ -7,7 +7,7 @@ export default class Project extends Model {
   description?: string;
 
   static get tableName() {
-    return "products";
+    return "projects";
   }
 
   static get relationMappings() {

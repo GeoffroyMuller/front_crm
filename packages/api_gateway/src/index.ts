@@ -13,6 +13,7 @@ const SERVICES = {
   erp: process.env.ERP_SERVICE_URL,
   calendar: process.env.CALENDAR_SERVICE_URL,
   products: process.env.PRODUCTS_SERVICE_URL,
+  projects: process.env.PROJECTS_SERVICE_URL,
 } as { [key: string]: string };
 
 const PROXY_OPTIONS: proxy.ProxyOptions = {
@@ -32,6 +33,9 @@ const PROXIES = {
   products_real: proxy(SERVICES.products, PROXY_OPTIONS),
   product_real_out: proxy(SERVICES.products, PROXY_OPTIONS),
   reservations: proxy(SERVICES.calendar, PROXY_OPTIONS),
+  projects: proxy(SERVICES.projects, PROXY_OPTIONS),
+  sections: proxy(SERVICES.projects, PROXY_OPTIONS),
+  tasks: proxy(SERVICES.projects, PROXY_OPTIONS),
 } as { [key: string]: RequestHandler };
 
 app.use(xAuthMiddleware);

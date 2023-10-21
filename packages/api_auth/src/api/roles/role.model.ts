@@ -1,7 +1,7 @@
 import { Model, Pojo } from "objection";
 import type { ID, Role as RoleType } from "core_api/types";
 
-export default class Role extends Model implements RoleType {
+export default class Role extends Model implements Partial<RoleType> {
   id?: ID;
   name?: string;
   idCompany?: ID;
