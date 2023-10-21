@@ -6,7 +6,11 @@ import SectionsService from "./sections.service";
 export default {
   create: async (req: IAuthRequest<User>, res: Response) => {
     try {
-      const item = await SectionsService.create(req.body, req.query, req.auth);
+      const item = await SectionsService.create(
+        { ...req.body, idProject: req.params.idProject },
+        req.query,
+        req.auth
+      );
       return res.status(200).json(item);
     } catch (err) {
       return handleError(req, res, err);
@@ -14,7 +18,7 @@ export default {
   },
   update: async (req: IAuthRequest<User>, res: Response) => {
     try {
-      const item = { ...req.body, id: req.params.id };
+      const item = { ...req.body, id: req.params.id, idProject: req.params.idProject };
       const updatedItem = await SectionsService.update(
         item,
         req.query,

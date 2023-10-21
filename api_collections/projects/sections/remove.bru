@@ -1,0 +1,19 @@
+meta {
+  name: remove
+  type: http
+  seq: 2
+}
+
+delete {
+  url: {{gatewayURL}}/projects/5/sections/1
+  body: none
+  auth: none
+}
+
+query {
+  : 
+}
+
+headers {
+  Authorization: {{token}}
+}

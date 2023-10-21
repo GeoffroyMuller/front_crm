@@ -3,7 +3,7 @@ import Section from "./sections.model";
 import { applyRelations } from "core_api/service";
 import { ID, User } from "core_api/types";
 import { handleFilters } from "core_api/services/filters.service";
-import Project from "../projects/project.model";
+import Project from "./project.model";
 import { AuthError } from "core_api/errors";
 
 export default {

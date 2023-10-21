@@ -5,8 +5,8 @@ meta {
 }
 
 post {
-  url: {{gatewayURL}}/projects
-  body: none
+  url: {{gatewayURL}}/projects/5/sections
+  body: json
   auth: none
 }
 
@@ -14,6 +14,8 @@ headers {
   Authorization: {{token}}
 }
 
-docs {
-  API to create a project
+body:json {
+  {
+    "name": "Section de test"
+  }
 }
