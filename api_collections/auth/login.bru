@@ -17,10 +17,6 @@ body:json {
   }
 }
 
-assert {
-  : 
-}
-
 script:post-response {
   bru.setEnvVar('token', res.body.token);
 }
