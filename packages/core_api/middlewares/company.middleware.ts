@@ -1,6 +1,7 @@
 import { NextFunction } from "express";
 import { AuthRequest } from "./auth.middleware";
 
+/// @deprecated
 const companyMiddleware = (
   req: AuthRequest,
   res: Response,

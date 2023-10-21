@@ -5,14 +5,13 @@
     <Card padding>
       <Form class="grid gap-4 w-[440px]" @submit="login">
         <template #default="{ hasError }">
-          <GoogleLoginBtn :disabled="loading" class="m-auto" />
-          <span class="text-slate-500 text-center">- {{ $t("or") }} -</span>
           <TextField :label="$t('email')" name="email" />
           <PasswordInput :label="$t('password')" name="password" />
-          <div class="grid gap-2">
+          <div class="flex items-center gap-4">
             <Button :disabled="hasError" :loading="loading" type="submit">
               {{ $t("login") }}
             </Button>
+            <GoogleLoginBtn :disabled="loading" />
           </div>
         </template>
       </Form>

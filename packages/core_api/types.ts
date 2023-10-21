@@ -4,17 +4,17 @@ import { Model, QueryBuilderType, RelationExpression } from "objection";
 export type ID = string | number;
 
 export interface Role {
-  id?: ID;
-  name?: string;
-  idCompany?: ID;
-  rights?: string | string[];
+  id: ID;
+  name: string;
+  idCompany: ID;
+  rights: string | string[];
 }
 
 export interface User {
-  id?: ID;
-  email?: string;
-  role?: Role;
-  idCompany?: ID;
+  id: ID;
+  email: string;
+  role: Role;
+  idCompany: ID;
 }
 
 export type ServiceLifeCycleActionParams<

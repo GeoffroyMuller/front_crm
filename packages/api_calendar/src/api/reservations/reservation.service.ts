@@ -2,7 +2,6 @@ import serviceFactory from "core_api/service";
 import type { User } from "core_api/types";
 import Reservation from "./reservation.model";
 import { isPopulateNeeded } from "core_api/services/filters.service";
-import productsProvider from "../../providers/products.provider";
 import ReservationLine from "./reservation_line.model";
 
 const reservationService = serviceFactory<Reservation, User>(Reservation, {
@@ -23,7 +22,7 @@ const reservationService = serviceFactory<Reservation, User>(Reservation, {
         query.where("idCompany", auth.idCompany);
       }
     }
-    if (isPopulateNeeded(filters, "lines.product"))  {
+    /* if (isPopulateNeeded(filters, "lines.product"))  {
       try {
         const products = await productsProvider.fetch([], auth);
         data.lines = (data.lines || []).map((line: ReservationLine) => {
@@ -38,7 +37,7 @@ const reservationService = serviceFactory<Reservation, User>(Reservation, {
       } catch(err) {
         console.error(err);
       }
-    }
+    } */
     return { query, auth, filters, data };
   },
   async onBeforeCreate({ query, auth, filters, data }) {

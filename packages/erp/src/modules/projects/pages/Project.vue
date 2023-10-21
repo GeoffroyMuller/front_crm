@@ -4,6 +4,9 @@
     icon="check_circle"
     v-model:sidebarOpen="sidebarOpen"
     class="pb-0"
+    :class="{
+      forceCursorGrab: drag,
+    }"
     :tabs="[
       {
         id: 'overview',
@@ -17,7 +20,7 @@
         id: 'kanban',
         title: $t('pages.projects.kanban'),
       },
-      {
+      /*{
         id: 'calendar',
         title: 'Calendrier',
       },
@@ -34,9 +37,9 @@
         title: 'Timeline',
       },
       {
-        id: 'timeline',
+        id: 'timeliness',
         title: 'Timeline',
-      },
+      },*/
     ]"
   >
     <template #head-end>
@@ -118,6 +121,9 @@
           :selected="isSelected(element)"
           class="p-4 min-h-[70px]"
           @click.stop="handleClickCard(element, $event)"
+          :class="{
+            '!cursor-grab': drag,
+          }"
         >
           <div>
             {{ element.title }}
@@ -310,3 +316,12 @@ watch(
   }
 );
 </script>
+
+<style lang="scss">
+.forceCursorGrab {
+  cursor: grab !important;
+  * {
+    cursor: grab !important;
+  }
+}
+</style>

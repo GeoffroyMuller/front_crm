@@ -9,7 +9,7 @@ import filtersService from "./services/filters.service";
 import { ServiceFactoryOptions, Service, ID } from "./types";
 import { AuthError } from "./errors";
 
-function isRelationExists<T extends Model>(
+export function isRelationExists<T extends Model>(
   model: ModelClass<T>,
   relation: string
 ): boolean {
@@ -29,7 +29,7 @@ function isRelationExists<T extends Model>(
   );
 }
 
-function applyRelations<T extends Model>(
+export function applyRelations<T extends Model>(
   query: QueryBuilderType<T>,
   model: ModelClass<T>,
   relations: any

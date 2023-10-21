@@ -14,19 +14,19 @@ export function getToken(req: Request): string | undefined {
   );
 }
 
+export function getRelationArray(req: Request): string[] {
+  if (Array.isArray(req.query.populate)) {
+    return req.query.populate as string[];
+  }
+  if (typeof req.query.populate === "string") {
+    return [req.query.populate];
+  }
+  return [];
+}
+
 const controllerFactory: ControllerFactory = (service, opts = undefined) => {
   const handleError: ControllerHandleError<any, any> =
     opts?.handleError || _handleError;
-
-  function _getRelationArray(req: Request): string[] {
-    if (Array.isArray(req.query.populate)) {
-      return req.query.populate as string[];
-    }
-    if (typeof req.query.populate === "string") {
-      return [req.query.populate];
-    }
-    return [];
-  }
 
   return {
     handleError,
@@ -34,7 +34,7 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
       try {
         const filters = req.query;
         const items = await service.paginate(
-          _getRelationArray(req),
+          getRelationArray(req),
           filters,
           req.auth
         );
@@ -47,7 +47,7 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
       try {
         const filters = req.query;
         const items = await service.getAll(
-          _getRelationArray(req),
+          getRelationArray(req),
           filters,
           req.auth
         );
@@ -63,7 +63,7 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
         const item = await service.getById(
           id,
           req.auth,
-          _getRelationArray(req),
+          getRelationArray(req),
           filters
         );
         if (!item) {

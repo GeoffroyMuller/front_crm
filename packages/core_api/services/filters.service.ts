@@ -135,8 +135,7 @@ const handleFiltersIn: HandleFiltersFunction = (query, filters, or) => {
   return query;
 };
 
-const handleFilters: HandleFiltersFunction = (query, filters, or) => {
-  console.error(filters)
+export const handleFilters: HandleFiltersFunction = (query, filters, or) => {
   handleFiltersOr(query, filters);
   handleFiltersAnd(query, filters);
   handleFiltersEq(query, filters, or);
