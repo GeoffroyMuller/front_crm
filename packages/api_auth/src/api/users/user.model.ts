@@ -4,7 +4,7 @@ import Role from "../roles/role.model";
 import type { ID, User as UserType, Role as RoleType } from "core_api/types";
 
 export default class User extends Model implements Partial<UserType> {
-  id?: ID;
+  id?: number;
   firstname?: string;
   lastname?: string;
   address?: string;

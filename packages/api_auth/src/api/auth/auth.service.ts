@@ -30,7 +30,7 @@ async function getTokenFromCode(code: string) {
     .withGraphFetched("role")
     .first();
   if (user) {
-    await User.query().updateAndFetchById(user.id as string, {
+    await User.query().updateAndFetchById(user.id as number, {
       accessTokenCode: null,
     });
     return await getToken(user);
@@ -40,7 +40,7 @@ async function getTokenFromCode(code: string) {
 
 async function generateAccessTokenCode(user: User) {
   const accessTokenCode = await generateRandomToken();
-  await User.query().updateAndFetchById(user.id as string, { accessTokenCode });
+  await User.query().updateAndFetchById(user.id as number, { accessTokenCode });
   return accessTokenCode;
 }
 
@@ -89,7 +89,7 @@ export default {
       throw "Invalid password or email";
     }
     refreshToken = await generateRandomToken();
-    await User.query().updateAndFetchById(user.id as string, {
+    await User.query().updateAndFetchById(user.id as number, {
       refreshToken,
       accessTokenCode: null,
     });

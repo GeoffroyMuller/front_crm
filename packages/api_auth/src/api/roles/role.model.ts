@@ -4,7 +4,7 @@ import type { ID, Role as RoleType } from "core_api/types";
 export default class Role extends Model implements Partial<RoleType> {
   id?: ID;
   name?: string;
-  idCompany?: ID;
+  idCompany?: number;
   rights?: string | string[];
 
   static get tableName() {
