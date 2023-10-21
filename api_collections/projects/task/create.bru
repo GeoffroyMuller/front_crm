@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: {{gatewayURL}}/projects/1/sections
+  url: {{gatewayURL}}/tasks
   body: json
   auth: none
 }
@@ -16,6 +16,7 @@ headers {
 
 body:json {
   {
-    "name": "Section de test"
+    "name": "Tasks TEST",
+    "idSection": 3
   }
 }

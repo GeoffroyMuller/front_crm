@@ -33,9 +33,11 @@ export default {
       .execute() as Promise<Section>;
   },
   remove: async (id: ID, filters: any, auth: User) => {
-    const query = Section.query().withGraphFetched('project').where("project.idCompany", auth.idCompany);
+    const query = Section.query()
+      .join(Project.tableName, `${Project.tableName}.id`, "=", `${Section.tableName}.id`)
+      .where(`${Project.tableName}.idCompany`, auth.idCompany);
     handleFilters(query, filters);
-    const removed = await query.where("id", id).delete().execute();
+    const removed = await query.where(`${Section.tableName}.id`, id).delete().execute();
     return removed;
   },
 };

@@ -1,9 +1,10 @@
 import { Model } from "objection";
 
-export default class Tasks extends Model {
+export default class Task extends Model {
   id?: number;
   name?: string;
   description?: string;
+  completed?: boolean;
 
   idProject?: number;
   idSection?: number;

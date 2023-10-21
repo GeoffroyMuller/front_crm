@@ -6,12 +6,12 @@ export type ID = string | number;
 export interface Role {
   id: ID;
   name: string;
-  idCompany: ID;
+  idCompany: number;
   rights: string | string[];
 }
 
 export interface User {
-  id: ID;
+  id: number;
   email: string;
   role: Role;
   idCompany: ID;
