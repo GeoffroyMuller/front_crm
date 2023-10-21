@@ -21,6 +21,7 @@ yarn generate:keypair
 
 # documentations
 - Typescript fondamentaux : https://www.typescriptlang.org/docs/handbook/utility-types.html
+- Outils pour doc/tests apis : https://www.usebruno.com/
 
 # packages
 - api_* : webservices de l'app
