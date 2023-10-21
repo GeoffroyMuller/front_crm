@@ -7,11 +7,6 @@ import Project from "../projects/project.model";
 import Section from "../projects/sections.model";
 
 export default {
-  paginate: async (
-    relations: RelationExpression<Task>[],
-    filters: any,
-    auth: User
-  ) => {},
   create: async (item: Partial<Task>, filters: any, auth: User) => {
     const query = Task.query();
     const data = { ...item };
