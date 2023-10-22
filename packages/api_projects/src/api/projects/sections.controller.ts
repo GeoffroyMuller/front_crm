@@ -18,7 +18,9 @@ export default {
   },
   update: async (req: IAuthRequest<User>, res: Response) => {
     try {
+    
       const item = { ...req.body, id: req.params.id, idProject: req.params.idProject };
+      console.log(item)
       const updatedItem = await SectionsService.update(
         item,
         req.query,

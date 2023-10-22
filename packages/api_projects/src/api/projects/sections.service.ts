@@ -18,26 +18,36 @@ export default {
     return res;
   },
   update: async (body: any, filters: any, auth: User) => {
-    const query = Section.query().where("idCompany", auth.idCompany);
+    const query = Section.query()
+      .where("idProject", body.idProject);
     const project = await Project.query().findById(body.idProject);
     if (project?.idCompany != auth.idCompany) {
       throw new AuthError();
     }
+    const id = body.id; 
     delete body.id;
     const data = {
       ...body,
     };
     handleFilters(query, filters);
     return query
-      .updateAndFetchById(data.id, data)
+      .updateAndFetchById(id, data)
       .execute() as Promise<Section>;
   },
   remove: async (id: ID, filters: any, auth: User) => {
     const query = Section.query()
-      .join(Project.tableName, `${Project.tableName}.id`, "=", `${Section.tableName}.id`)
+      .join(
+        Project.tableName,
+        `${Project.tableName}.id`,
+        "=",
+        `${Section.tableName}.id`
+      )
       .where(`${Project.tableName}.idCompany`, auth.idCompany);
     handleFilters(query, filters);
-    const removed = await query.where(`${Section.tableName}.id`, id).delete().execute();
+    const removed = await query
+      .where(`${Section.tableName}.id`, id)
+      .delete()
+      .execute();
     return removed;
   },
 };

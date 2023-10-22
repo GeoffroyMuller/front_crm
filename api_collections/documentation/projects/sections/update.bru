@@ -1,15 +1,21 @@
 meta {
-  name: remove
+  name: update
   type: http
-  seq: 3
+  seq: 2
 }
 
-delete {
+put {
   url: {{gatewayURL}}/projects/1/sections/1
-  body: none
+  body: json
   auth: none
 }
 
 headers {
   Authorization: {{token}}
+}
+
+body:json {
+  {
+    "name": "Section de test UPDATED"
+  }
 }
