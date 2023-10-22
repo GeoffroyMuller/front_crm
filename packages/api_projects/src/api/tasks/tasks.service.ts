@@ -5,6 +5,7 @@ import { AuthError } from "core_api/errors";
 import { handleFilters } from "core_api/services/filters.service";
 import Project from "../projects/project.model";
 import Section from "../projects/sections.model";
+import { notifyUsers } from "core_api/services/realtime.service";
 
 export default {
   create: async (item: Partial<Task>, filters: any, auth: User) => {
@@ -27,7 +28,9 @@ export default {
       data.idUser = auth.id;
     }
     handleFilters(query, filters);
-    const res = query.insert(data).execute() as Promise<Task>;
+    const res = await query.insert(data).execute();
+    // here to test realtime
+    notifyUsers('createTask', res, []);
     return res;
   },
 };

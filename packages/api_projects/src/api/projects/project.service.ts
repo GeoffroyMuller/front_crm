@@ -4,8 +4,6 @@ import { applyRelations } from "core_api/service";
 import { ID, User } from "core_api/types";
 import { handleFilters } from "core_api/services/filters.service";
 
-import "../../providers/rabbitmq.provider";
-
 export default {
   paginate: async (
     relations: RelationExpression<Project>[],
