@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.use(authMiddleware);
 
+router.get("/:id", ProjectController.findByID);
 router.get("/", ProjectController.paginate);
 router.post("/", ProjectController.create);
 router.put("/:id", ProjectController.update);

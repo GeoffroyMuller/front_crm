@@ -11,8 +11,9 @@ export default {
   create: async (item: Partial<Task>, filters: any, auth: User) => {
     const query = Task.query();
     const data = { ...item };
+    let project: Project | undefined;
     if (data.idSection) {
-      const project = await Section.relatedQuery<Project>("project")
+      project = await Section.relatedQuery<Project>("project")
         .for([data.idSection])
         .first();
       if (project?.idCompany != auth.idCompany) {
@@ -20,7 +21,7 @@ export default {
       }
       data.idProject = project?.id;
     } else if (data.idProject) {
-      const project = await Project.query().findById(data.idProject);
+      project = await Project.query().findById(data.idProject);
       if (project?.idCompany != auth.idCompany) {
         throw new AuthError();
       }
@@ -29,8 +30,9 @@ export default {
     }
     handleFilters(query, filters);
     const res = await query.insert(data).execute();
-    // here to test realtime
-    notifyUsers('createTask', res, []);
+    if (project?.id) {
+      notifyUsers('createTask', res, []);
+    }
     return res;
   },
 };

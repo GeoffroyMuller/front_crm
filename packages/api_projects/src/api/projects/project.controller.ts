@@ -5,6 +5,22 @@ import { getRelationArray } from "core_api/controller";
 import ProjectService from "./project.service";
 
 export default {
+  findByID: async (req: IAuthRequest<User>, res: Response) => {
+    try {
+      const item = await ProjectService.findByID(
+        req.params.id,
+        getRelationArray(req),
+        req.query,
+        req.auth
+      );
+      if (!item) {
+        throw new NotFoundError("no item found");
+      }
+      return res.status(200).json(item);
+    } catch (err) {
+      return handleError(req, res, err);
+    }
+  },
   paginate: async (req: IAuthRequest<User>, res: Response) => {
     try {
       const items = await ProjectService.paginate(

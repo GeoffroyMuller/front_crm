@@ -1,0 +1,15 @@
+meta {
+  name: byID
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{gatewayURL}}/projects/5
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: {{token}}
+}

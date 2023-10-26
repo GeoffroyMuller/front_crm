@@ -5,6 +5,17 @@ import { ID, User } from "core_api/types";
 import { handleFilters } from "core_api/services/filters.service";
 
 export default {
+  findByID: async (
+    id: ID,
+    relations: RelationExpression<Project>[],
+    filters: any,
+    auth: User
+  ) => {
+    const query = applyRelations(Project.query(), Project, relations);
+    query.where('id', id).where("idCompany", auth.idCompany);
+    handleFilters(query, filters);
+    return query.first().execute();
+  },
   paginate: async (
     relations: RelationExpression<Project>[],
     filters: any,
@@ -28,6 +39,7 @@ export default {
   },
   update: async (body: any, filters: any, auth: User) => {
     const query = Project.query().where("idCompany", auth.idCompany);
+    const id = body.id;
     delete body.id;
     const data = {
       ...body,
@@ -35,7 +47,7 @@ export default {
     };
     handleFilters(query, filters);
     return query
-      .updateAndFetchById(data.id, data)
+      .updateAndFetchById(id, data)
       .execute() as Promise<Project>;
   },
   remove: async (id: ID, filters: any, auth: User) => {

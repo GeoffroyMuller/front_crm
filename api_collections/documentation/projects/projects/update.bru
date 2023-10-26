@@ -1,0 +1,22 @@
+meta {
+  name: update
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{gatewayURL}}/projects/5
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: {{token}}
+}
+
+body:json {
+  {
+    "name": "Projet de modifié",
+    "description": "lorem ipsum..."
+  }
+}
