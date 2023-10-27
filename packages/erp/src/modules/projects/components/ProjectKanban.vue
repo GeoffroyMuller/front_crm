@@ -17,7 +17,10 @@
       <div class="flex items-center">
         <Input
           :model-value="column.title"
-          @update:model-value="($val) => handleUpdateSectionTitle(column, $val)"
+          :key="column.id"
+          @blur="
+            ($event) => handleUpdateSectionTitle(column, $event.target.value)
+          "
           variant="text"
           class="!pl-0 hover:!pl-inputXPadding focus-within:!pl-inputXPadding transition-all flex-1"
           :id="getIdColumInputTitle(column.id)"
@@ -173,14 +176,13 @@ async function addColumn() {
       try {
         const s = await projectSectionStore.create({ idProject: props.id });
         column.id = s.id as unknown as string;
+        inputTitle.focus();
       } catch (err) {
         toast({
           type: "danger",
           message: t("error_occured"),
         });
       }
-
-      inputTitle.focus();
     }
   });
 }

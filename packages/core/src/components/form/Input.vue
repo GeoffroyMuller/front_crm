@@ -108,9 +108,9 @@ const emit = defineEmits([
   "change",
 ]);
 
-function onBlur() {
+function onBlur($event: Event) {
   validate();
-  emit("blur");
+  emit("blur", $event);
 }
 
 function onFocus() {
