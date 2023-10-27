@@ -23,6 +23,7 @@
           "
           variant="text"
           class="!pl-0 hover:!pl-inputXPadding focus-within:!pl-inputXPadding transition-all flex-1"
+          input-class="!font-semibold"
           :id="getIdColumInputTitle(column.id)"
         />
         <ActionMenu

@@ -14,7 +14,6 @@
           variant === 'text' || variant === 'title',
         '!h-12 ': variant === 'title',
       },
-      inputClass,
     ]"
     @click="($refs.internalRef as HTMLInputElement)?.focus?.()"
   >
@@ -26,8 +25,9 @@
       @blur="onBlur"
       :class="{
         'appearance-none': appearanceNone === true,
-        'typo-title4': variant === 'text',
+        'typo-title4  font-normal': variant === 'text',
         ' typo-title2': variant === 'title',
+        [inputClass]: true,
       }"
       ref="internalRef"
       v-model="internalValue"

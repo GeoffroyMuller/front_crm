@@ -74,7 +74,7 @@
         >
           <Text
             typo="title4"
-            class="flex items-center"
+            class="flex items-center font-normal"
             :class="{ 'text-slate-400': internalValue == null && placeholder }"
           >
             <span>

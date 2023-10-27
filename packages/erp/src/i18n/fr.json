@@ -18,7 +18,7 @@
     "projects": {
       "overview": "Aperçu",
       "kanban": "Tableau",
-      "list": "Liste",
+      "list": "Section",
       "add-section": "Ajouter une section",
       "delete-section": "Supprimer la section",
       "delete-project": "Supprimer le project",
