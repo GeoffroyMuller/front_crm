@@ -11,6 +11,15 @@
     </template>
     <MagicDataTable
       :columns="[{ title: 'name', key: 'name' }]"
+      @row-click="
+        (item) =>
+          $router.push({
+            name: 'projects-id',
+            params: {
+              id: item.id,
+            },
+          })
+      "
       :store="projectStore"
     />
   </Page>
