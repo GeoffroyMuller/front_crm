@@ -1,9 +1,0 @@
-{
-  "extends": "@vue/tsconfig/tsconfig.node.json",
-  "include": ["vite.config.*", "vitest.config.*", "cypress.config.*"],
-  "compilerOptions": {
-    "lib": ["ES2020"],
-    "composite": true,
-    "types": ["node"]
-  }
-}

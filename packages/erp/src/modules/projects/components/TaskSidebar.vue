@@ -3,8 +3,8 @@
     <template #title>
       <Input
         variant="title"
-        :model-value="task?.title"
-        @update:model-value="task.title = $event"
+        :model-value="task?.name"
+        @update:model-value="task.name = $event"
         ref="titleInputRef"
         class="-ml-inputXPadding"
       />

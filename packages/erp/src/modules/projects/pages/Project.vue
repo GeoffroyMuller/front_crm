@@ -4,9 +4,6 @@
     icon="check_circle"
     v-model:sidebarOpen="sidebarOpen"
     class="pb-0"
-    :class="{
-      forceCursorGrab: drag,
-    }"
     :tabs="[
       {
         id: 'overview',
@@ -99,6 +96,12 @@
         v-model:sidebar-open="sidebarOpen"
       />
     </template>
+    <template #overview>
+      <ProjectView />
+    </template>
+    <template #list>
+      <ProjectViewList />
+    </template>
     <template #sidebar>
       <TaskSidebar ref="taskSidebar" :selected="selected" />
     </template>
@@ -114,6 +117,8 @@ import Avatar from "core/src/components/Avatar.vue";
 import TaskSidebar from "../components/TaskSidebar.vue";
 import type { Task } from "@/types/project";
 import ProjectKanban from "../components/ProjectKanban.vue";
+import ProjectView from "../components/ProjectView.vue";
+import ProjectViewList from "../components/ProjectViewList.vue";
 
 const { id } = useRoute().params;
 
@@ -125,12 +130,3 @@ function focusSidebarTitle() {
   taskSidebar?.value?.$refs.titleInputRef?.$refs?.internalRef?.focus();
 }
 </script>
-
-<style lang="scss">
-.forceCursorGrab {
-  cursor: grab !important;
-  * {
-    cursor: grab !important;
-  }
-}
-</style>
