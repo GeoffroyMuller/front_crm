@@ -1,45 +1,49 @@
 <template>
-  <PageHead
-    v-if="!hideTitleBar"
-    v-bind="$props"
-    v-model:current-tab="currentTab"
-    :style="contentStyle"
-  >
-    <template #head-end v-if="sidebarWidth === 0">
-      <slot name="head-end" />
-    </template>
-  </PageHead>
-  <div v-if="loading" class="w-full h-screenMinusHeaderHeight relative">
-    <Spinner
-      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-    />
+  <div class="w-full h-full overflow-y-auto relative">
+    <PageHead
+      v-if="!hideTitleBar"
+      v-bind="$props"
+      v-model:current-tab="currentTab"
+      :style="contentStyle"
+    >
+      <template #head-end v-if="sidebarWidth === 0">
+        <slot name="head-end" />
+      </template>
+      <template #head-sticky v-if="sidebarWidth === 0">
+        <slot name="head-sticky" />
+      </template>
+    </PageHead>
+    <div v-if="loading" class="w-full h-screenMinusHeaderHeight relative">
+      <Spinner
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      />
+    </div>
+    <PageContent
+      v-if="!loading"
+      :class="[
+        $props.class,
+        {
+          'h-fullMinusPageHeadHeight': !hideTitleBar,
+          'h-full': hideTitleBar,
+        },
+      ]"
+      ref="contentRef"
+      :style="contentStyle"
+      :padding="padding"
+      :gap="gap"
+    >
+      <slot v-if="currentTab" :name="currentTab" :tab="currentTab" />
+      <slot :tab="currentTab" />
+    </PageContent>
+    <Sidebar
+      :open="sidebarOpen || false"
+      @update:open="emit('update:sidebarOpen', $event)"
+      v-if="$slots.sidebar"
+      ref="sidebarRef"
+    >
+      <slot name="sidebar" />
+    </Sidebar>
   </div>
-  <PageContent
-    v-if="!loading"
-    :class="[
-      $props.class,
-      {
-        'h-fullMinusPageHeadHeight': !hideTitleBar,
-        'h-full': hideTitleBar,
-      },
-    ]"
-    ref="contentRef"
-    :style="contentStyle"
-    class="overflow-y-auto"
-    :padding="padding"
-    :gap="gap"
-  >
-    <slot v-if="currentTab" :name="currentTab" :tab="currentTab" />
-    <slot :tab="currentTab" />
-  </PageContent>
-  <Sidebar
-    :open="sidebarOpen || false"
-    @update:open="emit('update:sidebarOpen', $event)"
-    v-if="$slots.sidebar"
-    ref="sidebarRef"
-  >
-    <slot name="sidebar" />
-  </Sidebar>
 </template>
 
 <script setup lang="ts">
@@ -80,7 +84,6 @@ export interface PageProps {
   currentTab?: string;
 }
 
-
 const emit = defineEmits(["update:sidebarOpen", "update:currentTab"]);
 
 const props = withDefaults(defineProps<PageProps>(), {
@@ -88,10 +91,12 @@ const props = withDefaults(defineProps<PageProps>(), {
   gap: true,
 });
 
-const currentTab = props?.currentTab ? computed({
-  get: () => props.currentTab,
-  set: (val) => emit('update:currentTab', val)
-}) : ref();
+const currentTab = props?.currentTab
+  ? computed({
+      get: () => props.currentTab,
+      set: (val) => emit("update:currentTab", val),
+    })
+  : ref();
 
 watch(
   () => props.sidebarOpen,
