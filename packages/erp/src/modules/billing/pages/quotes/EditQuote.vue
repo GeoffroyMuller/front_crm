@@ -7,25 +7,27 @@
     :padding="null"
     :gap="false"
   >
-    <div
-      class="xl:hidden sticky top-0 w-full flex justify-between items-center bg-white z-20 h-fit py-2 px-4 border-b border-0 border-solid border-b-slate-200"
-    >
-      <Text typo="title7" htmlComponent="div">
-        {{ $t("pages.edit-quote.total-global") }}
-      </Text>
-      <div class="flex gap-2 items-center w-fit">
-        <Text typo="title7">
-          {{ $t("pages.edit-quote.without-taxes") }}
+    <template #head-sticky>
+      <div
+        class="xl:hidden sticky top-0 w-full flex justify-between items-center bg-white z-20 h-fit py-2 px-4 border-b border-0 border-solid border-b-slate-200"
+      >
+        <Text typo="title7" htmlComponent="div">
+          {{ $t("pages.edit-quote.total-global") }}
         </Text>
-        <Text typo="title3">
-          {{ $utils.formatPrice(prices.totalPrice) }}
-        </Text>
-        <Text typo="title7">{{ $t("pages.edit-quote.with-taxes") }}</Text>
-        <Text typo="title3">
-          {{ $utils.formatPrice(prices.totalPriceWithTaxes) }}
-        </Text>
+        <div class="flex gap-2 items-center w-fit">
+          <Text typo="title7">
+            {{ $t("pages.edit-quote.without-taxes") }}
+          </Text>
+          <Text typo="title3">
+            {{ $utils.formatPrice(prices.totalPrice) }}
+          </Text>
+          <Text typo="title7">{{ $t("pages.edit-quote.with-taxes") }}</Text>
+          <Text typo="title3">
+            {{ $utils.formatPrice(prices.totalPriceWithTaxes) }}
+          </Text>
+        </div>
       </div>
-    </div>
+    </template>
 
     <PageContent padding="large">
       <Form
@@ -295,6 +297,7 @@ import FloatingButton from "core/src/components/FloatingButton.vue";
 import EditQuoteSummary from "../../components/quotes/EditQuoteSummary.vue";
 import useUI from "core/src/composables/ui";
 import Wysiwyg from "core/src/components/form/Wysiwyg.vue";
+import PageHead from "core/src/components/PageHead.vue";
 
 const clientsStore = useClientStore();
 const quotesStore = useQuoteStore();

@@ -1,6 +1,7 @@
 <template>
   <div
-    class="h-pageHeadHeight min-h-pageHeadHeight max-h-pageHeadHeight border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0 px-contentXMobile md:px-contentX flex items-center justify-between gap-6"
+    :class="{ sticky: true }"
+    class="top-0 z-30 h-pageHeadHeight min-h-pageHeadHeight max-h-pageHeadHeight border border-slate-200 bg-white border-solid border-l-0 border-r-0 border-t-0 px-contentXMobile md:px-contentX flex h-full justify-between items-center"
   >
     <div class="flex gap-5 items-center h-full">
       <div
@@ -42,6 +43,10 @@
     <div>
       <slot name="head-end" />
     </div>
+  </div>
+
+  <div class="sticky top-0 z-30 flex item-start flex-col justify-between">
+    <slot name="head-sticky" />
   </div>
 </template>
 
