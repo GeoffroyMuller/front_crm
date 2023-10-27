@@ -1,6 +1,6 @@
 <template>
   <Page
-    title="Monorepo"
+    :title="project.name"
     icon="check_circle"
     v-model:sidebarOpen="sidebarOpen"
     class="pb-0"
@@ -119,12 +119,23 @@ import type { Task } from "@/types/project";
 import ProjectKanban from "../components/ProjectKanban.vue";
 import ProjectView from "../components/ProjectView.vue";
 import ProjectViewList from "../components/ProjectViewList.vue";
+import useProjectsStore from "../stores/projects.store";
+import { onMounted } from "vue";
+import { computed } from "vue";
 
 const { id } = useRoute().params;
 
 const selected = ref<Task>();
 const sidebarOpen = ref(false);
 const taskSidebar = ref();
+
+const projectStore = useProjectsStore();
+
+onMounted(() => {
+  projectStore.fetchById(id as string);
+});
+
+const project = computed(() => projectStore.getById(id as string));
 
 function focusSidebarTitle() {
   taskSidebar?.value?.$refs.titleInputRef?.$refs?.internalRef?.focus();
