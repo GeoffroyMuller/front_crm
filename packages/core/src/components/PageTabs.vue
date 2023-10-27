@@ -5,7 +5,7 @@
       tabindex="0"
       @keyup.enter="handleClickTab(tab.id)"
       :key="tab.id"
-      class="page-tab typo-button mb-3"
+      class="page-tab typo-button"
       :class="{ selected: tab.id == _currentTab }"
       @click="handleClickTab(tab.id)"
     >
@@ -94,7 +94,7 @@ watch(
     text-align: center;
     position: relative;
     cursor: pointer;
-    @apply px-[1px] w-max whitespace-nowrap;
+    @apply px-[1px] w-max whitespace-nowrap mb-3;
     &:hover:not(.selected) {
       opacity: 0.8;
     }
