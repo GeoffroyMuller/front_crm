@@ -5,6 +5,7 @@ export async function up(knex: Knex): Promise<void> {
     table.increments("id");
     table.integer("idCompany");
     table.string("name", 255);
+    table.string("color", 50);
     table.text("description");
   });
   await knex.schema.createTable("sections", function (table) {

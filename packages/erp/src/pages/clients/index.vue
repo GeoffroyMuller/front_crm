@@ -144,7 +144,7 @@ async function deleteCompany(company: Company) {
     try {
       await companiesStore.delete(company.id);
       toast({
-        type: "primary",
+        type: "info",
         message: t("deleted"),
       });
       await companiesStore.fetchList();

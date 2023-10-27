@@ -41,9 +41,10 @@ const props = defineProps<{
   open: boolean;
 }>();
 
-const emit = defineEmits(["update:open"]);
+const emit = defineEmits(["update:open", "save"]);
 
-function create() {
+function create(data: any) {
+  emit("save", data);
   emit("update:open", false);
 }
 </script>
