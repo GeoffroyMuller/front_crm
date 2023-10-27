@@ -100,7 +100,7 @@ const columns = computed({
   .columns-wrapper {
     @apply h-full flex items-start;
     .column {
-      @apply h-full min-h-[200px] flex flex-col px-kanbanColumnPadding min-w-[275px];
+      @apply h-full min-h-[200px] flex flex-col px-kanbanColumnPadding min-w-[300px] max-w-[300px];
       .drag_handle {
         cursor: grab;
       }

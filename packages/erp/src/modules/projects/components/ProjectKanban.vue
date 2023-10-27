@@ -70,7 +70,7 @@
 import type { Section, Project, Task } from "@/types/project";
 import Kanban, { type KanbanColumns } from "core/src/components/Kanban.vue";
 import { SIDEBAR_ANIMATION_DURATION } from "core/src/components/sidebar/sidebar.types";
-import { cloneDeep, omitBy, uniqueId } from "lodash";
+import { omitBy, uniqueId } from "lodash";
 import { nextTick, computed, ref, watch } from "vue";
 import Card from "core/src/components/card/Card.vue";
 import Input from "core/src/components/form/Input.vue";
