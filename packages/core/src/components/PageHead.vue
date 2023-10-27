@@ -6,6 +6,7 @@
       <div
         v-if="icon || imageSrc"
         class="overflow-hidden max-md:hidden bg-gradient-245 from-primary-400 to-primary-300 shadow-md shadow-primary-200 rounded grid place-items-center w-[3.25rem] min-w-[3.25rem] h-[3.25rem]"
+        :style="iconBgColor ? { background: iconBgColor } : undefined"
       >
         <Icon v-if="icon && !imageSrc" :name="icon" color="white" size="3xl" />
         <img

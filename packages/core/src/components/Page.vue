@@ -74,6 +74,7 @@ export interface PageProps {
   hideTitleBar?: boolean;
   tabs?: PageTab[];
   icon?: IconName;
+  iconBgColor?: string;
   imageSrc?: string;
 
   sidebarOpen?: boolean;
