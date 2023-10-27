@@ -318,7 +318,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         _setStyleProperties({ mb: props.gap });
         coord.transformTranslate = "translateX(100%)";
         break;
-      case "top-end-corner":
+      /* case "top-end-corner":
         coord.right = 0;
         coord.top = 0;
         coord.bottom =
@@ -335,7 +335,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coord.right = dimensions.activator.right + dimensions.activator.width;
         _setStyleProperties({ mb: props.gap, mr: props.gap });
         coord.transformTranslate = "";
-        break;
+        break; */
       case "bottom-end":
         coord.right = 0;
         coord.bottom = 0;
@@ -352,7 +352,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         _setStyleProperties({ mt: props.gap });
         coord.transformTranslate = "translateX(100%)";
         break;
-      case "bottom-end-corner":
+      /* case "bottom-end-corner":
         coord.right = 0;
         coord.bottom = 0;
         coord.top = dimensions.activator.top + dimensions.activator.height;
@@ -367,7 +367,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coord.right = dimensions.activator.right + dimensions.activator.width;
         _setStyleProperties({ mt: props.gap, mr: props.gap });
         coord.transformTranslate = "";
-        break;
+        break; */
       case "left-start":
         coord.left = 0;
         coord.bottom = 0;
