@@ -1,6 +1,6 @@
 <template>
   <Page
-    :title="project.name"
+    :title="project?.name || ''"
     icon="check_circle"
     v-model:sidebarOpen="sidebarOpen"
     class="pb-0"
