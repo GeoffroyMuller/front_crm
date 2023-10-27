@@ -17,9 +17,10 @@ export interface Tab {
 export type UseTabsProps = {
   tabRef: Ref<HTMLElement>;
   tabs: Tab[];
+  defaultTab?: Tab["id"];
 };
 
-export default function useTabs({ tabRef, tabs }: UseTabsProps) {
+export default function useTabs({ tabRef, tabs, defaultTab }: UseTabsProps) {
   const currentTab = ref<Tab["id"]>();
 
   const nbTabsHidden = ref(0);
@@ -91,8 +92,8 @@ export default function useTabs({ tabRef, tabs }: UseTabsProps) {
     window.removeEventListener("resize", computeTabOverflow);
   });
 
-  function handleClickTab(tab: Tab) {
-    currentTab.value = tab.id;
+  function handleClickTab(tabid: Tab["id"]) {
+    currentTab.value = tabid;
     nextTick(computeTabSelectedIndicator);
   }
 
@@ -117,7 +118,7 @@ export default function useTabs({ tabRef, tabs }: UseTabsProps) {
     () => tabs,
     (val, oldVal) => {
       if (!isEqual(val, oldVal)) {
-        handleClickTab(val?.[0]);
+        handleClickTab(defaultTab || val?.[0].id);
       }
     },
     { immediate: true }

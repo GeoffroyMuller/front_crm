@@ -3,11 +3,11 @@
     <div
       v-for="tab of tabsVisible"
       tabindex="0"
-      @keyup.enter="handleClickTab(tab)"
+      @keyup.enter="handleClickTab(tab.id)"
       :key="tab.id"
       class="page-tab typo-button mb-3"
       :class="{ selected: tab.id == _currentTab }"
-      @click="handleClickTab(tab)"
+      @click="handleClickTab(tab.id)"
     >
       {{ tab.title }}
     </div>
@@ -17,7 +17,7 @@
         tabsHidden.map((tab) => ({
           title: tab.title,
           action: () => {
-            handleClickTab(tab);
+            handleClickTab(tab.id);
           },
         }))
       "
@@ -43,6 +43,7 @@ import Button from "./Button.vue";
 interface PageTabsProps {
   tabs: Array<Tab>;
   currentTab?: Tab["id"];
+  defaultTab?: Tab["id"];
 }
 
 const props = withDefaults(defineProps<PageTabsProps>(), {});
@@ -59,6 +60,7 @@ const {
 } = useTabs({
   tabRef: tabRef as Ref<HTMLElement>,
   tabs: props.tabs,
+  defaultTab: props.defaultTab,
 });
 
 watch(

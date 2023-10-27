@@ -52,6 +52,7 @@ import { watch, computed, ref } from "vue";
 import PageHead from "./PageHead.vue";
 import Sidebar from "./sidebar/Sidebar.vue";
 import { SIDEBAR_ANIMATION_DURATION } from "./sidebar/sidebar.types";
+import type { Tab } from "src/composables/tabs";
 
 const sidebarRef = ref();
 
@@ -78,8 +79,8 @@ export interface PageProps {
   sidebarOpen?: boolean;
 
   currentTab?: string;
+  defaultTab?: Tab["id"];
 }
-
 
 const emit = defineEmits(["update:sidebarOpen", "update:currentTab"]);
 
@@ -88,10 +89,12 @@ const props = withDefaults(defineProps<PageProps>(), {
   gap: true,
 });
 
-const currentTab = props?.currentTab ? computed({
-  get: () => props.currentTab,
-  set: (val) => emit('update:currentTab', val)
-}) : ref();
+const currentTab = props?.currentTab
+  ? computed({
+      get: () => props.currentTab,
+      set: (val) => emit("update:currentTab", val),
+    })
+  : ref();
 
 watch(
   () => props.sidebarOpen,

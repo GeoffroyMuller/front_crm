@@ -36,6 +36,7 @@
           :tabs="tabs"
           :current-tab="currentTab"
           @update:current-tab="(tab: string) => $emit('update:currentTab', tab)"
+          :defaultTab="defaultTab"
         />
       </div>
     </div>

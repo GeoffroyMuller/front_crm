@@ -4,11 +4,11 @@
       <div
         v-for="tab of tabsVisible"
         tabindex="0"
-        @keyup.enter="handleClickTab(tab)"
+        @keyup.enter="handleClickTab(tab.id)"
         :key="tab.id"
         class="tab typo-button"
         :class="{ selected: tab.id == currentTab }"
-        @click="handleClickTab(tab)"
+        @click="handleClickTab(tab.id)"
       >
         {{ tab.title }}
       </div>
@@ -18,7 +18,7 @@
           tabsHidden.map((tab) => ({
             title: tab.title,
             action: () => {
-              handleClickTab(tab);
+              handleClickTab(tab.id);
             },
           }))
         "

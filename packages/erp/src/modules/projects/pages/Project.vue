@@ -4,6 +4,7 @@
     icon="check_circle"
     v-model:sidebarOpen="sidebarOpen"
     class="pb-0"
+    default-tab="kanban"
     :tabs="[
       {
         id: 'overview',
