@@ -35,6 +35,7 @@ const PROXIES = {
   reservations: proxy(SERVICES.calendar, PROXY_OPTIONS),
   projects: proxy(SERVICES.projects, PROXY_OPTIONS),
   tasks: proxy(SERVICES.projects, PROXY_OPTIONS),
+  sections: proxy(SERVICES.projects, PROXY_OPTIONS),
 } as { [key: string]: RequestHandler };
 
 app.use(xAuthMiddleware);

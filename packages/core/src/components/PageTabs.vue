@@ -5,7 +5,7 @@
       tabindex="0"
       @keyup.enter="handleClickTab(tab)"
       :key="tab.id"
-      class="page-tab typo-button mb-4"
+      class="page-tab typo-button mb-3"
       :class="{ selected: tab.id == _currentTab }"
       @click="handleClickTab(tab)"
     >

@@ -1,10 +1,12 @@
 import { Model } from "objection";
-import Project from "./project.model";
+import Project from "../projects/project.model";
 
 export default class Section extends Model {
   id?: number;
   name?: string;
   idProject?: number;
+
+  project?: Project;
 
   static get tableName() {
     return "sections";

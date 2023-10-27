@@ -2,6 +2,7 @@ import { IAuthRequest, User } from "core_api/types";
 import { Response } from "express";
 import { NotFoundError, handleError } from "core_api/errors";
 import SectionsService from "./sections.service";
+import { getRelationArray } from "core_api/controller";
 
 export default {
   create: async (req: IAuthRequest<User>, res: Response) => {
@@ -19,8 +20,7 @@ export default {
   update: async (req: IAuthRequest<User>, res: Response) => {
     try {
     
-      const item = { ...req.body, id: req.params.id, idProject: req.params.idProject };
-      console.log(item)
+      const item = { ...req.body, id: req.params.id };
       const updatedItem = await SectionsService.update(
         item,
         req.query,
@@ -46,4 +46,17 @@ export default {
       return handleError(req, res, err);
     }
   },
+  paginate: async (req: IAuthRequest<User>, res: Response) => {
+    try {
+      const items = await SectionsService.paginate(
+        req.params.idProject,
+        getRelationArray(req),
+        req.query,
+        req.auth
+      );
+      return res.status(200).json(items);
+    } catch (err) {
+      return handleError(req, res, err);
+    }
+  }
 };

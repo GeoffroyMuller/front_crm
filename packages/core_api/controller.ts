@@ -86,7 +86,7 @@ const controllerFactory: ControllerFactory = (service, opts = undefined) => {
       } catch (err) {
         return handleError(req, res, err);
       }
-    },
+    }, 
     update: async (req: IAuthRequest<any>, res: Response) => {
       try {
         const item = { ...req.body, id: req.params.id };

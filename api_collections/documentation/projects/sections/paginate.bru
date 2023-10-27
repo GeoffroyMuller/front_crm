@@ -1,0 +1,20 @@
+meta {
+  name: paginate
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{gatewayURL}}/projects/5/sections?page=1&pageSize=10
+  body: none
+  auth: none
+}
+
+query {
+  page: 1
+  pageSize: 10
+}
+
+headers {
+  Authorization: {{token}}
+}

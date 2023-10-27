@@ -3,7 +3,7 @@ import Section from "./sections.model";
 import { applyRelations } from "core_api/service";
 import { ID, User } from "core_api/types";
 import { handleFilters } from "core_api/services/filters.service";
-import Project from "./project.model";
+import Project from "../projects/project.model";
 import { AuthError } from "core_api/errors";
 
 export default {
@@ -18,21 +18,21 @@ export default {
     return res;
   },
   update: async (body: any, filters: any, auth: User) => {
-    const query = Section.query()
-      .where("idProject", body.idProject);
-    const project = await Project.query().findById(body.idProject);
+    const query = Section.query();
+    const id = body.id;
+    const project = (await Section.relatedQuery("project")
+      .for([id])
+      .first()) as Project;
     if (project?.idCompany != auth.idCompany) {
       throw new AuthError();
     }
-    const id = body.id; 
+
     delete body.id;
     const data = {
       ...body,
     };
     handleFilters(query, filters);
-    return query
-      .updateAndFetchById(id, data)
-      .execute() as Promise<Section>;
+    return query.updateAndFetchById(id, data).execute() as Promise<Section>;
   },
   remove: async (id: ID, filters: any, auth: User) => {
     const query = Section.query()
@@ -40,7 +40,7 @@ export default {
         Project.tableName,
         `${Project.tableName}.id`,
         "=",
-        `${Section.tableName}.id`
+        `${Section.tableName}.idProject`
       )
       .where(`${Project.tableName}.idCompany`, auth.idCompany);
     handleFilters(query, filters);
@@ -48,6 +48,27 @@ export default {
       .where(`${Section.tableName}.id`, id)
       .delete()
       .execute();
+
     return removed;
+  },
+  paginate: async (
+    idProject: ID,
+    relations: RelationExpression<Section>[],
+    filters: any,
+    auth: User
+  ) => {
+    const query = applyRelations<Section>(Section.query(), Section, relations);
+    query
+      .join(
+        Project.tableName,
+        `${Project.tableName}.id`,
+        "=",
+        `${Section.tableName}.idProject`
+      )
+      .where(`${Project.tableName}.idCompany`, auth.idCompany)
+      .andWhere("idProject", idProject);
+    query.page(filters.page ? filters.page - 1 : 0, filters.pageSize || 5);
+    handleFilters(query, filters);
+    return query.execute() as Promise<[]>;
   },
 };
