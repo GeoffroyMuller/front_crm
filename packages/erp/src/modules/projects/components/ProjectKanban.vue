@@ -151,7 +151,7 @@ function isSelected(element: Task) {
   return selected.value?.id === element.id && sidebarOpen.value;
 }
 
-function add(column: TaskKanbanColumn) {
+async function add(column: TaskKanbanColumn) {
   const index = columns.value.findIndex((c) => c.id === column.id);
 
   if (index != -1) {
@@ -159,10 +159,21 @@ function add(column: TaskKanbanColumn) {
       id: Math.random(),
       name: "",
     };
-    columns.value[index].elements.push(task);
-    selected.value = task as Task;
-    sidebarOpen.value = true;
-    props.focusSidebarTitle();
+    try {
+      const { id } = await tasksStore.create({
+        idSection: column.id as number,
+      });
+      columns.value[index].elements.push(task);
+      selected.value = task as Task;
+      sidebarOpen.value = true;
+      task.id = id;
+      props.focusSidebarTitle();
+    } catch (err) {
+      toast({
+        type: "danger",
+        message: t("error_occured"),
+      });
+    }
   }
 }
 

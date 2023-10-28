@@ -4,7 +4,7 @@
       <div class="flex items-center">
         <CheckCircle
           :checked="task?.checked"
-          @update:checked="task.completed = $event"
+          @update:checked="toggleCompleted()"
           size="xl"
         />
         <Input
@@ -102,4 +102,11 @@ const task = computed({
 });
 
 const dueDate = ref<string>(new Date().toISOString());
+
+function toggleCompleted() {
+  emit("update:selected", {
+    ...props.selected,
+    completed: !props?.selected?.completed,
+  });
+}
 </script>
