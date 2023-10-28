@@ -184,6 +184,7 @@ async function deleteRole(role: Role) {
         action: "confirm",
         label: t("delete"),
         buttonProps: {
+          icon: "delete",
           color: "danger",
         },
       },

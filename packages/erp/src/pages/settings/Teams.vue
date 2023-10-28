@@ -176,6 +176,7 @@ async function deleteUser(user: User) {
         action: "confirm",
         label: t("delete"),
         buttonProps: {
+          icon: "delete",
           color: "danger",
         },
       },

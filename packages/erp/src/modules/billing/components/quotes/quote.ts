@@ -92,6 +92,7 @@ export default function useQuote(props?: UseQuoteProps) {
           label: t("archive"),
           buttonProps: {
             color: "danger",
+            icon: "archive",
           },
         },
       ],

@@ -107,6 +107,7 @@ async function disconnect() {
           label: t("disconnect"),
           buttonProps: {
             color: "warning",
+            icon: "door_open",
           },
         },
       ],
