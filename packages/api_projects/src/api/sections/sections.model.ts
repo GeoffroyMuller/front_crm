@@ -1,5 +1,6 @@
 import { Model } from "objection";
 import Project from "../projects/project.model";
+import Task from "../tasks/task.model";
 
 export default class Section extends Model {
   id?: number;
@@ -7,6 +8,7 @@ export default class Section extends Model {
   idProject?: number;
 
   project?: Project;
+  tasks?: Task[];
 
   static get tableName() {
     return "sections";
@@ -20,6 +22,14 @@ export default class Section extends Model {
         join: {
           from: Section.tableName + ".idProject",
           to: Project.tableName + ".id",
+        },
+      },
+      tasks: {
+        relation: Model.HasManyRelation,
+        modelClass: Task,
+        join: {
+          from: Section.tableName + ".id",
+          to: Task.tableName + ".idSection",
         },
       },
     };

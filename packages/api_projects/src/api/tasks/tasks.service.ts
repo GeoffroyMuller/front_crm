@@ -75,4 +75,23 @@ export default {
     if (!project || project.idCompany != auth.idCompany) return null;
     return item;
   },
+  paginate: async (
+    relations: RelationExpression<Task>[],
+    filters: any,
+    auth: User
+  ) => {
+    let project: Project | undefined;
+    if (filters.idSection) {
+      project = await Section.relatedQuery<Project>("project")
+        .for([filters.idSection])
+        .first();
+      if (project?.idCompany != auth.idCompany) {
+        throw new AuthError();
+      }
+      return await Section.relatedQuery('tasks').for(filters.idSection).execute();
+    }
+    if (filters.idUser) {
+
+    }
+  },
 };
