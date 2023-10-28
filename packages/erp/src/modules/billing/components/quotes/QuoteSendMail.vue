@@ -3,7 +3,7 @@
     <ModalHead :title="$t('send_by_mail')"> </ModalHead>
     <Form @submit="send" :initial-value="formInitialData">
       <template #default="{ hasError }">
-        <ModalContent class="grid gap-2">
+        <ModalContent class="grid gap-4">
           <TextField name="subject" :label="$t('subject')" />
           <Wysiwyg :label="$t('content')" name="content" />
           <div class="flex items-end">
@@ -31,7 +31,6 @@
           <Button
             type="submit"
             color="success"
-            icon="mail"
             :loading="loading"
             :disabled="hasError"
           >

@@ -75,7 +75,27 @@ export default function useQuote(props?: UseQuoteProps) {
 
   async function setArchived(item: Quote) {
     const _quote = (props?.quote?.value || item) as Quote;
-    const confirmed = await confirm(t("pages.quotes.sure_archive_quote"));
+    const confirmed = await confirm({
+      message: t("pages.quotes.sure_archive_quote"),
+      type: "danger",
+      actions: [
+        {
+          action: "cancel",
+          label: t("cancel"),
+          buttonProps: {
+            variant: "text",
+            color: "black",
+          },
+        },
+        {
+          action: "confirm",
+          label: t("archive"),
+          buttonProps: {
+            color: "danger",
+          },
+        },
+      ],
+    });
     if (confirmed) {
       try {
         await quotestore.update(_quote.id, {

@@ -163,6 +163,23 @@ async function deleteUser(user: User) {
   const confirmConfig: ConfirmFunc["arguments"] = {
     message: t("settings-page.teams.sure_delete_user"),
     type: "danger",
+    actions: [
+      {
+        action: "cancel",
+        label: t("cancel"),
+        buttonProps: {
+          variant: "text",
+          color: "black",
+        },
+      },
+      {
+        action: "confirm",
+        label: t("delete"),
+        buttonProps: {
+          color: "danger",
+        },
+      },
+    ],
   };
   if (await confirm(confirmConfig)) {
     try {

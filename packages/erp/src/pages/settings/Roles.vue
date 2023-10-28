@@ -171,6 +171,23 @@ async function deleteRole(role: Role) {
   const confirmConfig: ConfirmFunc["arguments"] = {
     message: t("settings-page.role.sure_delete_role"),
     type: "danger",
+    actions: [
+      {
+        action: "cancel",
+        label: t("cancel"),
+        buttonProps: {
+          variant: "text",
+          color: "black",
+        },
+      },
+      {
+        action: "confirm",
+        label: t("delete"),
+        buttonProps: {
+          color: "danger",
+        },
+      },
+    ],
   };
   if (await confirm(confirmConfig)) {
     try {

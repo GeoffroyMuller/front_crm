@@ -92,7 +92,7 @@ async function disconnect() {
   if (
     await confirm({
       message: t("sure-disconnect"),
-      type: "info",
+      type: "warning",
       actions: [
         {
           action: "cancel",
@@ -106,7 +106,7 @@ async function disconnect() {
           action: "confirm",
           label: t("disconnect"),
           buttonProps: {
-            color: "primary",
+            color: "warning",
           },
         },
       ],

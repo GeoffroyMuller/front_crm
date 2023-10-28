@@ -32,9 +32,15 @@ export default {
     }
     handleFilters(query, filters);
     const res = await query.insert(data).execute();
-    if (project?.id) {
-      notifyUsers("createTask", res, []);
-    }
+
+    /* try {
+      if (project?.id) {
+        notifyUsers("createTask", res, []);
+      }
+    } catch (err) {
+      console.error(err);
+    } */
+
     return res;
   },
   findById: async (
@@ -62,7 +68,9 @@ export default {
       )) as Project;
     }
     if (item.idSection) {
-      project = await Section.relatedQuery('project').for([item.idSection]).first();
+      project = await Section.relatedQuery("project")
+        .for([item.idSection])
+        .first();
     }
     if (!project || project.idCompany != auth.idCompany) return null;
     return item;
