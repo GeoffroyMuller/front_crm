@@ -4,9 +4,13 @@
   >
     <div class="flex gap-5 items-center h-full">
       <div
-        v-if="icon || imageSrc"
+        v-if="icon || imageSrc || $slots.icon"
         class="overflow-hidden max-md:hidden bg-gradient-245 from-primary-400 to-primary-300 shadow-md shadow-primary-200 rounded grid place-items-center w-[3.25rem] min-w-[3.25rem] h-[3.25rem]"
-        :style="iconBgColor ? { background: iconBgColor } : undefined"
+        :style="
+          iconBgColor
+            ? { background: iconBgColor, '--tw-shadow-color': iconBgColor }
+            : undefined
+        "
       >
         <Icon v-if="icon && !imageSrc" :name="icon" color="white" size="3xl" />
         <img
@@ -15,6 +19,7 @@
           :src="imageSrc"
           :alt="''"
         />
+        <slot name="icon" />
       </div>
       <div
         class="flex flex-col items-start w-fit relative h-full gap-3"

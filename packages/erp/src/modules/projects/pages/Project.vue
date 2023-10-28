@@ -105,7 +105,11 @@
       <ProjectViewList />
     </template>
     <template #sidebar>
-      <TaskSidebar ref="taskSidebar" :selected="selected" />
+      <TaskSidebar
+        ref="taskSidebar"
+        :selected="selected"
+        @update:selected="($e) => (selected = $e)"
+      />
     </template>
   </Page>
 </template>

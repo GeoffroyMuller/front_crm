@@ -1,13 +1,20 @@
 <template>
   <SidebarHead :actions="[]">
     <template #title>
-      <Input
-        variant="title"
-        :model-value="task?.name"
-        @update:model-value="task.name = $event"
-        ref="titleInputRef"
-        class="-ml-inputXPadding"
-      />
+      <div class="flex items-center">
+        <CheckCircle
+          :checked="task?.checked"
+          @update:checked="task.completed = $event"
+          size="xl"
+        />
+        <Input
+          variant="title"
+          :model-value="task?.name"
+          @update:model-value="task.name = $event"
+          ref="titleInputRef"
+          class="mx-4"
+        />
+      </div>
     </template>
   </SidebarHead>
   <SidebarContent class="grid gap-6 max-w-[650px]">
@@ -81,6 +88,7 @@ import Text from "core/src/components/Text.vue";
 import Avatar from "core/src/components/Avatar.vue";
 import DatePicker from "core/src/components/form/datepicker/DatePicker.vue";
 import Wysiwyg2 from "../../../../../core/src/components/form/Wysiwyg2.vue";
+import CheckCircle from "./CheckCircle.vue";
 
 const props = defineProps<{
   selected?: any;

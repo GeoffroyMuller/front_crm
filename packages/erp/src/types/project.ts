@@ -18,4 +18,5 @@ export type Task = {
   description: string;
   idProject: number;
   idSection: number;
+  completed?: boolean;
 };

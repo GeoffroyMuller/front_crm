@@ -5,6 +5,9 @@
     v-model:current-tab="currentTab"
     :style="contentStyle"
   >
+    <template #icon>
+      <slot name="icon" />
+    </template>
     <template #head-end v-if="sidebarWidth === 0">
       <slot name="head-end" />
     </template>

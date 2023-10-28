@@ -52,8 +52,9 @@
           '!cursor-grab': drag,
         }"
       >
-        <div>
-          {{ element.name }}
+        <div class="flex gap-2 items-center">
+          <CheckCircle :checked="element.completed" size="sm" />
+          <span>{{ element.name }}</span>
         </div>
       </Card>
     </template>
@@ -87,6 +88,8 @@ import { useI18n } from "vue-i18n";
 import useSectionsStore from "../stores/sections.store";
 import useTasksStore from "../stores/tasks.store";
 import ActionMenu from "core/src/components/ActionMenu.vue";
+import CheckCircle from "./CheckCircle.vue";
+import ProjectIcon from "./ProjectIcon.vue";
 
 const props = defineProps<{
   id: Project["id"];
