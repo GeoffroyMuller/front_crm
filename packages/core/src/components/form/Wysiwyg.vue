@@ -1,5 +1,5 @@
 <template>
-  <div class="wysiwyg">
+  <div class="wysiwyg" @click="$refs.quill?.getQuill()?.focus?.()">
     <label v-if="label">
       {{ label }}
     </label>
@@ -80,7 +80,7 @@ button.ql-active .ql-stroke {
     height: fit-content;
     .ql-toolbar {
       opacity: 0;
-      pointer-events: none;
+      visibility: hidden;
       user-select: none;
       border: none;
       transition: opacity 0.2s;
@@ -102,7 +102,7 @@ button.ql-active .ql-stroke {
       }
       .ql-toolbar {
         opacity: 100;
-        pointer-events: initial;
+        visibility: visible;
         user-select: initial;
       }
     }
