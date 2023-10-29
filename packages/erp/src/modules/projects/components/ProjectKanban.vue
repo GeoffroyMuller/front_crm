@@ -19,7 +19,10 @@
           :model-value="column.title"
           :key="column.id"
           @blur="
-            ($event) => handleUpdateSectionTitle(column, $event.target.value)
+            ($event) => {
+              column.title = $event.target.value;
+              handleUpdateSectionTitle(column, $event.target.value);
+            }
           "
           variant="text"
           class="!pl-0 hover:!pl-inputXPadding focus-within:!pl-inputXPadding transition-all flex-1"
