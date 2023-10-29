@@ -31,7 +31,7 @@
             }
           "
           variant="text"
-          class="!pl-0 hover:!pl-inputXPadding focus-within:!pl-inputXPadding transition-all flex-1"
+          class="flex-1"
           input-class="!font-semibold"
           :id="getIdColumInputTitle(column.id)"
         />
@@ -47,7 +47,7 @@
             },
           ]"
         >
-          <IconButton name="more_horiz" class="mx-1" color="primary" />
+          <IconButton name="more_horiz" class="mx-1" color="black" />
         </ActionMenu>
       </div>
     </template>

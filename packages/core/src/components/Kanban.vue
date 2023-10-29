@@ -16,13 +16,13 @@
         <template #item="{ element: column }">
           <div class="column">
             <div class="flex items-center justify-between typo-title4">
+              <Icon name="drag_indicator" class="drag_handle" />
               <div v-if="!$slots.title">
                 {{ column?.title || "" }}
               </div>
               <div v-else class="flex-1">
                 <slot name="title" :column="column" />
               </div>
-              <Icon name="drag_indicator" class="drag_handle" />
             </div>
 
             <draggable
@@ -51,7 +51,7 @@
           </div>
         </template>
       </draggable>
-      <div class="column" v-if="$slots['section-end']">
+      <div class="column !bg-transparent" v-if="$slots['section-end']">
         <slot name="section-end" />
       </div>
     </div>
@@ -95,12 +95,11 @@ const columns = computed({
 <style>
 .kanban {
   height: 100%;
-  @apply -mx-kanbanColumnPadding;
   .columns,
   .columns-wrapper {
-    @apply h-full flex items-start;
+    @apply h-full flex items-start gap-4;
     .column {
-      @apply h-full min-h-[200px] flex flex-col px-kanbanColumnPadding min-w-[300px] max-w-[300px];
+      @apply h-full min-h-[200px] flex flex-col p-4 rounded min-w-[300px] max-w-[300px] bg-gray-100;
       .drag_handle {
         cursor: grab;
       }
