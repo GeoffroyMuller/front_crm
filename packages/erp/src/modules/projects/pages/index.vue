@@ -62,7 +62,7 @@ import ActionMenu, { type Action } from "core/src/components/ActionMenu.vue";
 import IconButton from "core/src/components/IconButton.vue";
 import type { Project } from "@/types/project";
 
-const { toast } = useUI();
+const { toast, confirm } = useUI();
 const { t } = useI18n();
 
 const addProjectOpen = ref(false);
@@ -70,6 +70,32 @@ const addProjectOpen = ref(false);
 const projectStore = useProjectsStore();
 
 async function removeProject(p: Project) {
+  if (
+    !(await confirm({
+      message: t("pages.projects.sure-delete-project"),
+      type: "danger",
+      actions: [
+        {
+          action: "cancel",
+          label: t("cancel"),
+          buttonProps: {
+            variant: "text",
+            color: "black",
+          },
+        },
+        {
+          action: "confirm",
+          label: t("delete"),
+          buttonProps: {
+            icon: "delete",
+            color: "danger",
+          },
+        },
+      ],
+    }))
+  ) {
+    return;
+  }
   try {
     await projectStore.delete(p.id);
     projectStore.fetchList();

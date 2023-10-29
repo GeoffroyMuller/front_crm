@@ -9,14 +9,16 @@
     - yarn generate:keypair
     - yarn start:apis
 # scripts
-yarn setup
-    -env: Copy packages/{PACKAGE_NAME}/.env.sample in packages/{PACKAGE_NAME}/.env
-    -migrate: 'yarn migrate' in packages/api_{PACKAGE_NAME}
-    -keypair: yarn generate:keypair
-    -all: equivalent "yarn setup -env -migrate"
-yarn start:apis
+- yarn setup
+    - -env: Copy packages/{PACKAGE_NAME}/.env.sample in packages/{PACKAGE_NAME}/.env
+    - -migrate: 'yarn migrate' in packages/api_{PACKAGE_NAME}
+    - -keypair: yarn generate:keypair
+    - -all: equivalent "yarn setup -env -migrate"
+- yarn start:apis
+    
     'yarn dev' in all packages/api_{PACKAGE_NAME}
-yarn generate:keypair
+- yarn generate:keypair
+    
     Generate private and public keys for authentication
 
 # documentations

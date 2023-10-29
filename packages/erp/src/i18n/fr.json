@@ -27,6 +27,7 @@
       "share": "Partager",
       "new-projects": "Nouveau projet",
       "create-project": "Créer le projet",
+      "sure-delete-project": "Etes vous sur de vouloir supprimer ce projet ?",
       "form": {
         "name": "Titre du projet",
         "color": "Couleur",
