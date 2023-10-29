@@ -2,7 +2,7 @@
   <SidebarHead
     :actions="[
       {
-        action: () => removeTask(task),
+        action: () => handleRemoveTask(task),
         title: $t('delete'),
         icon: 'delete',
         color: 'danger',
@@ -87,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
@@ -100,16 +100,24 @@ import Wysiwyg from "../../../../../core/src/components/form/Wysiwyg.vue";
 import CheckCircle from "./CheckCircle.vue";
 import useTask from "./tasks.composable";
 import { debounce } from "lodash";
+import type { Task } from "@/types/project";
+import { SIDEBAR_ANIMATION_DURATION } from "core/src/components/sidebar/sidebar.types";
+import { nextTick } from "vue";
 
 const props = defineProps<{
   selected?: any;
+  sidebarOpen?: boolean;
 }>();
 
-const emit = defineEmits([]);
+const emit = defineEmits(["update:selected"]);
 
-const task = computed(() => props.selected);
+const task = computed<Task>(() => props.selected);
 
 const { removeTask, toggleCompleted, updateName } = useTask();
+
+function handleRemoveTask(task: Task) {
+  removeTask(task);
+}
 
 const handleChangeTitle = debounce((val) => {
   updateName(task.value, val);

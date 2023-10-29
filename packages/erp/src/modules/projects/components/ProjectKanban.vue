@@ -168,6 +168,28 @@ const selected = computed({
   set: (val) => emit("update:selected", val),
 });
 
+watch(
+  () => selected.value,
+  (val, old) => {
+    if (old != null && val != null) {
+      let columnIndex, taskIndex;
+      columns.value.find((c, i) => {
+        const index = c.elements.findIndex((t) => t.id == val.id);
+        if (index == -1) return false;
+        columnIndex = i;
+        taskIndex = index;
+        return true;
+      });
+      if (columnIndex && taskIndex) {
+        columns.value[columnIndex].elements[taskIndex] = val;
+      }
+    }
+  },
+  {
+    deep: true,
+  }
+);
+
 const sidebarOpen = computed({
   get: () => props.sidebarOpen,
   set: (val) => emit("update:sidebarOpen", val),
@@ -211,7 +233,6 @@ async function add(prepareNew = false) {
   const title = addTaskTitle.value;
   addTaskTitle.value = "";
   const index = columns.value.findIndex((c) => c.id === column.id);
-  console.error({ index, column });
   if (index != -1) {
     try {
       const task = await tasksStore.create({
