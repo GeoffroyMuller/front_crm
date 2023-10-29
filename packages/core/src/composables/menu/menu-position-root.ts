@@ -158,7 +158,6 @@ export default function useMenuPositionRoot(props: MenuProps) {
     },
     { immediate: true }
   );
-
   /*   function _setStyleProperties({
     p,
     pt,
@@ -210,6 +209,8 @@ export default function useMenuPositionRoot(props: MenuProps) {
       container,
       activator
     );
+    let marginStyle: { [key: string]: string } | undefined;
+
     switch (
       getPlacementAlignmentToString(
         possiblePosition.placement,
@@ -409,21 +410,25 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coordArrowContainer.transform =
           coordArrowContainer.transform + "translateX(-100%) rotate(270deg)";
         coordArrowContainer.left = "0";
+        marginStyle = _toMarginStyle("left", props.space);
       }
       if (placement == "left") {
         coordArrowContainer.transform =
           coordArrowContainer.transform + "translateX(100%) rotate(90deg)";
         coordArrowContainer.right = "0";
+        marginStyle = _toMarginStyle("right", props.space);
       }
       if (placement == "top") {
         coordArrowContainer.transform =
           coordArrowContainer.transform + "translateY(100%) rotate(180deg)";
         coordArrowContainer.bottom = "0";
+        marginStyle = _toMarginStyle("bottom", props.space);
       }
       if (placement == "bottom") {
         coordArrowContainer.transform =
           coordArrowContainer.transform + "translateY(-100%) rotate(0deg)";
         coordArrowContainer.top = "0";
+        marginStyle = _toMarginStyle("top", props.space);
       }
     }
     if (alignment != null) {
@@ -442,30 +447,38 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coordArrowContainer.bottom = "0";
       }
     }
-    return { coord, coordArrowContainer };
+    return { coord, coordArrowContainer, marginStyle };
   }
-  function _toStyleMargin(placement?: MenuProps["placement"], space?: string) {
-    if (!placement || !space) return;
+  function _toMarginStyle(
+    marginPlacement?: MenuProps["placement"],
+    space?: string
+  ): { [key: string]: string } | undefined {
+    if (!marginPlacement || !space) return;
 
-    return { ["margin" + `${placement}`.toUpperCase()]: space };
+    const placementString = `${marginPlacement}`;
+    return {
+      ["margin" +
+      placementString.charAt(0).toUpperCase() +
+      placementString.slice(1)]: space,
+    };
   }
   function _setStyle() {
     const dimensions = {
       container: getDimensions(container.value as HTMLElement),
       activator: getDimensions(activator.value as HTMLElement),
     };
-    const { coord, coordArrowContainer } = _getCoordContainer(
+    const { coord, coordArrowContainer, marginStyle } = _getCoordContainer(
       props.placement,
       props.alignment,
       dimensions
     );
     Object.assign(container.value.style, {
+      ...marginStyle,
       top: coord.top === 0 ? "auto" : coord.top + "px",
       left: coord.left === 0 ? "auto" : coord.left + "px",
       bottom: coord.bottom === 0 ? "auto" : coord.bottom + "px",
       right: coord.right === 0 ? "auto" : coord.right + "px",
       transform: coord.transformTranslate,
-      ..._toStyleMargin(props.placement, props.space),
     });
 
     if (props.hasArrow === true) {
