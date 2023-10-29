@@ -19,7 +19,9 @@
         <Input
           variant="title"
           :model-value="task?.name"
-          @update:model-value="handleChangeTitle"
+          @update:model-value="(val) => (task.name = val)"
+          @blur="updateName(task, task.name)"
+          @keypress.enter="updateName(task, task.name)"
           ref="titleInputRef"
           class="mx-4"
         />
@@ -126,10 +128,6 @@ async function handleToggleCompleted() {
 function handleRemoveTask(task: Task) {
   removeTask(task);
 }
-
-const handleChangeTitle = debounce((val) => {
-  updateName(task.value, val);
-}, 500);
 
 const dueDate = ref<string>(new Date().toISOString());
 </script>
