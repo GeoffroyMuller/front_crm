@@ -12,7 +12,7 @@
     <template #title>
       <div class="flex items-center">
         <CheckCircle
-          :checked="task?.checked"
+          :checked="task?.completed"
           @update:checked="toggleCompleted(task)"
           size="xl"
         />
