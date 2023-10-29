@@ -13,6 +13,22 @@ export default {
       return handleError(req, res, err);
     }
   },
+  update: async (req: IAuthRequest<User>, res: Response) => {
+    try {
+      const item = await TasksService.update(
+        req.params.id,
+        req.body,
+        req.query,
+        req.auth
+      );
+      if (!item) {
+        throw new NotFoundError("no item found");
+      }
+      return res.status(200).json(item);
+    } catch (err) {
+      return handleError(req, res, err);
+    }
+  },
   // TODO : SECURITY
   findByID: async (req: IAuthRequest<User>, res: Response) => {
     try {

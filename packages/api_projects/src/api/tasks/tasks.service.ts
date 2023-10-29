@@ -9,7 +9,7 @@ import { notifyUsers } from "core_api/services/realtime.service";
 import { applyRelations } from "core_api/service";
 import projectService from "../projects/project.service";
 
-async function findById (
+async function findById(
   id: ID,
   relations: RelationExpression<Task>[],
   filters: any,
@@ -43,7 +43,11 @@ async function findById (
 }
 
 export default {
-  create: async (item: Partial<Task> & {after?: Task['id']}, filters: any, auth: User) => {
+  create: async (
+    item: Partial<Task> & { after?: Task["id"] },
+    filters: any,
+    auth: User
+  ) => {
     const query = Task.query();
     const data = { ...item };
     let project: Project | undefined;
@@ -55,13 +59,15 @@ export default {
         throw new AuthError();
       }
       data.idProject = project?.id;
-      const tasks = await Section.relatedQuery('tasks').for([data.idSection]).orderBy('order', 'DESC');
+      const tasks = await Section.relatedQuery("tasks")
+        .for([data.idSection])
+        .orderBy("order", "DESC");
       if (tasks?.length === 0) {
         data.order = 1;
       } else {
         data.order = (tasks[0].order || 0) + 1;
       }
-    }  else {
+    } else {
       if (!data.idUser) throw new AuthError();
       data.idUser = auth.id;
     }
@@ -78,7 +84,7 @@ export default {
 
     return res;
   },
-  
+
   remove: async (
     id: ID,
     relations: RelationExpression<Task>[],
@@ -110,5 +116,19 @@ export default {
     }
     if (filters.idUser) {
     }
+  },
+  update: async (
+    id: ID,
+    data: Partial<Task> & { after?: Task["id"] },
+    filters: any,
+    auth: User
+  ) => {
+    const item = await findById(id, [], filters, auth);
+    if (!item) return null;
+    await item.$query().update(data);
+    return {
+      ...item,
+      ...data,
+    };
   },
 };
