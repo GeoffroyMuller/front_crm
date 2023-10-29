@@ -51,7 +51,24 @@ export default function useTask() {
     }
   }
 
-  async function toggleCompleted(task: Task) {}
+  async function toggleCompleted(task: Task) {
+    try {
+      const completed = !task.completed;
+      await tasksStore.update(task.id, { completed });
+      if (completed) {
+        toast({
+          type: "info",
+          message: t("pages.projects.completed"),
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      toast({
+        type: "danger",
+        message: t("error_occured"),
+      });
+    }
+  }
 
   async function updateName(task: Task, val: string) {
     try {

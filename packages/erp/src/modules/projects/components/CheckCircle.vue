@@ -2,8 +2,8 @@
   <div
     @click="$emit('update:checked', !checked)"
     :class="{
-      'w-8 h-8': size === 'xl',
-      'w-6 h-6': size !== 'xl',
+      'w-7 h-7': size === 'xl',
+      'w-5 h-5': size !== 'xl',
 
       'hover:bg-success-50': !checked,
       'bg-gradient-245 from-success-400 to-success-300': checked,

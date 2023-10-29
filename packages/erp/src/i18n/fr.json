@@ -31,6 +31,7 @@
       "sure-delete-project": "Etes vous sur de vouloir supprimer ce projet ?",
       "sure_delete_task": "Etes vous sur de vouloir supprimer cette tâche ?",
       "tasks-deleted": "Tâche supprimé",
+      "completed": "Tâche terminé",
       "form": {
         "name": "Titre du projet",
         "color": "Couleur",
