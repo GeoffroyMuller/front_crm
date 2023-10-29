@@ -18,6 +18,12 @@
         <Input
           :model-value="column.title"
           :key="column.id"
+          @keypress.enter="
+            ($event) => {
+              $event.target.blur();
+              addColumn();
+            }
+          "
           @blur="
             ($event) => {
               column.title = $event.target.value;
@@ -75,7 +81,7 @@
             :id="getAddTaskInputID(column.id)"
             v-model="addTaskTitle"
             @blur="add()"
-            @keypress.enter="add()"
+            @keypress.enter="add(true)"
           />
         </div>
       </Card>
@@ -197,20 +203,25 @@ function prepareAdd(column: TaskKanbanColumn) {
   }, 100);
 }
 
-async function add() {
+async function add(prepareNew = false) {
   if (addTaskOpen.value == null) return;
-  const { id: idSection } = addTaskOpen.value;
-  addTaskOpen.value = undefined;
+  const column = addTaskOpen.value;
   if (addTaskTitle.value.length == 0) return;
-  const index = columns.value.findIndex((c) => c.id === idSection);
+  const title = addTaskTitle.value;
+  addTaskTitle.value = "";
+  if (prepareNew) {
+    addTaskOpen.value = column;
+  } else {
+    addTaskOpen.value = undefined;
+  }
+  const index = columns.value.findIndex((c) => c.id === column.id);
   if (index != -1) {
     try {
       const task = await tasksStore.create({
-        idSection: idSection as number,
-        name: addTaskTitle.value || "",
+        idSection: column.id as number,
+        name: title,
       });
       columns.value[index].elements.push(task);
-      addTaskTitle.value = "";
     } catch (err) {
       toast({
         type: "danger",
