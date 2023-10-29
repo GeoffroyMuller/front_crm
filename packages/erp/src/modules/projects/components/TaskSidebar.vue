@@ -13,7 +13,7 @@
       <div class="flex items-center">
         <CheckCircle
           :checked="task?.completed"
-          @update:checked="toggleCompleted(task)"
+          @update:checked="handleToggleCompleted()"
           size="xl"
         />
         <Input
@@ -101,8 +101,6 @@ import CheckCircle from "./CheckCircle.vue";
 import useTask from "./tasks.composable";
 import { debounce } from "lodash";
 import type { Task } from "@/types/project";
-import { SIDEBAR_ANIMATION_DURATION } from "core/src/components/sidebar/sidebar.types";
-import { nextTick } from "vue";
 
 const props = defineProps<{
   selected?: any;
@@ -111,9 +109,19 @@ const props = defineProps<{
 
 const emit = defineEmits(["update:selected"]);
 
-const task = computed<Task>(() => props.selected);
+const task = ref<Task>(props.selected);
+
+watch(
+  () => props.selected,
+  () => (task.value = { ...props.selected })
+);
 
 const { removeTask, toggleCompleted, updateName } = useTask();
+
+async function handleToggleCompleted() {
+  await toggleCompleted({ ...task.value });
+  task.value.completed = !task.value.completed;
+}
 
 function handleRemoveTask(task: Task) {
   removeTask(task);

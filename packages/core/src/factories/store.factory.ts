@@ -58,7 +58,7 @@ export interface APIStoreActions<T> {
 
 export interface APIStoreGetters<T> extends _GettersTree<APIStoreStateTree<T>> {
   getList: () => Array<T>;
-  getById: () => (id: ID) => T;
+  getById: () => (id: ID) => T | undefined;
 }
 
 export type APIStoreDef<T> = StoreDefinition<

@@ -52,20 +52,11 @@
       </div>
     </template>
     <template #element="{ element }">
-      <Card
-        selectable
-        :selected="isSelected(element)"
-        class="p-4 min-h-[70px]"
+      <TaskCard
+        :isSelected="isSelected"
+        :element="element"
         @click.stop="handleClickCard(element, $event)"
-        :class="{
-          '!cursor-grab': drag,
-        }"
-      >
-        <div class="flex gap-2 items-center">
-          <CheckCircle :checked="element.completed" size="sm" />
-          <span>{{ element.name }}</span>
-        </div>
-      </Card>
+      />
     </template>
     <template #column-footer="{ column }">
       <Card
@@ -114,7 +105,7 @@ import { useI18n } from "vue-i18n";
 import useSectionsStore from "../stores/sections.store";
 import useTasksStore from "../stores/tasks.store";
 import ActionMenu from "core/src/components/ActionMenu.vue";
-import CheckCircle from "./CheckCircle.vue";
+import TaskCard from "./TaskCard.vue";
 
 const props = defineProps<{
   id: Project["id"];
