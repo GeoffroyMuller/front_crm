@@ -70,9 +70,9 @@
         ></Select>
       </div>
     </div>
-    <div class="grid gap-2 max-w-[650px]">
+    <div class="grid gap-4 max-w-[650px]">
       <Text typo="title7">{{ $t("pages.projects.task.description") }}</Text>
-      <Wysiwyg2 variant="text"></Wysiwyg2>
+      <Wysiwyg></Wysiwyg>
     </div>
   </SidebarContent>
 </template>
@@ -87,7 +87,7 @@ import Select from "core/src/components/form/Select.vue";
 import Text from "core/src/components/Text.vue";
 import Avatar from "core/src/components/Avatar.vue";
 import DatePicker from "core/src/components/form/datepicker/DatePicker.vue";
-import Wysiwyg2 from "../../../../../core/src/components/form/Wysiwyg2.vue";
+import Wysiwyg from "../../../../../core/src/components/form/Wysiwyg.vue";
 import CheckCircle from "./CheckCircle.vue";
 
 const props = defineProps<{
