@@ -30,6 +30,22 @@ export default {
       return handleError(req, res, err);
     }
   },
+  remove: async (req: IAuthRequest<User>, res: Response) => {
+    try {
+      const item = await TasksService.remove(
+        req.params.id,
+        [],
+        req.query,
+        req.auth
+      );
+      if (!item) {
+        throw new NotFoundError("no item found");
+      }
+      return res.status(200).end();
+    } catch (err) {
+      return handleError(req, res, err);
+    }
+  },
   paginate: async (req: IAuthRequest<User>, res: Response) => {
     try {
       const item = await TasksService.paginate([], req.query, req.auth);

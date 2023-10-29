@@ -206,15 +206,12 @@ function prepareAdd(column: TaskKanbanColumn) {
 async function add(prepareNew = false) {
   if (addTaskOpen.value == null) return;
   const column = addTaskOpen.value;
+  addTaskOpen.value = prepareNew ? addTaskOpen.value : undefined;
   if (addTaskTitle.value.length == 0) return;
   const title = addTaskTitle.value;
   addTaskTitle.value = "";
-  if (prepareNew) {
-    addTaskOpen.value = column;
-  } else {
-    addTaskOpen.value = undefined;
-  }
   const index = columns.value.findIndex((c) => c.id === column.id);
+  console.error({ index, column });
   if (index != -1) {
     try {
       const task = await tasksStore.create({

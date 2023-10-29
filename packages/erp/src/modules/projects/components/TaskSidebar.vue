@@ -19,7 +19,7 @@
         <Input
           variant="title"
           :model-value="task?.name"
-          @update:model-value="($val) => updateName(task, $val)"
+          @update:model-value="handleChangeTitle"
           ref="titleInputRef"
           class="mx-4"
         />
@@ -99,6 +99,7 @@ import DatePicker from "core/src/components/form/datepicker/DatePicker.vue";
 import Wysiwyg from "../../../../../core/src/components/form/Wysiwyg.vue";
 import CheckCircle from "./CheckCircle.vue";
 import useTask from "./tasks.composable";
+import { debounce } from "lodash";
 
 const props = defineProps<{
   selected?: any;
@@ -109,6 +110,10 @@ const emit = defineEmits([]);
 const task = computed(() => props.selected);
 
 const { removeTask, toggleCompleted, updateName } = useTask();
+
+const handleChangeTitle = debounce((val) => {
+  updateName(task.value, val);
+}, 500);
 
 const dueDate = ref<string>(new Date().toISOString());
 </script>
