@@ -34,9 +34,6 @@
     <template #tabs>
       <DemoTabs />
     </template>
-    <template #wysiwyg>
-      <DemoWysiwyg />
-    </template>
   </Page>
 </template>
 
@@ -52,7 +49,6 @@ import DemoMenu from "./DemoMenu.vue";
 import DemoTypo from "./DemoTypo.vue";
 import DemoBreadcrumb from "./DemoBreadcrumb.vue";
 import DemoTabs from "./DemoTabs.vue";
-import DemoWysiwyg from "./DemoWysiwyg.vue";
 
 const tabs = [
   { id: "menu" },

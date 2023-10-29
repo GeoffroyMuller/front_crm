@@ -1,175 +1,111 @@
 <template>
-  <div class="relative wysiwyg" ref="editorWrapperElement">
+  <div class="wysiwyg">
     <label v-if="label">
       {{ label }}
     </label>
-    <div
-      ref="editorElement"
-      class="rounded-sm z-20 px-3 py-2 transition-[box-shadow_border-color] duration-200 border border-solid focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input"
-      :class="[
-        {
-          'border-danger-400 focus-within:shadow-[0_0_2pt_0.5pt] focus-within:shadow-danger-200':
-            internalError || error,
-          'focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input':
-            !internalError && !error,
-          [`rounded-${rounded}`]: true,
-          'bg-white': !disabled,
-          'bg-inputDisabled cursor-not-allowed': disabled,
-          'mt-2': label?.length,
-        },
-      ]"
-    />
-    <div class="absolute bottom-0 left-0 p-2 flex z-10 items-center gap-1">
-      <ActionMenu :actions="addActions" alignment="start">
-        <IconButton name="add" class="-m-iconButtonPadding" />
-      </ActionMenu>
+    <div class="wysiwyg-content">
+      <QuillEditor ref="quill" @ready="init" @update:content="handleChange" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import EditorJS from "@editorjs/editorjs";
-import { onMounted } from "vue";
 import useValidatable from "../../composables/validatable";
-import type { Size } from "../types";
-import { watch } from "vue";
-import IconButton from "../IconButton.vue";
-import ActionMenu, { type Action } from "../ActionMenu.vue";
-import { useI18n } from "vue-i18n";
-import Header from "@editorjs/header";
-import DragDrop from "editorjs-drag-drop";
+import { QuillEditor } from "@vueup/vue-quill";
+import { ref, watch } from "vue";
+import "../../assets/style/vuequill.steelsheet.scss";
 
-export type WysiwygProps = {
+interface WysiwygProps {
   name?: string;
   label?: string;
   modelValue?: string;
   error?: string;
-  rounded?: Size | "full";
-  disabled?: boolean;
-};
+}
 
 const props = withDefaults(defineProps<WysiwygProps>(), {});
 
-const { internalValue, internalError } = useValidatable({
+const quill = ref();
+
+const { internalValue } = useValidatable({
   error: props.error,
   value: props.modelValue,
 });
 
-const editorElement = ref<HTMLDivElement>();
-const editorWrapperElement = ref<HTMLDivElement>();
-const editor = ref<EditorJS>();
-
-const { t } = useI18n();
-
-onMounted(() => {
-  if (editorElement.value == null) return;
-  async function handleEditorChange() {
-    if (!editor.value) return;
-    const data = await editor.value.save();
-    internalValue.value = JSON.stringify(data).trim();
-  }
-  const e = new EditorJS({
-    holder: editorElement.value,
-    minHeight: 100,
-    tools: {
-      header: Header,
-    },
-    onChange: (api, event) => {
-     /*  if (!Array.isArray(event) && event.type === "block-added") {
-        if (event.detail.target.name === "paragraph") {
-        }
-      } */
-      handleEditorChange();
-    },
-    onReady: () => {
-      new DragDrop(e);
-      watch(
-        () => internalValue.value,
-        async () => {
-          if (editorWrapperElement.value == null) return;
-          if (internalValue.value == null) return;
-          const editorHasFocus = editorWrapperElement.value.contains(
-            document.activeElement
-          );
-          if (!editorHasFocus) {
-            e.render(JSON.parse(internalValue.value));
-          }
-        },
-        {
-          immediate: true,
-        }
-      );
-    },
-  });
-  editor.value = e;
-});
-
-async function add(type = "paragraph") {
-  const block = await editor.value?.blocks.insert(type, { autoFocus: true });
-  if (!block || !block.holder.parentElement) return;
-
-  const blockIndex = Array.from(block.holder.parentElement.children).findIndex(
-    // @ts-ignore
-    (elem) => elem?.dataset?.id === block.id
-  );
-  if (blockIndex === -1) {
-    editor.value?.caret.setToLastBlock();
-  } else {
-    editor.value?.caret.setToBlock(blockIndex);
+function init() {
+  if (internalValue.value?.length) {
+    quill.value.pasteHTML(internalValue.value);
   }
 }
 
-const addActions: Action[] = [
-  {
-    action: () => add("paragraph"),
-    title: t("core.wysiwyg.paragraph"),
-    icon: "format_paragraph",
-  },
-  {
-    action: () => add("header"),
-    title: t("core.wysiwyg.title"),
-    icon: "title",
-  },
-];
+watch(
+  () => internalValue.value,
+  () => {
+    if (
+      internalValue.value?.length &&
+      internalValue.value != quill.value.getHTML()
+    ) {
+      quill.value.pasteHTML(internalValue.value);
+    }
+  }
+);
+
+function handleChange() {
+  internalValue.value = quill.value.getHTML();
+}
 </script>
 
 <style lang="scss">
+button.ql-active {
+  background-color: color("primary", 50) !important;
+  color: color("primary", 500) !important;
+}
+button.ql-active .ql-stroke {
+  stroke: color("primary", 500) !important;
+}
 .wysiwyg {
-  .ce-toolbar__actions {
-    .ce-toolbar__plus {
-      display: none;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  label {
+    @include typo(label);
+  }
+  gap: spacing(1);
+  .wysiwyg-content {
+    &:focus-within {
+      .ql-editor {
+        border-color: color("primary", 300);
+        box-shadow: 0 0 1pt 0.5pt color("primary", 200);
+        &:focus-visible {
+          border-color: color("primary", 300) !important;
+          box-shadow: 0 0 1pt 0.5pt color("primary", 200);
+        }
+      }
+      .ql-toolbar {
+        border-color: color("primary", 300);
+        box-shadow: 0 0 1pt 0.5pt color("primary", 200);
+      }
     }
-    .ce-toolbar__settings-btn {
-      @apply shadow-card bg-white w-5 hover:bg-primary-50 border border-solid border-slate-200;
+    height: fit-content;
+    .ql-toolbar {
+      border-radius: map-get($rounded, "sm") map-get($rounded, "sm") 0 0;
+      transition: border-color 0.5s, box-shadow 0.5s;
+      @apply bg-white border-b-0;
     }
-  }
-  .ce-inline-toolbar {
-    @apply shadow rounded-sm p-px border-none;
-  }
-  .ce-block__content {
-    max-width: none;
-    margin: 0;
-  }
-  .cdx-block {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-  .ce-toolbar__content {
-    max-width: none;
-  }
-  .ce-popover,
-  .ce-popover__overlay {
-    display: none !important;
-  }
-
-  .codex-editor,
-  .ce-conversion-toolbar,
-  .ce-conversion-tool {
-    z-index: 20;
-  }
-  .codex-editor {
-    margin-bottom: 35px;
+    .ql-container {
+      border: none;
+    }
+    .ql-editor {
+      min-height: 120px;
+      border: solid 1px #d1d5db !important;
+      border-radius: 0 0 map-get($rounded, "sm") map-get($rounded, "sm");
+      border-top: 0;
+      transition: border-color 0.5s, box-shadow 0.5s;
+      @apply bg-white;
+      font-size: 0.875rem;
+      color: #334155;
+      font-weight: 400;
+    }
   }
 }
 </style>
