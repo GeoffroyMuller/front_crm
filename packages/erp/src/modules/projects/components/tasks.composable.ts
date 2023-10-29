@@ -57,7 +57,7 @@ export default function useTask() {
       await tasksStore.update(task.id, { completed });
       if (completed) {
         toast({
-          type: "info",
+          type: "success",
           message: t("pages.projects.completed"),
         });
       }
