@@ -277,10 +277,4 @@ watch(
     }
   }
 );
-watch(
-  () => selected.value,
-  (val, old) => {
-    checkIfSelectedIsEmptyAndDelete(old);
-  }
-);
 </script>
