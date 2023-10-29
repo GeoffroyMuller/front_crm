@@ -8,6 +8,8 @@ router.use(authMiddleware);
 
 router.post("/", TasksController.create);
 router.get("/:id", TasksController.findByID);
+router.delete("/:id", TasksController.remove);
+router.put("/:id", TasksController.update);
 router.get("/", TasksController.paginate);
 
 export default router;

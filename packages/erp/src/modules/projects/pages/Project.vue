@@ -104,14 +104,18 @@
       <ProjectViewList />
     </template>
     <template #sidebar>
-      <TaskSidebar ref="taskSidebar" :selected="selected" />
+      <TaskSidebar
+        ref="taskSidebar"
+        :sidebarOpen="sidebarOpen"
+        :selected="selected"
+      />
     </template>
   </Page>
 </template>
 <script lang="ts" setup>
 import Page from "core/src/components/Page.vue";
 import Button from "core/src/components/Button.vue";
-import { ref } from "vue";
+import { ref, nextTick, watch, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import Menu from "core/src/components/Menu.vue";
 import Avatar from "core/src/components/Avatar.vue";
@@ -121,8 +125,6 @@ import ProjectKanban from "../components/ProjectKanban.vue";
 import ProjectView from "../components/ProjectView.vue";
 import ProjectViewList from "../components/ProjectViewList.vue";
 import useProjectsStore from "../stores/projects.store";
-import { onMounted } from "vue";
-import { computed } from "vue";
 
 const { id } = useRoute().params;
 

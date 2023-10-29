@@ -2,7 +2,7 @@
   <SidebarHead
     :actions="[
       {
-        action: () => removeTask(task),
+        action: () => handleRemoveTask(task),
         title: $t('delete'),
         icon: 'delete',
         color: 'danger',
@@ -12,14 +12,16 @@
     <template #title>
       <div class="flex items-center">
         <CheckCircle
-          :checked="task?.checked"
-          @update:checked="toggleCompleted(task)"
+          :checked="task?.completed"
+          @update:checked="handleToggleCompleted()"
           size="xl"
         />
         <Input
           variant="title"
           :model-value="task?.name"
-          @update:model-value="($val) => updateName(task, $val)"
+          @update:model-value="(val) => (task.name = val)"
+          @blur="updateName(task, task.name)"
+          @keypress.enter="updateName(task, task.name)"
           ref="titleInputRef"
           class="mx-4"
         />
@@ -87,7 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
@@ -99,16 +101,32 @@ import DatePicker from "core/src/components/form/datepicker/DatePicker.vue";
 import Wysiwyg from "../../../../../core/src/components/form/Wysiwyg.vue";
 import CheckCircle from "./CheckCircle.vue";
 import useTask from "./tasks.composable";
+import type { Task } from "@/types/project";
 
 const props = defineProps<{
   selected?: any;
+  sidebarOpen?: boolean;
 }>();
 
 const emit = defineEmits([]);
 
-const task = computed(() => props.selected);
+const task = ref<Task>(props.selected);
+
+watch(
+  () => props.selected,
+  () => (task.value = { ...props.selected })
+);
 
 const { removeTask, toggleCompleted, updateName } = useTask();
+
+async function handleToggleCompleted() {
+  await toggleCompleted({ ...task.value });
+  task.value.completed = !task.value.completed;
+}
+
+function handleRemoveTask(task: Task) {
+  removeTask(task);
+}
 
 const dueDate = ref<string>(new Date().toISOString());
 </script>

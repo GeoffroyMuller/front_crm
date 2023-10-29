@@ -18,6 +18,12 @@
         <Input
           :model-value="column.title"
           :key="column.id"
+          @keypress.enter="
+            ($event) => {
+              $event.target.blur();
+              addColumn();
+            }
+          "
           @blur="
             ($event) => {
               column.title = $event.target.value;
@@ -46,20 +52,11 @@
       </div>
     </template>
     <template #element="{ element }">
-      <Card
-        selectable
-        :selected="isSelected(element)"
-        class="p-4 min-h-[70px]"
+      <TaskCard
+        :isSelected="isSelected"
+        :element="element"
         @click.stop="handleClickCard(element, $event)"
-        :class="{
-          '!cursor-grab': drag,
-        }"
-      >
-        <div class="flex gap-2 items-center">
-          <CheckCircle :checked="element.completed" size="sm" />
-          <span>{{ element.name }}</span>
-        </div>
-      </Card>
+      />
     </template>
     <template #column-footer="{ column }">
       <Card
@@ -75,7 +72,7 @@
             :id="getAddTaskInputID(column.id)"
             v-model="addTaskTitle"
             @blur="add()"
-            @keypress.enter="add()"
+            @keypress.enter="add(true)"
           />
         </div>
       </Card>
@@ -108,7 +105,7 @@ import { useI18n } from "vue-i18n";
 import useSectionsStore from "../stores/sections.store";
 import useTasksStore from "../stores/tasks.store";
 import ActionMenu from "core/src/components/ActionMenu.vue";
-import CheckCircle from "./CheckCircle.vue";
+import TaskCard from "./TaskCard.vue";
 
 const props = defineProps<{
   id: Project["id"];
@@ -162,6 +159,28 @@ const selected = computed({
   set: (val) => emit("update:selected", val),
 });
 
+watch(
+  () => selected.value,
+  (val, old) => {
+    if (old != null && val != null) {
+      let columnIndex, taskIndex;
+      columns.value.find((c, i) => {
+        const index = c.elements.findIndex((t) => t.id == val.id);
+        if (index == -1) return false;
+        columnIndex = i;
+        taskIndex = index;
+        return true;
+      });
+      if (columnIndex && taskIndex) {
+        columns.value[columnIndex].elements[taskIndex] = val;
+      }
+    }
+  },
+  {
+    deep: true,
+  }
+);
+
 const sidebarOpen = computed({
   get: () => props.sidebarOpen,
   set: (val) => emit("update:sidebarOpen", val),
@@ -197,20 +216,21 @@ function prepareAdd(column: TaskKanbanColumn) {
   }, 100);
 }
 
-async function add() {
+async function add(prepareNew = false) {
   if (addTaskOpen.value == null) return;
-  const { id: idSection } = addTaskOpen.value;
-  addTaskOpen.value = undefined;
+  const column = addTaskOpen.value;
+  addTaskOpen.value = prepareNew ? addTaskOpen.value : undefined;
   if (addTaskTitle.value.length == 0) return;
-  const index = columns.value.findIndex((c) => c.id === idSection);
+  const title = addTaskTitle.value;
+  addTaskTitle.value = "";
+  const index = columns.value.findIndex((c) => c.id === column.id);
   if (index != -1) {
     try {
       const task = await tasksStore.create({
-        idSection: idSection as number,
-        name: addTaskTitle.value || "",
+        idSection: column.id as number,
+        name: title,
       });
       columns.value[index].elements.push(task);
-      addTaskTitle.value = "";
     } catch (err) {
       toast({
         type: "danger",

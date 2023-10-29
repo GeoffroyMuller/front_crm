@@ -4,7 +4,7 @@ import { useI18n } from "vue-i18n";
 import useTasksStore from "../stores/tasks.store";
 
 export default function useTask() {
-  const { confirm } = useUI();
+  const { confirm, toast } = useUI();
   const { t } = useI18n();
 
   const tasksStore = useTasksStore();
@@ -36,13 +36,50 @@ export default function useTask() {
     ) {
       return;
     }
-    console.error("removed");
+    try {
+      await tasksStore.delete(task.id);
+      toast({
+        type: "info",
+        message: t("pages.projects.tasks-deleted"),
+      });
+    } catch (err) {
+      console.error(err);
+      toast({
+        type: "danger",
+        message: t("error_occured"),
+      });
+    }
   }
 
-  async function toggleCompleted(task: Task) {}
+  async function toggleCompleted(task: Task) {
+    try {
+      const completed = !task.completed;
+      await tasksStore.update(task.id, { completed });
+      if (completed) {
+        toast({
+          type: "success",
+          message: t("pages.projects.completed"),
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      toast({
+        type: "danger",
+        message: t("error_occured"),
+      });
+    }
+  }
 
   async function updateName(task: Task, val: string) {
-    
+    try {
+      await tasksStore.update(task.id, { name: val });
+    } catch (err) {
+      console.error(err);
+      toast({
+        type: "danger",
+        message: t("error_occured"),
+      });
+    }
   }
 
   return {
