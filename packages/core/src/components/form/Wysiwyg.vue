@@ -89,7 +89,7 @@ button.ql-active .ql-stroke {
       border: none;
     }
     .ql-editor {
-      min-height: 100px;
+      min-height: 120px;
       font-size: 0.875rem;
       color: #334155;
       font-weight: 400;
