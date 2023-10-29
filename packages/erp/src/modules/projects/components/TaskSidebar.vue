@@ -101,7 +101,6 @@ import DatePicker from "core/src/components/form/datepicker/DatePicker.vue";
 import Wysiwyg from "../../../../../core/src/components/form/Wysiwyg.vue";
 import CheckCircle from "./CheckCircle.vue";
 import useTask from "./tasks.composable";
-import { debounce } from "lodash";
 import type { Task } from "@/types/project";
 
 const props = defineProps<{
@@ -109,7 +108,7 @@ const props = defineProps<{
   sidebarOpen?: boolean;
 }>();
 
-const emit = defineEmits(["update:selected"]);
+const emit = defineEmits([]);
 
 const task = ref<Task>(props.selected);
 

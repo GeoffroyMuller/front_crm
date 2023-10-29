@@ -107,7 +107,7 @@
       <TaskSidebar
         ref="taskSidebar"
         :sidebarOpen="sidebarOpen"
-        v-model:selected="selected"
+        :selected="selected"
       />
     </template>
   </Page>
