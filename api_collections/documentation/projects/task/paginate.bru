@@ -1,13 +1,17 @@
 meta {
-  name: findAuthTaskById
+  name: paginate
   type: http
-  seq: 2
+  seq: 3
 }
 
 get {
-  url: {{gatewayURL}}/tasks/1
+  url: {{gatewayURL}}/tasks?idSection=2
   body: none
   auth: none
+}
+
+query {
+  idSection: 2
 }
 
 headers {

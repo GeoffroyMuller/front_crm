@@ -85,13 +85,15 @@ export default {
       project = await Section.relatedQuery<Project>("project")
         .for([filters.idSection])
         .first();
+      console.error(project);
       if (project?.idCompany != auth.idCompany) {
         throw new AuthError();
       }
-      return await Section.relatedQuery('tasks').for(filters.idSection).execute();
+      return (await Section.relatedQuery("tasks")
+        .for([filters.idSection])
+        .execute()) as Task[];
     }
     if (filters.idUser) {
-
     }
   },
 };

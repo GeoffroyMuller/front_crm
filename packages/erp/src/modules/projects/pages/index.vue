@@ -61,9 +61,11 @@ import { useI18n } from "vue-i18n";
 import ActionMenu, { type Action } from "core/src/components/ActionMenu.vue";
 import IconButton from "core/src/components/IconButton.vue";
 import type { Project } from "@/types/project";
+import { useRouter } from "vue-router";
 
 const { toast, confirm } = useUI();
 const { t } = useI18n();
+const router = useRouter();
 
 const addProjectOpen = ref(false);
 
@@ -113,6 +115,19 @@ async function removeProject(p: Project) {
 
 function getActionsForItem(item: Project): Action[] {
   return [
+    {
+      title: t("pages.projects.edit"),
+      color: "black",
+      icon: "edit",
+      action: () => {
+        router.push({
+          name: "projects-id",
+          params: {
+            id: item.id,
+          },
+        });
+      },
+    },
     {
       title: t("pages.projects.delete-project"),
       color: "danger",

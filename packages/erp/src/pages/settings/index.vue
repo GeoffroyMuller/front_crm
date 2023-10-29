@@ -12,7 +12,6 @@ import { useI18n } from "vue-i18n";
 
 import Roles from "./Roles.vue";
 import Teams from "./Teams.vue";
-import QuoteSettings from "./QuoteSettings.vue";
 
 const { t } = useI18n();
 
@@ -26,11 +25,6 @@ const settings = [
     id: "teams",
     title: t("teams"),
     component: Teams,
-  },
-  {
-    id: "quotes",
-    title: `${t("quotes")} / ${t("invoices")}`,
-    component: QuoteSettings,
   },
   /* {
     id: "comm_fee",

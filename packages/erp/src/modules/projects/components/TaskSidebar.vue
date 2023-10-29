@@ -1,5 +1,14 @@
 <template>
-  <SidebarHead :actions="[]">
+  <SidebarHead
+    :actions="[
+      {
+        action: () => $emit('remove'),
+        title: $t('delete'),
+        icon: 'delete',
+        color: 'danger',
+      },
+    ]"
+  >
     <template #title>
       <div class="flex items-center">
         <CheckCircle
@@ -94,7 +103,7 @@ const props = defineProps<{
   selected?: any;
 }>();
 
-const emit = defineEmits(["update:selected"]);
+const emit = defineEmits(["update:selected", "remove"]);
 
 const task = computed({
   get: () => props.selected,

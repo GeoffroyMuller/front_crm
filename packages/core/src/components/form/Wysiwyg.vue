@@ -72,39 +72,39 @@ button.ql-active .ql-stroke {
   }
   gap: spacing(1);
   .wysiwyg-content {
-    &:focus-within {
-      .ql-editor {
-        border-color: color("primary", 300);
-        box-shadow: 0 0 1pt 0.5pt color("primary", 200);
-        &:focus-visible {
-          border-color: color("primary", 300) !important;
-          box-shadow: 0 0 1pt 0.5pt color("primary", 200);
-        }
-      }
-      .ql-toolbar {
-        border-color: color("primary", 300);
-        box-shadow: 0 0 1pt 0.5pt color("primary", 200);
-      }
-    }
+    display: flex;
+    flex-direction: column-reverse;
+    @apply bg-white rounded-sm;
+    border: solid 1px #d1d5db !important;
+    transition: border-color 0.5s, box-shadow 0.5s;
     height: fit-content;
     .ql-toolbar {
-      border-radius: map-get($rounded, "sm") map-get($rounded, "sm") 0 0;
-      transition: border-color 0.5s, box-shadow 0.5s;
-      @apply bg-white border-b-0;
+      opacity: 0;
+      pointer-events: none;
+      user-select: none;
+      border: none;
+      transition: opacity 0.2s;
     }
     .ql-container {
       border: none;
     }
     .ql-editor {
-      min-height: 120px;
-      border: solid 1px #d1d5db !important;
-      border-radius: 0 0 map-get($rounded, "sm") map-get($rounded, "sm");
-      border-top: 0;
-      transition: border-color 0.5s, box-shadow 0.5s;
-      @apply bg-white;
+      min-height: 100px;
       font-size: 0.875rem;
       color: #334155;
       font-weight: 400;
+    }
+    &:focus-within {
+      box-shadow: 0 0 1pt 0.5pt color("primary", 200);
+      border-color: color("primary", 300) !important;
+      *:focus-visible {
+        border: none !important;
+      }
+      .ql-toolbar {
+        opacity: 100;
+        pointer-events: initial;
+        user-select: initial;
+      }
     }
   }
 }

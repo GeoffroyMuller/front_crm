@@ -111,17 +111,29 @@ const tasksStore = useTasksStore();
 const { toast } = useUI();
 const { t } = useI18n();
 
-const _mapSectionToColumn = (s: Section) => ({
-  id: s.id,
-  title: s.name,
-  elements: [],
-});
-
-onMounted(() => {
-  projectSectionStore.fetchList().then((val) => {
-    columns.value = sections.value.map(_mapSectionToColumn);
+const _mapSectionToColumn = (s: Section) => {
+  const column = {
+    id: s.id,
+    title: s.name,
+    elements: [],
+  };
+  tasksStore.fetchList({ idSection: s.id }, false).then((tasksRes) => {
+    columns.value[columns.value.findIndex((c) => c.id == s.id)].elements =
+      tasksRes.results;
   });
-});
+  return column;
+};
+
+async function initialFetch() {
+  try {
+    await projectSectionStore.fetchList();
+    columns.value = sections.value.map(_mapSectionToColumn);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+onMounted(initialFetch);
 
 const sections = computed(() => {
   return projectSectionStore.getList;

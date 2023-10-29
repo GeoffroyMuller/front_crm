@@ -6,7 +6,8 @@ const router = express.Router();
 
 router.use(authMiddleware);
 
-router.post('/', TasksController.create);
-router.get('/:id', TasksController.findByID)
+router.post("/", TasksController.create);
+router.get("/:id", TasksController.findByID);
+router.get("/", TasksController.paginate);
 
 export default router;
