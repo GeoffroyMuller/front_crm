@@ -63,11 +63,11 @@
     </template>
     <template #column-footer="{ column }">
       <Card
-        class="transition-all"
         :class="{
           'invisible select-none pointer-events-none opacity-0 max-h-0':
             addTaskOpen?.id != column.id,
-          'opacity-100 mt-2 min-h-[70px] p-4': addTaskOpen?.id == column.id,
+          'opacity-100 mt-2 min-h-[70px] p-4 transition-all':
+            addTaskOpen?.id == column.id,
         }"
       >
         <div class="flex gap-2 items-center">
