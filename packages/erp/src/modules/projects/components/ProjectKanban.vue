@@ -59,11 +59,28 @@
       </Card>
     </template>
     <template #column-footer="{ column }">
+      <Card
+        class="transition-all"
+        :class="{
+          'invisible select-none pointer-events-none opacity-0 max-h-0':
+            addTaskOpen?.id != column.id,
+          'opacity-100 mt-2 min-h-[70px] p-4': addTaskOpen?.id == column.id,
+        }"
+      >
+        <div class="flex gap-2 items-center">
+          <Input
+            :id="getAddTaskInputID(column.id)"
+            v-model="addTaskTitle"
+            @blur="add()"
+            @keypress.enter="add()"
+          />
+        </div>
+      </Card>
       <Button
         variant="text"
         class="m-auto mt-2"
         color="black"
-        @click.stop="add(column)"
+        @click.stop="prepareAdd(column)"
       >
         {{ $t("pages.projects.add-task") }}
       </Button>
@@ -89,13 +106,11 @@ import useSectionsStore from "../stores/sections.store";
 import useTasksStore from "../stores/tasks.store";
 import ActionMenu from "core/src/components/ActionMenu.vue";
 import CheckCircle from "./CheckCircle.vue";
-import ProjectIcon from "./ProjectIcon.vue";
 
 const props = defineProps<{
   id: Project["id"];
   selected?: Task;
   sidebarOpen: boolean;
-  focusSidebarTitle: () => void;
 }>();
 const emit = defineEmits(["update:selected", "update:sidebarOpen"]);
 
@@ -163,23 +178,36 @@ function isSelected(element: Task) {
   return selected.value?.id === element.id && sidebarOpen.value;
 }
 
-async function add(column: TaskKanbanColumn) {
-  const index = columns.value.findIndex((c) => c.id === column.id);
+const addTaskOpen = ref<TaskKanbanColumn>();
+const addTaskTitle = ref("");
+function getAddTaskInputID(columnID: TaskKanbanColumn["id"]) {
+  return `kanban-column-${columnID}-new-task`;
+}
 
+function prepareAdd(column: TaskKanbanColumn) {
+  addTaskOpen.value = column;
+  setTimeout(() => {
+    const inputNewTaskTitle = document.getElementById(
+      getAddTaskInputID(column.id)
+    );
+    inputNewTaskTitle?.focus();
+  }, 100);
+}
+
+async function add() {
+  if (addTaskOpen.value == null) return;
+  const { id: idSection } = addTaskOpen.value;
+  addTaskOpen.value = undefined;
+  if (addTaskTitle.value.length == 0) return;
+  const index = columns.value.findIndex((c) => c.id === idSection);
   if (index != -1) {
-    const task: Partial<Task> = {
-      id: Math.random(),
-      name: "",
-    };
     try {
-      const { id } = await tasksStore.create({
-        idSection: column.id as number,
+      const task = await tasksStore.create({
+        idSection: idSection as number,
+        name: addTaskTitle.value || "",
       });
       columns.value[index].elements.push(task);
-      selected.value = task as Task;
-      sidebarOpen.value = true;
-      task.id = id;
-      props.focusSidebarTitle();
+      addTaskTitle.value = "";
     } catch (err) {
       toast({
         type: "danger",
@@ -249,32 +277,4 @@ async function removeColumn(column: TaskKanbanColumn) {
     });
   }
 }
-
-function checkIfSelectedIsEmptyAndDelete(element?: Task) {
-  const elem = element ?? selected.value;
-  if (!elem) return;
-  const selectedPurged = omitBy(
-    elem,
-    (k) => k == null || (typeof k === "string" && k.trim() === "")
-  );
-  if (Object.keys(selectedPurged).length === 1) {
-    columns.value.forEach((c, i) => {
-      const index = c.elements.findIndex((e) => e.id === elem.id);
-      if (index != -1) {
-        columns.value[i].elements = columns.value[i].elements.filter(
-          (e, i) => i !== index
-        );
-      }
-    });
-  }
-}
-
-watch(
-  () => sidebarOpen.value,
-  () => {
-    if (!sidebarOpen.value) {
-      checkIfSelectedIsEmptyAndDelete();
-    }
-  }
-);
 </script>

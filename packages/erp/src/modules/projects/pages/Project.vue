@@ -92,7 +92,6 @@
 
     <template #kanban>
       <ProjectKanban
-        :focus-sidebar-title="focusSidebarTitle"
         :id="(id as unknown as number)"
         v-model:selected="selected"
         v-model:sidebar-open="sidebarOpen"
@@ -105,12 +104,7 @@
       <ProjectViewList />
     </template>
     <template #sidebar>
-      <TaskSidebar
-        ref="taskSidebar"
-        :selected="selected"
-        @update:selected="($e) => (selected = $e)"
-        @remove="removeTask(selected as Task)"
-      />
+      <TaskSidebar ref="taskSidebar" :selected="selected" />
     </template>
   </Page>
 </template>
@@ -129,12 +123,8 @@ import ProjectViewList from "../components/ProjectViewList.vue";
 import useProjectsStore from "../stores/projects.store";
 import { onMounted } from "vue";
 import { computed } from "vue";
-import useUI from "core/src/composables/ui";
-import { useI18n } from "vue-i18n";
 
 const { id } = useRoute().params;
-const { confirm } = useUI();
-const { t } = useI18n();
 
 const selected = ref<Task>();
 const sidebarOpen = ref(false);
@@ -147,38 +137,4 @@ onMounted(() => {
 });
 
 const project = computed(() => projectStore.getById(id as string));
-
-function focusSidebarTitle() {
-  taskSidebar?.value?.$refs.titleInputRef?.$refs?.internalRef?.focus();
-}
-
-async function removeTask(task: Task) {
-  if (
-    !(await confirm({
-      message: t("pages.projects.sure_delete_task"),
-      type: "danger",
-      actions: [
-        {
-          action: "cancel",
-          label: t("cancel"),
-          buttonProps: {
-            variant: "text",
-            color: "black",
-          },
-        },
-        {
-          action: "confirm",
-          label: t("delete"),
-          buttonProps: {
-            icon: "delete",
-            color: "danger",
-          },
-        },
-      ],
-    }))
-  ) {
-    return;
-  }
-  console.error("removed");
-}
 </script>

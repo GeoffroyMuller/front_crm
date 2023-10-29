@@ -2,7 +2,7 @@
   <SidebarHead
     :actions="[
       {
-        action: () => $emit('remove'),
+        action: () => removeTask(task),
         title: $t('delete'),
         icon: 'delete',
         color: 'danger',
@@ -13,13 +13,13 @@
       <div class="flex items-center">
         <CheckCircle
           :checked="task?.checked"
-          @update:checked="toggleCompleted()"
+          @update:checked="toggleCompleted(task)"
           size="xl"
         />
         <Input
           variant="title"
           :model-value="task?.name"
-          @update:model-value="task.name = $event"
+          @update:model-value="($val) => updateName(task, $val)"
           ref="titleInputRef"
           class="mx-4"
         />
@@ -98,24 +98,17 @@ import Avatar from "core/src/components/Avatar.vue";
 import DatePicker from "core/src/components/form/datepicker/DatePicker.vue";
 import Wysiwyg from "../../../../../core/src/components/form/Wysiwyg.vue";
 import CheckCircle from "./CheckCircle.vue";
+import useTask from "./tasks.composable";
 
 const props = defineProps<{
   selected?: any;
 }>();
 
-const emit = defineEmits(["update:selected", "remove"]);
+const emit = defineEmits([]);
 
-const task = computed({
-  get: () => props.selected,
-  set: (val) => emit("update:selected", val),
-});
+const task = computed(() => props.selected);
+
+const { removeTask, toggleCompleted, updateName } = useTask();
 
 const dueDate = ref<string>(new Date().toISOString());
-
-function toggleCompleted() {
-  emit("update:selected", {
-    ...props.selected,
-    completed: !props?.selected?.completed,
-  });
-}
 </script>
