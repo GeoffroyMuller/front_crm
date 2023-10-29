@@ -29,9 +29,9 @@
 
 <script setup lang="ts">
 import type { AnySchema } from "yup/lib/schema";
-import type { IconName, Size } from "../types";
-import useValidatable from "../../composables/validatable";
-import Icon from "../Icon.vue";
+import type { IconName, Size } from "../../types";
+import useValidatable from "../../../composables/validatable";
+import Icon from "../../Icon.vue";
 
 export interface InputFileProps {
   modelValue?: any;

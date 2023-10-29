@@ -4,7 +4,7 @@
     :title="`${auth.firstname || ''} ${auth.lastname || ''}`"
   >
     <Card padding>
-      <FileInput
+      <ImageInput
         class="w-fit"
         label="Test"
         :placeholder="$t('pages.myaccount.import-image')"
@@ -17,7 +17,7 @@
 import useUserStore from "@/stores/user";
 import Page from "core/src/components/Page.vue";
 import Card from "core/src/components/card/Card.vue";
-import FileInput from "core/src/components/form/FileInput.vue";
+import ImageInput from "core/src/components/form/files/ImageInput.vue";
 import { computed } from "vue";
 
 const userStore = useUserStore();

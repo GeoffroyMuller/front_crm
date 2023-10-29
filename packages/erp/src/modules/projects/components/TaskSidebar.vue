@@ -108,7 +108,7 @@ const props = defineProps<{
   sidebarOpen?: boolean;
 }>();
 
-const emit = defineEmits([]);
+const emit = defineEmits(["remove"]);
 
 const task = ref<Task>(props.selected);
 
@@ -126,6 +126,7 @@ async function handleToggleCompleted() {
 
 function handleRemoveTask(task: Task) {
   removeTask(task);
+  emit("remove");
 }
 
 const dueDate = ref<string>(new Date().toISOString());
