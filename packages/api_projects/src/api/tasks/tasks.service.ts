@@ -10,7 +10,7 @@ import { applyRelations } from "core_api/service";
 import projectService from "../projects/project.service";
 
 export default {
-  create: async (item: Partial<Task>, filters: any, auth: User) => {
+  create: async (item: Partial<Task> & {after?: Task['id']}, filters: any, auth: User) => {
     const query = Task.query();
     const data = { ...item };
     let project: Project | undefined;
@@ -22,12 +22,14 @@ export default {
         throw new AuthError();
       }
       data.idProject = project?.id;
-    } else if (data.idProject) {
-      project = await Project.query().findById(data.idProject);
-      if (project?.idCompany != auth.idCompany) {
-        throw new AuthError();
+      const tasks = await Section.relatedQuery('tasks').for([data.idSection]).orderBy('order', 'DESC');
+      if (tasks?.length === 0) {
+        data.order = 1;
+      } else {
+        data.order = (tasks[0].order || 0) + 1;
       }
-    } else {
+    }  else {
+      if (!data.idUser) throw new AuthError();
       data.idUser = auth.id;
     }
     handleFilters(query, filters);

@@ -5,10 +5,12 @@ export default class Task extends Model {
   name?: string;
   description?: string;
   completed?: boolean;
-
+  order?: number;
+  
   idProject?: number;
   idSection?: number;
   idUser?: number;
+  
 
   static get tableName() {
     return "tasks";

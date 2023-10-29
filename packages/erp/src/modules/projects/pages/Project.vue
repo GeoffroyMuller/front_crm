@@ -47,7 +47,7 @@
           <Avatar
             selectable
             size="sm"
-            class="-mr-4"
+            class="-mr-2"
             color="primary"
             custom-color="rgb(241, 120, 182)"
           >
@@ -56,7 +56,7 @@
           <Avatar
             selectable
             size="sm"
-            class="-mr-4"
+            class="-mr-2"
             color="success"
             custom-color="#72f039"
           >

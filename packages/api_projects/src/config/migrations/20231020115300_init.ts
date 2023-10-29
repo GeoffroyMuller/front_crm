@@ -21,6 +21,7 @@ export async function up(knex: Knex): Promise<void> {
     table.integer("idProject");
     table.integer("idUser");
     table.boolean("completed").defaultTo(false);
+    table.float('order');
   });
 }
 
