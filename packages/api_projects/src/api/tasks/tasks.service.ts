@@ -112,6 +112,7 @@ export default {
       }
       return (await Section.relatedQuery("tasks")
         .for([filters.idSection])
+        .orderBy('order', "ASC")
         .execute()) as Task[];
     }
     if (filters.idUser) {
