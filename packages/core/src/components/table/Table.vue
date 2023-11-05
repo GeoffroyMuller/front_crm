@@ -421,10 +421,6 @@ table {
     }
   }
   .actions-block {
-    position: sticky;
-    right: 0;
-    z-index: 10;
-    background-color: inherit;
     display: flex;
     align-items: center;
     justify-content: end;
@@ -436,9 +432,6 @@ table {
   tbody {
     th:first-child,
     td:first-child {
-      position: sticky;
-      left: 0;
-      background-color: inherit;
       z-index: 10;
     }
   }
