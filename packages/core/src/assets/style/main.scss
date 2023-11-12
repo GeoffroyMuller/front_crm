@@ -1,71 +1,75 @@
-@import './_variables.scss';
-@import './mixins.scss';
-@import './fonts.scss';
-@import './utilities.scss';
+@import "./_variables.scss";
+@import "./mixins.scss";
+@import "./fonts.scss";
+@import "./utilities.scss";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-    --font-size: 16px;
+  --font-size: 16px;
+
+  --menu-arrow-container-size: #{$menu-arrow-container-size};
 }
 
 html {
-    overflow: hidden;
+  overflow: hidden;
 }
 
-html, body {
-    margin: 0;
-    font-size: var(--font-size);
+html,
+body {
+  margin: 0;
+  font-size: var(--font-size);
 }
-
 
 body {
-    background-color: #f8fafc;
-    @include typo(text1);
+  background-color: #f8fafc;
+  @include typo(text1);
 }
 
 * {
-    box-sizing: border-box;
-    font-family: 'Open Sans Font', 'Open Sans', sans-serif;
-    line-height: 1;
-    letter-spacing: .5px;
+  box-sizing: border-box;
+  font-family: "Open Sans Font", "Open Sans", sans-serif;
+  line-height: 1;
+  letter-spacing: 0.5px;
 }
 
 p {
-    margin: 0;
+  margin: 0;
 }
 
-
 iframe {
-    border: none;
+  border: none;
 }
 
 button {
-    border: none;
-    outline: none;
-    cursor: pointer;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
 
-input, textarea, select {
-    @include typo(title5);
+input,
+textarea,
+select {
+  @include typo(title5);
+  font-weight: 400;
+  &::placeholder {
+    @include typo(title7);
     font-weight: 400;
-    &::placeholder {
-        @include typo(title7);
-        font-weight: 400;
-    }
+  }
 }
 
 label {
-    @include typo(label);
+  @include typo(label);
 }
 
-div, button {
-    &:focus-visible {
-        border: 2px solid #3730a3 !important;
-        outline: none !important;
-    }
+div,
+button {
+  &:focus-visible {
+    border: 2px solid #3730a3 !important;
+    outline: none !important;
+  }
 }
 
 .selectable-white::before,
@@ -79,23 +83,23 @@ div, button {
   border-radius: inherit;
 }
 .selectable-white:hover::before {
-    @apply bg-white opacity-5;
+  @apply bg-white opacity-5;
 }
 .selectable-black:hover::before {
-    @apply bg-slate-500 opacity-5;
+  @apply bg-slate-500 opacity-5;
 }
 
 /// @deprecated
 .layout-component {
- --mt: 0;
- --mb: 0;
- --ml: 0;
- --mr: 0;
- --pt: 0;
- --pb: 0;
- --pl: 0;
- --pr: 0;
- --gap: 0;
+  --mt: 0;
+  --mb: 0;
+  --ml: 0;
+  --mr: 0;
+  --pt: 0;
+  --pb: 0;
+  --pl: 0;
+  --pr: 0;
+  --gap: 0;
 
   gap: calc(spacing(1) * var(--gap));
 
