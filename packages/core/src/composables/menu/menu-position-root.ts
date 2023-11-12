@@ -408,13 +408,19 @@ export default function useMenuPositionRoot(props: MenuProps) {
     if (placement != null) {
       if (placement == "right") {
         coordArrowContainer.transform =
-          coordArrowContainer.transform + "translateX(-100%) rotate(270deg)";
+          coordArrowContainer.transform +
+          `translate(-100%, 
+            calc(-1 * calc(var(--menu-arrow-container-size, 10px) / 2))) 
+            rotate(270deg)`;
         coordArrowContainer.left = "0";
         marginStyle = _toMarginStyle("left", props.space);
       }
       if (placement == "left") {
         coordArrowContainer.transform =
-          coordArrowContainer.transform + "translate(100%, -5px) rotate(90deg)"; //TODO: -5px: arrowHeightContainer/2
+          coordArrowContainer.transform +
+          `translate(100%, 
+           calc(-1 * calc(var(--menu-arrow-container-size, 10px) / 2)))
+           rotate(90deg)`;
         coordArrowContainer.right = "0";
         marginStyle = _toMarginStyle("right", props.space);
       }

@@ -88,14 +88,14 @@ function handleClickOutside() {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  width: 10px;
+  width: var(--menu-arrow-container-size, 10px);
   pointer-events: none;
-  height: 10px;
+  height: var(--menu-arrow-container-size, 10px);
   //filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5)); //TODO
   .menu-arrow {
     background-color: red;
     clip-path: polygon(50% 0, 100% 100%, 0 100%);
-    width: 10px;
+    width: 100%;
     height: 8px;
   }
 }
