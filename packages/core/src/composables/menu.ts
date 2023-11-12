@@ -93,7 +93,7 @@ export function getPossibleDisplayPosition(
 
 export default function useMenu(props: MenuProps) {
   if (props.strategy === "absolute") {
-    return useMenuPositionAbsolute({ ...props, space: "10px" });
+    return useMenuPositionAbsolute({ ...props, space: "8px" }); //TODO 8px:arrowHeight
   }
-  return useMenuPositionRoot({ ...props, space: "10px" });
+  return useMenuPositionRoot({ ...props, space: "8px" });
 }
