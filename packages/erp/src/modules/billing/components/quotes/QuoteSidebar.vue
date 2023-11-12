@@ -15,7 +15,7 @@
       <PdfViewer
         v-if="quote"
         :key="quote?.id"
-        :src="generateQuotePDF(quote, { output: 'datauristring' })"
+        :src="quotePDFSrc"
         class="max-h-full"
       />
     </SidebarContent>
@@ -35,13 +35,15 @@ import { merge } from "lodash";
 import PdfViewer from "core/src/components/PdfViewer.vue";
 import { generateQuotePDF } from "@megaapp/pdfs";
 import { ref } from "vue";
-import type { Tab } from "core/src/components/Tabs.vue";
+import { watch } from "vue";
 
 const props = defineProps<{ open: boolean; model?: Quote }>();
 const emit = defineEmits(["close"]);
 
 const quotesStore = useQuoteStore();
 const { t } = useI18n();
+
+const quotePDFSrc = ref();
 
 const actions = computed<SidebarHeadAction[]>(() => {
   const res: SidebarHeadAction[] = [
@@ -82,6 +84,15 @@ const quote = computed<Quote>(() => {
   }
   return null;
 });
+
+watch(
+  () => quote.value,
+  async () => {
+    quotePDFSrc.value = await generateQuotePDF(quote.value, {
+      output: "datauristring",
+    });
+  }
+);
 
 const title = computed<string>(() => {
   if (quote.value == null) return "";
