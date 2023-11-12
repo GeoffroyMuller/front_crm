@@ -414,7 +414,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
       }
       if (placement == "left") {
         coordArrowContainer.transform =
-          coordArrowContainer.transform + "translateX(100%) rotate(90deg)";
+          coordArrowContainer.transform + "translate(100%, -5px) rotate(90deg)"; //TODO: -5px: arrowHeightContainer/2
         coordArrowContainer.right = "0";
         marginStyle = _toMarginStyle("right", props.space);
       }
