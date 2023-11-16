@@ -12,7 +12,6 @@
       'hover:shadow-md': selectable && !selected,
       'bg-primary-50': selected,
       'bg-white': !selected,
-      'bg-zinc-50 border border-solid border-zinc-200': cardParent || sidebarParent
     }"
   >
     <slot />
