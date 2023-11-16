@@ -17,27 +17,35 @@
           <TextField name="address" :label="$t('address')" />
           <TextField name="phone" :label="$t('phone')" />
           <TextField name="email" :label="$t('email')" />
-          <MagicAutocomplete
-            name="idClientCompany"
-            :label="$t('company')"
-            :getOptionLabel="(opt) => opt.name"
-            optionKey="id"
-            :get-option-value="(opt) => opt.id"
-            :get-filters="(str) => ({ $contains: { name: str } })"
-            :store="companiesStore"
-            can-add
-            @add="isAddCompanyOpen = true"
-            v-model="idCompany"
-            v-model:options="companiesOptions"
-          />
+          <div>
+            <MagicAutocomplete
+              name="idClientCompany"
+              :label="$t('company')"
+              :getOptionLabel="(opt) => opt.name"
+              optionKey="id"
+              :get-option-value="(opt) => opt.id"
+              :get-filters="(str) => ({ $contains: { name: str } })"
+              :store="companiesStore"
+              v-model="idCompany"
+              v-model:options="companiesOptions"
+            />
+            <div class="flex items-center mt-0.5 gap-0.5">
+              <span class="typo-title5 font-medium">
+                {{ $t(`pages.edit-client.no-company`) }}
+              </span>
+              <Button variant="text" @click.stop="isAddCompanyOpen = true">
+                {{ $t(`add`) }}
+              </Button>
+            </div>
+          </div>
           <Card padding v-if="isAddCompanyOpen">
-            <div>
+            <div class="grid gap-4">
               <div class="typo-title6">{{ $t("new-company") }}</div>
               <TextField
                 :label="$t('new-company-name')"
                 v-model="companyName"
               />
-              <div>
+              <div class="flex gap-2 items-center">
                 <Button
                   type="button"
                   color="success"

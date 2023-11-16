@@ -227,16 +227,20 @@ watch(
     &:first-child {
       @apply rounded-t-md;
     }
+    @apply border border-solid border-zinc-200 bg-zinc-50;
+    &:not(:first-child) {
+      border-top: 0;
+    }
     background-color: color("zinc", 50);
     border-bottom: dashed 1px color("slate", 400);
     position: relative;
   }
   .repetable-actions {
+    @apply border border-solid border-zinc-200 bg-zinc-50 border-t-0;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: spacing(1.5);
-    background-color: color("zinc", 50);
     @apply rounded-b-md;
   }
 }

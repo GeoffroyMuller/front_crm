@@ -17,15 +17,12 @@
     </Autocomplete>
     <div
       class="footer"
-      v-if="canAdd || internalError || error"
+      v-if="internalError || error"
       :class="{ alert: internalError || error }"
     >
       <Alert v-if="internalError || error">
         {{ internalError || error }}
       </Alert>
-      <Button v-if="canAdd" variant="text" @click.stop="$emit('add')">
-        {{ addText || $t("add") }}
-      </Button>
     </div>
   </div>
 </template>
@@ -50,8 +47,6 @@ export interface MagicAutocompleteProps<T> /* extends AutocompleteProps */ {
 
   // magic autocomplete props
   store: APIStore<T>;
-  addText?: string;
-  canAdd?: boolean;
   options?: Array<T>;
   getFilters?: (str: string) => Filters;
   debounce?: number;

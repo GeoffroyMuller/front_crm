@@ -86,6 +86,7 @@
       "add-line-comment": "Ligne de commentaire",
       "footer": "Pied de page",
       "modalities": "Modalitées",
+      "no-customer": "Votre client n'existe pas ?",
       "add-customer": "Ajouter un client",
       "title": "Titre",
       "comment": "Commentaire",
@@ -131,6 +132,9 @@
       "total-price": "Prix total de la vente: {price} €",
       "customer-name": "Nom du client",
       "customer-email": "Email du client"
+    },
+    "edit-client": {
+      "no-company": "Cette entreprise n'existe pas ?"
     },
     "edit-product": {
       "description": "Description",

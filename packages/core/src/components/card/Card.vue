@@ -12,6 +12,7 @@
       'hover:shadow-md': selectable && !selected,
       'bg-primary-50': selected,
       'bg-white': !selected,
+      'bg-zinc-50 border border-solid border-zinc-200': cardParent || sidebarParent
     }"
   >
     <slot />
@@ -19,9 +20,9 @@
 </template>
 
 <script setup lang="ts">
-import { provide, withDefaults } from "vue";
+import { inject, provide, withDefaults } from "vue";
 import type { Size } from "../types";
-
+import type { SidebarInject } from "../sidebar/sidebar.types";
 export interface CardProps {
   padding?: boolean;
   rounded: Size;
@@ -40,4 +41,7 @@ provide<CardProvide>("card", {
   padding: props.padding,
   rounded: props.rounded,
 });
+
+const cardParent = inject<CardProvide>('card');
+const sidebarParent = inject<SidebarInject>('sidebar');
 </script>
