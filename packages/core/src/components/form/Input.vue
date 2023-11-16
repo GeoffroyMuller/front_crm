@@ -48,7 +48,7 @@
     />
     <div
       v-if="icon || $slots.icon"
-      class="ml-1"
+      class="ml-1 flex w-fit items-center"
       :class="{
         [`rounded-${rounded}`]: true,
       }"

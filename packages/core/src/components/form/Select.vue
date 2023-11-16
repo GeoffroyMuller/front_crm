@@ -43,23 +43,13 @@
               </Chip>
             </div>
           </template>
+
           <template #icon>
             <Icon
-              :name="!open ? 'expand_more' : 'expand_less'"
-              :color="
-                !isFocus
-                  ? 'black'
-                  : internalError || error
-                  ? 'danger'
-                  : 'primary'
-              "
-              v-if="required || multiple || internalValue === undefined"
-            />
-            <IconButton
-              class="-mr-iconButtonPadding"
-              name="close"
-              v-else
-              @click.stop="handleClickClose"
+              :class="{ 'transform rotate-180': open }"
+              class="transition-all duration-100"
+              name="expand_more"
+              color="black"
             />
           </template>
           <!-- <template #content v-if="multiple">

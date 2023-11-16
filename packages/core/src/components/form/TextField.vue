@@ -19,6 +19,8 @@
         ref="inputRef"
         v-model="internalValue"
         :inputClass="inputClass"
+        @focus="onFocus"
+        @blur="onBlur"
         v-bind="{
           min,
           max,

@@ -21,13 +21,7 @@
           <template #icon>
             <Icon
               name="search"
-              :color="
-                !isFocus
-                  ? 'black'
-                  : internalError || error
-                  ? 'danger'
-                  : 'primary'
-              "
+              color="black"
               v-if="multiple || internalValue == null"
             />
             <IconButton

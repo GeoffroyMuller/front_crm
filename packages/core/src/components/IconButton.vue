@@ -32,7 +32,7 @@ interface IconButtonProps {
   color?: Color;
   sharp?: boolean;
   weight?: IconProps["weight"];
-  size?: Size;
+  size?: Size | "xs";
   disabled?: boolean;
   defaultColored?: boolean;
 }
@@ -49,6 +49,6 @@ const iconProps = computed(() => {
 <style>
 .icon-btn {
   line-height: 0;
-  @apply cursor-pointer select-none bg-transparent block w-fit h-fit border-none transition-all rounded-sm disabled:cursor-not-allowed relative p-iconButtonPadding;
+  @apply cursor-pointer select-none bg-transparent block w-fit h-fit border-none transition-all rounded-sm disabled:cursor-not-allowed relative p-iconButtonPadding text-slate-500;
 }
 </style>
