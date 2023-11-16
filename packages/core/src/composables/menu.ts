@@ -19,6 +19,7 @@ export interface MenuProps {
   alignment?: "start" | "end" | "center";
   hasArrow?: boolean;
   gap?: number;
+  space?: string;
   openOnHover?: boolean;
   strategy?: "root" | "absolute";
   hideOnClickActivator?: boolean;
@@ -92,7 +93,7 @@ export function getPossibleDisplayPosition(
 
 export default function useMenu(props: MenuProps) {
   if (props.strategy === "absolute") {
-    return useMenuPositionAbsolute(props);
+    return useMenuPositionAbsolute({ ...props, space: "8px" }); //TODO 8px:arrowHeight
   }
-  return useMenuPositionRoot(props);
+  return useMenuPositionRoot({ ...props, space: "8px" });
 }

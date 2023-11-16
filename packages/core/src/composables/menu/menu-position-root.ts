@@ -158,8 +158,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
     },
     { immediate: true }
   );
-
-  function _setStyleProperties({
+  /*   function _setStyleProperties({
     p,
     pt,
     pb,
@@ -183,7 +182,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
     container.value.style.setProperty("--pr", `${pr || p || 0}`);
     container.value.style.setProperty("--p", `${p || 0}`);
     container.value.style.setProperty("--m", `${m || 0}`);
-  }
+  } */
 
   function _getCoordContainer(
     placement: MenuProps["placement"],
@@ -210,6 +209,8 @@ export default function useMenuPositionRoot(props: MenuProps) {
       container,
       activator
     );
+    let marginStyle: { [key: string]: string } | undefined;
+
     switch (
       getPlacementAlignmentToString(
         possiblePosition.placement,
@@ -222,7 +223,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coord.bottom = 0;
         coord.top = dimensions.activator.top + dimensions.activator.height / 2;
         coord.left = dimensions.activator.left + dimensions.activator.width;
-        _setStyleProperties({ ml: props.gap });
+        //_setStyleProperties({ ml: props.gap });
         coord.transformTranslate = "translateY(-50%)";
 
         coordArrowContainer.top = "50%";
@@ -233,7 +234,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coord.bottom = 0;
         coord.top = dimensions.activator.top + dimensions.activator.height / 2;
         coord.right = dimensions.activator.right + dimensions.activator.width;
-        _setStyleProperties({ mr: props.gap });
+        //_setStyleProperties({ mr: props.gap });
         coord.transformTranslate = "translateY(-50%)";
 
         coordArrowContainer.top = "50%";
@@ -245,7 +246,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coord.bottom =
           dimensions.activator.bottom + dimensions.activator.height;
         coord.left = dimensions.activator.left + dimensions.activator.width / 2;
-        _setStyleProperties({ mb: props.gap });
+        //_setStyleProperties({ mb: props.gap });
         coord.transformTranslate = "translateX(-50%)";
 
         coordArrowContainer.transform = "translateX(-50%)";
@@ -268,7 +269,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coord.bottom = 0;
         coord.top = dimensions.activator.top + dimensions.activator.height;
         coord.left = dimensions.activator.left + dimensions.activator.width / 2;
-        _setStyleProperties({ mt: props.gap });
+        //_setStyleProperties({ mt: props.gap });
         coord.transformTranslate = "translateX(-50%)";
 
         coordArrowContainer.transform = "translateX(-50%)";
@@ -304,7 +305,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coord.bottom =
           dimensions.activator.bottom + dimensions.activator.height;
         coord.left = dimensions.activator.left + dimensions.activator.width;
-        _setStyleProperties({ mb: props.gap });
+        //_setStyleProperties({ mb: props.gap });
         coord.transformTranslate = "translateX(-100%)";
 
         coordArrowContainer.right = "0";
@@ -315,7 +316,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coord.bottom =
           dimensions.activator.bottom + dimensions.activator.height;
         coord.right = dimensions.activator.right + dimensions.activator.width;
-        _setStyleProperties({ mb: props.gap });
+        //_setStyleProperties({ mb: props.gap });
         coord.transformTranslate = "translateX(100%)";
         break;
       /* case "top-end-corner":
@@ -341,7 +342,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coord.bottom = 0;
         coord.top = dimensions.activator.top + dimensions.activator.height;
         coord.left = dimensions.activator.left + dimensions.activator.width;
-        _setStyleProperties({ mt: props.gap });
+        //_setStyleProperties({ mt: props.gap });
         coord.transformTranslate = "translateX(-100%)";
         break;
       case "bottom-start":
@@ -349,7 +350,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coord.bottom = 0;
         coord.top = dimensions.activator.top + dimensions.activator.height;
         coord.right = dimensions.activator.right + dimensions.activator.width;
-        _setStyleProperties({ mt: props.gap });
+        //_setStyleProperties({ mt: props.gap });
         coord.transformTranslate = "translateX(100%)";
         break;
       /* case "bottom-end-corner":
@@ -373,7 +374,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coord.bottom = 0;
         coord.top = dimensions.activator.top;
         coord.right = dimensions.activator.right + dimensions.activator.width;
-        _setStyleProperties({ mr: props.gap });
+        //_setStyleProperties({ mr: props.gap });
         coord.transformTranslate = "";
         break;
       case "left-end":
@@ -381,7 +382,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coord.top = 0;
         coord.bottom = dimensions.activator.bottom;
         coord.right = dimensions.activator.right + dimensions.activator.width;
-        _setStyleProperties({ mr: props.gap });
+        //_setStyleProperties({ mr: props.gap });
         coord.transformTranslate = "";
         break;
       case "right-start":
@@ -389,7 +390,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coord.bottom = 0;
         coord.top = dimensions.activator.top;
         coord.left = dimensions.activator.left + dimensions.activator.width;
-        _setStyleProperties({ ml: props.gap });
+        //_setStyleProperties({ ml: props.gap });
         coord.transformTranslate = "";
         break;
       case "right-end":
@@ -397,7 +398,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coord.top = 0;
         coord.bottom = dimensions.activator.bottom;
         coord.left = dimensions.activator.left + dimensions.activator.width;
-        _setStyleProperties({ ml: props.gap });
+        //_setStyleProperties({ ml: props.gap });
         coord.transformTranslate = "";
         break;
       default:
@@ -407,23 +408,33 @@ export default function useMenuPositionRoot(props: MenuProps) {
     if (placement != null) {
       if (placement == "right") {
         coordArrowContainer.transform =
-          coordArrowContainer.transform + "translateX(-100%) rotate(270deg)";
+          coordArrowContainer.transform +
+          `translate(-100%, 
+            calc(-1 * calc(var(--menu-arrow-container-size, 10px) / 2))) 
+            rotate(270deg)`;
         coordArrowContainer.left = "0";
+        marginStyle = _toMarginStyle("left", props.space);
       }
       if (placement == "left") {
         coordArrowContainer.transform =
-          coordArrowContainer.transform + "translateX(100%) rotate(90deg)";
+          coordArrowContainer.transform +
+          `translate(100%, 
+           calc(-1 * calc(var(--menu-arrow-container-size, 10px) / 2)))
+           rotate(90deg)`;
         coordArrowContainer.right = "0";
+        marginStyle = _toMarginStyle("right", props.space);
       }
       if (placement == "top") {
         coordArrowContainer.transform =
           coordArrowContainer.transform + "translateY(100%) rotate(180deg)";
         coordArrowContainer.bottom = "0";
+        marginStyle = _toMarginStyle("bottom", props.space);
       }
       if (placement == "bottom") {
         coordArrowContainer.transform =
           coordArrowContainer.transform + "translateY(-100%) rotate(0deg)";
         coordArrowContainer.top = "0";
+        marginStyle = _toMarginStyle("top", props.space);
       }
     }
     if (alignment != null) {
@@ -442,20 +453,33 @@ export default function useMenuPositionRoot(props: MenuProps) {
         coordArrowContainer.bottom = "0";
       }
     }
-    return { coord, coordArrowContainer };
+    return { coord, coordArrowContainer, marginStyle };
   }
+  function _toMarginStyle(
+    marginPlacement?: MenuProps["placement"],
+    space?: string
+  ): { [key: string]: string } | undefined {
+    if (!marginPlacement || !space) return;
 
+    const placementString = `${marginPlacement}`;
+    return {
+      ["margin" +
+      placementString.charAt(0).toUpperCase() +
+      placementString.slice(1)]: space,
+    };
+  }
   function _setStyle() {
     const dimensions = {
       container: getDimensions(container.value as HTMLElement),
       activator: getDimensions(activator.value as HTMLElement),
     };
-    const { coord, coordArrowContainer } = _getCoordContainer(
+    const { coord, coordArrowContainer, marginStyle } = _getCoordContainer(
       props.placement,
       props.alignment,
       dimensions
     );
     Object.assign(container.value.style, {
+      ...marginStyle,
       top: coord.top === 0 ? "auto" : coord.top + "px",
       left: coord.left === 0 ? "auto" : coord.left + "px",
       bottom: coord.bottom === 0 ? "auto" : coord.bottom + "px",
@@ -483,7 +507,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
   }
 
   function init() {
-    container.value.classList.add("layout-component");
+    // container.value.classList.add("layout-component");
     container.value.style.position = "absolute";
     container.value.style.zIndex = "65";
     container.value.style.top = "0";
