@@ -222,7 +222,7 @@ const {
         color: black;
         width: spacing(4);
         height: spacing(4);
-        border-radius: map-deep-get($rounded, "sm");
+        @apply rounded-sm;
         cursor: pointer;
         &.last-month {
           color: rgb(215, 215, 215);

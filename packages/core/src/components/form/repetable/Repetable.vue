@@ -225,8 +225,7 @@ watch(
   }
   .repetable-section {
     &:first-child {
-      border-top-left-radius: map-get($rounded, "md");
-      border-top-right-radius: map-get($rounded, "md");
+      @apply rounded-t-md;
     }
     background-color: color("zinc", 50);
     border-bottom: dashed 1px color("slate", 400);
@@ -238,8 +237,7 @@ watch(
     align-items: center;
     gap: spacing(1.5);
     background-color: color("zinc", 50);
-    border-bottom-left-radius: map-get($rounded, "md");
-    border-bottom-right-radius: map-get($rounded, "md");
+    @apply rounded-b-md;
   }
 }
 </style>

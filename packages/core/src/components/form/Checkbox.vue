@@ -76,7 +76,7 @@ function handleSwitch() {
       cursor: pointer;
     }
     .checkmark {
-      border-radius: map-deep-get($rounded, "sm");
+      @apply rounded-sm;
       position: absolute;
       top: 0;
       left: 0;

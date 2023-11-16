@@ -79,12 +79,10 @@ const { handleClickTab, currentTab, tabsHidden, tabsVisible, nbTabsHidden } =
 
   .tab {
     font-weight: bold;
-    border-radius: map-deep-get($rounded, "sm");
-    @apply pb-2;
+    @apply rounded-sm pb-2 whitespace-nowrap;
     text-align: center;
     position: relative;
     cursor: pointer;
-    @apply whitespace-nowrap;
     &:hover:not(.selected) {
       opacity: 0.8;
     }

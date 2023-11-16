@@ -129,7 +129,7 @@ async function displayPdf() {
   background-color: color("zinc", 200);
   overflow: auto;
   position: relative;
-  border-radius: map-deep-get($rounded, "sm");
+  @apply rounded-sm;
   .pdf-viewer-actions-wrapper {
     position: sticky;
     top: 0;
@@ -143,7 +143,7 @@ async function displayPdf() {
     align-items: center;
     justify-content: center;
     background-color: color("zinc", 300);
-    border-radius: 0 0 map-deep-get($rounded, "xl") map-deep-get($rounded, "xl");
+    @apply rounded-t-none rounded-b-xl;
     .total {
       @apply ml-1;
     }
@@ -155,7 +155,7 @@ async function displayPdf() {
   }
   canvas {
     background-color: white;
-    border-radius: map-deep-get($rounded, "sm");
+    @apply rounded-sm;
     margin: auto;
     max-width: 1200px;
     display: block;

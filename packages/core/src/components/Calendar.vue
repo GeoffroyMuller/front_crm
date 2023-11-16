@@ -206,7 +206,6 @@ function clickOnDay(day: Day) {
 
 <style lang="scss">
 $borderColor: #dbdcdc;
-$borderRadius: map-deep-get($rounded, "md");
 
 .calendar {
   .calendar-header {
@@ -222,7 +221,7 @@ $borderRadius: map-deep-get($rounded, "md");
       cursor: pointer;
       user-select: none;
       @apply p-2;
-      border-radius: map-deep-get($rounded, "sm");
+      @apply rounded-sm;
 
       &.selected {
         background: color("primary", 500);
