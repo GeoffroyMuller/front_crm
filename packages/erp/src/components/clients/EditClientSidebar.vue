@@ -38,7 +38,7 @@
               </Button>
             </div>
           </div>
-          <Card padding v-if="isAddCompanyOpen" bordered>
+          <Card padding v-if="isAddCompanyOpen" bordered darken>
             <div class="grid gap-4">
               <div class="typo-title6">{{ $t("new-company") }}</div>
               <TextField

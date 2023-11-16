@@ -11,7 +11,8 @@
       'cursor-pointer select-none': selectable,
       'hover:shadow-md': selectable && !selected,
       'bg-primary-50': selected,
-      'bg-white': !selected,
+      'bg-white': !selected && !darken,
+      'bg-zinc-50': !selected && darken 
     }"
   >
     <slot />
@@ -28,6 +29,7 @@ export interface CardProps {
   bordered?: boolean;
   selectable?: boolean;
   selected?: boolean;
+  darken?: boolean;
 }
 
 export type CardProvide = Pick<CardProps, "padding" | "rounded">;

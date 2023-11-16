@@ -231,7 +231,6 @@ watch(
     &:not(:first-child) {
       border-top: 0;
     }
-    background-color: color("zinc", 50);
     border-bottom: dashed 1px color("slate", 400);
     position: relative;
   }
