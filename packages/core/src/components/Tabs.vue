@@ -80,7 +80,7 @@ const { handleClickTab, currentTab, tabsHidden, tabsVisible, nbTabsHidden } =
   .tab {
     font-weight: bold;
     border-radius: map-deep-get($rounded, "sm");
-    padding-bottom: spacing(1);
+    @apply pb-2;
     text-align: center;
     position: relative;
     cursor: pointer;

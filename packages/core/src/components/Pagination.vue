@@ -134,11 +134,10 @@ span {
   white-space: nowrap;
 }
 .pagination {
-  @apply flex justify-end items-center;
+  @apply flex justify-end items-center gap-8;
   &.pagination-mobile {
     justify-content: start;
   }
-  gap: spacing(4);
 }
 
 .pagination-items-per-page {
@@ -150,7 +149,7 @@ span {
 .pagination-number-page {
   display: flex;
   align-items: center;
-  gap: spacing(1);
+  @apply gap-2;
 }
 .input-number-page {
   width: 3rem;

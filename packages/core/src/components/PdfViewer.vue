@@ -137,17 +137,15 @@ async function displayPdf() {
     place-items: center;
   }
   .pdf-viewer-actions {
-    height: spacing(6);
+    @apply h-12 gap-2 py-0 px-2;
     display: flex;
     width: fit-content;
     align-items: center;
     justify-content: center;
-    gap: spacing(1);
     background-color: color("zinc", 300);
     border-radius: 0 0 map-deep-get($rounded, "xl") map-deep-get($rounded, "xl");
-    padding: 0 spacing(1);
     .total {
-      margin-left: spacing(0.5);
+      @apply ml-1;
     }
     > * {
       display: flex;

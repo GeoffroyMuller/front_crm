@@ -50,10 +50,9 @@ const emit = defineEmits(["select"]);
 <style lang="scss">
 .select-option {
   cursor: pointer;
-  padding: spacing(0.75) spacing(1);
+  @apply py-1.5 px-2 gap-2;
   display: flex;
   align-items: center;
-  gap: spacing(1);
   &.selected {
     color: color("primary", 500);
   }

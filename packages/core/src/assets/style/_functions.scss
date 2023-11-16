@@ -2,15 +2,6 @@
 
 @function spacing($number, $breakpoint: none) {
     @if ($breakpoint != none) {
-        @if ($number == "block") {
-            $map: $spacing-block;
-        } @else if ($number == "page") {
-            $map: $padding-page;
-        } @else if ($number == "card-block") {
-            $map: $padding-card-block;
-        } @else if ($number == "card-text") {
-            $map: $padding-card-text;
-        }
         @return map-get($map, $breakpoint);
     }
     @return $number * $spacing + px

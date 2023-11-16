@@ -210,8 +210,7 @@ $borderRadius: map-deep-get($rounded, "md");
 
 .calendar {
   .calendar-header {
-    @apply flex justify-between items-center gap-2;
-    padding: spacing(2);
+    @apply flex justify-between items-center gap-2 p-4;
     border-bottom: solid color("slate", 200) 1px;
     opacity: 1;
     z-index: 21;
@@ -222,7 +221,7 @@ $borderRadius: map-deep-get($rounded, "md");
     .mode {
       cursor: pointer;
       user-select: none;
-      padding: spacing(1);
+      @apply p-2;
       border-radius: map-deep-get($rounded, "sm");
 
       &.selected {
@@ -251,7 +250,7 @@ $borderRadius: map-deep-get($rounded, "md");
     background-color: white;
     z-index: 21;
     .weekday {
-      padding: spacing(1);
+      @apply p-2;
       border-bottom: 1px solid $borderColor;
       &:not(:last-child) {
         border-right: 1px solid $borderColor;
@@ -266,7 +265,7 @@ $borderRadius: map-deep-get($rounded, "md");
       border-top: 0;
       .day {
         border-left: 1px solid $borderColor;
-        padding: spacing(1);
+        @apply p-2;
         &:first-child {
           border-left: none;
         }
@@ -291,7 +290,7 @@ $borderRadius: map-deep-get($rounded, "md");
     overflow-y: auto;
     .day {
       height: 180px;
-      padding: spacing(1);
+      @apply p-2;
       border: 1px solid $borderColor;
       border-left: none;
       border-bottom: none;
@@ -307,7 +306,7 @@ $borderRadius: map-deep-get($rounded, "md");
         display: none;
         text-align: center;
         position: absolute;
-        bottom: spacing(0.5);
+        @apply bottom-1;
         left: 50%;
         transform: translateX(-50%);
         z-index: 4;
@@ -329,7 +328,7 @@ $borderRadius: map-deep-get($rounded, "md");
       }
     }
     .weekday {
-      padding: spacing(1);
+      @apply p-2;
       border-right: 1px solid $borderColor;
       &:last-child {
         border-right: none;
