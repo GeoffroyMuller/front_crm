@@ -79,25 +79,13 @@
             />
           </KeepAlive>
         </div>
-        <div class="form-bottom">
-          <Button
-            :disabled="hasError || !hasChanged"
-            :loading="loading"
-            type="submit"
-            v-tooltip="{
-              text: $t('keyboardshortcuts.ctrl+s'),
-              placement: 'bottom',
-            }"
-            >{{ $t("save") }}</Button
-          >
-        </div>
+        <slot name="end" />
       </div>
     </template>
   </Form>
 </template>
 <script setup lang="ts">
 import Form from "core/src/components/form/Form.vue";
-import Button from "core/src/components/Button.vue";
 import TextField from "core/src/components/form/TextField.vue";
 import type { Product, StockManagement } from "@/types/product";
 import { computed, ref } from "vue";

@@ -62,14 +62,13 @@
       "sidebartabs": {
         "pdf": "PDF",
         "payments": "Paiements"
-      } 
+      }
     },
     "sales": {
       "edit-list-products-real": "Editer le stock {count}",
       "warning-sentence-qty": "L'impact sur le stock est différent de la quantité.",
       "edit-products-real": "Produit avec stock",
       "edit-products-real-product": "Choix des produit du stock"
-
     },
     "edit-quote": {
       "qty": "Quantitée",
@@ -142,7 +141,11 @@
       "edit-product-real": "Modifier le produit",
       "add-selectable-options": "Ajouter des options de selection",
       "event-product": "Ce produit est un produit evenementiel",
-      "capacity": "Capacité des évenements"
+      "capacity": "Capacité des évenements",
+      "informations": "Informations général",
+      "name": "Titre",
+      "unit-price": "Prix unitaire",
+      "vat": "TVA"
     },
     "edit-reservation": {
       "new-reservation": "Nouvelle réservation",

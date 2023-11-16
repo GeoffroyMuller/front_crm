@@ -9,15 +9,19 @@
     :loading="loadingPage"
     :tabs="id != 'new' ? productTabs : undefined"
   >
+    <template #head-end>
+      <Button
+        v-if="id != 'new'"
+        variant="outlined"
+        color="primary"
+        @click.stop="editSidebarOpen = true"
+      >
+        {{ $t("edit") }}
+      </Button>
+    </template>
     <template #informations>
       <Card padding>
-        <ProductForm
-          :product="product"
-          @saved="save"
-          @cancel="goToProductsPage"
-          :loading="loading"
-        >
-        </ProductForm>
+        <ProductView :product="product" />
       </Card>
     </template>
     <template #stock>
@@ -43,8 +47,32 @@
         @cancel="goToProductsPage"
         :loading="loading"
       >
+        <template #end>
+          <Button color="success" type="submit">{{ $t("add") }}</Button>
+        </template>
       </ProductForm>
     </Card>
+    <Sidebar
+      v-model:open="editSidebarOpen"
+      contentClass="md:min-w-[800px] md:max-w-[800px]"
+    >
+      <SidebarHead :actions="[]" :title="product?.name"> </SidebarHead>
+
+      <SidebarContent>
+        <ProductForm
+          :product="product"
+          @saved="save"
+          @cancel="goToProductsPage"
+          :loading="loading"
+        >
+          <template #end>
+            <SidebarActions class="flex justify-end gap-2">
+              <Button color="success" type="submit">{{ $t("save") }}</Button>
+            </SidebarActions>
+          </template>
+        </ProductForm>
+      </SidebarContent>
+    </Sidebar>
   </Page>
 </template>
 <script setup lang="ts">
@@ -53,16 +81,24 @@ import Page from "core/src/components/Page.vue";
 import useProductStore from "@/modules/products/stores/products";
 import { computed, onMounted, ref } from "vue";
 import Card from "core/src/components/card/Card.vue";
-import Tabs from "core/src/components/Tabs.vue";
 import ProductAvancedSettingsPhysical from "@/modules/products/components/ProductAvancedSettingsPhysical.vue";
 import ProductStock from "@/modules/products/components/ProductStock.vue";
 import useVatStore from "@/stores/vat";
 import useEditPage from "@/components/editpage";
 import type { Product } from "@/types/product";
 import ProductAdvancedSettingsEvents from "@/modules/products/components/ProductAdvancedSettingsEvents.vue";
+import ProductView from "../components/ProductView.vue";
+import Sidebar from "core/src/components/sidebar/Sidebar.vue";
+import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
+import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
+import Button from "core/src/components/Button.vue";
+import SidebarActions from "core/src/components/sidebar/SidebarActions.vue";
+import CardActions from "core/src/components/card/CardActions.vue";
 
 const productsStore = useProductStore();
 const vatStore = useVatStore();
+
+const editSidebarOpen = ref(false);
 
 const {
   router,
