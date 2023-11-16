@@ -243,5 +243,10 @@ watch(
     gap: spacing(1.5);
     @apply rounded-b-md;
   }
+  &:not(:has(.repetable-section)) {
+    .repetable-actions {
+      @apply border-t rounded-t-md;
+    }
+  }
 }
 </style>

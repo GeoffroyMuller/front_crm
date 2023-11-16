@@ -42,7 +42,7 @@
             <div class="grid gap-4">
               <div class="typo-title6">{{ $t("new-company") }}</div>
               <TextField
-                :label="$t('new-company-name')"
+                :placeholder="$t('new-company-name')"
                 v-model="companyName"
               />
               <div class="flex gap-2 items-center">
