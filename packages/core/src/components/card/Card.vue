@@ -12,7 +12,7 @@
       'hover:shadow-md': selectable && !selected,
       'bg-primary-50': selected,
       'bg-white': !selected && !darken,
-      'bg-zinc-50': !selected && darken 
+      'bg-zinc-50': !selected && darken,
     }"
   >
     <slot />
@@ -43,6 +43,6 @@ provide<CardProvide>("card", {
   rounded: props.rounded,
 });
 
-const cardParent = inject<CardProvide>('card');
-const sidebarParent = inject<SidebarInject>('sidebar');
+const cardParent = inject<CardProvide>("card");
+const sidebarParent = inject<SidebarInject>("sidebar");
 </script>
