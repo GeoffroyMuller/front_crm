@@ -14,6 +14,7 @@
           :key="item[itemsKey]"
           @click.stop="$emit('row-click', item)"
           :bordered="bordered"
+          :darken="darken"
         >
           <Flex :mb="1.5" v-if="selectable">
             <Checkbox
@@ -69,7 +70,7 @@
         </Card>
       </template>
       <template v-else>
-        <Card>
+        <Card :darken="darken" :bordered="bordered">
           <slot v-if="$slots.empty" name="empty"></slot>
           <div v-else class="empty-block">
             {{ $t("empty") }}
@@ -86,6 +87,7 @@
       class="table-container"
       :class="{ selectable }"
       :bordered="bordered"
+      :darken="darken"
     >
       <div class="table-wrapper">
         <!--  <div class="table-head" v-if="$slots['head']">
@@ -230,6 +232,7 @@ export interface TableProps<T = any> {
   selected?: any[];
   itemsKey?: ID;
   bordered?: boolean;
+  darken?: boolean;
 }
 
 const props = withDefaults(defineProps<TableProps>(), {
