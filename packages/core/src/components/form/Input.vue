@@ -141,6 +141,7 @@ const maskOptions = computed<MaskOptions | null>(() => {
 
 <style lang="scss">
 input {
+  cursor: inherit;
   &.appearance-none {
     /* Firefox */
     -moz-appearance: textfield;

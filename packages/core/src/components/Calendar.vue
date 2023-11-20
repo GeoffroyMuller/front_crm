@@ -7,26 +7,30 @@
     <div class="calendar-header h-[60px] sticky top-0 bg-white">
       <div class="date">
         <div class="buttons">
-          <IconButton name="chevron_left" @click.stop="decrement()" />
-          <IconButton name="chevron_right" @click.stop="increment()" />
+          <IconButton
+            name="chevron_left"
+            class="-ml-iconButtonPadding"
+            @click.stop="decrement()"
+          />
+          <IconButton
+            name="chevron_right"
+            class="-ml-iconButtonPadding"
+            @click.stop="increment()"
+          />
         </div>
-        <div>{{ monthNames[current.month] }} {{ current.year }}</div>
+        <Button variant="text" color="black" class="-ml-iconButtonPadding">
+          {{ monthNames[current.month] }} {{ current.year }}
+        </Button>
       </div>
-      <div class="modes">
-        <div
-          class="mode"
-          :class="{ selected: !displayWeek }"
-          @click="displayWeek = false"
-        >
-          month
-        </div>
-        <div
-          class="mode"
-          :class="{ selected: displayWeek }"
-          @click="displayWeek = true"
-        >
-          week
-        </div>
+      <div>
+        <Select
+          v-model="displayWeek"
+          :options="[
+            { label: 'month', value: false },
+            { label: 'week', value: true },
+          ]"
+          menuStrategy="root"
+        />
       </div>
     </div>
     <div class="weekdays sticky top-[60px]">
@@ -88,6 +92,8 @@ import Card from "./card/Card.vue";
 import useCalendar, { type Day } from "../composables/calendar";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
+import Button from "./Button.vue";
+import Select from "./form/Select.vue";
 
 export interface CalendarEvent {
   id?: number;
@@ -213,25 +219,8 @@ $borderColor: #dbdcdc;
     border-bottom: solid color("slate", 200) 1px;
     opacity: 1;
     z-index: 21;
-    .modes,
     .date {
       @apply flex justify-start items-center gap-2;
-    }
-    .mode {
-      cursor: pointer;
-      user-select: none;
-      @apply p-2;
-      @apply rounded-sm;
-
-      &.selected {
-        background: color("primary", 500);
-        background: linear-gradient(
-          245deg,
-          color("primary", 500) 0%,
-          color("primary", 400) 100%
-        );
-        color: white;
-      }
     }
 
     .date {

@@ -1,5 +1,14 @@
 <template>
   <Page :title="$t('products')" icon="inventory_2">
+    <template #head-end>
+      <Button
+        @click="$router.push({ name: 'products-id', params: { id: 'new' } })"
+        variant="outlined"
+        color="success"
+      >
+        {{ $t("add-menu.add-product") }}
+      </Button>
+    </template>
     <MagicFilterBar
       mapSearch="$contains.name"
       :filters="[]"

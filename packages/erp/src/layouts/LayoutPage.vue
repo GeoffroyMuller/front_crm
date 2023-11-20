@@ -23,6 +23,12 @@
               router.push({ name: 'invoices-id', params: { id: 'new' } }),
             title: $t('add-menu.add-invoice'),
           },
+          {
+            icon: 'inventory_2',
+            action: () =>
+              router.push({ name: 'products-id', params: { id: 'new' } }),
+            title: $t('add-menu.add-product'),
+          },
         ]"
         placement="bottom"
         alignment="end"

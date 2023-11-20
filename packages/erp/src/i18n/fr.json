@@ -9,7 +9,8 @@
   "add-menu": {
     "add-quote": "Nouveau devis",
     "add-invoice": "Nouvelle facture",
-    "new-project": "Nouveau Projet"
+    "new-project": "Nouveau Projet",
+    "add-product": "Nouveau produit"
   },
   "pages": {
     "myaccount": {
