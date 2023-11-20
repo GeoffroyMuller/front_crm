@@ -136,11 +136,23 @@
                 </div>
                 <div
                   class="typo-title5 font-semibold mt-12 flex-1 flex flex-col justify-start"
+                  v-if="client"
                 >
                   <div class="mb-4">
                     {{ $t("pages.edit-quote.customer") }}
                   </div>
                   <div class="grid gap-3">
+                    <div
+                      class="flex gap-2"
+                      v-if="client?.firstname || client?.lastname"
+                    >
+                      <div class="text-slate-400">
+                        {{ $t("pages.edit-quote.name") }}
+                      </div>
+                      <div class="text-slate-500">
+                        {{ client?.firstname }} {{ client?.lastname }}
+                      </div>
+                    </div>
                     <div class="flex gap-2" v-if="client?.company?.name">
                       <div class="text-slate-400">
                         {{ $t("pages.edit-quote.company") }}

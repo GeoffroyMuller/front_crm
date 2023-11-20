@@ -105,7 +105,8 @@
       "email": "Email",
       "phone": "Téléphone",
       "city": "Ville",
-      "customer": "Client"
+      "customer": "Client",
+      "name": "Nom"
     },
     "edit-invoice": {
       "qty": "Quantitée",
