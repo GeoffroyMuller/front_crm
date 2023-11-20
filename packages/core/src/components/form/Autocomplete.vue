@@ -11,6 +11,7 @@
         <TextField
           v-model="search"
           :disabled="disabled"
+          input-class="group/autocomplete"
           :label="label"
           :error="internalError || error ? true : false"
           @focus="isFocus = true"
@@ -19,17 +20,14 @@
           @keydown="handleKeydown"
         >
           <template #icon>
-            <Icon
-              name="search"
-              color="black"
-              v-if="multiple || internalValue == null"
-            />
             <IconButton
-              class="-mr-iconButtonPadding"
               name="close"
-              v-else
               @click.stop="handleClickClose"
+              size="xs"
+              v-if="internalValue != null"
+              class="opacity-0 pointer-events-none group-hover/autocomplete:opacity-100 group-hover/autocomplete:pointer-events-auto"
             />
+            <Icon name="search" color="black" />
           </template>
         </TextField>
       </template>

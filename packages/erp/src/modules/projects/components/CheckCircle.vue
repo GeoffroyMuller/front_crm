@@ -12,7 +12,7 @@
   >
     <Icon
       name="check"
-      :size="size === 'xl' ? 'sm' : 'xs'"
+      :size="size === 'xl' ? 'sm' : 'xxs'"
       :color="checked ? 'white' : 'black'"
     />
   </div>

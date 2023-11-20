@@ -93,7 +93,7 @@ function handleClickOutside() {
   height: var(--menu-arrow-container-size, 10px);
   //filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5)); //TODO
   .menu-arrow {
-    background-color: red;
+    @apply bg-tooltip;
     clip-path: polygon(50% 0, 100% 100%, 0 100%);
     width: 100%;
     height: 8px;

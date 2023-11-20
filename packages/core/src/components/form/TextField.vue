@@ -18,7 +18,7 @@
       <Input
         ref="inputRef"
         v-model="internalValue"
-        :inputClass="inputClass"
+        :class="inputClass"
         @focus="onFocus"
         @blur="onBlur"
         v-bind="{

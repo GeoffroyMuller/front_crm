@@ -12,7 +12,7 @@ export interface IconProps {
   name: IconName;
   color?: Color;
   sharp?: boolean;
-  size?: Size | "xs" | "3xl";
+  size?: Size | "xxs" | "xs" | "3xl";
   weight?: "bold" | "normal";
 
   // TODO : this props exist just for LayoutSideMenu TreeItem selected, not so generic...
@@ -62,8 +62,11 @@ const props = withDefaults(defineProps<IconProps>(), {
     }
   }
 }
-.icon-xs {
+.icon-xxs {
   font-size: 0.8125rem !important;
+}
+.icon-xs {
+  font-size: 1rem !important;
 }
 .icon-sm {
   font-size: 1.25rem !important;
