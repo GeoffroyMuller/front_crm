@@ -25,7 +25,7 @@
               @click.stop="handleClickClose"
               size="xs"
               v-if="internalValue != null"
-              class="opacity-0 pointer-events-none group-hover/autocomplete:opacity-100 group-hover/autocomplete:pointer-events-auto"
+              class="opacity-0 pointer-events-none group-focus-within/autocomplete:opacity-100 group-focus-within/autocomplete:pointer-events-auto group-hover/autocomplete:opacity-100 group-hover/autocomplete:pointer-events-auto"
             />
             <Icon name="search" color="black" />
           </template>
