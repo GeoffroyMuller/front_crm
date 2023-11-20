@@ -4,6 +4,7 @@
       {{ label }}
     </label>
     <div
+      ref="dropzoneRef"
       tabindex="0"
       class="selectable-black min-h-input relative flex items-center justify-center gap-2 p-4 typo-title5 text-slate-400 cursor-pointer"
       :class="{
@@ -32,6 +33,14 @@ import type { AnySchema } from "yup/lib/schema";
 import type { IconName, Size } from "../../types";
 import useValidatable from "../../../composables/validatable";
 import Icon from "../../Icon.vue";
+import { Dropzone } from "dropzone";
+import { onMounted, ref } from "vue";
+
+const dropzoneRef = ref();
+
+onMounted(() => {
+  const dropzone = new Dropzone(dropzoneRef.value, { url: "/file/post" });
+});
 
 export interface InputFileProps {
   modelValue?: any;
