@@ -38,6 +38,7 @@
           rounded,
           type,
           variant,
+          name,
         }"
       >
         <template #start v-if="$slots.start">

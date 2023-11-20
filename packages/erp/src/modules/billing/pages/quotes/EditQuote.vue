@@ -50,7 +50,7 @@
               <Card padding class="flex flex-col">
                 <TextField name="name" :label="$t('title')" />
                 <div
-                  class="typo-title5 font-semibold mt-8 flex-1 flex flex-col justify-end"
+                  class="typo-title5 font-semibold mt-12 flex-1 flex flex-col justify-start"
                 >
                   <div class="mb-4">
                     {{ $t("pages.edit-quote.responsible") }}
@@ -124,16 +124,18 @@
                   v-model:options="clientOptions"
                   v-model="idClient"
                 />
-                <div class="flex items-center mt-0.5 gap-0.5">
-                  <span class="typo-title5 font-medium">
-                    {{ $t(`pages.edit-quote.no-customer`) }}
-                  </span>
-                  <Button variant="text" @click.stop="isAddClientOpen = true">
-                    {{ $t(`pages.edit-quote.add-customer`) }}
-                  </Button>
+                <div class="mt-0.5 gap-0.5 relative">
+                  <div class="flex items-center absolute">
+                    <span class="typo-title5 font-medium">
+                      {{ $t(`pages.edit-quote.no-customer`) }}
+                    </span>
+                    <Button variant="text" @click.stop="isAddClientOpen = true">
+                      {{ $t(`pages.edit-quote.add-customer`) }}
+                    </Button>
+                  </div>
                 </div>
                 <div
-                  class="typo-title5 font-semibold mt-8 flex-1 flex flex-col justify-end"
+                  class="typo-title5 font-semibold mt-12 flex-1 flex flex-col justify-start"
                 >
                   <div class="mb-4">
                     {{ $t("pages.edit-quote.customer") }}
