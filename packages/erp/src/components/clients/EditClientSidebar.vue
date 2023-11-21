@@ -49,7 +49,6 @@
                 <Button
                   type="button"
                   color="success"
-                  icon="add"
                   @click="addCompany"
                   :loading="isAddCompanyLoading"
                 >
@@ -67,12 +66,7 @@
             </div>
           </Card>
           <SidebarActions class="flex justify-end gap-2">
-            <Button
-              type="submit"
-              color="success"
-              icon="add"
-              :disabled="hasError"
-            >
+            <Button type="submit" color="success" :disabled="hasError">
               {{ isAddAction ? $t("add") : $t("save") }}
             </Button>
           </SidebarActions>

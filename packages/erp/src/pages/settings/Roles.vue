@@ -51,12 +51,7 @@
               />
             </Grid>
             <SidebarActions class="flex justify-end items-center">
-              <Button
-                type="submit"
-                color="success"
-                icon="add"
-                :disabled="hasError"
-              >
+              <Button type="submit" color="success" :disabled="hasError">
                 {{ isAddAction ? $t("add") : $t("save") }}
               </Button>
             </SidebarActions>
