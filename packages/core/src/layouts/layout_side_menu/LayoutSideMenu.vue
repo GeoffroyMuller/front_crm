@@ -188,12 +188,12 @@ provide<LayoutSideMenuProvide>("LayoutSideMenu", {
   @apply flex items-center gap-3 py-2 hover:bg-primary-50 px-3 mx-2 rounded-sm cursor-pointer min-h-[38px];
 }
 .tree-items .icon {
-  @apply bg-gradient-245 from-slate-600 to-slate-600 !text-transparent bg-clip-text;
+  @apply text-slate-600;
 }
 
 .tree-items.selected .icon,
 .tree-items:hover .icon {
-  @apply bg-gradient-245 from-primary-500 to-primary-300 text-transparent bg-clip-text;
+  @apply text-primary-400;
 }
 
 /* .tree-menu::before {

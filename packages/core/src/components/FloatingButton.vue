@@ -2,7 +2,7 @@
   <button
     class="select-none h-[50px] w-[50px] grid place-items-center cursor-pointer rounded-full border-none p-2 fixed right-2 bottom-2 z-50 shadow-[2px_2px_3px_#999] text-white"
     :class="{
-      [`bg-gradient-245 from-${color}-500 to-${color}-400 hover:from-${color}-600 hover:to-${color}-500 `]: !disabled && !loading,
+      [`bg-${color}-500 hover:bg-${color}-600 `]: !disabled && !loading,
       [`bg-${color}-200`]: (disabled || loading)
     }">
 

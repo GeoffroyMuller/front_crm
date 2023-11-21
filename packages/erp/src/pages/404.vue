@@ -2,7 +2,7 @@
   <div class="grid place-items-center h-screenMinusHeaderHeight relative">
     <div class="grid place-items-center gap-content transform -translate-y-14">
       <div
-        class="text-5xl bg-gradient-245 from-primary-400 to-primary-300 text-transparent bg-clip-text font-semibold"
+        class="text-5xl bg-gradient-245 from-primary-400 to-primary-400 text-transparent bg-clip-text font-semibold"
       >
         404
       </div>

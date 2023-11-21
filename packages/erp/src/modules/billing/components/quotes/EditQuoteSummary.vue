@@ -61,7 +61,9 @@
         <Text typo="title6">{{
           $t("pages.edit-quote.customer-validation")
         }}</Text>
-        <div class="justify-self-end flex gap-4 justify-end text-end">
+        <div
+          class="justify-self-end flex gap-4 justify-end items-center text-end"
+        >
           <QuoteStatusChips
             v-if="
               quote?.validationStatus !== QuoteValidationStatus.DRAFT &&
