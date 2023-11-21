@@ -54,8 +54,7 @@ const computedColor = computed<Color>(() => {
 .chip {
   @apply flex justify-center items-center;
   border-radius: 50px;
-  background-color: rgba(0, 0, 0, 0.08);
-  color: rgba(0, 0, 0, 0.87);
+  @apply bg-gray-50 text-black;
   width: max-content;
   padding: 8px 12px;
   line-height: unset;
@@ -67,13 +66,8 @@ const computedColor = computed<Color>(() => {
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .chip-#{$key} {
-      background: color($key, 500);
-      color: color("white");
-      background: linear-gradient(
-        245deg,
-        color($key, 500) 0%,
-        color($key, 400) 100%
-      );
+      background: color($key, 100);
+      color: color("black");
     }
     .chip-outline-#{$key} {
       border: 1px solid color($key, 500);
@@ -83,8 +77,7 @@ const computedColor = computed<Color>(() => {
     }
   } @else {
     .chip-#{$key} {
-      background-color: rgba(0, 0, 0, 0.25);
-      color: color("white");
+      @apply bg-slate-100 text-black;
     }
     .chip-black {
       color: rgba(0, 0, 0, 0.65);
