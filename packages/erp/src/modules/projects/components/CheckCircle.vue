@@ -6,7 +6,7 @@
       'w-5 h-5': size !== 'xl',
 
       'hover:bg-success-50': !checked,
-      'bg-gradient-245 from-success-400 to-success-300': checked,
+      'bg-success-400': checked,
     }"
     class="rounded-full border border-slate-200 border-solid grid place-items-center cursor-pointer transition-all aspect-square"
   >
