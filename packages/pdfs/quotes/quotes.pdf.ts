@@ -52,7 +52,7 @@ export function generateQuotePDF(
   const headers = [["Description", "Quantité", "Prix unitaire", "Montant HT"]];
 
   const data = (quoteData.lines || []).map((line) => [
-    line.description.replace(/<[^>]+>/g, ""),
+    (line.description || '').replace(/<[^>]+>/g, ""),
     line.qty,
     line.unit_price ? line.unit_price.toFixed(2) : "-",
     line.qty && line.unit_price ? (line.unit_price * line.qty).toFixed(2) : "-",

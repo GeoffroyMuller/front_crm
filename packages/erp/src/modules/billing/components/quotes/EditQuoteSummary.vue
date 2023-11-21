@@ -29,7 +29,7 @@
           <IconButton
             v-tooltip="{
               text: $t('download'),
-              placement: 'bottom',
+              placement: 'top',
               alignment: 'end',
             }"
             name="download"
@@ -39,7 +39,7 @@
           <IconButton
             v-tooltip="{
               text: $t('preview'),
-              placement: 'bottom',
+              placement: 'top',
               alignment: 'end',
             }"
             name="visibility"
@@ -93,7 +93,8 @@
             color="success"
             v-tooltip="{
               text: $t('pages.edit-quote.customer-validated'),
-              placement: 'bottom',
+              placement: 'top',
+              alignment: 'end',
             }"
             @click="validateQuote"
             class="-m-iconButtonPadding"
@@ -108,7 +109,8 @@
             color="danger"
             v-tooltip="{
               text: $t('pages.edit-quote.customer-refused'),
-              placement: 'bottom',
+              placement: 'top',
+              alignment: 'end',
             }"
             @click="refuseQuote"
             class="-m-iconButtonPadding"
