@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-full flex items-center gap-2" :class="`text-${color}-500`">
+  <div class="max-w-full flex items-center gap-2 typo-label" :class="`text-${color}-500`">
     <Icon :name="icon" size="sm" :class="`text-${color}-400`" />
     <slot />
   </div>
