@@ -17,6 +17,8 @@ export interface IconProps {
 
   // TODO : this props exist just for LayoutSideMenu TreeItem selected, not so generic...
   transition?: boolean;
+
+  darken?: boolean;
 }
 
 const classes = computed(() => {
@@ -30,6 +32,9 @@ const classes = computed(() => {
   res.push(`icon-${props.weight}`);
   if (props.transition) {
     res.push("icon-transition");
+  }
+  if (props.darken) {
+    res.push("darken");
   }
   return res;
 });
@@ -87,15 +92,10 @@ const props = withDefaults(defineProps<IconProps>(), {
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .icon-#{$key} {
-      //color: map-deep-get($value, 500);
-      background: linear-gradient(
-        245deg,
-        map-deep-get($value, 600) 0%,
-        map-deep-get($value, 500) 100%
-      );
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: map-deep-get($value, 500);
+      &.darken {
+        color: map-deep-get($value, 700);
+      }
     }
   }
 }

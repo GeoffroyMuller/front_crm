@@ -20,6 +20,7 @@
       v-bind="iconProps"
       :color="defaultColored || color === 'white' ? color : undefined"
       class="relative"
+      :darken="darken"
     />
   </button>
 </template>
@@ -34,6 +35,7 @@ interface IconButtonProps {
   weight?: IconProps["weight"];
   size?: Size | "xs";
   disabled?: boolean;
+  darken?: boolean;
   defaultColored?: boolean;
 }
 

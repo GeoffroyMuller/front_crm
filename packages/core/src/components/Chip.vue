@@ -18,6 +18,7 @@
       class="ml-2 -my-iconButtonPadding -mr-iconButtonPadding"
       size="sm"
       :color="computedColor"
+      darken
       @click="$emit('close')"
     />
   </div>
@@ -42,11 +43,7 @@ const props = withDefaults(defineProps<ChipProps>(), {
 });
 
 const computedColor = computed<Color>(() => {
-  if (props.isOutline) {
-    return props.color || "white";
-  }
-  if (!props.color || props.color === "black") return "black";
-  return "white";
+  return props.color
 });
 </script>
 
@@ -59,6 +56,7 @@ const computedColor = computed<Color>(() => {
   width: max-content;
   padding: 8px 12px;
   line-height: unset;
+  @apply bg-slate-100 text-black border border-solid border-slate-300;
 }
 .icon-chip {
   margin-right: 4px;
@@ -67,8 +65,9 @@ const computedColor = computed<Color>(() => {
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .chip-#{$key} {
-      background: color($key, 500);
-      color: color("white");
+      background: color($key, 100);
+      border: 1px solid color($key, 300);
+      color: color($key, 700);
     }
     .chip-outline-#{$key} {
       border: 1px solid color($key, 500);
@@ -78,12 +77,9 @@ const computedColor = computed<Color>(() => {
     }
   } @else {
     .chip-#{$key} {
-      background-color: rgba(0, 0, 0, 0.25);
-      color: color("white");
+      @apply bg-slate-100 text-black border border-solid border-slate-300;
     }
-    .chip-black {
-      color: rgba(0, 0, 0, 0.65);
-    }
+
     .chip-outline-#{$key} {
       border: 1px solid rgba(0, 0, 0, 0.25);
       background-color: transparent;
