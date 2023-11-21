@@ -21,7 +21,7 @@
     </template>
     <template #informations>
       <Card padding>
-        <ProductView :product="product" />
+        <ProductView :product="product" @edit="editSidebarOpen = true" />
       </Card>
     </template>
     <template #stock>

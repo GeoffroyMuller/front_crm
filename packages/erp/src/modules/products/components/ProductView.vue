@@ -1,8 +1,15 @@
 <template>
   <div class="grid grid-cols-2 gap-6 items-start">
     <div class="typo-title5 font-semibold">
-      <div class="mb-6">
+      <div class="mb-6 flex items-center gap-0.5">
         {{ $t("pages.edit-product.informations") }}
+        <IconButton
+          @click.stop="$emit('edit')"
+          color="primary"
+          default-colored
+          size="xs"
+          name="edit"
+        />
       </div>
       <div class="grid gap-5">
         <div class="flex gap-2" v-if="product.name">
@@ -61,6 +68,7 @@
 import useVatStore from "@/stores/vat";
 import type { Product } from "@/types/product";
 import Price from "core/src/components/Price.vue";
+import IconButton from "core/src/components/IconButton.vue";
 import { onMounted } from "vue";
 import { computed } from "vue";
 
@@ -69,6 +77,8 @@ const vatStore = useVatStore();
 const props = defineProps<{
   product: Product;
 }>();
+
+defineEmits(["edit"]);
 
 const vat = computed(() =>
   props.product?.idVat
