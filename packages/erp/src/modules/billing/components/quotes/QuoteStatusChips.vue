@@ -31,6 +31,6 @@ const statusColor = computed<Color>(() => {
   } else if (props.quote.validationStatus === QuoteValidationStatus.VALIDATED) {
     return "success";
   }
-  return "black";
+  return "white";
 });
 </script>

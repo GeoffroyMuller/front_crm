@@ -8,7 +8,7 @@
       {
         [`button-${color} text-white border-none`]:
           variant !== 'text' && variant !== 'outlined',
-        [`bg-gradient-245 from-${color}-500 to-${color}-400 hover:from-${color}-600 hover:to-${color}-500 `]:
+        [`bg-gradient-245 from-${color}-500 to-${color}-500 hover:from-${color}-600 hover:to-${color}-600 `]:
           variant !== 'text' && variant !== 'outlined' && !disabled && !loading,
         [`bg-${color}-200`]:
           variant !== 'text' && variant !== 'outlined' && (disabled || loading),

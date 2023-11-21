@@ -52,9 +52,10 @@ const computedColor = computed<Color>(() => {
 
 <style lang="scss" scoped>
 .chip {
-  @apply flex justify-center items-center;
+  @apply flex justify-center items-center h-7;
   border-radius: 50px;
-  @apply bg-gray-50 text-black;
+  background-color: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.87);
   width: max-content;
   padding: 8px 12px;
   line-height: unset;
@@ -66,8 +67,8 @@ const computedColor = computed<Color>(() => {
 @each $key, $value in $colors {
   @if type-of($value) == "map" {
     .chip-#{$key} {
-      background: color($key, 100);
-      color: color("black");
+      background: color($key, 500);
+      color: color("white");
     }
     .chip-outline-#{$key} {
       border: 1px solid color($key, 500);
@@ -77,7 +78,8 @@ const computedColor = computed<Color>(() => {
     }
   } @else {
     .chip-#{$key} {
-      @apply bg-slate-100 text-black;
+      background-color: rgba(0, 0, 0, 0.25);
+      color: color("white");
     }
     .chip-black {
       color: rgba(0, 0, 0, 0.65);

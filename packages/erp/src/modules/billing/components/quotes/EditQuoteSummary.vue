@@ -120,7 +120,7 @@
       type="submit"
       v-tooltip="{
         text: $t('keyboardshortcuts.ctrl+s'),
-        placement: 'bottom',
+        placement: 'right',
       }"
       color="success"
       rounded
