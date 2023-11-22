@@ -3,7 +3,10 @@
     <label v-if="label">
       {{ label }}
     </label>
-    <div class="wysiwyg-content">
+    <div
+      class="wysiwyg-content"
+      :class="{ 'text-variant': variant === 'text' }"
+    >
       <QuillEditor ref="quill" @ready="init" @update:content="handleChange" />
     </div>
   </div>
@@ -20,6 +23,7 @@ interface WysiwygProps {
   label?: string;
   modelValue?: string;
   error?: string;
+  variant?: "text";
 }
 
 const props = withDefaults(defineProps<WysiwygProps>(), {});
@@ -74,9 +78,13 @@ button.ql-active .ql-stroke {
   .wysiwyg-content {
     display: flex;
     flex-direction: column-reverse;
-    @apply bg-white rounded-sm;
-    border: solid 1px #d1d5db !important;
-    transition: border-color 0.5s, box-shadow 0.5s;
+    @apply bg-white rounded-sm transition-[box-shadow_border-color_background] duration-200 border border-solid border-input;
+    &.text-variant {
+      @apply border-transparent;
+      &:hover:not(:focus-within) {
+        @apply border-input;
+      }
+    }
     height: fit-content;
     .ql-toolbar {
       opacity: 0;
