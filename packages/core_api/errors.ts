@@ -33,5 +33,6 @@ export async function handleError(
   if (err instanceof NotFoundError) {
     return res.status(404).json(err.message);
   }
+  console.error(err);
   return res.status(500).end(err.message);
 }

@@ -1,93 +1,59 @@
-import { raw } from "objection";
-import serviceFactory from "core_api/service";
-import ProductReal from "../products_real/product_real.model";
-import type { User } from "core_api/types";;
+import { RelationExpression } from "objection";
 import Product from "./product.model";
-import { isPopulateNeeded } from "core_api/services/filters.service";
+import { applyRelations } from "core_api/service";
+import { ID, User } from "core_api/types";
+import { handleFilters } from "core_api/services/filters.service";
 
-const productService = serviceFactory<Product, User>(Product, {
-  isAuthorized: async (model: Product | Object, user: User) => {
-    return Product.fromJson(model)?.idCompany == user?.idCompany;
+export default {
+  findByID: async (
+    id: ID,
+    relations: RelationExpression<Product>[],
+    filters: any,
+    auth: User
+  ) => {
+    const query = applyRelations(Product.query(), Product, relations);
+    query.where('id', id).where("idCompany", auth.idCompany);
+    handleFilters(query, filters);
+    return query.first().execute() as Promise<Product | undefined>;
   },
-  async onBeforeGetById({ query, auth, filters, data }) {
-    if (auth != null) {
-      if (auth.idCompany) {
-        query.where("idCompany", auth.idCompany);
-      }
-    }
-    return { query, auth, filters, data};
+  paginate: async (
+    relations: RelationExpression<Product>[],
+    filters: any,
+    auth: User
+  ) => {
+    const query = applyRelations<Product>(Product.query(), Product, relations);
+    query.where("idCompany", auth.idCompany);
+    query.page(filters.page ? filters.page - 1 : 0, filters.pageSize || 5);
+    handleFilters(query, filters);
+    return query.execute() as Promise<[]>;
   },
-  async onBeforeFetchList({ query, auth, filters, data }) {
-    if (auth != null) {
-      if (auth.idCompany) {
-        query.where("idCompany", auth.idCompany);
-      }
-    }
-    query.select(`${Product.tableName}.*`);
-    if (isPopulateNeeded(filters, "stock_physical")) {
-      query.select(
-        raw(`(
-        SELECT COUNT(*)
-        FROM ${ProductReal.tableName}
-        WHERE ${ProductReal.tableName}.idProduct = ${Product.tableName}.id
-      )`).as("stock_physical")
-      );
-    }
-    return { query, auth, filters, data };
-  },
-  async onBeforeCreate({ query, auth, filters, data }) {
-    return {
-      query,
-      auth,
-      filters,
-      data: _mapProductData(data, auth),
+  create: async (item: any, filters: any, auth: User) => {
+    const query = Product.query();
+    const data: Product = {
+      ...item,
+      idCompany: auth.idCompany,
     };
+    handleFilters(query, filters);
+    const res = query.insert(data).execute() as Promise<Product>;
+    return res;
   },
-  async onBeforeUpdate({ query, auth, filters, data }) {
-    return {
-      query,
-      auth,
-      filters,
-      data: _mapProductData(data, auth),
+  update: async (body: any, filters: any, auth: User) => {
+    const query = Product.query().where("idCompany", auth.idCompany);
+    const id = body.id;
+    delete body.id;
+    const data = {
+      ...body,
+      idCompany: auth.idCompany,
     };
+    handleFilters(query, filters);
+    return query
+      .updateAndFetchById(id, data)
+      .execute() as Promise<Product>;
   },
-});
-
-function _mapProductData(product: Product, auth: User) {
-  return {
-    ...product,
-    idCompany: auth.idCompany,
-    stock: product.stock != null ? product.stock : 0,
-    product_fields: product.product_fields?.map((elem: any) => {
-      return { ...elem, props: JSON.stringify(elem.props) };
-    }),
-  };
-}
-
-productService.create = async (body: any, auth) => {
-  const { data, query } = await productService.onBeforeCreate({
-    query: Product.query(),
-    data: body,
-    auth,
-  });
-  await productService.checkAuthorization(data, auth);
-  return (await query.insertGraphAndFetch({ ...data })) as unknown as Product;
+  remove: async (id: ID, filters: any, auth: User) => {
+    const query = Product.query().where("idCompany", auth.idCompany);
+    handleFilters(query, filters);
+    const removed = await query.where("id", id).delete().execute();
+    return removed;
+  },
 };
-
-productService.update = async (body: any, auth) => {
-  const { data, query } = await productService.onBeforeUpdate({
-    query: Product.query(),
-    data: body,
-    auth,
-  });
-  await productService.getById(data.id, auth);
-  return (await query.upsertGraphAndFetch(
-    {
-      id: data.id,
-      ...data,
-    },
-    { relate: true, unrelate: true }
-  )) as unknown as Product;
-};
-
-export default productService;

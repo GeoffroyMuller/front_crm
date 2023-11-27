@@ -31,14 +31,14 @@
             color="danger"
             default-colored
             name="delete"
-            v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
+            v-tooltip="{ text: $t('delete'), placement: 'left' }"
             variant="outlined"
           />
         </template>
         <template #actions-title>
           <Button
             color="success"
-            v-tooltip="{ text: $t('add'), placement: 'bottom' }"
+            v-tooltip="{ text: $t('add'), placement: 'top' }"
             @click.stop="
               () =>
                 $router.push({
@@ -82,7 +82,7 @@
           <div>
             <Button
               color="success"
-              v-tooltip="{ text: $t('add'), placement: 'bottom' }"
+              v-tooltip="{ text: $t('add'), placement: 'top' }"
               @click.stop="() => clickEdit()"
             >
               {{ $t("add") }}
@@ -95,7 +95,7 @@
             color="danger"
             default-colored
             name="delete"
-            v-tooltip="{ text: $t('delete'), placement: 'bottom' }"
+            v-tooltip="{ text: $t('delete'), placement: 'left' }"
             variant="outlined"
           />
         </template>

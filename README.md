@@ -25,6 +25,9 @@
 - Typescript fondamentaux : https://www.typescriptlang.org/docs/handbook/utility-types.html
 - Outils pour doc/tests apis : https://www.usebruno.com/
 
+# à checker
+- Open-Source, Cloud-Native Storage for Kubernetes: https://rook.io/
+
 # packages
 - api_* : webservices de l'app
 - api_gateway : point d'entrée de l'API (check l'auth et relaie les requetes aux services)

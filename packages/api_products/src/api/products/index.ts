@@ -21,8 +21,8 @@ router.put(
 router.delete(
   "/:id",
   accessMiddlewareFactory("manage_products"),
-  ProductController.delete
+  ProductController.remove
 );
-router.get("/:id", ProductController.getById);
+router.get("/:id", ProductController.findByID);
 
 export default router;

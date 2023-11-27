@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-2 w-fit items-center">
     <Text
-      class="flex gap-2 items-center w-fit decoration-transparent"
+      class="flex gap-2 items-center w-fit decoration-transparent !font-normal"
       typo="title6"
       v-for="(item, index) in items"
       :key="item.label"
@@ -10,10 +10,10 @@
         class="inline-block decoration-transparent flex items-center gap-1 text-gray-400 hover:text-primary-400"
         :to="item.to"
       >
-        <Icon v-if="item.icon" :name="item.icon" class="!text-[1.1rem]" />
+        <Icon v-if="item.icon" :name="item.icon" size="xs" />
         {{ item.label }}
       </RouterLink>
-      <span class="select-none" v-if="index !== items.length - 1">{{ ">" }}</span>
+      <span class="select-none text-xs" v-if="index !== items.length - 1">{{ ">" }}</span>
     </Text>
   </div>
 </template>

@@ -1,6 +1,72 @@
-import controllerFactory from "core_api/controller";
-import productRealService from "./product_real.service";
+import { IAuthRequest, User } from "core_api/types";
+import { Response } from "express";
+import { NotFoundError, handleError } from "core_api/errors";
+import { getRelationArray } from "core_api/controller";
+import ProductRealService from "./product_real.service";
 
-const productRealController = controllerFactory(productRealService);
-
-export default productRealController;
+export default {
+  findByID: async (req: IAuthRequest<User>, res: Response) => {
+    try {
+      const item = await ProductRealService.findByID(
+        req.params.id,
+        getRelationArray(req),
+        req.query,
+        req.auth
+      );
+      if (!item) {
+        throw new NotFoundError("no item found");
+      }
+      return res.status(200).json(item);
+    } catch (err) {
+      return handleError(req, res, err);
+    }
+  },
+  paginate: async (req: IAuthRequest<User>, res: Response) => {
+    try {
+      const items = await ProductRealService.paginate(
+        getRelationArray(req),
+        req.query,
+        req.auth
+      );
+      return res.status(200).json(items);
+    } catch (err) {
+      return handleError(req, res, err);
+    }
+  },
+  create: async (req: IAuthRequest<User>, res: Response) => {
+    try {
+      const item = await ProductRealService.create(req.body, req.query, req.auth);
+      return res.status(200).json(item);
+    } catch (err) {
+      return handleError(req, res, err);
+    }
+  },
+  update: async (req: IAuthRequest<User>, res: Response) => {
+    try {
+      const item = { ...req.body, id: req.params.id };
+      const updatedItem = await ProductRealService.update(
+        item,
+        req.query,
+        req.auth
+      );
+      if (!updatedItem) {
+        throw new NotFoundError("no item found");
+      }
+      return res.status(200).json(updatedItem);
+    } catch (err) {
+      return handleError(req, res, err);
+    }
+  },
+  remove: async (req: IAuthRequest<any>, res: Response) => {
+    try {
+      const id = req.params.id;
+      const deletedItem = await ProductRealService.remove(id, req.query, req.auth);
+      if (!deletedItem) {
+        throw new NotFoundError("no item found");
+      }
+      return res.status(200).end();
+    } catch (err) {
+      return handleError(req, res, err);
+    }
+  },
+};

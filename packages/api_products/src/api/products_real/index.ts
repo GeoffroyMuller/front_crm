@@ -7,7 +7,7 @@ const router = express.Router()
 router.get('/', authMiddleware, ProductRealController.paginate)
 router.post('/', authMiddleware, ProductRealController.create)
 router.put('/:id', authMiddleware, ProductRealController.update)
-router.delete('/:id',authMiddleware, ProductRealController.delete)
-router.get('/:id', authMiddleware, ProductRealController.getById)
+router.delete('/:id',authMiddleware, ProductRealController.remove)
+router.get('/:id', authMiddleware, ProductRealController.findByID)
 
 export default router;
