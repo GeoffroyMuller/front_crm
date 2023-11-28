@@ -43,7 +43,8 @@
         "due_date": "Echeance",
         "list": "Liste",
         "list-placeholder": "Aucune",
-        "description": "Description"
+        "description": "Description",
+        "describe_task": "Decrivez la tâche en quelque mots"
       }
     },
     "clients": {

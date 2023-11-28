@@ -7,7 +7,12 @@
       class="wysiwyg-content"
       :class="{ 'text-variant': variant === 'text' }"
     >
-      <QuillEditor ref="quill" @ready="init" @update:content="handleChange" />
+      <QuillEditor
+        :placeholder="placeholder"
+        ref="quill"
+        @ready="init"
+        @update:content="handleChange"
+      />
     </div>
   </div>
 </template>
@@ -24,6 +29,7 @@ interface WysiwygProps {
   modelValue?: string;
   error?: string;
   variant?: "text";
+  placeholder?: string;
 }
 
 const props = withDefaults(defineProps<WysiwygProps>(), {});

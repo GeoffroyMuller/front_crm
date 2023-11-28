@@ -3,7 +3,7 @@
     v-model:open="isOpen"
     :title="`${$t('quote')} ${quote?.identifier || ''}`"
     padding
-    contentClass="overflow-hidden"
+    contentClass="overflow-hidden md:min-w-[800px] md:max-w-[800px]"
   >
     <SidebarContent class="h-full">
       <PdfViewer

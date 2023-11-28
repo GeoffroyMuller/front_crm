@@ -83,7 +83,10 @@
     </div>
     <div class="grid gap-4 max-w-[650px]">
       <Text typo="title7">{{ $t("pages.projects.task.description") }}</Text>
-      <Wysiwyg variant="text"></Wysiwyg>
+      <Wysiwyg
+        variant="text"
+        :placeholder="$t('pages.projects.task.describe_task')"
+      ></Wysiwyg>
     </div>
   </SidebarContent>
 </template>
