@@ -27,7 +27,7 @@ quoteController.getPdf = async (req, res) => {
 
     res.writeHead(200, {
       "Content-Type": "application/pdf",
-      "Content-disposition": `attachment; filename=quote.pdf`,
+      // "Content-disposition": `attachment; filename=quote.pdf`,
     });
 
     const pdf: Stream = await QuoteService.getPdf(req.params.id, req.auth);

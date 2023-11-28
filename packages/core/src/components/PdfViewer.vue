@@ -1,15 +1,20 @@
 <template>
-  <div
-    class="pdf-viewer px-16 pb-4 border border-slate-200 border-solid"
-    v-if="src"
-  >
-    <div class="pdf-viewer-actions-wrapper pb-4">
+  <div class="pdf-viewer pb-4 border border-slate-200 border-solid" v-if="src">
+    <div class="pdf-viewer-actions-wrapper pb-4 text-white">
       <div class="pdf-viewer-actions">
         <div>
-          <IconButton name="chevron_left" @click.stop="substractOne()" />
-          <IconButton name="chevron_right" @click.stop="addOne()" />
+          <IconButton
+            color="white"
+            name="chevron_left"
+            @click.stop="substractOne()"
+          />
+          <IconButton
+            color="white"
+            name="chevron_right"
+            @click.stop="addOne()"
+          />
         </div>
-        <div>
+        <div class="flex w-fit items-center gap-1">
           <div>
             <TextField
               class="input-number-page"
@@ -20,13 +25,14 @@
               v-model="currentPage"
             />
           </div>
+          <div>/</div>
           <span v-if="!$_.isNil(totalPages)" class="total">
-            {{ `/ ${totalPages}` }}
+            {{ `${totalPages}` }}
           </span>
         </div>
         <div>
-          <IconButton name="add" @click.stop="zoomIn()" />
-          <IconButton name="remove" @click.stop="zoomOut()" />
+          <IconButton color="white" name="add" @click.stop="zoomIn()" />
+          <IconButton color="white" name="remove" @click.stop="zoomOut()" />
         </div>
       </div>
     </div>
@@ -126,24 +132,26 @@ async function displayPdf() {
 
 <style lang="scss">
 .pdf-viewer {
+  @apply px-12;
   background-color: color("zinc", 200);
   overflow: auto;
   position: relative;
   @apply rounded-sm;
   .pdf-viewer-actions-wrapper {
+    @apply -mx-12;
     position: sticky;
     top: 0;
     display: grid;
     place-items: center;
   }
   .pdf-viewer-actions {
-    @apply h-12 gap-2 py-0 px-2;
+    @apply h-12 gap-4 py-0 px-2;
     display: flex;
     width: fit-content;
     align-items: center;
     justify-content: center;
-    background-color: color("zinc", 300);
-    @apply rounded-t-none rounded-b-xl;
+    background-color: color("zinc", 500);
+    width: 100%;
     .total {
       @apply ml-1;
     }
