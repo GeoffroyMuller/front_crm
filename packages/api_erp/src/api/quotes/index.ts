@@ -10,6 +10,7 @@ router.use(authMiddleware);
 router.get("/", companyMiddleware, QuoteController.paginate);
 router.get("/:id", companyMiddleware, QuoteController.getById);
 router.post("/:id/send_mail", companyMiddleware, QuoteController.sendByMail);
+router.get("/:id/pdf", QuoteController.getPdf);
 
 router.post(
   "/",

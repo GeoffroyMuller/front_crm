@@ -15,8 +15,8 @@
       <PdfViewer
         v-if="quote"
         :key="quote?.id"
-        :src="quotePDFSrc"
         class="max-h-full"
+        :src="`${config.API_URL}/quotes/${quote.id}/pdf?token=${getJWT()}`"
       />
     </SidebarContent>
   </Sidebar>
@@ -33,9 +33,10 @@ import useQuoteStore from "../../stores/quotes";
 import { useI18n } from "vue-i18n";
 import { merge } from "lodash";
 import PdfViewer from "core/src/components/PdfViewer.vue";
-import { generateQuotePDF } from "@megaapp/pdfs";
 import { ref } from "vue";
-import { watch } from "vue";
+import config from "@/const";
+import { getJWT } from 'core/src/helpers/utils';
+
 
 const props = defineProps<{ open: boolean; model?: Quote }>();
 const emit = defineEmits(["close"]);
@@ -84,15 +85,6 @@ const quote = computed<Quote>(() => {
   }
   return null;
 });
-
-watch(
-  () => quote.value,
-  async () => {
-    quotePDFSrc.value = await generateQuotePDF(quote.value, {
-      output: "datauristring",
-    });
-  }
-);
 
 const title = computed<string>(() => {
   if (quote.value == null) return "";

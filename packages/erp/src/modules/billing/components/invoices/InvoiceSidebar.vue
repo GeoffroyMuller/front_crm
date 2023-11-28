@@ -26,7 +26,7 @@
         <PdfViewer
           v-if="invoice"
           :key="invoice?.id"
-          :src="generateQuotePDF(invoice, { output: 'datauristring' })"
+          :src="''"
           class="max-h-full"
         />
       </SidebarContent>
@@ -52,7 +52,6 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { merge } from "lodash";
 import PdfViewer from "core/src/components/PdfViewer.vue";
-import { generateQuotePDF } from "@megaapp/pdfs";
 import useInvoicesStore from "../../stores/invoices";
 import InvoicePayements from "./InvoicePayements.vue";
 import type Invoice from "../../types";

@@ -9,7 +9,7 @@
       <PdfViewer
         class="h-full"
         v-if="isOpen"
-        :src="generateQuotePDF(quote, { output: 'datauristring' })"
+        :src="`${config.API_URL}/quotes/${quote.id}/pdf?token=${getJWT()}`"
       />
     </SidebarContent>
   </Sidebar>
@@ -22,7 +22,9 @@ import Sidebar from "core/src/components/sidebar/Sidebar.vue";
 import { ref, watch } from "vue";
 import PdfViewer from "core/src/components/PdfViewer.vue";
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
-import { generateQuotePDF } from "@megaapp/pdfs";
+import config from "@/const";
+import { getJWT } from 'core/src/helpers/utils';
+
 interface QuotePreviewProps {
   quote?: Quote | null;
 }

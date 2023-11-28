@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Devis</title>
+  </head>
+
+  <body>
+    <style>
+
+      body {
+        font-size: 28px;
+        padding: 32px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+        font-size: 1em;
+        color: #636363;
+        margin: 0;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 2em;
+        font-weight: 600;
+        margin-top: 0;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 24px;
+      }
+
+      table {
+        width: 100%;
+        max-width: 100%;
+        width: max-content;
+        
+        background-color: red !important;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+      }
+      .content .head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .content .modalities {
+      }
+
+      .page-footer {
+        position: fixed;
+        bottom: 16px;
+        left: 0;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+      }
+    </style>
+
+    <h1 style="text-align: left">Devis #<%= identifier %></h1>
+
+    <div class="content">
+      <div class="head">
+        <div>
+          <%= responsible?.firstname || '' %> <%= responsible?.lastname || '' %> <br />
+          <%= responsible?.company?.name || '' %>
+        </div>
+        <div>
+          <%= client?.firstname || '' %> <%= client?.lastname || '' %> <br />
+          <%= client?.company?.name || '' %>
+        </div>
+      </div>
+      <table>
+        <thead></thead>
+      </table>
+      <div class="table">
+        <div style="margin-bottom: 15px">DESCRIPTION</div>
+        <div style="justify-self: center">QUANTITÉ</div>
+        <div style="justify-self: center">PRIX UNITAIRE</div>
+        <div style="justify-self: center">TVA</div>
+        <div style="justify-self: center">TOTAL</div>
+
+        <% (lines||[]).forEach(function(line){ %>
+
+        <div><%- line?.description || '' %></div>
+        <div style="align-self: center; justify-self: center">
+          <%= line?.qty || '' %>
+        </div>
+        <div style="align-self: center; justify-self: center">
+          <%= line?.unit_price || '' %>
+        </div>
+        <div style="align-self: center; justify-self: center">
+          <%= line?.vatRate || '' %>
+        </div>
+        <div style="align-self: center; justify-self: center">
+          <%= (line?.unit_price || 0) * (line?.qty || 0) %>
+        </div>
+
+        <% }); %>
+        <div class="footer"></div>
+      </div>
+      <div class="modalities"><%- modalities || '' %></div>
+    </div>
+
+    <div class="page-footer"><%- footer || '' %></div>
+  </body>
+</html>

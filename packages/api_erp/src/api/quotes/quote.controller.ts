@@ -20,4 +20,22 @@ quoteController.sendByMail = async (req, res) => {
   }
 };
 
+
+quoteController.getPdf = async (req, res) => {
+  try {
+    
+
+    res.writeHead(200, {
+      "Content-Type": "application/pdf",
+      "Content-disposition": `attachment; filename=quote.pdf`,
+    });
+
+    const pdf: Stream = await QuoteService.getPdf(req.params.id, req.auth);
+    pdf.pipe(res);
+    return res;
+  } catch (err) {
+    return quoteController.handleError(req, res, err);
+  }
+};
+
 export default quoteController;

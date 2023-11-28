@@ -1,14 +1,17 @@
 import Quote from "./quote.model";
-import type { User } from "core_api/types";
+import type { ID, User } from "core_api/types";
 import mailService from "core_api/services/mail.service";
 import serviceFactory from "core_api/service";
 import { Service } from "core_api/types";
 import { raw } from "objection";
 import QuoteLine from "./quote_line.model";
 import { NotFoundError } from "core_api/errors";
+import PdfService from 'core_api/services/pdf.service';
+import { Stream } from "stream";
 
 export interface IQuoteService extends Service<Quote, User> {
   sendByMail: (q: Quote, token: string) => Promise<any>;
+  getPdf: (body: any, auth: User) => Promise<Stream>;
 }
 
 async function getNextIdentifier(auth: User) {
@@ -86,6 +89,32 @@ quoteService.sendByMail = async (quote: Quote, token: string) => {
     console.error(err);
     return err;
   }
+};
+
+quoteService.getPdf = async (id: ID, auth: User) => {
+  const quote = await quoteService.getById(id, auth, ['client.company', 'lines']);
+  if (quote == null) {
+    throw new NotFoundError();
+  }
+  const pdf = await PdfService.printPDF({
+    data: {
+      responsible: {
+        firstname: 'Jean-Michel',
+        lastname: 'DataEnDur',
+        company: {
+          name: 'Company en dur'
+        }
+      },
+      client: undefined,
+      footer: undefined,
+      modalities: undefined,
+      lines: undefined,
+      ...quote,
+    } as Partial<Quote>,
+    inputPath: __dirname + "/../../templates/quote.ejs",
+    returnType: "stream",
+  });
+  return pdf as Stream;
 };
 
 export default quoteService;

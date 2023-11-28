@@ -7,7 +7,6 @@ import { ref, type Ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import useInvoicesStore from "@/modules/billing/stores/invoices";
-import { generateQuotePDF } from "@megaapp/pdfs";
 
 export interface UseQuoteProps {
   quote?: Ref<Quote>;
@@ -48,10 +47,9 @@ export default function useQuote(props?: UseQuoteProps) {
   }
 
   function downloadPdf(item?: Quote) {
-    generateQuotePDF(props?.quote?.value || (item as Quote), { save: true });
-    /* const _quote = (props?.quote?.value || item) as Quote;
+    const _quote = (props?.quote?.value || item) as Quote;
     const url = `${config.API_URL}/quotes/${_quote.id}/pdf?token=${getJWT()}`;
-    window.open(url, "_blank"); */
+    window.open(url, "_blank");
   }
 
   async function createInvoiceFromQuote(item?: Quote) {
