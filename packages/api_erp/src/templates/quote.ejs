@@ -9,13 +9,15 @@
 
   <body>
     <style>
+      :root {
+        --border: 1px solid rgb(220, 220, 220);
+      }
 
       body {
-        font-size: 28px;
         padding: 32px;
         font-family: "Montserrat", sans-serif;
         font-weight: 400;
-        font-size: 1em;
+        font-size: 16px;
         color: #636363;
         margin: 0;
       }
@@ -35,11 +37,27 @@
 
       table {
         width: 100%;
-        max-width: 100%;
-        width: max-content;
-        
-        background-color: red !important;
+        border-collapse: collapse;
+        border: var(--border); 
       }
+
+      thead {
+        background-color: #818cf8 !important;
+        color: white;
+      }
+
+
+      td {
+        padding: 16px 14px;
+        text-align: left;
+      }
+
+      th {
+        padding: 20px 14px;
+        text-align: left;
+      }
+
+      
 
       .content {
         display: flex;
@@ -51,7 +69,7 @@
         justify-content: space-between;
         align-items: center;
       }
-      
+
       .content .modalities {
       }
 
@@ -65,12 +83,13 @@
       }
     </style>
 
-    <h1 style="text-align: left">Devis #<%= identifier %></h1>
+    <h1>Devis #<%= identifier %></h1>
 
     <div class="content">
       <div class="head">
         <div>
-          <%= responsible?.firstname || '' %> <%= responsible?.lastname || '' %> <br />
+          <%= responsible?.firstname || '' %> <%= responsible?.lastname || '' %>
+          <br />
           <%= responsible?.company?.name || '' %>
         </div>
         <div>
@@ -78,35 +97,31 @@
           <%= client?.company?.name || '' %>
         </div>
       </div>
-      <table>
-        <thead></thead>
+      <table style="<%= !lines?.length ? 'display: none;' : '' %>">
+        <thead>
+          <tr>
+            <th>DESCRIPTION</th>
+            <th>QUANTITÉ</th>
+            <th>PRIX UNITAIRE</th>
+            <th>TVA</th>
+            <th>TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% (lines||[]).forEach(function(line){ %>
+
+          <tr>
+            <td style="max-width: 300px"><%- line?.description || '' %></td>
+            <td style="text-align: center;"><%= line?.qty || '' %></td>
+            <td><%= line?.unit_price || '' %></td>
+            <td><%= line?.vatRate || '' %></td>
+            <td><%= (line?.unit_price || 0) * (line?.qty || 0) %></td>
+          </tr>
+
+          <% }); %>
+        </tbody>
+        <tfoot></tfoot>
       </table>
-      <div class="table">
-        <div style="margin-bottom: 15px">DESCRIPTION</div>
-        <div style="justify-self: center">QUANTITÉ</div>
-        <div style="justify-self: center">PRIX UNITAIRE</div>
-        <div style="justify-self: center">TVA</div>
-        <div style="justify-self: center">TOTAL</div>
-
-        <% (lines||[]).forEach(function(line){ %>
-
-        <div><%- line?.description || '' %></div>
-        <div style="align-self: center; justify-self: center">
-          <%= line?.qty || '' %>
-        </div>
-        <div style="align-self: center; justify-self: center">
-          <%= line?.unit_price || '' %>
-        </div>
-        <div style="align-self: center; justify-self: center">
-          <%= line?.vatRate || '' %>
-        </div>
-        <div style="align-self: center; justify-self: center">
-          <%= (line?.unit_price || 0) * (line?.qty || 0) %>
-        </div>
-
-        <% }); %>
-        <div class="footer"></div>
-      </div>
       <div class="modalities"><%- modalities || '' %></div>
     </div>
 
