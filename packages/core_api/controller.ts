@@ -24,6 +24,7 @@ export function getRelationArray(req: Request): string[] {
   return [];
 }
 
+// @DEPRECATED
 const controllerFactory: ControllerFactory = (service, opts = undefined) => {
   const handleError: ControllerHandleError<any, any> =
     opts?.handleError || _handleError;
