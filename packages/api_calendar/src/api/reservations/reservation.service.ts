@@ -16,28 +16,12 @@ const reservationService = serviceFactory<Reservation, User>(Reservation, {
     }
     return { query, auth, filters, data };
   },
-  async onAfterGetById({ query, auth, filters, data }) {
+  async onBeforeGetById({ query, auth, filters, data }) {
     if (auth != null) {
       if (auth.idCompany) {
         query.where("idCompany", auth.idCompany);
       }
     }
-    /* if (isPopulateNeeded(filters, "lines.product"))  {
-      try {
-        const products = await productsProvider.fetch([], auth);
-        data.lines = (data.lines || []).map((line: ReservationLine) => {
-          const product = products.find((p) => p.id == line.idProduct);
-          if (product == null) return line;
-          return {
-            ...line,
-            product,
-          };
-        });
-        
-      } catch(err) {
-        console.error(err);
-      }
-    } */
     return { query, auth, filters, data };
   },
   async onBeforeCreate({ query, auth, filters, data }) {

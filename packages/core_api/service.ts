@@ -156,6 +156,7 @@ const serviceFactory = <
         data: body,
         auth,
       });
+      getById(data.id, auth);
       handleFilters(query, filters);
       return query.updateAndFetchById(data.id, data).execute() as Promise<T>;
     },
@@ -166,6 +167,7 @@ const serviceFactory = <
         auth,
       });
       handleFilters(query, filters);
+      getById(data.id, auth);
       const removed = await query.where("id", id).delete().execute();
       console.log(removed);
       return true;
