@@ -22,7 +22,6 @@
           :label="$t('pages.edit-quote.product')"
           :store="productsStore"
           :get-option-label="(opt) => opt?.name"
-          multiple
           @update:selected="handleProductChange"
           option-key="id"
           name="idProduct"
