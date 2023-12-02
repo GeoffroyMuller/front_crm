@@ -14,6 +14,7 @@ const SERVICES = {
   calendar: process.env.CALENDAR_SERVICE_URL,
   products: process.env.PRODUCTS_SERVICE_URL,
   projects: process.env.PROJECTS_SERVICE_URL,
+  email: process.env.EMAIL_SERVICE_URL,
 } as { [key: string]: string };
 
 const PROXY_OPTIONS: proxy.ProxyOptions = {
@@ -36,6 +37,7 @@ const PROXIES = {
   projects: proxy(SERVICES.projects, PROXY_OPTIONS),
   tasks: proxy(SERVICES.projects, PROXY_OPTIONS),
   sections: proxy(SERVICES.projects, PROXY_OPTIONS),
+  email: proxy(SERVICES.email, PROXY_OPTIONS),
 } as { [key: string]: RequestHandler };
 
 app.use(xAuthMiddleware);

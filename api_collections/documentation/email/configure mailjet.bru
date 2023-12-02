@@ -1,0 +1,22 @@
+meta {
+  name: configure mailjet
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{gatewayURL}}/email/mailjet/configure
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: {{token}}
+}
+
+body:json {
+  {
+    "key": "ae7030305678bbfd15e6a40c4adec6a5",
+    "secretkey": "875b171d203bb0a5fdad8367ba884ef4"
+  }
+}
