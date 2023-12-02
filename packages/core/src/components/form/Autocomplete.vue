@@ -19,12 +19,25 @@
           @click="clickTextField"
           @keydown="handleKeydown"
         >
+          <template #start>
+            <div class="flex items-center" v-if="props.multiple">
+              <Chip
+                v-for="(opt, index) in options.filter(isSelected)"
+                :key="index"
+                is-closable
+                @close="handleClickOption(opt)"
+              >
+                {{ getOptionLabel(opt) }}
+              </Chip>
+            </div>
+          </template>
+
           <template #icon>
             <IconButton
               name="close"
               @click.stop="handleClickClose"
               size="xs"
-              v-if="internalValue != null"
+              v-if="internalValue != null && !multiple"
               class="opacity-0 pointer-events-none group-focus-within/autocomplete:opacity-100 group-focus-within/autocomplete:pointer-events-auto group-hover/autocomplete:opacity-100 group-hover/autocomplete:pointer-events-auto"
             />
             <Icon name="search" color="black" />
@@ -70,6 +83,7 @@ import IconButton from "../IconButton.vue";
 import Menu from "../Menu.vue";
 import SelectOptions from "../SelectOptions.vue";
 import useSelect from "../../composables/select";
+import Chip from "../Chip.vue";
 
 export interface AutocompleteProps {
   multiple?: boolean;
@@ -185,7 +199,7 @@ watch(
         open.value = false;
       }
     }
-    if (!search.value.length) {
+    if (!search.value.length && !props.multiple) {
       open.value = false;
     }
   }, props.debounce)
@@ -197,7 +211,15 @@ const storedOpt = ref();
 watch(
   () => internalValue.value,
   (val) => {
-    search.value = displayed.value;
+    if (props.multiple) {
+      search.value = "";
+      if (!internalValue.value.length) {
+        open.value = false;
+      }
+    } else {
+      search.value = displayed.value;
+    }
+
     storedOpt.value = selected.value;
     emit("update:selected", selected.value);
   },
@@ -213,7 +235,7 @@ watch(
       if (isFocus.value) {
         if (search.value?.length) open.value = true;
       } else {
-        if (internalValue.value != null) {
+        if (internalValue.value != null && !props.multiple) {
           search.value = displayed.value;
         }
       }
@@ -223,7 +245,11 @@ watch(
 
 function handleBlur() {
   isFocus.value = false;
-  search.value = displayed.value;
+  if (props.multiple) {
+    search.value = "";
+  } else {
+    search.value = displayed.value;
+  }
 }
 </script>
 
