@@ -26,7 +26,7 @@ async function findByID(
     )
     .where(`${Product.tableName}.idCompany`, auth.idCompany);
   handleFilters(query, filters);
-  const product = (await query.first().execute()) as Product;
+  const product = (await query.first().execute()) as ProductReal;
   if (product == null) throw new NotFoundError();
   return product;
 }
@@ -60,13 +60,22 @@ export default {
     if (item.idProduct == null) {
       throw new Error("No product selected");
     }
-    const product = await productService.findByID(item.idProduct, ['product_fields'], {}, auth);
+    const product = await productService.findByID(
+      item.idProduct,
+      ["product_fields"],
+      {},
+      auth
+    );
     if (product == null) {
       throw new Error("No product selected");
     }
     if (item.product_real_fields && Array.isArray(item.product_real_fields)) {
       const productFields = product.product_fields || [];
-      if (item.product_real_fields.find((prf) => !productFields.find(pf => pf.id == prf.idProductField))) {
+      if (
+        item.product_real_fields.find(
+          (prf) => !productFields.find((pf) => pf.id == prf.idProductField)
+        )
+      ) {
         throw new Error();
       }
       // @ts-ignore
@@ -85,12 +94,25 @@ export default {
   update: async (body: any, filters: any, auth: User) => {
     const id = body.id;
     if (id == null) throw new Error("no id provided");
-    const item = await findByID(id, [], {}, auth);
+    const item = await findByID(id, ["product_real_fields"], {}, auth);
     if (item == null) throw new NotFoundError();
-    delete body.id;
     delete body.idProduct;
+    if (Array.isArray(body.product_real_fields)) {
+      if (
+        body.product_real_fields.find((prf: ProductRealField) =>
+          !(item.product_real_fields || []).find((p) => p.id == prf.id)
+        )
+      ) {
+        throw new Error();
+      }
+      body.product_real_fields = body.product_real_fields.map((prf: ProductRealField) => ({
+        idProductReal: prf.idProductField,
+        idProductField: prf.idProductField,
+        value: JSON.stringify(prf.value || ""),
+      }));
+    }
     const query = ProductReal.query();
-    return query.updateAndFetchById(id, body).execute() as Promise<ProductReal>;
+    return query.upsertGraphAndFetch([body]).first().execute() as Promise<ProductReal>;
   },
   remove: async (id: ID, filters: any, auth: User) => {
     const item = await findByID(id, [], {}, auth);
