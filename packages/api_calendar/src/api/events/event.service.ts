@@ -23,6 +23,15 @@ const eventService = serviceFactory<Event, User>(Event, {
             }
         };
     },
+    async onBeforeUpdate({query, auth, filters, data}) {
+        return {
+            query, auth, filters,
+            data: {
+                ...data,
+                idCompany: auth?.idCompany
+            }
+        };
+    },
 });
 
 export default eventService;

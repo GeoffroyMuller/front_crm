@@ -52,6 +52,7 @@ quoteService.create = async (body: any, auth, filters) => {
       ...body,
       idResponsible: auth.id,
       identifier: await getNextIdentifier(auth),
+      idCompany: auth.idCompany,
     },
     { relate: true }
   )) as unknown as Quote;
@@ -64,6 +65,7 @@ quoteService.update = async (body: any, auth, filters) => {
     {
       id: body.id,
       ...body,
+      idCompany: auth.idCompany,
       lines: body.lines?.length
         ? body.lines.map((val: any, order: number) => ({
             ...val,

@@ -23,6 +23,15 @@ const companyService = serviceFactory<Company, User>(Company, {
             }
         };
     },
+    async onBeforeUpdate({query, auth, filters, data}) {
+        return {
+            query, auth, filters,
+            data: {
+                ...data,
+                idCompany: auth?.idCompany
+            }
+        };
+    },
     
 });
 
