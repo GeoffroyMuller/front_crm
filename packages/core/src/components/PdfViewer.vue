@@ -150,7 +150,7 @@ async function displayPdf() {
   position: relative;
   @apply rounded-sm;
   .pdf-viewer-actions-wrapper {
-    @apply -mx-12;
+    @apply -mx-12 -left-12;
     position: sticky;
     top: 0;
     display: grid;
