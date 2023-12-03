@@ -26,9 +26,9 @@ export default function useTabs(props: UseTabsProps) {
   const nbTabsHidden = ref(0);
 
   function computeTabOverflow() {
+    nbTabsHidden.value = 0;
     if (!props.tabRef.value) return;
     if (props.tabs.value.length <= 2) return;
-    nbTabsHidden.value = 0;
     nextTick(() => {
       const visibleWidth = props.tabRef.value.offsetWidth;
       const totalWidth = props.tabRef.value.scrollWidth;
@@ -106,7 +106,10 @@ export default function useTabs(props: UseTabsProps) {
 
   const tabsVisible = computed(() => {
     if (nbTabsHidden.value === 0) return props.tabs.value;
-    return props.tabs.value.slice(0, props.tabs.value.length - nbTabsHidden.value);
+    return props.tabs.value.slice(
+      0,
+      props.tabs.value.length - nbTabsHidden.value
+    );
   });
 
   watch(
@@ -121,6 +124,7 @@ export default function useTabs(props: UseTabsProps) {
     (val, oldVal) => {
       if (!isEqual(val, oldVal)) {
         handleClickTab(props.defaultTab || val?.[0].id);
+        computeTabOverflow();
       }
     },
     { immediate: true }
