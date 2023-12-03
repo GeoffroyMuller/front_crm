@@ -4,8 +4,13 @@
     class="calendar"
     :class="{ rounded, 'calendar-full-screen': fullScreen }"
   >
-    <div class="calendar-header px-contentX max-md:px-contentXMobile h-[55px] sticky top-0 bg-white">
+    <div
+      class="calendar-header px-contentX max-md:px-contentXMobile h-[55px] sticky top-0 bg-white"
+    >
       <div class="date">
+        <Button variant="outlined" color="black" @click="setCurrentToday()">
+          {{ $t("core.today") }}
+        </Button>
         <div class="buttons">
           <IconButton
             name="chevron_left"
@@ -132,6 +137,7 @@ const {
   monthNames,
   increment,
   decrement,
+  setCurrentToday,
   daysToDisplay: datesToDisplay,
 } = useCalendar({
   weekMode: displayWeek,

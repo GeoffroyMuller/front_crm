@@ -5,7 +5,7 @@
     v-model:current-tab="currentTab"
     :style="contentStyle"
   >
-    <template #icon>
+    <template #icon v-if="$slots.icon">
       <slot name="icon" />
     </template>
     <template #head-end v-if="sidebarWidth === 0">

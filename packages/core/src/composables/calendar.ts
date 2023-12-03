@@ -220,6 +220,16 @@ export default function useCalendar(props: useCalendarProps) {
     return daysToDisplayMounth.value;
   });
 
+  function setCurrentToday() {
+    current.value = {
+      month: dayjs().month(),
+      year: dayjs().year(),
+      hour: null,
+      minute: null,
+      week: 0,
+    };
+  }
+
   return {
     increment,
     decrement,
@@ -229,5 +239,6 @@ export default function useCalendar(props: useCalendarProps) {
     dateCanBeSelected,
     daysToDisplay,
     current,
+    setCurrentToday,
   };
 }
