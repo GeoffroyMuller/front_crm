@@ -44,10 +44,14 @@
         <template #default="{ hasError }">
           <Grid :gap="3">
             <Grid :gap="2">
-              <TextField name="firstname" :label="$t('firstname')" />
-              <TextField name="lastname" :label="$t('lastname')" />
-              <TextField name="email" :label="$t('email')" />
-              <TextField name="phone" :label="$t('phone')" />
+              <div class="flex gap-2">
+                <TextField name="firstname" :label="$t('firstname')" />
+                <TextField name="lastname" :label="$t('lastname')" />
+              </div>
+              <div class="flex gap-2">
+                <TextField name="email" :label="$t('email')" />
+                <TextField name="phone" :label="$t('phone')" />
+              </div>
               <TextField name="address" :label="$t('address')" />
               <MagicAutocomplete
                 name="idRole"

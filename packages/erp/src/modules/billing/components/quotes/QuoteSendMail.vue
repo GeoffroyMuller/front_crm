@@ -60,6 +60,7 @@ import Wysiwyg from "core/src/components/form/Wysiwyg.vue";
 
 interface QuoteSendMailProps {
   quote?: Quote | null;
+  open: boolean;
 }
 
 const props = withDefaults(defineProps<QuoteSendMailProps>(), {});
@@ -123,6 +124,26 @@ watch(
     } else {
       isOpen.value = true;
     }
+  },
+  { immediate: true }
+);
+
+watch(
+  () => props.quote,
+  (quote) => {
+    if (quote == null) {
+      isOpen.value = false;
+    } else {
+      isOpen.value = true;
+    }
+  },
+  { immediate: true }
+);
+
+watch(
+  () => props.open,
+  (open) => {
+    isOpen.value = open;
   },
   { immediate: true }
 );

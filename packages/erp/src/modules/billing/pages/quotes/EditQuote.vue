@@ -277,8 +277,9 @@
   </Page>
   <QuoteSendMail
     @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)"
-    @close="quoteToSendMail = null"
+    @close="sendMailOpen = false"
     :quote="quoteToSendMail"
+    :open="sendMailOpen"
   />
   <QuotePreview @close="quoteToPreview = null" :quote="quoteToPreview" />
   <EditClientSidebar @add="onAddClient" v-model:open="isAddClientOpen" />
@@ -386,6 +387,7 @@ const {
   sendMail,
   quoteToSendMail,
   edit,
+  sendMailOpen,
 } = useQuote({});
 
 const {

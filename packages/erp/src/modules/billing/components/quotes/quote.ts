@@ -15,10 +15,11 @@ export interface UseQuoteProps {
 /*
 to send mail, and preview : add the following to the <template> :
     <QuoteSendMail
-      @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)"
-      @close="quoteToSendMail = null"
-      :quote="quoteToSendMail"
-    />
+    @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)"
+    @close="sendMailOpen = false"
+    :quote="quoteToSendMail"
+    :open="sendMailOpen"
+  />
     <QuotePreview @close="quoteToPreview = null" :quote="quoteToPreview" />
 */
 
@@ -35,9 +36,11 @@ export default function useQuote(props?: UseQuoteProps) {
   const _afterAction = props?.afterAction || (() => {});
 
   const quoteToSendMail = ref<Quote | null>();
+  const sendMailOpen = ref<boolean>(false);
   function sendMail(item?: Quote) {
     const _quote = (props?.quote?.value || item) as Quote;
     quoteToSendMail.value = _quote;
+    sendMailOpen.value = true;
   }
 
   const quoteToPreview = ref<Quote | null>();
@@ -171,5 +174,7 @@ export default function useQuote(props?: UseQuoteProps) {
     quoteToPreview,
 
     createInvoiceFromQuote,
+
+    sendMailOpen,
   };
 }

@@ -105,8 +105,9 @@
     </MagicDataTable>
     <QuoteSendMail
       @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)"
-      @close="quoteToSendMail = null"
+      @close="sendMailOpen = false"
       :quote="quoteToSendMail"
+      :open="sendMailOpen"
     />
   </Page>
   <QuoteSidebar
@@ -159,6 +160,7 @@ const {
   edit,
   createInvoiceFromQuote,
   add,
+  sendMailOpen,
 } = useQuote({
   afterAction: () => {
     quotestore.fetchList();
