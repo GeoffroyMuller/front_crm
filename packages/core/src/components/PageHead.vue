@@ -5,7 +5,7 @@
     <div class="flex gap-5 items-center h-full">
       <div
         v-if="icon || imageSrc || $slots.icon"
-        class="overflow-hidden max-md:hidden bg-gradient-245 from-primary-400 to-primary-400 shadow-md shadow-primary-200 rounded grid place-items-center w-[3.25rem] min-w-[3.25rem] h-[3.25rem]"
+        class="overflow-hidden max-md:hidden bg-gradient-245 from-primary-400 to-primary-400 shadow-md shadow-primary-200 rounded grid place-items-center w-[3.05rem] min-w-[3.05rem] h-[3.05rem]"
         :style="
           iconBgColor
             ? { background: iconBgColor, '--tw-shadow-color': iconBgColor }

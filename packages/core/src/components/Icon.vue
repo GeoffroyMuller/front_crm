@@ -86,7 +86,7 @@ const props = withDefaults(defineProps<IconProps>(), {
   font-size: 1.625rem !important;
 }
 .icon-3xl {
-  font-size: 1.875rem !important;
+  font-size: 1.7rem !important;
 }
 
 @each $key, $value in $colors {

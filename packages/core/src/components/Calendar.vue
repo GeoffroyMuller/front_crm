@@ -4,7 +4,7 @@
     class="calendar"
     :class="{ rounded, 'calendar-full-screen': fullScreen }"
   >
-    <div class="calendar-header h-[60px] sticky top-0 bg-white">
+    <div class="calendar-header px-contentX max-md:px-contentXMobile h-[55px] sticky top-0 bg-white">
       <div class="date">
         <div class="buttons">
           <IconButton
@@ -33,7 +33,7 @@
         />
       </div>
     </div>
-    <div class="weekdays sticky top-[60px]">
+    <div class="weekdays sticky top-[55px]">
       <div
         v-for="(day, index) of weekDaysLabels"
         :key="index"
@@ -215,7 +215,7 @@ $borderColor: #dbdcdc;
 
 .calendar {
   .calendar-header {
-    @apply flex justify-between items-center gap-2 p-4;
+    @apply flex justify-between items-center gap-2 py-2;
     border-bottom: solid color("slate", 200) 1px;
     opacity: 1;
     z-index: 21;

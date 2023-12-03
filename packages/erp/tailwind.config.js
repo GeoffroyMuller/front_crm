@@ -24,10 +24,10 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
-        headerHeight: "56px",
-        screenMinusHeaderHeight: "calc(100vh - 56px)",
-        pageHeadHeight: "85px",
-        fullMinusPageHeadHeight: "calc(100% - 85px)",
+        headerHeight: "50px",
+        screenMinusHeaderHeight: "calc(100vh - 50px)",
+        pageHeadHeight: "81px",
+        fullMinusPageHeadHeight: "calc(100% - 81px)",
         content: "1.5rem",
         iconButtonPadding: ".25rem",
         inputXPadding: ".5rem",

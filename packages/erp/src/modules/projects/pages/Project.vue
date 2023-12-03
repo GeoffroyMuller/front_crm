@@ -42,7 +42,7 @@
     ]"
   >
     <template #head-end>
-      <div class="flex flex-col items-end justify-end gap-2">
+      <div class="flex flex-col items-end justify-end gap-1">
         <div class="flex justify-end">
           <Avatar
             selectable
@@ -79,7 +79,7 @@
         </div>
         <Menu placement="bottom" alignment="end">
           <template #activator>
-            <Button icon="filter_alt" variant="text">
+            <Button icon="filter_alt" variant="text" color="black">
               {{ $t("core.to_filter") }}
             </Button>
           </template>

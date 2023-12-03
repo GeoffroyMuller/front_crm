@@ -141,7 +141,7 @@ const buttonAdditionnalProps = computed(() => {
   @apply bg-white hover:bg-gray-50 text-black;
 }
 .button-text {
-  @apply gap-1 bg-transparent relative py-iconButtonPadding px-buttonTextPadding;
+  @apply gap-1 bg-transparent relative px-buttonTextPadding  min-h-[29px];
   span {
     width: max-content;
   }
