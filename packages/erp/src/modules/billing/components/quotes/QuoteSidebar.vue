@@ -35,8 +35,7 @@ import { merge } from "lodash";
 import PdfViewer from "core/src/components/PdfViewer.vue";
 import { ref } from "vue";
 import config from "@/const";
-import { getJWT } from 'core/src/helpers/utils';
-
+import { getJWT } from "core/src/helpers/utils";
 
 const props = defineProps<{ open: boolean; model?: Quote }>();
 const emit = defineEmits(["close"]);
@@ -73,7 +72,6 @@ const actions = computed<SidebarHeadAction[]>(() => {
       icon: "archive",
       action: "setArchived",
       color: "danger",
-      main: true,
     });
   }
   return res;
