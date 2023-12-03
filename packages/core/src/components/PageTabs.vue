@@ -39,6 +39,7 @@ import useTabs, { type Tab } from "../composables/tabs";
 import ActionMenu from "./ActionMenu.vue";
 import Icon from "./Icon.vue";
 import Button from "./Button.vue";
+import { toRef } from "vue";
 
 interface PageTabsProps {
   tabs: Array<Tab>;
@@ -59,7 +60,7 @@ const {
   nbTabsHidden,
 } = useTabs({
   tabRef: tabRef as Ref<HTMLElement>,
-  tabs: props.tabs,
+  tabs: toRef(props, "tabs"),
   defaultTab: props.defaultTab,
 });
 

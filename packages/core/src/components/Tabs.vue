@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from "vue";
+import { ref, type Ref, toRef } from "vue";
 import useTabs, { type Tab } from "../composables/tabs";
 import ActionMenu from "./ActionMenu.vue";
 import Button from "./Button.vue";
@@ -55,7 +55,7 @@ const props = withDefaults(defineProps<TabsProps>(), {});
 const { handleClickTab, currentTab, tabsHidden, tabsVisible, nbTabsHidden } =
   useTabs({
     tabRef: tabRef as Ref<HTMLElement>,
-    tabs: props.tabs,
+    tabs: toRef(props, "tabs"),
   });
 </script>
 

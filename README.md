@@ -28,6 +28,9 @@
 # outils prometteur à checker
 - Open-Source, Cloud-Native Storage for Kubernetes: https://rook.io/
 
+# tuto utils
+- How to upload files to aws s3 with node : https://www.freecodecamp.org/news/how-to-upload-files-to-aws-s3-with-node/
+
 # packages
 - api_* : webservices de l'app
 - api_gateway : point d'entrée de l'API (check l'auth et relaie les requetes aux services)

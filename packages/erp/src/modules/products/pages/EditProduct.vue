@@ -28,15 +28,11 @@
       <ProductStock :product="product" />
     </template>
     <template #advanced_settings>
-      <ProductAvancedSettingsPhysical
+      <ProductAdvancedSettingsPhysical
         v-if="productsStore.isPhysicalStock(product)"
         :loading="loading"
         :product="product"
-        @saved="save"
-      />
-      <ProductAdvancedSettingsEvents
-        v-if="productsStore.isEventStock(product)"
-        :product="product"
+        @saved="saveFields"
       />
     </template>
 
@@ -81,19 +77,17 @@ import Page from "core/src/components/Page.vue";
 import useProductStore from "@/modules/products/stores/products";
 import { computed, onMounted, ref } from "vue";
 import Card from "core/src/components/card/Card.vue";
-import ProductAvancedSettingsPhysical from "@/modules/products/components/ProductAvancedSettingsPhysical.vue";
+import ProductAdvancedSettingsPhysical from "@/modules/products/components/ProductAdvancedSettingsPhysical.vue";
 import ProductStock from "@/modules/products/components/ProductStock.vue";
 import useVatStore from "@/stores/vat";
 import useEditPage from "@/components/editpage";
-import type { Product } from "@/types/product";
-import ProductAdvancedSettingsEvents from "@/modules/products/components/ProductAdvancedSettingsEvents.vue";
+import type { Product, ProductField } from "@/types/product";
 import ProductView from "../components/ProductView.vue";
 import Sidebar from "core/src/components/sidebar/Sidebar.vue";
 import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 import Button from "core/src/components/Button.vue";
 import SidebarActions from "core/src/components/sidebar/SidebarActions.vue";
-import CardActions from "core/src/components/card/CardActions.vue";
 
 const productsStore = useProductStore();
 const vatStore = useVatStore();
@@ -116,16 +110,15 @@ const {
   },
 });
 
+function saveFields(fields: ProductField[]) {
+  console.error({ fields });
+}
+
 const productTabs = computed(() => {
   const res = [{ id: "informations", title: t("informations") }];
 
-  if (
-    productsStore.isPhysicalStock(product.value) ||
-    productsStore.isEventStock(product.value)
-  ) {
-    if (productsStore.isPhysicalStock(product.value)) {
-      res.push({ id: "stock", title: t("stock") });
-    }
+  if (productsStore.isPhysicalStock(product.value)) {
+    res.push({ id: "stock", title: t("stock") });
     res.push({ id: "advanced_settings", title: t("advanced_settings") });
   }
 

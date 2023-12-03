@@ -69,4 +69,11 @@ export default {
       return handleError(req, res, err);
     }
   },
+  saveField: async (req: IAuthRequest<any>, res: Response) =>  {
+    try {
+      return res.status(200).json({});
+    } catch (err) {
+      return handleError(req, res, err);
+    }
+  }
 };

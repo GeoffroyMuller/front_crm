@@ -16,33 +16,33 @@ export interface Tab {
 
 export type UseTabsProps = {
   tabRef: Ref<HTMLElement>;
-  tabs: Tab[];
+  tabs: Ref<Tab[]>;
   defaultTab?: Tab["id"];
 };
 
-export default function useTabs({ tabRef, tabs, defaultTab }: UseTabsProps) {
+export default function useTabs(props: UseTabsProps) {
   const currentTab = ref<Tab["id"]>();
 
   const nbTabsHidden = ref(0);
 
   function computeTabOverflow() {
-    if (!tabRef.value) return;
-    if (tabs.length <= 2) return;
+    if (!props.tabRef.value) return;
+    if (props.tabs.value.length <= 2) return;
     nbTabsHidden.value = 0;
     nextTick(() => {
-      const visibleWidth = tabRef.value.offsetWidth;
-      const totalWidth = tabRef.value.scrollWidth;
+      const visibleWidth = props.tabRef.value.offsetWidth;
+      const totalWidth = props.tabRef.value.scrollWidth;
       if (visibleWidth < totalWidth) {
-        const tabsLeft = tabRef.value.getBoundingClientRect().left;
-        const childrenDisplayed = Array.from(tabRef.value.children).filter(
-          (elem) => {
-            const elemRight = elem.getBoundingClientRect().right - tabsLeft;
-            if (elemRight >= visibleWidth) {
-              return true;
-            }
-            return false;
+        const tabsLeft = props.tabRef.value.getBoundingClientRect().left;
+        const childrenDisplayed = Array.from(
+          props.tabRef.value.children
+        ).filter((elem) => {
+          const elemRight = elem.getBoundingClientRect().right - tabsLeft;
+          if (elemRight >= visibleWidth) {
+            return true;
           }
-        );
+          return false;
+        });
         nbTabsHidden.value = childrenDisplayed.length
           ? childrenDisplayed.length + 1
           : 0;
@@ -51,32 +51,34 @@ export default function useTabs({ tabRef, tabs, defaultTab }: UseTabsProps) {
   }
 
   function computeTabSelectedIndicator() {
-    if (!tabRef.value) return;
-    const tabsLeft = tabRef.value.getBoundingClientRect().left;
+    if (!props.tabRef.value) return;
+    const tabsLeft = props.tabRef.value.getBoundingClientRect().left;
     if (tabsHidden.value.find((t) => t.id == currentTab.value)) {
-      tabRef.value.style.setProperty(
+      props.tabRef.value.style.setProperty(
         "--tab-indicator-left",
         `${
-          (tabRef.value.lastElementChild?.getBoundingClientRect()?.left ||
+          (props.tabRef.value.lastElementChild?.getBoundingClientRect()?.left ||
             tabsLeft) - tabsLeft
         }px`
       );
-      tabRef.value.style.setProperty(
+      props.tabRef.value.style.setProperty(
         "--tab-indicator-width",
-        `${tabRef.value.lastElementChild?.getBoundingClientRect()?.width}px`
+        `${
+          props.tabRef.value.lastElementChild?.getBoundingClientRect()?.width
+        }px`
       );
       return;
     }
-    const selected = tabRef.value.querySelector(".selected");
+    const selected = props.tabRef.value.querySelector(".selected");
     if (!selected) return;
     const selectedBounds = selected.getBoundingClientRect();
     const selectedLeft = selectedBounds.left;
     if (tabsLeft && selectedLeft) {
-      tabRef.value.style.setProperty(
+      props.tabRef.value.style.setProperty(
         "--tab-indicator-left",
         `${selectedLeft - tabsLeft}px`
       );
-      tabRef.value.style.setProperty(
+      props.tabRef.value.style.setProperty(
         "--tab-indicator-width",
         `${selectedBounds.width}px`
       );
@@ -99,12 +101,12 @@ export default function useTabs({ tabRef, tabs, defaultTab }: UseTabsProps) {
 
   const tabsHidden = computed(() => {
     if (nbTabsHidden.value === 0) return [];
-    return tabs.slice(tabs.length - nbTabsHidden.value);
+    return props.tabs.value.slice(props.tabs.value.length - nbTabsHidden.value);
   });
 
   const tabsVisible = computed(() => {
-    if (nbTabsHidden.value === 0) return tabs;
-    return tabs.slice(0, tabs.length - nbTabsHidden.value);
+    if (nbTabsHidden.value === 0) return props.tabs.value;
+    return props.tabs.value.slice(0, props.tabs.value.length - nbTabsHidden.value);
   });
 
   watch(
@@ -115,10 +117,10 @@ export default function useTabs({ tabRef, tabs, defaultTab }: UseTabsProps) {
   );
 
   watch(
-    () => tabs,
+    () => props.tabs.value,
     (val, oldVal) => {
       if (!isEqual(val, oldVal)) {
-        handleClickTab(defaultTab || val?.[0].id);
+        handleClickTab(props.defaultTab || val?.[0].id);
       }
     },
     { immediate: true }

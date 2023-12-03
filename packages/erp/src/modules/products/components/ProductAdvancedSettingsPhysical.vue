@@ -82,11 +82,7 @@ interface ProductAvancedSettingsStockProps {
   product: Product | null;
   loading: boolean;
 }
-interface IFieldOption {
-  label: string;
-  value: string;
-}
-const productStore = useProductsStore();
+
 const emit = defineEmits(["saved", "cancel"]);
 const props = withDefaults(defineProps<ProductAvancedSettingsStockProps>(), {
   product: null,
@@ -106,46 +102,8 @@ const productInternal = computed(() => {
   };
 });
 
-function _mapProductFields(formDataProductFields: any): Array<ProductField> {
-  return formDataProductFields.reduce(
-    (accumulator: Array<ProductField>, field: any) => {
-      if (!isNil(field)) {
-        accumulator.push({
-          ...field,
-          props: {
-            options: field?.props?.reduce(
-              (accumulator: Array<IFieldOption>, elem: any) => {
-                if (
-                  !isNil(elem) &&
-                  // eslint-disable-next-line no-prototype-builtins
-                  elem?.hasOwnProperty("option") &&
-                  !isNil(elem?.option) &&
-                  elem?.option != ""
-                ) {
-                  accumulator.push({
-                    label: elem.option,
-                    value: elem.option,
-                  });
-                }
-                return accumulator;
-              },
-              []
-            ),
-          },
-        });
-      }
-      return accumulator;
-    },
-    []
-  );
-}
-
 function handleSubmit(data: any) {
-  const productRes = {
-    ...props.product,
-    product_fields: _mapProductFields(data.product_fields),
-  };
-  emit("saved", productRes);
+  emit("saved", data.product_fields);
 }
 </script>
 <style lang="scss">
