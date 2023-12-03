@@ -1,5 +1,5 @@
 <template>
-  <div class="pdf-viewer pb-4 border border-slate-200 border-solid" v-if="src">
+  <div class="pdf-viewer pb-4" v-if="src">
     <div class="pdf-viewer-actions-wrapper pb-4 text-white">
       <div class="pdf-viewer-actions">
         <div>

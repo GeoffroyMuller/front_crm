@@ -11,15 +11,15 @@
         <Button variant="outlined" color="black" @click="setCurrentToday()">
           {{ $t("core.today") }}
         </Button>
-        <div class="buttons">
+        <div class="buttons gap-1">
           <IconButton
             name="chevron_left"
-            class="-ml-iconButtonPadding"
+            class="-mx-iconButtonPadding"
             @click.stop="decrement()"
           />
           <IconButton
             name="chevron_right"
-            class="-ml-iconButtonPadding"
+            class="-mx-iconButtonPadding"
             @click.stop="increment()"
           />
         </div>
