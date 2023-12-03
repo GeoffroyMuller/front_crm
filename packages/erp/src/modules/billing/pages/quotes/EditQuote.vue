@@ -281,7 +281,11 @@
     :quote="quoteToSendMail"
     :open="sendMailOpen"
   />
-  <QuotePreview @close="quoteToPreview = null" :quote="quoteToPreview" />
+  <QuotePreview
+    @close="quotePreviewOpen = false"
+    :quote="quoteToPreview"
+    :open="quotePreviewOpen"
+  />
   <EditClientSidebar @add="onAddClient" v-model:open="isAddClientOpen" />
 </template>
 
@@ -388,6 +392,7 @@ const {
   quoteToSendMail,
   edit,
   sendMailOpen,
+  quotePreviewOpen,
 } = useQuote({});
 
 const {

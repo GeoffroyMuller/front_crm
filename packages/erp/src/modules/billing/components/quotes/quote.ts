@@ -15,12 +15,16 @@ export interface UseQuoteProps {
 /*
 to send mail, and preview : add the following to the <template> :
     <QuoteSendMail
-    @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)"
-    @close="sendMailOpen = false"
-    :quote="quoteToSendMail"
-    :open="sendMailOpen"
-  />
-    <QuotePreview @close="quoteToPreview = null" :quote="quoteToPreview" />
+      @clickDownloadPDF="() => downloadPdf(quoteToSendMail as Quote)"
+      @close="sendMailOpen = false"
+      :quote="quoteToSendMail"
+      :open="sendMailOpen"
+    />
+   <QuotePreview
+      @close="quotePreviewOpen = false"
+      :quote="quoteToPreview"
+      :open="quotePreviewOpen"
+    />
 */
 
 export default function useQuote(props?: UseQuoteProps) {
@@ -44,9 +48,11 @@ export default function useQuote(props?: UseQuoteProps) {
   }
 
   const quoteToPreview = ref<Quote | null>();
+  const quotePreviewOpen = ref(false);
   function preview(item?: Quote) {
     const _quote = (props?.quote?.value || item) as Quote;
     quoteToPreview.value = _quote;
+    quotePreviewOpen.value = true;
   }
 
   function downloadPdf(item?: Quote) {
@@ -176,5 +182,6 @@ export default function useQuote(props?: UseQuoteProps) {
     createInvoiceFromQuote,
 
     sendMailOpen,
+    quotePreviewOpen,
   };
 }

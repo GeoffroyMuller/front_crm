@@ -8,7 +8,7 @@
     <SidebarContent class="h-full">
       <PdfViewer
         class="h-full"
-        v-if="isOpen"
+        v-if="isOpen && quote"
         :src="`${config.API_URL}/quotes/${quote.id}/pdf?token=${getJWT()}`"
       />
     </SidebarContent>
@@ -23,10 +23,11 @@ import { ref, watch } from "vue";
 import PdfViewer from "core/src/components/PdfViewer.vue";
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 import config from "@/const";
-import { getJWT } from 'core/src/helpers/utils';
+import { getJWT } from "core/src/helpers/utils";
 
 interface QuotePreviewProps {
   quote?: Quote | null;
+  open?: boolean;
 }
 
 const props = withDefaults(defineProps<QuotePreviewProps>(), {});
@@ -56,5 +57,12 @@ watch(
     }
   },
   { immediate: true }
+);
+
+watch(
+  () => props.open,
+  (open) => {
+    isOpen.value = open;
+  }
 );
 </script>
