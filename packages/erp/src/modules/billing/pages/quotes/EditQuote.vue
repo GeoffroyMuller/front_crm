@@ -433,7 +433,7 @@ useUI({
         },
         {
           action: async () => {
-            return save(formValue);
+            return save(formValue.value);
           },
           label: t("core.save_and_quite"),
           buttonProps: {
