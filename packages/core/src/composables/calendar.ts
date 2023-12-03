@@ -94,7 +94,7 @@ export default function useCalendar(props: useCalendarProps) {
       ...weekdaysName.filter((d: string, index: number) => index < firstDay),
     ];
 
-    return list.map((d: string) => d[0].toUpperCase());
+    return list.map((d: string) => d.substring(0, 3).toUpperCase() + ".");
   });
 
   function isDateSelected(day: number, month: number, year: number) {

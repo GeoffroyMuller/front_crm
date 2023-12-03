@@ -48,7 +48,7 @@
       </div>
     </div>
     <div class="calendar-content-week" v-if="displayWeek">
-      <div class="days">
+      <div class="days typo-title6">
         <div class="day" v-for="day of datesToDisplay" :key="day.id">
           <span v-if="!$slots['mounth-day']">
             {{ $utils.formatDate(day.dayjs) }}
@@ -64,7 +64,7 @@
     <div class="calendar-content" v-if="!displayWeek">
       <div class="days">
         <div
-          class="day"
+          class="day typo-title6"
           v-for="day in datesToDisplay"
           :key="day.id"
           @click.stop="clickOnDay(day)"

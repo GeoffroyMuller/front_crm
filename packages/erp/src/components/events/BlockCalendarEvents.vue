@@ -8,7 +8,7 @@
         :selected="isSelected(e)"
       >
         <div class="typo-title7 font-semibold">E</div>
-        <div class="typo-text5 font-semibold">
+        <div class="typo-title5 font-semibold">
           {{ getEventTitle(e) }}
         </div>
       </Card>
