@@ -61,6 +61,7 @@ quoteService.create = async (body: any, auth, filters) => {
 quoteService.update = async (body: any, auth, filters) => {
   const data = await quoteService.getById(body.id, auth, [], filters);
   if (!data) throw new NotFoundError();
+  delete body.identifier;
   const quote = (await Quote.query().upsertGraphAndFetch(
     {
       id: body.id,
