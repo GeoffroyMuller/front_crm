@@ -23,9 +23,9 @@
       "
       placement="bottom"
       alignment="start"
-      class="mb-4"
+      class="mb-3"
     >
-      <Button variant="text" color="black">
+      <Button variant="text" color="black" class="-my-buttonTextPadding">
         <span>+{{ nbTabsHidden }}</span>
         <Icon name="more_horiz" />
       </Button>
@@ -77,7 +77,7 @@ watch(
 
 <style lang="scss">
 .page-tabs {
-  @apply flex items-center gap-4 select-none relative;
+  @apply flex items-center gap-4 select-none relative w-full;
   &::before {
     content: " ";
     width: var(--tab-indicator-width, 0);
