@@ -12,11 +12,15 @@
     <SidebarContent>
       <Form :initial-value="client" @submit="handleSubmit" class="grid gap-4">
         <template #default="{ hasError }">
-          <TextField name="firstname" :label="$t('firstname')" />
-          <TextField name="lastname" :label="$t('lastname')" />
+          <div class="flex gap-2">
+            <TextField name="firstname" :label="$t('firstname')" />
+            <TextField name="lastname" :label="$t('lastname')" />
+          </div>
+          <div class="flex gap-2">
+            <TextField name="phone" :label="$t('phone')" />
+            <TextField name="email" :label="$t('email')" />
+          </div>
           <TextField name="address" :label="$t('address')" />
-          <TextField name="phone" :label="$t('phone')" />
-          <TextField name="email" :label="$t('email')" />
           <div>
             <MagicAutocomplete
               name="idClientCompany"
