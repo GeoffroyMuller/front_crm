@@ -20,9 +20,7 @@
       </Button>
     </template>
     <template #informations>
-      <Card padding>
-        <ProductView :product="product" @edit="editSidebarOpen = true" />
-      </Card>
+      <ProductView :product="product" @edit="editSidebarOpen = true" />
     </template>
     <template #stock>
       <ProductStock :product="product" />

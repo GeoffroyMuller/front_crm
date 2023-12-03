@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-2 gap-6 items-start">
+  <Card padding class="grid xl:grid-cols-[1fr_max-content] gap-6 items-start">
     <div class="typo-title5 font-semibold">
       <div class="mb-6 flex items-center gap-0.5">
         {{ $t("pages.edit-product.informations") }}
@@ -44,24 +44,8 @@
         </div>
       </div>
     </div>
-    <div>
-      <img
-        class="w-full rounded"
-        src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/03/web-images.jpg?auto=format&q=60&w=1600&h=824&fit=crop&crop=faces"
-      />
-      <div class="grid grid-cols-3 gap-2 mt-2 [&>*]:w-full [&>*]:rounded">
-        <img
-          src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/03/web-images.jpg?auto=format&q=60&w=1600&h=824&fit=crop&crop=faces"
-        />
-        <img
-          src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/03/web-images.jpg?auto=format&q=60&w=1600&h=824&fit=crop&crop=faces"
-        />
-        <img
-          src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2016/03/web-images.jpg?auto=format&q=60&w=1600&h=824&fit=crop&crop=faces"
-        />
-      </div>
-    </div>
-  </div>
+    <ProdcutGallery class="max-w-[500px]" />
+  </Card>
 </template>
 
 <script setup lang="ts">
@@ -69,8 +53,9 @@ import useVatStore from "@/stores/vat";
 import type { Product } from "@/types/product";
 import Price from "core/src/components/Price.vue";
 import IconButton from "core/src/components/IconButton.vue";
-import { onMounted } from "vue";
 import { computed } from "vue";
+import Card from "core/src/components/card/Card.vue";
+import ProdcutGallery from "./ProductGallery.vue";
 
 const vatStore = useVatStore();
 
