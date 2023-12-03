@@ -217,6 +217,7 @@ watch(
         open.value = false;
       }
     } else {
+      open.value = false;
       search.value = displayed.value;
     }
 
@@ -249,6 +250,7 @@ function handleBlur() {
     search.value = "";
   } else {
     search.value = displayed.value;
+    open.value = false;
   }
 }
 </script>
