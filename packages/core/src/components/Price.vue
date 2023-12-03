@@ -1,7 +1,7 @@
 <template>
   <Text
     :class="{
-      'bg-slate-100 border border-slate-300 border-solid': price,
+      'bg-slate-100 border border-slate-300 border-solid h-7 grid place-items-center': price,
     }"
     class="font-semibold p-1 rounded-sm w-fit"
     typo="text1"
