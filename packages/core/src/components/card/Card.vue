@@ -1,18 +1,19 @@
 <template>
   <div
-    class="shadow-card"
+    class="shadow-card border border-solid transition-all duration-100"
     :class="{
       'max-md:p-cardMobile p-card': padding,
       'rounded-sm': rounded === 'sm',
       'rounded-md': rounded === 'md',
       'rounded-lg': rounded === 'lg',
       'rounded-xl': rounded === 'xl',
-      'border border-slate-200 border-solid': bordered,
+      'border-slate-200': bordered,
       'cursor-pointer select-none': selectable,
-      'hover:shadow-md': selectable && !selected,
-      'bg-primary-50': selected,
-      'bg-white': !selected && !darken,
-      'bg-zinc-50': !selected && darken,
+      'hover:border-slate-300': selectable && !selected,
+      'border-primary-800': selected,
+      'border-transparent': !selected,
+      'bg-white':  !darken,
+      'bg-zinc-50': darken,
     }"
   >
     <slot />

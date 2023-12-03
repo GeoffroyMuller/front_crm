@@ -267,7 +267,7 @@ $borderColor: #dbdcdc;
     }
     .days {
       border-top: none;
-      background-color: color("slate", 50);
+      @apply bg-slate-50;
       > *:not(:nth-child(1n + 8)) {
         border-top: 0;
       }
@@ -299,16 +299,9 @@ $borderColor: #dbdcdc;
         transform: translateX(-50%);
         z-index: 4;
       }
-      &::before {
-        content: " ";
-        @apply transition-all bg-primary-500 absolute bottom-2 right-2 w-[5px] h-[5px] opacity-0 rounded-full shadow shadow-primary-400;
-      }
       &:hover {
         position: relative;
-        &::before {
-          content: " ";
-          @apply opacity-50;
-        }
+        @apply bg-slate-100;
         cursor: pointer;
       }
       &.not-this-month {
