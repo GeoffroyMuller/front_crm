@@ -6,7 +6,7 @@ import { Service } from "core_api/types";
 import { raw } from "objection";
 import QuoteLine from "./quote_line.model";
 import { NotFoundError } from "core_api/errors";
-import PdfService from 'core_api/services/pdf.service';
+import PdfService from "core_api/services/pdf.service";
 import { Stream } from "stream";
 
 export interface IQuoteService extends Service<Quote, User> {
@@ -42,6 +42,9 @@ const quoteService = serviceFactory<Quote, User>(Quote, {
         WHERE ${QuoteLine.tableName}.idQuote = quotes.id
       )`).as("taxes")
     );
+    if (!filters?.$eq?.archived) {
+      query.whereNull("archived").orWhere("archived", 0);
+    }
     return { query, auth, filters, data };
   },
 }) as IQuoteService;
@@ -95,18 +98,21 @@ quoteService.sendByMail = async (quote: Quote, token: string) => {
 };
 
 quoteService.getPdf = async (id: ID, auth: User) => {
-  const quote = await quoteService.getById(id, auth, ['client.company', 'lines']);
+  const quote = await quoteService.getById(id, auth, [
+    "client.company",
+    "lines",
+  ]);
   if (quote == null) {
     throw new NotFoundError();
   }
   const pdf = await PdfService.printPDF({
     data: {
       responsible: {
-        firstname: 'Jean-Michel',
-        lastname: 'DataEnDur',
+        firstname: "Jean-Michel",
+        lastname: "DataEnDur",
         company: {
-          name: 'Company en dur'
-        }
+          name: "Company en dur",
+        },
       },
       client: undefined,
       footer: undefined,

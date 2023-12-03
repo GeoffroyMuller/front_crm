@@ -171,7 +171,6 @@ const serviceFactory = <
       handleFilters(query, filters);
       getById(data.id, auth);
       const removed = await query.where("id", id).delete().execute();
-      console.log(removed);
       return true;
     },
   };

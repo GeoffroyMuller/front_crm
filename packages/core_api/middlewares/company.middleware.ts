@@ -10,6 +10,8 @@ const companyMiddleware = (
   req.query = {
     ...req.query,
     $eq: {
+      // @ts-ignore
+      ...(typeof req?.query?.$eq === "object" ? req?.query?.$eq : {}),
       idCompany: req.auth.idCompany as string,
     },
   };

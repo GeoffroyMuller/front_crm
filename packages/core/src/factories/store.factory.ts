@@ -217,8 +217,8 @@ export function makeAPIStore<T>(
         signal?: AbortSignal
       ): Promise<PaginateResult2<T>> {
         const _filters = merge(
-          cloneDeep(this.filters),
-          merge(cloneDeep(f), cloneDeep(props.filters))
+          cloneDeep(props.filters),
+          merge(cloneDeep(this.filters), cloneDeep(f))
         );
 
         // @ts-ignore
