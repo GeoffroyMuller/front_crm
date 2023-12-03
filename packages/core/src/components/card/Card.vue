@@ -1,6 +1,6 @@
 <template>
   <div
-    class="shadow-card border border-solid transition-all duration-100"
+    class="shadow-card border border-solid transition-all duration-200"
     :class="{
       'max-md:p-cardMobile p-card': padding,
       'rounded-sm': rounded === 'sm',
@@ -11,7 +11,7 @@
       'cursor-pointer select-none': selectable,
       'hover:border-slate-300': selectable && !selected,
       'border-primary-800': selected,
-      'border-transparent': !selected,
+      'border-transparent': !selected && !bordered,
       'bg-white':  !darken,
       'bg-zinc-50': darken,
     }"
