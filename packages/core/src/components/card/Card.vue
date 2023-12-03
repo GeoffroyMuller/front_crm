@@ -1,6 +1,6 @@
 <template>
   <div
-    class="shadow-card border border-solid transition-all duration-200"
+    class="shadow-card border border-solid transition-[border] duration-200"
     :class="{
       'max-md:p-cardMobile p-card': padding,
       'rounded-sm': rounded === 'sm',
