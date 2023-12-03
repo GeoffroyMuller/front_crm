@@ -14,11 +14,7 @@
   </div>
   <Teleport v-if="strategy === 'root'" to="body">
     <div ref="content">
-      <Card
-        :class="contentCardClass"
-        v-bind="cardProps"
-        class="border border-solid border-slate-200"
-      >
+      <Card :class="contentCardClass" bordered v-bind="cardProps">
         <slot name="content" />
       </Card>
     </div>

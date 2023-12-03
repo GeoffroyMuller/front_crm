@@ -12,7 +12,7 @@
       'hover:border-slate-300': selectable && !selected,
       'border-primary-800': selected,
       'border-transparent': !selected && !bordered,
-      'bg-white':  !darken,
+      'bg-white': !darken,
       'bg-zinc-50': darken,
     }"
   >
