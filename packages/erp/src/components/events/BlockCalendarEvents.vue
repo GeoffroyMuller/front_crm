@@ -7,7 +7,7 @@
         selectable
         :selected="isSelected(e)"
       >
-        <div class="typo-title7 font-semibold ml-[10px]">E</div>
+        <div class="typo-title7 font-semibold">E</div>
         <div class="typo-text5 font-semibold">
           {{ getEventTitle(e) }}
         </div>
@@ -37,15 +37,21 @@ function getEventTitle(e: Event) {
 
 <style lang="scss" scoped>
 .event-block {
+  $beforeWidth: 7px;
   position: relative;
   overflow: hidden;
+  @apply px-1.5 min-h-[38px];
+  border-radius: $beforeWidth;
+  > :first-child {
+    margin-left: $beforeWidth;
+  }
   &::before {
     content: " ";
     position: absolute;
     height: 100%;
     top: 0;
     left: 0;
-    width: 5px;
+    width: $beforeWidth;
     @apply bg-primary-400;
     z-index: 20;
   }
