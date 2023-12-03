@@ -37,7 +37,10 @@
       </div>
     </div>
 
-    <canvas ref="canvasRef" />
+    <canvas
+      ref="canvasRef"
+      :class="{ 'bg-white': !loading, 'skeleton h-[841px] w-[594px]': loading }"
+    />
     <div ref="textRef" class="text-layer"></div>
   </div>
 </template>
@@ -65,10 +68,19 @@ const totalPages = ref(1);
 const zoom = ref(props.initialZoom || 1);
 let pdf: any = null;
 
+const loading = ref(true);
+
 async function fetchPdf() {
   if (!props.src) return;
-  pdf = await pdfjs.getDocument(props.src).promise;
-  displayPdf();
+  try {
+    loading.value = true;
+    pdf = await pdfjs.getDocument(props.src).promise;
+    displayPdf();
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loading.value = false;
+  }
 }
 
 onMounted(fetchPdf);
@@ -162,7 +174,6 @@ async function displayPdf() {
     }
   }
   canvas {
-    background-color: white;
     @apply rounded-sm;
     margin: auto;
     max-width: 1200px;

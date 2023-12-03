@@ -10,6 +10,7 @@
       variant="text"
       icon="filter_alt"
       @click="isAdvancedFiltersDisplayed = true"
+      class="!min-h-[33px]"
     >
       {{ $t("advanced_filters") }}
       <span v-if="+nbFilters > 0">({{ nbFilters }})</span>
