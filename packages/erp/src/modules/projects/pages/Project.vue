@@ -43,7 +43,7 @@
   >
     <template #head-end>
       <div class="flex flex-col items-end justify-end gap-1">
-        <div class="flex justify-end">
+        <div class="hidden md:flex justify-end">
           <Avatar
             selectable
             size="sm"
