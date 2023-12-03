@@ -31,8 +31,8 @@
         <Select
           v-model="displayWeek"
           :options="[
-            { label: 'month', value: false },
-            { label: 'week', value: true },
+            { label: $t('calendar.display_month'), value: false },
+            { label: $t('calendar.display_week'), value: true },
           ]"
           menuStrategy="root"
         />

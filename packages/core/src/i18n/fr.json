@@ -139,6 +139,10 @@
   "created_at": "Créer le",
   "description": "Description",
   "dates": "Dates",
+  "calendar": {
+    "display_month": "Affichage par mois",
+    "display_week": "Affichage par semaine"
+  },
   "core": {
     "wysiwyg": {
       "paragraph": "Paragraph",
