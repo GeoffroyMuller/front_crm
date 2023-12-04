@@ -2,6 +2,7 @@
   <div class="kanban">
     <div class="columns-wrapper">
       <draggable
+        v-if="columns?.length"
         class="columns"
         v-model="columns"
         group="columns"
@@ -51,7 +52,7 @@
           </div>
         </template>
       </draggable>
-      <div class="column !bg-transparent" v-if="$slots['section-end']">
+      <div class="column !px-0 !bg-transparent" v-if="$slots['section-end']">
         <slot name="section-end" />
       </div>
     </div>

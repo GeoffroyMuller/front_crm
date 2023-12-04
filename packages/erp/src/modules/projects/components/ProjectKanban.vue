@@ -8,7 +8,12 @@
   >
     <template #section-end>
       <div class="h-input grid items-center">
-        <Button variant="text" color="black" @click.stop="addColumn()">
+        <Button
+          icon="add"
+          variant="text"
+          color="black"
+          @click.stop="addColumn()"
+        >
           {{ $t("pages.projects.add-section") }}
         </Button>
       </div>
@@ -81,6 +86,7 @@
         class="m-auto mt-2"
         color="black"
         @click.stop="prepareAdd(column)"
+        icon="add"
       >
         {{ $t("pages.projects.add-task") }}
       </Button>
