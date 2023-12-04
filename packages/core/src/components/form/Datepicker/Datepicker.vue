@@ -178,6 +178,7 @@ const {
   monthNames,
   weekDaysLabels,
 } = useCalendar({
+  shortWeekDayLabels: true,
   value: internalValue,
   min: props.min,
   max: props.max,
