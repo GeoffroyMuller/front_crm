@@ -82,12 +82,29 @@ button {
   pointer-events: none;
   border-radius: inherit;
 }
-.selectable-white:hover::before {
-  @apply bg-white opacity-5;
-}
+.selectable-white:hover::before,
 .selectable-black:hover::before {
-  @apply bg-slate-500 opacity-5;
+ @apply opacity-5;
 }
+
+.selectable-white::before {
+  @apply bg-white;
+}
+.selectable-black::before {
+  @apply bg-slate-500;
+}
+/*
+ TODO: this can cause problem if we change class in component "Menu.vue"
+       Do not work with menu position=root (because no class 'menu' and 'open')
+       Problem in autocomplete: when menu is open, 'close' icon is highlighted (opacity: 0.08)
+
+.menu.open {
+  .selectable-white::before, .selectable-black::before {
+    opacity: 0.08;
+  }
+}
+
+*/
 
 
 .skeleton {

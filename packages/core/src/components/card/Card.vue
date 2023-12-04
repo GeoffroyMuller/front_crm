@@ -1,5 +1,11 @@
 <template>
   <div
+    :tabindex="selectable ? 0 : -1"
+    ref="cardRef"
+    @keydown.enter="
+      // @ts-ignore
+      selectable && $refs?.cardRef?.click()
+    "
     class="shadow-card border border-solid transition-[border] duration-200"
     :class="{
       'max-md:p-cardMobile p-card': padding,
