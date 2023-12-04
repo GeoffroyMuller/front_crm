@@ -25,7 +25,11 @@
       alignment="start"
       class="mb-3"
     >
-      <Button variant="text" color="black" class="-my-buttonTextPadding">
+      <Button
+        variant="text"
+        color="black"
+        class="-my-buttonTextPadding !min-h-0"
+      >
         <span>+{{ nbTabsHidden }}</span>
         <Icon name="more_horiz" />
       </Button>
