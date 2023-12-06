@@ -29,7 +29,7 @@
           @click="open = !open"
           @keydown="handleKeydown"
           :class="$props.class"
-          input-class="cursor-pointer"
+          input-class="cursor-pointer caret-transparent"
         >
           <template #start>
             <div class="flex items-center" v-if="props.multiple">
