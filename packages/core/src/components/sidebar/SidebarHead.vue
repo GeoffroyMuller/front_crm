@@ -74,9 +74,11 @@
     </div>
     <div
       class="px-sidebarX border-0 border-b border-solid border-slate-200"
-      v-if="tabs?.length"
+      v-if="tabs?.length || $slots.subtitle"
     >
+      <slot name="subtitle" />
       <PageTabs
+        v-if="tabs?.length"
         @update:currentTab="($e) => updateCurrentTab($e)"
         :tabs="tabs"
         class="mt-3"

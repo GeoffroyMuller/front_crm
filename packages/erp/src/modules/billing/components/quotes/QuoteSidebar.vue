@@ -6,10 +6,20 @@
     contentClass="flex flex-col overflow-hidden md:min-w-[800px] md:max-w-[800px]"
   >
     <SidebarHead
-      :title="title"
       :actions="actions"
       @action="($action) => $emit($action, quote)"
-    />
+    >
+      <template #title>
+        <div class="flex items-center gap-4">
+          <div>
+            {{ title }}
+          </div>
+          <Chip color="danger" v-if="quote?.archived">
+            {{ $t("archived") }}
+          </Chip>
+        </div>
+      </template>
+    </SidebarHead>
 
     <SidebarContent class="flex-1 overflow-hidden">
       <PdfViewer
@@ -36,6 +46,7 @@ import PdfViewer from "core/src/components/PdfViewer.vue";
 import { ref } from "vue";
 import config from "@/const";
 import { getJWT } from "core/src/helpers/utils";
+import Chip from "core/src/components/Chip.vue";
 
 const props = defineProps<{ open: boolean; model?: Quote }>();
 const emit = defineEmits(["close"]);
