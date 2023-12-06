@@ -14,7 +14,7 @@
           <div>
             {{ title }}
           </div>
-          <Chip color="danger" v-if="quote?.archived">
+          <Chip color="danger" isOutline v-if="quote?.archived">
             {{ $t("archived") }}
           </Chip>
         </div>
