@@ -24,8 +24,6 @@
           :disabled="disabled"
           :label="label"
           :error="internalError || error ? true : false"
-          @focus="isFocus = true"
-          @blur="isFocus = false"
           @click="open = !open"
           @keydown="handleKeydown"
           :class="$props.class"
@@ -75,13 +73,7 @@
             <Icon
               :name="!open ? 'expand_more' : 'expand_less'"
               weight="bold"
-              :color="
-                !isFocus
-                  ? 'black'
-                  : internalError || error
-                  ? 'danger'
-                  : 'primary'
-              "
+              color="black"
             />
           </Text>
         </SelectActivator>
@@ -177,7 +169,7 @@ const emit = defineEmits([
 ]);
 
 const open = ref(false);
-const isFocus = ref(false);
+
 
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
