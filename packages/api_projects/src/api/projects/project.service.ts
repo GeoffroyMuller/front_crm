@@ -12,7 +12,7 @@ export default {
     auth: User
   ) => {
     const query = applyRelations(Project.query(), Project, relations);
-    query.where('id', id).where("idCompany", auth.idCompany);
+    query.where("id", id).where("idCompany", auth.idCompany);
     handleFilters(query, filters);
     return query.first().execute();
   },
@@ -22,10 +22,11 @@ export default {
     auth: User
   ) => {
     const query = applyRelations<Project>(Project.query(), Project, relations);
-    query.where("idCompany", auth.idCompany);
-    query.page(filters.page ? filters.page - 1 : 0, filters.pageSize || 5);
     handleFilters(query, filters);
-    return query.execute() as Promise<[]>;
+    return query
+      .where("idCompany", auth.idCompany)
+      .page(filters.page ? filters.page - 1 : 0, filters.pageSize || 5)
+      .execute();
   },
   create: async (item: any, filters: any, auth: User) => {
     const query = Project.query();
@@ -46,9 +47,7 @@ export default {
       idCompany: auth.idCompany,
     };
     handleFilters(query, filters);
-    return query
-      .updateAndFetchById(id, data)
-      .execute() as Promise<Project>;
+    return query.updateAndFetchById(id, data).execute() as Promise<Project>;
   },
   remove: async (id: ID, filters: any, auth: User) => {
     const query = Project.query().where("idCompany", auth.idCompany);

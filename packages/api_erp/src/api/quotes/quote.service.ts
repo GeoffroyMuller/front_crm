@@ -28,7 +28,7 @@ async function getNextIdentifier(auth: User) {
 const quoteService = serviceFactory<Quote, User>(Quote, {}) as IQuoteService;
 
 quoteService.paginate = async (relations, filters, auth) => {
-  const query: QueryBuilder<Quote> = applyRelations(Quote.query(), Quote, relations);
+  const query = applyRelations<Quote>(Quote.query(), Quote, relations);
   handleFilters(query, filters);
   if (!filters?.$eq?.archived) {
     query.where((q) => q.whereNull("archived").orWhere("archived", 0));
@@ -40,15 +40,8 @@ quoteService.paginate = async (relations, filters, auth) => {
     .execute();
 
   for (const quote of quotes.results) {
-    quote.price = (quote.lines || []).reduce((prev, curr) => {
-      return prev + (curr.unit_price || 0) * (curr.qty || 0);
-    }, 0);
-    quote.taxes = (quote.lines || []).reduce((prev, curr) => {
-      return (
-        prev +
-        (curr.unit_price || 0) * (curr.qty || 0) * ((curr.vat?.rate || 1) / 100)
-      );
-    }, 0);
+    quote.computePrice();
+    quote.computeTaxes();
   }
   return quotes;
 };

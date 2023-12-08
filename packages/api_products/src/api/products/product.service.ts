@@ -25,10 +25,11 @@ export default {
     auth: User
   ) => {
     const query = applyRelations<Product>(Product.query(), Product, relations);
-    query.where("idCompany", auth.idCompany);
-    query.page(filters.page ? filters.page - 1 : 0, filters.pageSize || 5);
     handleFilters(query, filters);
-    return query.execute() as Promise<[]>;
+    return query
+      .where("idCompany", auth.idCompany)
+      .page(filters.page ? filters.page - 1 : 0, filters.pageSize || 5)
+      .execute();
   },
   create: async (item: any, filters: any, auth: User) => {
     const query = Product.query();
@@ -57,12 +58,17 @@ export default {
     const removed = await query.where("id", id).delete().execute();
     return removed;
   },
-  saveFields: async (id: ID, body: Array<Partial<ProductField>>, filters: any, auth: User) => {
-    const product = await findByID(id, ['product_fields'], {}, auth);
+  saveFields: async (
+    id: ID,
+    body: Array<Partial<ProductField>>,
+    filters: any,
+    auth: User
+  ) => {
+    const product = await findByID(id, ["product_fields"], {}, auth);
     if (!product) throw new NotFoundError();
-    
+
     const trx = await ProductField.startTransaction();
-    body.map(pf => {
+    body.map((pf) => {
       ProductField.query(trx).update(pf);
     });
     try {

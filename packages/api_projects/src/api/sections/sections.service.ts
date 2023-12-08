@@ -67,8 +67,7 @@ export default {
       )
       .where(`${Project.tableName}.idCompany`, auth.idCompany)
       .andWhere("idProject", idProject);
-    query.page(filters.page ? filters.page - 1 : 0, filters.pageSize || 5);
     handleFilters(query, filters);
-    return query.execute() as Promise<[]>;
+    return query.page(filters.page ? filters.page - 1 : 0, filters.pageSize || 5).execute();
   },
 };

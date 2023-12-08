@@ -359,7 +359,14 @@ const prices = computed(() => {
   if (!formValue.value?.lines) return { totalPrice, totalPriceWithTaxes };
   for (const line of formValue.value.lines) {
     if (!line.qty || !line.unit_price) continue;
-    const price = line.qty * line.unit_price;
+    let price = line.qty * line.unit_price;
+    if (line.discount && line.discount_type) {
+      if (line.discount_type === "percent") {
+        price = price - price * (line.discount / 100);
+      } else {
+        price = price - line.discount;
+      }
+    }
     const vat = vats.value.find((v) => v.id == line.idVat);
     const vatPrice = price * (1 + (vat?.rate || 0) / 100);
     totalPriceWithTaxes += vatPrice;

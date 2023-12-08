@@ -51,9 +51,10 @@ export default {
         `${ProductReal.tableName}.idProduct`
       )
       .where(`${Product.tableName}.idCompany`, auth.idCompany);
-    query.page(filters.page ? filters.page - 1 : 0, filters.pageSize || 5);
     handleFilters(query, filters);
-    return query.execute() as Promise<[]>;
+    return query
+      .page(filters.page ? filters.page - 1 : 0, filters.pageSize || 5)
+      .execute();
   },
   create: async (item: Partial<ProductReal>, filters: any, auth: User) => {
     const query = ProductReal.query();
@@ -99,20 +100,26 @@ export default {
     delete body.idProduct;
     if (Array.isArray(body.product_real_fields)) {
       if (
-        body.product_real_fields.find((prf: ProductRealField) =>
-          !(item.product_real_fields || []).find((p) => p.id == prf.id)
+        body.product_real_fields.find(
+          (prf: ProductRealField) =>
+            !(item.product_real_fields || []).find((p) => p.id == prf.id)
         )
       ) {
         throw new Error();
       }
-      body.product_real_fields = body.product_real_fields.map((prf: ProductRealField) => ({
-        idProductReal: prf.idProductField,
-        idProductField: prf.idProductField,
-        value: JSON.stringify(prf.value || ""),
-      }));
+      body.product_real_fields = body.product_real_fields.map(
+        (prf: ProductRealField) => ({
+          idProductReal: prf.idProductField,
+          idProductField: prf.idProductField,
+          value: JSON.stringify(prf.value || ""),
+        })
+      );
     }
     const query = ProductReal.query();
-    return query.upsertGraphAndFetch([body]).first().execute() as Promise<ProductReal>;
+    return query
+      .upsertGraphAndFetch([body])
+      .first()
+      .execute() as Promise<ProductReal>;
   },
   remove: async (id: ID, filters: any, auth: User) => {
     const item = await findByID(id, [], {}, auth);

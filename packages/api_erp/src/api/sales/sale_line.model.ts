@@ -8,7 +8,7 @@ export default class SaleLine<T> extends Model {
   qty?: number;
   unit_price?: number;
   discount?: number;
-  discount_type?: "€" | "%";
+  discount_type?: "amount" | "percent";
   type?: "title" | "product" | "comment" | "discount";
   idVat?: number;
   order?: number;

@@ -215,7 +215,15 @@ const totalWithoutTaxes = computed(() => {
   if (!internalLine.value.unit_price || !internalLine.value.qty) {
     return "-";
   }
-  return internalLine.value.unit_price * internalLine.value.qty;
+  const result = internalLine.value.unit_price * internalLine.value.qty;
+  if (internalLine.value.discount && internalLine.value.discount_type) {
+    if (internalLine.value.discount_type === "percent") {
+      return result - result * (internalLine.value.discount / 100);
+    } else {
+      return result - internalLine.value.discount;
+    }
+  }
+  return result;
 });
 
 const totalWithTaxes = computed(() => {

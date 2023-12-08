@@ -75,4 +75,18 @@ export default class Quote extends Model {
       },
     },
   };
+
+  computePrice() {
+    this.price = (this.lines || []).reduce((prev, curr) => {
+      curr.computePrice();
+      return prev + (curr.price || 0);
+    }, 0);
+  }
+
+  computeTaxes() {
+    this.taxes = (this.lines || []).reduce((prev, curr) => {
+      curr.computeTaxes();
+      return prev + (curr.taxes || 0);
+    }, 0);
+  }
 }
