@@ -15,6 +15,7 @@ const SERVICES = {
   products: process.env.PRODUCTS_SERVICE_URL,
   projects: process.env.PROJECTS_SERVICE_URL,
   email: process.env.EMAIL_SERVICE_URL,
+  media: process.env.MEDIA_SERVICE_URL
 } as { [key: string]: string };
 
 const PROXY_OPTIONS: proxy.ProxyOptions = {
@@ -38,6 +39,7 @@ const PROXIES = {
   tasks: proxy(SERVICES.projects, PROXY_OPTIONS),
   sections: proxy(SERVICES.projects, PROXY_OPTIONS),
   email: proxy(SERVICES.email, PROXY_OPTIONS),
+  media: proxy(SERVICES.media, PROXY_OPTIONS),
 } as { [key: string]: RequestHandler };
 
 app.use(xAuthMiddleware);
