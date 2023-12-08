@@ -51,7 +51,44 @@
           name="idVat"
         />
       </div>
-      <div class="flex justify-end items-center py-4 gap-2 self-center">
+
+      <div v-if="!dsiplayDiscount" class="flex items-center py-1 justify-end">
+        <Button
+          variant="text"
+          color="primary"
+          default-colored
+          @click="discount()"
+        >
+          {{ $t("pages.edit-quote.discount") }}
+        </Button>
+      </div>
+      <div class="flex items-end gap-2 py-2" v-if="dsiplayDiscount">
+        <TextField
+          name="discount"
+          type="number"
+          :step="0.01"
+          :label="$t('pages.edit-quote.discount')"
+          class="max-w-[170px]"
+        />
+        <Select
+          :options="[
+            { label: '%', value: 'percent' },
+            { label: '€', value: 'amount' },
+          ]"
+          name="discount_type"
+          :label="$t('pages.edit-quote.discount_type')"
+          class="max-w-[170px]"
+        />
+        <Button
+          variant="text"
+          color="danger"
+          default-colored
+          @click="deleteDiscount()"
+        >
+          {{ $t("pages.edit-quote.delete-discount") }}
+        </Button>
+      </div>
+      <div class="flex justify-end items-center py-1 gap-2 self-center">
         <Text typo="title7" class="mr-4">
           {{ $t("pages.edit-quote.total-global") }}
         </Text>
@@ -73,8 +110,8 @@
         </Text>
       </div>
     </div>
+
     <Wysiwyg
-      class="lg:-mt-4"
       :label="$t('pages.edit-quote.description')"
       v-model="internalLine.description"
       name="description"
@@ -153,6 +190,24 @@ interface QuoteLineProps {
 
 const vatsStore = useVatStore();
 const productsStore = useProductStore();
+
+const dsiplayDiscount = computed<boolean>(
+  () => internalLine.value.discount != null
+);
+
+function discount() {
+  internalLine.value = {
+    ...internalLine.value,
+    discount: 0,
+  };
+}
+
+function deleteDiscount() {
+  internalLine.value = {
+    ...internalLine.value,
+    discount: undefined,
+  };
+}
 
 const vats = computed(() => vatsStore.getList);
 

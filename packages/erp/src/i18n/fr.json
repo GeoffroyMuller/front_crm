@@ -108,7 +108,10 @@
       "phone": "Téléphone",
       "city": "Ville",
       "customer": "Client",
-      "name": "Nom"
+      "name": "Nom",
+      "discount": "Remise",
+      "discount_type": "Type de remise",
+      "delete-discount": "Annuler la remise"
     },
     "edit-invoice": {
       "qty": "Quantitée",

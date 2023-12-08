@@ -30,6 +30,7 @@
 
 # tuto utils
 - How to upload files to aws s3 with node : https://www.freecodecamp.org/news/how-to-upload-files-to-aws-s3-with-node/
+- GRPC in nodejs : https://daily.dev/blog/build-a-grpc-service-in-nodejs
 
 # packages
 - api_* : webservices de l'app

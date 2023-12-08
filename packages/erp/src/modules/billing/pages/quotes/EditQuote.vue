@@ -412,10 +412,15 @@ const {
         .map((line: any) => {
           const newLine = { ...line };
           delete newLine.vat;
+          if (!newLine.discount) {
+            newLine.discount = null;
+            newLine.discount_type = null;
+          }
           return newLine;
         })
         .filter((line: any) => !isEmpty(line));
     }
+
     delete data.client;
     return data;
   },
