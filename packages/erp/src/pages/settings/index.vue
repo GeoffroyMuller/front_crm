@@ -12,6 +12,7 @@ import { useI18n } from "vue-i18n";
 
 import Roles from "./Roles.vue";
 import Teams from "./Teams.vue";
+import InvoiceSettings from "./InvoiceSettings.vue";
 
 const { t } = useI18n();
 
@@ -31,5 +32,10 @@ const settings = [
     title: t("settings-page.commission-fee.title"),
     component: ComissionFee,
   }, */
+  {
+    id: "invoices",
+    title: t("settings-page.invoices.title"),
+    component: InvoiceSettings,
+  },
 ];
 </script>

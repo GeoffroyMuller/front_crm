@@ -1,13 +1,14 @@
 import Quote from "./quote.model";
 import type { ID, User } from "core_api/types";
 import mailService from "core_api/services/mail.service";
-import serviceFactory from "core_api/service";
+import serviceFactory, { applyRelations } from "core_api/service";
 import { Service } from "core_api/types";
-import { raw } from "objection";
+import { QueryBuilder, raw } from "objection";
 import QuoteLine from "./quote_line.model";
 import { NotFoundError } from "core_api/errors";
-import PdfService from 'core_api/services/pdf.service';
+import PdfService from "core_api/services/pdf.service";
 import { Stream } from "stream";
+import { handleFilters } from "core_api/services/filters.service";
 
 export interface IQuoteService extends Service<Quote, User> {
   sendByMail: (q: Quote, token: string) => Promise<any>;
@@ -24,30 +25,33 @@ async function getNextIdentifier(auth: User) {
   return lastIdentifier + 1;
 }
 
-const quoteService = serviceFactory<Quote, User>(Quote, {
-  async onBeforeFetchList({ query, auth, filters, data }) {
-    query.select("quotes.*");
-    query.select(
-      raw(`(
-        SELECT SUM(${QuoteLine.tableName}.unit_price * ${QuoteLine.tableName}.qty) 
-        FROM ${QuoteLine.tableName} 
-        WHERE ${QuoteLine.tableName}.idQuote = quotes.id
-      )`).as("price")
-    );
-    query.select(
-      raw(`(
-        SELECT SUM(${QuoteLine.tableName}.unit_price * ${QuoteLine.tableName}.qty) * (vat.rate / 100) 
-        FROM ${QuoteLine.tableName} 
-        JOIN vat ON vat.id = ${QuoteLine.tableName}.idVat
-        WHERE ${QuoteLine.tableName}.idQuote = quotes.id
-      )`).as("taxes")
-    );
-    if (!filters?.$eq?.archived) {
-      query.where(q => q.whereNull('archived').orWhere('archived', 0))
-    }
-    return { query, auth, filters, data };
-  },
-}) as IQuoteService;
+const quoteService = serviceFactory<Quote, User>(Quote, {}) as IQuoteService;
+
+quoteService.paginate = async (relations, filters, auth) => {
+  const query: QueryBuilder<Quote> = applyRelations(Quote.query(), Quote, relations);
+  handleFilters(query, filters);
+  if (!filters?.$eq?.archived) {
+    query.where((q) => q.whereNull("archived").orWhere("archived", 0));
+  }
+
+  const quotes = await query
+    .page(filters.page ? filters.page - 1 : 0, filters.pageSize || 5)
+    .withGraphFetched("lines.vat")
+    .execute();
+
+  for (const quote of quotes.results) {
+    quote.price = (quote.lines || []).reduce((prev, curr) => {
+      return prev + (curr.unit_price || 0) * (curr.qty || 0);
+    }, 0);
+    quote.taxes = (quote.lines || []).reduce((prev, curr) => {
+      return (
+        prev +
+        (curr.unit_price || 0) * (curr.qty || 0) * ((curr.vat?.rate || 1) / 100)
+      );
+    }, 0);
+  }
+  return quotes;
+};
 
 quoteService.create = async (body: any, auth, filters) => {
   return (await Quote.query().upsertGraphAndFetch(
@@ -98,18 +102,21 @@ quoteService.sendByMail = async (quote: Quote, token: string) => {
 };
 
 quoteService.getPdf = async (id: ID, auth: User) => {
-  const quote = await quoteService.getById(id, auth, ['client.company', 'lines']);
+  const quote = await quoteService.getById(id, auth, [
+    "client.company",
+    "lines",
+  ]);
   if (quote == null) {
     throw new NotFoundError();
   }
   const pdf = await PdfService.printPDF({
     data: {
       responsible: {
-        firstname: 'Jean-Michel',
-        lastname: 'DataEnDur',
+        firstname: "Jean-Michel",
+        lastname: "DataEnDur",
         company: {
-          name: 'Company en dur'
-        }
+          name: "Company en dur",
+        },
       },
       client: undefined,
       footer: undefined,

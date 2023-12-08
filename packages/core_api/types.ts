@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Model, QueryBuilderType, RelationExpression } from "objection";
+import { Model, Page, QueryBuilderType, RelationExpression } from "objection";
 
 export type ID = string | number;
 
@@ -47,7 +47,7 @@ export interface Service<
     relations: RelationExpression<T>[],
     filters: any,
     auth: any
-  ) => Promise<T[]>;
+  ) => Promise<Page<T>>;
   getById: (
     id: ID,
     auth: AuthModel,

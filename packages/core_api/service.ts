@@ -3,6 +3,7 @@
 import {
   Model,
   ModelClass,
+  Page,
   QueryBuilder,
   QueryBuilderType,
   RelationExpression,
@@ -134,7 +135,7 @@ const serviceFactory = <
       });
       q.page(f.page ? f.page - 1 : 0, f.pageSize || 5);
       handleFilters(q, f);
-      return q.execute() as Promise<T[]>;
+      return q.execute() as unknown as Promise<Page<T>>;
     },
 
     create: async (item: any, auth: any, filters: any) => {

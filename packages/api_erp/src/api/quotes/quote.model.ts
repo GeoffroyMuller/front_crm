@@ -21,11 +21,14 @@ export default class Quote extends Model {
   madeOn?: string;
 
   archived?: boolean;
-  totalPrice?: number;
 
   invoices?: Array<Invoice>;
 
   validationStatus?: QuoteValidationStatus;
+
+  // computed
+  price?: number;
+  taxes?: number;
 
   $formatJson(json: Pojo): Pojo {
     json = super.$formatJson(json);

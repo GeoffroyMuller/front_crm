@@ -235,8 +235,9 @@
       "user": "Utilisateur",
       "sure_delete_user": "Etes vous certain de vouloir supprimer cet utilisateur ?"
     },
-    "quotes": {
-      "modele": "Modèle de Devis/Facture"
+    "invoices": {
+      "title": "Devis/Facture",
+      "model": "Modèle de Devis/Facture"
     }
   }
 }
