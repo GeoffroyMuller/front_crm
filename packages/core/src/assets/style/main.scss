@@ -93,6 +93,10 @@ button {
 .selectable-black::before {
   @apply bg-slate-500;
 }
+.selectable-white:active::before,
+.selectable-black:active::before {
+  opacity: 0.09;
+}
 /*
  TODO: this can cause problem/stop working if we change class in component "Menu.vue"
 */
@@ -102,7 +106,6 @@ button {
     opacity: 0.08;
   }
 }
-
 
 
 .skeleton {

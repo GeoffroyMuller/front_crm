@@ -221,8 +221,8 @@ $borderColor: #dbdcdc;
 
 .calendar {
   .calendar-header {
-    @apply flex justify-between items-center gap-2 py-2;
-    border-bottom: solid color("slate", 200) 1px;
+    @apply flex justify-between items-center gap-2 py-2 border-0 border-b border-solid border-slate-200;
+
     opacity: 1;
     z-index: 21;
     .date {
@@ -255,7 +255,7 @@ $borderColor: #dbdcdc;
     .days {
       @include grid(7, 0, 0);
       border: 1px solid $borderColor;
-      background-color: color("slate", 50);
+      @apply bg-slate-50;
       border-top: 0;
       .day {
         border-left: 1px solid $borderColor;
@@ -323,7 +323,7 @@ $borderColor: #dbdcdc;
     }
   }
   &.calendar-full-screen {
-    background-color: color("white");
+    background-color: white;
     .days,
     .weekdays {
       border-right: 0;
