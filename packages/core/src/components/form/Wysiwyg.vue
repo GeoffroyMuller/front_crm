@@ -109,7 +109,8 @@ button.ql-active .ql-stroke {
       font-weight: 400;
     }
     &:focus-within {
-      border-color: color("primary", 600) !important;
+      box-shadow: 0 0 1pt 0.5pt color("primary", 200);
+      border-color: color("primary", 300) !important;
       *:focus-visible {
         border: none !important;
       }
