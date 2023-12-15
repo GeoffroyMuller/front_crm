@@ -3,9 +3,8 @@
     class="min-h-input h-input relative border border-solid overflow-hidden flex items-center px-inputXPadding py-1 transition-[box-shadow_border-color_background] duration-200"
     :class="[
       {
-        'border-danger-400 focus-within:shadow-[0_0_2pt_0.5pt] focus-within:shadow-danger-200':
-          (internalError || error) && variant === 'base',
-        'focus-within:border-primary-300 focus-within:shadow-[0_0_1pt_0.5pt] focus-within:shadow-primary-200 border-input':
+        'border-danger-600': (internalError || error) && variant === 'base',
+        'focus-within:border-primary-600  border-input':
           !internalError && !error && variant === 'base',
         [`rounded-${rounded}`]: true,
         'bg-white': !disabled && variant === 'base',

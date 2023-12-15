@@ -27,7 +27,7 @@
           step,
           icon,
           placeholder,
-          error,
+          error: error || internalError,
           id,
           disabled,
           blur: onBlur,
