@@ -97,8 +97,8 @@ button {
  TODO: this can cause problem/stop working if we change class in component "Menu.vue"
 */
 .menu.open {
-  .selectable-white:focus::before,
-  .selectable-black:focus::before {
+  > .selectable-white:focus::before,
+  > .selectable-black:focus::before {
     opacity: 0.08;
   }
 }
