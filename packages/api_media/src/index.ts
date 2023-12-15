@@ -4,12 +4,18 @@ const path = require("path");
 import * as formidable from "formidable";
 import { NotFoundError, handleError } from "core_api/errors";
 import { IAuthRequest, User } from "core_api/types";
+import Media from "./media.model";
+import crypto from "node:crypto";
+import "./config/database";
+import authMiddleware from "core_api/middlewares/auth.middleware";
 
 const app = express();
 
 const router = express.Router();
 
-router.post("/upload", (req, res) => {
+router.use(authMiddleware);
+
+router.post("/upload", async (req, res) => {
   try {
     const form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
@@ -18,12 +24,19 @@ router.post("/upload", (req, res) => {
       }
 
       let oldPath = files.media[0].filepath;
-      
-      let newPath = path.join(__dirname, "../uploads") + "/" + (files.media[0].originalFilename);
+      const filename = files.media[0].originalFilename || "";
+      const fileextension = filename.split(".")?.[1];
+      const filepath = `${crypto.randomUUID()}.${fileextension}`;
+      let newPath = path.join(__dirname, "../uploads") + "/" + filepath;
       let rawData = fs.readFileSync(oldPath);
-
-      fs.writeFile(newPath, rawData, function (err: any) {
+      const idCompany = (req as IAuthRequest<User>).auth.idCompany as number || 0;
+      fs.writeFile(newPath, rawData, async function (err: any) {
         if (err) throw err;
+        await Media.query().insert({
+          idCompany,
+          filepath,
+          filename,
+        });
         return res.send("Successfully uploaded");
       });
     });

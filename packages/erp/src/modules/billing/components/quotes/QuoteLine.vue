@@ -183,6 +183,7 @@ import Text from "core/src/components/Text.vue";
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
 import Wysiwyg from "core/src/components/form/Wysiwyg.vue";
+import { watch } from "vue";
 
 interface QuoteLineProps {
   line: SaleLine;
@@ -240,6 +241,15 @@ const totalWithTaxes = computed(() => {
 const props = withDefaults(defineProps<QuoteLineProps>(), {});
 
 const internalLine = ref(props.line);
+
+watch(
+  () => props.line,
+  (line) => {
+    internalLine.value = line;
+  },
+  { immediate: true, deep: true }
+);
+
 const internalProduct = ref<Product | null>(null);
 const isSidebarOpen = ref<boolean>(false);
 const nbProductReal = ref<number>();

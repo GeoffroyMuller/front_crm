@@ -15,7 +15,7 @@ export interface SaleSubline {
 export interface SaleLine {
   description: string;
   discount?: number;
-  discount_type: null;
+  discount_type: "percent" | "amount";
   id: ID;
   idQuote?: number;
   idVat?: number;

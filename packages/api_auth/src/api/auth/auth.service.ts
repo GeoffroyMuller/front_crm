@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import Company from "../companies/company.model";
 import * as fs from "fs";
 import path from "path";
-import { uniqueId } from "lodash";
 
 const PRIVATE_KEY = fs.readFileSync(
   path.join(__dirname, "../../../private.key"),

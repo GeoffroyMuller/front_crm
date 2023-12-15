@@ -507,6 +507,7 @@ export default function useMenuPositionRoot(props: MenuProps) {
   }
 
   function init() {
+    activator.value.classList.add("menu");
     // container.value.classList.add("layout-component");
     container.value.style.position = "absolute";
     container.value.style.zIndex = "65";
@@ -552,11 +553,13 @@ export default function useMenuPositionRoot(props: MenuProps) {
     container.value.style.display = "unset";
     _setStyle();
     container.value.style.opacity = "100";
+    activator.value.classList.add("open");
   }
 
   function hide() {
     container.value.style.opacity = "0";
     container.value.style.display = "none";
+    activator.value.classList.remove("open");
     _resetStyle();
   }
   const isHidden = () => container.value?.style?.opacity == "0";

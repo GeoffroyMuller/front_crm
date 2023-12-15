@@ -94,17 +94,15 @@ button {
   @apply bg-slate-500;
 }
 /*
- TODO: this can cause problem if we change class in component "Menu.vue"
-       Do not work with menu position=root (because no class 'menu' and 'open')
-       Problem in autocomplete: when menu is open, 'close' icon is highlighted (opacity: 0.08)
-
+ TODO: this can cause problem/stop working if we change class in component "Menu.vue"
+*/
 .menu.open {
-  .selectable-white::before, .selectable-black::before {
+  .selectable-white:focus::before,
+  .selectable-black:focus::before {
     opacity: 0.08;
   }
 }
 
-*/
 
 
 .skeleton {

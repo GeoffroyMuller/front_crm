@@ -1,12 +1,5 @@
 <template>
-  <div v-if="file">
-    <img
-      :src="url"
-      alt=""
-      class="object-contain bg-black w-80 h-80 rounded-sm"
-    />
-  </div>
-  <FileInput v-else v-bind="$props" @input="onInput" />
+  <FileInput v-bind="$props" @input="onInput" />
 </template>
 
 <script lang="ts" setup>
@@ -34,17 +27,9 @@ export interface ImageInputProps {
 }
 
 const props = defineProps<ImageInputProps>();
-
-const file = ref();
-const url = ref("");
+const emit = defineEmits(["input"]);
 
 function onInput(e: Event) {
-  // @ts-ignore
-  file.value = e.target.files[0];
-  const reader = new FileReader();
-  reader.readAsDataURL(file.value);
-  reader.onload = function () {
-    url.value = reader.result as string;
-  };
+  emit("input", e);
 }
 </script>
