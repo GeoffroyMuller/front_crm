@@ -40,6 +40,7 @@ const dropzoneRef = ref();
 
 onMounted(() => {
   const dropzone = new Dropzone(dropzoneRef.value, { url: "/file/post" });
+  
 });
 
 export interface InputFileProps {
