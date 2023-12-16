@@ -36,13 +36,6 @@ import Icon from "../../Icon.vue";
 import { Dropzone } from "dropzone";
 import { onMounted, ref } from "vue";
 
-const dropzoneRef = ref();
-
-onMounted(() => {
-  const dropzone = new Dropzone(dropzoneRef.value, { url: "/file/post" });
-  
-});
-
 export interface InputFileProps {
   modelValue?: any;
   icon?: IconName;
@@ -73,6 +66,13 @@ const emit = defineEmits([
   "input",
   "change",
 ]);
+
+const dropzoneRef = ref();
+
+onMounted(() => {
+  const dropzone = new Dropzone(dropzoneRef.value, { url: "/file/post" });
+});
+
 function onBlur() {
   emit("blur");
 }
