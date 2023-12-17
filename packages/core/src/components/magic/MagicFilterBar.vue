@@ -1,10 +1,6 @@
 <template>
   <Flex v-show="!isAdvancedFiltersDisplayed" :gap="1" align-items="end">
-    <SearchBar
-      :placeholder="searchBarPlaceholder"
-      v-model="search"
-      class="magic-filters-bar-search"
-    />
+    <SearchBar :placeholder="searchBarPlaceholder" v-model="search" />
     <Button
       v-if="hasAdvancedFilters"
       variant="text"
@@ -162,9 +158,5 @@ function handleInputChange({ name, value }: { name: string; value: any }) {
 <style lang="scss">
 .magic-filter-bar {
   padding: spacing(2);
-}
-
-.magic-filters-bar-search {
-  max-width: 800px;
 }
 </style>

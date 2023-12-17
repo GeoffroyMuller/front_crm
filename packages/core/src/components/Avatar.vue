@@ -10,6 +10,12 @@
       },
     ]"
     :style="style"
+    ref="avatarRef"
+    :tabindex="selectable ? 0 : -1"
+    @keydown.enter="
+      // @ts-ignore
+      selectable && $refs?.avatarRef?.click()
+    "
   >
     <Icon class="icon" v-if="icon" :name="icon" />
     <img

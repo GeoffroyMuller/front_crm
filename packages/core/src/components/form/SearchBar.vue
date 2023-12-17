@@ -1,6 +1,7 @@
 <template>
   <TextField
     rounded="full"
+    class="max-w-[400px]"
     v-bind="$attrs"
     input-class="input-style-card shadow-card h-[39px]"
     :placeholder="$props.placeholder || $t('search')"
@@ -45,8 +46,10 @@ const props = defineProps<SearchBarProps>();
 
 <style lang="scss">
 .input-style-card {
-  &:not(:focus-within) {
-    border-color: transparent !important;
+  border-color: transparent !important;
+  @apply pl-2.5 transition-all duration-300;
+  &:focus-within {
+    @apply shadow-primary-300;
   }
 }
 </style>
