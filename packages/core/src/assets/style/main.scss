@@ -83,7 +83,9 @@ button {
   border-radius: inherit;
 }
 .selectable-white:hover::before,
-.selectable-black:hover::before {
+.selectable-black:hover::before,
+.selectable-white.hover::before,
+.selectable-black.hover::before {
  @apply opacity-5;
 }
 

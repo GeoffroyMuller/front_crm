@@ -1,6 +1,6 @@
 <template>
   <div class="grid gap-2">
-    <label v-if="label" @click="$refs.internalRef?.click?.()">
+    <label v-if="label">
       {{ label }}
     </label>
     <div
@@ -10,21 +10,20 @@
       :class="{
         'border border-dashed border-slate-400': variant === 'base',
         [`rounded-${rounded}`]: true,
+        'hover': dragover
       }"
-      @keydown.enter="$refs.internalRef?.click?.()"
-      @click="$refs.internalRef?.click?.()"
     >
-      <Icon name="file_upload" size="sm" />
-      <span>{{ placeholder || $t("core.import") }}</span>
+      <Icon class="select-none pointer-events-none" v-if="!fileAdded" name="file_upload" size="sm" />
+      <span class="select-none pointer-events-none" v-if="!fileAdded">{{ placeholder || $t("core.import") }}</span>
     </div>
-    <input
+    <!--  <input
       ref="internalRef"
       @focus="onFocus()"
       @blur="onBlur()"
       @input="onInput($event)"
       class="hidden"
       type="file"
-    />
+    /> -->
   </div>
 </template>
 
@@ -52,6 +51,9 @@ export interface InputFileProps {
   rounded?: Size | "full";
 
   variant?: "base";
+
+  path?: string;
+  headers?: any;
 }
 const props = withDefaults(defineProps<InputFileProps>(), {
   rounded: "md",
@@ -65,28 +67,53 @@ const emit = defineEmits([
   "focus",
   "input",
   "change",
+
+  'complete',
+  'addedfile'
 ]);
 
 const dropzoneRef = ref();
+const dragover = ref(false);
+const fileAdded = ref(false);
 
 onMounted(() => {
-  const dropzone = new Dropzone(dropzoneRef.value, { url: "/file/post" });
+  const dropzone = new Dropzone(dropzoneRef.value, {
+    url: props.path,
+    headers: props.headers,
+
+  });
+  dropzone.on("complete", function (file) {
+    emit('complete', file);
+  });
+  dropzone.on("addedfile", function (file) {
+    emit('addedfile', file);
+    fileAdded.value = true;
+  });
+
+
+  dropzone.on("dragover", function () {
+    dragover.value = true;
+  });
+  dropzone.on("dragleave", function () {
+    dragover.value = false;
+  });
+  dropzone.on("dragend", function () {
+    dragover.value = false;
+  });
+  dropzone.on("drop", function () {
+    dragover.value = false;
+  });
 });
 
-function onBlur() {
-  emit("blur");
-}
-
-function onFocus() {
-  emit("focus");
-}
-
-function onInput(e: InputEvent) {
-  emit("input", e);
-}
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
   error: props.error,
   rules: props.rules,
 });
 </script>
+
+<style>
+.dz-success-mark, .dz-error-mark {
+  display: none !important;
+}
+</style>

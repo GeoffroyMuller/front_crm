@@ -33,6 +33,7 @@
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/mousetrap": "^1.6.11",
     "@types/node": "^16.11.45",
+    "@types/dropzone": "^5.7.8",
     "@types/pdfjs-dist": "^2.10.378",
     "@types/quill": "^2.0.12",
     "@vitejs/plugin-vue": "^3.0.1",

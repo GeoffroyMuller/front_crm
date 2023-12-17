@@ -47,7 +47,7 @@ const props = defineProps<SearchBarProps>();
 <style lang="scss">
 .input-style-card {
   border-color: transparent !important;
-  @apply pl-2.5 transition-all duration-300;
+  @apply px-2.5 transition-all duration-300;
   &:focus-within {
     @apply shadow-primary-300;
   }

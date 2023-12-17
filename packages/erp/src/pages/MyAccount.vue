@@ -4,9 +4,9 @@
     :title="`${auth.firstname || ''} ${auth.lastname || ''}`"
   >
     <Card padding>
-      <FileInput
-        class="w-fit"
+      <UploadMedia
         label="Test"
+        name="profilePic"
         :placeholder="$t('pages.myaccount.import-image')"
       />
     </Card>
@@ -14,10 +14,10 @@
 </template>
 
 <script setup lang="ts">
+import UploadMedia from "@/components/UploadMedia.vue";
 import useUserStore from "@/stores/user";
 import Page from "core/src/components/Page.vue";
 import Card from "core/src/components/card/Card.vue";
-import FileInput from "core/src/components/form/files/FileInput.vue";
 import { computed } from "vue";
 
 const userStore = useUserStore();

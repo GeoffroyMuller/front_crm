@@ -19,12 +19,13 @@ router.post("/upload", async (req, res) => {
   try {
     const form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
-      if (!files.media?.[0]) {
+      const file = files.media?.[0] || files.file?.[0];
+      if (!file) {
         throw Error();
       }
 
-      let oldPath = files.media[0].filepath;
-      const filename = files.media[0].originalFilename || "";
+      let oldPath = file.filepath;
+      const filename = file.originalFilename || "";
       const fileextension = filename.split(".")?.[1];
       const filepath = `${crypto.randomUUID()}.${fileextension}`;
       let newPath = path.join(__dirname, "../uploads") + "/" + filepath;
@@ -32,12 +33,12 @@ router.post("/upload", async (req, res) => {
       const idCompany = (req as IAuthRequest<User>).auth.idCompany as number || 0;
       fs.writeFile(newPath, rawData, async function (err: any) {
         if (err) throw err;
-        await Media.query().insert({
+        const media = await Media.query().insertAndFetch({
           idCompany,
           filepath,
           filename,
         });
-        return res.send("Successfully uploaded");
+        return res.json(media);
       });
     });
   } catch (err) {
