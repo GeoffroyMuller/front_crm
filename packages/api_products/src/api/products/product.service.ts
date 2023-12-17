@@ -82,7 +82,17 @@ export default {
   addImage: async (id: ID, data: Partial<ProductImage>, auth: User) => {
     const product = await findByID(id, [], {}, auth);
     if (product) {
-      return ProductImage.query().insertAndFetch({ ...data, idProduct: product.id });
+      return ProductImage.query().insertAndFetch({
+        ...data,
+        idProduct: product.id,
+      });
+    }
+    return null;
+  },
+  deleteImage: async (id: ID, idImage: number, auth: User) => {
+    const product = await findByID(id, [], {}, auth);
+    if (product) {
+      return ProductImage.query().where("idProduct", product.id as number).andWhere('id', idImage).delete();
     }
     return null;
   },

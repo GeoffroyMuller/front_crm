@@ -155,7 +155,9 @@
       "informations": "Informations général",
       "name": "Titre",
       "unit-price": "Prix unitaire",
-      "vat": "TVA"
+      "vat": "TVA",
+      "sure-delete-image": "Etes vous sur de vouloir supprimer cette image ?",
+      "image-deleted": "Image supprimé"
     },
     "edit-reservation": {
       "new-reservation": "Nouvelle réservation",

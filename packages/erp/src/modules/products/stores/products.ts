@@ -15,12 +15,23 @@ const useProductsStore = makeAPIStore<Product>({
     isNullStock: (product: Product) => product?.stockManagement == null,
     isEventStock: (product: Product) => product?.stockManagement == "events",
 
-    addImage: function (id: Product["id"], image: any) {
-      axios.post(`products/${id}/image`, image);
+    addImage: async function (id: Product["id"], image: any) {
+      const { data } = await axios.post(`products/${id}/image`, image);
       // @ts-ignore
       if (Array.isArray(this.byId[id].images)) {
         // @ts-ignore
-        this.byId[id].images.push(image);
+        this.byId[id].images.push(data);
+      }
+    },
+    deleteImage: function (id: number, idImage: number) {
+      axios.delete(`products/${id}/image/${idImage}`);
+      // @ts-ignore
+      if (Array.isArray(this.byId[id].images)) {
+        // @ts-ignore
+        this.byId[id].images = this.byId[id].images.filter(
+          (i) => i.id != idImage
+        );
+        console.error(this.byId[id].images);
       }
     },
   },

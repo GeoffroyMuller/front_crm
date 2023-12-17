@@ -87,5 +87,16 @@ export default {
     } catch (err) {
       return handleError(req, res, err);
     }
-  }
+  },
+  deleteImage: async (req: IAuthRequest<any>, res: Response) =>  {
+    try {
+      const image = await ProductService.deleteImage(req.params.id, req.params.idImage as unknown as number,  req.auth);
+      if (!image) {
+        throw new NotFoundError("no item found");
+      }
+      return res.status(200).json(image);
+    } catch (err) {
+      return handleError(req, res, err);
+    }
+  },
 };
