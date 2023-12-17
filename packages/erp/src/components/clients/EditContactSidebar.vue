@@ -96,13 +96,13 @@ import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 import SidebarActions from "core/src/components/sidebar/SidebarActions.vue";
 import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
 
-interface EditClientSidebarProps {
+interface EditContactSidebarProps {
   open: boolean;
   client?: Client;
 }
 
 const emit = defineEmits(["update:open", "add", "update"]);
-const props = withDefaults(defineProps<EditClientSidebarProps>(), {});
+const props = withDefaults(defineProps<EditContactSidebarProps>(), {});
 
 const clientStore = useClientStore();
 const companiesStore = useCompaniesStore();

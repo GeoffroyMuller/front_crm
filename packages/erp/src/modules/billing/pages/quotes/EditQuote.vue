@@ -286,7 +286,7 @@
     :quote="quoteToPreview"
     :open="quotePreviewOpen"
   />
-  <EditClientSidebar @add="onAddClient" v-model:open="isAddClientOpen" />
+  <EditContactSidebar @add="onAddClient" v-model:open="isAddClientOpen" />
 </template>
 
 <script setup lang="ts">
@@ -303,7 +303,7 @@ import type { Quote } from "../../types";
 import QuoteLineVue from "../../components/quotes/QuoteLine.vue";
 import useVatStore from "@/stores/vat";
 import Repetable from "core/src/components/form/repetable/Repetable.vue";
-import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
+import EditContactSidebar from "@/components/clients/EditContactSidebar.vue";
 import type Client from "@/types/client";
 import { isEmpty } from "lodash";
 import useEditPage from "@/components/editpage";

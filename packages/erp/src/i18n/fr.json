@@ -157,6 +157,14 @@
       "unit-price": "Prix unitaire",
       "vat": "TVA"
     },
+    "edit-company": {
+      "description": "Description",
+      "new-company": "Nouvelle entreprise",
+      "edit-company": "Modifier l'entreprise",
+      "add-selectable-options": "Ajouter des options de selection",
+      "informations": "Informations général",
+      "name": "Nom de l'entreprise"
+    },
     "edit-reservation": {
       "new-reservation": "Nouvelle réservation",
       "edit-reservation": "Modifier la réservation",

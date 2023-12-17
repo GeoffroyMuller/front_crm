@@ -39,18 +39,14 @@
           <Button
             color="success"
             v-tooltip="{ text: $t('add'), placement: 'top' }"
-            @click.stop="
-              () =>
-                $router.push({
-                  name: 'customers-companies-id',
-                  params: { id: 'new' },
-                })
-            "
+            @click.stop="editSidebarCompanyOpen = true"
           >
             {{ $t("add") }}
           </Button>
         </template>
       </MagicDataTable>
+      <!-- TODO save new pour company sidebar -->
+      <EditCompanySidebar v-model:open="editSidebarCompanyOpen" />
     </template>
     <template #clients>
       <MagicDataTable
@@ -100,8 +96,7 @@
           />
         </template>
       </MagicDataTable>
-
-      <EditClientSidebar
+      <EditContactSidebar
         @update="onEditClient"
         @add="onAddClient"
         v-model:open="isSidebarOpen"
@@ -118,7 +113,7 @@ import Page from "core/src/components/Page.vue";
 import { ref } from "vue";
 
 import useClientStore from "@/stores/clients";
-import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
+import EditContactSidebar from "@/components/clients/EditContactSidebar.vue";
 import type Client from "@/types/client";
 import Tabs from "core/src/components/Tabs.vue";
 import useCompaniesStore from "@/stores/companies";
@@ -127,9 +122,11 @@ import type { Company } from "@/types/company";
 import { useI18n } from "vue-i18n";
 import IconButton from "core/src/components/IconButton.vue";
 import type { ConfirmFunc } from "core/src/components/types";
+import EditCompanySidebar from "../components/EditCompanySidebar.vue";
 
 const selected = ref<Array<Client>>([]);
 const isSidebarOpen = ref(false);
+const editSidebarCompanyOpen = ref(false);
 const clientSelected = ref<Client | null>(null);
 
 const { confirm, toast } = useUI();

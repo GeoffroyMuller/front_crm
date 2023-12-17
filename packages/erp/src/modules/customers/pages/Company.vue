@@ -1,18 +1,18 @@
 <template>
   <Page icon="person" :title="title" :loading="loadingPage">
-    <EditClientSidebar
-      v-model:open="editClientOpen"
-      @update="editClientOpen = false"
-      @add="editClientOpen = false"
-      :client="clientSelected"
-    />
-    TTTTTTTTTTTTTTTTTTT P
+    <template #head-end>
+      <Button
+        v-if="id != 'new'"
+        variant="outlined"
+        color="primary"
+        @click.stop="editSidebarOpen = true"
+      >
+        {{ $t("edit") }}
+      </Button>
+    </template>
+    <CompanyView :company="company" @edit="editSidebarOpen = true" />
+
     <Flex align-items="start" direction="column" :gap="2">
-      <MagicFormVue
-        :fields="[{ type: 'string', props: { name: 'name', label: 'name' } }]"
-        :initial-value="company"
-        @submit="save"
-      />
       <Grid :gap="1" v-if="!isAddAction">
         <div class="typo-label">{{ $t("contacts") }}</div>
         <MagicDataTable
@@ -38,10 +38,21 @@
         </MagicDataTable>
       </Grid>
     </Flex>
+    <EditContactSidebar
+      v-model:open="editClientOpen"
+      @update="editClientOpen = false"
+      @add="editClientOpen = false"
+      :client="clientSelected"
+    />
+    <EditCompanySidebar
+      v-model:open="editSidebarOpen"
+      v-model:company="company"
+      @saved="save"
+    />
   </Page>
 </template>
 <script lang="ts" setup>
-import EditClientSidebar from "@/components/clients/EditClientSidebar.vue";
+import EditContactSidebar from "@/components/clients/EditContactSidebar.vue";
 import useEditPage from "@/components/editpage";
 import Page from "core/src/components/Page.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
@@ -52,19 +63,45 @@ import useClientStore from "@/stores/clients";
 import useCompaniesStore from "@/stores/companies";
 import type Client from "@/types/client";
 import type { Company } from "@/types/company";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
+import CompanyView from "../components/CompanyView.vue";
+import Sidebar from "core/src/components/sidebar/Sidebar.vue";
+import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
+import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
+import SidebarActions from "core/src/components/sidebar/SidebarActions.vue";
+import Button from "core/src/components/Button.vue";
+import CompanyForm from "../components/CompanyForm.vue";
+import EditCompanySidebar from "../components/EditCompanySidebar.vue";
 
 const clientSelected = ref<Client>();
-const editClientOpen = ref<boolean>(false);
 
 const title = computed(() => {
-  if (isAddAction.value) {
-    return t("new-company");
-  }
   return company.value?.name || "";
 });
 
 const companiesStore = useCompaniesStore();
+
+const editSidebarOpen = ref<boolean>(false);
+const editClientOpen = ref<boolean>(false);
+
+watch(
+  () => editSidebarOpen.value,
+  () => {
+    if (!editClientOpen.value) return;
+
+    editClientOpen.value = false;
+  },
+  { immediate: false }
+);
+watch(
+  () => editClientOpen.value,
+  () => {
+    if (!editSidebarOpen.value) return;
+
+    editSidebarOpen.value = false;
+  },
+  { immediate: false }
+);
 
 const {
   isAddAction,
