@@ -2,8 +2,8 @@
   <Page
     :title="$t('customers')"
     :tabs="[
-      { id: 'companies', title: $t('companies') },
-      { id: 'clients', title: $t('customers') },
+      { id: 'companies', title: $t('customers') },
+      { id: 'clients', title: $t('contacts') },
     ]"
     icon="person"
   >
@@ -19,7 +19,7 @@
         "
         :columns="[
           {
-            title: $t('company'),
+            title: $t('customer'),
             key: 'name',
             sortable: true,
           },

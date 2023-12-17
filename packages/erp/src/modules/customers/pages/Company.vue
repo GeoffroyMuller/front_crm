@@ -6,6 +6,7 @@
       @add="editClientOpen = false"
       :client="clientSelected"
     />
+    TTTTTTTTTTTTTTTTTTT P
     <Flex align-items="start" direction="column" :gap="2">
       <MagicFormVue
         :fields="[{ type: 'string', props: { name: 'name', label: 'name' } }]"
@@ -13,7 +14,7 @@
         @submit="save"
       />
       <Grid :gap="1" v-if="!isAddAction">
-        <div class="typo-label">{{ $t("customers") }}</div>
+        <div class="typo-label">{{ $t("contacts") }}</div>
         <MagicDataTable
           :store="clientStore"
           @row-click="
@@ -29,17 +30,10 @@
               title: $t('email'),
               key: 'email',
             },
-            {
-              title: $t('company'),
-              key: 'company',
-            },
           ]"
         >
           <template #content-name="{ item }">
             {{ item?.firstname || "" }} {{ item?.lastname || "" }}
-          </template>
-          <template #content-company="{ item }">
-            {{ item.company?.name || "" }}
           </template>
         </MagicDataTable>
       </Grid>

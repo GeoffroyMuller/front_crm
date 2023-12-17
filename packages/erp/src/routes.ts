@@ -6,8 +6,6 @@ import auth from "./middleware/auth";
 
 import Home from "./pages/Home.vue";
 import Settings from "./pages/settings/index.vue";
-import Clients from "./pages/clients/index.vue";
-import EditCompany from "./pages/clients/EditCompany.vue";
 import Events from "./pages/events/index.vue";
 import MyAccount from "./pages/MyAccount.vue";
 
@@ -25,24 +23,6 @@ export default [
     path: "/settings",
     name: "settings",
     component: Settings,
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
-    path: "/customers",
-    name: "customers",
-    component: Clients,
-    meta: {
-      middleware: [auth],
-      layout: LayoutPage,
-    },
-  },
-  {
-    path: "/customers/companies/:id",
-    name: "customers-companies-id",
-    component: EditCompany,
     meta: {
       middleware: [auth],
       layout: LayoutPage,
