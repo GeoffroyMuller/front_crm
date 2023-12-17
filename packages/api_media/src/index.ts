@@ -45,8 +45,27 @@ router.post("/upload", async (req, res) => {
     handleError(req as IAuthRequest<User>, res, err);
   }
 });
+router.delete("/upload/:id", async (req, res) => {
+  try {
+    const media = await Media.query().where('id', req.params.id).andWhere('idCompany', (req as unknown as IAuthRequest<User>).auth.idCompany).first();
+    if (media) {
+      await media.$query().delete();
+      fs.unlink(path.join(__dirname, "../uploads") + "/" + media.filepath, () => {})
+      res.status(200).end();
+    }
+    res.status(400).end();
+  } catch (err) {
+    handleError(req as unknown as IAuthRequest<User>, res, err);
+  }
+});
+
+app.use('/media/file', express.static('uploads'));
 
 app.use("/media", router);
+
+
+
+
 
 // @ts-ignore
 app.listen(3011, function (err) {

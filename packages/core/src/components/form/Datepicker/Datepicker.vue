@@ -4,6 +4,7 @@
     class="datepicker-input"
     :placement="placement"
     :alignment="alignment"
+    full-activator-width
   >
     <template #activator>
       <SelectActivator v-if="$slots.activator">

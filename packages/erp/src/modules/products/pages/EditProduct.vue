@@ -102,7 +102,7 @@ const {
   loadingPage,
 } = useEditPage<Product>({
   store: productsStore,
-  populate: ["products_real", "product_fields"],
+  populate: ["products_real", "product_fields", "images"],
   onAdd: () => {
     goToProductsPage();
   },
