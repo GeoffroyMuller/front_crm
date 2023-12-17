@@ -6,7 +6,6 @@
     <Card padding>
       <UploadMedia
         label="Test"
-        name="profilePic"
         :placeholder="$t('pages.myaccount.import-image')"
       />
     </Card>
