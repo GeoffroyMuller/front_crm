@@ -6,7 +6,8 @@ export default class Media extends Model {
     idCompany?: number;
     filepath?: string;
     filename?: string;
-
+    id_model?: number;
+    model?: string;
 
     static get tableName() {
         return 'medias'

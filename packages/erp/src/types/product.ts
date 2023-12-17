@@ -14,6 +14,8 @@ export interface Product {
 
   products_real?: Array<ProductReal>;
   product_fields?: Array<ProductField>;
+
+  images?: { idMedia: number; filepath: string }[];
 }
 
 export type StockManagement =

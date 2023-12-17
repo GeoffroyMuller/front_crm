@@ -44,7 +44,10 @@
         </div>
       </div>
     </div>
-    <ProdcutGallery class="max-w-[500px]" />
+    <ProdcutGallery
+      :product="props.product"
+      class="max-w-[500px] w-full lg:w-[500px]"
+    />
   </Card>
 </template>
 

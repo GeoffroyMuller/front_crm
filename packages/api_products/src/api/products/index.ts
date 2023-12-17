@@ -25,4 +25,7 @@ router.delete(
 );
 router.get("/:id", ProductController.findByID);
 
+router.post("/:id/image", ProductController.addImage);
+router.delete("/:id/image/:idImage", ProductController.deleteImage);
+
 export default router;

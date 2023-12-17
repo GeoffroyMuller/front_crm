@@ -1,20 +1,35 @@
 <template>
-  <div class="grid gap-2">
+  <div>
     <label v-if="label">
       {{ label }}
     </label>
     <div
       ref="dropzoneRef"
       tabindex="0"
-      class="selectable-black min-h-input relative flex items-center justify-center gap-2 p-4 typo-title5 text-slate-400 cursor-pointer"
+      class="selectable-black mt-2 min-h-input relative flex items-center justify-center gap-2 p-4 typo-title5 text-slate-400 cursor-pointer"
       :class="{
         'border border-dashed border-slate-400': variant === 'base',
         [`rounded-${rounded}`]: true,
-        'hover': dragover
+        hover: dragover,
       }"
     >
-      <Icon class="select-none pointer-events-none" v-if="!fileAdded" name="file_upload" size="sm" />
-      <span class="select-none pointer-events-none" v-if="!fileAdded">{{ placeholder || $t("core.import") }}</span>
+      <Icon
+        class="select-none pointer-events-none"
+        v-if="!fileAdded"
+        name="file_upload"
+        size="sm"
+      />
+      <span class="select-none pointer-events-none" v-if="!fileAdded">{{
+        placeholder || $t("core.import")
+      }}</span>
+    </div>
+    <div class="flex items-center mt-px" v-if="fileAdded">
+      <Button variant="text" color="success" @click="validate2()">{{
+        $t("validate")
+      }}</Button>
+      <Button variant="text" color="black" @click="cancel()">{{
+        $t("cancel")
+      }}</Button>
     </div>
     <!--  <input
       ref="internalRef"
@@ -34,6 +49,7 @@ import useValidatable from "../../../composables/validatable";
 import Icon from "../../Icon.vue";
 import { Dropzone } from "dropzone";
 import { onMounted, ref } from "vue";
+import Button from "core/src/components/Button.vue";
 
 export interface InputFileProps {
   modelValue?: any;
@@ -68,42 +84,59 @@ const emit = defineEmits([
   "input",
   "change",
 
-  'complete',
-  'addedfile'
+  "complete",
+  "addedfile",
+
+  "validate",
+  "cancel",
 ]);
 
 const dropzoneRef = ref();
 const dragover = ref(false);
 const fileAdded = ref(false);
 
-onMounted(() => {
-  const dropzone = new Dropzone(dropzoneRef.value, {
+const dropzone = ref<Dropzone>();
+
+function initDropzone() {
+  dropzone.value = new Dropzone(dropzoneRef.value, {
     url: props.path,
     headers: props.headers,
-
   });
-  dropzone.on("complete", function (file) {
-    emit('complete', file);
+  dropzone.value.on("complete", function (file) {
+    emit("complete", file);
   });
-  dropzone.on("addedfile", function (file) {
-    emit('addedfile', file);
+  dropzone.value.on("addedfile", function (file) {
+    emit("addedfile", file);
     fileAdded.value = true;
   });
 
-
-  dropzone.on("dragover", function () {
+  dropzone.value.on("dragover", function () {
     dragover.value = true;
   });
-  dropzone.on("dragleave", function () {
+  dropzone.value.on("dragleave", function () {
     dragover.value = false;
   });
-  dropzone.on("dragend", function () {
+  dropzone.value.on("dragend", function () {
     dragover.value = false;
   });
-  dropzone.on("drop", function () {
+  dropzone.value.on("drop", function () {
     dragover.value = false;
   });
-});
+}
+
+function cancel() {
+  emit("cancel");
+  dropzone.value.removeAllFiles();
+  fileAdded.value = false;
+}
+
+async function validate2() {
+  await emit("validate");
+  dropzone.value.removeAllFiles();
+  fileAdded.value = false;
+}
+
+onMounted(initDropzone);
 
 const { internalValue, internalError, validate } = useValidatable({
   value: props.modelValue,
@@ -113,7 +146,8 @@ const { internalValue, internalError, validate } = useValidatable({
 </script>
 
 <style>
-.dz-success-mark, .dz-error-mark {
+.dz-success-mark,
+.dz-error-mark {
   display: none !important;
 }
 </style>

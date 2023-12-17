@@ -5,6 +5,7 @@ import { ID, User } from "core_api/types";
 import { handleFilters } from "core_api/services/filters.service";
 import ProductField from "./product_field.model";
 import { NotFoundError } from "core_api/errors";
+import ProductImage from "./product_image.model";
 
 async function findByID(
   id: ID,
@@ -77,5 +78,22 @@ export default {
       await trx.rollback();
       throw err;
     }
+  },
+  addImage: async (id: ID, data: Partial<ProductImage>, auth: User) => {
+    const product = await findByID(id, [], {}, auth);
+    if (product) {
+      return ProductImage.query().insertAndFetch({
+        ...data,
+        idProduct: product.id,
+      });
+    }
+    return null;
+  },
+  deleteImage: async (id: ID, idImage: number, auth: User) => {
+    const product = await findByID(id, [], {}, auth);
+    if (product) {
+      return ProductImage.query().where("idProduct", product.id as number).andWhere('id', idImage).delete();
+    }
+    return null;
   },
 };
