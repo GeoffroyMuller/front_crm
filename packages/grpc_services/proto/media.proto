@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+service MediaService {
+  rpc Find (FindRequest) returns (FindResponse);
+}
+
+message User {
+  string idCompany = 1;
+}
+
+message Media {
+  int32 id  = 1;
+  int32 idCompany = 2;
+  string filepath = 3;
+  string filename = 4;
+  int32 id_model = 5;
+  string model = 6;
+}
+
+message FindRequest {
+  string model = 1;
+  optional int32 modelId = 2;
+  User auth = 3;
+  
+}
+
+message FindResponse {
+  repeated Media data = 1;
+}
+

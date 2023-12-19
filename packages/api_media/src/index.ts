@@ -8,6 +8,9 @@ import Media from "./media.model";
 import crypto from "node:crypto";
 import "./config/database";
 import authMiddleware from "core_api/middlewares/auth.middleware";
+import mediaService from "./media.service";
+
+import "./grpc";
 
 const app = express();
 
@@ -30,7 +33,8 @@ router.post("/upload", async (req, res) => {
       const filepath = `${crypto.randomUUID()}.${fileextension}`;
       let newPath = path.join(__dirname, "../uploads") + "/" + filepath;
       let rawData = fs.readFileSync(oldPath);
-      const idCompany = (req as IAuthRequest<User>).auth.idCompany as number || 0;
+      const idCompany =
+        ((req as IAuthRequest<User>).auth.idCompany as number) || 0;
       fs.writeFile(newPath, rawData, async function (err: any) {
         if (err) throw err;
         const media = await Media.query().insertAndFetch({
@@ -47,10 +51,19 @@ router.post("/upload", async (req, res) => {
 });
 router.delete("/upload/:id", async (req, res) => {
   try {
-    const media = await Media.query().where('id', req.params.id).andWhere('idCompany', (req as unknown as IAuthRequest<User>).auth.idCompany).first();
+    const media = await Media.query()
+      .where("id", req.params.id)
+      .andWhere(
+        "idCompany",
+        (req as unknown as IAuthRequest<User>).auth.idCompany
+      )
+      .first();
     if (media) {
       await media.$query().delete();
-      fs.unlink(path.join(__dirname, "../uploads") + "/" + media.filepath, () => {})
+      fs.unlink(
+        path.join(__dirname, "../uploads") + "/" + media.filepath,
+        () => {}
+      );
       res.status(200).end();
     }
     res.status(400).end();
@@ -58,14 +71,39 @@ router.delete("/upload/:id", async (req, res) => {
     handleError(req as unknown as IAuthRequest<User>, res, err);
   }
 });
+router.get("/upload/:id", async (req, res) => {
+  try {
+    const media = await mediaService.findById(
+      req.params.id,
+      (req as unknown as IAuthRequest<User>).auth
+    );
+    if (media) {
+      res.status(200).json(media);
+    }
+    res.status(400).end();
+  } catch (err) {
+    handleError(req as unknown as IAuthRequest<User>, res, err);
+  }
+});
 
-app.use('/media/file', express.static('uploads'));
+router.get("/upload/", async (req, res) => {
+  try {
+    res
+      .status(200)
+      .json(
+        await mediaService.find(
+          req.query,
+          (req as unknown as IAuthRequest<User>).auth
+        )
+      );
+  } catch (err) {
+    handleError(req as unknown as IAuthRequest<User>, res, err);
+  }
+});
+
+app.use("/media/file", express.static("uploads"));
 
 app.use("/media", router);
-
-
-
-
 
 // @ts-ignore
 app.listen(3011, function (err) {

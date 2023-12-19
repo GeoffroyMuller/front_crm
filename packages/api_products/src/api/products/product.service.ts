@@ -7,16 +7,38 @@ import ProductField from "./product_field.model";
 import { NotFoundError } from "core_api/errors";
 import ProductImage from "./product_image.model";
 
+import { getMediaService } from "grpcservice/clients/media.client";
+
+const getGRPCDeadline = () => Date.now() + 500;
+
 async function findByID(
   id: ID,
   relations: RelationExpression<Product>[],
   filters: any,
   auth: User
-) {
-  const query = applyRelations(Product.query(), Product, relations);
-  query.where("id", id).where("idCompany", auth.idCompany);
-  handleFilters(query, filters);
-  return query.first().execute() as Promise<Product | undefined>;
+): Promise<Product | undefined> {
+  return new Promise(async (resolve) => {
+    const query = applyRelations(Product.query(), Product, relations);
+    query.where("id", id).where("idCompany", auth.idCompany);
+    handleFilters(query, filters);
+    const product = (await query.first().execute()) as Product | undefined;
+
+    if (filters?.populate?.includes?.("images") && product) {
+      getMediaService().Find(
+        { auth, model: "product", modelId: id },
+        { deadline: getGRPCDeadline() },
+        // @ts-ignore
+        (error, result) => {
+          if (error) {
+            console.error("An error has occured", error);
+            resolve(product);
+          }
+          console.log(result);
+          resolve(product);
+        }
+      );
+    }
+  });
 }
 export default {
   findByID,
@@ -92,7 +114,10 @@ export default {
   deleteImage: async (id: ID, idImage: number, auth: User) => {
     const product = await findByID(id, [], {}, auth);
     if (product) {
-      return ProductImage.query().where("idProduct", product.id as number).andWhere('id', idImage).delete();
+      return ProductImage.query()
+        .where("idProduct", product.id as number)
+        .andWhere("id", idImage)
+        .delete();
     }
     return null;
   },
