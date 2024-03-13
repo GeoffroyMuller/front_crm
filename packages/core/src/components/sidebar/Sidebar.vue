@@ -23,6 +23,7 @@
 import { provide, ref } from "vue";
 import type { SidebarInject } from "./sidebar.types";
 import type { Tab } from "src/composables/tabs";
+import useKeyboardShortcut from "../../composables/keyboardshortcut";
 
 interface SidebarProps {
   open: boolean;
@@ -39,6 +40,12 @@ const props = withDefaults(defineProps<SidebarProps>(), {
 const emit = defineEmits(["update:open"]);
 
 const currentTab = ref<Tab["id"]>();
+
+useKeyboardShortcut("esc", () => {
+  emit("update:open", false);
+  // @ts-ignore
+  document.activeElement?.blur && document.activeElement?.blur();
+});
 
 function onClickOutside(event: PointerEvent) {
   // click on body just if click started on sidebar and finish outside

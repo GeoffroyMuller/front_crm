@@ -24,6 +24,7 @@
 <script lang="ts" setup>
 import { provide, withDefaults } from "vue";
 import Card from "../card/Card.vue";
+import useKeyboardShortcut from "../../composables/keyboardshortcut";
 
 interface ModalProps {
   open: boolean;
@@ -40,6 +41,12 @@ const props = withDefaults(defineProps<ModalProps>(), {
 });
 
 const emit = defineEmits(["update:open"]);
+
+useKeyboardShortcut("esc", () => {
+  emit("update:open", false);
+  // @ts-ignore
+  document.activeElement?.blur && document.activeElement?.blur();
+});
 
 export type ModalInject = {
   close: () => void;

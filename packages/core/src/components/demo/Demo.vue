@@ -1,38 +1,54 @@
 <template>
-  <Page
-    title="Demo"
-    icon="tools_wrench"
-    :tabs="tabs.map((t) => ({ id: t.id, title: t.id }))"
-  >
+  <Page title="Demo" icon="tools_wrench" :tabs="tabs.map((t) => ({ id: t.id, title: t.id }))">
     <template #buttons>
-      <DemoButtons />
+      <Card padding>
+        <DemoButtons />
+      </Card>
     </template>
     <template #cards>
-      <DemoCard />
+      <Card padding>
+        <DemoCard />
+      </Card>
     </template>
     <template #toast>
-      <DemoToast />
+      <Card padding>
+        <DemoToast />
+      </Card>
     </template>
     <template #color>
-      <DemoColor />
+      <Card padding>
+        <DemoColor />
+      </Card>
     </template>
     <template #chips>
-      <DemoChips />
+      <Card padding>
+        <DemoChips />
+      </Card>
     </template>
     <template #inputs>
-      <DemoInput />
+      <Card padding>
+        <DemoInput />
+      </Card>
     </template>
     <template #menu>
-      <DemoMenu />
+      <Card padding>
+        <DemoMenu />
+      </Card>
     </template>
     <template #typo>
-      <DemoTypo />
+      <Card padding>
+        <DemoTypo />
+      </Card>
     </template>
     <template #breadcrumb>
-      <DemoBreadcrumb />
+      <Card padding>
+        <DemoBreadcrumb />
+      </Card>
     </template>
     <template #tabs>
-      <DemoTabs />
+      <Card padding>
+        <DemoTabs />
+      </Card>
     </template>
   </Page>
 </template>
@@ -49,6 +65,7 @@ import DemoMenu from "./DemoMenu.vue";
 import DemoTypo from "./DemoTypo.vue";
 import DemoBreadcrumb from "./DemoBreadcrumb.vue";
 import DemoTabs from "./DemoTabs.vue";
+import Card from "../card/Card.vue";
 
 const tabs = [
   { id: "menu" },

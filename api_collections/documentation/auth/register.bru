@@ -1,0 +1,18 @@
+meta {
+  name: register
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{gatewayURL}}/auth/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "email": "etienne.robert1698@gmail.com",
+      "password": "test1234"
+  }
+}
