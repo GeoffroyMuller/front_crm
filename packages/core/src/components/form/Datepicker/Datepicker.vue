@@ -16,6 +16,7 @@
           :label="label"
           :error="internalError || error ? true : false"
           :disabled="disabled"
+          readonly
           @focus="isFocus = true"
           @blur="isFocus = false"
           :mask="mask"

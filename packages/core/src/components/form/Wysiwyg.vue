@@ -5,7 +5,7 @@
     </label>
     <div
       class="wysiwyg-content"
-      :class="{ 'text-variant': variant === 'text' }"
+      :class="[{ 'text-variant': variant === 'text' }, contentClass]"
     >
       <QuillEditor
         :placeholder="placeholder"
@@ -30,6 +30,7 @@ interface WysiwygProps {
   error?: string;
   variant?: "text";
   placeholder?: string;
+  contentClass?: string;
 }
 
 const props = withDefaults(defineProps<WysiwygProps>(), {});

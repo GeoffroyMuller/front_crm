@@ -13,6 +13,7 @@
         }"
         color="white"
       />
+      <!-- <Button color="white" icon="arrow_back" variant="text"> Retour </Button> -->
     </div>
 
     <div class="flex gap-4 items-center justify-end text-white">
@@ -147,6 +148,7 @@ import type { LayoutSideMenuProvide, MenuItem } from "../types";
 import useLocalStorage from "../../composables/localStorage";
 import useBreakpoints from "../../composables/breakpoints";
 import TreeItem from "./TreeItemTooltip.vue";
+import Button from "../../components/Button.vue";
 
 interface LayoutSideMenuProps {
   menu: MenuItem[];

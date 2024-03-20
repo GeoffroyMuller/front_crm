@@ -10,11 +10,11 @@
       @click.stop="$emit('update:open', false)"
     ></div>
     <Card
-      class="max-md:w-[95%] fixed top-1/2 left-1/2 md:min-w-[650px] max-w-[98%] max-h-[98%] overflow-auto transform -translate-x-1/2 -translate-y-1/2 transition-modalbackdrop duration-300 z-modal"
-      :class="{
+      class="max-md:w-[95%] fixed top-1/2 left-1/2 md:min-w-[650px] max-w-[98%] max-h-[98%] overflow-auto transform -translate-x-1/2 -translate-y-[calc(50%+16px)] transition-modalbackdrop duration-300 z-modal"
+      :class="[{
         'opacity-100': open,
         'opacity-0 pointer-events-none': !open,
-      }"
+      }, $props.class]"
       @click.stop
     >
       <slot />
@@ -33,6 +33,7 @@ interface ModalProps {
 
   title?: string;
   subtitle?: string;
+  class?: string;
 }
 
 const props = withDefaults(defineProps<ModalProps>(), {

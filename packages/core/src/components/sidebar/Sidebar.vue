@@ -21,7 +21,10 @@
 </template>
 <script setup lang="ts">
 import { provide, ref } from "vue";
-import type { SidebarInject } from "./sidebar.types";
+import {
+  SIDEBAR_ANIMATION_DURATION,
+  type SidebarInject,
+} from "./sidebar.types";
 import type { Tab } from "src/composables/tabs";
 import useKeyboardShortcut from "../../composables/keyboardshortcut";
 
@@ -37,7 +40,7 @@ interface SidebarProps {
 const props = withDefaults(defineProps<SidebarProps>(), {
   position: "right",
 });
-const emit = defineEmits(["update:open"]);
+const emit = defineEmits(["update:open", "close"]);
 
 const currentTab = ref<Tab["id"]>();
 
@@ -47,6 +50,11 @@ useKeyboardShortcut("esc", () => {
   document.activeElement?.blur && document.activeElement?.blur();
 });
 
+function close() {
+  emit("update:open", false);
+  setTimeout(() => emit("close"), SIDEBAR_ANIMATION_DURATION);
+}
+
 function onClickOutside(event: PointerEvent) {
   // click on body just if click started on sidebar and finish outside
   // @ts-ignore
@@ -54,13 +62,13 @@ function onClickOutside(event: PointerEvent) {
     return;
   }
   if (props.open) {
-    emit("update:open", false);
+    close();
   }
 }
 
 provide<SidebarInject>("sidebar", {
   open: props.open,
-  close: () => emit("update:open", false),
+  close,
   setCurrentTab(t) {
     currentTab.value = t;
   },

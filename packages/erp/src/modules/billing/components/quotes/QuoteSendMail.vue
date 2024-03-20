@@ -5,7 +5,11 @@
       <template #default="{ hasError }">
         <ModalContent class="grid gap-4">
           <TextField name="subject" :label="$t('subject')" />
-          <Wysiwyg :label="$t('content')" name="content" />
+          <Wysiwyg
+            :label="$t('content')"
+            name="content"
+            contentClass="max-h-[250px] overflow-auto"
+          />
           <div class="flex items-end">
             <TextField name="pdf" :label="$t('pdf')" />
             <span :style="{ paddingLeft: '2px' }">.pdf</span>

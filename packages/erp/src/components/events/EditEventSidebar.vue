@@ -3,13 +3,28 @@
     :open="open"
     @update:open="($event) => $emit('update:open', $event)"
     padding
+    @close="$emit('close')"
   >
-    <SidebarHead
-      :title="isAddAction ? $t('events.new-event') : $t('events.event')"
-      :actions="[]"
-    ></SidebarHead>
+    <SidebarHead :actions="[]">
+      <template #title>
+        <div class="flex gap-2">
+          <span>{{
+            isAddAction ? $t("events.new-event") : $t("events.event")
+          }}</span>
+          <IconButton
+            v-if="!isAddAction && !isEdit"
+            @click.stop="isEdit = true"
+            color="primary"
+            default-colored
+            size="xs"
+            name="edit"
+          />
+        </div>
+      </template>
+    </SidebarHead>
     <SidebarContent>
       <Form
+        v-if="isAddAction || isEdit"
         :initial-value="{
           recurrence_freq: recurrenceOptions[0],
           ...event,
@@ -93,6 +108,70 @@
           </SidebarActions>
         </template>
       </Form>
+      <div v-else>
+        <div class="typo-title5 font-semibold">
+          <div class="grid gap-5">
+            <div class="flex gap-2" v-if="event?.summary">
+              <div class="text-slate-400">
+                {{ $t("events.summary") }}
+              </div>
+              <div class="text-slate-500">
+                {{ event?.summary }}
+              </div>
+            </div>
+            <div class="grid gap-2" v-if="event?.description">
+              <div class="text-slate-400">
+                {{ $t("events.descriptions") }}
+              </div>
+              <div class="text-slate-500">
+                {{ event?.description }}
+              </div>
+            </div>
+            <div class="flex gap-2" v-if="event?.dtstart || event?.dtend">
+              <div class="grid gap-2">
+                <div class="text-slate-400">
+                  {{ $t("events.dtstart") }}
+                </div>
+                <div class="text-slate-500">
+                  {{ $utils.formatDate(event?.dtstart || "") }}
+                </div>
+              </div>
+              <div class="grid gap-2">
+                <div class="text-slate-400">
+                  {{ $t("events.dtend") }}
+                </div>
+                <div class="text-slate-500">
+                  {{ $utils.formatDate(event?.dtend || "") }}
+                </div>
+              </div>
+            </div>
+            <div class="flex gap-2" v-if="event?.recurrence_freq">
+              <div class="text-slate-400">
+                {{ $t("events.recurrence") }}
+              </div>
+              <div class="text-slate-500">
+                {{ $t(`events.recurrenceopts.${event.recurrence_freq}`) }}
+              </div>
+            </div>
+            <div class="flex gap-2" v-if="event?.recurrence_count">
+              <div class="text-slate-400">
+                {{ $t("events.recurrence_count") }}
+              </div>
+              <div class="text-slate-500">
+                {{ $t(`events.recurrenceopts.${event.recurrence_count}`) }}
+              </div>
+            </div>
+            <div class="flex gap-2" v-if="event?.recurrence_until">
+              <div class="text-slate-400">
+                {{ $t("events.recurrence_until") }}
+              </div>
+              <div class="text-slate-500">
+                {{ $utils.formatDate(event.recurrence_until) }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </SidebarContent>
   </Sidebar>
 </template>
@@ -108,11 +187,12 @@ import Sidebar from "core/src/components/sidebar/Sidebar.vue";
 import useUI from "core/src/composables/ui";
 import useEventsStore from "@/stores/events";
 import type { Event } from "@/types/events";
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import SidebarActions from "core/src/components/sidebar/SidebarActions.vue";
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 import SidebarHead from "core/src/components/sidebar/SidebarHead.vue";
+import IconButton from "core/src/components/IconButton.vue";
 
 interface EditEventSidebarProps {
   open: boolean;
@@ -120,7 +200,7 @@ interface EditEventSidebarProps {
   hideDescription?: boolean;
 }
 
-const emit = defineEmits(["update:open", "add", "update"]);
+const emit = defineEmits(["update:open", "add", "update", "close"]);
 const props = withDefaults(defineProps<EditEventSidebarProps>(), {});
 
 const { toast } = useUI();
@@ -128,6 +208,7 @@ const { t } = useI18n();
 const eventStore = useEventsStore();
 
 const isAddAction = computed(() => props.event?.id == null);
+const isEdit = ref(false);
 
 const recurrenceOptions: Event["recurrence_freq"][] = [
   null,
@@ -136,6 +217,13 @@ const recurrenceOptions: Event["recurrence_freq"][] = [
   "MONTHLY",
   "YEARLY",
 ];
+
+watch(
+  () => props.event,
+  () => {
+    isEdit.value = false;
+  }
+);
 
 // rrule documentation: https://www.kanzaki.com/docs/ical/rrule.html
 async function handleSubmit(data: any) {

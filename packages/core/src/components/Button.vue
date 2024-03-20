@@ -156,7 +156,9 @@ const buttonAdditionnalProps = computed(() => {
 .button-outlined {
   position: relative;
 }
-.button-outlined-white,
+.button-outlined-white {
+  @apply text-slate-200 border-slate-300 border border-solid hover:bg-slate-100 hover:text-[#6b7280] disabled:text-[#6b7280] disabled:bg-transparent;
+}
 .button-outlined-black {
   @apply text-[#6b7280] border-slate-300 border border-solid hover:bg-slate-100 disabled:text-[#6b7280] disabled:bg-transparent;
 }

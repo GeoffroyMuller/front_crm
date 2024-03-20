@@ -33,6 +33,7 @@
       @update="fetch()"
       :event="eventEdited"
       v-model:open="editOpen"
+      @close="eventEdited = undefined"
     />
   </Page>
 </template>
