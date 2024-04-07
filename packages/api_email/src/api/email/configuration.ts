@@ -15,7 +15,7 @@ export default class Configuration extends Model {
   smtp_distributor?: SmtpDistributor;
 
   static get tableName() {
-    return "mailjetconfiguration";
+    return "configuration";
   }
 
   static get relationMappings() {

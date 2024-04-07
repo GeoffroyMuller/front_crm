@@ -11,10 +11,13 @@
     ></div>
     <Card
       class="max-md:w-[95%] fixed top-1/2 left-1/2 md:min-w-[650px] max-w-[98%] max-h-[98%] overflow-auto transform -translate-x-1/2 -translate-y-[calc(50%+16px)] transition-modalbackdrop duration-300 z-modal"
-      :class="[{
-        'opacity-100': open,
-        'opacity-0 pointer-events-none': !open,
-      }, $props.class]"
+      :class="[
+        {
+          'opacity-100': open,
+          'opacity-0 pointer-events-none select-none': !open,
+        },
+        $props.class,
+      ]"
       @click.stop
     >
       <slot />
@@ -43,20 +46,20 @@ const props = withDefaults(defineProps<ModalProps>(), {
 
 const emit = defineEmits(["update:open"]);
 
-useKeyboardShortcut("esc", () => {
+function close() {
   emit("update:open", false);
   // @ts-ignore
   document.activeElement?.blur && document.activeElement?.blur();
-});
+}
+
+useKeyboardShortcut("esc", close);
 
 export type ModalInject = {
   close: () => void;
 };
 
 provide<ModalInject>("modal", {
-  close: () => {
-    emit("update:open", false);
-  },
+  close,
 });
 </script>
 
