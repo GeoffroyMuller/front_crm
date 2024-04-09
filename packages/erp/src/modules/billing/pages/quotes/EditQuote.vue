@@ -7,6 +7,8 @@
     :padding="null"
     :gap="false"
   >
+  
+
     <div
       class="xl:hidden sticky top-0 w-full flex justify-between items-center bg-white z-20 h-fit py-2 px-4 border-b border-0 border-solid border-b-slate-200"
     >

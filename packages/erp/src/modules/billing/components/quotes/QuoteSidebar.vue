@@ -54,8 +54,6 @@ const emit = defineEmits(["close"]);
 const quotesStore = useQuoteStore();
 const { t } = useI18n();
 
-const quotePDFSrc = ref();
-
 const actions = computed<SidebarHeadAction[]>(() => {
   const res: SidebarHeadAction[] = [
     { title: t("edit"), icon: "edit", action: "edit", main: true },

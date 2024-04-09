@@ -13,7 +13,6 @@
         }"
         color="white"
       />
-      <!-- <Button color="white" icon="arrow_back" variant="text"> Retour </Button> -->
     </div>
 
     <div class="flex gap-4 items-center justify-end text-white">

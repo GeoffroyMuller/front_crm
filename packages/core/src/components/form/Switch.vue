@@ -3,14 +3,11 @@
     <label>
       {{ label }}
     </label>
-    <div
-      class="switch"
-      :class="{
-        selected: !!internalValue,
-        error: internalError || error,
-        disabled: disabled,
-      }"
-    >
+    <div class="switch" :class="{
+    selected: !!internalValue,
+    error: internalError || error,
+    disabled: disabled,
+  }">
       <div class="switch-inner" />
     </div>
     <Alert v-if="internalError || error">
@@ -64,9 +61,11 @@ function handleSwitch() {
   overflow: hidden;
 
   cursor: pointer;
+
   label {
     cursor: pointer;
   }
+
   .switch {
     border-radius: 10px;
     border: solid 1px #d1d5db;
@@ -80,38 +79,46 @@ function handleSwitch() {
     &.disabled {
       background-color: #d1d5db;
       cursor: not-allowed;
+
       &.selected {
         .switch-inner {
           margin-left: calc($width - $dotSize - 2 * $dotMargin);
         }
       }
     }
+
     &.selected:not(.disabled) {
       @apply bg-primary-50;
+
       .switch-inner {
         margin-left: calc($width - $dotSize - 2 * $dotMargin);
         @apply bg-primary-500;
-        background: linear-gradient(
-          245deg,
-          color("primary", 500) 0%,
-          color("primary", 400) 100%
-        );
+        background: linear-gradient(245deg,
+            color("primary", 500) 0%,
+            color("primary", 400) 100%);
       }
     }
+
     &.error:not(.disabled) {
       border: solid 1px color("danger", 500);
       background: color("danger", 50);
+
       .switch-inner {
         background: color("danger", 500);
-        background: linear-gradient(
-          245deg,
-          color("danger", 500) 0%,
-          color("danger", 400) 100%
-        );
+        background: linear-gradient(245deg,
+            color("danger", 500) 0%,
+            color("danger", 400) 100%);
       }
     }
+
+    &:not(.selected):active {
+      .switch-inner {
+        width: calc($dotSize + 4px);
+      }
+    }
+
     .switch-inner {
-      transition: margin-left 0.5s ease;
+      transition: width 0.5s ease, margin-left 0.5s ease;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
