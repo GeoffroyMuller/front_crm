@@ -1,0 +1,253 @@
+{
+  "data": {
+    "status": {
+      "draft": "Brouillon",
+      "refused": "Refusé",
+      "validated": "Validé"
+    }
+  },
+  "add-menu": {
+    "add-quote": "Nouveau devis",
+    "add-invoice": "Nouvelle facture",
+    "new-project": "Nouveau Projet",
+    "add-product": "Nouveau produit"
+  },
+  "pages": {
+    "myaccount": {
+      "import-image": "Importer une image"
+    },
+    "projects": {
+      "edit": "Editer",
+      "overview": "Aperçu",
+      "kanban": "Tableau",
+      "list": "Liste",
+      "add-section": "Ajouter une colonne",
+      "delete-section": "Supprimer la colonne",
+      "delete-project": "Supprimer le project",
+      "add-task": "Ajouter une tache",
+      "project-name": "Titre",
+      "share": "Partager",
+      "new-projects": "Nouveau projet",
+      "create-project": "Créer le projet",
+      "sure-delete-project": "Etes vous sur de vouloir supprimer ce projet ?",
+      "sure_delete_task": "Etes vous sur de vouloir supprimer cette tâche ?",
+      "tasks-deleted": "Tâche supprimé",
+      "completed": "Tâche terminé",
+      "form": {
+        "name": "Titre du projet",
+        "color": "Couleur",
+        "icon": "Icone"
+      },
+      "task": {
+        "responsible": "Responsable",
+        "due_date": "Echeance",
+        "list": "Liste",
+        "list-placeholder": "Aucune",
+        "description": "Description",
+        "describe_task": "Decrivez la tâche en quelque mots"
+      }
+    },
+    "clients": {
+      "sure_delete_company": "Etes vous sur de vouloir supprimer cette entreprise de vos clients ?",
+      "sure_delete_client": "Etes vous sur de vouloir supprimer ce client ?"
+    },
+    "quotes": {
+      "sure_archive_quote": "Etes vous sur de vouloir archiver ce devis ?",
+      "sure_archive_selected": "Etes vous sur de vouloir archiver la séléction ?",
+      "create_invoice": "Creer une facture",
+      "quote": "Devis"
+    },
+    "invoices": {
+      "sure_archive_invoice": "Etes vous sur de vouloir archiver cette facture ?",
+      "sure_archive_selected": "Etes vous sur de vouloir archiver la séléction ?",
+      "invoice": "Facture",
+      "sidebartabs": {
+        "pdf": "PDF",
+        "payments": "Paiements"
+      }
+    },
+    "sales": {
+      "edit-list-products-real": "Editer le stock {count}",
+      "warning-sentence-qty": "L'impact sur le stock est différent de la quantité.",
+      "edit-products-real": "Produit avec stock",
+      "edit-products-real-product": "Choix des produit du stock"
+    },
+    "edit-quote": {
+      "qty": "Quantitée",
+      "unit_price": "Prix unitaire (HT)",
+      "description": "Description",
+      "vat": "TVA",
+      "total-global": "Total",
+      "total": "Total TTC",
+      "total-without-taxes": "Total HT",
+      "without-taxes": "HT",
+      "with-taxes": "TTC",
+      "pdf": "PDF",
+      "add-line-product": "Ligne de produit",
+      "add-line-title": "Ligne de titre",
+      "add-line-comment": "Ligne de commentaire",
+      "footer": "Pied de page",
+      "modalities": "Modalitées",
+      "no-customer": "Votre client n'existe pas ?",
+      "add-customer": "Ajouter un client",
+      "title": "Titre",
+      "comment": "Commentaire",
+      "product": "Produit",
+      "save": "Enregistrer le devis",
+      "sendemail": "Envoyer",
+      "customer-validation": "Validation",
+      "customer-validated": "Validé par le client",
+      "customer-refused": "Refusé par le client",
+      "validated": "Validé",
+      "refused": "Refusé",
+      "responsible": "Responsable",
+      "company": "Entreprise",
+      "address": "Adresse",
+      "siret": "Siret",
+      "email": "Email",
+      "phone": "Téléphone",
+      "city": "Ville",
+      "customer": "Client",
+      "name": "Nom",
+      "discount": "Remise",
+      "discount_type": "Type de remise",
+      "delete-discount": "Annuler la remise"
+    },
+    "edit-invoice": {
+      "qty": "Quantitée",
+      "unit_price": "Prix unitaire (HT)",
+      "description": "Description",
+      "vat": "TVA",
+      "total": "Total TTC",
+      "total-without-taxes": "Total HT",
+      "add-line-product": "Ajouter une ligne de produit",
+      "add-line-title": "Ajouter une ligne de titre",
+      "add-line-comment": "Ajouter une ligne de commentaire",
+      "footer": "Pied de page",
+      "modalities": "Modalitées",
+      "add-customer": "Ajouter un client",
+      "title": "Titre",
+      "comment": "Commentaire",
+      "product": "Produit",
+      "new-invoice": "Nouvelle Facture"
+    },
+    "edit-sale": {
+      "new-sale": "Nouvelle vente",
+      "add-product": "Ajouter un produit",
+      "add-products": "Ajouter des produits a la vente",
+      "total-price": "Prix total de la vente: {price} €",
+      "customer-name": "Nom du client",
+      "customer-email": "Email du client"
+    },
+    "edit-client": {
+      "no-company": "Cette entreprise n'existe pas ?"
+    },
+    "edit-product": {
+      "description": "Description",
+      "stored-numerary": "Stockage numéraire",
+      "stock-management": "Gestion du stock",
+      "new-product": "Nouveau produit",
+      "creat-product-real": "Creer un produit physique",
+      "edit-product-real": "Modifier le produit",
+      "add-selectable-options": "Ajouter des options de selection",
+      "event-product": "Ce produit est un produit evenementiel",
+      "capacity": "Capacité des évenements",
+      "informations": "Informations général",
+      "name": "Titre",
+      "unit-price": "Prix unitaire",
+      "vat": "TVA",
+      "sure-delete-image": "Etes vous sur de vouloir supprimer cette image ?",
+      "image-deleted": "Image supprimé"
+    },
+    "edit-company": {
+      "description": "Description",
+      "new-company": "Nouvelle entreprise",
+      "edit-company": "Modifier l'entreprise",
+      "add-selectable-options": "Ajouter des options de selection",
+      "informations": "Informations général",
+      "name": "Nom de l'entreprise"
+    },
+    "edit-reservation": {
+      "new-reservation": "Nouvelle réservation",
+      "edit-reservation": "Modifier la réservation",
+      "add-product": "Ajouter un produit",
+      "add-product-real": "Ajouter un produit physique",
+      "add-products": "Ajouter des produits a la réservation",
+      "select-existing-client": "Chercher un client",
+      "client-not-exist": "Créer un client",
+      "action-select-existing-client": "Votre client existe déjà ?",
+      "action-client-not-exist": "Votre client n'existe pas ?",
+      "prepare-the-products": "Préparer les produits"
+    }
+  },
+  "new-quote": "Nouveau devis",
+  "new-customer": "Nouveau client",
+  "client-add-success": "Client ajouté",
+  "client-update-success": "Client modifié",
+  "new-company-name": "Nom de l'entreprise",
+  "new-company": "Nouvelle entreprise",
+  "sure-disconnect": "Confirmer la deconnexion ?",
+  "login-with-google": "Continuer avec Google",
+  "connection": "Connexion",
+  "menu": {
+    "projects-calendar": "Calendrier",
+    "projects": "Projets",
+    "billing": "Facturation",
+    "calendar": "Calendrier",
+    "home": "Accueil",
+    "quotes": "Devis",
+    "products": "Produits",
+    "product": "Produit",
+    "clients": "Clients",
+    "invoices": "Factures",
+    "reservations": "Reservation"
+  },
+  "events": {
+    "new-event": "Nouvel Evenement",
+    "event": "Evenement",
+    "dtstart": "Date de début",
+    "dtend": "Date de fin",
+    "summary": "Titre",
+    "descriptions": "Description",
+    "location": "Localisation",
+    "all_day_event": "Cette evenement dure toute la journée",
+    "events": "Evenements",
+    "start": "Début",
+    "end": "Fin",
+    "recurrence": "Récurrence",
+    "recurrence_until": "Jusqu'au",
+    "recurrence_count": "Nombre de récurrence",
+    "recurrenceopts": {
+      "none": "Une seule fois",
+      "DAILY": "Tous les jours",
+      "WEEKLY": "Chaque semaine",
+      "MONTHLY": "Tous les mois",
+      "YEARLY": "Tous les ans"
+    }
+  },
+  "settings-page": {
+    "commission-fee": {
+      "title": "Commissions",
+      "fee": "Commissions (en %)",
+      "with-fee": "Avec commissions",
+      "roles": "Roles",
+      "users": "Utilisateurs"
+    },
+    "role": {
+      "rolename": "Role",
+      "new-role": "Nouveau role",
+      "role": "Role",
+      "rights": "Droits",
+      "sure_delete_role": "Etes vous certain de vouloir supprimer ce role ?"
+    },
+    "teams": {
+      "new-user": "Nouvel utilisateur",
+      "user": "Utilisateur",
+      "sure_delete_user": "Etes vous certain de vouloir supprimer cet utilisateur ?"
+    },
+    "invoices": {
+      "title": "Devis/Facture",
+      "model": "Modèle de Devis/Facture"
+    }
+  }
+}
