@@ -1,12 +1,12 @@
 import { getJWT } from "core/src/helpers/utils";
 import useUI from "core/src/composables/ui";
-import useQuotesStore from "../../stores/quotes";
+import useQuotesStore from "@/stores/quotes";
 import type { Quote } from "../../types";
 import config from "@/const";
 import { ref, type Ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import useInvoicesStore from "@/modules/billing/stores/invoices";
+import useInvoicesStore from "@/stores/invoices";
 
 export interface UseQuoteProps {
   quote?: Ref<Quote>;

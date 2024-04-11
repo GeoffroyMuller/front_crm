@@ -95,7 +95,7 @@ import type { Vat } from "@/types/vat";
 import Select from "core/src/components/form/Select.vue";
 import Switch from "core/src/components/form/Switch.vue";
 import Flex from "core/src/components/layouts/Flex.vue";
-import useProductsStore from "@/modules/products/stores/products";
+import useProductsStore from "@/stores/products";
 import Wysiwyg from "core/src/components/form/Wysiwyg.vue";
 
 interface ProductFormProps {

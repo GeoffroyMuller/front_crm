@@ -52,7 +52,7 @@ import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { merge } from "lodash";
 import PdfViewer from "core/src/components/PdfViewer.vue";
-import useInvoicesStore from "../../stores/invoices";
+import useInvoicesStore from "@/stores/invoices";
 import InvoicePayements from "./InvoicePayements.vue";
 import type Invoice from "../../types";
 

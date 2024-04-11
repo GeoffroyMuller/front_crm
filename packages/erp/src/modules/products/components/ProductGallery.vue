@@ -42,7 +42,8 @@
 <script setup lang="ts">
 import UploadMedia from "@/components/UploadMedia.vue";
 import config from "@/const";
-import useProductsStore from "@/modules/products/stores/products";
+import useProductsStore from "@/stores/products";
+import useMediaStore from "@/stores/media";
 import type { Product } from "@/types/product";
 import axios from "axios";
 import IconButton from "core/src/components/IconButton.vue";
@@ -55,18 +56,21 @@ const props = defineProps<{
 }>();
 
 const productsStore = useProductsStore();
+const mediaStore = useMediaStore();
+
 const { confirm, toast } = useUI();
 const { t } = useI18n();
 
 async function uploadImage(data: any) {
-  try {
-    await productsStore.addImage(props.product.id, {
-      idMedia: data.id,
-      filepath: data.filepath,
+   try {
+    await mediaStore.updateMedia(data.id, {
+      id_model: props.product.id,
+      model: 'product'
     });
   } catch (err) {
     console.error(err);
-  }
+  } 
+  
 }
 
 async function deleteImage(image: any) {

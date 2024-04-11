@@ -8,7 +8,7 @@ import MagicFilterBar, {
 } from "core/src/components/magic/MagicFilterBar.vue";
 import useClientStore from "@/stores/clients";
 import useCompaniesStore from "@/stores/companies";
-import useQuoteStore from "../../stores/quotes";
+import useQuoteStore from "@/stores/quotes";
 import type Client from "@/types/client";
 import type { Company } from "@/types/company";
 import { QuoteValidationStatus, type Quote } from "../../types";

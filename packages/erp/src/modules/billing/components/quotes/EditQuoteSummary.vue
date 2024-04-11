@@ -143,7 +143,7 @@ import Flex from "core/src/components/layouts/Flex.vue";
 import Card from "core/src/components/card/Card.vue";
 import CardDivider from "core/src/components/card/CardDivider.vue";
 import { QuoteValidationStatus } from "../../types";
-import useQuoteStore from "../../stores/quotes";
+import useQuoteStore from "@/stores/quotes";
 import useUI from "core/src/composables/ui";
 import { useI18n } from "vue-i18n";
 import QuoteStatusChips from "./QuoteStatusChips.vue";

@@ -9,12 +9,16 @@ import crypto from "node:crypto";
 import "./config/database";
 import authMiddleware from "core_api/middlewares/auth.middleware";
 import mediaService from "./media.service";
+import bodyParser from 'body-parser';
 
 import "./grpc";
 
 const app = express();
 
 const router = express.Router();
+
+// parse application/json
+app.use(bodyParser.json())
 
 router.use(authMiddleware);
 
@@ -96,6 +100,20 @@ router.get("/upload/", async (req, res) => {
           (req as unknown as IAuthRequest<User>).auth
         )
       );
+  } catch (err) {
+    handleError(req as unknown as IAuthRequest<User>, res, err);
+  }
+});
+router.put('/:id', async (req, res) => {
+  try {
+    console.error(req.params.id, req.body)
+    const media = await Media.query()
+     /*  .where(
+        "idCompany",
+        (req as unknown as IAuthRequest<User>).auth.idCompany
+      ) */
+      .updateAndFetchById(req.params.id, req.body);  
+    res.status(200).json(media);
   } catch (err) {
     handleError(req as unknown as IAuthRequest<User>, res, err);
   }

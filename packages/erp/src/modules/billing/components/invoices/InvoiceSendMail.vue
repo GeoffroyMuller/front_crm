@@ -47,7 +47,7 @@ import useUI from "core/src/composables/ui";
 import type Invoice from "../../types";
 import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import useInvoiceStore from "../../stores/invoices";
+import useInvoiceStore from "@/stores/invoices";
 import Form from "core/src/components/form/Form.vue";
 import TextField from "core/src/components/form/TextField.vue";
 import IconButton from "core/src/components/IconButton.vue";

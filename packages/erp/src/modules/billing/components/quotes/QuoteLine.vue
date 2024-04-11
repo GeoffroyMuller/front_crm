@@ -170,7 +170,7 @@ import { computed, ref } from "vue";
 import TextField from "core/src/components/form/TextField.vue";
 import Select from "core/src/components/form/Select.vue";
 import useVatStore from "@/stores/vat";
-import useProductStore from "@/modules/products/stores/products";
+import useProductStore from "@/stores/products";
 import type { Vat } from "@/types/vat";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
 import type { Product } from "@/types/product";

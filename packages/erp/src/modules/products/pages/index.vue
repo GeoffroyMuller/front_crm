@@ -80,7 +80,7 @@
 import MagicDataTable from "core/src/components/magic/MagicDataTable.vue";
 import Button from "core/src/components/Button.vue";
 import Page from "core/src/components/Page.vue";
-import useProductStore from "@/modules/products/stores/products";
+import useProductStore from "@/stores/products";
 import type { Product } from "@/types/product";
 import MagicFilterBar from "core/src/components/magic/MagicFilterBar.vue";
 import Price from "core/src/components/Price.vue";

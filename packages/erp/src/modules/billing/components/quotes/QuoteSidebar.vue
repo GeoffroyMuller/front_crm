@@ -39,7 +39,7 @@ import SidebarHead, {
 import SidebarContent from "core/src/components/sidebar/SidebarContent.vue";
 import type { Quote } from "../../types";
 import { computed } from "vue";
-import useQuoteStore from "../../stores/quotes";
+import useQuoteStore from "@/stores/quotes";
 import { useI18n } from "vue-i18n";
 import { merge } from "lodash";
 import PdfViewer from "core/src/components/PdfViewer.vue";

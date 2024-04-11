@@ -33,7 +33,7 @@ async function findByID(
             console.error("An error has occured", error);
             resolve(product);
           }
-          console.log(result);
+          if (result.data) {product.images = result.data;}
           resolve(product);
         }
       );

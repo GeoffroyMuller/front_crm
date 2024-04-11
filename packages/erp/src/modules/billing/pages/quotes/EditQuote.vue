@@ -298,7 +298,7 @@ import TextField from "core/src/components/form/TextField.vue";
 import Button from "core/src/components/Button.vue";
 import Page from "core/src/components/Page.vue";
 import PageContent from "core/src/components/PageContent.vue";
-import useQuoteStore from "../../stores/quotes";
+import useQuoteStore from "@/stores/quotes";
 import MagicAutocomplete from "core/src/components/magic/MagicAutocomplete.vue";
 import useClientStore from "@/stores/clients";
 import type { Quote } from "../../types";

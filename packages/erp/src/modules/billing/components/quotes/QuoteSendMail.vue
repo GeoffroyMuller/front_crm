@@ -53,7 +53,7 @@ import TextField from "core/src/components/form/TextField.vue";
 import IconButton from "core/src/components/IconButton.vue";
 import Modal from "core/src/components/modal/Modal.vue";
 import useUI from "core/src/composables/ui";
-import useQuoteStore from "../../stores/quotes";
+import useQuoteStore from "@/stores/quotes";
 import type { Quote } from "../../types";
 import { computed, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
