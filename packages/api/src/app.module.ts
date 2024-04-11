@@ -8,6 +8,7 @@ import { Workspace } from './modules/auth/entities/workspace.entity';
 import { WorkspaceUser } from './modules/auth/entities/workspace-user.entity';
 import { WorkspaceRight } from './modules/auth/entities/workspace-right.entity';
 import { WorkspaceRole } from './modules/auth/entities/workspace-role.entity';
+import { InvoicingModule } from './modules/invoicing/invoicing.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { WorkspaceRole } from './modules/auth/entities/workspace-role.entity';
       synchronize: Boolean(process.env.SYNC_DB_ENTITIES),
     }),
     AuthModule,
+    InvoicingModule
   ],
   controllers: [],
   providers: [],

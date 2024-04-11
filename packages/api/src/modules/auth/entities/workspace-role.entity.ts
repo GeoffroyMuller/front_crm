@@ -9,6 +9,9 @@ export class WorkspaceRole {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Column()
+    name: string;
+
     @JoinColumn()
     @ManyToOne(type => Workspace)
     workspace: Workspace;

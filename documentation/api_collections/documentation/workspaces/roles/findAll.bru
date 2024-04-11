@@ -1,12 +1,12 @@
 meta {
-  name: create
+  name: findAll
   type: http
-  seq: 1
+  seq: 2
 }
 
-post {
-  url: {{gatewayURL}}/workspaces/2/roles
-  body: json
+get {
+  url: {{gatewayURL}}/workspaces/1/roles
+  body: none
   auth: none
 }
 

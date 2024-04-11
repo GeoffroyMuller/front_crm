@@ -8,3 +8,8 @@ export class CreateWorkspaceDTO {
 export class UpdateWorkspaceDTO {
   name: string;
 }
+
+export class CreateWorkspaceRoleDTO {
+  @IsNotEmpty()
+  name: string;
+}
