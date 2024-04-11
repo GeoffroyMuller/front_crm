@@ -13,3 +13,7 @@ export class CreateWorkspaceRoleDTO {
   @IsNotEmpty()
   name: string;
 }
+
+export class UpdateWorkspaceRoleDTO {
+  name: string;
+}

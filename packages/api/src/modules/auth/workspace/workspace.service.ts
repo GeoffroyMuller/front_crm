@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/modules/auth/entities/user.entity';
 import { Workspace } from 'src/modules/auth/entities/workspace.entity';
@@ -16,19 +16,18 @@ export class WorkspaceService {
     return this.workspacesRepository.find();
   }
 
-  findOne(id: number, auth: User): Promise<Workspace> {
+  findOne(id: number, auth: User): Promise<Workspace | null> {
     const workspace = this.workspacesRepository.findOne({ where: { id } });
-    if (!workspace) {
-      throw new HttpException('Workspace not found', HttpStatus.UNPROCESSABLE_ENTITY);
-    }
+    if (!workspace) return null;
     return workspace;
   }
 
-  async remove(id: number, auth: User): Promise<void> {
-    const deleteResult = await this.workspacesRepository.delete({id, owner: auth});
-    if (deleteResult.affected === 0) {
-      throw new HttpException('Workspace not found', HttpStatus.UNPROCESSABLE_ENTITY);
-    }
+  async remove(id: number, auth: User): Promise<boolean> {
+    const deleteResult = await this.workspacesRepository.delete({
+      id,
+      owner: auth,
+    });
+    return deleteResult.affected > 0;
   }
 
   async create(workspace: CreateWorkspaceDTO, auth: User): Promise<Workspace> {
@@ -39,7 +38,7 @@ export class WorkspaceService {
     id: number,
     data: UpdateWorkspaceDTO,
     auth: User,
-  ): Promise<Workspace> {
+  ): Promise<Workspace | null> {
     const updateResult = await this.workspacesRepository.update(
       { id, owner: auth },
       data,
@@ -49,10 +48,6 @@ export class WorkspaceService {
         where: { id, owner: auth },
       });
     }
-
-    throw new HttpException(
-      'Workspace not found',
-      HttpStatus.UNPROCESSABLE_ENTITY,
-    );
+    return null;
   }
 }

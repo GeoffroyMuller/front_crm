@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
   Put,
@@ -26,17 +28,31 @@ export class WorkspaceController {
   @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(@Body() { id }: { id: number }, @Auth() auth) {
-    return this.workspaceService.findOne(id, auth);
+    const workspace = await this.workspaceService.findOne(id, auth);
+    if (!workspace) {
+      throw new HttpException(
+        'Workspace not found',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+    return workspace;
   }
 
   @UseGuards(AuthGuard)
   @Put(':id')
   async update(
     @Param('id') id: number,
-    @Body() workspace: UpdateWorkspaceDTO,
+    @Body() data: UpdateWorkspaceDTO,
     @Auth() auth,
   ) {
-    return this.workspaceService.update(id, workspace, auth);
+    const workspace = await this.workspaceService.update(id, data, auth);
+    if (!workspace) {
+      throw new HttpException(
+        'Workspace not found',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+    return workspace;
   }
 
   @UseGuards(AuthGuard)
@@ -48,6 +64,13 @@ export class WorkspaceController {
   @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id, @Auth() auth) {
-    return this.workspaceService.remove(id, auth);
+    const deleted = await this.workspaceService.remove(id, auth);
+    if (!deleted) {
+      throw new HttpException(
+        'Workspace not found',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+    return;
   }
 }
