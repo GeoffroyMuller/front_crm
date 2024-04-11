@@ -32,7 +32,7 @@ export class WorkspaceController {
     if (!workspace) {
       throw new HttpException(
         'Workspace not found',
-        HttpStatus.UNPROCESSABLE_ENTITY,
+        HttpStatus.NOT_FOUND,
       );
     }
     return workspace;
@@ -49,7 +49,7 @@ export class WorkspaceController {
     if (!workspace) {
       throw new HttpException(
         'Workspace not found',
-        HttpStatus.UNPROCESSABLE_ENTITY,
+        HttpStatus.NOT_FOUND,
       );
     }
     return workspace;
@@ -68,7 +68,7 @@ export class WorkspaceController {
     if (!deleted) {
       throw new HttpException(
         'Workspace not found',
-        HttpStatus.UNPROCESSABLE_ENTITY,
+        HttpStatus.NOT_FOUND,
       );
     }
     return;

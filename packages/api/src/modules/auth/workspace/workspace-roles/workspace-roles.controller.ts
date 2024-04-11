@@ -17,25 +17,47 @@ import {
 import { WorkspaceRolesService } from './workspace-roles.service';
 import { Auth } from 'src/decorators/auth.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { WorkspaceService } from '../workspace.service';
 
 @Controller('workspaces/:idWorkspace/roles')
 export class WorkspaceRolesController {
-  constructor(private workspaceRolesService: WorkspaceRolesService) {}
+  constructor(
+    private workspaceRolesService: WorkspaceRolesService,
+    private workspaceService: WorkspaceService,
+  ) {}
+
+  private async getWorkspace(idWorkspace: number, auth) {
+    const workspace = await this.workspaceService.findOne(idWorkspace, auth);
+    if (!workspace) {
+      throw new HttpException(
+        'Workspace not found',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+    return workspace;
+  }
 
   @UseGuards(AuthGuard)
   @Get()
-  findAll(@Param('idWorkspace') idWorkspace: number, @Auth() auth) {
-    return this.workspaceRolesService.findAll(idWorkspace, auth);
+  async findAll(@Param('idWorkspace') idWorkspace: number, @Auth() auth) {
+    return this.workspaceRolesService.findAll(
+      await this.getWorkspace(idWorkspace, auth),
+      auth,
+    );
   }
 
   @UseGuards(AuthGuard)
   @Post()
-  create(
+  async create(
     @Param('idWorkspace') idWorkspace: number,
     @Body() body: CreateWorkspaceRoleDTO,
     @Auth() auth,
   ) {
-    return this.workspaceRolesService.create(idWorkspace, body, auth);
+    return this.workspaceRolesService.create(
+      await this.getWorkspace(idWorkspace, auth),
+      body,
+      auth,
+    );
   }
 
   @UseGuards(AuthGuard)
@@ -46,14 +68,14 @@ export class WorkspaceRolesController {
     @Auth() auth,
   ) {
     const role = await this.workspaceRolesService.findOne(
-      idWorkspace,
+      await this.getWorkspace(idWorkspace, auth),
       id,
       auth,
     );
     if (!role) {
       throw new HttpException(
         'Role not found',
-        HttpStatus.UNPROCESSABLE_ENTITY,
+        HttpStatus.NOT_FOUND,
       );
     }
     return role;
@@ -67,14 +89,14 @@ export class WorkspaceRolesController {
     @Auth() auth,
   ) {
     const deleted = await this.workspaceRolesService.remove(
-      idWorkspace,
+      await this.getWorkspace(idWorkspace, auth),
       id,
       auth,
     );
     if (!deleted) {
       throw new HttpException(
         'Role not found',
-        HttpStatus.UNPROCESSABLE_ENTITY,
+        HttpStatus.NOT_FOUND,
       );
     }
     return deleted;
@@ -88,7 +110,7 @@ export class WorkspaceRolesController {
     @Body() body: UpdateWorkspaceRoleDTO,
   ) {
     const updated = await this.workspaceRolesService.update(
-      idWorkspace,
+      await this.getWorkspace(idWorkspace, auth),
       id,
       body,
       auth,
@@ -96,7 +118,7 @@ export class WorkspaceRolesController {
     if (!updated) {
       throw new HttpException(
         'Role not found',
-        HttpStatus.UNPROCESSABLE_ENTITY,
+        HttpStatus.NOT_FOUND,
       );
     }
     return updated;
