@@ -1,8 +1,14 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from './modules/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import { User } from './modules/auth/entities/user.entity';
 import { ConfigModule } from '@nestjs/config';
+
+import { AuthModule } from './modules/auth/auth.module';
+import { Workspace } from './modules/auth/entities/workspace.entity';
+import { WorkspaceUser } from './modules/auth/entities/workspace-user.entity';
+import { WorkspaceRight } from './modules/auth/entities/workspace-right.entity';
+import { WorkspaceRole } from './modules/auth/entities/workspace-role.entity';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -13,10 +19,10 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User],
-      synchronize: true,
+      entities: [User, Workspace, WorkspaceRole, WorkspaceRight, WorkspaceUser],
+      synchronize: Boolean(process.env.SYNC_DB_ENTITIES),
     }),
-    AuthModule
+    AuthModule,
   ],
   controllers: [],
   providers: [],

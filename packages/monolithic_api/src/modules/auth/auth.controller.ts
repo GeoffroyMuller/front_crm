@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthLoginDto, AuthRegisterDto } from './auth.validators';
-import { AuthGuard } from './auth.guard';
-import { Auth } from './decorators/auth.decorator';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { Auth } from 'src/decorators/auth.decorator';
 
 @Controller('auth')
 export class AuthController {

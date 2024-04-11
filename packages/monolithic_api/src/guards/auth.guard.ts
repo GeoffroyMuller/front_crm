@@ -11,7 +11,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 const PUBLIC_KEY = fs.readFileSync(
-  path.join(__dirname, '../../../public.key.pub'),
+  path.join(__dirname, '../../public.key.pub'),
   'utf8',
 );
 

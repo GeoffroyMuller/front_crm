@@ -1,0 +1,10 @@
+import { IsNotEmpty } from 'class-validator';
+
+export class CreateWorkspaceDTO {
+  @IsNotEmpty()
+  name: string;
+}
+
+export class UpdateWorkspaceDTO {
+  name: string;
+}
