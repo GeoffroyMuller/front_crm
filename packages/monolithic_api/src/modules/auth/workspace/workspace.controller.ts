@@ -47,7 +47,7 @@ export class WorkspaceController {
 
   @UseGuards(AuthGuard)
   @Delete(':id')
-  async remove(@Body() { id }: { id: number }, @Auth() auth) {
+  async remove(@Param('id') id, @Auth() auth) {
     return this.workspaceService.remove(id, auth);
   }
 }

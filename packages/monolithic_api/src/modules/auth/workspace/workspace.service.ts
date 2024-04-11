@@ -17,11 +17,18 @@ export class WorkspaceService {
   }
 
   findOne(id: number, auth: User): Promise<Workspace> {
-    return this.workspacesRepository.findOne({ where: { id } });
+    const workspace = this.workspacesRepository.findOne({ where: { id } });
+    if (!workspace) {
+      throw new HttpException('Workspace not found', HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+    return workspace;
   }
 
   async remove(id: number, auth: User): Promise<void> {
-    await this.workspacesRepository.delete(id);
+    const deleteResult = await this.workspacesRepository.delete({id, owner: auth});
+    if (deleteResult.affected === 0) {
+      throw new HttpException('Workspace not found', HttpStatus.UNPROCESSABLE_ENTITY);
+    }
   }
 
   async create(workspace: CreateWorkspaceDTO, auth: User): Promise<Workspace> {
@@ -30,13 +37,22 @@ export class WorkspaceService {
 
   async update(
     id: number,
-    workspace: UpdateWorkspaceDTO,
+    data: UpdateWorkspaceDTO,
     auth: User,
   ): Promise<Workspace> {
-    const updateResult = await this.workspacesRepository.update(id, workspace);
+    const updateResult = await this.workspacesRepository.update(
+      { id, owner: auth },
+      data,
+    );
     if (updateResult.affected > 0) {
-      return await this.workspacesRepository.findOne({ where: { id } });
+      return await this.workspacesRepository.findOne({
+        where: { id, owner: auth },
+      });
     }
-    throw new HttpException('Workspace not found', HttpStatus.UNPROCESSABLE_ENTITY);
+
+    throw new HttpException(
+      'Workspace not found',
+      HttpStatus.UNPROCESSABLE_ENTITY,
+    );
   }
 }

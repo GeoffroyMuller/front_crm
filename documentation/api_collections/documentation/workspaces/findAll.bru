@@ -1,12 +1,12 @@
 meta {
-  name: update
+  name: findAll
   type: http
-  seq: 2
+  seq: 5
 }
 
-put {
-  url: {{gatewayURL}}/workspaces/1
-  body: json
+get {
+  url: {{gatewayURL}}/workspaces
+  body: none
   auth: none
 }
 
