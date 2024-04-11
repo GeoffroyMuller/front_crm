@@ -24,7 +24,7 @@ import breakpointsPlugin from "./plugins/breakpoints";
 import type { AppModule } from "./types";
 
 interface SetupOptions {
-  routes: Readonly<RouteRecordRaw[]>;
+  routes?: Readonly<RouteRecordRaw[]>;
   i18n?: {
     messages: any;
     locale: string;
@@ -39,7 +39,7 @@ export function setupPlugins(options: SetupOptions) {
 
   const router = setupRouter({
     history: createWebHashHistory(import.meta.env.BASE_URL),
-    routes,
+    routes: routes || [],
   });
 
   const i18n = setupI18n(options.i18n?.messages || {}, options.i18n?.locale);
